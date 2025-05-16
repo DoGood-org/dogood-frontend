@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "lint-staged": "^16.0.0"
+  }
+}
