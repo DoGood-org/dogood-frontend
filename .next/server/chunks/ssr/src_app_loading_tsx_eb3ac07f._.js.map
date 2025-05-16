@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/nightven/Documents/GitHub/dogood-frontend/src/app/loading.tsx"],"sourcesContent":["import React, { type JSX } from 'react';\n\nconst Loading = (): JSX.Element => {\n  return (\n    <div\n      className=\"fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 z-50 transition-opacity duration-300\"\n      role=\"alert\"\n      aria-live=\"assertive\"\n    >\n      Loading...\n      <p className=\"mt-4 text-white text-lg\">Loading, please wait...</p>\n    </div>\n  );\n};\n\nexport default Loading;\n"],"names":[],"mappings":";;;;;AAEA,MAAM,UAAU;IACd,qBACE,8OAAC;QACC,WAAU;QACV,MAAK;QACL,aAAU;;YACX;0BAEC,8OAAC;gBAAE,WAAU;0BAA0B;;;;;;;;;;;;AAG7C;uCAEe","debugId":null}}]
+}
