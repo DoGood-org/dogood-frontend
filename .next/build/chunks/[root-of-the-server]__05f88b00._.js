@@ -24,13 +24,21 @@ const mod = __turbopack_context__.x("fs", () => require("fs"));
 
 module.exports = mod;
 }}),
-"[project]/postcss.config.mjs [postcss] (ecmascript)": (function(__turbopack_context__) {
+"[project]/postcss.config.mjs [postcss] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
 
-var { g: global, __dirname, m: module, e: exports } = __turbopack_context__;
+var { g: global, __dirname } = __turbopack_context__;
 {
-const e = new Error("Could not parse module '[project]/postcss.config.mjs'");
-e.code = 'MODULE_UNPARSEABLE';
-throw e;}}),
+__turbopack_context__.s({
+    "default": (()=>__TURBOPACK__default__export__)
+});
+const config = {
+    plugins: [
+        "@tailwindcss/postcss"
+    ]
+};
+const __TURBOPACK__default__export__ = config;
+}}),
 "[project]/postcss.config.mjs/transform.ts { CONFIG => \"[project]/postcss.config.mjs [postcss] (ecmascript)\" } [postcss] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
