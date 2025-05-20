@@ -1,7 +1,6 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import React, { type JSX } from 'react';
-
+import {Button} from '@/components/ui/button'
 const GlobalErrorPage = ({
   error,
   reset,
