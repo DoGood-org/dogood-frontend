@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "svgr": "svgr --out-dir src/components/icons src/assets/svg --typescript --icon",
+    "svgr:watch": "chokidar \"src/assets/svg/*.svg\" -c \"npm run svgr\"",
+    "dev:all": "concurrently \"npm run dev\" \"npm run svgr:watch\""
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -28,10 +31,13 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@svgr/cli": "^8.1.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^9.1.2",
     "eslint": "^9.27.0",
     "eslint-config-next": "15.3.2",
     "eslint-config-prettier": "^10.1.5",
