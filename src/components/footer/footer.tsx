@@ -2,11 +2,13 @@ import React from 'react';
 import Image from 'next/image';
 import icon from '@/assets/logo.png';
 import Link from 'next/link';
-import LinkedinIcon from '@/assets/footer-icons/mdi_linkedin.svg';
-import Xicon from '@/assets/footer-icons/ri_twitter-x-line.svg';
-import FacebookIcon from '@/assets/footer-icons/ic_outline-facebook.svg';
-import TelegramIcon from '@/assets/footer-icons/ic_baseline-telegram.svg';
-import InstagramIcon from '@/assets/footer-icons/ri_instagram-line.svg';
+import {
+  IcBaselineTelegram,
+  IcOutlineFacebook,
+  MdiLinkedin,
+  RiInstagramLine,
+  RiTwitterXLine,
+} from '../icons';
 export default function Footer() {
   return (
     <footer className="w-full bg-[#111215]">
@@ -21,19 +23,19 @@ export default function Footer() {
         <div className="flex flex-col items-end">
           <div className="flex space-x-4 mb-5">
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <LinkedinIcon className="w-30px h-30px" />
+              <MdiLinkedin />
             </a>
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <Xicon />
+              <RiTwitterXLine />
             </a>
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <FacebookIcon />
+              <IcOutlineFacebook />
             </a>
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <TelegramIcon />
+              <IcBaselineTelegram />
             </a>
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <InstagramIcon />
+              <RiInstagramLine />
             </a>
           </div>
           <a
