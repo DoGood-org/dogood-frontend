@@ -4,7 +4,6 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Planet from '../assets/images/planet.png';
-import { Button } from '@/components/ui/button';
 
 const HeroSection = () => {
   const t = useTranslations('common');
@@ -26,7 +25,6 @@ const HeroSection = () => {
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center">
           <h1 className="text-[32px] font-bold">{t('title')}</h1>
           <h2 className="text-[25px] font-semibold">{t('subtitle')}</h2>
-          <Button variant="outline">Become a volunteer</Button>
         </div>
       </div>
 
