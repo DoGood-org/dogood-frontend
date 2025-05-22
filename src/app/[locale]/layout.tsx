@@ -6,6 +6,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { routing } from '../../i18n/routing';
 import { notFound } from 'next/navigation';
 import React from 'react';
+import Footer from '@/components/footer/footer';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -52,6 +53,7 @@ export default async function RootLayout({
         <NextIntlClientProvider locale={locale}>
           {children}
         </NextIntlClientProvider>
+        <Footer />
       </body>
     </html>
   );
