@@ -48,7 +48,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-[-600px] w-full pointer-events-none">
+      <div className="absolute bottom-[-600px] w-full pointer-events-none z-25">
         <div className="sticky top-0 h-screen flex items-end justify-center ">
           <motion.div
             style={{ y, opacity }}

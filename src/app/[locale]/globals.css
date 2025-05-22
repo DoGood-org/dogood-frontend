@@ -26,20 +26,20 @@
   --color-star: var(--star);
 
   /* font sizes desktop */
-  --text-h1-d: 70pt;
-  --text-h2-d: 32pt;
-  --text-h3-d: 25pt;
-  --text-h4-d: 20pt;
-  --text-h5-d: 18pt;
-  --text-p1-d: 18pt;
-  --text-p2-d: 16pt;
+  --text-h1-d: var(--h1-d);
+  --text-h2-d: var(--h2-d);
+  --text-h3-d: var(--h3-d);
+  --text-h4-d: var(--h4-d);
+  --text-h5-d: var(--h5-d);
+  --text-p1-d: var(--p1-d);
+  --text-p2-d: var(--p2-d);
 
   /* font sizes mobile */
-  --text-h4-m: 30pt;
-  --text-h5-m: 25pt;
-  --text-h6-m: 18pt;
-  --text-p3-m: 16pt;
-  --text-p4-m: 14pt;
+  --text-h4-m: var(--h4-m);
+  --text-h5-m: var(--h5-m);
+  --text-h6-m: var(--h6-m);
+  --text-p3-m: var(--p3-m);
+  --text-p4-m: var(--p4-m);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -75,20 +75,20 @@
   --star: #ffee00;
 
   /* font sizes desktop */
-  --text-h1-d: 70pt;
-  --text-h2-d: 32pt;
-  --text-h3-d: 25pt;
-  --text-h4-d: 20pt;
-  --text-h5-d: 18pt;
-  --text-p1-d: 18pt;
-  --text-p2-d: 16pt;
+  --h1-d: 70px;
+  --h2-d: 32px;
+  --h3-d: 25px;
+  --h4-d: 20px;
+  --h5-d: 18px;
+  --p1-d: 18px;
+  --p2-d: 16px;
 
   /* font sizes mobile */
-  --text-h4-m: 30pt;
-  --text-h5-m: 25pt;
-  --text-h6-m: 18pt;
-  --text-p3-m: 16pt;
-  --text-p4-m: 14pt;
+  --h4-m: 30px;
+  --h5-m: 25px;
+  --h6-m: 18px;
+  --p3-m: 16px;
+  --p4-m: 14px;
 }
 
 .dark {
@@ -105,6 +105,7 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-montserrat);
+    line-height: 1.2;
   }
 }
 

@@ -6,7 +6,6 @@ import { routing } from '../../i18n/routing';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import Footer from '@/components/footer/footer';
-import { LearnIcon } from '@/components/icons';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -46,7 +45,6 @@ export default async function RootLayout({
           </NextIntlClientProvider>
         </main>
         <Footer />
-        <LearnIcon />
       </body>
     </html>
   );
