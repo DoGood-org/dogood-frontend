@@ -115,3 +115,6 @@ p {
 button {
   font-family: var(--font-montserrat);
 }
+.bg-hero{
+  background-image: url(../../assets/images/hero/bg-hero.png);
+}
