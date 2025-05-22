@@ -23,19 +23,19 @@ export default function Footer() {
         <div className="flex flex-col items-end">
           <div className="flex space-x-4 mb-5">
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <MdiLinkedin />
+              <MdiLinkedin className="w-7.5 h-7.5" />
             </a>
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <RiTwitterXLine />
+              <RiTwitterXLine className="w-7.5 h-7.5" />
             </a>
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <IcOutlineFacebook />
+              <IcOutlineFacebook className="w-7.5 h-7.5" />
             </a>
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <IcBaselineTelegram />
+              <IcBaselineTelegram className="w-7.5 h-7.5" />
             </a>
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <RiInstagramLine />
+              <RiInstagramLine className="w-7.5 h-7.5" />
             </a>
           </div>
           <a

@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { LearnIcon } from '@/components/icons';
+import Faq from '@/components/faq/faq';
 
 export default function Home() {
   const t = useTranslations('common');
@@ -9,6 +10,7 @@ export default function Home() {
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start"></main>
       <h1>{t('title')}</h1>
       <LearnIcon />
+      <Faq />
     </div>
   );
 }
