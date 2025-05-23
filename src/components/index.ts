@@ -7,3 +7,5 @@ export * from './footer/Footer';
 export * from './footer/SocialLinks';
 export * from './main/AboutSection';
 export * from './main/HeroSection';
+export * from './ui/Accordion';
+export * from './ui/Button';

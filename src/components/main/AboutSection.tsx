@@ -1,14 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useLocale, useTranslations } from 'next-intl';
 import { images } from '@/assets/images/about/import';
-import { Button } from '../ui/Button';
+// import { Button } from ;
 import { LearnIcon } from '../icons';
+import { Button } from '@/components';
 
 export const AboutSection = () => {
   const t = useTranslations('about');
@@ -24,18 +25,25 @@ export const AboutSection = () => {
   const [activeView, setActiveView] = useState(views[0].view);
   const activeData = views.find(({ view }) => view === activeView);
 
+  const [hasAnimated, setHasAnimated] = useState(false);
   const { ref, inView } = useInView({
     triggerOnce: false,
     threshold: 0.4,
   });
 
+  useEffect(() => {
+    if (inView && !hasAnimated) {
+      setHasAnimated(true);
+    }
+  }, [inView, hasAnimated]);
+
   return (
     <motion.section
       ref={ref}
       animate={{
-        paddingTop: inView ? '376px' : '100px',
+        paddingTop: hasAnimated ? '376px' : '100px',
       }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
+      transition={{ duration: 1, ease: 'easeOut' }}
       className="pb-[50px] bg-background relative z-20"
     >
       <div className="relative z-10 max-w-[1920px] mx-auto px-[100px] items-center">
@@ -52,7 +60,7 @@ export const AboutSection = () => {
           ))}
         </div>
         {activeData && (
-          <div className="flex gap-[80px] transition-opacity duration-500 ease-in-out opacity-100 animate-fade">
+          <div className="flex gap-[80px] transition-opacity duration-500 ease-in-out opacity-100">
             <div className="max-w-[55%]">
               <Image
                 src={images[activeData.img]}
