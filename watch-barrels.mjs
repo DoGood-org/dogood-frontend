@@ -37,13 +37,13 @@ async function main() {
     watcher1.on("unlink", () => runBarrelsby("barrelsby.json"));
 
     // 3. Запускаємо watcher для другої директорії
-    const watcher2 = chokidar.watch("src/components/ui/**/*.{ts,tsx}", {
-      ignored: /index\.ts$/, 
-      ignoreInitial: true,
-    });
-    watcher2.on("add", () => runBarrelsby("barrelsby.ui.json"));
-    watcher2.on("change", () => runBarrelsby("barrelsby.ui.json"));
-    watcher2.on("unlink", () => runBarrelsby("barrelsby.ui.json"));
+    // const watcher2 = chokidar.watch("src/components/ui/**/*.{ts,tsx}", {
+    //   ignored: /index\.ts$/, 
+    //   ignoreInitial: true,
+    // });
+    // watcher2.on("add", () => runBarrelsby("barrelsby.ui.json"));
+    // watcher2.on("change", () => runBarrelsby("barrelsby.ui.json"));
+    // watcher2.on("unlink", () => runBarrelsby("barrelsby.ui.json"));
 
   } catch (error) {
     console.error("Error during barrelsby initial run:", error);
