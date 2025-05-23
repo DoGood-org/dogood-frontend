@@ -1,3 +1,18 @@
 {
-    
+  "faq": [
+    {
+      "question": "How it works?",
+      "answer": [
+        "Using DoGood is simple and rewarding:",
+        "Submit or browse a request — whether it’s groceries for someone in need, supporting a cause, or offering your skills.",
+        "Respond to a request — as an individual, a volunteer, a business, or part of an organization."
+      ]
+    },
+    {
+      "question": "Where can I track my progress?",
+      "answer": [
+        "You can track your progress in our telegram channel, as well as we will present every block what we have done, and what we will do in the future."
+      ]
+    }
+  ]
 }
