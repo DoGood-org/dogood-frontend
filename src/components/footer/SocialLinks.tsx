@@ -13,7 +13,7 @@ const socialLinks = [
   { icon: RiInstagramLine, url: 'https://instagram.com' },
 ];
 
-export default function SocialLinks() {
+export const SocialLinks = () => {
   return (
     <ul className="flex gap-4 ">
       {socialLinks.map(({ icon: Icon, url }, index) => (
@@ -30,4 +30,4 @@ export default function SocialLinks() {
       ))}
     </ul>
   );
-}
+};

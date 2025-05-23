@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useLocale, useTranslations } from 'next-intl';
 import { images } from '@/assets/images/about/import';
-import { Button } from '../ui/button';
+import { Button } from '../ui/Button';
 import { LearnIcon } from '../icons';
 
 export const AboutSection = () => {

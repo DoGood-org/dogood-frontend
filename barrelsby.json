@@ -1,0 +1,7 @@
+  {
+    "directory": "src/components",
+    "exclude": ["ui", "icons"],
+    "delete": true,
+    "structure": "flat",
+    "barrelName": "index.ts"
+  }
