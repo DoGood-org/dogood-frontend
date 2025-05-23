@@ -1,7 +1,6 @@
 import React from 'react';
-import HeroSection from '@/components/main/HeroSection';
 import Faq from '@/components/faq/faq';
-import { AboutSection } from '@/components/main/AboutSection';
+import { AboutSection, HeroSection } from '@/components';
 
 export default function Home() {
   return (

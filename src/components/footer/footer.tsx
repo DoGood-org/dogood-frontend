@@ -2,9 +2,9 @@ import React from 'react';
 import Image from 'next/image';
 import icon from '@/assets/logo.png';
 import Link from 'next/link';
-import SocialLinks from '../ui/SocialLinks';
+import { SocialLinks } from './SocialLinks';
 
-export default function Footer() {
+export const Footer = () => {
   return (
     <footer className="w-full bg-[#111215]">
       <div className="max-w-[1920px] mx-auto flex justify-between items-center px-[100px] py-[74px] h-[188px]">
@@ -33,4 +33,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+};

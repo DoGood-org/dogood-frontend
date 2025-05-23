@@ -4,11 +4,11 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Planet from '../../assets/images/hero/planet.png';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 
-const HeroSection = () => {
+export const HeroSection = () => {
   const t = useTranslations('common');
   const router = useRouter();
   const localActive = useLocale();
@@ -70,5 +70,3 @@ const HeroSection = () => {
     </section>
   );
 };
-
-export default HeroSection;

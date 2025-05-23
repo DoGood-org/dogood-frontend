@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "concurrently \"node watch-barrels.mjs\" \"next dev\" \"npm run svgr:watch\" --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
@@ -39,6 +39,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "barrelsby": "^2.8.1",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^9.1.2",
     "eslint": "^9.27.0",
