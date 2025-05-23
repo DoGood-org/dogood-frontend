@@ -1,6 +1,6 @@
 {
   "directory": "src/components/ui",
-  "delete": true,
+  "delete": false,
   "structure": "flat",
   "barrelName": "index.ts"
 }
