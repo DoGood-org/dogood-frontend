@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Planet from '../../assets/images/hero/planet.png';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui';
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 
