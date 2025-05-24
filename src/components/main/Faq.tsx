@@ -4,7 +4,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
+} from '@/components/ui/Accordion';
 import { useTranslations } from 'next-intl';
 import ContactForm from '../faq/СontactForm';
 import Image from 'next/image';
@@ -45,7 +45,7 @@ export default function Faq() {
           <Image
             src={FaqImg}
             alt="Logo"
-            className="w-[993px] h-[663px]"
+            className="max-w-[993px] max-h-[663px]"
             priority
           />
         </div>
