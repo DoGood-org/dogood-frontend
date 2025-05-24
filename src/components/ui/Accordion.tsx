@@ -19,7 +19,10 @@ function AccordionItem({
   return (
     <AccordionPrimitive.Item
       data-slot="accordion-item"
-      className={cn('border-b last:border-b-0', className)}
+      className={cn(
+        'border rounded-[10px] px-[50px] mb-[30px] last:mb-[0px]',
+        className
+      )}
       {...props}
     />
   );

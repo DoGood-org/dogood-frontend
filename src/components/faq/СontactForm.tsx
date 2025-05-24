@@ -1,0 +1,104 @@
+'use client';
+
+import type React from 'react';
+
+import { useState } from 'react';
+import { User, Mail, Phone, MessageCircle } from 'lucide-react';
+import { Button } from '../ui/Button';
+
+export default function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    interest: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+  };
+
+  return (
+    <div className="rounded-[10px] min-w-[697px] min-h-[663px] flex items-center justify-center bg-foreground p-4">
+      <div className="w-full max-w-xl">
+        <h2 className="text-[#ffffff] text-4xl font-bold mb-8">
+          Do you have any questions?
+        </h2>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="relative">
+            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+              <User className="h-5 w-5 text-[#696969]" />
+            </div>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="What's your name?"
+              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-full focus:outline-none focus:ring-2 focus:ring-[#17814b]"
+            />
+          </div>
+
+          <div className="relative">
+            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+              <Mail className="h-5 w-5 text-[#696969]" />
+            </div>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="E-mail"
+              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-full focus:outline-none focus:ring-2 focus:ring-[#17814b]"
+            />
+          </div>
+
+          <div className="relative">
+            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+              <Phone className="h-5 w-5 text-[#696969]" />
+            </div>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Phone number"
+              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-full focus:outline-none focus:ring-2 focus:ring-[#17814b]"
+            />
+          </div>
+
+          <div className="relative">
+            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+              <MessageCircle className="h-5 w-5 text-[#696969]" />
+            </div>
+            <input
+              type="text"
+              name="interest"
+              value={formData.interest}
+              onChange={handleChange}
+              placeholder="What are you interested in?"
+              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-full focus:outline-none focus:ring-2 focus:ring-[#17814b]"
+            />
+          </div>
+
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pt-4">
+            <p className="text-[#999999] text-sm">
+              By clicking on the button, you agree to the processing of personal
+              data.
+            </p>
+            <Button variant="primary" size="lg">
+              Send request
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
