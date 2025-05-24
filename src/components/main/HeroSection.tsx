@@ -25,7 +25,7 @@ export const HeroSection = () => {
   const contentOpacity = useTransform(scrollYProgress, [0.5, 0.8], [1, 0]);
 
   return (
-    <section ref={sectionRef} className="relative h-[200vh] w-full">
+    <section ref={sectionRef} className="relative h-[1080px] w-full">
       {/* Background layer */}
       <div className="fixed inset-0 bg-hero bg-center bg-cover -z-10" />
 
@@ -60,7 +60,7 @@ export const HeroSection = () => {
       </motion.div>
 
       {/* Planet layer */}
-      <div className="absolute bottom-[-600px] w-full pointer-events-none z-25">
+      <div className="absolute bottom-[-500px] w-full pointer-events-none z-25">
         <div className="sticky top-0 h-screen flex items-end justify-center ">
           <motion.div
             style={{ y: yPlanet, opacity }}
