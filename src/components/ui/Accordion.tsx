@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import Plus from '@/components/icons/Plus';
 
 import { cn } from '@/lib/utils';
+import { Plus } from '../icons';
 
 function Accordion({
   ...props
