@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '../ui/Button';
+import { Button } from '../../ui/Button';
 
 export const AboutAnimationTabs = ({
   views,

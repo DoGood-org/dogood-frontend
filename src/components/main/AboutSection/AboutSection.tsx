@@ -11,7 +11,7 @@ import {
 } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
 import { images } from '@/assets/images/about/import';
-import { LearnIcon } from '../icons';
+import { LearnIcon } from '../../icons';
 import { AboutAnimationTabs, Button } from '@/components';
 
 declare global {
