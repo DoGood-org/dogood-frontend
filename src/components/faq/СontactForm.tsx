@@ -93,7 +93,7 @@ export default function ContactForm() {
               data.
             </p>
             <Button
-              className="hover:bg-btn-hover active:bg-btn-active w-[228px] h-[50px] text-white"
+              className="btn-expand-hover active:bg-btn-active w-[228px] h-[50px] text-white"
               variant="primary"
               size="lg"
             >
