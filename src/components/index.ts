@@ -5,6 +5,7 @@
 export * from './faq/СontactForm';
 export * from './footer/Footer';
 export * from './footer/SocialLinks';
+export * from './main/AboutAnimationTabs';
 export * from './main/AboutSection';
 export * from './main/Faq';
 export * from './main/HeroSection';
