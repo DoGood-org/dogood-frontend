@@ -1,3 +1,73 @@
 {
-    
+  "nav": [
+    {
+      "title": "Donate",
+      "type": "link",
+      "src": "/donate"
+    },
+    {
+      "title": "Company",
+      "type": "list",
+      "content": [
+        {
+          "name": "Support",
+          "description": "We're there for you when you need help.",
+          "src": "/support"
+        },
+        {
+          "name": "Grants",
+          "description": "We support initiatives that make a difference in the community.",
+          "src": "/grants"
+        },
+        {
+          "name": "About DoGood",
+          "description": "DoGood is a community of people for whom kindness is an active act.",
+          "src": "/about"
+        }
+      ]
+    },
+    {
+      "title": "News",
+      "type": "list",
+      "content": [
+        {
+          "name": "News",
+          "description": "Keep up to date with DoGood events.",
+          "src": "/news"
+        },
+        {
+          "name": "Blog",
+          "description": "Ideas, tips and inspiration for those who want to change the world.",
+          "src": "/blog"
+        },
+        {
+          "name": "Volunteer stories",
+          "description": "Real stories of people who are doing good.",
+          "src": "/volunteerStories"
+        }
+      ]
+    },
+    {
+      "title": "Settings",
+      "type": "settings",
+      "content": [
+        {
+          "name": "Languages",
+          "description": "Select a language"
+        },
+        {
+          "name": "Special features",
+          "description": "Mode for the visually impaired"
+        },
+        {
+          "name": "Theme",
+          "description": "Display theme"
+        }
+      ]
+    }
+  ],
+  "buttons": [
+    { "name": "Log in", "src": "/login" },
+    { "name": "Sign up", "src": "/register" }
+  ]
 }
