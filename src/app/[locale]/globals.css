@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
-
+@import 'leaflet/dist/leaflet.css';
+@import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

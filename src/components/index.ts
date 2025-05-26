@@ -7,5 +7,8 @@ export * from './footer/Footer';
 export * from './footer/SocialLinks';
 export * from './main/AboutSection';
 export * from './main/HeroSection';
+export * from './main/Map';
+export * from './main/MapSection';
 export * from './ui/Accordion';
 export * from './ui/Button';
+export * from './ui/Input';
