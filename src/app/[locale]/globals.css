@@ -8,7 +8,7 @@
   --color-foreground: var(--foreground);
   --color-text-help: var(--text-help);
   --color-text-gray: var(--text-gray);
-
+  --color-layout-background: var(--layout-background);
   --color-card: var(--card);
 
   /* buttons */
@@ -53,7 +53,7 @@
 
   --background: #f0f1f2;
   --foreground: #000000;
-
+  --layout-background: #111215;
   --text-help: #696969;
   --text-gray: #999999;
 
@@ -146,6 +146,16 @@ p {
 button {
   font-family: var(--font-montserrat);
 }
+
 .bg-hero {
   background-image: url(../../assets/images/hero/bg-hero.png);
+}
+
+.dropdown-link{
+  border: 1px solid transparent;
+  transition: border 1s ease-in-out;
+
+  &:hover {
+    border: 1px solid var(--border);
+  }
 }
