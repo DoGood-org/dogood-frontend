@@ -15,7 +15,7 @@ export default function Faq() {
   const faqItems = t.raw('faq') as { question: string; answer: string[] }[];
   return (
     <section className="w-full bg-background relative z-25 py-[100px]">
-      <div className="max-w-[1920px] mx-auto px-[100px] items-center ">
+      <div className="max-w-[1920px] mx-auto px-[20px] lg:px-[100px] items-center flex flex-col ">
         <h2 className="text-[32px] text-foreground flex justify-center pb-[40px]">
           FAQ
         </h2>
@@ -40,14 +40,16 @@ export default function Faq() {
             </AccordionItem>
           ))}
         </Accordion>
-        <div className=" flex justify-center py-[100px] gap-[30px]">
+        <div className=" flex justify-center py-[100px] gap-[30px] md:flex-col-reverse lg:flex-row">
           <ContactForm />
-          <Image
-            src={FaqImg}
-            alt="Logo"
-            className="max-w-[993px] max-h-[663px]"
-            priority
-          />
+          <div className="hidden lg:block">
+            <Image
+              src={FaqImg}
+              alt="Logo"
+              className="max-w-[993px] max-h-[663px]"
+              priority
+            />
+          </div>
         </div>
       </div>
     </section>

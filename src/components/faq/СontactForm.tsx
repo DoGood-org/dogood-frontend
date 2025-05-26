@@ -24,9 +24,9 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="rounded-[10px] max-w-[697px] max-h-[663px] flex items-center justify-center bg-card p-[60px]">
+    <div className="rounded-[10px] flex items-center justify-center bg-card p-[20px] lg:p-[60px]">
       <div className="w-full max-w-xl">
-        <h2 className="text-[#ffffff] text-4xl font-bold mb-10">
+        <h2 className="text-[#ffffff] text-4xl font-bold pb-[25px] lg:pb-10">
           Do you have any questions?
         </h2>
 
@@ -87,13 +87,13 @@ export default function ContactForm() {
             />
           </div>
 
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-[44px] ">
+          <div className="flex flex-col-reverse items-center md:flex-row md:items-start  md:justify-between gap-[44px] ">
             <p className="text-[#999999] text-sm">
               By clicking on the button, you agree to the processing of personal
               data.
             </p>
             <Button
-              className="btn-expand-hover active:bg-btn-active w-[228px] h-[50px] text-white"
+              className="btn-expand-hover active:bg-btn-active w-[313px] h-[42px]  md:w-[228px] md:h-[50px] text-white"
               variant="primary"
               size="lg"
             >
