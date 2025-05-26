@@ -15,14 +15,14 @@
           "src": "/support"
         },
         {
-          "name": "Grants",
-          "description": "We support initiatives that make a difference in the community.",
-          "src": "/grants"
-        },
-        {
           "name": "About DoGood",
           "description": "DoGood is a community of people for whom kindness is an active act.",
           "src": "/about"
+        },
+        {
+          "name": "Grants",
+          "description": "We support initiatives that make a difference in the community.",
+          "src": "/grants"
         }
       ]
     },
@@ -36,14 +36,14 @@
           "src": "/news"
         },
         {
-          "name": "Blog",
-          "description": "Ideas, tips and inspiration for those who want to change the world.",
-          "src": "/blog"
-        },
-        {
           "name": "Volunteer stories",
           "description": "Real stories of people who are doing good.",
           "src": "/volunteerStories"
+        },
+        {
+          "name": "Blog",
+          "description": "Ideas, tips and inspiration for those who want to change the world.",
+          "src": "/blog"
         }
       ]
     },
