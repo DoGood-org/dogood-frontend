@@ -159,3 +159,40 @@ button {
     border: 1px solid var(--border);
   }
 }
+
+@keyframes dropdown-fade {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+.animate-dropdown-fade {
+  animation: dropdown-fade 200ms ease-out forwards;
+}
+
+@keyframes dropdown-open {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+    max-height: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 500px;
+  }
+}
+
+.animate-dropdown-open {
+  animation: dropdown-open 0.2s ease-out;
+  /* transform: scaleY(100);
+  max-height: 500px; */
+  
+  
+}
+

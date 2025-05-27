@@ -8,7 +8,7 @@ export type NavItem =
   | {
       type: 'link';
       title: string;
-      src: string; // обов’язковий
+      src: string;
     }
   | {
       type: 'list';
