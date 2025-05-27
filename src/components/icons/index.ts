@@ -5,3 +5,5 @@ export { default as MdiLinkedin } from './MdiLinkedin';
 export { default as Plus } from './Plus';
 export { default as RiInstagramLine } from './RiInstagramLine';
 export { default as RiTwitterXLine } from './RiTwitterXLine';
+export { default as Search } from './Search';
+export { default as Settings } from './Settings';

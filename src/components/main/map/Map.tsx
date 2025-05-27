@@ -1,13 +1,12 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Icon, LatLngLiteral } from 'leaflet';
-import MedicineMarker from '../../assets/images/map/medicine-marker.png';
-import NatureMarker from '../../assets/images/map/nature-marker.png';
-import AnimalMarker from '../../assets/images/map/animal-marker.png';
-import FoodMarker from '../../assets/images/map/food-marker.png';
-import MyPositionMarker from '../../assets/images/map/my-position.jpg';
-
-import { Input } from '../ui/Input';
+import MedicineMarker from '@/assets/images/map/medicine-marker.png';
+import NatureMarker from '@/assets/images/map/nature-marker.png';
+import AnimalMarker from '@/assets/images/map/animal-marker.png';
+import FoodMarker from '@/assets/images/map/food-marker.png';
+import MyPositionMarker from '@/assets/images/map/my-position.jpg';
+import SearchInput from './SearchInput';
 
 interface ReactLeafletModule {
   MapContainer: typeof import('react-leaflet').MapContainer;
@@ -107,7 +106,7 @@ const Map: React.FC<MapProps> = ({
       }
     }
   }, []);
-
+  console.log(userLocation);
   if (
     !leafletComponents ||
     !mapMedicineMarkIcon ||
@@ -131,11 +130,12 @@ const Map: React.FC<MapProps> = ({
   const SelectedLocation = ({ center }: { center: LatLngLiteral }) => {
     const map = useMap();
     useEffect(() => {
-      map.panTo(center, { animate: true });
+      map.panTo(userLocation || center, { animate: true });
     }, [center, map]);
     return null;
   };
 
+  //create different icon depends of the title of tasks
   const createMarks = (title: string) => {
     switch (title) {
       case 'Medicine':
@@ -154,6 +154,8 @@ const Map: React.FC<MapProps> = ({
         return mapMedicineMarkIcon;
     }
   };
+
+  //render all markers of locations from db
   const renderMarks = () => {
     return locations.map((location) => (
       <div key={location.id}>
@@ -174,6 +176,7 @@ const Map: React.FC<MapProps> = ({
     ));
   };
 
+  //render marker clicking on map
   const renderCustomMarkers = () => {
     return customMarkers.map((marker, index) => (
       <Marker
@@ -187,6 +190,7 @@ const Map: React.FC<MapProps> = ({
     ));
   };
 
+  //add marker to user's position
   const renderUserLocation = () => {
     if (!userLocation) return null;
     return (
@@ -198,7 +202,7 @@ const Map: React.FC<MapProps> = ({
             setSelectedLocation({
               ...userLocation,
               id: 'user-location',
-              title: 'medicine',
+              title: 'myPosition',
             });
             if (onLocationSelect) {
               onLocationSelect(userLocation);
@@ -257,6 +261,7 @@ const Map: React.FC<MapProps> = ({
             Location Error: {locationError}
           </div>
         )}
+        <SearchInput />
         <MapContainer
           center={userLocation || center} // Use user's location as center if available
           zoom={13}
@@ -265,18 +270,12 @@ const Map: React.FC<MapProps> = ({
           attributionControl={false}
           className="h-full w-full"
         >
-          <div className="absolute top-4 left-4 z-[1000] w-[250px]">
-            <Input
-              type="text"
-              placeholder="Search"
-              className="w-full bg-white border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
           <TileLayer
             url={'http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}'}
           />
-          {selectedLocation && <SelectedLocation center={selectedLocation} />}
+          {selectedLocation && (
+            <SelectedLocation center={userLocation || center} />
+          )}
           <MapClickHandler
             onClick={handleMapClick}
             allowClickToAddMarker={allowClickToAddMarker}

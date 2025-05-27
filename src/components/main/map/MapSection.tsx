@@ -4,7 +4,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 // Use dynamic import for the Map component with ssr: false
-const Map = dynamic(() => import('@/components/main/Map'), { ssr: false });
+const Map = dynamic(() => import('@/components/main/map/Map'), { ssr: false });
 
 const MapSection = () => {
   const locations = [
