@@ -7,27 +7,28 @@ import { SocialLinks } from './SocialLinks';
 export const Footer = () => {
   return (
     <footer className="w-full bg-[#111215]">
-      <div className="max-w-[1920px] mx-auto flex justify-between items-center px-[100px] py-[74px] h-[188px]">
-        <Link href="/">
-          <Image
-            src={icon}
-            alt="Logo"
-            className="w-[135px] h-[40px]"
-            priority
-          />
-        </Link>
-
+      <div className="max-w-[1920px] mx-auto px-4 md:px-10 lg:px-[100px] py-10 lg:py-[74px] flex flex-col lg:flex-row items-center justify-between h-[188px] gap-6 lg:gap-0">
+        <div className="hidden lg:block">
+          <Link href="/">
+            <Image
+              src={icon}
+              alt="Logo"
+              className="w-[135px] h-[40px]"
+              priority
+            />
+          </Link>
+        </div>
         <p className="font-normal text-[18px] text-white">
           © 2025 DoGood. All rights reserved.
         </p>
 
-        <div className="flex flex-col items-end gap-3">
+        <div className="flex flex-col items-center lg:items-end gap-3">
           <SocialLinks />
           <a
-            href="mailto:DoGood@gmail.com"
+            href="mailto:startup.dogood@gmail.com"
             className="font-normal text-[18px] text-white"
           >
-            DoGood@gmail.com
+            startup.dogood@gmail.com
           </a>
         </div>
       </div>
