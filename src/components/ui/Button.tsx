@@ -19,7 +19,7 @@ const buttonVariants = cva(
           'text-primary-foreground text-lg font-semibold hover:border-btn-outline-hover',
         link: 'text-primary underline-offset-4 hover:underline',
         primary:
-          'relative text-primary-foreground bg-btn overflow-hidden group transition-colors duration-500',
+          'relative text-primary-foreground text-lg bg-btn overflow-hidden group transition-colors duration-500',
         outline:
           'relative text-primary-foreground border font-semibold overflow-hidden group transition-colors duration-500',
         filters: 'bg-background text-base focus:bg-btn',

@@ -9,7 +9,7 @@
   --color-foreground: var(--foreground);
   --color-text-help: var(--text-help);
   --color-text-gray: var(--text-gray);
-
+  --color-layout-background: var(--layout-background);
   --color-card: var(--card);
 
   /* buttons */
@@ -54,7 +54,7 @@
 
   --background: #f0f1f2;
   --foreground: #000000;
-
+  --layout-background: #111215;
   --text-help: #696969;
   --text-gray: #999999;
 
@@ -98,6 +98,36 @@
   --card: #ffffff;
 }
 
+/* Стиль для ховер (глянути як використати можна в ContactForm */
+.btn-expand-hover {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color 0.3s ease;
+}
+
+.btn-expand-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--btn-hover) 50%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+  transition: width 0.4s ease;
+  z-index: -1;
+}
+
+.btn-expand-hover:hover::before {
+  width: 200%;
+}
+/*---------------------------------------------------------------*/
 @layer base {
   * {
     @apply border-border;
@@ -117,6 +147,53 @@ p {
 button {
   font-family: var(--font-montserrat);
 }
-.bg-hero{
+
+.bg-hero {
   background-image: url(../../assets/images/hero/bg-hero.png);
 }
+
+.dropdown-link{
+  border: 1px solid transparent;
+  transition: border 1s ease-in-out;
+
+  &:hover {
+    border: 1px solid var(--border);
+  }
+}
+
+@keyframes dropdown-fade {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+.animate-dropdown-fade {
+  animation: dropdown-fade 200ms ease-out forwards;
+}
+
+@keyframes dropdown-open {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+    max-height: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 500px;
+  }
+}
+
+.animate-dropdown-open {
+  animation: dropdown-open 0.2s ease-out;
+  /* transform: scaleY(100);
+  max-height: 500px; */
+  
+  
+}
+
