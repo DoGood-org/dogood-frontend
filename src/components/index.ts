@@ -7,6 +7,8 @@ export * from './footer/Footer';
 export * from './footer/SocialLinks';
 export * from './main/AboutSection';
 export * from './main/HeroSection';
+export * from './main/map/CategoryFilter';
+export * from './main/map/Filters';
 export * from './main/map/Map';
 export * from './main/map/MapSection';
 export * from './main/map/SearchInput';

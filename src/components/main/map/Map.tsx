@@ -6,26 +6,10 @@ import NatureMarker from '@/assets/images/map/nature-marker.png';
 import AnimalMarker from '@/assets/images/map/animal-marker.png';
 import FoodMarker from '@/assets/images/map/food-marker.png';
 import MyPositionMarker from '@/assets/images/map/my-position.jpg';
-import SearchInput from './SearchInput';
+import { SearchInput } from './SearchInput';
+import { MapLocation, MapProps, ReactLeafletModule } from '@/typings/mapTypes';
 
-interface ReactLeafletModule {
-  MapContainer: typeof import('react-leaflet').MapContainer;
-  TileLayer: typeof import('react-leaflet').TileLayer;
-  Marker: typeof import('react-leaflet').Marker;
-  useMap: typeof import('react-leaflet').useMap;
-  ZoomControl: typeof import('react-leaflet').ZoomControl;
-  useMapEvents: typeof import('react-leaflet').useMapEvents;
-}
-type MapLocation = LatLngLiteral & { id: string; title: string };
-
-type MapProps = {
-  center: LatLngLiteral;
-  locations: MapLocation[];
-  onLocationSelect?: (coords: LatLngLiteral) => void;
-  allowClickToAddMarker?: boolean;
-};
-
-const Map: React.FC<MapProps> = ({
+export const Map: React.FC<MapProps> = ({
   center,
   locations,
   onLocationSelect,
@@ -289,5 +273,4 @@ const Map: React.FC<MapProps> = ({
     </div>
   );
 };
-
 export default Map;
