@@ -21,13 +21,15 @@ const buttonVariants = cva(
         primary:
           'relative text-primary-foreground text-lg bg-btn overflow-hidden group transition-colors duration-500',
         outline:
-          'relative text-primary-foreground text-lg border font-semibold overflow-hidden group transition-colors duration-500',
+          'relative text-primary-foreground border font-semibold overflow-hidden group transition-colors duration-500',
+        filters: 'bg-background text-base focus:bg-btn',
       },
       size: {
-        default: 'h-9 px-4 py-2 has-[>svg]:px-3',
+        default: 'h-[45px] px-[15px] py-[10px] has-[>svg]:px-3',
         sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
         md: 'h-[42px] rounded-md px-5 py-[10px]',
         lg: 'h-[52px] rounded-[10px] px-5 has-[>svg]:px-4 py-[15px]',
+        xl: 'h-[52px] rounded-[10px] px-[35px] py-[15px]',
         icon: 'size-9',
       },
     },

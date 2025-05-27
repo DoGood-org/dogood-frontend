@@ -44,17 +44,19 @@ export const HeroSection = () => {
             variant="primary"
             size="lg"
             onClick={() => router.push(`/${localActive}/register`)}
+            className="min-w-[227px]"
           >
             <span className="absolute inset-0 bg-btn-hover origin-center rounded-md transform scale-x-0 group-hover:scale-x-100 transition-transform duration-800 z-0"></span>
-            <span className="relative z-10"> Become a volunteer</span>
+            <span className="relative z-10"> {t('volunteerBtn')}</span>
           </Button>
           <Button
             variant="outline"
             size="lg"
             onClick={() => router.push(`/${localActive}/about`)}
+            className="min-w-[227px]"
           >
             <span className="absolute inset-0 bg-btn-hover origin-center rounded-md transform scale-x-0 group-hover:scale-x-100 transition-transform duration-800 z-0"></span>
-            <span className="relative z-10"> Learn more</span>
+            <span className="relative z-10"> {t('learnMoreBtn')}</span>
           </Button>
         </div>
       </motion.div>
