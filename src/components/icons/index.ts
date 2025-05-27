@@ -1,3 +1,4 @@
+export { default as ChevronDown } from './ChevronDown';
 export { default as IcBaselineTelegram } from './IcBaselineTelegram';
 export { default as IcOutlineFacebook } from './IcOutlineFacebook';
 export { default as LearnIcon } from './LearnIcon';
