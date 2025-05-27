@@ -26,3 +26,10 @@ export interface NavItemRendererProps {
   onToggle: () => void;
   children?: React.ReactNode;
 }
+
+export interface NavDropdownProps {
+  trigger: React.ReactNode;
+  children: React.ReactNode;
+  isOpen: boolean;
+  className?: string;
+}

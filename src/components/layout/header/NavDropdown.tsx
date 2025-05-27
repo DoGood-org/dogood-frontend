@@ -3,13 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown } from '@/components/icons';
-
-interface NavDropdownProps {
-  trigger: React.ReactNode;
-  children: React.ReactNode;
-  isOpen: boolean;
-  className?: string;
-}
+import { NavDropdownProps } from '@/types';
 
 export const NavDropdown = ({
   trigger,
@@ -52,10 +46,10 @@ export const NavDropdown = ({
         {open && (
           <motion.div
             ref={contentRef}
-            initial={{ opacity: 0, y: -100, top: 0 }}
-            animate={{ opacity: 1, y: 0, top: '100%' }}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -100 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 1 }}
             className={`absolute top-full left-0 z-20 rounded-b-[10px] bg-layout-background p-4 shadow-xl gap-4 ${className}`}
           >
             {children}
