@@ -24,7 +24,7 @@ export const SocialLinks = () => {
             rel="noopener noreferrer"
             className="inline-block"
           >
-            <Icon className="w-[30px] h-[30px]" />
+            <Icon className="w-[30px] h-[30px] text-[white] hover:text-[#999] transition duration-300" />
           </a>
         </li>
       ))}

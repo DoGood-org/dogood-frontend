@@ -1,26 +1,25 @@
 'use client';
 
-import type React from 'react';
-
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Button } from '../ui/Button';
 import { MailIcon, MessageIcon, NameIcon, TelIcon } from '@/components/icons';
-export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    interest: '',
-  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+type FormData = {
+  name: string;
+  email: string;
+  phone: string;
+  interest: string;
+};
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
+const ContactForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  const onSubmit = (data: FormData) => {
+    console.log('Form submitted:', data);
   };
 
   return (
@@ -29,61 +28,57 @@ export default function ContactForm() {
         <h2 className="text-[#ffffff] text-4xl font-bold pb-[25px] lg:pb-10">
           Do you have any questions?
         </h2>
-
-        <form onSubmit={handleSubmit} className="space-y-[49px]">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-[49px]">
           <div className="relative">
             <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
               <NameIcon className="h-5 w-5 text-[#696969]" />
             </div>
             <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
+              {...register('name', { required: true })}
               placeholder="What's your name?"
               className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b]"
             />
+            {errors.name && (
+              <span className="text-red-500 text-sm pl-2">
+                Name is required
+              </span>
+            )}
           </div>
-
           <div className="relative">
             <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
               <MailIcon className="h-5 w-5 text-[#696969]" />
             </div>
             <input
               type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="E-mail"
-              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-full focus:outline-none focus:ring-2 focus:ring-[#17814b]"
+              {...register('email', { required: true })}
+              placeholder="E-mail?"
+              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b]"
             />
+            {errors.email && (
+              <span className="text-red-500 text-sm pl-2">
+                Email is required
+              </span>
+            )}
           </div>
-
           <div className="relative">
             <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
               <TelIcon className="h-5 w-5 text-[#696969]" />
             </div>
             <input
               type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
+              {...register('phone')}
               placeholder="Phone number"
-              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-full focus:outline-none focus:ring-2 focus:ring-[#17814b]"
+              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b]"
             />
           </div>
-
           <div className="relative">
-            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+            <div className="absolute top-4 left-4 pointer-events-none">
               <MessageIcon className="h-5 w-5 text-[#696969]" />
             </div>
             <input
-              type="text"
-              name="interest"
-              value={formData.interest}
-              onChange={handleChange}
+              {...register('interest')}
               placeholder="What are you interested in?"
-              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-full focus:outline-none focus:ring-2 focus:ring-[#17814b]"
+              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b]"
             />
           </div>
 
@@ -104,4 +99,6 @@ export default function ContactForm() {
       </div>
     </div>
   );
-}
+};
+
+export default ContactForm;

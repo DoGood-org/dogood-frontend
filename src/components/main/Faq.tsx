@@ -6,11 +6,12 @@ import {
   AccordionTrigger,
 } from '@/components/ui/Accordion';
 import { useTranslations } from 'next-intl';
-import ContactForm from '../faq/СontactForm';
+
 import Image from 'next/image';
 import FaqImg from '@/assets/images/faq/image-6.png';
+import ContactForm from '../faq/ContactForm';
 
-export default function Faq() {
+const Faq = () => {
   const t = useTranslations('faq');
   const faqItems = t.raw('faq') as { question: string; answer: string[] }[];
   return (
@@ -54,4 +55,5 @@ export default function Faq() {
       </div>
     </section>
   );
-}
+};
+export default Faq;
