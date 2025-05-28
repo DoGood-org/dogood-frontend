@@ -6,18 +6,13 @@
     "dev": "concurrently \"node watch-barrels.mjs\" \"next dev\" \"npm run svgr:watch\" --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
+    "lint": "eslint src",
     "prepare": "husky install",
     "svgr": "svgr --out-dir src/components/icons src/assets/svg --typescript --icon",
     "svgr:watch": "chokidar \"src/assets/svg/*.svg\" -c \"npm run svgr\"",
     "dev:all": "concurrently \"npm run dev\" \"npm run svgr:watch\""
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
-  },
+  
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-slot": "^1.2.2",
@@ -52,7 +47,6 @@
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.0.0",
     "prettier": "^3.5.3",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.0",

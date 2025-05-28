@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SupportPage = () => {
+const SupportPage: React.FC = () => {
   return <div>SupportPage</div>;
 };
 

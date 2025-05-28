@@ -5,10 +5,10 @@ import { Settings } from 'lucide-react';
 import React, { useState } from 'react';
 import { Filters } from './Filters';
 
-export const SearchInput = () => {
+export const SearchInput: React.FC = () => {
   const [isSettingOpen, setIsSettingOpen] = useState<boolean>(false);
 
-  const toggleFilters = () => {
+  const toggleFilters = (): void => {
     setIsSettingOpen(!isSettingOpen);
   };
   return (

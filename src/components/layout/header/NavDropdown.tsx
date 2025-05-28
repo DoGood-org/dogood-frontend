@@ -9,14 +9,14 @@ export const NavDropdown = ({
   trigger,
   children,
   className,
-}: NavDropdownProps) => {
+}: NavDropdownProps): React.JSX.Element => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLLIElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
 
   // Закриття по кліку поза дропдауном
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+  useEffect((): (() => void) | void => {
+    function handleClickOutside(event: MouseEvent): void {
       if (
         containerRef.current &&
         !containerRef.current.contains(event.target as Node)

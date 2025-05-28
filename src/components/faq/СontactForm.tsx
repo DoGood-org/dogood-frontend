@@ -5,7 +5,7 @@ import type React from 'react';
 import { useState } from 'react';
 import { Button } from '../ui/Button';
 import { MailIcon, MessageIcon, NameIcon, TelIcon } from '@/components/icons';
-export default function ContactForm() {
+export default function ContactForm(): React.ReactElement {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,12 +13,12 @@ export default function ContactForm() {
     interest: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     console.log('Form submitted:', formData);
   };

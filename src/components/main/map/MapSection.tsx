@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 // Use dynamic import for the Map component with ssr: false
 const Map = dynamic(() => import('@/components/main/map/Map'), { ssr: false });
 
-export const MapSection = () => {
+export const MapSection: React.FC = () => {
   const locations = [
     {
       id: '550e8400-e29b-41d4-a716-446655440000',
