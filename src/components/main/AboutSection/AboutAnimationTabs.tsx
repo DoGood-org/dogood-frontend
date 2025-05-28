@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '../../ui/Button';
 
@@ -12,7 +12,7 @@ export const AboutAnimationTabs = ({
   views: { view: string }[];
   activeView: string;
   onChange: (view: string) => void;
-}) => {
+}): React.JSX.Element => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [rect, setRect] = useState<{ left: number; width: number } | null>(
     null

@@ -13,7 +13,7 @@ const socialLinks = [
   { icon: RiInstagramLine, url: 'https://instagram.com' },
 ];
 
-export const SocialLinks = () => {
+export const SocialLinks: React.FC = () => {
   return (
     <ul className="flex gap-4 ">
       {socialLinks.map(({ icon: Icon, url }, index) => (

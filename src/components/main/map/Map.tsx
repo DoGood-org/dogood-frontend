@@ -111,7 +111,11 @@ export const Map: React.FC<MapProps> = ({
   const { MapContainer, TileLayer, Marker, useMap, ZoomControl, useMapEvents } =
     leafletComponents;
 
-  const SelectedLocation = ({ center }: { center: LatLngLiteral }) => {
+  const SelectedLocation = ({
+    center,
+  }: {
+    center: LatLngLiteral;
+  }): React.ReactElement | null => {
     const map = useMap();
     useEffect(() => {
       map.panTo(userLocation || center, { animate: true });
@@ -120,7 +124,7 @@ export const Map: React.FC<MapProps> = ({
   };
 
   //create different icon depends of the title of tasks
-  const createMarks = (title: string) => {
+  const createMarks = (title: string): L.Icon => {
     switch (title) {
       case 'Medicine':
         return mapMedicineMarkIcon;
@@ -140,7 +144,7 @@ export const Map: React.FC<MapProps> = ({
   };
 
   //render all markers of locations from db
-  const renderMarks = () => {
+  const renderMarks = (): React.ReactNode => {
     return locations.map((location) => (
       <div key={location.id}>
         <Marker
@@ -161,7 +165,7 @@ export const Map: React.FC<MapProps> = ({
   };
 
   //render marker clicking on map
-  const renderCustomMarkers = () => {
+  const renderCustomMarkers = (): React.ReactNode => {
     return customMarkers.map((marker, index) => (
       <Marker
         key={`custom-marker-${index}`}
@@ -175,7 +179,7 @@ export const Map: React.FC<MapProps> = ({
   };
 
   //add marker to user's position
-  const renderUserLocation = () => {
+  const renderUserLocation = (): React.ReactNode => {
     if (!userLocation) return null;
     return (
       <Marker
@@ -203,7 +207,7 @@ export const Map: React.FC<MapProps> = ({
   }: {
     onClick: (latlng: LatLngLiteral) => void;
     allowClickToAddMarker?: boolean;
-  }) => {
+  }): React.ReactNode => {
     useMapEvents({
       click: (e: { latlng: LatLngLiteral }) => {
         if (allowClickToAddMarker) {
@@ -214,7 +218,7 @@ export const Map: React.FC<MapProps> = ({
     return null;
   };
 
-  const handleMapClick = (latlng: LatLngLiteral) => {
+  const handleMapClick = (latlng: LatLngLiteral): void => {
     setClickedCoords(latlng);
     setSelectedLocation(undefined);
     console.log(clickedCoords);

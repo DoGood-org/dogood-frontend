@@ -5,13 +5,13 @@ import { useTranslations } from 'next-intl';
 import { NavItem } from '@/types';
 import { NavItemRenderer } from './NavItemRenderer';
 
-export const Navigation = () => {
+export const Navigation: React.FC = () => {
   const t = useTranslations('header');
   const navList = t.raw('nav') as NavItem[];
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const handleToggle = (index: number) => {
+  const handleToggle = (index: number): void => {
     setActiveIndex((prev) => (prev === index ? null : index));
   };
 

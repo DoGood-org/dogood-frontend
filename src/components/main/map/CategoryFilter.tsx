@@ -7,7 +7,7 @@ import FoodSvg from '@/components/icons/Food';
 import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
 
-export const CategoryFilter = () => {
+export const CategoryFilter: React.FC = () => {
   const t = useTranslations('map');
 
   const categories = [
