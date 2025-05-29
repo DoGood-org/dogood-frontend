@@ -22,6 +22,7 @@
   --color-text-gray: var(--text-gray);
   --color-layout-background: var(--layout-background);
   --color-card: var(--card);
+  --color-toggle: var(--toggle);
 
   /* buttons */
   --color-border: var(--border);
@@ -79,6 +80,7 @@
   --text-gray: #999999;
 
   --card: #303030;
+  --toggle: #303030;
 
   --border: #17814b;
   --btn: #17814b;
