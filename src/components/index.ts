@@ -6,6 +6,7 @@ export * from './faq/ContactForm';
 export * from './layout/footer/Footer';
 export * from './layout/footer/SocialLinks';
 export * from './layout/header/Header';
+export * from './layout/header/NavButtons';
 export * from './layout/header/NavDropdown';
 export * from './layout/header/Navigation';
 export * from './layout/header/NavItemRenderer';

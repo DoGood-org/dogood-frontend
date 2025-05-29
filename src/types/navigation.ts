@@ -20,6 +20,12 @@ export type NavItem =
       title: string;
     };
 
+export type NavButtonProps = {
+  name: string;
+  src: string;
+  variant: 'primary' | 'outline';
+};
+
 export interface NavItemRendererProps {
   navItem: NavItem;
   isOpen: boolean;

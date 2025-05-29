@@ -32,11 +32,11 @@ export const NavDropdown = ({
     <li ref={containerRef}>
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="focus:outline-none flex items-baseline gap-[10px] h-[104px] items-center"
+        className="focus:outline-none flex items-baseline gap-[10px] h-[104px] items-center cursor-pointer"
       >
         {trigger}
         <ChevronDown
-          className={`w-[14px] h-[8px] fill-border transition-transform duration-300 
+          className={`w-[14px] h-[8px] fill-border transition-transform duration-700 
             ${open ? 'rotate-180' : ''}
             
             `}
@@ -46,7 +46,7 @@ export const NavDropdown = ({
         {open && (
           <motion.div
             ref={contentRef}
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -100 }}
             transition={{ duration: 1 }}
