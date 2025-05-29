@@ -112,6 +112,13 @@
   --p4-m: 14px;
 }
 
+.roboto {
+  font-family: var(--font-roboto);
+}
+.montserrat {
+  font-family: var(--font-montserrat);
+}
+
 .dark {
   --background: #171b19;
   --foreground: #ffffff;
