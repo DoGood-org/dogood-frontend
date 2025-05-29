@@ -152,7 +152,7 @@ button {
   background-image: url(../../assets/images/hero/bg-hero.png);
 }
 
-.dropdown-link{
+.dropdown-link {
   border: 1px solid transparent;
   transition: border 1s ease-in-out;
 
@@ -193,7 +193,4 @@ button {
   animation: dropdown-open 0.2s ease-out;
   /* transform: scaleY(100);
   max-height: 500px; */
-  
-  
 }
-

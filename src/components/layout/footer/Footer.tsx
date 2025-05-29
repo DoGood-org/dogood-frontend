@@ -26,7 +26,7 @@ export const Footer: React.FC = () => {
           <SocialLinks />
           <a
             href="mailto:startup.dogood@gmail.com"
-            className="font-normal text-[18px] text-white"
+            className="font-normal text-[18px] text-white hover:text-[#999] duration-300"
           >
             startup.dogood@gmail.com
           </a>
