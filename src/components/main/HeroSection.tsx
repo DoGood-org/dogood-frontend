@@ -8,7 +8,7 @@ import { Button } from '@/components';
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 
-export const HeroSection = () => {
+export const HeroSection: React.FC = () => {
   const t = useTranslations('common');
   const router = useRouter();
   const localActive = useLocale();

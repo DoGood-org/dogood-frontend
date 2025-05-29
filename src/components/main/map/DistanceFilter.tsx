@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-export const DistanceFilter = () => {
+export const DistanceFilter: React.FC = () => {
   const t = useTranslations('map');
 
   const distances = [

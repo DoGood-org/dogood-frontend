@@ -3,9 +3,9 @@ import { NavItemRendererProps } from '@/types';
 import { NavDropdown } from './NavDropdown';
 
 // Тимчасові заглушки
-const Languages = () => <div>Languages Component</div>;
-const Features = () => <div>Features Component</div>;
-const Theme = () => <div>Theme Component</div>;
+const Languages: React.FC = () => <div>Languages Component</div>;
+const Features: React.FC = () => <div>Features Component</div>;
+const Theme: React.FC = () => <div>Theme Component</div>;
 
 export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   navItem,

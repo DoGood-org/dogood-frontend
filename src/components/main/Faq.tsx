@@ -10,8 +10,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import FaqImg from '@/assets/images/faq/image-6.png';
 import ContactForm from '../faq/ContactForm';
-
-const Faq = () => {
+const Faq = (): React.JSX.Element => {
   const t = useTranslations('faq');
   const faqItems = t.raw('faq') as { question: string; answer: string[] }[];
   return (

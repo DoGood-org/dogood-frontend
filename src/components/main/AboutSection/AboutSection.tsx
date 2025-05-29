@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import {
@@ -20,7 +20,7 @@ declare global {
   }
 }
 
-export const AboutSection = () => {
+export const AboutSection: React.FC = () => {
   const t = useTranslations('about');
   const router = useRouter();
   const locale = useLocale();

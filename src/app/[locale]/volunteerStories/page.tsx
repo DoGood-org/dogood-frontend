@@ -1,6 +1,6 @@
 import React from 'react';
 
-const VolunteerStoriesPage = () => {
+const VolunteerStoriesPage: React.FC = () => {
   return <div>VolunteerStoriesPage</div>;
 };
 

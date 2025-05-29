@@ -1,6 +1,8 @@
 import * as React from 'react';
 import type { SVGProps } from 'react';
-const SvgRiInstagramLine = (props: SVGProps<SVGSVGElement>) => (
+const SvgRiInstagramLine = (
+  props: SVGProps<SVGSVGElement>
+): React.JSX.Element => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"

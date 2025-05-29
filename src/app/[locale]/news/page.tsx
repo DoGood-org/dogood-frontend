@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NewsPage = () => {
+const NewsPage: React.FC = () => {
   return <div>NewsPage</div>;
 };
 

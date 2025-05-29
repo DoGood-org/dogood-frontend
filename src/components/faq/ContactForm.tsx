@@ -11,14 +11,14 @@ type FormData = {
   interest: string;
 };
 
-const ContactForm = () => {
+const ContactForm = (): React.ReactElement => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: FormData): void => {
     console.log('Form submitted:', data);
   };
 
