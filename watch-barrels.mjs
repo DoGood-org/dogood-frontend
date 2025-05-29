@@ -12,7 +12,7 @@ function runBarrelsby(configPath) {
       shell: true,
     });
 
-    process.on('close', (code) => {
+    process.on('close', code => {
       if (code === 0) {
         console.log(`✅ Barrels generated using ${configPath}`);
         resolve();

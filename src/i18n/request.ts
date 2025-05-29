@@ -21,7 +21,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   const messages = Object.fromEntries(
     await Promise.all(
-      namespaces.map(async (ns) => {
+      namespaces.map(async ns => {
         const msgs = await import(`../../messages/${locale}/${ns}.json`);
         return [ns, msgs.default];
       })

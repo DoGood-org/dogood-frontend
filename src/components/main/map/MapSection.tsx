@@ -38,7 +38,7 @@ export const MapSection: React.FC = () => {
       <Map
         center={{ lng: -0.1278, lat: 51.5074 }}
         locations={locations}
-        onLocationSelect={(coords) =>
+        onLocationSelect={coords =>
           console.log('Selected coordinates:', coords)
         }
         allowClickToAddMarker={true}
