@@ -2,9 +2,20 @@
 @import 'tw-animate-css';
 @import 'leaflet/dist/leaflet.css';
 @import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --breakpoint-mobile: var(--breakpoint-mobile);
+  --breakpoint-mob-plus: var(--breakpoint-mob-plus);
+  --breakpoint-tablet: var(--breakpoint-tablet);
+  --breakpoint-desktop: var(--breakpoint-desktop);
+
+  --container-mobile: var(--breakpoint-mobile);
+  --container-mob-plus: var(--breakpoint-mob-plus);
+  --container-tablet: var(--breakpoint-tablet);
+  --container-desktop: var(--breakpoint-desktop);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-text-help: var(--text-help);
@@ -49,6 +60,15 @@
 }
 
 :root {
+  --breakpoint-mobile: 393px;
+  --breakpoint-mob-plus: 768px;
+  --breakpoint-tablet: 1194px;
+  --breakpoint-desktop: 1920px;
+
+  --padding-mobile: 20px;
+  --padding-tablet: 60px;
+  --padding-desktop: 100px;
+
   --font-montserrat: 'Montserrat', sans-serif;
   --font-roboto: 'Roboto', 'SF Pro Text', sans-serif;
 
@@ -127,6 +147,7 @@
 .btn-expand-hover:hover::before {
   width: 200%;
 }
+
 /*---------------------------------------------------------------*/
 @layer base {
   * {
@@ -137,60 +158,118 @@
     @apply bg-background text-foreground;
     font-family: var(--font-montserrat);
     line-height: 1.2;
+    margin: 0 auto;
+  }
+
+  @media screen and (min-width: 393px) {
+    body {
+      max-width: var(--breakpoint-mobile);
+    }
+  }
+  @media screen and (min-width: 768px) {
+    body {
+      max-width: var(--breakpoint-mob-plus);
+    }
+  }
+
+  @media screen and (min-width: 1194px) {
+    body {
+      max-width: var(--breakpoint-tablet);
+    }
+  }
+
+  @media screen and (min-width: 1920px) {
+    body {
+      max-width: var(--breakpoint-desktop);
+    }
+  }
+
+  p {
+    font-family: var(--font-roboto);
+  }
+
+  button {
+    font-family: var(--font-montserrat);
   }
 }
 
-p {
-  font-family: var(--font-roboto);
-}
-
-button {
-  font-family: var(--font-montserrat);
-}
-
-.bg-hero {
-  background-image: url(../../assets/images/hero/bg-hero.png);
-}
-
-.dropdown-link {
-  border: 1px solid transparent;
-  transition: border 1s ease-in-out;
-
-  &:hover {
-    border: 1px solid var(--border);
+@layer components {
+  .my-container {
+    @apply w-full mx-auto px-5;
   }
-}
 
-@keyframes dropdown-fade {
-  0% {
-    opacity: 0;
-    transform: scaleY(0.8);
+  @media screen and (min-width: 393px) {
+    .my-container {
+      @apply px-5;
+      max-width: var(--breakpoint-mobile);
+    }
   }
-  100% {
-    opacity: 1;
-    transform: scaleY(1);
-  }
-}
 
-.animate-dropdown-fade {
-  animation: dropdown-fade 200ms ease-out forwards;
-}
-
-@keyframes dropdown-open {
-  0% {
-    opacity: 0;
-    transform: translateY(-100px);
-    max-height: 0;
+  @media screen and (min-width: 768px) {
+    .my-container {
+      @apply px-15;
+      max-width: 768px;
+    }
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-    max-height: 500px;
-  }
-}
 
-.animate-dropdown-open {
-  animation: dropdown-open 0.2s ease-out;
-  /* transform: scaleY(100);
+  @media screen and (min-width: 1194px) {
+    .my-container {
+      @apply px-15;
+      max-width: var(--breakpoint-tablet);
+    }
+  }
+
+  @media screen and (min-width: 1920px) {
+    .my-container {
+      @apply px-25;
+      max-width: var(--breakpoint-desktop);
+    }
+  }
+
+  .bg-hero {
+    background-image: url(../../assets/images/hero/bg-hero.png);
+  }
+
+  .dropdown-link {
+    border: 1px solid transparent;
+    transition: border 1s ease-in-out;
+
+    &:hover {
+      border: 1px solid var(--border);
+    }
+  }
+
+  @keyframes dropdown-fade {
+    0% {
+      opacity: 0;
+      transform: scaleY(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+
+  .animate-dropdown-fade {
+    animation: dropdown-fade 200ms ease-out forwards;
+  }
+
+  @keyframes dropdown-open {
+    0% {
+      opacity: 0;
+      transform: translateY(-100px);
+      max-height: 0;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 500px;
+    }
+  }
+
+  .animate-dropdown-open {
+    animation: dropdown-open 0.2s ease-out;
+    /* transform: scaleY(100);
   max-height: 500px; */
+  }
 }

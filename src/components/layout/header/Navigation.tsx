@@ -16,7 +16,7 @@ export const Navigation: React.FC = () => {
   };
 
   return (
-    <nav className="text-white relative z-100">
+    <nav className="text-white relative z-[9999]">
       <ul className="flex gap-10 pl-10">
         {navList.map((navItem, index) => (
           <NavItemRenderer

@@ -12,7 +12,6 @@
     "svgr:watch": "chokidar \"src/assets/svg/*.svg\" -c \"npm run svgr\"",
     "dev:all": "concurrently \"npm run dev\" \"npm run svgr:watch\""
   },
-  
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-slot": "^1.2.2",
