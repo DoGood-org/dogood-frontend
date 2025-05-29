@@ -7,10 +7,14 @@ console.log('👀 Watching for component changes in multiple directories...');
 function runBarrelsby(configPath) {
   return new Promise((resolve, reject) => {
     console.log(`🔄 Running barrelsby with config ${configPath}...`);
-    const process = spawn('npx', ['barrelsby', '--config', configPath], {
-      stdio: 'inherit',
-      shell: true,
-    });
+    const process = spawn(
+      'npx',
+      ['barrelsby', '--config', configPath, '--singleQuotes'],
+      {
+        stdio: 'inherit',
+        shell: true,
+      }
+    );
 
     process.on('close', (code) => {
       if (code === 0) {
