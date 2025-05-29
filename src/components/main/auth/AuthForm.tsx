@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, FieldErrors } from 'react-hook-form';
 
 import { AuthInput } from './AuthInput';
 import { Button } from '@/components/ui/Button';
@@ -10,6 +10,7 @@ import {
   registerCompanySchema,
   registerPersonSchema,
 } from '@/lib/validation/authSchemas';
+import { AuthErrorBox } from './AuthErrorBox';
 type Props = {
   type: 'registerCompany' | 'registerPerson' | 'login';
 };
@@ -62,13 +63,12 @@ export const AuthForm: React.FC<Props> = (props) => {
         onSubmit={handleSubmit((data) => {
           console.log(data);
         })}
-        className="w-full flex flex-col gap-[34px] mt-[40px]"
+        className="w-full flex flex-col mt-[40px]"
       >
         {(type === 'registerCompany' || type === 'registerPerson') && (
           <Controller
             name="name"
             control={control}
-            rules={{ required: 'Name is required' }}
             render={({ field }) => (
               <>
                 <AuthInput
@@ -79,11 +79,15 @@ export const AuthForm: React.FC<Props> = (props) => {
                   placeholder="Name"
                   onChange={field.onChange}
                 />
-                {'name' in errors && errors.name && (
-                  <p className="text-red-500 text-sm">
-                    {errors.name?.message as string}
-                  </p>
-                )}
+                <AuthErrorBox
+                  errorMessage={
+                    (
+                      errors as FieldErrors<
+                        FormRegisterCompany | FormRegisterPerson
+                      >
+                    ).name?.message as string
+                  }
+                />
               </>
             )}
           />
@@ -92,23 +96,29 @@ export const AuthForm: React.FC<Props> = (props) => {
           <Controller
             name="companyName"
             control={control}
-            rules={{ required: 'Company name is required' }}
             render={({ field }) => (
-              <AuthInput
-                label="Company Name"
-                htmlFor="companyName"
-                type="text"
-                id="companyName"
-                placeholder="Company Name"
-                {...field}
-              />
+              <>
+                <AuthInput
+                  label="Company Name"
+                  htmlFor="companyName"
+                  type="text"
+                  id="companyName"
+                  placeholder="Company Name"
+                  {...field}
+                />
+                <AuthErrorBox
+                  errorMessage={
+                    (errors as FieldErrors<FormRegisterCompany>).companyName
+                      ?.message as string
+                  }
+                />
+              </>
             )}
           />
         )}
         <Controller
           name="email"
           control={control}
-          rules={{ required: 'Email is required' }}
           render={({ field }) => (
             <>
               <AuthInput
@@ -119,18 +129,13 @@ export const AuthForm: React.FC<Props> = (props) => {
                 placeholder="Email"
                 onChange={field.onChange}
               />
-              {'email' in errors && errors.email && (
-                <p className="text-red-500 text-sm">
-                  {errors.email.message as string}
-                </p>
-              )}
+              <AuthErrorBox errorMessage={errors.email?.message as string} />
             </>
           )}
         />
         <Controller
           name="password"
           control={control}
-          rules={{ required: 'Password is required' }}
           render={({ field }) => (
             <>
               <AuthInput
@@ -141,43 +146,43 @@ export const AuthForm: React.FC<Props> = (props) => {
                 placeholder="Password"
                 onChange={field.onChange}
               />
-              {'password' in errors && errors.password && (
-                <p className="text-red-500 text-sm">
-                  {errors.password.message as string}
-                </p>
-              )}
+              <AuthErrorBox errorMessage={errors.password?.message as string} />
             </>
           )}
         />
-
-        <Controller
-          name="repeatPassword"
-          control={control}
-          rules={{ required: 'Repeat password is required' }}
-          render={({ field }) => (
-            <>
-              <AuthInput
-                label="Repeat Password"
-                htmlFor="repeatPassword"
-                type="password"
-                id="repeatPassword"
-                placeholder="Repeat Password"
-                onChange={field.onChange}
-              />
-              {'repeatPassword' in errors && errors.repeatPassword && (
-                <p className="text-red-500 text-sm">
-                  {errors.repeatPassword.message as string}
-                </p>
-              )}
-            </>
-          )}
-        />
+        {(type === 'registerCompany' || type === 'registerPerson') && (
+          <Controller
+            name="repeatPassword"
+            control={control}
+            render={({ field }) => (
+              <>
+                <AuthInput
+                  label="Repeat Password"
+                  htmlFor="repeatPassword"
+                  type="password"
+                  id="repeatPassword"
+                  placeholder="Repeat Password"
+                  onChange={field.onChange}
+                />
+                <AuthErrorBox
+                  errorMessage={
+                    (
+                      errors as FieldErrors<
+                        FormRegisterCompany | FormRegisterPerson
+                      >
+                    ).repeatPassword?.message as string
+                  }
+                />
+              </>
+            )}
+          />
+        )}
 
         <Button
           type="submit"
           variant={'default'}
           size={'lg'}
-          className="btn-auth btn-expand-hover text-white hover:bg-[var(--primary-hover)] transition-colors duration-300"
+          className="btn-auth mt-1 btn-expand-hover text-white hover:bg-[var(--primary-hover)] transition-colors duration-300"
         >
           Next Step
         </Button>

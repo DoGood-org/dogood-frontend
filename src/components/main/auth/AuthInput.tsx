@@ -1,4 +1,5 @@
 import { Input } from '@/components/ui/Input';
+import React from 'react';
 
 type Props = {
   label?: string;
@@ -12,7 +13,6 @@ type Props = {
   className?: string;
   id?: string;
 };
-import React from 'react';
 
 export const AuthInput: React.FC<Props> = (props) => {
   return (

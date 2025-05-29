@@ -1,4 +1,3 @@
-
 export * from './faq/ContactForm';
 export * from './layout/footer/Footer';
 export * from './layout/footer/SocialLinks';
@@ -11,6 +10,7 @@ export * from './main/Faq';
 export * from './main/HeroSection';
 export * from './main/about/AboutAnimationTabs';
 export * from './main/about/AboutSection';
+export * from './main/AboutSection/AboutSection';
 export * from './main/auth/AuthErrorBox';
 export * from './main/auth/AuthForm';
 export * from './main/auth/AuthInput';
