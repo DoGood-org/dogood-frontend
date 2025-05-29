@@ -280,3 +280,14 @@
   max-height: 500px; */
   }
 }
+
+/* Стиль для authForm*/
+
+.btn-auth {
+  @apply bg-btn text-white cursor-pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/*---------------------------------------------------------------*/

@@ -1,8 +1,15 @@
 'use client';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
+
 import { AuthInput } from './AuthInput';
 import { Button } from '@/components/ui/Button';
+import { yupResolver } from '@hookform/resolvers/yup';
+import {
+  loginSchema,
+  registerCompanySchema,
+  registerPersonSchema,
+} from '@/lib/validation/authSchemas';
 type Props = {
   type: 'registerCompany' | 'registerPerson' | 'login';
 };
@@ -25,17 +32,24 @@ type FormLogin = {
 
 export const AuthForm: React.FC<Props> = (props) => {
   const { type } = props;
+  const schema =
+    type === 'registerCompany'
+      ? registerCompanySchema
+      : type === 'registerPerson'
+        ? registerPersonSchema
+        : loginSchema;
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<FormRegisterCompany | FormRegisterPerson | FormLogin>({
+    resolver: yupResolver(schema),
     defaultValues: {
+      name: '',
       email: '',
       password: '',
-      name: '',
-      companyName: '',
       repeatPassword: '',
+      companyName: '',
     },
   });
 
@@ -50,21 +64,30 @@ export const AuthForm: React.FC<Props> = (props) => {
         })}
         className="w-full flex flex-col gap-[34px] mt-[40px]"
       >
-        <Controller
-          name="name"
-          control={control}
-          rules={{ required: 'Name is required' }}
-          render={({ field }) => (
-            <AuthInput
-              label="Name"
-              htmlFor="name"
-              type="text"
-              id="name"
-              placeholder="Name"
-              onChange={field.onChange}
-            />
-          )}
-        />
+        {(type === 'registerCompany' || type === 'registerPerson') && (
+          <Controller
+            name="name"
+            control={control}
+            rules={{ required: 'Name is required' }}
+            render={({ field }) => (
+              <>
+                <AuthInput
+                  label="Name"
+                  htmlFor="name"
+                  type="text"
+                  id="name"
+                  placeholder="Name"
+                  onChange={field.onChange}
+                />
+                {'name' in errors && errors.name && (
+                  <p className="text-red-500 text-sm">
+                    {errors.name?.message as string}
+                  </p>
+                )}
+              </>
+            )}
+          />
+        )}
         {type === 'registerCompany' && (
           <Controller
             name="companyName"
@@ -87,14 +110,21 @@ export const AuthForm: React.FC<Props> = (props) => {
           control={control}
           rules={{ required: 'Email is required' }}
           render={({ field }) => (
-            <AuthInput
-              label="Email"
-              htmlFor="email"
-              type="email"
-              id="email"
-              placeholder="Email"
-              onChange={field.onChange}
-            />
+            <>
+              <AuthInput
+                label="Email"
+                htmlFor="email"
+                type="email"
+                id="email"
+                placeholder="Email"
+                onChange={field.onChange}
+              />
+              {'email' in errors && errors.email && (
+                <p className="text-red-500 text-sm">
+                  {errors.email.message as string}
+                </p>
+              )}
+            </>
           )}
         />
         <Controller
@@ -102,14 +132,21 @@ export const AuthForm: React.FC<Props> = (props) => {
           control={control}
           rules={{ required: 'Password is required' }}
           render={({ field }) => (
-            <AuthInput
-              label="Password"
-              htmlFor="password"
-              type="password"
-              id="password"
-              placeholder="Password"
-              onChange={field.onChange}
-            />
+            <>
+              <AuthInput
+                label="Password"
+                htmlFor="password"
+                type="password"
+                id="password"
+                placeholder="Password"
+                onChange={field.onChange}
+              />
+              {'password' in errors && errors.password && (
+                <p className="text-red-500 text-sm">
+                  {errors.password.message as string}
+                </p>
+              )}
+            </>
           )}
         />
 
@@ -118,18 +155,30 @@ export const AuthForm: React.FC<Props> = (props) => {
           control={control}
           rules={{ required: 'Repeat password is required' }}
           render={({ field }) => (
-            <AuthInput
-              label="Repeat Password"
-              htmlFor="repeatPassword"
-              type="password"
-              id="repeatPassword"
-              placeholder="Repeat Password"
-              onChange={field.onChange}
-            />
+            <>
+              <AuthInput
+                label="Repeat Password"
+                htmlFor="repeatPassword"
+                type="password"
+                id="repeatPassword"
+                placeholder="Repeat Password"
+                onChange={field.onChange}
+              />
+              {'repeatPassword' in errors && errors.repeatPassword && (
+                <p className="text-red-500 text-sm">
+                  {errors.repeatPassword.message as string}
+                </p>
+              )}
+            </>
           )}
         />
 
-        <Button type="submit" variant={default}>
+        <Button
+          type="submit"
+          variant={'default'}
+          size={'lg'}
+          className="btn-auth btn-expand-hover text-white hover:bg-[var(--primary-hover)] transition-colors duration-300"
+        >
           Next Step
         </Button>
       </form>
