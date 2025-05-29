@@ -31,7 +31,7 @@ export const NavDropdown = ({
   return (
     <li ref={containerRef}>
       <button
-        onClick={() => setOpen(prev => !prev)}
+        onClick={() => setOpen((prev) => !prev)}
         className="focus:outline-none flex items-baseline gap-[10px] h-[104px] items-center"
       >
         {trigger}

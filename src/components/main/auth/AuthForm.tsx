@@ -4,26 +4,24 @@ import { useForm } from 'react-hook-form';
 type Props = {
   type: 'registerCompany' | 'registerPerson' | 'login';
 };
-type FormRegisterCompany = {
+interface FormBase {
   name: string;
-  companyName: string;
   email: string;
   password: string;
   repeatPassword: string;
-};
-type FormRegisterPerson = {
-  name: string;
+}
+
+type FormRegisterCompany = FormBase & {
   companyName: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
 };
+
+type FormRegisterPerson = FormBase;
 type FormLogin = {
   email: string;
   password: string;
 };
 
-export const AuthForm: React.FC<Props> = props => {
+export const AuthForm: React.FC<Props> = (props) => {
   const { type } = props;
   const {
     control,
@@ -41,7 +39,12 @@ export const AuthForm: React.FC<Props> = props => {
 
   return (
     <div>
-      <form onSubmit={e => e.preventDefault()} className="flex flex-col gap-4">
+      <form
+        onSubmit={handleSubmit((data) => {
+          console.log(data);
+        })}
+        className="flex flex-col gap-4"
+      >
         {type === 'registerCompany' && (
           <>
             <div>

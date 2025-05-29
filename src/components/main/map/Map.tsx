@@ -39,11 +39,11 @@ export const Map: React.FC<MapProps> = ({
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      import('react-leaflet').then(module => {
+      import('react-leaflet').then((module) => {
         setLeafletComponents(module);
       });
 
-      import('leaflet').then(L => {
+      import('leaflet').then((L) => {
         // Initialize all icons at once
         const medicineIcon = new L.Icon({
           iconUrl: MedicineMarker.src,
@@ -75,12 +75,12 @@ export const Map: React.FC<MapProps> = ({
       // Get user's current location
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          position => {
+          (position) => {
             const { latitude, longitude } = position.coords;
             setUserLocation({ lat: latitude, lng: longitude });
             setLocationError(null);
           },
-          error => {
+          (error) => {
             setLocationError(error.message);
             console.error('Error getting location:', error);
           }
@@ -145,7 +145,7 @@ export const Map: React.FC<MapProps> = ({
 
   //render all markers of locations from db
   const renderMarks = (): React.ReactNode => {
-    return locations.map(location => (
+    return locations.map((location) => (
       <div key={location.id}>
         <Marker
           icon={createMarks(location.title)}
@@ -223,17 +223,17 @@ export const Map: React.FC<MapProps> = ({
     setSelectedLocation(undefined);
     console.log(clickedCoords);
     const existingMarkerIndex = customMarkers.findIndex(
-      marker =>
+      (marker) =>
         Math.abs(marker.lat - latlng.lat) < 0.0001 &&
         Math.abs(marker.lng - latlng.lng) < 0.0001
     );
 
     if (existingMarkerIndex >= 0) {
-      setCustomMarkers(prev =>
+      setCustomMarkers((prev) =>
         prev.filter((_, index) => index !== existingMarkerIndex)
       );
     } else {
-      setCustomMarkers(prev => [...prev, latlng]);
+      setCustomMarkers((prev) => [...prev, latlng]);
     }
 
     if (onLocationSelect) {

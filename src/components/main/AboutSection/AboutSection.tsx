@@ -36,7 +36,7 @@ export const AboutSection: React.FC = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   // const [fixedY, setFixedY] = useState<number | null>(null);
 
-  useMotionValueEvent(scrollY, 'change', latest => {
+  useMotionValueEvent(scrollY, 'change', (latest) => {
     const previous = scrollY.getPrevious() ?? latest;
 
     if (latest > previous) {
