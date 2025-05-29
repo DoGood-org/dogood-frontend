@@ -27,7 +27,7 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
     case 'list':
       return (
         <NavDropdown isOpen={isOpen} trigger={navItem.title}>
-          <div className="grid grid-cols-[62.5%_37.5%] grid-rows-2 gap-3 min-w-[400px]">
+          <div className="z-10 grid grid-cols-[62.5%_37.5%] grid-rows-2 gap-3 min-w-[400px]">
             {navItem.content.map(({ src, name, description }, index) => (
               <Link
                 key={index}
