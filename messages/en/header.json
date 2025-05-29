@@ -68,6 +68,6 @@
   ],
   "buttons": [
     { "name": "Log in", "src": "/login", "variant": "primary" },
-    { "name": "Sign up", "src": "/register", "variant": "outline"}
+    { "name": "Sign up", "src": "/register", "variant": "outline" }
   ]
 }

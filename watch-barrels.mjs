@@ -34,7 +34,6 @@ async function main() {
   try {
     // 1. Одноразово генеруємо barrel-файли на старті
     await runBarrelsby('barrelsby.json');
-    // await runBarrelsby("barrelsby.ui.json");
 
     // 2. Запускаємо watcher для першої директорії
     const watcher1 = chokidar.watch('src/components/**/*.{ts,tsx}', {
@@ -44,15 +43,6 @@ async function main() {
     watcher1.on('add', () => runBarrelsby('barrelsby.json'));
     watcher1.on('change', () => runBarrelsby('barrelsby.json'));
     watcher1.on('unlink', () => runBarrelsby('barrelsby.json'));
-
-    // 3. Запускаємо watcher для другої директорії
-    // const watcher2 = chokidar.watch("src/components/ui/**/*.{ts,tsx}", {
-    //   ignored: /index\.ts$/,
-    //   ignoreInitial: true,
-    // });
-    // watcher2.on("add", () => runBarrelsby("barrelsby.ui.json"));
-    // watcher2.on("change", () => runBarrelsby("barrelsby.ui.json"));
-    // watcher2.on("unlink", () => runBarrelsby("barrelsby.ui.json"));
   } catch (error) {
     console.error('Error during barrelsby initial run:', error);
     process.exit(1);
