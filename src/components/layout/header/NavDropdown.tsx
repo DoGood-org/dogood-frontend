@@ -32,7 +32,7 @@ export const NavDropdown = ({
     <li ref={containerRef}>
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="focus:outline-none flex items-baseline gap-[10px] h-[104px] items-center cursor-pointer"
+        className="focus:outline-none flex items-baseline gap-[10px] h-[104px] items-center"
       >
         {trigger}
         <ChevronDown

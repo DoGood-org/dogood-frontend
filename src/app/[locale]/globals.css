@@ -112,6 +112,13 @@
   --p4-m: 14px;
 }
 
+.roboto {
+  font-family: var(--font-roboto);
+}
+.montserrat {
+  font-family: var(--font-montserrat);
+}
+
 .dark {
   --background: #171b19;
   --foreground: #ffffff;
@@ -273,3 +280,14 @@
   max-height: 500px; */
   }
 }
+
+/* Стиль для authForm*/
+
+.btn-auth {
+  @apply bg-btn text-white cursor-pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/*---------------------------------------------------------------*/
