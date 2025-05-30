@@ -29,7 +29,7 @@ export const AuthChoice: React.FC<AuthChoiceProps> = ({ onChoice }) => {
     }
   };
   return (
-    <div className="mt-[104px] flex flex-col items-center justify-center h-[calc(100vh-188px)] text-white max-w-[812px] w-full">
+    <div className=" flex flex-col items-center justify-center h-[calc(100vh-188px)] text-white max-w-[812px] w-full">
       <h2 className="font-bold text-[32px] mb-[100px] text-center">
         Choose how you want to join
       </h2>

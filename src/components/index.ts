@@ -21,6 +21,7 @@ export * from './main/auth/AuthChoice';
 export * from './main/auth/AuthChoiceButton';
 export * from './main/auth/AuthErrorBox';
 export * from './main/auth/AuthForm';
+export * from './main/auth/AuthHeader';
 export * from './main/auth/AuthInput';
 export * from './main/auth/RegisterLoginSocial';
 export * from './main/auth/RegisterPageContent';

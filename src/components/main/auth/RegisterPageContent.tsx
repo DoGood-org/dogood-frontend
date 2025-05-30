@@ -7,7 +7,7 @@ export const RegisterPageContent = (): React.ReactElement => {
   const [choice, setChoice] = useState<'human' | 'company' | null>(null);
 
   return (
-    <section className="bg-[#171b19] flex flex-col items-center justify-center h-[calc(100vh-188px)] text-white w-full">
+    <section className="bg-[#171b19] flex flex-col items-center justify-center  text-white w-full min-h-screen">
       {!choice && <AuthChoice onChoice={setChoice} />}
       {choice === 'human' && <AuthForm type="registerPerson" />}
       {choice === 'company' && <AuthForm type="registerCompany" />}
