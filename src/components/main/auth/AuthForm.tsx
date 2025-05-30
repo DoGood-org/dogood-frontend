@@ -54,7 +54,7 @@ export const AuthForm: React.FC<Props> = (props) => {
     },
   });
   const errorRef = React.useRef<HTMLInputElement>(null);
-
+  console.log('errors', errorRef.current?.value, errors);
   return (
     <div className="mt-[104px]  flex flex-col items-center justify-center w-[560px] rounded-[10px] bg-[var(--card)] py-[40px] px-[64px] text-white">
       <h2 className="text-[32px] font-bold mb-4">Start doing good</h2>
