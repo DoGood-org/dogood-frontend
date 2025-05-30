@@ -1,0 +1,9 @@
+# Уніфікуємо переноси рядків
+* text=auto eol=lf
+
+# Явно виключаємо бінарні файли
+*.png binary
+*.jpg binary
+*.svg binary
+*.woff2 binary
+*.woff binary
