@@ -14,7 +14,7 @@ const Faq = (): React.JSX.Element => {
   const t = useTranslations('faq');
   const faqItems = t.raw('faq') as { question: string; answer: string[] }[];
   return (
-    <section className="w-full bg-background relative z-25 py-[100px]">
+    <section className="my-container w-full bg-background relative z-25 py-[100px]">
       <div className="max-w-[1920px] mx-auto px-[20px] lg:px-[100px] items-center flex flex-col ">
         <h2 className="text-[32px] text-foreground flex justify-center pb-[40px]">
           FAQ
@@ -22,7 +22,7 @@ const Faq = (): React.JSX.Element => {
         <Accordion
           type="single"
           collapsible
-          className="w-full max-w-xl mx-auto space-y-2"
+          className="w-full max-w-xl mx-auto space-y-2 pb-[65px] md:pb-[100px]"
         >
           {faqItems.map(({ question, answer }, idx) => (
             <AccordionItem key={idx} value={`item-${idx}`}>
@@ -40,15 +40,17 @@ const Faq = (): React.JSX.Element => {
             </AccordionItem>
           ))}
         </Accordion>
-        <div className=" flex justify-center py-[100px] gap-[30px] md:flex-col-reverse lg:flex-row">
-          <ContactForm />
-          <div className="hidden lg:block">
-            <Image
-              src={FaqImg}
-              alt="Logo"
-              className="max-w-[993px] max-h-[663px]"
-              priority
-            />
+        <div className="bg-card rounded-[10px] md:p-[60px] lg:bg-transparent">
+          <div className=" flex justify-center lg:py-[100px] md:py-0 gap-[30px] md:flex-col-reverse lg:flex-row">
+            <ContactForm />
+            <div className="hidden md:block">
+              <Image
+                src={FaqImg}
+                alt="Logo"
+                className="md:w-[949px] h-auto lg:max-w-[993px] max-h-auto"
+                priority
+              />
+            </div>
           </div>
         </div>
       </div>

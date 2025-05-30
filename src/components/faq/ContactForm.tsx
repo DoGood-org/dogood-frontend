@@ -23,12 +23,12 @@ const ContactForm = (): React.ReactElement => {
   };
 
   return (
-    <div className="rounded-[10px] flex items-center justify-center bg-card p-[20px] lg:p-[60px]">
+    <div className="rounded-[10px] flex items-center justify-center bg-card md:bg-transparent lg:bg-card p-[20px] lg:p-[60px]">
       <div className="w-full max-w-xl">
-        <h2 className="text-[#ffffff] text-4xl font-bold pb-[25px] lg:pb-10">
+        <h2 className="text-[#ffffff] text-[24px] font-bold pb-[25px] lg:pb-10">
           Do you have any questions?
         </h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-[49px]">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-[20px]">
           <div className="relative">
             <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
               <NameIcon className="h-5 w-5 text-[#696969]" />
@@ -71,7 +71,7 @@ const ContactForm = (): React.ReactElement => {
               className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b]"
             />
           </div>
-          <div className="relative">
+          <div className="relative mb-[25px]">
             <div className="absolute top-4 left-4 pointer-events-none">
               <MessageIcon className="h-5 w-5 text-[#696969]" />
             </div>
@@ -82,7 +82,7 @@ const ContactForm = (): React.ReactElement => {
             />
           </div>
 
-          <div className="flex flex-col-reverse items-center md:flex-row md:items-start  md:justify-between gap-[44px] ">
+          <div className="flex flex-col-reverse items-center md:flex-row md:items-start  md:justify-between gap-[20px] ">
             <p className="text-[#999999] text-sm">
               By clicking on the button, you agree to the processing of personal
               data.
