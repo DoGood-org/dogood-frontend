@@ -1,33 +1,49 @@
 'use client';
-import React from 'react';
-import MedicineSvg from '@/components/icons/Medicine';
-import NatureSvg from '@/components/icons/Nature';
-import AnimalSvg from '@/components/icons/Animal';
-import FoodSvg from '@/components/icons/Food';
+import React, { FC } from 'react';
 import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
+import { getCategoryList } from '@/lib/utils';
+import { CategoryFilterProps } from '@/types/mapType';
 
-export const CategoryFilter: React.FC = () => {
+export const CategoryFilter: FC<CategoryFilterProps> = ({
+  selectedCategories,
+  onCategoryToggle,
+}) => {
   const t = useTranslations('map');
 
-  const categories = [
-    { icon: MedicineSvg, title: t('medicineBtn') },
-    { icon: NatureSvg, title: t('natureBtn') },
-    { icon: AnimalSvg, title: t('animalBtn') },
-    { icon: FoodSvg, title: t('foodBtn') },
-  ];
-
+  const CATEGOTY_LIST = getCategoryList(t);
   return (
-    <ul className="flex gap-[10px] flex-wrap w-full mb-5">
-      {categories.map((category, index) => (
-        <li key={index}>
-          <Button variant="filters" className="flex gap-[10px]">
-            <category.icon className="fill-foreground" />
-            {category.title}
+    <div>
+      <h4 className="text-lg font-semibold mb-[13px]">{t('category')}</h4>
+      <ul className="flex gap-[10px] flex-wrap w-full mb-5">
+        {CATEGOTY_LIST.map((category, index) => (
+          <li key={index}>
+            <Button
+              variant="filters"
+              className={`flex gap-[10px] ${
+                selectedCategories.includes(category.title) ? 'clickedBtn' : ''
+              }`}
+              onClick={() => onCategoryToggle(category.title)}
+              id={category.title}
+            >
+              <category.icon className="fill-foreground" />
+              {category.title}
+            </Button>
+          </li>
+        ))}
+        <li>
+          <Button
+            variant="filters"
+            className={`flex gap-[10px] ${
+              selectedCategories.includes('neutroBtn') ? 'clickedBtn' : ''
+            }`}
+            onClick={() => onCategoryToggle('Doesn\"t matter')}
+            id="Does'n matter"
+          >
+            {t('neutroBtn')}
           </Button>
         </li>
-      ))}
-      <Button variant="filters">{t('neutroBtn')}</Button>
-    </ul>
+      </ul>
+    </div>
   );
 };

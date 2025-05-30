@@ -1,28 +1,37 @@
 'use client';
 import { Button } from '@/components/ui/Button';
+import { getDistancesList } from '@/lib/utils';
+import { DistanceFilterProps } from '@/types/mapType';
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import React, { FC } from 'react';
 
-export const DistanceFilter: React.FC = () => {
+export const DistanceFilter: FC<DistanceFilterProps> = ({
+  selectedDistances,
+  onDistanceToggle,
+}) => {
   const t = useTranslations('map');
 
-  const distances = [
-    { title: t('1km') },
-    { title: t('3km') },
-    { title: t('5km') },
-    { title: t('10km') },
-    { title: t('neutroBtn') },
-  ];
+  const DISTANCE_LIST = getDistancesList(t);
 
   return (
-    <ul className="flex gap-[10px] flex-wrap w-full mb-[95px]">
-      {distances.map((distance, index) => (
-        <li key={index}>
-          <Button variant="filters" className="flex gap-[10px]">
-            {distance.title}
-          </Button>
-        </li>
-      ))}
-    </ul>
+    <>
+      <h4 className="text-lg font-semibold mb-[13px]">{t('distance')}</h4>
+      <ul className="flex gap-[10px] flex-wrap w-full mb-[95px]">
+        {DISTANCE_LIST.map((distance, index) => (
+          <li key={index}>
+            <Button
+              variant="filters"
+              className={`flex gap-[10px] ${
+                selectedDistances.includes(distance.title) ? 'clickedBtn' : ''
+              }`}
+              onClick={() => onDistanceToggle(distance.title)}
+              id={distance.title}
+            >
+              {distance.title}
+            </Button>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
