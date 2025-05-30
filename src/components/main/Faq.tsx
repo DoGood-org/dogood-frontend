@@ -14,7 +14,7 @@ const Faq = (): React.JSX.Element => {
   const t = useTranslations('faq');
   const faqItems = t.raw('faq') as { question: string; answer: string[] }[];
   return (
-    <section className="w-full bg-background relative z-25 py-[100px]">
+    <section className="my-container w-full bg-background relative z-25 py-[100px]">
       <div className="max-w-[1920px] mx-auto px-[20px] lg:px-[100px] items-center flex flex-col ">
         <h2 className="text-[32px] text-foreground flex justify-center pb-[40px]">
           FAQ
