@@ -2,12 +2,25 @@
 
 import GroupAuthIcon from '@/components/icons/GroupAuthIcon';
 import UserAuthIcon from '@/components/icons/UserAuthIcon';
-import { Button } from '@/components/ui/Button';
 import React from 'react';
+import AuthChoiceButton from './AuthChoiceButton';
 
-export const AuthChoice: React.FC = () => {
-  const handleHumanAuth = (): void => {};
-  const handleCompanyAuth = (): void => {};
+type AuthChoiceProps = {
+  onChoice: (choice: 'human' | 'company') => void;
+};
+
+const AuthChoiceConfig = {
+  human: { title: 'I’m a human', icon: <UserAuthIcon /> },
+  company: { title: 'I’m a company or organization', icon: <GroupAuthIcon /> },
+};
+
+export const AuthChoice: React.FC<AuthChoiceProps> = ({ onChoice }) => {
+  const handleHumanAuth = (): void => {
+    onChoice('human');
+  };
+  const handleCompanyAuth = (): void => {
+    onChoice('company');
+  };
   const handleAuthChoice = (choice: 'human' | 'company'): void => {
     if (choice === 'human') {
       handleHumanAuth();
@@ -16,26 +29,21 @@ export const AuthChoice: React.FC = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center h-[calc(100vh-188px)] bg-gray-100">
-      AuthChoice
-      <h2>Choose how you want to join</h2>
-      <div className="flex">
-        <Button
-          onClick={() => handleAuthChoice('human')}
-          variant="outline"
-          className="flex items-center bg-[var(--card)] text-white w-[250px] h-[270px]"
-        >
-          <UserAuthIcon height={60} width={60} />
-          <span> I’m a human</span>
-        </Button>
-        <Button
-          onClick={() => handleAuthChoice('company')}
-          variant="outline"
-          className="flex items-center bg-[var(--card)] text-white w-[250px] h-[270px]"
-        >
-          <GroupAuthIcon className="" height={60} width={102} />
-          {/* <span>I’m a company or organization</span> */}
-        </Button>
+    <div className="mt-[104px] flex flex-col items-center justify-center h-[calc(100vh-188px)] text-white max-w-[812px] w-full">
+      <h2 className="font-bold text-[32px] mb-[100px] text-center">
+        Choose how you want to join
+      </h2>
+      <div className="flex justify-between w-full">
+        <AuthChoiceButton
+          icon={AuthChoiceConfig.human.icon}
+          title={AuthChoiceConfig.human.title}
+          handleAuthChoice={() => handleAuthChoice('human')}
+        />
+        <AuthChoiceButton
+          icon={AuthChoiceConfig.company.icon}
+          title={AuthChoiceConfig.company.title}
+          handleAuthChoice={() => handleAuthChoice('company')}
+        />
       </div>
     </div>
   );

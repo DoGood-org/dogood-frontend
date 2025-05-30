@@ -15,11 +15,10 @@ const UserAuthIcon: React.FC<Props> = ({
 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={width}
-    height={height}
     viewBox="0 0 59 60"
     fill="none"
     className={className}
+    style={{ width, height }}
   >
     <path
       d="M30 36C38.2843 36 45 27.9411 45 18C45 8.05887 38.2843 0 30 0C21.7157 0 15 8.05887 15 18C15 27.9411 21.7157 36 30 36Z"

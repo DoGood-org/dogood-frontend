@@ -16,11 +16,10 @@ const GroupAuthIcon: React.FC<Props> = ({
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
       viewBox="0 0 102 60"
       fill="none"
       className={className}
+      style={{ width, height }}
     >
       <path
         d="M37 14C37 6.15385 43.0667 0 51 0C58.9333 0 65 6.15385 65 14C65 21.8462 58.9333 28 51 28C43.0667 28 37 21.8462 37 14ZM51 37C29.5333 37 23 52 23 52V60H79V52C79 52 72.4667 37 51 37Z"

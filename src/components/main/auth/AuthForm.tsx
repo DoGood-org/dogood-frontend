@@ -53,9 +53,10 @@ export const AuthForm: React.FC<Props> = (props) => {
       companyName: '',
     },
   });
+  const errorRef = React.useRef<HTMLInputElement>(null);
 
   return (
-    <div className=" flex flex-col items-center w-[560px] rounded-[10px] bg-[var(--card)] py-[40px] px-[64px] text-white">
+    <div className="mt-[104px]  flex flex-col items-center justify-center w-[560px] rounded-[10px] bg-[var(--card)] py-[40px] px-[64px] text-white">
       <h2 className="text-[32px] font-bold mb-4">Start doing good</h2>
       <h3 className="text-[20px]"> Create an account to continue.</h3>
 
