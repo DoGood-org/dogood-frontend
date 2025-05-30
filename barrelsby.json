@@ -1,7 +1,7 @@
-  {
-    "directory": "src/components",
-    "exclude": ["icons"],
-    "delete": true,
-    "structure": "flat",
-    "barrelName": "index.ts"
-  }
+{
+  "directory": "src/components",
+  "exclude": ["icons"],
+  "delete": true,
+  "structure": "flat",
+  "barrelName": "index.ts"
+}
