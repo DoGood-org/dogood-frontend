@@ -1,9 +1,8 @@
-// src/components/main/MapSection.tsx
-'use client'; // This is important for MapSection itself if it has client-side logic
+'use client';
 import React from 'react';
 import dynamic from 'next/dynamic';
+import { LatLngLiteral } from 'leaflet';
 
-// Use dynamic import for the Map component with ssr: false
 const Map = dynamic(() => import('@/components/main/map/Map'), { ssr: false });
 
 export const MapSection: React.FC = () => {
@@ -33,15 +32,20 @@ export const MapSection: React.FC = () => {
       lng: 9.7068,
     },
   ];
+
+  const floridaCenter = {
+    lat: 28.6305,
+    lng: -82.4497,
+  };
   return (
     <section className="bg-background pt-[100px]">
       <Map
-        center={{ lng: -0.1278, lat: 51.5074 }}
+        center={floridaCenter}
         locations={locations}
-        onLocationSelect={(coords) =>
+        onLocationSelect={(coords: LatLngLiteral) =>
           console.log('Selected coordinates:', coords)
         }
-        allowClickToAddMarker={true}
+        allowClickToAddMarker={false}
       />
     </section>
   );
