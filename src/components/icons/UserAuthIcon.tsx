@@ -7,7 +7,7 @@ type Props = {
   fill?: string;
 };
 
-export const UserAuthIcon: React.FC<Props> = ({
+const UserAuthIcon: React.FC<Props> = ({
   width = 59,
   height = 60,
   className,
@@ -31,3 +31,4 @@ export const UserAuthIcon: React.FC<Props> = ({
     />
   </svg>
 );
+export default UserAuthIcon;

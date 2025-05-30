@@ -1,5 +1,7 @@
-import { GroupAuthIcon } from '@/components/icons/GroupAuthIcon';
-import { UserAuthIcon } from '@/components/icons/UserAuthIcon';
+'use client';
+
+import GroupAuthIcon from '@/components/icons/GroupAuthIcon';
+import UserAuthIcon from '@/components/icons/UserAuthIcon';
 import { Button } from '@/components/ui/Button';
 import React from 'react';
 
@@ -21,19 +23,18 @@ export const AuthChoice: React.FC = () => {
         <Button
           onClick={() => handleAuthChoice('human')}
           variant="outline"
-          className="flex items-center bg-[var(--card)] text-white"
+          className="flex items-center bg-[var(--card)] text-white w-[250px] h-[270px]"
         >
+          <UserAuthIcon height={60} width={60} />
           <span> I’m a human</span>
-
-          <UserAuthIcon className="ml-2" />
         </Button>
         <Button
           onClick={() => handleAuthChoice('company')}
           variant="outline"
-          className="flex items-center bg-[var(--card)] text-white"
+          className="flex items-center bg-[var(--card)] text-white w-[250px] h-[270px]"
         >
-          <span>I’m a company or organization</span>
-          <GroupAuthIcon className="ml-2" />
+          <GroupAuthIcon className="" height={60} width={102} />
+          {/* <span>I’m a company or organization</span> */}
         </Button>
       </div>
     </div>
