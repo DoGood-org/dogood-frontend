@@ -10,6 +10,8 @@ export * from './layout/header/NavButtons';
 export * from './layout/header/NavDropdown';
 export * from './layout/header/Navigation';
 export * from './layout/header/NavItemRenderer';
+export * from './layout/header/SettingList';
+export * from './layout/header/ThemeToggle';
 export * from './main/Container';
 export * from './main/Faq';
 export * from './main/HeroSection';

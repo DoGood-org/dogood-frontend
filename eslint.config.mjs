@@ -51,7 +51,7 @@ export default (async () => {
       },
     },
     {
-      ignores: ['.eslintrc.cjs'],
+      ignores: ['.eslintrc.cjs', 'src/components/icons/**'],
     },
   ];
 })();

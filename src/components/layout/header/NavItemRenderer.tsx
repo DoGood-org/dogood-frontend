@@ -1,11 +1,7 @@
 import Link from 'next/link';
 import { NavItemRendererProps } from '@/types';
 import { NavDropdown } from './NavDropdown';
-
-// Тимчасові заглушки
-const Languages: React.FC = () => <div>Languages Component</div>;
-const Features: React.FC = () => <div>Features Component</div>;
-const Theme: React.FC = () => <div>Theme Component</div>;
+import { SettingsList } from './SettingList';
 
 export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   navItem,
@@ -47,13 +43,11 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
         <NavDropdown
           isOpen={isOpen}
           trigger={navItem.title}
-          className="right-0 left-20"
+          className="right-0 left-20 p-10"
         >
-          <div className="p-5 grid gap-[25px]">
-            <Languages />
-            <Features />
-            <Theme />
-          </div>
+          <ul>
+            <SettingsList settingItem={navItem} />
+          </ul>
         </NavDropdown>
       );
 

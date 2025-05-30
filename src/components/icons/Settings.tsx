@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { SVGProps } from 'react';
-const SvgSettings = (props: SVGProps<SVGSVGElement>): React.JSX.Element => (
+const SvgSettings = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
@@ -10,12 +10,14 @@ const SvgSettings = (props: SVGProps<SVGSVGElement>): React.JSX.Element => (
     {...props}
   >
     <path
+      stroke="#fff"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeMiterlimit={10}
       d="M16 20a4 4 0 1 0 0-8 4 4 0 0 0 0 8"
     />
     <path
+      stroke="#fff"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeMiterlimit={10}
