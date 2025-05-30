@@ -4,6 +4,16 @@ export interface NavContentItem {
   src: string;
 }
 
+export interface SettingContentItem {
+  name: string;
+  description: string;
+}
+
+export interface SettingsContentProps {
+  settingItem: Extract<NavItem, { type: 'settings' }>;
+  children?: React.ReactNode;
+}
+
 export type NavItem =
   | {
       type: 'link';
@@ -18,6 +28,7 @@ export type NavItem =
   | {
       type: 'settings';
       title: string;
+      content: SettingContentItem[];
     };
 
 export type NavButtonProps = {
