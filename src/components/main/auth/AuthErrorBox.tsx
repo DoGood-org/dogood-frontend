@@ -10,8 +10,8 @@ export const AuthErrorBox = ({
   className = '',
 }: Props): React.ReactElement => {
   return (
-    <div className={`block h-[34px]   ${className}`}>
-      <p className="text-xs text-[#FF6262] my-1">{errorMessage}</p>
+    <div className={`block h-[16px] mt-[2px] mx-4  ${className}`}>
+      <p className="text-[10px] text-[#FF6262]">{errorMessage}</p>
     </div>
   );
 };

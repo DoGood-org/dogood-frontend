@@ -24,6 +24,7 @@ export * from './main/auth/AuthForm';
 export * from './main/auth/AuthInput';
 export * from './main/auth/RegisterLoginSocial';
 export * from './main/auth/RegisterPageContent';
+export * from './main/auth/Verification';
 export * from './main/map/CategoryFilter';
 export * from './main/map/DistanceFilter';
 export * from './main/map/FilterButton';
