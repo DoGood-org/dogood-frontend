@@ -14,23 +14,27 @@ const Faq = (): React.JSX.Element => {
   const t = useTranslations('faq');
   const faqItems = t.raw('faq') as { question: string; answer: string[] }[];
   return (
-    <section className="my-container w-full bg-background relative z-25 py-[100px]">
-      <div className="max-w-[1920px] mx-auto px-[20px] lg:px-[100px] items-center flex flex-col ">
-        <h2 className="text-[32px] text-foreground flex justify-center pb-[40px]">
+    <section className="my-container mx-auto py-[165px] w-full bg-background relative z-25 ">
+      <div className="items-center flex flex-col ">
+        <h2 className="text-h5-m font-bold md:text-h2-d semibold lg:text-h2-d semibold pb-[30px] text-foreground flex justify-center lg:pb-[40px]">
           FAQ
         </h2>
         <Accordion
           type="single"
           collapsible
-          className="w-full max-w-xl mx-auto space-y-2 pb-[65px] md:pb-[100px]"
+          className="w-full max-w-4xl space-y-2 pb-[65px] md:pb-[100px]"
         >
           {faqItems.map(({ question, answer }, idx) => (
             <AccordionItem key={idx} value={`item-${idx}`}>
-              <AccordionTrigger>{question}</AccordionTrigger>
-              <AccordionContent>
-                <p className="mb-3">{answer[0]}</p>
+              <AccordionTrigger className="text-h4-d font-semibold md:text-h3-d lg:text-h3-d">
+                {question}
+              </AccordionTrigger>
+              <AccordionContent className="text-p3-m font-normal">
+                <p className="text-p3-m font-normal mt-[30px] mb-3">
+                  {answer[0]}
+                </p>
                 {answer.length > 1 && (
-                  <ul className="list-disc pl-5 space-y-2">
+                  <ul className="roboto text-p3-m font-normal list-disc pl-5 space-y-2">
                     {answer.slice(1).map((line, i) => (
                       <li key={i}>{line}</li>
                     ))}
@@ -40,16 +44,11 @@ const Faq = (): React.JSX.Element => {
             </AccordionItem>
           ))}
         </Accordion>
-        <div className="bg-card rounded-[10px] md:p-[60px] lg:bg-transparent">
-          <div className=" flex justify-center lg:py-[100px] md:py-0 gap-[30px] md:flex-col-reverse lg:flex-row">
+        <div className="bg-card rounded-[10px]">
+          <div className=" flex justify-center md:py-0 gap-[30px] md:flex-col-reverse lg:flex-row">
             <ContactForm />
             <div className="hidden md:block">
-              <Image
-                src={FaqImg}
-                alt="Logo"
-                className="md:w-[949px] h-auto lg:max-w-[993px] max-h-auto"
-                priority
-              />
+              <Image src={FaqImg} alt="Logo" priority />
             </div>
           </div>
         </div>

@@ -79,7 +79,7 @@
   --text-help: #696969;
   --text-gray: #999999;
 
-  --card: #303030;
+  --card: #ffffff;
   --toggle: #303030;
 
   --border: #17814b;
@@ -124,7 +124,7 @@
 .dark {
   --background: #171b19;
   --foreground: #ffffff;
-  --card: #ffffff;
+  --card: #303030;
 }
 
 /* Стиль для ховер (глянути як використати можна в ContactForm */
@@ -293,3 +293,8 @@
 }
 
 /*---------------------------------------------------------------*/
+
+.clickedBtn{
+  background-color: var(--btn);
+  color:#ffffff;
+}

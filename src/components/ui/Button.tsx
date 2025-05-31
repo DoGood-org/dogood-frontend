@@ -22,7 +22,7 @@ const buttonVariants = cva(
           'relative text-primary-foreground text-lg bg-btn overflow-hidden group transition-colors duration-500',
         outline:
           'relative text-primary-foreground border font-semibold overflow-hidden group transition-colors duration-500',
-        filters: 'bg-background text-base focus:bg-btn',
+        filters: 'bg-white text-base',
       },
       size: {
         default: 'h-[45px] px-[15px] py-[10px] has-[>svg]:px-3',
