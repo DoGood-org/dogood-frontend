@@ -2,8 +2,6 @@ import fs from 'fs/promises';
 import path from 'path';
 import { transform } from '@svgr/core';
 import { fileURLToPath } from 'url';
-
-// Імпортуємо плагіни
 import jsx from '@svgr/plugin-jsx';
 import svgo from '@svgr/plugin-svgo';
 import prettier from '@svgr/plugin-prettier';
@@ -21,7 +19,7 @@ const options = {
   typescript: true,
   jsxRuntime: 'automatic',
   template,
-  plugins: [svgo, jsx, prettier], // Ось сюди додаємо плагіни
+  plugins: [svgo, jsx, prettier],
 };
 
 function toPascalCase(filename) {
