@@ -27,7 +27,7 @@ export const AuthInput: React.FC<Props> = (props) => {
         ref={props.ref}
         onChange={props.onChange}
         id={props.id}
-        className={`${props.className} bg-white text-[#696969] text-[16px] rounded-[20px] placeholder:text-[#696969] focus:outline-none focus:ring-0 focus:border-[var(--primary)]`}
+        className={`${props.className} bg-white text-[#696969] text-[16px] rounded-[20px] placeholder:text-[#696969] focus:outline-none focus:ring-0  focus:ring-[var(--border)]`}
         type={props.type}
         placeholder={props.placeholder}
         value={props.value}
