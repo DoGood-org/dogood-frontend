@@ -14,5 +14,22 @@
         "You can track your progress in our telegram channel, as well as we will present every block what we have done, and what we will do in the future."
       ]
     }
+  ],
+  "contact": [
+    {
+      "heading": "Do you have any questions?",
+      "nameText": "What's your name?",
+      "nameError": "Name is required",
+      "emailText": "E-mail?",
+      "emailError": "Email is required",
+      "phoneText": "Phone number",
+      "messageText": "What are you interested in?"
+    }
+  ],
+  "downtext": [
+    {
+      "text": "By clicking on the button, you agree to the processing of personal data.",
+      "btn": "Send request"
+    }
   ]
 }
