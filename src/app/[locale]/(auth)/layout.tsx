@@ -1,13 +1,7 @@
-import { AuthHeader } from '@/components';
 export default function CatLayout({
   children,
 }: {
   children: React.ReactNode;
 }): React.ReactNode {
-  return (
-    <>
-      <AuthHeader />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

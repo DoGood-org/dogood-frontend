@@ -5,6 +5,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { routing } from '../../i18n/routing';
 import { notFound } from 'next/navigation';
 import React from 'react';
+import { Header, Footer } from '@/components';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -39,7 +40,9 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className={`${montserrat.variable} ${roboto.variable} antialiased`}>
         <NextIntlClientProvider locale={locale}>
+          <Header />
           <main>{children}</main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
