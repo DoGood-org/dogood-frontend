@@ -17,6 +17,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     'map',
     'faq',
     'footer',
+    'auth',
   ];
 
   const messages = Object.fromEntries(
