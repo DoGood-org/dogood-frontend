@@ -9,7 +9,7 @@ import MyPositionMarker from '@/assets/images/map/my-position.png';
 import { SearchInput } from './SearchInput';
 import { GeolocationPopup } from './GeolocationPopup';
 import { MapLocation, MapProps, ReactLeafletModule } from '@/types/mapType';
-import { Container } from '../Container';
+import { Container } from '@/components/ui/Container';
 
 type MarkerCategory = 'Medicine' | 'Nature' | 'Animal' | 'Food' | 'myPosition';
 

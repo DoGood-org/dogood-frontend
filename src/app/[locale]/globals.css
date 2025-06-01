@@ -6,16 +6,19 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --breakpoint-mobile: var(--breakpoint-mobile);
-  --breakpoint-mob-plus: var(--breakpoint-mob-plus);
-  --breakpoint-tablet: var(--breakpoint-tablet);
-  --breakpoint-desktop: var(--breakpoint-desktop);
+  /* breakpoints */
+  --breakpoint-*: initial;
+  --breakpoint-xs: 24.5625rem;
+  --breakpoint-sm: 48rem;
+  --breakpoint-md: 74.625rem;
+  --breakpoint-xl: 120rem;
 
-  --container-mobile: var(--breakpoint-mobile);
-  --container-mob-plus: var(--breakpoint-mob-plus);
-  --container-tablet: var(--breakpoint-tablet);
-  --container-desktop: var(--breakpoint-desktop);
+  --container-mobile: var(--mobile);
+  --container-mob-plus: var(--mob-plus);
+  --container-tablet: var(--tablet);
+  --container-desktop: var(--desktop);
 
+  /* colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-text-help: var(--text-help);
@@ -61,10 +64,10 @@
 }
 
 :root {
-  --breakpoint-mobile: 393px;
-  --breakpoint-mob-plus: 768px;
-  --breakpoint-tablet: 1194px;
-  --breakpoint-desktop: 1920px;
+  --mobile: 24.5625rem;
+  --mob-plus: 48rem;
+  --tablet: 74.625rem;
+  --desktop: 120rem;
 
   --padding-mobile: 20px;
   --padding-tablet: 60px;
@@ -168,29 +171,10 @@
     font-family: var(--font-montserrat);
     line-height: 1.2;
     margin: 0 auto;
-  }
-
-  @media screen and (min-width: 393px) {
-    body {
-      max-width: var(--breakpoint-mobile);
-    }
-  }
-  @media screen and (min-width: 768px) {
-    body {
-      max-width: var(--breakpoint-mob-plus);
-    }
-  }
-
-  @media screen and (min-width: 1194px) {
-    body {
-      max-width: var(--breakpoint-tablet);
-    }
-  }
-
-  @media screen and (min-width: 1920px) {
-    body {
-      max-width: var(--breakpoint-desktop);
-    }
+    @apply xs:max-w-[var(--breakpoint-xs)];
+    @apply sm:max-w-[var(--breakpoint-sm)];
+    @apply md:max-w-[var(--breakpoint-md)];
+    @apply xl:max-w-[var(--breakpoint-xl)];
   }
 
   p {
@@ -205,34 +189,10 @@
 @layer components {
   .my-container {
     @apply w-full mx-auto px-5;
-  }
-
-  @media screen and (min-width: 393px) {
-    .my-container {
-      @apply px-5;
-      max-width: var(--breakpoint-mobile);
-    }
-  }
-
-  @media screen and (min-width: 768px) {
-    .my-container {
-      @apply px-15;
-      max-width: 768px;
-    }
-  }
-
-  @media screen and (min-width: 1194px) {
-    .my-container {
-      @apply px-15;
-      max-width: var(--breakpoint-tablet);
-    }
-  }
-
-  @media screen and (min-width: 1920px) {
-    .my-container {
-      @apply px-25;
-      max-width: var(--breakpoint-desktop);
-    }
+    @apply xs:px-5 xs:max-w-[var(--breakpoint-xs)];
+    @apply sm:px-15 sm:max-w-[var(--breakpoint-sm)];
+    @apply md:px-15 md:max-w-[var(--breakpoint-md)];
+    @apply xl:px-25 xl:max-w-[var(--breakpoint-xl)];
   }
 
   .bg-hero {

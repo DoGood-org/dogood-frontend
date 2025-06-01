@@ -17,8 +17,8 @@ export const Navigation: React.FC = () => {
   };
 
   return (
-    <nav className="flex text-white relative z-[9999] gap-10 items-center">
-      <ul className="flex gap-10 pl-10 relative  z-[9999] text-h4-d">
+    <nav className="hidden md:flex text-white relative z-[9999] gap-10 items-center">
+      <ul className="flex gap-10 pl-10 relative z-[9999] text-h4-d">
         {navList.map((navItem, index) => (
           <NavItemRenderer
             key={navItem.title}

@@ -75,7 +75,10 @@ export const AboutSection: React.FC = () => {
 
   return (
     <section className="pt-[100px] pb-[50px] bg-background relative z-20 h-[843px]">
-      <motion.div style={{ y: ySpring }} className="relative z-10 items-center">
+      <motion.div
+        style={{ y: ySpring }}
+        className="relative z-10 items-center overflow-hidden"
+      >
         <Container className="">
           <AboutAnimationTabs
             views={views}
@@ -83,8 +86,8 @@ export const AboutSection: React.FC = () => {
             onChange={setActiveView}
           />
           {activeData && (
-            <div className="flex gap-[80px] transition-opacity duration-500 ease-in-out opacity-100">
-              <div className="max-w-[55%]">
+            <div className="md:flex gap-[80px] transition-opacity duration-500 ease-in-out opacity-100">
+              <div className="w-full md:max-w-[55%]">
                 <Image
                   src={images[activeData.img]}
                   alt={activeData.title}
@@ -93,7 +96,7 @@ export const AboutSection: React.FC = () => {
                   className="rounded-xl shadow"
                 />
               </div>
-              <div className="w-[41%] py-[50px] flex flex-col">
+              <div className="md:w-[41%] py-[50px] flex flex-col">
                 <h2 className="font-bold text-h2-d mb-[45px]">
                   {activeData.title}
                 </h2>
