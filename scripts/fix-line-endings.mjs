@@ -1,5 +1,11 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Отримуємо абсолютний шлях до кореня проєкту
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const rootDir = path.resolve(__dirname, '..'); // вихід із scripts/
 
 const exts = ['.js', '.ts', '.tsx', '.json', '.md'];
 
@@ -18,5 +24,5 @@ function walk(dir) {
   });
 }
 
-walk('./');
+walk(rootDir);
 console.log('✅ Line endings fixed to LF');

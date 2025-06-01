@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+
 import { Controller, useForm, FieldErrors } from 'react-hook-form';
 
 import { AuthInput } from './AuthInput';
@@ -11,9 +11,8 @@ import {
   registerPersonSchema,
 } from '@/lib/validation/authSchemas';
 import { AuthErrorBox } from './AuthErrorBox';
-type Props = {
-  type: 'registerCompany' | 'registerPerson' | 'login';
-};
+import { useTranslations } from 'next-intl';
+
 interface FormRegister {
   name: string;
   email: string;
@@ -21,18 +20,25 @@ interface FormRegister {
   repeatPassword: string;
 }
 type FormRegisterPerson = FormRegister;
-
 type FormRegisterCompany = FormRegister & {
   companyName: string;
 };
-
 type FormLogin = {
   email: string;
   password: string;
 };
+type Props = {
+  type: 'registerCompany' | 'registerPerson' | 'login';
+  onFormSubmit: (
+    type: 'registerCompany' | 'registerPerson' | 'login',
+    data: FormRegisterCompany | FormRegisterPerson | FormLogin
+  ) => void;
+};
 
 export const AuthForm: React.FC<Props> = (props) => {
-  const { type } = props;
+  const { type, onFormSubmit } = props;
+  const t = useTranslations('auth');
+
   const schema =
     type === 'registerCompany'
       ? registerCompanySchema
@@ -42,6 +48,7 @@ export const AuthForm: React.FC<Props> = (props) => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormRegisterCompany | FormRegisterPerson | FormLogin>({
     resolver: yupResolver(schema),
@@ -53,17 +60,21 @@ export const AuthForm: React.FC<Props> = (props) => {
       companyName: '',
     },
   });
+  const submitHandler = (
+    data: FormRegisterCompany | FormRegisterPerson | FormLogin
+  ): void => {
+    onFormSubmit(type, data);
+    reset();
+  };
 
   return (
-    <div className=" flex flex-col items-center w-[560px] rounded-[10px] bg-[var(--card)] py-[40px] px-[64px] text-white">
-      <h2 className="text-[32px] font-bold mb-4">Start doing good</h2>
-      <h3 className="text-[20px]"> Create an account to continue.</h3>
+    <div className=" flex flex-col items-center justify-center  rounded-[10px] bg-[#303030] w-[514px] p-[40px] text-white shadow-md">
+      <h2 className="text-[32px] font-bold mb-4">{t('start')}</h2>
+      <h3 className="text-[20px]">{t('createAccount')}</h3>
 
       <form
-        onSubmit={handleSubmit((data) => {
-          console.log(data);
-        })}
-        className="w-full flex flex-col mt-[40px]"
+        onSubmit={handleSubmit(submitHandler)}
+        className="w-full flex flex-col"
       >
         {(type === 'registerCompany' || type === 'registerPerson') && (
           <Controller
@@ -72,11 +83,11 @@ export const AuthForm: React.FC<Props> = (props) => {
             render={({ field }) => (
               <>
                 <AuthInput
-                  label="Name"
+                  label={t('name')}
                   htmlFor="name"
                   type="text"
-                  id="name"
-                  placeholder="Name"
+                  id={'name'}
+                  placeholder={t('name')}
                   onChange={field.onChange}
                 />
                 <AuthErrorBox
@@ -99,11 +110,11 @@ export const AuthForm: React.FC<Props> = (props) => {
             render={({ field }) => (
               <>
                 <AuthInput
-                  label="Company Name"
+                  label={t('companyName')}
                   htmlFor="companyName"
                   type="text"
                   id="companyName"
-                  placeholder="Company Name"
+                  placeholder={t('companyName')}
                   {...field}
                 />
                 <AuthErrorBox
@@ -122,11 +133,11 @@ export const AuthForm: React.FC<Props> = (props) => {
           render={({ field }) => (
             <>
               <AuthInput
-                label="Email"
+                label={t('email')}
                 htmlFor="email"
                 type="email"
                 id="email"
-                placeholder="Email"
+                placeholder={t('email')}
                 onChange={field.onChange}
               />
               <AuthErrorBox errorMessage={errors.email?.message as string} />
@@ -139,11 +150,11 @@ export const AuthForm: React.FC<Props> = (props) => {
           render={({ field }) => (
             <>
               <AuthInput
-                label="Password"
+                label={t('password')}
                 htmlFor="password"
                 type="password"
                 id="password"
-                placeholder="Password"
+                placeholder={t('password')}
                 onChange={field.onChange}
               />
               <AuthErrorBox errorMessage={errors.password?.message as string} />
@@ -157,11 +168,11 @@ export const AuthForm: React.FC<Props> = (props) => {
             render={({ field }) => (
               <>
                 <AuthInput
-                  label="Repeat Password"
+                  label={t('repeatPassword')}
                   htmlFor="repeatPassword"
                   type="password"
                   id="repeatPassword"
-                  placeholder="Repeat Password"
+                  placeholder={t('repeatPassword')}
                   onChange={field.onChange}
                 />
                 <AuthErrorBox
@@ -181,10 +192,10 @@ export const AuthForm: React.FC<Props> = (props) => {
         <Button
           type="submit"
           variant={'default'}
-          size={'lg'}
-          className="btn-auth mt-1 btn-expand-hover text-white hover:bg-[var(--primary-hover)] transition-colors duration-300"
+          size={'md'}
+          className="btn-auth mt-1 btn-expand-hover text-white h-[44px]"
         >
-          Next Step
+          {t('nextStep')}
         </Button>
       </form>
     </div>

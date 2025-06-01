@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"node watch-barrels.mjs\" \"next dev\" \"npm run svgr:watch\" --turbopack",
+    "dev": "concurrently \"node scripts/watch-barrels.mjs\" \"next dev\" \"npm run svgr:watch\" --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "eslint src",
     "prepare": "husky install",
-    "svgr": "svgr --out-dir src/components/icons src/assets/svg --typescript --icon",
+    "svgr": "node scripts/svgr-conditional.mjs",
     "svgr:watch": "chokidar \"src/assets/svg/*.svg\" -c \"npm run svgr\"",
     "dev:all": "concurrently \"npm run dev\" \"npm run svgr:watch\""
   },
@@ -36,6 +36,10 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@svgr/cli": "^8.1.0",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-prettier": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
