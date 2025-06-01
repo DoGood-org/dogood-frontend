@@ -47,7 +47,7 @@ const Faq = (): React.JSX.Element => {
             ))}
           </Accordion>
           <div className="bg-card rounded-[10px] p-[20px] md:p-[60px]">
-            <div className=" flex justify-center sm:py-0 gap-[60px] sm:flex-col-reverse">
+            <div className=" flex justify-center sm:py-0 gap-[60px] sm:flex-col-reverse xl:flex-row">
               <ContactForm />
               <div className="hidden sm:block">
                 <Image
