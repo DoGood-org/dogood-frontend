@@ -3,5 +3,16 @@
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "github.copilot.enable": {
+    "typescript": true,
+    "javascript": true,
+    "javascriptreact": true,
+    "json": true,
+    "jsonc": true,
+    "powershell": true,
+    "python": true,
+    "shellscript": true,
+    "typescriptreact": true
+  }
 }
