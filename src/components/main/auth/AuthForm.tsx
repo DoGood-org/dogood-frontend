@@ -1,7 +1,7 @@
 'use client';
-
+import { useState } from 'react';
 import { Controller, useForm, FieldErrors } from 'react-hook-form';
-
+import { Eye, EyeOff } from 'lucide-react';
 import { AuthInput } from './AuthInput';
 import { Button } from '@/components/ui/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -36,6 +36,9 @@ type Props = {
 };
 
 export const AuthForm: React.FC<Props> = (props) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [clickedIcon, setClickedIcon] = useState(false);
+
   const { type, onFormSubmit } = props;
   const t = useTranslations('auth');
 
@@ -66,7 +69,6 @@ export const AuthForm: React.FC<Props> = (props) => {
     onFormSubmit(type, data);
     reset();
   };
-
   return (
     <div className=" flex flex-col items-center justify-center  rounded-[10px] bg-[#303030] w-[514px] p-[40px] text-white shadow-md">
       <h2 className="text-[32px] font-bold mb-4">{t('start')}</h2>
@@ -83,12 +85,12 @@ export const AuthForm: React.FC<Props> = (props) => {
             render={({ field }) => (
               <>
                 <AuthInput
+                  {...field}
                   label={t('name')}
                   htmlFor="name"
                   type="text"
                   id={'name'}
                   placeholder={t('name')}
-                  onChange={field.onChange}
                 />
                 <AuthErrorBox
                   errorMessage={
@@ -133,12 +135,12 @@ export const AuthForm: React.FC<Props> = (props) => {
           render={({ field }) => (
             <>
               <AuthInput
+                {...field}
                 label={t('email')}
                 htmlFor="email"
                 type="email"
                 id="email"
                 placeholder={t('email')}
-                onChange={field.onChange}
               />
               <AuthErrorBox errorMessage={errors.email?.message as string} />
             </>
@@ -150,14 +152,37 @@ export const AuthForm: React.FC<Props> = (props) => {
           render={({ field }) => (
             <>
               <AuthInput
+                {...field}
+                ref={field.ref} // ✅ pass ref for RHF
                 label={t('password')}
-                htmlFor="password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 placeholder={t('password')}
-                onChange={field.onChange}
+                onBlur={() => {
+                  field.onBlur();
+                  setTimeout(() => {
+                    if (!clickedIcon) {
+                      setShowPassword(false);
+                    }
+                    setClickedIcon(false);
+                  }, 0);
+                }}
+                icon={
+                  showPassword ? (
+                    <EyeOff size={24} stroke="#000" />
+                  ) : (
+                    <Eye size={24} stroke="#000" />
+                  )
+                }
+                iconRight
+                onIconClick={() => {
+                  setShowPassword((prev) => !prev);
+                  setClickedIcon(true);
+                }}
+                setClickedIcon={setClickedIcon} // ✅ pass click tracker
+                error={errors.password?.message}
               />
-              <AuthErrorBox errorMessage={errors.password?.message as string} />
+              <AuthErrorBox errorMessage={errors.password?.message} />
             </>
           )}
         />
@@ -168,12 +193,12 @@ export const AuthForm: React.FC<Props> = (props) => {
             render={({ field }) => (
               <>
                 <AuthInput
+                  {...field}
                   label={t('repeatPassword')}
                   htmlFor="repeatPassword"
                   type="password"
                   id="repeatPassword"
                   placeholder={t('repeatPassword')}
-                  onChange={field.onChange}
                 />
                 <AuthErrorBox
                   errorMessage={
