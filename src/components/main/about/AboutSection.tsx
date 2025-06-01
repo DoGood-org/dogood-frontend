@@ -110,7 +110,7 @@ export const AboutSection: React.FC = () => {
 
                 <Button
                   variant="outline"
-                  size="xl"
+                  size="2xl"
                   className="hover:text-btn-text w-auto flex-shrink-0 flex-grow-0 self-start gap-[18px] md:gap-[10px] xl:gap-3 border-2"
                   onClick={() => router.push(`/${locale}/about`)}
                 >

@@ -30,7 +30,9 @@ const buttonVariants = cva(
         sm: 'h-[42px] px-[18px] rounded-md text-p2-h font-normal md:h-11 md:px-3 md:rounded-lg xl:h-12 xl:rounded-md xl:text-h4-d', //about
         md: 'h-11 rounded-lg px-3', //forms
         lg: 'h-[50px] rounded-md px-[18px] font-semibold  text-p2-d  md:h-10 md:px-[15px] xl:h-12 xl:rounded-sm xl:text-h4-d has-[>svg]:px-4 ', //hero
-        xl: 'h-[54px] rounded-md px-[15px] text-p2-d font-semibold md:h-11 md:px-3 md:rounded-lg xl:h-12 xl:text-h5-d', //about-button
+        xl: 'h-[52px] rounded-[10px] px-[35px] py-[15px]', //filter
+        '2xl':
+          'h-[54px] rounded-md px-[15px] text-p2-d font-semibold md:h-11 md:px-3 md:rounded-lg xl:h-12 xl:text-h5-d', //about-button
         icon: 'size-9',
       },
     },
