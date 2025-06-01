@@ -51,8 +51,7 @@ export const Verification: React.FC = () => {
       setFocusedIndex(0);
       inputsRef.current.forEach((input) => {
         if (input) input.value = '';
-      }
-      );
+      });
       return;
     }
     if (e.key === 'Escape') {
@@ -74,9 +73,7 @@ export const Verification: React.FC = () => {
     setFocusedIndex(0);
     inputsRef.current.forEach((input) => {
       if (input) input.value = '';
-    }
-    );
-
+    });
   };
 
   return (
