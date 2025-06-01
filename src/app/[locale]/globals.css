@@ -145,7 +145,7 @@
   position: relative;
   overflow: hidden;
   z-index: 0;
-  transition: color 0.3s ease-in-out;
+  transition: color 0.3s ease;
 }
 
 .btn-expand-hover::before {
@@ -162,12 +162,12 @@
     transparent 100%
   );
   transform: translateX(-50%);
-  transition: width 0.5s ease-in-out;
+  transition: width 0.4s ease;
   z-index: -1;
 }
 
 .btn-expand-hover:hover::before {
-  width: 500%;
+  width: 200%;
 }
 
 /*---------------------------------------------------------------*/

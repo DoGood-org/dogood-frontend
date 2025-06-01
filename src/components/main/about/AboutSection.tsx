@@ -111,11 +111,15 @@ export const AboutSection: React.FC = () => {
                 <Button
                   variant="outline"
                   size="2xl"
-                  className="w-auto flex-shrink-0 flex-grow-0 self-start gap-[18px] md:gap-[10px] xl:gap-3 border-2"
+                  className="w-auto flex-shrink-0 flex-grow-0 self-start gap-[18px] md:gap-[10px] xl:gap-3 hover:border-btn-hover hover:text-btn-text"
                   onClick={() => router.push(`/${locale}/about`)}
                 >
-                  <LearnIcon className="size-6 md:size-[18px] xl:size-6" />
-                  {t('aboutButton')}
+                  <span className="absolute inset-0 bg-btn-hover origin-center rounded-md transform scale-x-0 group-hover:scale-x-100 transition-transform duration-800 z-0"></span>
+                  {/* <span className="relative z-10"> {t('learnMoreBtn')}</span> */}
+                  <span className="relative z-10 flex gap-[18px] md:gap-[10px] xl:gap-3">
+                    <LearnIcon className="size-6 md:size-[20px] xl:size-6" />
+                    {t('aboutButton')}
+                  </span>
                 </Button>
               </div>
             </div>
