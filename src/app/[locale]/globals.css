@@ -4,6 +4,7 @@
 @import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant hover (&:hover);
 
 @theme {
   --breakpoint-*: initial;
