@@ -21,8 +21,6 @@ type Props = {
 
 export const AuthInput = forwardRef<HTMLInputElement, Props>((props, ref) => (
   <>
-    {/* Optionally keep your debug log here */}
-    {console.log(props.setClickedIcon)}
     <div className="flex flex-col gap-[10px] w-full">
       <label
         className="roboto block text-[18px] font-normal"
@@ -46,12 +44,11 @@ export const AuthInput = forwardRef<HTMLInputElement, Props>((props, ref) => (
           value={props.value}
           onBlur={props.onBlur}
           autoComplete="off"
-          autoFocus={true}
+          autoFocus={props.autoFocus}
         />
         {props.iconRight && props.icon && (
           <span
             className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
-            onMouseDown={() => props.setClickedIcon?.(true)}
             onClick={props.onIconClick}
           >
             {props.icon}

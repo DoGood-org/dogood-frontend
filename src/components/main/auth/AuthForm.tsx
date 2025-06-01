@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Controller, useForm, FieldErrors } from 'react-hook-form';
 import { Eye, EyeOff } from 'lucide-react';
 import { AuthInput } from './AuthInput';
@@ -37,10 +37,23 @@ type Props = {
 
 export const AuthForm: React.FC<Props> = (props) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [clickedIcon, setClickedIcon] = useState(false);
 
   const { type, onFormSubmit } = props;
   const t = useTranslations('auth');
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const repeatPasswordRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (props.type === 'login') {
+      emailRef.current?.focus();
+    } else {
+      nameRef.current?.focus();
+    }
+  }, [props.type]);
 
   const schema =
     type === 'registerCompany'
@@ -86,6 +99,7 @@ export const AuthForm: React.FC<Props> = (props) => {
               <>
                 <AuthInput
                   {...field}
+                  ref={nameRef}
                   label={t('name')}
                   htmlFor="name"
                   type="text"
@@ -136,6 +150,7 @@ export const AuthForm: React.FC<Props> = (props) => {
             <>
               <AuthInput
                 {...field}
+                ref={emailRef}
                 label={t('email')}
                 htmlFor="email"
                 type="email"
@@ -153,7 +168,7 @@ export const AuthForm: React.FC<Props> = (props) => {
             <>
               <AuthInput
                 {...field}
-                ref={field.ref} // ✅ pass ref for RHF
+                ref={passwordRef}
                 label={t('password')}
                 type={showPassword ? 'text' : 'password'}
                 id="password"
@@ -161,10 +176,9 @@ export const AuthForm: React.FC<Props> = (props) => {
                 onBlur={() => {
                   field.onBlur();
                   setTimeout(() => {
-                    if (!clickedIcon) {
+                    if (showPassword) {
                       setShowPassword(false);
                     }
-                    setClickedIcon(false);
                   }, 0);
                 }}
                 icon={
@@ -177,9 +191,8 @@ export const AuthForm: React.FC<Props> = (props) => {
                 iconRight
                 onIconClick={() => {
                   setShowPassword((prev) => !prev);
-                  setClickedIcon(true);
+                  passwordRef.current?.focus();
                 }}
-                setClickedIcon={setClickedIcon} // ✅ pass click tracker
                 error={errors.password?.message}
               />
               <AuthErrorBox errorMessage={errors.password?.message} />
@@ -194,11 +207,30 @@ export const AuthForm: React.FC<Props> = (props) => {
               <>
                 <AuthInput
                   {...field}
+                  ref={repeatPasswordRef}
                   label={t('repeatPassword')}
                   htmlFor="repeatPassword"
-                  type="password"
+                  type={showRepeatPassword ? 'text' : 'password'}
                   id="repeatPassword"
                   placeholder={t('repeatPassword')}
+                  onBlur={() => {
+                    field.onBlur();
+                    setTimeout(() => {
+                      if (showRepeatPassword) setShowRepeatPassword(false);
+                    }, 0);
+                  }}
+                  icon={
+                    showRepeatPassword ? (
+                      <EyeOff size={24} stroke="#000" />
+                    ) : (
+                      <Eye size={24} stroke="#000" />
+                    )
+                  }
+                  iconRight
+                  onIconClick={() => {
+                    setShowRepeatPassword((prev) => !prev);
+                    repeatPasswordRef.current?.focus();
+                  }}
                 />
                 <AuthErrorBox
                   errorMessage={
