@@ -127,6 +127,12 @@
   --card: #303030;
 }
 
+.dark .leaflet-layer,
+.dark .leaflet-control-zoom-in,
+.dark .leaflet-control-zoom-out {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
 /* Стиль для ховер (глянути як використати можна в ContactForm */
 .btn-expand-hover {
   position: relative;
@@ -294,7 +300,7 @@
 
 /*---------------------------------------------------------------*/
 
-.clickedBtn{
+.clickedBtn {
   background-color: var(--btn);
-  color:#ffffff;
+  color: #ffffff;
 }

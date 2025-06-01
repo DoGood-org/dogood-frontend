@@ -6,7 +6,7 @@ export const GeolocationPopup: FC<IGeolocationPopupProps> = ({
   declineGeolocation,
 }) => {
   return (
-    <div className="absolute inset-0 bg-opacity-50 flex items-center justify-center z-[550]">
+    <div className="fixed top-32 left-1/2 transform -translate-x-1/2 z-[1000] w-full max-w-md">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
         <h3 className="text-lg font-semibold mb-4">Share your location?</h3>
         <p className="mb-6">

@@ -1,6 +1,6 @@
 'use client';
 import { IPropsFilterPanel } from '@/types/mapType';
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 
 export const FilterPannel: FC<IPropsFilterPanel> = ({
   selectedCategories,
@@ -8,18 +8,20 @@ export const FilterPannel: FC<IPropsFilterPanel> = ({
   selectedCategoryButtons,
   selectedDistanceButtons,
 }) => {
+  // Convert single ReactNode to array if needed
+  const normalizeButtons = (buttons: ReactNode | ReactNode[]): ReactNode[] => {
+    return Array.isArray(buttons) ? buttons : [buttons];
+  };
+
+  const categoryButtons = normalizeButtons(selectedCategoryButtons);
+  const distanceButtons = normalizeButtons(selectedDistanceButtons);
+
   return (
     <div className="">
-      {/* Div with selected category buttons - only show if there are selected categories */}
-      {selectedCategories.length > 0 && (
-        <div className="absolute z-[500] top-[5px] left-[508px] flex gap-[30px] w-[500px]">
-          {selectedCategoryButtons}
-        </div>
-      )}
-      {/* Div with selected distance buttons - only show if there are selected distances */}
-      {selectedDistances.length > 0 && (
-        <div className="absolute z-[500] top-[80px] left-[508px] flex gap-[30px] w-[500px]">
-          {selectedDistanceButtons}
+      {(selectedCategories.length > 0 || selectedDistances.length > 0) && (
+        <div className="absolute z-[500] top-[5px] left-[508px] flex flex-wrap gap-[10px] w-[500px] max-w-[500px]">
+          {categoryButtons}
+          {distanceButtons}
         </div>
       )}
     </div>

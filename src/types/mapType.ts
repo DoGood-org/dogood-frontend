@@ -1,5 +1,4 @@
 import { LatLngLiteral } from 'leaflet';
-import { ReactNode } from 'react';
 //Map types
 export interface ReactLeafletModule {
   MapContainer: typeof import('react-leaflet').MapContainer;
@@ -41,11 +40,10 @@ export interface IPropsFilters {
 }
 export interface IPropsFilterPanel {
   selectedCategories: string[];
-  selectedCategoryButtons: ReactNode;
   selectedDistances: string[];
-  selectedDistanceButtons: ReactNode;
+  selectedCategoryButtons: React.ReactElement[]; // Array of elements
+  selectedDistanceButtons: React.ReactElement[]; // Array of elements
 }
-
 export interface CategoryFilterProps {
   selectedCategories: string[];
   onCategoryToggle: (id: string) => void;
@@ -64,6 +62,11 @@ export interface FilterButtonProps {
   onRemove: (item: string) => void;
   buttonClassName?: string;
   keyPrefix?: string;
+}
+
+export interface MapClickHandlerProps {
+  onClick: (latlng: LatLngLiteral) => void;
+  allowClickToAddMarker?: boolean;
 }
 
 //types for constants

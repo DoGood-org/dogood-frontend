@@ -20,7 +20,7 @@ export const CategoryFilter: FC<CategoryFilterProps> = ({
           <li key={index}>
             <Button
               variant="filters"
-              className={`flex gap-[10px] ${
+              className={`flex gap-[10px] bg-card ${
                 selectedCategories.includes(category.title) ? 'clickedBtn' : ''
               }`}
               onClick={() => onCategoryToggle(category.title)}
@@ -34,8 +34,8 @@ export const CategoryFilter: FC<CategoryFilterProps> = ({
         <li>
           <Button
             variant="filters"
-            className={`flex gap-[10px] ${
-              selectedCategories.includes('neutroBtn') ? 'clickedBtn' : ''
+            className={`flex gap-[10px] bg-card ${
+              selectedCategories.includes('Doesn\"t matter') ? 'clickedBtn' : ''
             }`}
             onClick={() => onCategoryToggle('Doesn\"t matter')}
             id="Does'n matter"

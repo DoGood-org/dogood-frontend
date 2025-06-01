@@ -57,7 +57,7 @@ export const SearchInput: React.FC = () => {
   });
 
   return (
-    <div className="absolute flex top-4 left-30 z-[500]">
+    <div className="absolute flex top-12 left-12 z-[500]">
       <FilterPannel
         selectedCategories={selectedCategories}
         selectedDistances={selectedDistances}
@@ -65,14 +65,14 @@ export const SearchInput: React.FC = () => {
         selectedDistanceButtons={selectedDistanceButtons}
       />
       <div className="relative flex items-center w-[478px]">
-        <Search className="absolute left-5 stroke-card fill-card w-[30px] h-[30px]" />
+        <Search className="absolute left-5 stroke-black dark:stroke-white fill-black dark:fill-white w-[30px] h-[30px]" />
         <Input
           type="text"
           placeholder="Search"
-          className="bg-white shadow-lg border-none rounded-[20px] px-5 py-[20px] text-base pl-[70px] focus:ring focus:ring-background w-full min-h-[60px]"
+          className="bg-background shadow-lg border-none rounded-[20px] px-5 py-[20px] text-base  pl-[70px] focus:ring focus:ring-background w-full min-h-[60px] placeholder-black dark:placeholder-white"
         />
         <Settings
-          className="absolute stroke-card stroke-1 right-[14px] w-[32px] h-[32px]"
+          className="absolute stroke-black stroke-1 right-[14px] w-[32px] h-[32px] z-[600] dark:stroke-white"
           onClick={toggleFilters}
         />
       </div>

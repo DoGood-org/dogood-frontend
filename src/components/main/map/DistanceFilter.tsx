@@ -21,7 +21,7 @@ export const DistanceFilter: FC<DistanceFilterProps> = ({
           <li key={index}>
             <Button
               variant="filters"
-              className={`flex gap-[10px] ${
+              className={`flex gap-[10px] bg-card ${
                 selectedDistances.includes(distance.title) ? 'clickedBtn' : ''
               }`}
               onClick={() => onDistanceToggle(distance.title)}
