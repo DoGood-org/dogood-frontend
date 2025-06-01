@@ -43,11 +43,17 @@ export const Verification: React.FC = () => {
     }
     if (e.key === 'Enter') {
       e.preventDefault();
-      // Handle form submission or next action here
       console.log(
         'Code submitted:',
         inputsRef.current.map((input) => input?.value).join('')
       );
+      inputsRef.current[0]?.focus();
+      setFocusedIndex(0);
+      inputsRef.current.forEach((input) => {
+        if (input) input.value = '';
+      }
+      );
+      return;
     }
     if (e.key === 'Escape') {
       e.preventDefault();
@@ -58,6 +64,19 @@ export const Verification: React.FC = () => {
       inputsRef.current[0]?.focus();
       setFocusedIndex(0);
     }
+  };
+  const handleClick = (): void => {
+    console.log(
+      'Code submitted:',
+      inputsRef.current.map((input) => input?.value).join('')
+    );
+    inputsRef.current[0]?.focus();
+    setFocusedIndex(0);
+    inputsRef.current.forEach((input) => {
+      if (input) input.value = '';
+    }
+    );
+
   };
 
   return (
@@ -89,6 +108,7 @@ export const Verification: React.FC = () => {
           ))}
       </div>
       <Button
+        onClick={handleClick}
         type="button"
         variant={'default'}
         size={'md'}
