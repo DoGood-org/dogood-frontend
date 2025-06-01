@@ -74,7 +74,7 @@ export const AboutSection: React.FC = () => {
   const activeData = views.find(({ view }) => view === activeView);
 
   return (
-    <section className="pt-[100px] pb-[50px] bg-background relative z-20 h-[843px]">
+    <section className="pt-[100px] pb-[226px] bg-background relative z-20 min-h-[843px]">
       <motion.div
         style={{ y: ySpring }}
         className="relative z-10 items-center overflow-hidden"
@@ -107,13 +107,14 @@ export const AboutSection: React.FC = () => {
                     </p>
                   ))}
                 </div>
+
                 <Button
                   variant="outline"
-                  size="lg"
-                  className="w-auto flex-shrink-0 flex-grow-0 self-start gap-4"
+                  size="xl"
+                  className="hover:text-btn-text w-auto flex-shrink-0 flex-grow-0 self-start gap-[18px] md:gap-[10px] xl:gap-3 border-2"
                   onClick={() => router.push(`/${locale}/about`)}
                 >
-                  <LearnIcon />
+                  <LearnIcon className="size-6 md:size-[18px] xl:size-6" />
                   {t('aboutButton')}
                 </Button>
               </div>

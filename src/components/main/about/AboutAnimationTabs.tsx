@@ -2,7 +2,7 @@
 
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '../../ui/Button';
+import { Button } from '@/components';
 
 export const AboutAnimationTabs = ({
   views,
@@ -49,11 +49,10 @@ export const AboutAnimationTabs = ({
           transition={{ type: 'spring', stiffness: 400, damping: 30 }}
         />
       )}
-
-      {/* Buttons */}
       {views.map(({ view }) => (
         <Button
           variant="ghost"
+          size="sm"
           key={view}
           data-view={view}
           onClick={() => onChange(view)}

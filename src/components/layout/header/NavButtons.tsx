@@ -17,8 +17,9 @@ export const NavButtons: React.FC = () => {
         <Button
           key={name}
           variant={variant}
+          size="xs"
           onClick={() => router.push(`/${locale}${src}`)}
-          className=""
+          className="btn-expand-hover"
         >
           {name}
         </Button>
