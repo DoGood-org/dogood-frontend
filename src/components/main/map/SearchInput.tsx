@@ -2,9 +2,7 @@
 import { Search, Settings } from '@/components/icons';
 import { Input } from '@/components/ui/Input';
 import React, { useState, useEffect } from 'react';
-import { Filters } from './Filters';
-import { FilterPannel } from './FilterPannel';
-import { renderFilterButtons } from './FilterButton';
+import { Filters, FilterPannel, renderFilterButtons } from '@/components';
 
 export const SearchInput: React.FC = () => {
   const [isSettingOpen, setIsSettingOpen] = useState<boolean>(false);
@@ -64,7 +62,7 @@ export const SearchInput: React.FC = () => {
         selectedCategoryButtons={selectedCategoryButtons}
         selectedDistanceButtons={selectedDistanceButtons}
       />
-      <div className="relative flex items-center w-[478px]">
+      <div className="relative flex items-center w-[313px] xl:w-[478px]">
         <Search className="absolute left-5 stroke-black dark:stroke-white fill-black dark:fill-white w-[30px] h-[30px]" />
         <Input
           type="text"

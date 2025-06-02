@@ -13,7 +13,7 @@ export const CategoryFilter: FC<CategoryFilterProps> = ({
 
   const CATEGOTY_LIST = getCategoryList(t);
   return (
-    <div>
+    <div className="mb-9">
       <h4 className="text-lg font-semibold mb-[13px]">{t('category')}</h4>
       <ul className="flex gap-[10px] flex-wrap w-full mb-5">
         {CATEGOTY_LIST.map((category, index) => (

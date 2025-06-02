@@ -69,6 +69,13 @@ export interface MapClickHandlerProps {
   allowClickToAddMarker?: boolean;
 }
 
+export type MarkerCategory =
+  | 'Medicine'
+  | 'Nature'
+  | 'Animal'
+  | 'Food'
+  | 'myPosition';
+
 //types for constants
 export interface CategoryItem {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -80,3 +87,19 @@ export interface DistanceItem {
 }
 
 export type TranslationFunction = (key: string) => string;
+
+export interface ITasksProps {
+  title: string;
+  subtitle: string;
+  category: string[];
+  description: string;
+}
+
+export interface IDescriptionProps {
+  description: string;
+}
+
+export interface ExtendedITasksProps extends ITasksProps {
+  isSelected: boolean;
+  onToggleDescription: () => void;
+}

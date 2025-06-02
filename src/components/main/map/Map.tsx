@@ -6,12 +6,19 @@ import NatureMarker from '@/assets/images/map/nature-marker.png';
 import AnimalMarker from '@/assets/images/map/animal-marker.png';
 import FoodMarker from '@/assets/images/map/food-marker.png';
 import MyPositionMarker from '@/assets/images/map/my-position.png';
-import { SearchInput } from './SearchInput';
-import { GeolocationPopup } from './GeolocationPopup';
-import { MapLocation, MapProps, ReactLeafletModule } from '@/types/mapType';
-import { Container } from '@/components/ui/Container';
-
-type MarkerCategory = 'Medicine' | 'Nature' | 'Animal' | 'Food' | 'myPosition';
+import {
+  MapClickHandlerProps,
+  MapLocation,
+  MapProps,
+  MarkerCategory,
+  ReactLeafletModule,
+} from '@/types/mapType';
+import {
+  GeolocationPopup,
+  SearchInput,
+  Container,
+  TasksList,
+} from '@/components';
 
 export const Map: React.FC<MapProps> = ({
   center,
@@ -162,21 +169,27 @@ export const Map: React.FC<MapProps> = ({
     }, [center, map]);
     return null;
   };
-  //Function of creating markers depend of title of task
+  //Function for creating markers depend of title of task
   const createMarks = (title: MarkerCategory): Icon => {
     switch (title) {
       case 'Medicine':
         return mapMedicineMarkIcon!;
+        break;
       case 'Nature':
         return mapNatureMarkIcon!;
+        break;
       case 'Animal':
         return mapAnimalMarkIcon!;
+        break;
       case 'Food':
         return mapFoodMarkIcon!;
+        break;
       case 'myPosition':
         return mapMyPositionMarkIcon!;
+        break;
       default:
         return mapMedicineMarkIcon!;
+        break;
     }
   };
   //Function for creating markers on map
@@ -282,6 +295,7 @@ export const Map: React.FC<MapProps> = ({
         </div>
       )}
       <SearchInput />
+      <TasksList />
       <MapContainer
         center={userLocation || center}
         zoom={13}

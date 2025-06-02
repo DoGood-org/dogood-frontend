@@ -264,3 +264,56 @@
   background-color: var(--btn);
   color: #ffffff;
 }
+
+/*------------------utilities for scrollbar---------------------------*/
+@layer utilities {
+  .custom-scrollbar {
+    scrollbar-width: thin; /* Firefox fallback */
+    scrollbar-color: var(--btn) transparent;
+    scrollbar-width: 14px; /* Firefox thumb width */
+  }
+
+  /* WebKit browsers (Chrome, Safari, Edge) */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 15px; /* 14px thumb + 1px track border */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: black;
+    border-left: 1px solid #999999; /* 1px track line */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--btn);
+    min-height: 44px; /* Minimum height (will grow with content) */
+    width: 14px;
+    border-radius: 0;
+    border: none;
+    position: relative;
+  }
+
+  /* Constrain thumb height while allowing it to scale with content */
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    height: 44px;
+    max-height: 44px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--btn);
+  }
+}
+
+/* Firefox specific styles */
+@supports (scrollbar-width: thin) {
+  .custom-scrollbar {
+    scrollbar-width: 14px;
+    scrollbar-color: var(--btn) transparent;
+  }
+}
+
+/* Edge Legacy fix */
+@supports (-ms-ime-align: auto) {
+  .custom-scrollbar {
+    -ms-overflow-style: none;
+  }
+}

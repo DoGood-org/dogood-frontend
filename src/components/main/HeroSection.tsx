@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Planet from '../../assets/images/hero/planet.png';
-import { Button } from '@/components';
+import { Button, Container } from '@/components';
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 
@@ -37,28 +37,31 @@ export const HeroSection: React.FC = () => {
           opacity: contentOpacity,
         }}
       >
-        <h1 className="text-[70px] font-bold  mb-[30px]">{t('title')}</h1>
-        <h2 className="text-[32px] font-semibold mb-[50px]">{t('subtitle')}</h2>
-        <div className="flex gap-[50px] justify-center">
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => router.push(`/${localActive}/register`)}
-            className="min-w-[227px] btn-expand-hover"
-          >
-            {t('volunteerBtn')}
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={() => router.push(`/${localActive}/about`)}
-            className="min-w-[227px] btn-expand-hover"
-          >
-            {t('learnMoreBtn')}
-          </Button>
-        </div>
+        <Container className="">
+          <h1 className="text-[70px] font-bold  mb-[30px]">{t('title')}</h1>
+          <h2 className="text-[32px] font-semibold mb-[50px]">
+            {t('subtitle')}
+          </h2>
+          <div className="flex gap-[50px] justify-center my-container">
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => router.push(`/${localActive}/register`)}
+              className="min-w-[227px] btn-expand-hover"
+            >
+              {t('volunteerBtn')}
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => router.push(`/${localActive}/about`)}
+              className="min-w-[227px] btn-expand-hover"
+            >
+              {t('learnMoreBtn')}
+            </Button>
+          </div>
+        </Container>
       </motion.div>
-
       {/* Planet layer */}
       <div className="absolute bottom-[-500px] w-full pointer-events-none z-25">
         <div className="sticky top-0 h-screen flex items-end justify-center ">
