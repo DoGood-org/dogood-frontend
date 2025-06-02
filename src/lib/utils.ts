@@ -4,6 +4,7 @@ import MedicineSvg from '@/components/icons/Medicine';
 import NatureSvg from '@/components/icons/Nature';
 import AnimalSvg from '@/components/icons/Animal';
 import FoodSvg from '@/components/icons/Food';
+
 import {
   CategoryItem,
   DistanceItem,
@@ -28,3 +29,23 @@ export const getDistancesList = (t: TranslationFunction): DistanceItem[] => [
   { title: t('10km') },
   { title: t('neutroBtn') },
 ];
+
+//-------------helpers for tasksList---------------------
+export const createBackgroundColor = (title: string): string | undefined => {
+  switch (title) {
+    case 'Medicine':
+      return 'bg-[#FFC3C3]';
+      break;
+    case 'Nature':
+      return 'bg-[#FF7D57]';
+      break;
+    case 'Animal':
+      return 'bg-[#D2EDFF]';
+      break;
+    case 'Food':
+      return 'bg-[#FF7D57]';
+      break;
+    default:
+      break;
+  }
+};

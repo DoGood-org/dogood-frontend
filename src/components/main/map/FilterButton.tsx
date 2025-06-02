@@ -17,7 +17,7 @@ export const renderFilterButtons = ({
       onClick={() => onRemove(title)}
     >
       {title}
-      <Close />
+      <Close className="stroke-foreground" />
     </Button>
   ));
 };

@@ -1,5 +1,4 @@
 import { LatLngLiteral } from 'leaflet';
-import { ReactNode } from 'react';
 //Map types
 export interface ReactLeafletModule {
   MapContainer: typeof import('react-leaflet').MapContainer;
@@ -41,11 +40,10 @@ export interface IPropsFilters {
 }
 export interface IPropsFilterPanel {
   selectedCategories: string[];
-  selectedCategoryButtons: ReactNode;
   selectedDistances: string[];
-  selectedDistanceButtons: ReactNode;
+  selectedCategoryButtons: React.ReactElement[]; // Array of elements
+  selectedDistanceButtons: React.ReactElement[]; // Array of elements
 }
-
 export interface CategoryFilterProps {
   selectedCategories: string[];
   onCategoryToggle: (id: string) => void;
@@ -66,6 +64,18 @@ export interface FilterButtonProps {
   keyPrefix?: string;
 }
 
+export interface MapClickHandlerProps {
+  onClick: (latlng: LatLngLiteral) => void;
+  allowClickToAddMarker?: boolean;
+}
+
+export type MarkerCategory =
+  | 'Medicine'
+  | 'Nature'
+  | 'Animal'
+  | 'Food'
+  | 'myPosition';
+
 //types for constants
 export interface CategoryItem {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -77,3 +87,19 @@ export interface DistanceItem {
 }
 
 export type TranslationFunction = (key: string) => string;
+
+export interface ITasksProps {
+  title: string;
+  subtitle: string;
+  category: string[];
+  description: string;
+}
+
+export interface IDescriptionProps {
+  description: string;
+}
+
+export interface ExtendedITasksProps extends ITasksProps {
+  isSelected: boolean;
+  onToggleDescription: () => void;
+}

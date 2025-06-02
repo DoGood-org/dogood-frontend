@@ -1,7 +1,7 @@
 'use client';
-
+import { useState, useRef, useEffect } from 'react';
 import { Controller, useForm, FieldErrors } from 'react-hook-form';
-
+import { Eye, EyeOff } from 'lucide-react';
 import { AuthInput } from './AuthInput';
 import { Button } from '@/components/ui/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -36,8 +36,24 @@ type Props = {
 };
 
 export const AuthForm: React.FC<Props> = (props) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const { type, onFormSubmit } = props;
   const t = useTranslations('auth');
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const repeatPasswordRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (props.type === 'login') {
+      emailRef.current?.focus();
+    } else {
+      nameRef.current?.focus();
+    }
+  }, [props.type]);
 
   const schema =
     type === 'registerCompany'
@@ -69,8 +85,20 @@ export const AuthForm: React.FC<Props> = (props) => {
 
   return (
     <div className=" flex flex-col items-center justify-center  rounded-[10px] bg-[#303030] w-[514px] p-[40px] text-white shadow-md">
-      <h2 className="text-[32px] font-bold mb-4">{t('start')}</h2>
-      <h3 className="text-[20px]">{t('createAccount')}</h3>
+      {type === 'login' && (
+        <div className="mb-6 text-center">
+          <h2 className="text-[32px] font-bold mb-4">{t('loginFormTitle')}</h2>
+          <h3 className="text-[20px]">{t('loginFormSubtitle')}</h3>
+        </div>
+      )}
+      {(type === 'registerCompany' || type === 'registerPerson') && (
+        <div className="mb-6 text-center">
+          <h2 className="text-[32px] font-bold mb-4">
+            {t('registerFormTitle')}
+          </h2>
+          <h3 className="text-[20px]">{t('registerFormSubtitle')}</h3>
+        </div>
+      )}
 
       <form
         onSubmit={handleSubmit(submitHandler)}
@@ -83,12 +111,13 @@ export const AuthForm: React.FC<Props> = (props) => {
             render={({ field }) => (
               <>
                 <AuthInput
+                  {...field}
+                  ref={nameRef}
                   label={t('name')}
                   htmlFor="name"
                   type="text"
                   id={'name'}
                   placeholder={t('name')}
-                  onChange={field.onChange}
                 />
                 <AuthErrorBox
                   errorMessage={
@@ -133,12 +162,13 @@ export const AuthForm: React.FC<Props> = (props) => {
           render={({ field }) => (
             <>
               <AuthInput
+                {...field}
+                ref={emailRef}
                 label={t('email')}
                 htmlFor="email"
                 type="email"
                 id="email"
                 placeholder={t('email')}
-                onChange={field.onChange}
               />
               <AuthErrorBox errorMessage={errors.email?.message as string} />
             </>
@@ -150,14 +180,35 @@ export const AuthForm: React.FC<Props> = (props) => {
           render={({ field }) => (
             <>
               <AuthInput
+                {...field}
+                ref={passwordRef}
                 label={t('password')}
-                htmlFor="password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 placeholder={t('password')}
-                onChange={field.onChange}
+                onBlur={() => {
+                  field.onBlur();
+                  setTimeout(() => {
+                    if (showPassword) {
+                      setShowPassword(false);
+                    }
+                  }, 0);
+                }}
+                icon={
+                  showPassword ? (
+                    <EyeOff size={24} stroke="#000" />
+                  ) : (
+                    <Eye size={24} stroke="#000" />
+                  )
+                }
+                iconRight
+                onIconClick={() => {
+                  setShowPassword((prev) => !prev);
+                  passwordRef.current?.focus();
+                }}
+                error={errors.password?.message}
               />
-              <AuthErrorBox errorMessage={errors.password?.message as string} />
+              <AuthErrorBox errorMessage={errors.password?.message} />
             </>
           )}
         />
@@ -168,12 +219,31 @@ export const AuthForm: React.FC<Props> = (props) => {
             render={({ field }) => (
               <>
                 <AuthInput
+                  {...field}
+                  ref={repeatPasswordRef}
                   label={t('repeatPassword')}
                   htmlFor="repeatPassword"
-                  type="password"
+                  type={showRepeatPassword ? 'text' : 'password'}
                   id="repeatPassword"
                   placeholder={t('repeatPassword')}
-                  onChange={field.onChange}
+                  onBlur={() => {
+                    field.onBlur();
+                    setTimeout(() => {
+                      if (showRepeatPassword) setShowRepeatPassword(false);
+                    }, 0);
+                  }}
+                  icon={
+                    showRepeatPassword ? (
+                      <EyeOff size={24} stroke="#000" />
+                    ) : (
+                      <Eye size={24} stroke="#000" />
+                    )
+                  }
+                  iconRight
+                  onIconClick={() => {
+                    setShowRepeatPassword((prev) => !prev);
+                    repeatPasswordRef.current?.focus();
+                  }}
                 />
                 <AuthErrorBox
                   errorMessage={
