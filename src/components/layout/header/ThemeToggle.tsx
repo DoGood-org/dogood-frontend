@@ -28,7 +28,7 @@ export const ThemeToggle: React.FC = () => {
       onClick={toggleTheme}
       className={`
         relative w-[65px] h-[30px] rounded-full flex items-center justify-between
-        px-2 transition-colors duration-300 cursor-pointer
+        px-2 transition-colors duration-800 cursor-pointer
         ${theme === 'dark' ? 'bg-toggle' : 'bg-btn-hover'}
       `}
       aria-label="Перемикач теми"
@@ -43,7 +43,7 @@ export const ThemeToggle: React.FC = () => {
       <span
         className={`
           absolute top-0 left-0 w-[30px] h-[30px] bg-white rounded-full shadow-md
-          transform transition-transform duration-300
+          transform transition-transform duration-800
           ${theme === 'dark' ? 'translate-x-0' : 'translate-x-[35px]'}
         `}
       />
