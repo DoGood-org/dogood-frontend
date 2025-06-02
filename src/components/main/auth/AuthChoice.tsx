@@ -10,14 +10,12 @@ type AuthChoiceProps = {
   onChoice: (choice: 'human' | 'company') => void;
 };
 
-
-
 export const AuthChoice: React.FC<AuthChoiceProps> = ({ onChoice }) => {
   const t = useTranslations('auth');
   const AuthChoiceConfig = {
-  human: { title: t('personalAccount'), icon: <UserAuthIcon /> },
-  company: { title: t('businessAccount'), icon: <GroupAuthIcon /> },
-};
+    human: { title: t('personalAccount'), icon: <UserAuthIcon /> },
+    company: { title: t('businessAccount'), icon: <GroupAuthIcon /> },
+  };
   const handleHumanAuth = (): void => {
     onChoice('human');
   };
