@@ -13,14 +13,14 @@ export const CategoryFilter: FC<CategoryFilterProps> = ({
 
   const CATEGOTY_LIST = getCategoryList(t);
   return (
-    <div>
+    <div className="mb-9">
       <h4 className="text-lg font-semibold mb-[13px]">{t('category')}</h4>
       <ul className="flex gap-[10px] flex-wrap w-full mb-5">
         {CATEGOTY_LIST.map((category, index) => (
           <li key={index}>
             <Button
               variant="filters"
-              className={`flex gap-[10px] ${
+              className={`flex gap-[10px] bg-card ${
                 selectedCategories.includes(category.title) ? 'clickedBtn' : ''
               }`}
               onClick={() => onCategoryToggle(category.title)}
@@ -34,8 +34,8 @@ export const CategoryFilter: FC<CategoryFilterProps> = ({
         <li>
           <Button
             variant="filters"
-            className={`flex gap-[10px] ${
-              selectedCategories.includes('neutroBtn') ? 'clickedBtn' : ''
+            className={`flex gap-[10px] bg-card ${
+              selectedCategories.includes('Doesn\"t matter') ? 'clickedBtn' : ''
             }`}
             onClick={() => onCategoryToggle('Doesn\"t matter')}
             id="Does'n matter"

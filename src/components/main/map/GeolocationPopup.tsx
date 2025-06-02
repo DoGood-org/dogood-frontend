@@ -1,31 +1,35 @@
+'use client';
+import { Button } from '@/components/ui/Button';
 import { IGeolocationPopupProps } from '@/types/mapType';
+import { useTranslations } from 'next-intl';
 import React, { FC } from 'react';
 
 export const GeolocationPopup: FC<IGeolocationPopupProps> = ({
   requestGeolocation,
   declineGeolocation,
 }) => {
+  const t = useTranslations('map');
+
   return (
-    <div className="absolute inset-0 bg-opacity-50 flex items-center justify-center z-[550]">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-        <h3 className="text-lg font-semibold mb-4">Share your location?</h3>
-        <p className="mb-6">
-          Would you like to share your current location to center the map on
-          your position?
-        </p>
+    <div className="fixed top-32 left-1/2 transform -translate-x-1/2 z-[1000] w-full max-w-md">
+      <div className="bg-white p-4 rounded-lg shadow-lg max-w-md w-full">
+        <h3 className="text-base font-semibold mb-4">{t('popupTitle')}</h3>
+        <p className="mb-4">{t('popupDescription')}</p>
         <div className="flex justify-end space-x-4">
-          <button
+          <Button
+            variant="outline"
             onClick={declineGeolocation}
-            className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
+            className="btn-expand-hover"
           >
-            No, thanks
-          </button>
-          <button
+            {t('noBtn')}
+          </Button>
+          <Button
+            variant="primary"
             onClick={requestGeolocation}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="btn-expand-hover text-base"
           >
-            Yes, share
-          </button>
+            {t('yesBtn')}
+          </Button>
         </div>
       </div>
     </div>
