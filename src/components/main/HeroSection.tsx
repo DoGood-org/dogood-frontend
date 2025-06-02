@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Planet from '../../assets/images/hero/planet.png';
-import { Button, Container } from '@/components';
+import { Button } from '@/components';
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 
@@ -31,36 +31,36 @@ export const HeroSection: React.FC = () => {
 
       {/* Content layer (under planet) */}
       <motion.div
-        className="fixed top-[320px] left-1/2 transform -translate-x-1/2 text-white text-center"
+        className="my-container fixed top-[166px] md:top-[220px] xl:top-[320px] left-1/2 transform -translate-x-1/2 text-white text-center"
         style={{
           y: yContent,
           opacity: contentOpacity,
         }}
       >
-        <Container className="">
-          <h1 className="text-[70px] font-bold  mb-[30px]">{t('title')}</h1>
-          <h2 className="text-[32px] font-semibold mb-[50px]">
-            {t('subtitle')}
-          </h2>
-          <div className="flex gap-[50px] justify-center my-container">
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => router.push(`/${localActive}/register`)}
-              className="min-w-[227px] btn-expand-hover"
-            >
-              {t('volunteerBtn')}
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => router.push(`/${localActive}/about`)}
-              className="min-w-[227px] btn-expand-hover"
-            >
-              {t('learnMoreBtn')}
-            </Button>
-          </div>
-        </Container>
+        <h1 className="text-[32px] md:text-[40px] lg:text-[70px] font-bold md:font-semibold xl:font-bold mb-[30px]">
+          {t('title')}
+        </h1>
+        <h2 className="text-2xl font-semibold md:text-[28px] xl:text-[32px] mb-[50px]">
+          {t('subtitle')}
+        </h2>
+        <div className="flex flex-col gap-6 md:flex-row md:gap-5 xl:gap-12 justify-center my-container">
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={() => router.push(`/${localActive}/register`)}
+            className="min-w-[186px] md:min-w-[232px] btn-expand-hover"
+          >
+            {t('volunteerBtn')}
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => router.push(`/${localActive}/about`)}
+            className="min-w-[186px] md:min-w-[232px] btn-expand-hover"
+          >
+            {t('learnMoreBtn')}
+          </Button>
+        </div>
       </motion.div>
       {/* Planet layer */}
       <div className="absolute bottom-[-500px] w-full pointer-events-none z-25">

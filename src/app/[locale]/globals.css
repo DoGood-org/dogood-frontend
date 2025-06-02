@@ -277,12 +277,6 @@
 
 /*------------------utilities for scrollbar---------------------------*/
 @layer utilities {
-  .custom-scrollbar {
-    scrollbar-width: thin; /* Firefox fallback */
-    scrollbar-color: var(--btn) transparent;
-    scrollbar-width: 14px; /* Firefox thumb width */
-  }
-
   /* WebKit browsers (Chrome, Safari, Edge) */
   .custom-scrollbar::-webkit-scrollbar {
     width: 15px; /* 14px thumb + 1px track border */
@@ -295,7 +289,7 @@
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: var(--btn);
-    min-height: 44px; /* Minimum height (will grow with content) */
+    height: 44px !important; /* Minimum height (will grow with content) */
     width: 14px;
     border-radius: 0;
     border: none;
@@ -305,7 +299,7 @@
   /* Constrain thumb height while allowing it to scale with content */
   .custom-scrollbar::-webkit-scrollbar-thumb {
     height: 44px;
-    max-height: 44px;
+    max-height: 44px !important;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {

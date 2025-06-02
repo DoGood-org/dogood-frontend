@@ -15,7 +15,7 @@ export const Filters: FC<FiltersProps> = ({
 }) => {
   const t = useTranslations('map');
   return (
-    <div className="absolute top-[50px] left-0 w-[478px] bg-background z-[1000] px-[35px] py-10 rounded-b-[10px]">
+    <div className="absolute top-[50px] left-0 w-[313px] md:w-[358px] xl:w-[478px] bg-background z-[1000] px-[35px] py-10 rounded-b-[10px]">
       <div className="flex justify-between align-text-bottom mb-[25px]">
         <h3 className="text-xl font-semibold">{t('title')}</h3>
         <Close

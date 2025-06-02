@@ -62,7 +62,7 @@ export const SearchInput: React.FC = () => {
         selectedCategoryButtons={selectedCategoryButtons}
         selectedDistanceButtons={selectedDistanceButtons}
       />
-      <div className="relative flex items-center w-[313px] xl:w-[478px]">
+      <div className="relative flex items-center w-[313px] md:w-[358px] xl:w-[478px]">
         <Search className="absolute left-5 stroke-black dark:stroke-white fill-black dark:fill-white w-[30px] h-[30px]" />
         <Input
           type="text"
