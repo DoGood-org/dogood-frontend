@@ -1,11 +1,13 @@
 'use client';
 import { Button } from '@/components/ui/Button';
+import { useTranslations } from 'next-intl';
 
 import React, { useEffect, useRef } from 'react';
 
 export const Verification: React.FC = () => {
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const [focusedIndex, setFocusedIndex] = React.useState<number | null>(0);
+  const t = useTranslations('auth');
 
   useEffect(() => {
     inputsRef.current[0]?.focus();
@@ -78,10 +80,10 @@ export const Verification: React.FC = () => {
 
   return (
     <div className="flex flex-col p-[40px] gap-[32px] w-[514px] justify-center items-center mt-4 bg-[#303030] text-white rounded  shadow-md">
-      <h2 className="text-[32px] font-bold">Email Confirmation </h2>
+      <h2 className="text-[32px] font-bold">{t('verificationRequired')} </h2>
       <p className="roboto text-sm">
-        Enter the code from the email we sent to{' '}
-        <span className="font-bold">DoGood@gmail.com</span>
+        {t('enterVerificationCode')}
+        <span className="font-bold">{t('yourEmail')}</span>
       </p>
       <div className="flex gap-4">
         {Array(6)
@@ -111,14 +113,14 @@ export const Verification: React.FC = () => {
         size={'md'}
         className="btn-auth mt-1 btn-expand-hover text-white h-[44px] w-full"
       >
-        Create account{' '}
+        {t('confirm')}
       </Button>{' '}
       <a href="#" className="text-white underline">
         {' '}
-        <p className="roboto font-normal">Didnt get the email? </p>{' '}
+        <p className="roboto font-normal">{t('didntGetEmail')} </p>{' '}
       </a>{' '}
       <a href="#" className="text-white underline">
-        <p> Made a mistake in the email? </p>
+        <p>{t('madeMistakeInEmail')} </p>
       </a>
     </div>
   );

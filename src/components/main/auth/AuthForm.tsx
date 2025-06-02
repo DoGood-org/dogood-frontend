@@ -82,10 +82,23 @@ export const AuthForm: React.FC<Props> = (props) => {
     onFormSubmit(type, data);
     reset();
   };
+
   return (
     <div className=" flex flex-col items-center justify-center  rounded-[10px] bg-[#303030] w-[514px] p-[40px] text-white shadow-md">
-      <h2 className="text-[32px] font-bold mb-4">{t('start')}</h2>
-      <h3 className="text-[20px]">{t('createAccount')}</h3>
+      {type === 'login' && (
+        <div className="mb-6 text-center">
+          <h2 className="text-[32px] font-bold mb-4">{t('loginFormTitle')}</h2>
+          <h3 className="text-[20px]">{t('loginFormSubtitle')}</h3>
+        </div>
+      )}
+      {(type === 'registerCompany' || type === 'registerPerson') && (
+        <div className="mb-6 text-center">
+          <h2 className="text-[32px] font-bold mb-4">
+            {t('registerFormTitle')}
+          </h2>
+          <h3 className="text-[20px]">{t('registerFormSubtitle')}</h3>
+        </div>
+      )}
 
       <form
         onSubmit={handleSubmit(submitHandler)}

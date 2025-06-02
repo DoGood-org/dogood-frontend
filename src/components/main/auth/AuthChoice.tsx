@@ -4,17 +4,20 @@ import GroupAuthIcon from '@/components/icons/GroupAuthIcon';
 import UserAuthIcon from '@/components/icons/UserAuthIcon';
 import React from 'react';
 import AuthChoiceButton from './AuthChoiceButton';
+import { useTranslations } from 'next-intl';
 
 type AuthChoiceProps = {
   onChoice: (choice: 'human' | 'company') => void;
 };
 
-const AuthChoiceConfig = {
-  human: { title: 'I’m a human', icon: <UserAuthIcon /> },
-  company: { title: 'I’m a company or organization', icon: <GroupAuthIcon /> },
-};
+
 
 export const AuthChoice: React.FC<AuthChoiceProps> = ({ onChoice }) => {
+  const t = useTranslations('auth');
+  const AuthChoiceConfig = {
+  human: { title: t('personalAccount'), icon: <UserAuthIcon /> },
+  company: { title: t('businessAccount'), icon: <GroupAuthIcon /> },
+};
   const handleHumanAuth = (): void => {
     onChoice('human');
   };
@@ -31,7 +34,7 @@ export const AuthChoice: React.FC<AuthChoiceProps> = ({ onChoice }) => {
   return (
     <div className=" flex flex-col items-center justify-center text-white max-w-[812px] w-full">
       <h2 className="font-bold text-[32px] mb-[100px] text-center">
-        Choose how you want to join
+        {t('choose')}
       </h2>
       <div className="flex justify-between w-full">
         <AuthChoiceButton
