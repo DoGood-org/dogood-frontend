@@ -26,12 +26,15 @@ const ContactForm = (): React.ReactElement => {
   };
 
   return (
-    <div className="rounded-[10px] flex items-center justify-center bg-card p-[20px] ">
-      <div className="w-full max-w-xl">
-        <h2 className="text-[24px] md:text-[28px] lg:text-[32px] font-bold pb-[25px] lg:pb-10">
+    <div className="rounded-[10px] flex items-center bg-card">
+      <div className="w-full">
+        <h2 className="text-[24px] md:text-[28px] lg:text-[32px] font-bold lg:pb-10">
           {contact.heading}
         </h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-[20px]">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-[20px] py-[24px] md:space-y-[36px] md:py-[60px]"
+        >
           <div className="relative">
             <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
               <NameIcon className="h-5 w-5 text-[#696969]" />
@@ -39,10 +42,10 @@ const ContactForm = (): React.ReactElement => {
             <input
               {...register('name', { required: true })}
               placeholder={contact.nameText}
-              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b]"
+              className="w-full pl-12 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-h3-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
             />
             {errors.name && (
-              <span className="text-red-500 text-sm pl-2">
+              <span className="absolute left-2 bottom-[-20px] text-red-500 text-sm pl-2">
                 {contact.nameError}
               </span>
             )}
@@ -55,10 +58,10 @@ const ContactForm = (): React.ReactElement => {
               type="email"
               {...register('email', { required: true })}
               placeholder={contact.emailText}
-              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b]"
+              className="w-full pl-12 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-h3-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
             />
             {errors.email && (
-              <span className="text-red-500 text-sm pl-2">
+              <span className="absolute left-2 bottom-[-20px] text-red-500 text-sm pl-2">
                 {contact.emailError}
               </span>
             )}
@@ -71,7 +74,7 @@ const ContactForm = (): React.ReactElement => {
               type="tel"
               {...register('phone')}
               placeholder={contact.phoneText}
-              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b]"
+              className="w-full pl-12 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-h3-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
             />
           </div>
           <div className="relative mb-[25px]">
@@ -81,21 +84,21 @@ const ContactForm = (): React.ReactElement => {
             <input
               {...register('interest')}
               placeholder={contact.messageText}
-              className="w-full pl-12 pr-4 py-4 bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b]"
+              className="w-full pl-12 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-h3-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
             />
           </div>
-
-          <div className="flex flex-col-reverse items-center md:flex-row md:items-start  md:justify-between gap-[20px] ">
-            <p className="text-[#999999] text-sm">{downText.text}</p>
-            <Button
-              className="btn-expand-hover active:bg-btn-active max-w-[313px] h-[42px]  md:max-w-[228px] md:max-h-[50px] text-white"
-              variant="primary"
-              size="lg"
-            >
-              {downText.btn}
-            </Button>
-          </div>
         </form>
+        <div className="flex flex-col-reverse items-center sm:flex-row sm:items-start sm:justify-between gap-[20px] ">
+          <p className="text-[#999999] text-p4-m md:text-h3-d max-w-[520px]">
+            {downText.text}
+          </p>
+          <Button
+            className="btn-expand-hover active:bg-btn-active w-[313px] sm:max-w-[196px] md:max-w-[228px] max-h-[50px] text-white"
+            variant="primary"
+          >
+            {downText.btn}
+          </Button>
+        </div>
       </div>
     </div>
   );
