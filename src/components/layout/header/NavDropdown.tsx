@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown } from '@/components/icons';
 import { NavDropdownProps } from '@/types';
@@ -36,9 +36,8 @@ export const NavDropdown = ({
       >
         {trigger}
         <ChevronDown
-          className={`w-[14px] h-[8px] fill-border transition-transform duration-700 
+          className={`w-[14px] h-[8px] fill-border transition-transform duration-700
             ${open ? 'rotate-180' : ''}
-            
             `}
         />
       </button>
@@ -46,10 +45,10 @@ export const NavDropdown = ({
         {open && (
           <motion.div
             ref={contentRef}
-            initial={{ opacity: 0, y: -100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -100 }}
-            transition={{ duration: 1 }}
+            initial={{ opacity: 0, y: -10, maxHeight: '200px' }}
+            animate={{ opacity: 1, y: 0, maxHeight: '400px' }}
+            exit={{ opacity: 0, y: -10, maxHeight: '200px' }}
+            transition={{ duration: 0.7 }}
             className={`absolute top-full left-0 z-20 rounded-b-[10px] bg-layout-background p-4 shadow-xl gap-4 ${className}`}
           >
             {children}

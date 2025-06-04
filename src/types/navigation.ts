@@ -5,6 +5,7 @@ export interface NavContentItem {
 }
 
 export interface SettingContentItem {
+  id: string;
   name: string;
   description: string;
 }
