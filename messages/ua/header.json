@@ -1,1 +1,76 @@
-{}
+{
+  "nav": [
+    {
+      "title": "Пожертвувати",
+      "type": "link",
+      "src": "/donate"
+    },
+    {
+      "title": "Компанія",
+      "type": "list",
+      "content": [
+        {
+          "name": "Підтримка",
+          "description": "Ми поруч, коли вам потрібна допомога.",
+          "src": "/support"
+        },
+        {
+          "name": "Про DoGood",
+          "description": "DoGood — це спільнота людей, для яких доброта — це активна дія.",
+          "src": "/about"
+        },
+        {
+          "name": "Гранти",
+          "description": "Ми підтримуємо ініціативи, що змінюють спільноти на краще.",
+          "src": "/grants"
+        }
+      ]
+    },
+    {
+      "title": "Новини",
+      "type": "list",
+      "content": [
+        {
+          "name": "Новини",
+          "description": "Будьте в курсі подій DoGood.",
+          "src": "/news"
+        },
+        {
+          "name": "Історії волонтерів",
+          "description": "Справжні історії людей, які творять добро.",
+          "src": "/volunteerStories"
+        },
+        {
+          "name": "Блог",
+          "description": "Ідеї, поради та натхнення для тих, хто хоче змінювати світ.",
+          "src": "/blog"
+        }
+      ]
+    },
+    {
+      "title": "Налаштування",
+      "type": "settings",
+      "content": [
+        {
+          "id": "languages",
+          "name": "Мови",
+          "description": "Оберіть мову"
+        },
+        {
+          "id": "accessibility",
+          "name": "Спеціальні можливості",
+          "description": "Режим для людей з порушенням зору"
+        },
+        {
+          "id": "theme",
+          "name": "Тема",
+          "description": "Тема оформлення"
+        }
+      ]
+    }
+  ],
+  "buttons": [
+    { "name": "Увійти", "src": "/login", "variant": "primary" },
+    { "name": "Зареєструватися", "src": "/register", "variant": "outline" }
+  ]
+}
