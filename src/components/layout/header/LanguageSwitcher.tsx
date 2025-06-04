@@ -7,7 +7,7 @@ import { ChevronDown } from '@/components/icons';
 
 const localeLabels: Record<string, string> = {
   en: 'English',
-  // ua: 'Українська',
+  ua: 'Українська',
 };
 
 export const LanguageSwitcher: React.FC = () => {

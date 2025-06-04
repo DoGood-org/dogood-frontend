@@ -45,7 +45,7 @@ export const NavDropdown = ({
         {open && (
           <motion.div
             ref={contentRef}
-            initial={{ opacity: 0, y: -100, maxHeight: '200px' }}
+            initial={{ opacity: 0, y: -10, maxHeight: '200px' }}
             animate={{ opacity: 1, y: 0, maxHeight: '400px' }}
             exit={{ opacity: 0, y: -10, maxHeight: '200px' }}
             transition={{ duration: 0.7 }}
