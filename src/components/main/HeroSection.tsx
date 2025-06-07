@@ -37,18 +37,18 @@ export const HeroSection: React.FC = () => {
           opacity: contentOpacity,
         }}
       >
-        <h1 className="text-[32px] md:text-[40px] lg:text-[70px] font-bold md:font-semibold xl:font-bold mb-[30px]">
+        <h1 className="text-[32px] mb-8 font-bold md:text-[40px] xl:text-[72px] xl:font-normal xl:mb-6">
           {t('title')}
         </h1>
-        <h2 className="text-2xl font-semibold md:text-[28px] xl:text-[32px] mb-[50px]">
+        <h2 className="text-2xl font-semibold md:text-[28px] xl:text-[32px] xl:font-normal mb-[52px] md:mb-[36px] xl:mb-[40px]">
           {t('subtitle')}
         </h2>
-        <div className="flex flex-col gap-6 md:flex-row md:gap-5 xl:gap-12 justify-center my-container">
+        <div className="flex flex-col gap-6 md:flex-row md:gap-5 xl:gap-15 justify-center my-container">
           <Button
             variant="primary"
             size="lg"
             onClick={() => router.push(`/${localActive}/register`)}
-            className="min-w-[186px] md:min-w-[232px] btn-expand-hover"
+            className="min-w-[186px] md:min-w-[232px] xl:min-w-[147px] btn-expand-hover"
           >
             {t('volunteerBtn')}
           </Button>
