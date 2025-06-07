@@ -1,11 +1,29 @@
 'use client';
 import { Animal, Food, Medicine, Nature } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
-import { createBackgroundColor } from '@/lib/utils';
-import { ExtendedITasksProps } from '@/types/mapType';
+import { getCategoryIcon } from '@/lib/utils';
+import { ExtendedITasksProps, IconMap } from '@/types/mapType';
 import { useTranslations } from 'next-intl';
-import React, { FC, JSX } from 'react';
+import React, { FC } from 'react';
 
+export const iconMap: IconMap = {
+  Medicine: {
+    icon: <Medicine className="stroke-black" />,
+    color: 'bg-[#FFC3C3]',
+  },
+  Animal: {
+    icon: <Animal className="stroke-black" />,
+    color: 'bg-[#D2EDFF]',
+  },
+  Nature: {
+    icon: <Nature className="stroke-black" />,
+    color: 'bg-[#FF7D57]',
+  },
+  Food: {
+    icon: <Food className="stroke-black" />,
+    color: 'bg-[#FF7D57]',
+  },
+};
 export const TaskItem: FC<ExtendedITasksProps> = ({
   title,
   subtitle,
@@ -15,21 +33,6 @@ export const TaskItem: FC<ExtendedITasksProps> = ({
 }) => {
   const t = useTranslations('map');
 
-  const createImg = (title: string): JSX.Element | undefined => {
-    switch (title) {
-      case 'Medicine':
-        return <Medicine className="stroke-black" />;
-      case 'Nature':
-        return <Nature className="stroke-black" />;
-      case 'Animal':
-        return <Animal className="stroke-black" />;
-      case 'Food':
-        return <Food className="stroke-black" />;
-      default:
-        return undefined;
-    }
-  };
-
   return (
     <div className="min-h-[200px]">
       <h3 className="text-xl font-semibold mb-4">{title}</h3>
@@ -38,9 +41,9 @@ export const TaskItem: FC<ExtendedITasksProps> = ({
         {category.map((item, idx) => (
           <li key={idx}>
             <button
-              className={`${createBackgroundColor(item)} rounded-full p-2`}
+              className={`${getCategoryIcon(item).color} rounded-full p-2`}
             >
-              {createImg(item)}
+              {getCategoryIcon(item).icon}
             </button>
           </li>
         ))}

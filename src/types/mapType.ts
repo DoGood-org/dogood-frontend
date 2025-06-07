@@ -1,5 +1,6 @@
-import { LatLngLiteral } from 'leaflet';
-//Map types
+import { Icon, LatLngLiteral } from 'leaflet';
+import { ReactElement } from 'react';
+
 export interface ReactLeafletModule {
   MapContainer: typeof import('react-leaflet').MapContainer;
   TileLayer: typeof import('react-leaflet').TileLayer;
@@ -24,7 +25,7 @@ export interface IGeolocationPopupProps {
 
 export interface SelectedLocationProps {
   center: LatLngLiteral;
-  userLocation?: LatLngLiteral; // Making this optional since it's used with || operator
+  userLocation?: LatLngLiteral;
 }
 
 export interface RenderMarksProps {
@@ -41,8 +42,8 @@ export interface IPropsFilters {
 export interface IPropsFilterPanel {
   selectedCategories: string[];
   selectedDistances: string[];
-  selectedCategoryButtons: React.ReactElement[]; // Array of elements
-  selectedDistanceButtons: React.ReactElement[]; // Array of elements
+  selectedCategoryButtons: React.ReactElement[];
+  selectedDistanceButtons: React.ReactElement[];
 }
 export interface CategoryFilterProps {
   selectedCategories: string[];
@@ -76,7 +77,6 @@ export type MarkerCategory =
   | 'Food'
   | 'myPosition';
 
-//types for constants
 export interface CategoryItem {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
@@ -103,3 +103,29 @@ export interface ExtendedITasksProps extends ITasksProps {
   isSelected: boolean;
   onToggleDescription: () => void;
 }
+
+export interface IconData {
+  icon: ReactElement;
+  color: string;
+}
+
+export interface IconMap {
+  [key: string]: IconData;
+}
+
+export type MapIcons = {
+  medicineIcon: Icon | null;
+  natureIcon: Icon | null;
+  animalIcon: Icon | null;
+  foodIcon: Icon | null;
+  myPositionIcon: Icon | null;
+};
+
+export type LeafletModule = {
+  Icon: typeof Icon;
+  icon: typeof Icon;
+};
+
+import type L from 'leaflet';
+
+export type LeafletType = typeof L;
