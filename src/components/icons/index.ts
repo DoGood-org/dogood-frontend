@@ -19,3 +19,4 @@ export { default as Search } from './Search';
 export { default as Settings } from './Settings';
 export { default as Sun } from './Sun';
 export { default as TelIcon } from './TelIcon';
+export { default as Vector } from './Vector';

@@ -1,12 +1,14 @@
 'use client';
 import React, { useState, useEffect, JSX, useRef } from 'react';
 import { Icon, LatLngLiteral } from 'leaflet';
-import MedicineMarker from '@/assets/images/map/medicine-marker.png';
-import NatureMarker from '@/assets/images/map/nature-marker.png';
-import AnimalMarker from '@/assets/images/map/animal-marker.png';
-import FoodMarker from '@/assets/images/map/food-marker.png';
-import MyPositionMarker from '@/assets/images/map/my-position.png';
 import {
+  initializeMapIcons,
+  getMarkerIcon,
+  isMarkerExists,
+  getUserGeolocation,
+} from '@/lib/utils';
+import {
+  LeafletType,
   MapClickHandlerProps,
   MapLocation,
   MapProps,
@@ -18,7 +20,9 @@ import {
   SearchInput,
   Container,
   TasksList,
+  Button,
 } from '@/components';
+import { Vector } from '@/components/icons';
 
 export const Map: React.FC<MapProps> = ({
   center,
@@ -35,14 +39,19 @@ export const Map: React.FC<MapProps> = ({
   const [customMarkers, setCustomMarkers] = useState<LatLngLiteral[]>([]);
   const [leafletComponents, setLeafletComponents] =
     useState<ReactLeafletModule | null>(null);
-  const [mapMedicineMarkIcon, setMapMedicineMarkIcon] = useState<Icon | null>(
-    null
-  );
-  const [mapNatureMarkIcon, setMapNatureMarkIcon] = useState<Icon | null>(null);
-  const [mapAnimalMarkIcon, setMapAnimalMarkIcon] = useState<Icon | null>(null);
-  const [mapFoodMarkIcon, setMapFoodMarkIcon] = useState<Icon | null>(null);
-  const [mapMyPositionMarkIcon, setMapMyPositionMarkIcon] =
-    useState<Icon | null>(null);
+  const [mapIcons, setMapIcons] = useState<{
+    medicineIcon: Icon | null;
+    natureIcon: Icon | null;
+    animalIcon: Icon | null;
+    foodIcon: Icon | null;
+    myPositionIcon: Icon | null;
+  }>({
+    medicineIcon: null,
+    natureIcon: null,
+    animalIcon: null,
+    foodIcon: null,
+    myPositionIcon: null,
+  });
   const [userLocation, setUserLocation] = useState<LatLngLiteral | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [showGeolocationPopup, setShowGeolocationPopup] = useState(false);
@@ -53,19 +62,16 @@ export const Map: React.FC<MapProps> = ({
     const timer = setTimeout(() => {
       setShowGeolocationPopup(true);
     }, 300);
-
     return (): void => clearTimeout(timer);
   }, []);
 
-  //useEffect to handle scroll prevention
+  // Handle scroll prevention
   useEffect(() => {
     const mapContainer = mapContainerRef.current;
     if (!mapContainer) return;
 
     const preventScroll = (e: WheelEvent): false | undefined => {
       if (!mapContainer.contains(e.target as Node)) return;
-
-      // Check if the event is a vertical scroll
       if (e.deltaY !== 0) {
         e.preventDefault();
         e.stopPropagation();
@@ -78,24 +84,14 @@ export const Map: React.FC<MapProps> = ({
       mapContainer.removeEventListener('wheel', preventScroll);
     };
   }, []);
-  //load all leaflet components
+
+  // Load all leaflet components
   useEffect(() => {
     if (typeof window !== 'undefined') {
       Promise.all([import('react-leaflet'), import('leaflet')])
         .then(([reactLeafletModule, L]) => {
           setLeafletComponents(reactLeafletModule);
-
-          const createIcon = (src: string): Icon =>
-            new L.Icon({
-              iconUrl: src,
-              iconSize: [30, 35],
-            });
-
-          setMapMedicineMarkIcon(createIcon(MedicineMarker.src));
-          setMapNatureMarkIcon(createIcon(NatureMarker.src));
-          setMapAnimalMarkIcon(createIcon(AnimalMarker.src));
-          setMapFoodMarkIcon(createIcon(FoodMarker.src));
-          setMapMyPositionMarkIcon(createIcon(MyPositionMarker.src));
+          setMapIcons(initializeMapIcons(L as unknown as LeafletType));
         })
         .catch((error) => {
           console.error('Error loading map components:', error);
@@ -105,49 +101,32 @@ export const Map: React.FC<MapProps> = ({
   }, []);
 
   // Handle accept geolocation
-  const requestGeolocation = (): void => {
+  const requestGeolocation = async (): Promise<void> => {
     setShowGeolocationPopup(false);
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          const newLocation: LatLngLiteral = { lat: latitude, lng: longitude };
-          setUserLocation(newLocation);
-          setLocationError(null);
-          setSelectedLocation({
-            ...newLocation,
-            id: 'user-location',
-            title: 'myPosition',
-          });
-        },
-        (error: GeolocationPositionError) => {
-          setLocationError(error.message);
-          console.error('Error getting location:', error);
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0,
-        }
-      );
-    } else {
-      setLocationError('Geolocation is not supported by this browser.');
+    try {
+      const location = await getUserGeolocation();
+      setUserLocation(location);
+      setLocationError(null);
+      setSelectedLocation({
+        ...location,
+        id: 'user-location',
+        title: 'myPosition',
+      });
+    } catch (error) {
+      setLocationError(error instanceof Error ? error.message : String(error));
+      console.error('Error getting location:', error);
     }
   };
+
   // Handle decline geolocation
   const declineGeolocation = (): void => {
     setShowGeolocationPopup(false);
     setLocationError('User declined geolocation access.');
   };
-  //Handle if leaflet component weren't been loaded
+
   if (
     !leafletComponents ||
-    !mapMedicineMarkIcon ||
-    !mapNatureMarkIcon ||
-    !mapAnimalMarkIcon ||
-    !mapFoodMarkIcon ||
-    !mapMyPositionMarkIcon
+    !Object.values(mapIcons).every((icon) => icon !== null)
   ) {
     return (
       <div className="w-full bg-background">
@@ -157,9 +136,10 @@ export const Map: React.FC<MapProps> = ({
       </div>
     );
   }
-  //Desctructive all leaflet cpmponents
+
   const { MapContainer, TileLayer, Marker, useMap, ZoomControl, useMapEvents } =
     leafletComponents;
+
   const SelectedLocation: React.FC<{ center: LatLngLiteral }> = ({
     center,
   }) => {
@@ -169,35 +149,12 @@ export const Map: React.FC<MapProps> = ({
     }, [center, map]);
     return null;
   };
-  //Function for creating markers depend of title of task
-  const createMarks = (title: MarkerCategory): Icon => {
-    switch (title) {
-      case 'Medicine':
-        return mapMedicineMarkIcon!;
-        break;
-      case 'Nature':
-        return mapNatureMarkIcon!;
-        break;
-      case 'Animal':
-        return mapAnimalMarkIcon!;
-        break;
-      case 'Food':
-        return mapFoodMarkIcon!;
-        break;
-      case 'myPosition':
-        return mapMyPositionMarkIcon!;
-        break;
-      default:
-        return mapMedicineMarkIcon!;
-        break;
-    }
-  };
-  //Function for creating markers on map
+
   const renderMarks = (): JSX.Element[] => {
     return locations.map((location: MapLocation) => (
       <div key={location.id}>
         <Marker
-          icon={createMarks(location.title as MarkerCategory)}
+          icon={getMarkerIcon(location.title as MarkerCategory, mapIcons)}
           position={{ lat: location.lat, lng: location.lng }}
           eventHandlers={{
             click: () => {
@@ -211,13 +168,12 @@ export const Map: React.FC<MapProps> = ({
     ));
   };
 
-  //Function for rendering customMarker on the map
   const renderCustomMarkers = (): JSX.Element[] => {
     return customMarkers.map((marker, index) => (
       <Marker
         key={`custom-marker-${index}`}
         position={marker}
-        icon={mapMedicineMarkIcon!}
+        icon={mapIcons.medicineIcon!}
         eventHandlers={{
           click: () => handleMapClick(marker),
         }}
@@ -225,13 +181,12 @@ export const Map: React.FC<MapProps> = ({
     ));
   };
 
-  //Function for rendering user location on the map
   const renderUserLocation = (): JSX.Element | null => {
     if (!userLocation) return null;
     return (
       <Marker
         position={userLocation}
-        icon={mapMyPositionMarkIcon!}
+        icon={mapIcons.myPositionIcon!}
         eventHandlers={{
           click: () => {
             setSelectedLocation({
@@ -262,18 +217,17 @@ export const Map: React.FC<MapProps> = ({
 
   const handleMapClick = (latlng: LatLngLiteral): void => {
     setClickedCoords(latlng);
-    console.log(clickedCoords);
     setSelectedLocation(undefined);
-
-    const existingMarkerIndex = customMarkers.findIndex(
-      (marker) =>
-        Math.abs(marker.lat - latlng.lat) < 0.0001 &&
-        Math.abs(marker.lng - latlng.lng) < 0.0001
-    );
-
-    if (existingMarkerIndex >= 0) {
+    console.log(clickedCoords);
+    if (isMarkerExists(customMarkers, latlng)) {
       setCustomMarkers((prev) =>
-        prev.filter((_, index) => index !== existingMarkerIndex)
+        prev.filter(
+          (marker) =>
+            !(
+              Math.abs(marker.lat - latlng.lat) < 0.0001 &&
+              Math.abs(marker.lng - latlng.lng) < 0.0001
+            )
+        )
       );
     } else {
       setCustomMarkers((prev) => [...prev, latlng]);
@@ -281,6 +235,7 @@ export const Map: React.FC<MapProps> = ({
 
     onLocationSelect?.(latlng);
   };
+
   return (
     <Container className="h-[919px] mx-auto relative px-0">
       {showGeolocationPopup && (
@@ -317,6 +272,13 @@ export const Map: React.FC<MapProps> = ({
         {renderCustomMarkers()}
         {renderUserLocation()}
         <ZoomControl position="topright" />
+        <Button
+          variant="filters"
+          className="z-[700] absolute top-[95px] right-[10px] p-[10px]"
+          onClick={requestGeolocation}
+        >
+          <Vector className="stroke-foreground w-5 h-5" />
+        </Button>
       </MapContainer>
     </Container>
   );
