@@ -33,9 +33,7 @@ export const AuthChoice: React.FC<AuthChoiceProps> = ({ onChoice }) => {
   return (
     <div className=" flex flex-col max-w-[670px] w-full gap-[48px] text-white z-10">
       <div className="montserrat text-center">
-        <h2 className="text-[44px] font-bold leading-[52px] ">
-          {title}
-        </h2>
+        <h2 className="text-[44px] font-bold leading-[52px] ">{title}</h2>
       </div>
       <div className="flex  gap-[48px] justify-center ">
         <AuthChoiceButton

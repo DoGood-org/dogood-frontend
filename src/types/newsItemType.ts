@@ -4,6 +4,3 @@ export interface INewsItem {
   img: string;
   date: string;
 }
-
-
-

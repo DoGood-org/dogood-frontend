@@ -91,18 +91,16 @@ export const AuthForm: React.FC<Props> = (props) => {
      md:w-[554px] md:p-[60px]
      xl:w-[514px]  xl:p-[40px]"
     >
-
-
       {/* Title and Subtitle */}
-         <div className="mb-[24px] xl:mb-[24px] text-center">
-      {type === 'login' && (
-     <>
-          <h2 className="text-[32px] font-bold xl:mb-[16px]">
-            {t('loginFormTitle')}
-          </h2>
-          <h3 className="text-[20px]">{t('loginFormSubtitle')}</h3>
-     </>
-      )}
+      <div className="mb-[24px] xl:mb-[24px] text-center">
+        {type === 'login' && (
+          <>
+            <h2 className="text-[32px] font-bold xl:mb-[16px]">
+              {t('loginFormTitle')}
+            </h2>
+            <h3 className="text-[20px]">{t('loginFormSubtitle')}</h3>
+          </>
+        )}
         {(type === 'registerCompany' || type === 'registerPerson') && (
           <>
             <h2 className="text-[32px] font-bold xl:mb-[16px]">

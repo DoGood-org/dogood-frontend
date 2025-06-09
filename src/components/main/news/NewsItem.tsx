@@ -1,16 +1,19 @@
+import Image from 'next/image';
+import React from 'react';
+
 type Props = {
   id: string;
   title: string;
   img: string;
   date: string;
-}
-export const NewsItem = (props: Props) => {
+};
+export const NewsItem: React.FC<Props> = (props) => {
   return (
     <div className="news-item">
       <h2>{props.title}</h2>
-      <img src={props.img} alt={props.title} />
+      <Image src={props.img} alt={props.title} width={500} height={300} />
       <span>{new Date(props.date).toLocaleDateString()}</span>
     </div>
-  )
-}
+  );
+};
 export default NewsItem;

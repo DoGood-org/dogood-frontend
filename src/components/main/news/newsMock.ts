@@ -28,4 +28,5 @@ export const newsMock = [
     title: 'Entertainment Buzz: Celebrity News and Gossip',
     img: '@/../assets/news5.jpg',
     date: '2023-10-05T11:00:00Z',
-  }]
+  },
+];
