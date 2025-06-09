@@ -13,7 +13,7 @@ type AuthChoiceProps = {
 export const AuthChoice: React.FC<AuthChoiceProps> = ({ onChoice }) => {
   const t = useTranslations('auth');
   const AuthChoiceConfig = {
-    human: { title: t('personalAccount'), icon: <UserAuthIcon /> },
+    human: { title: t('personalAccount'), icon: <UserAuthIcon  /> },
     company: { title: t('businessAccount'), icon: <GroupAuthIcon /> },
   };
   const title = t('chooseAccountType');
@@ -31,11 +31,17 @@ export const AuthChoice: React.FC<AuthChoiceProps> = ({ onChoice }) => {
     }
   };
   return (
-    <div className=" flex flex-col max-w-[670px] w-full gap-[48px] text-white z-10">
+    <div
+      className=" flex flex-col items-center justify-center gap-[60px]  max-w-full text-[var(--text-white)] z-10 my-0 mx-auto
+    
+    sm:gap-[48px] xl:max-w-[670px] xl:gap-[48px] "
+    >
       <div className="montserrat text-center">
-        <h2 className="text-[44px] font-bold leading-[52px] ">{title}</h2>
+        <h2 className="text-[24px] sm:text-[44px] font-bold sm:leading-[52px] ">
+          {title}
+        </h2>
       </div>
-      <div className="flex  gap-[48px] justify-center ">
+      <div className="flex flex-col gap-[48px]  sm:flex-row sm:gap-[44px] justify-center">
         <AuthChoiceButton
           icon={AuthChoiceConfig.human.icon}
           title={AuthChoiceConfig.human.title}
