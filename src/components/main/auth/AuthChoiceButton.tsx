@@ -13,13 +13,15 @@ const AuthChoiceButton: React.FC<Props> = (props: Props) => {
     <div
       onClick={handleAuthChoice}
       role="button"
-      className="flex flex-col items-center justify-center  cursor-pointer   bg-[#303030] text-white 
-     p-6 w-[270px] h-[250px] rounded-[10px]
+      className="flex flex-col items-center cursor-pointer   bg-[#303030] text-white 
+     py-[64px] px-[60px] w-[260px] h-[220px] rounded-[12px]
      btn-expand-hover"
     >
-      <div className="flex flex-col gap-[30px] items-center justify-center">
+      <div className=" flex flex-col gap-[12px] items-center justify-center w-full">
         <Icon />
-        <p className="text-wrap text-center">{title}</p>
+        <p className="text-[#F1F1F1] text-center font-montserrat text-[20px] font-semibold leading-[26px] max-w-[300px] mx-auto break-words">
+          {title}
+        </p>
       </div>
     </div>
   );

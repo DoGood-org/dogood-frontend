@@ -4,7 +4,7 @@ import React from 'react';
 
 export const LoginPageContent: React.FC = () => {
   return (
-    <div className="bg-[#171b19] flex flex-col items-center justify-center  text-white w-full min-h-screen">
+    <div className=" flex flex-col items-center justify-center  text-white w-full min-h-screen">
       <AuthForm
         type="login"
         onFormSubmit={(type, data) => {

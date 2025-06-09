@@ -7,10 +7,9 @@ import { Verification } from './Verification';
 export const RegisterPageContent = (): React.ReactElement => {
   const [choice, setChoice] = useState<'human' | 'company' | null>(null);
   const [step, setStep] = useState<null | 'verification'>(null);
-  console.log(step);
 
   return (
-    <div className="bg-[#171b19] flex flex-col items-center justify-center  text-white  w-full">
+    <div className=" flex flex-col items-center justify-center  text-white  w-full">
       {!choice && <AuthChoice onChoice={setChoice} />}
       {choice === 'human' && !step && (
         <AuthForm
