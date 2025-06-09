@@ -1,6 +1,7 @@
 export type Theme = 'light' | 'dark';
 
-export interface ThemeContextType {
-  theme: Theme;
-  toggleTheme: (theme: Theme) => void;
-}
+export type ThemeStore = {
+  theme: Theme | undefined;
+  // toggleTheme?: (forcedTheme?: Theme) => void;
+  setTheme: (theme: Theme) => void;
+};

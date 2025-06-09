@@ -6,7 +6,8 @@ import { routing } from '../../i18n/routing';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import { Header, Footer } from '@/components';
-import { ThemeProvider } from '@/context/ThemeProvider';
+import { ThemeInitializer } from '@/components/layout/theme/ThemeInitializer';
+// import { ThemeProvider } from '@/context/ThemeProvider';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -40,12 +41,11 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className={`${montserrat.variable} ${roboto.variable} antialiased`}>
+        <ThemeInitializer />
         <NextIntlClientProvider locale={locale}>
-          <ThemeProvider>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </ThemeProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
