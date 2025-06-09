@@ -13,7 +13,7 @@ type AuthChoiceProps = {
 export const AuthChoice: React.FC<AuthChoiceProps> = ({ onChoice }) => {
   const t = useTranslations('auth');
   const AuthChoiceConfig = {
-    human: { title: t('personalAccount'), icon: <UserAuthIcon  /> },
+    human: { title: t('personalAccount'), icon: <UserAuthIcon /> },
     company: { title: t('businessAccount'), icon: <GroupAuthIcon /> },
   };
   const title = t('chooseAccountType');

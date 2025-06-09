@@ -19,8 +19,10 @@ const AuthChoiceButton: React.FC<Props> = (props: Props) => {
     >
       <div className=" flex flex-col  gap-[20px]  items-center justify-center w-full md:gap-[12px]">
         <Icon />
-        <p className="text-[#F1F1F1] text-center montserrat text-[18px] font-semibold mx-auto break-words
-        md:text-[20px] md:leading-[26px]">
+        <p
+          className="text-[#F1F1F1] text-center montserrat text-[18px] font-semibold mx-auto break-words
+        md:text-[20px] md:leading-[26px]"
+        >
           {title}
         </p>
       </div>
