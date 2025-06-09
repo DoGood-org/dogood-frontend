@@ -7,7 +7,6 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 import { Header, Footer } from '@/components';
 import { ThemeInitializer } from '@/components/layout/theme/ThemeInitializer';
-// import { ThemeProvider } from '@/context/ThemeProvider';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
