@@ -84,22 +84,32 @@ export const AuthForm: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className=" flex flex-col items-center justify-center  rounded-[10px] bg-[#303030] w-[514px] p-[40px] text-white shadow-md">
-      {type === 'login' && (
-        <div className="mb-6 text-center">
-          <h2 className="text-[32px] font-bold mb-4">{t('loginFormTitle')}</h2>
-          <h3 className="text-[20px]">{t('loginFormSubtitle')}</h3>
-        </div>
-      )}
-      {(type === 'registerCompany' || type === 'registerPerson') && (
-        <div className="mb-6 text-center">
-          <h2 className="text-[32px] font-bold mb-4">
-            {t('registerFormTitle')}
-          </h2>
-          <h3 className="text-[20px]">{t('registerFormSubtitle')}</h3>
-        </div>
-      )}
-
+    <div
+      className=" z-10 flex flex-col items-center justify-center  rounded-[12px] bg-[#303030] text-white shadow-md
+     p-[40px] w-[500px]
+     
+     md:w-[554px] md:p-[60px]
+     xl:w-[514px]  xl:p-[40px]"
+    >
+      {/* Title and Subtitle */}
+      <div className="mb-[24px] xl:mb-[24px] text-center">
+        {type === 'login' && (
+          <>
+            <h2 className="text-[32px] font-bold xl:mb-[16px]">
+              {t('loginFormTitle')}
+            </h2>
+            <h3 className="text-[20px]">{t('loginFormSubtitle')}</h3>
+          </>
+        )}
+        {(type === 'registerCompany' || type === 'registerPerson') && (
+          <>
+            <h2 className="text-[32px] font-bold xl:mb-[16px]">
+              {t('registerFormTitle')}
+            </h2>
+            <h3 className="text-[20px]">{t('registerFormSubtitle')}</h3>
+          </>
+        )}
+      </div>
       <form
         onSubmit={handleSubmit(submitHandler)}
         className="w-full flex flex-col"

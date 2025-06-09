@@ -14,5 +14,7 @@
     "python": true,
     "shellscript": true,
     "typescriptreact": true
-  }
+  },
+  "github.copilot.nextEditSuggestions.fixes": true,
+  "github.copilot.chat.codesearch.enabled": true
 }

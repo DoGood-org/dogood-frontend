@@ -7,18 +7,12 @@ type Props = {
   fill?: string;
 };
 
-const UserAuthIcon: React.FC<Props> = ({
-  width = 59,
-  height = 60,
-  className,
-  fill = 'white',
-}) => (
+const UserAuthIcon: React.FC<Props> = ({ className, fill = 'white' }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 59 60"
     fill="none"
-    className={className}
-    style={{ width, height }}
+    className={`w-[40px] h-[40px] sm:w-[48px] sm:h-[48px] md:w-[59px] md:h-[60px] ${className}`}
   >
     <path
       d="M30 36C38.2843 36 45 27.9411 45 18C45 8.05887 38.2843 0 30 0C21.7157 0 15 8.05887 15 18C15 27.9411 21.7157 36 30 36Z"

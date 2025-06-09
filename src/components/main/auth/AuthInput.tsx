@@ -21,7 +21,7 @@ type Props = {
 
 export const AuthInput = forwardRef<HTMLInputElement, Props>((props, ref) => (
   <>
-    <div className="flex flex-col gap-[10px] w-full">
+    <div className="flex flex-col gap-[12px] w-full">
       <label
         className="roboto block text-[18px] font-normal"
         htmlFor={props.htmlFor}
@@ -34,7 +34,7 @@ export const AuthInput = forwardRef<HTMLInputElement, Props>((props, ref) => (
           onChange={props.onChange}
           id={props.id}
           className={`
-            w-full px-4 py-2 text-[16px] rounded-[20px] text-[#696969] bg-white
+            w-full px-4 py-2 text-[16px] font-normal rounded-[20px] text-[#696969] bg-white
             placeholder:text-[#696969] focus:outline-none focus:ring-2 focus:ring-[var(--border)]
             ${props.icon ? (props.iconRight ? 'pr-10' : 'pl-10') : ''}
             ${props.className}
