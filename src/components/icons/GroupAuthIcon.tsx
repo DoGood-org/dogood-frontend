@@ -11,7 +11,7 @@ const GroupAuthIcon: React.FC<Props> = ({
   width = 102,
   height = 60,
   className = 'w-[68px] h-[40px] sm:w-[102px] sm:h-[60px] ',
-  fill = 'white',
+  fill = 'var(--foreground)',
 }) => {
   return (
     <svg

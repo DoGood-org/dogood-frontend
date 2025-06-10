@@ -9,7 +9,7 @@ export const RegisterPageContent = (): React.ReactElement => {
   const [step, setStep] = useState<null | 'verification'>(null);
 
   return (
-    <div className=" flex flex-col items-center justify-center  text-white  w-full">
+    <div className=" flex flex-col items-center justify-center  text-[var(--foreground)] w-full">
       {!choice && <AuthChoice onChoice={setChoice} />}
       {choice === 'human' && !step && (
         <AuthForm
@@ -30,8 +30,9 @@ export const RegisterPageContent = (): React.ReactElement => {
         />
       )}
 
-      {choice && (
-        <div className="mt-4 text-center">
+      {step === 'verification' && choice && <Verification />}
+      {/* {choice && step!=='verification' && (
+        <div className="block mt-4 text-center">
           <p className="text-sm text-gray-400">You have selected: </p>
           <strong>{choice === 'human' ? 'Human' : 'Company'}</strong>
           <button
@@ -42,8 +43,7 @@ export const RegisterPageContent = (): React.ReactElement => {
             Change
           </button>
         </div>
-      )}
-      {step === 'verification' && choice && <Verification />}
+      )} */}
     </div>
   );
 };
