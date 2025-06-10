@@ -39,7 +39,6 @@ export * from './main/map/TaskItem';
 export * from './main/map/TasksList';
 export * from './main/news/NewsItem';
 export * from './main/news/NewsList';
-export * from './main/news/newsMock';
 export * from './ui/Accordion';
 export * from './ui/Button';
 export * from './ui/Container';

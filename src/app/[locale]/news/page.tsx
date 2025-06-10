@@ -1,7 +1,5 @@
-import React from 'react';
-
 const NewsPage: React.FC = () => {
-  return <div>NewsPage</div>;
+  return <div> News Page</div>;
 };
 
 export default NewsPage;
