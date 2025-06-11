@@ -1,28 +1,57 @@
 import NewsItem from '@/components/main/news/NewsItem';
-import { INewsItem } from '@/types/newsItemType';
+import { INewsItem } from '@/types/news.interface';
+import { ArrowDownToDot, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import React from 'react';
-import news1 from '@/assets/images/news/news1.png';
-import news2 from '@/assets/images/news/news2.png';
-import news3 from '@/assets/images/news/news3.png';
 
 export const newsMock: INewsItem[] = [
   {
-    id: '1',
+    id: 'news_1',
     title: 'Kindness That Speaks Without Words',
-    img: news1,
+    img: '/news/news1.png',
     date: '2023-10-01T12:00:00Z',
+    tags: ['kindness', 'community'],
+    category: 'Community',
   },
   {
-    id: '2',
+    id: 'news_2',
     title: 'The Hidden Side of Healthcare: The Role of Giving',
-    img: news2,
+    img: '/news/news2.png',
     date: '2023-10-02T12:00:00Z',
+    tags: ['healthcare', 'giving'],
+    category: 'Healthcare',
   },
   {
-    id: '3',
+    id: 'news_3',
     title: 'When Helping Isn’t a Trend — It’s a Daily Choice',
-    img: news3,
+    img: '/news/news3.png',
     date: '2023-10-03T12:00:00Z',
+    tags: ['helping', 'choice'],
+    category: 'Lifestyle',
+  },
+  {
+    id: 'news_4',
+    title: 'Kindness That Speaks Without Words Part 2',
+    img: '/news/news1.png',
+    date: '2023-10-01T12:00:00Z',
+    tags: ['kindness', 'community'],
+    category: 'Community',
+  },
+  {
+    id: 'news_5',
+    title: 'The Hidden Side of Healthcare: The Role of Giving Part 2',
+    img: '/news/news2.png',
+    date: '2023-10-02T12:00:00Z',
+    tags: ['healthcare', 'giving'],
+    category: 'Healthcare',
+  },
+  {
+    id: 'news_6',
+    title: 'When Helping Isn’t a Trend — It’s a Daily Choice Part 2',
+    img: '/news/news3.png',
+    date: '2023-10-03T12:00:00Z',
+    tags: ['helping', 'choice'],
+    category: 'Lifestyle',
   },
 ];
 
@@ -34,21 +63,23 @@ export const NewsList: React.FC = () => {
   }
 
   return (
-    <section className="mx-auto w-full ">
-      <div className="my-container py-[100px]">
-        <h2>Last news, stories and blog posts</h2>
-        <ul className="news-list grid grid-cols-1 gap-[24px] px-[20px] md:grid-cols-2 lg:grid-cols-3">
-          {newsMock.slice(0, lengthNewsToDisplay).map((item) => (
-            <li key={item.id} className="flex flex-col justify-center">
-              <NewsItem
-                id={item.id}
-                title={item.title}
-                img={item.img}
-                date={item.date}
-              />
-            </li>
+    <section className="dark mx-auto w-full text-[var(--foreground)] py-[40px] ">
+      <div className="my-container">
+        <h2 className="mb-[40px] text-[var(--foreground)] text-[32px] font-normal leading-12">
+          Last news, stories and blog posts
+        </h2>
+        <ul className="news-list gap-[24px] px-[20px] flex flex-col justify-center items-center sm:flex-row sm:overflow-auto">
+          {newsMock.map((item) => (
+            <NewsItem key={item.id} item={item} />
           ))}
         </ul>
+   
+
+        <div className="mt-4 text-[16px] text-[var(--foreground)] text-left leading-6">
+          <Link href="/news" className="text-sm hover:underline">
+            See all news <ArrowRight className="inline" />
+          </Link>
+        </div>
       </div>
     </section>
   );
