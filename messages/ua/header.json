@@ -72,5 +72,6 @@
   "buttons": [
     { "name": "Увійти", "src": "/login", "variant": "primary" },
     { "name": "Зареєструватися", "src": "/register", "variant": "outline" }
-  ]
+  ],
+  "toggle": "Перемикач теми"
 }
