@@ -7,7 +7,7 @@
         "We believe that kindness and mutual support can transform the world. DoGood brings together volunteers, nonprofits, socially responsible businesses, and anyone who wants to make a difference — in a simple, transparent, and meaningful way.",
         "Our mission is not just to provide one-time help, but to build a global culture of doing good as part of daily life."
       ],
-      "img": "about.png"
+      "img": ["about1.png", "about2.png", "about3.png", "about4.png"]
     },
     {
       "view": "Volunteer",
@@ -16,7 +16,12 @@
         "Volunteering is not just about helping, it's about making the world around you a better place. By joining DoGood, you'll become part of a community where every action counts.",
         "Get involved in the causes you care about, from helping people to caring for nature. We'll support you every step of the way - just start."
       ],
-      "img": "volunteer.png"
+      "img": [
+        "volunteer1.png",
+        "volunteer2.png",
+        "volunteer3.png",
+        "volunteer4.png"
+      ]
     },
     {
       "view": "GoodBot",
@@ -25,7 +30,7 @@
         "DoGood Bot is your assistant in the world of good deeds. It will tell you where you need help, remind you of the task, help you choose a direction, and answer your questions when you are just starting out.",
         "You are always in touch with the platform: in messenger, without unnecessary transitions and forms. Just write - and good will become even more accessible."
       ],
-      "img": "goodBot.png"
+      "img": ["goodBot.png"]
     },
     {
       "view": "Grants",
@@ -34,7 +39,7 @@
         "Do you have a project that could make a difference in your community? We can help. DoGood supports social initiatives with grants so that good becomes systemic.",
         "Fill out an application form, tell us about your idea and get not only funding, but also support from your team and community."
       ],
-      "img": "grants.png"
+      "img": ["grants1.png", "grants2.png", "grants3.png", "grants4.png"]
     },
     {
       "view": "My Deeds",
@@ -43,7 +48,7 @@
         "Every good deed is a chance to make someone's day brighter. Support an elderly person, help a shelter, clean up a park - simple actions that change lives.",
         "On the DoGood platform, you choose where and when to help. Do good at your own pace - we are there for you every step of the way."
       ],
-      "img": "myDeeds.png"
+      "img": ["myDeeds1.png", "myDeeds2.png", "myDeeds3.png", "myDeeds4.png"]
     },
     {
       "view": "Donate",
@@ -52,7 +57,7 @@
         "Even if you don't have time, you can still help. One donation and you're already part of a big cause: helping people, animals, the environment.",
         "Every amount counts. You give others the opportunity to act and make a real difference - right now."
       ],
-      "img": "donate.png"
+      "img": ["donate1.png", "donate2.png", "donate3.png", "donate4.png"]
     }
   ],
   "aboutButton": "Learn more"
