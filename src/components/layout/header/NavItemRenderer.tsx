@@ -30,7 +30,7 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
           <div className="z-10 grid grid-cols-[62%_auto] grid-rows-2 gap-3 min-w-[400px] ">
             {navItem.content.map(({ src, name, description }, index) => (
               <Link
-                key={index}
+                key={`${index}-${name}`}
                 href={src}
                 className={`${index === 1 ? 'row-span-2 col-start-2 h-full flex flex-col justify-between' : ''}  dropdown-link block p-5 rounded-md transition duration-700 text-white `}
               >

@@ -21,7 +21,7 @@ export const Navigation: React.FC = () => {
       <ul className="flex gap-10 pl-10 text-h4-d">
         {navList.map((navItem, index) => (
           <NavItemRenderer
-            key={index}
+            key={`${index}-${navItem.title}`}
             navItem={navItem}
             isOpen={activeIndex === index}
             onToggle={() => handleToggle(index)}
