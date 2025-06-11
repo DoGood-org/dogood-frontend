@@ -175,6 +175,16 @@
 .btn-expand-hover:hover::before {
   width: 200%;
 }
+.faq-section {
+  background-image: url('/src/assets/images/faq/linesBlack.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.dark .faq-section {
+  background-image: url('/src/assets/images/faq/Lines.png');
+}
 
 /*---------------------------------------------------------------*/
 @layer base {
