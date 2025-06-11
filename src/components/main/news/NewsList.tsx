@@ -1,6 +1,6 @@
 import NewsItem from '@/components/main/news/NewsItem';
 import { INewsItem } from '@/types/news.interface';
-import { ArrowDownToDot, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 
@@ -56,8 +56,6 @@ export const newsMock: INewsItem[] = [
 ];
 
 export const NewsList: React.FC = () => {
-  const lengthNewsToDisplay = 3;
-
   if (!newsMock || newsMock.length === 0) {
     return <div>No news available</div>;
   }
@@ -73,7 +71,6 @@ export const NewsList: React.FC = () => {
             <NewsItem key={item.id} item={item} />
           ))}
         </ul>
-   
 
         <div className="mt-4 text-[16px] text-[var(--foreground)] text-left leading-6">
           <Link href="/news" className="text-sm hover:underline">

@@ -6,7 +6,6 @@ type Props = {
   item: INewsItem;
 };
 export const NewsItem: React.FC<Props> = (props) => {
-  const { id, title, img, date, tags, category } = props.item;
   if (!props.item || !props.item.id || !props.item.title) {
     return null;
   }
