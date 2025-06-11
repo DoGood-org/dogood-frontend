@@ -17,7 +17,7 @@ export const AboutSection: React.FC = () => {
     view: string;
     title: string;
     description: string[];
-    img: keyof typeof images;
+    img: Array<keyof typeof images>;
   }[];
 
   const [activeView, setActiveView] = useState(views[0].view);
@@ -40,15 +40,17 @@ export const AboutSection: React.FC = () => {
           />
           {activeData && (
             <div className="flex flex-col md:flex-row gap-7 md:gap-15 xl:gap-20 transition-opacity duration-500 ease-in-out opacity-100">
-              <div className="w-full md:w-[587px]  xl:max-w-[55%] xl:w-[937px]">
-                <Image
-                  src={images[activeData.img]}
-                  alt={activeData.title}
-                  width={937}
-                  height={500}
-                  className="rounded-xl shadow"
-                />
-              </div>
+              {activeData.img.map((imgKey, idx) => (
+                <div key={idx} className="w-full">
+                  <Image
+                    src={images[imgKey]}
+                    alt={`${activeData.title}-image${idx + 1}`}
+                    width={450}
+                    height={250}
+                    className="rounded-xl shadow w-full h-auto object-cover"
+                  />
+                </div>
+              ))}
               <div className="md:w-[41%] xl:py-[50px] flex flex-col">
                 <h2 className="font-bold text-[24px] md:text-[28px] xl:text-h2-d mb-6 xl:mb-11]">
                   {activeData.title}
