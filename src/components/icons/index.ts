@@ -5,6 +5,7 @@ export { default as Food } from './Food';
 export { default as IcBaselineTelegram } from './IcBaselineTelegram';
 export { default as IcOutlineFacebook } from './IcOutlineFacebook';
 export { default as LearnIcon } from './LearnIcon';
+export { default as Line6 } from './Line6';
 export { default as MailIcon } from './MailIcon';
 export { default as MdiLinkedin } from './MdiLinkedin';
 export { default as Medicine } from './Medicine';

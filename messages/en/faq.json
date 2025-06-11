@@ -18,12 +18,12 @@
   "contact": [
     {
       "heading": "Do you have any questions?",
-      "nameText": "What's your name?",
+      "nameText": "ex. Michael",
       "nameError": "Name is required",
-      "emailText": "E-mail?",
+      "emailText": "ex. example@gmail.com",
       "emailError": "Email is required",
-      "phoneText": "Phone number",
-      "messageText": "What are you interested in?"
+      "phoneText": "ex. +1 (111) 111-1111",
+      "messageText": "Type your message here ..."
     }
   ],
   "downtext": [

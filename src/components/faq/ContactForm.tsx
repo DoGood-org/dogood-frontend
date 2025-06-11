@@ -1,9 +1,9 @@
 'use client';
-
-import { useForm } from 'react-hook-form';
-import { Button } from '../ui/Button';
-import { MailIcon, MessageIcon, NameIcon, TelIcon } from '@/components/icons';
+import { useForm, useWatch } from 'react-hook-form';
+import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
+
+import { useEffect, useState } from 'react';
 type FormData = {
   name: string;
   email: string;
@@ -18,87 +18,125 @@ const ContactForm = (): React.ReactElement => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<FormData>();
 
   const onSubmit = (data: FormData): void => {
     console.log('Form submitted:', data);
   };
+  const messageValue = useWatch({ name: 'interest', control });
+  const [charCount, setCharCount] = useState(0);
 
+  useEffect(() => {
+    setCharCount(messageValue?.length || 0);
+  }, [messageValue]);
   return (
-    <div className="rounded-[10px] flex items-center bg-card">
+    <div className="flex items-center z-9">
       <div className="w-full">
-        <h2 className="text-[24px] md:text-[28px] lg:text-[32px] font-bold lg:pb-10">
+        <h2 className="text-[24px] md:text-[28px] xl:text-[48px] flex items-center justify-center">
           {contact.heading}
         </h2>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-[20px] py-[24px] md:space-y-[36px] md:py-[60px]"
+          className="space-y-[24px] py-[24px] md:space-y-[36px] md:pt-[40px] xl:py[0]"
         >
           <div className="relative">
-            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-              <NameIcon className="h-5 w-5 text-[#696969]" />
+            <div className="mb-4">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-[#696969] mb-1"
+              >
+                Name*
+              </label>
+              <input
+                type="text"
+                id="name"
+                {...register('name', { required: true })}
+                placeholder={contact.nameText}
+                className="placeholder:italic w-full pl-2 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-p2-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
+              />
+              {errors.name && (
+                <span className="z-10 absolute left-2 bottom-[-20px] text-red-500 text-sm pl-2">
+                  {contact.nameError}
+                </span>
+              )}
             </div>
-            <input
-              {...register('name', { required: true })}
-              placeholder={contact.nameText}
-              className="w-full pl-12 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-h3-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
-            />
-            {errors.name && (
-              <span className="absolute left-2 bottom-[-20px] text-red-500 text-sm pl-2">
-                {contact.nameError}
-              </span>
-            )}
           </div>
           <div className="relative">
-            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-              <MailIcon className="h-5 w-5 text-[#696969]" />
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-[#696969] mb-1"
+              >
+                E-mail*
+              </label>
+              <input
+                type="email"
+                id="email"
+                {...register('email', { required: true })}
+                placeholder={contact.emailText}
+                className="placeholder:italic w-full pl-2 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-p2-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
+              />
+              {errors.email && (
+                <span className="absolute left-2 bottom-[-20px] text-red-500 text-sm pl-2">
+                  {contact.emailError}
+                </span>
+              )}
             </div>
-            <input
-              type="email"
-              {...register('email', { required: true })}
-              placeholder={contact.emailText}
-              className="w-full pl-12 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-h3-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
-            />
-            {errors.email && (
-              <span className="absolute left-2 bottom-[-20px] text-red-500 text-sm pl-2">
-                {contact.emailError}
-              </span>
-            )}
           </div>
           <div className="relative">
-            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-              <TelIcon className="h-5 w-5 text-[#696969]" />
+            <div className="mb-4">
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-[#696969] mb-1"
+              >
+                Phone number(optional)
+              </label>
+              <input
+                id="phone"
+                type="tel"
+                {...register('phone')}
+                placeholder={contact.phoneText}
+                className="placeholder:italic w-full pl-2 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-p2-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
+              />
             </div>
-            <input
-              type="tel"
-              {...register('phone')}
-              placeholder={contact.phoneText}
-              className="w-full pl-12 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-h3-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
-            />
           </div>
           <div className="relative mb-[25px]">
-            <div className="absolute top-4 left-4 pointer-events-none">
-              <MessageIcon className="h-5 w-5 text-[#696969]" />
+            <div className="mb-4">
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium text-[#696969] mb-1"
+              >
+                Add a message
+              </label>
+              <textarea
+                id="message"
+                maxLength={200}
+                {...register('interest')}
+                placeholder={contact.messageText}
+                className="placeholder:italic w-full h-[122px] pl-2 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-p2-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
+              />
             </div>
-            <input
-              {...register('interest')}
-              placeholder={contact.messageText}
-              className="w-full pl-12 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-h3-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[20px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
-            />
+            <div className="absolute bottom-2 right-4 text-xs text-[#999999]">
+              {charCount}/200
+            </div>
+          </div>
+          <div className="pt-[40px] flex flex-col-reverse items-center sm:flex-row sm:items-start sm:justify-between gap-[20px] ">
+            <p className="text-[#999999] text-p4-m md:text-p2-d max-w-[365px]">
+              {downText.text}
+            </p>
+            <Button
+              variant="outline"
+              size="lg"
+              type="submit"
+              // onClick={() => }
+              className="min-w-[186px] md:min-w-[180px] btn-expand-hover xl:text-p2-d"
+            >
+              {downText.btn}
+            </Button>
           </div>
         </form>
-        <div className="flex flex-col-reverse items-center sm:flex-row sm:items-start sm:justify-between gap-[20px] ">
-          <p className="text-[#999999] text-p4-m md:text-h3-d max-w-[520px]">
-            {downText.text}
-          </p>
-          <Button
-            className="btn-expand-hover active:bg-btn-active w-[313px] sm:max-w-[196px] md:max-w-[228px] max-h-[50px] text-white"
-            variant="primary"
-          >
-            {downText.btn}
-          </Button>
-        </div>
       </div>
     </div>
   );
