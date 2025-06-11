@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useThemeStore } from '@/zustand/stores/themeStore';
 import { getInitialTheme, applyTheme } from '@/zustand/services/themeService';
 import type { Theme } from '@/types';
+import { useTheme } from '@/hooks/useTheme';
 
 export const ThemeInitializer = (): null => {
-  const setTheme = useThemeStore((s) => s.setTheme);
+  const { setTheme } = useTheme();
 
   useEffect(() => {
     const initialTheme: Theme = getInitialTheme();
