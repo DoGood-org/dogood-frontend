@@ -181,6 +181,9 @@
 @layer base {
   * {
     @apply border-border;
+    transition:
+      background-color 0.8s ease,
+      color 0.8s ease;
     /* outline-ring/50; */
   }
   body {
