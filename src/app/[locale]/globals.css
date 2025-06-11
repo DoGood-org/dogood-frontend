@@ -322,3 +322,17 @@
     -ms-overflow-style: none;
   }
 }
+
+/* Swiper Pagination */
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background-color: var(--btn);
+  border-radius: 50%;
+  opacity: 1;
+}
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  transform: scale(1.2);
+  background-color: transparent;
+  transition: transform 0.3s ease;
+}
