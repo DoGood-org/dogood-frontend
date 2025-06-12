@@ -3,16 +3,13 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components';
+import { AboutTabsProps } from '@/types';
 
 export const AboutAnimationTabs = ({
   views,
   activeView,
   onChange,
-}: {
-  views: { view: string }[];
-  activeView: string;
-  onChange: (view: string) => void;
-}): React.JSX.Element => {
+}: AboutTabsProps): React.JSX.Element => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [rect, setRect] = useState<{ left: number; width: number } | null>(
     null

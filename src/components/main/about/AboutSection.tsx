@@ -1,24 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
-import { images } from '@/assets/images/about/import';
 import { LearnIcon } from '../../icons';
 import { AboutAnimationTabs, Button, Container } from '@/components';
+import { AboutSectionProps } from '@/types';
+import { AboutImages } from './AboutImages';
 
 export const AboutSection: React.FC = () => {
   const t = useTranslations('about');
   const router = useRouter();
   const locale = useLocale();
-  const views = t.raw('views') as {
-    view: string;
-    title: string;
-    description: string[];
-    img: Array<keyof typeof images>;
-  }[];
+  const views = t.raw('views') as AboutSectionProps[];
 
   const [activeView, setActiveView] = useState(views[0].view);
   const activeData = views.find(({ view }) => view === activeView);
@@ -40,30 +35,15 @@ export const AboutSection: React.FC = () => {
           />
           {activeData && (
             <div className="flex flex-col md:flex-row gap-7 md:gap-15 xl:gap-20 transition-opacity duration-500 ease-in-out opacity-100">
-              {activeData.img.map((imgKey, idx) => (
-                <div key={`${idx}-${imgKey}`} className="w-full">
-                  <Image
-                    src={images[imgKey]}
-                    alt={`${activeData.title}-image${idx + 1}`}
-                    width={450}
-                    height={250}
-                    className="rounded-xl shadow w-full h-auto object-cover"
-                  />
-                </div>
-              ))}
+              <AboutImages activeData={activeData} />
               <div className="md:w-[41%] xl:py-[50px] flex flex-col">
                 <h2 className="font-bold text-[24px] md:text-[28px] xl:text-h2-d mb-6 xl:mb-11]">
                   {activeData.title}
                 </h2>
                 <div className="space-y-2 mb-7 xl:mb-4">
-                  {/* {activeData.description.map((desc, idx) => ( */}
-                  <p
-                    // key={idx}
-                    className="text-p2-d md:text-p1-d font-normal mb-[18px] xl:mb-[35px]"
-                  >
+                  <p className="text-p2-d md:text-p1-d font-normal mb-[18px] xl:mb-[35px]">
                     {activeData.description}
                   </p>
-                  {/* ))} */}
                 </div>
 
                 <Button
