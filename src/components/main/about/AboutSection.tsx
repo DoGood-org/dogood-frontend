@@ -41,7 +41,7 @@ export const AboutSection: React.FC = () => {
           {activeData && (
             <div className="flex flex-col md:flex-row gap-7 md:gap-15 xl:gap-20 transition-opacity duration-500 ease-in-out opacity-100">
               {activeData.img.map((imgKey, idx) => (
-                <div key={idx} className="w-full">
+                <div key={`${idx}-${imgKey}`} className="w-full">
                   <Image
                     src={images[imgKey]}
                     alt={`${activeData.title}-image${idx + 1}`}
@@ -56,14 +56,14 @@ export const AboutSection: React.FC = () => {
                   {activeData.title}
                 </h2>
                 <div className="space-y-2 mb-7 xl:mb-4">
-                  {activeData.description.map((desc, idx) => (
-                    <p
-                      key={idx}
-                      className="text-p2-d md:text-p1-d font-normal mb-[18px] xl:mb-[35px]"
-                    >
-                      {desc}
-                    </p>
-                  ))}
+                  {/* {activeData.description.map((desc, idx) => ( */}
+                  <p
+                    // key={idx}
+                    className="text-p2-d md:text-p1-d font-normal mb-[18px] xl:mb-[35px]"
+                  >
+                    {activeData.description}
+                  </p>
+                  {/* ))} */}
                 </div>
 
                 <Button
