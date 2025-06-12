@@ -201,10 +201,6 @@
     font-family: var(--font-montserrat);
     line-height: 1.2;
     margin: 0 auto;
-    @apply xs:max-w-[var(--breakpoint-xs)];
-    @apply sm:max-w-[var(--breakpoint-sm)];
-    @apply md:max-w-[var(--breakpoint-md)];
-    @apply xl:max-w-[var(--breakpoint-xl)];
   }
 
   p {
@@ -222,7 +218,7 @@
     @apply xs:px-5 xs:max-w-[var(--breakpoint-xs)];
     @apply sm:px-15 sm:max-w-[var(--breakpoint-sm)];
     @apply md:px-15 md:max-w-[var(--breakpoint-md)];
-    @apply xl:px-25 xl:max-w-[var(--breakpoint-xl)];
+    @apply xl:px-20 xl:max-w-[var(--breakpoint-xl)];
   }
 
   .bg-hero {
