@@ -9,6 +9,9 @@ import NatureMarker from '@/assets/images/map/nature-marker.png';
 import AnimalMarker from '@/assets/images/map/animal-marker.png';
 import FoodMarker from '@/assets/images/map/food-marker.png';
 import MyPositionMarker from '@/assets/images/map/my-position.png';
+import NotePencil from '@/components/icons/NotePencil';
+import Binoculars from '@/components/icons/Binoculars';
+import HandHeart from '@/components/icons/HandHeart';
 
 import {
   CategoryItem,
@@ -21,6 +24,7 @@ import {
 } from '@/types/mapType';
 import { iconMap } from '@/components';
 import { Icon, LatLngLiteral } from 'leaflet';
+import { IHowItWorksItem } from '@/types/howItWorksType';
 
 export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
@@ -44,6 +48,12 @@ export const getDistancesList = (t: TranslationFunction): DistanceItem[] => [
 export const getCategoryIcon = (category: keyof typeof iconMap): IconData => {
   return iconMap[category];
 };
+
+export const getHowItWorks = (t: TranslationFunction): IHowItWorksItem[] => [
+  { icon: NotePencil, title: t('block1') },
+  { icon: Binoculars, title: t('block2') },
+  { icon: HandHeart, title: t('block3') },
+];
 //---------------------------map utils-------------------------------------------
 /**
  * Creates a custom Leaflet icon

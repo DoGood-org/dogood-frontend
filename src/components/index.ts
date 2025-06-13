@@ -27,6 +27,7 @@ export * from './main/auth/LoginPageContent';
 export * from './main/auth/RegisterLoginSocial';
 export * from './main/auth/RegisterPageContent';
 export * from './main/auth/Verification';
+export * from './main/howItWorks/HowItWorks';
 export * from './main/map/CategoryFilter';
 export * from './main/map/Description';
 export * from './main/map/DistanceFilter';
