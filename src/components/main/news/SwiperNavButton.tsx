@@ -3,24 +3,25 @@ import { JSX } from 'react';
 
 type Props = {
   className?: string;
-  icon?: LucideIcon | JSX.Element;
+  icon: LucideIcon;
   onClick?: () => void;
   disabled?: boolean;
   type?: 'prev' | 'next';
   ariaLabel?: string;
 };
 export const SwiperNavButton = (props: Props): JSX.Element => {
-  if (!props.icon) {
-    return (
+ 
+  return (
+      <>
       <button
-        className={`${props.className} block h-4 w-4 cursor-pointer hover:scale-125 text-white`}
+        className={`${props.className} w-full  cursor-pointer hover:scale-125 text-[var(--foreground)] bg-transparent flex items-center justify-center`}
         onClick={props.onClick}
         disabled={props.disabled}
         aria-label={props.ariaLabel}
       >
-        {props.icon} button
-      </button>
+        {props.icon && <props.icon color='currentColor' size={24} />}
+      </button></>
     );
   }
-  return <></>;
-};
+
+

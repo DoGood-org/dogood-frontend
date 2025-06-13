@@ -282,7 +282,7 @@ export const AuthForm: React.FC<Props> = (props) => {
           {t('nextStep')}
         </Button>
         <RegisterLoginSocial
-          className="mt-[36px] sm:mt-[16px]"
+          className="mt-[36px] sm:mt-[16px] text-[var(--foreground)]"
           onSocialLogin={(provider) => console.log(provider)}
         />
       </form>

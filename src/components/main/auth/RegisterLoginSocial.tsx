@@ -33,12 +33,11 @@ export const RegisterLoginSocial: React.FC<Props> = ({
         {socialButtons.map((button, index) => (
           <button
             key={index}
-            className={`btn-${button.label.toLowerCase()}`}
             aria-label={button.label}
             title={button.label}
             onClick={() => onSocialLogin && onSocialLogin(button.label)}
           >
-            <button.icon className={'text-[var(--foreground)]'} />
+            <button.icon className="w-6 h-6 text-[var(--foreground)]" />
           </button>
         ))}
       </div>
