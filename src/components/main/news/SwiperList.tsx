@@ -5,7 +5,6 @@ import { INewsItem } from '@/types/news.interface';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 
-
 type Props = {
   newsItems: INewsItem[];
   swiperContainerClass: string;
