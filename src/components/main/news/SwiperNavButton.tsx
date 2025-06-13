@@ -1,8 +1,9 @@
+import { LucideIcon } from 'lucide-react';
 import { JSX } from 'react';
 
 type Props = {
   className?: string;
-  icon?: React.ReactNode;
+  icon?: LucideIcon | JSX.Element;
   onClick?: () => void;
   disabled?: boolean;
   type?: 'prev' | 'next';
@@ -12,12 +13,12 @@ export const SwiperNavButton = (props: Props): JSX.Element => {
   if (!props.icon) {
     return (
       <button
-        className={`${props.className} cursor-pointer hover:scale-125`}
+        className={`${props.className} block h-4 w-4 cursor-pointer hover:scale-125 text-white`}
         onClick={props.onClick}
         disabled={props.disabled}
         aria-label={props.ariaLabel}
       >
-        {props.icon}
+        {props.icon} button
       </button>
     );
   }

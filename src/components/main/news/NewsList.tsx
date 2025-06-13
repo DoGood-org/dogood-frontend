@@ -7,16 +7,16 @@ import React, { JSX } from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { SwiperNavButton } from '@/components/main/news/SwiperNavButton';
 import { SwiperList } from '@/components/main/news/SwiperList';
 import { mockNews } from '@/components/main/news/mockNews';
 import { useTranslations } from 'next-intl';
 import { SwiperPagination } from '@/components/main/news/SwiperPagination';
+import { SwiperNavButton } from '@/components/main/news/SwiperNavButton';
 
 export const NewsList = (): JSX.Element => {
   const t = useTranslations('news');
   return (
-    <section className="dark mx-auto w-full text-[var(--foreground)] py-[40px] ">
+    <section className=" mx-auto w-full text-[var(--foreground)] py-[40px] ">
       <div className="my-container">
         <h2
           className="text-[var(--foreground)] text-[32px] font-normal leading-12
@@ -37,7 +37,7 @@ export const NewsList = (): JSX.Element => {
               className="prevNews"
               ariaLabel="Previous news"
               onClick={() => {}}
-              icon={<ArrowBigUp className="stroke-current" />}
+              icon={<ArrowBigUp className="stroke-white h-6 w-6" />}
             />
             <SwiperNavButton
               className="nextNews"
@@ -50,7 +50,7 @@ export const NewsList = (): JSX.Element => {
 
         <SwiperList
           newsItems={mockNews}
-          swiperContainerClass="flex h-[1380px] my-[40px] md:h-[480px]"
+          swiperContainerClass="flex h-[1380px] my-[40px] sm:h-[480px]"
           prevClass="prevNews"
           nextClass="nextNews"
           paginationClass="news-pagination"
@@ -58,7 +58,8 @@ export const NewsList = (): JSX.Element => {
           bulletActiveClass="news-pagination-bullet-active"
         />
 
-        <div className="mt-4 text-[16px] text-[var(--foreground)] text-left leading-6 md:text-right">
+        <div className="mt-4 text-[16px] text-[var(--foreground)] text-left leading-6 
+        md:text-right">
           <Link href="/news" className="text-sm hover:underline">
             {t('newsList.seeAll')} <ArrowRight className="inline" />
           </Link>

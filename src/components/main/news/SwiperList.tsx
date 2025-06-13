@@ -48,6 +48,18 @@ export const SwiperList: React.FC<Props> = (props) => {
         edgeSwipeDetection={true}
         onResize={(swiper) => swiper.update()}
         breakpoints={{
+          960: {
+            slidesPerView: 2,
+            direction: 'horizontal',
+            spaceBetween: 16,
+            edgeSwipeDetection: true,
+          },
+          1494: {
+            slidesPerView: 3,
+            direction: 'horizontal',
+            spaceBetween: 16,
+            edgeSwipeDetection: true,
+          },
           1920: {
             slidesPerView: 4,
             direction: 'horizontal',
