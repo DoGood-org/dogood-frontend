@@ -1,23 +1,26 @@
 import { SettingsContentProps } from '@/types';
-import { ThemeToggle } from './ThemeToggle';
+import { LanguageSwitcher, ThemeToggle } from '@/components';
 
 export const SettingsList: React.FC<SettingsContentProps> = ({
   settingItem,
 }) => {
   const content = settingItem.content;
-  console.log(content);
+
+  const settingsComponents: Record<string, React.ReactNode> = {
+    languages: <LanguageSwitcher />,
+    accessibility: <p>features switch</p>,
+    theme: <ThemeToggle />,
+  };
 
   return (
     <ul className="flex flex-col gap-[25px]">
-      {content.map(({ name, description }) => (
-        <li className="flex gap-10" key={name}>
+      {content.map(({ id, name, description }, index) => (
+        <li className="flex gap-10 justify-between" key={`${index}-${id}`}>
           <div className="w-[215px]">
             <h4 className="mb-[22px]">{name}</h4>
             <p className="text-p2-d text-text-gray">{description}</p>
           </div>
-          {name === 'Languages' && <p>Switch</p>}
-          {name === 'Special features' && <p>features switch</p>}
-          {name === 'Theme' && <ThemeToggle />}
+          {settingsComponents[id]}
         </li>
       ))}
     </ul>

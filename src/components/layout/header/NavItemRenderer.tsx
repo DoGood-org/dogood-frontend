@@ -25,12 +25,12 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
         <NavDropdown
           isOpen={isOpen}
           trigger={navItem.title}
-          className="desktop:w-[631px]"
+          className="xl:w-[631px]"
         >
           <div className="z-10 grid grid-cols-[62%_auto] grid-rows-2 gap-3 min-w-[400px] ">
             {navItem.content.map(({ src, name, description }, index) => (
               <Link
-                key={index}
+                key={`${index}-${name}`}
                 href={src}
                 className={`${index === 1 ? 'row-span-2 col-start-2 h-full flex flex-col justify-between' : ''}  dropdown-link block p-5 rounded-md transition duration-700 text-white `}
               >
@@ -47,7 +47,7 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
         <NavDropdown
           isOpen={isOpen}
           trigger={navItem.title}
-          className="right-0 left-20 p-10"
+          className="left-20 p-10"
         >
           <ul>
             <SettingsList settingItem={navItem} />

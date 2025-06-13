@@ -52,14 +52,17 @@
       "type": "settings",
       "content": [
         {
+          "id": "languages",
           "name": "Languages",
           "description": "Select a language"
         },
         {
+          "id": "accessibility",
           "name": "Special features",
           "description": "Mode for the visually impaired"
         },
         {
+          "id": "theme",
           "name": "Theme",
           "description": "Display theme"
         }
@@ -69,5 +72,6 @@
   "buttons": [
     { "name": "Log in", "src": "/login", "variant": "primary" },
     { "name": "Sign up", "src": "/register", "variant": "outline" }
-  ]
+  ],
+  "toggle": "Theme toggle"
 }

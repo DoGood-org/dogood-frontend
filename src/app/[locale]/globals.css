@@ -176,11 +176,24 @@
 .btn-expand-hover:hover::before {
   width: 200%;
 }
+.faq-section {
+  background-image: url('/src/assets/images/faq/linesBlack.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.dark .faq-section {
+  background-image: url('/src/assets/images/faq/Lines.png');
+}
 
 /*---------------------------------------------------------------*/
 @layer base {
   * {
     @apply border-border;
+    transition:
+      background-color 0.8s ease,
+      color 0.8s ease;
     /* outline-ring/50; */
   }
   body {

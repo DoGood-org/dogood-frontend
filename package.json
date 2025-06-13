@@ -23,6 +23,7 @@
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "lucide-react": "^0.511.0",
+    "middleware": "^1.0.0",
     "next": "^15.3.3",
     "next-intl": "^4.1.0",
     "react": "^19.1.0",
@@ -33,7 +34,8 @@
     "swiper": "^11.2.8",
     "tailwind-merge": "^3.3.0",
     "tailwind-scrollbar": "^4.0.2",
-    "yup": "^1.6.1"
+    "yup": "^1.6.1",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
