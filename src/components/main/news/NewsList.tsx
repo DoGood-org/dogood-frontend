@@ -58,8 +58,10 @@ export const NewsList = (): JSX.Element => {
           bulletActiveClass="news-pagination-bullet-active"
         />
 
-        <div className="mt-4 text-[16px] text-[var(--foreground)] text-left leading-6 
-        md:text-right">
+        <div
+          className="mt-4 text-[16px] text-[var(--foreground)] text-left leading-6 
+        md:text-right"
+        >
           <Link href="/news" className="text-sm hover:underline">
             {t('newsList.seeAll')} <ArrowRight className="inline" />
           </Link>
