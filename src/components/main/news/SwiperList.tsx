@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import NewsItem from '@/components/main/news/NewsItem';
+import { NewsItem } from '@/components/main/news/NewsItem';
 import { INewsItem } from '@/types/news.interface';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
