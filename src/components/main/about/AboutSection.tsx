@@ -28,16 +28,23 @@ export const AboutSection: React.FC = () => {
         className="relative z-10 items-center overflow-hidden"
       >
         <Container>
-          <AboutAnimationTabs
+          {/* <AboutAnimationTabs
             views={views}
             activeView={activeView}
             onChange={setActiveView}
-          />
+          /> */}
           {activeData && (
-            <div className="flex flex-col md:flex-row gap-7 md:gap-15 xl:gap-20 transition-opacity duration-500 ease-in-out opacity-100">
-              <AboutImages activeData={activeData} />
-              <div className="md:w-[41%] xl:py-[50px] flex flex-col">
-                <h2 className="font-bold text-[24px] md:text-[28px] xl:text-h2-d mb-6 xl:mb-11]">
+            <div className="flex flex-col md:flex-row gap-7 md:gap-15 xl:gap-6 transition-opacity duration-500 ease-in-out opacity-100">
+              <div>
+                <AboutAnimationTabs
+                  views={views}
+                  activeView={activeView}
+                  onChange={setActiveView}
+                />
+                <AboutImages activeData={activeData} />
+              </div>
+              <div className="xl:py-39 flex flex-col justify-between">
+                <h2 className="font-bold text-[24px] md:text-[28px] xl:text-[48px] mb-8 xl:mb-12]">
                   {activeData.title}
                 </h2>
                 <div className="space-y-2 mb-7 xl:mb-4">
@@ -49,7 +56,7 @@ export const AboutSection: React.FC = () => {
                 <Button
                   variant="outline"
                   size="2xl"
-                  className="w-[145px] self-center md:w-auto flex-shrink-0 flex-grow-0 md:self-start gap-[10px] md:gap-[10px] xl:gap-3 hover:border-btn-hover hover:text-btn-text"
+                  className="w-[145px] self-center md:w-auto flex-shrink-0 flex-grow-0 md:self-start gap-[10px] md:gap-[10px] xl:gap-3 hover:border-btn-hover hover:text-btn-text mt-auto"
                   onClick={() => router.push(`/${locale}/about`)}
                 >
                   <span className="absolute inset-0 bg-btn-hover origin-center rounded-md transform scale-x-0 group-hover:scale-x-100 transition-transform duration-800 z-0"></span>
