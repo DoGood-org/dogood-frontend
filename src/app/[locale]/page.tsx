@@ -1,5 +1,6 @@
 import React from 'react';
 import Faq from '@/components/main/Faq';
+import Donate from '@/components/main/Donate';
 import { AboutSection, HeroSection, MapSection, NewsList } from '@/components';
 
 export default function Home(): React.JSX.Element {
@@ -8,6 +9,7 @@ export default function Home(): React.JSX.Element {
       <HeroSection />
       <AboutSection />
       <MapSection />
+      <Donate />
       <Faq />
       <NewsList />
     </>
