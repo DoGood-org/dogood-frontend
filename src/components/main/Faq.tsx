@@ -12,9 +12,7 @@ const Faq = (): React.JSX.Element => {
         <Line6 />
       </div>
       <Container>
-        <div className="flex flex-col p-[20px] md:p-[60px] justify-center sm:py-0 gap-[60px] sm:flex-col-reverse xl:flex-row">
-          <ContactForm />
-        </div>
+        <ContactForm />
       </Container>
     </section>
   );

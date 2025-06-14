@@ -16,8 +16,8 @@ const DonateCard = ({
         <div className="w-[50px] h-[50px] xl:w-[100px] xl:h-[100px]">
           {icon}
         </div>
-        <div className="text-[36px] xl:text-[72px]">{title}</div>
-        <div className="text-p3-m xl:text-h3-d text-center">{description}</div>
+        <h4 className="text-[36px] xl:text-[72px]">{title}</h4>
+        <p className="text-p3-m xl:text-h3-d text-center">{description}</p>
       </div>
     </div>
   );
