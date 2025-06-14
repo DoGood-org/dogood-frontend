@@ -12,6 +12,7 @@ import {
 } from '@/lib/validation/authSchemas';
 import { AuthErrorBox } from './AuthErrorBox';
 import { useTranslations } from 'next-intl';
+import { RegisterLoginSocial } from '@/components/main/auth/RegisterLoginSocial';
 
 interface FormRegister {
   name: string;
@@ -85,28 +86,31 @@ export const AuthForm: React.FC<Props> = (props) => {
 
   return (
     <div
-      className=" z-10 flex flex-col items-center justify-center  rounded-[12px] bg-[#303030] text-white shadow-md
-     p-[40px] w-[500px]
-     
-     md:w-[554px] md:p-[60px]
+      className="flex flex-col items-center justify-center  rounded-[12px] bg-[var(--card)] text-[var(--foreground)] shadow-md
+     p-[24px] w-full 
+     sm:w-[554px] sm:p-[60px]
      xl:w-[514px]  xl:p-[40px]"
     >
       {/* Title and Subtitle */}
-      <div className="mb-[24px] xl:mb-[24px] text-center">
+      <div className=" mb-[40px] sm:mb-[24px] xl:mb-[24px] text-center">
         {type === 'login' && (
           <>
-            <h2 className="text-[32px] font-bold xl:mb-[16px]">
+            <h2 className="text-[24px] font-bold mb-[16px] sm:text-[32px]">
               {t('loginFormTitle')}
             </h2>
-            <h3 className="text-[20px]">{t('loginFormSubtitle')}</h3>
+            <h3 className="text-[16px] sm:text-[20px]">
+              {t('loginFormSubtitle')}
+            </h3>
           </>
         )}
         {(type === 'registerCompany' || type === 'registerPerson') && (
           <>
-            <h2 className="text-[32px] font-bold xl:mb-[16px]">
+            <h2 className="text-[24px] font-bold mb-[16px] sm:text-[32px]">
               {t('registerFormTitle')}
             </h2>
-            <h3 className="text-[20px]">{t('registerFormSubtitle')}</h3>
+            <h3 className="text-[16px] sm:text-[20px]">
+              {t('registerFormSubtitle')}
+            </h3>
           </>
         )}
       </div>
@@ -273,10 +277,14 @@ export const AuthForm: React.FC<Props> = (props) => {
           type="submit"
           variant={'default'}
           size={'md'}
-          className="btn-auth mt-1 btn-expand-hover text-white h-[44px]"
+          className="btn-auth mt-[4px] sm:mt-[36px] btn-expand-hover text-[var(--foreground)] h-[44px]"
         >
           {t('nextStep')}
         </Button>
+        <RegisterLoginSocial
+          className="mt-[36px] sm:mt-[16px] text-[var(--foreground)]"
+          onSocialLogin={(provider) => console.log(provider)}
+        />
       </form>
     </div>
   );

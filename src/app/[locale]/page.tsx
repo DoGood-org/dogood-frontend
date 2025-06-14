@@ -1,6 +1,6 @@
 import React from 'react';
 import Faq from '@/components/main/Faq';
-import { AboutSection, HeroSection, MapSection } from '@/components';
+import { AboutSection, HeroSection, MapSection, NewsList } from '@/components';
 
 export default function Home(): React.JSX.Element {
   return (
@@ -9,6 +9,7 @@ export default function Home(): React.JSX.Element {
       <AboutSection />
       <MapSection />
       <Faq />
+      <NewsList />
     </>
   );
 }
