@@ -1,7 +1,9 @@
 export { default as Animal } from './Animal';
 export { default as ChevronDown } from './ChevronDown';
 export { default as Close } from './Close';
+export { default as Drop } from './Drop';
 export { default as Food } from './Food';
+export { default as Heart } from './Heart';
 export { default as IcBaselineTelegram } from './IcBaselineTelegram';
 export { default as IcOutlineFacebook } from './IcOutlineFacebook';
 export { default as LearnIcon } from './LearnIcon';
@@ -13,6 +15,7 @@ export { default as MessageIcon } from './MessageIcon';
 export { default as Moon } from './Moon';
 export { default as NameIcon } from './NameIcon';
 export { default as Nature } from './Nature';
+export { default as Pill } from './Pill';
 export { default as Plus } from './Plus';
 export { default as RiInstagramLine } from './RiInstagramLine';
 export { default as RiTwitterXLine } from './RiTwitterXLine';
