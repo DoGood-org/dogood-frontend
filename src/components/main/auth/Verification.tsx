@@ -140,14 +140,16 @@ export const Verification: React.FC = () => {
   };
 
   return (
-    <div className="z-10 flex flex-col p-[40px] w-[514px] gap-[32px] justify-center items-center  bg-[#303030] text-[var(--text-white)] rounded  shadow-md">
-      <div className="flex flex-col gap-[40px] w-full justify-center items-center">
-        <h2 className="text-[32px] font-bold ">{t('verificationRequired')} </h2>
-        <p className="roboto text-[16px] font-normal">
+    <div className=" dark bg-[var(--card)] flex flex-col gap-[16px] p-[24px] sm:p-[40px]  sm:w-[514px]  sm:gap-[32px] justify-center items-center text-[var(--foreground)] rounded-[12px]  shadow-md">
+      <div className="flex flex-col  sm:gap-[40px] w-full justify-center items-center">
+        <h2 className="text-[24px] sm:text-[32px] mb-[16px] sm:gap-0  font-bold ">
+          {t('verificationRequired')}{' '}
+        </h2>
+        <p className="roboto text-[16px] mb-[16px] sm:mb-0 font-normal">
           {t('enterVerificationCode')}
           <span className="font-bold">{t('yourEmail')}</span>
         </p>
-        <div className="flex gap-4">
+        <div className="mb-[32px] sm:mb-0 flex gap-[24px]">
           {Array(6)
             .fill(0)
             .map((_, i) => (
@@ -160,7 +162,7 @@ export const Verification: React.FC = () => {
                 key={i}
                 maxLength={1}
                 type="text"
-                className={`w-10 text-center border-b-[5px] border-white focus:outline-none text-[32px] bg-transparent text-[var(--text-white)] placeholder:text-white ${i === 0 ? 'ml-0' : ''} ${
+                className={`w-[35px] sm:w-[40px]  text-center border-b-[5px] border-[var(--foreground)] focus:outline-none focus:border-[var(--foreground)] focus:border-b-[5px] text-[24px] sm:text-[32px] bg-transparent text-[var(--foreground)] placeholder:text-[var(--foreground)] ${i === 0 ? 'ml-0' : ''} ${
                   focusedIndex === i
                     ? 'focus:border-green-500'
                     : 'focus:border-white'
@@ -176,13 +178,14 @@ export const Verification: React.FC = () => {
           size={'md'}
           disabled={isIncomplete}
           aria-label="Confirm Verification Code"
-          className="btn-auth mt-[4px] btn-expand-hover  h-[44px] w-full text-[var(--text-white)]"
+          className="btn-auth mt-[4px] btn-expand-hover  h-[44px] w-full  text-[16px] font-semibold"
+          aria-disabled={isIncomplete ? 'true' : 'false'}
         >
           {t('confirm')}
         </Button>
       </div>
 
-      <div className="flex flex-col items-center gap-[12px] roboto text-[16px] font-normal text-[#F1F1F1]">
+      <div className="flex flex-col items-center gap-[12px] roboto  text-[14px] sm:text-[16px] font-normal ">
         <a href="#" className="text-[var(--text-gray)] ">
           <p>{t('didntGetEmail')} </p>
         </a>

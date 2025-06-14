@@ -3,4 +3,6 @@ export interface INewsItem {
   title: string;
   img: string;
   date: string;
+  category?: string;
+  tags?: string[];
 }
