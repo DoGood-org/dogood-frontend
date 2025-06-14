@@ -66,7 +66,9 @@ items-center
 justify-center
 "
     >
-      <h2 className="text-[var(--foreground)]">{t('newsItemPage.title', { title: newsItem.title })}</h2>
+      <h2 className="text-[var(--foreground)]">
+        {t('newsItemPage.title', { title: newsItem.title })}
+      </h2>
       <p className="text-[var(--foreground)]">{newsItem.date}</p>
       <p className="text-[var(--foreground)]">{newsItem.title}</p>
       <Image
@@ -76,7 +78,6 @@ justify-center
         width={600}
         height={400}
       />
-      
     </div>
   );
 }
