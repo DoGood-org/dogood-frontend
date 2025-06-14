@@ -23,7 +23,7 @@ export const NewsList = (): JSX.Element => {
         xl:text-[48px] xl:font-normal mb-4
         "
         >
-          {t('newsList.title')}
+          {t('newsListMain.title')}
         </h2>
         <div className="flex justify-between items-center mb-4">
           <div className=" flex gap-4">
@@ -63,7 +63,7 @@ export const NewsList = (): JSX.Element => {
         md:text-right"
         >
           <Link href="/news" className="text-sm hover:underline">
-            {t('newsList.seeAll')} <ArrowRight className="inline" />
+            {t('newsListMain.seeAll')} <ArrowRight className="inline" />
           </Link>
         </div>
       </div>
