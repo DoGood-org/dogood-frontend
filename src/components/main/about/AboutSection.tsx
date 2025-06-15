@@ -1,17 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
-import { LearnIcon } from '../../icons';
-import { AboutAnimationTabs, Button, Container } from '@/components';
+import { AboutAnimationTabs, Container, LinkWithArrow } from '@/components';
 import { AboutSectionProps } from '@/types';
 import { AboutImages } from './AboutImages';
 
 export const AboutSection: React.FC = () => {
   const t = useTranslations('about');
-  const router = useRouter();
+  // const router = useRouter();
   const locale = useLocale();
   const views = t.raw('views') as AboutSectionProps[];
 
@@ -28,11 +26,6 @@ export const AboutSection: React.FC = () => {
         className="relative z-10 items-center overflow-hidden"
       >
         <Container>
-          {/* <AboutAnimationTabs
-            views={views}
-            activeView={activeView}
-            onChange={setActiveView}
-          /> */}
           {activeData && (
             <div className="flex flex-col md:flex-row gap-7 md:gap-15 xl:gap-6 transition-opacity duration-500 ease-in-out opacity-100">
               <div>
@@ -52,19 +45,10 @@ export const AboutSection: React.FC = () => {
                     {activeData.description}
                   </p>
                 </div>
-
-                <Button
-                  variant="outline"
-                  size="2xl"
-                  className="w-[145px] self-center md:w-auto flex-shrink-0 flex-grow-0 md:self-start gap-[10px] md:gap-[10px] xl:gap-3 hover:border-btn-hover hover:text-btn-text mt-auto"
-                  onClick={() => router.push(`/${locale}/about`)}
-                >
-                  <span className="absolute inset-0 bg-btn-hover origin-center rounded-md transform scale-x-0 group-hover:scale-x-100 transition-transform duration-800 z-0"></span>
-                  <span className="relative z-10 items-center flex gap-[10px] md:gap-[10px] xl:gap-3">
-                    <LearnIcon className="size-6 md:size-[20px] xl:size-6" />
-                    {t('aboutButton')}
-                  </span>
-                </Button>
+                <LinkWithArrow
+                  href={`/${locale}/about`}
+                  text={t('aboutButton')}
+                />
               </div>
             </div>
           )}

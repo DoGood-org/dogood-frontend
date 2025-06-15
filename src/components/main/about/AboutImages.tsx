@@ -31,7 +31,7 @@ export const AboutImages = ({
 
         return (
           <div
-            key={idx}
+            key={`${idx}-${imgKey}`}
             className={`overflow-hidden rounded-xl shadow object-cover ${getAreaClass(area)}`}
           >
             <Image
