@@ -5,6 +5,7 @@ import { getCategoryIcon } from '@/lib/utils';
 import { ExtendedITasksProps, IconMap } from '@/types/mapType';
 import { useTranslations } from 'next-intl';
 import React, { FC } from 'react';
+import CategoryIconsList from './CategoryIconList';
 
 export const iconMap: IconMap = {
   Medicine: {
@@ -37,17 +38,10 @@ export const TaskItem: FC<ExtendedITasksProps> = ({
     <div className="min-h-[200px]">
       <h3 className="text-xl font-semibold mb-4">{title}</h3>
       <h4 className="mb-4">{subtitle}</h4>
-      <ul className="flex gap-4 list-none mb-6">
-        {category.map((item, idx) => (
-          <li key={idx}>
-            <button
-              className={`${getCategoryIcon(item).color} rounded-full p-2`}
-            >
-              {getCategoryIcon(item).icon}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <CategoryIconsList
+        categories={category}
+        getCategoryIcon={getCategoryIcon}
+      />
       <div className="flex justify-between mb-8">
         <Button variant="primary" size="md" className="text-[14px]">
           {t('respondBtn')}
@@ -56,9 +50,7 @@ export const TaskItem: FC<ExtendedITasksProps> = ({
           variant="outline"
           size="md"
           onClick={onToggleDescription}
-          className={`flex gap-[10px] bg-card ${
-            isSelected ? 'clickedBtn' : ''
-          }`}
+          className={`bg-card text-[14px] ${isSelected ? 'clickedBtn' : ''}`}
         >
           {t('descriptionBtn')}
         </Button>

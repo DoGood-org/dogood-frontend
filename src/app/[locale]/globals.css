@@ -288,7 +288,15 @@
   background-color: var(--btn);
   color: #ffffff;
 }
+.bg-dots {
+  background-image:
+    radial-gradient(circle, rgba(0, 0, 0, 0.2) 1px, transparent 2px),
+    linear-gradient(to bottom left, rgba(26, 211, 170, 0.5), rgba(0, 0, 0, 0.5));
 
+  background-size:
+    13px 13px,
+    100% 100%;
+}
 /*------------------utilities for scrollbar---------------------------*/
 @layer utilities {
   /* WebKit browsers (Chrome, Safari, Edge) */

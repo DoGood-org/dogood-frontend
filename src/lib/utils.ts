@@ -24,7 +24,7 @@ import {
 } from '@/types/mapType';
 import { iconMap } from '@/components';
 import { Icon, LatLngLiteral } from 'leaflet';
-import { IHowItWorksItem } from '@/types/howItWorksType';
+import { IHowItWorksItem } from '@/types/howItWorksItem';
 
 export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));

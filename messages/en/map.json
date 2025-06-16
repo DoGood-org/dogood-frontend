@@ -17,5 +17,8 @@
   "noBtn": "No, thanks",
   "tasksTitle": "Tasks",
   "respondBtn": "Respond",
-  "descriptionBtn": "Description"
+  "descriptionBtn": "Description",
+  "task": "Task",
+  "donate":"Donate",
+  "join":"Join"
 }
