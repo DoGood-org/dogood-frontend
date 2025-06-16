@@ -137,7 +137,7 @@
 
 .dark {
   --background: #171b19;
-  --foreground: #ffffff;
+  --foreground: #f0f1f2;
   --card: #303030;
 }
 
@@ -201,10 +201,6 @@
     font-family: var(--font-montserrat);
     line-height: 1.2;
     margin: 0 auto;
-    @apply xs:max-w-[var(--breakpoint-xs)];
-    @apply sm:max-w-[var(--breakpoint-sm)];
-    @apply md:max-w-[var(--breakpoint-md)];
-    @apply xl:max-w-[var(--breakpoint-xl)];
   }
 
   p {
@@ -222,7 +218,7 @@
     @apply xs:px-5 xs:max-w-[var(--breakpoint-xs)];
     @apply sm:px-15 sm:max-w-[var(--breakpoint-sm)];
     @apply md:px-15 md:max-w-[var(--breakpoint-md)];
-    @apply xl:px-25 xl:max-w-[var(--breakpoint-xl)];
+    @apply xl:px-20 xl:max-w-[var(--breakpoint-xl)];
   }
 
   .bg-hero {
@@ -342,4 +338,18 @@
   .custom-scrollbar {
     -ms-overflow-style: none;
   }
+}
+
+/* Swiper Pagination */
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background-color: var(--btn);
+  border-radius: 50%;
+  opacity: 1;
+}
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  transform: scale(1.2);
+  background-color: transparent;
+  transition: transform 0.3s ease;
 }
