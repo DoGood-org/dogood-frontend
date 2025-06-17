@@ -24,12 +24,9 @@
     "notFoundDescription": "The requested news item does not exist."
   },
   "newsItemPage": {
-    "title": "News article - DoGood",
-    "notFoundTitle": "News item not found",
-    "notFoundDescription": "The requested news item does not exist."
+    "title": "News item"
   },
   "newsItemPageMeta": {
-    "title": "News article - DoGood",
     "description": "Read the latest news, stories and blog posts from DoGood. Stay updated with our community initiatives and events."
   }
 }

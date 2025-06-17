@@ -13,9 +13,9 @@
 @theme inline {
   /* breakpoints */
   --breakpoint-*: initial;
-  --breakpoint-xs: 24.5625rem; /*393px*/
-  --breakpoint-sm: 48rem; /*768px*/
-  --breakpoint-md: 74.625rem; /*1194px*/
+  --breakpoint-sm: 24.5625rem; /*393px*/
+  --breakpoint-md: 48rem; /*768px*/
+  --breakpoint-lg: 90rem; /*1440px*/
   --breakpoint-xl: 120rem; /*1920px*/
 
   --container-mobile: var(--mobile);
@@ -73,7 +73,7 @@
 :root {
   --mobile: 24.5625rem;
   --mob-plus: 48rem;
-  --tablet: 74.625rem;
+  --tablet: 90rem;
   --desktop: 120rem;
 
   --padding-mobile: 20px;
@@ -215,9 +215,9 @@
 @layer components {
   .my-container {
     @apply w-full mx-auto px-5;
-    @apply xs:px-5 xs:max-w-[var(--breakpoint-xs)];
-    @apply sm:px-15 sm:max-w-[var(--breakpoint-sm)];
+    @apply sm:px-5 sm:max-w-[var(--breakpoint-sm)];
     @apply md:px-15 md:max-w-[var(--breakpoint-md)];
+    @apply lg:px-20 lg:max-w-[var(--breakpoint-lg)];
     @apply xl:px-20 xl:max-w-[var(--breakpoint-xl)];
   }
 
