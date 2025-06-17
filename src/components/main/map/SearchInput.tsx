@@ -1,5 +1,5 @@
 'use client';
-import { Search, Settings } from '@/components/icons';
+import { Faders, Search } from '@/components/icons';
 import { Input } from '@/components/ui/Input';
 import React, { useState, useEffect } from 'react';
 import { Filters, FilterPannel, renderFilterButtons } from '@/components';
@@ -55,22 +55,22 @@ export const SearchInput: React.FC = () => {
   });
 
   return (
-    <div className="absolute flex top-12 left-12 z-[500]">
+    <div className="md:absolute md:flex md:top-12 md:left-24 md:z-[500]">
       <FilterPannel
         selectedCategories={selectedCategories}
         selectedDistances={selectedDistances}
         selectedCategoryButtons={selectedCategoryButtons}
         selectedDistanceButtons={selectedDistanceButtons}
       />
-      <div className="relative flex items-center w-[313px] md:w-[358px] xl:w-[478px]">
+      <div className="relative flex items-center justify-center mx-auto w-full md:w-[358px] xl:w-[478px]">
         <Search className="absolute left-5 stroke-black dark:stroke-white fill-black dark:fill-white w-[30px] h-[30px]" />
         <Input
           type="text"
           placeholder="Search"
-          className="bg-background shadow-lg border-none rounded-[20px] px-5 py-[20px] text-base  pl-[70px] focus:ring focus:ring-background w-full min-h-[60px] placeholder-black dark:placeholder-white"
+          className="bg-background shadow-lg border-none rounded-none md:rounded-[20px] px-5 py-[20px] text-base  pl-[70px] focus:ring focus:ring-background h-12 w-[328px] md:min-w-[328px] md:min-h-[60px] placeholder-black dark:placeholder-white"
         />
-        <Settings
-          className="absolute stroke-black stroke-1 right-[14px] w-[32px] h-[32px] z-[600] dark:stroke-white"
+        <Faders
+          className="absolute stroke-foreground stroke-1 right-[18px] w-[24px] h-[24px] z-[600]"
           onClick={toggleFilters}
         />
       </div>

@@ -237,7 +237,7 @@ export const Map: React.FC<MapProps> = ({
   };
 
   return (
-    <Container className="h-[919px] mx-auto relative px-0">
+    <Container className="h-[919px] mx-auto relative">
       {showGeolocationPopup && (
         <GeolocationPopup
           requestGeolocation={requestGeolocation}
@@ -249,8 +249,6 @@ export const Map: React.FC<MapProps> = ({
           Location Error: {locationError}
         </div>
       )}
-      <SearchInput />
-      <TasksList />
       <MapContainer
         center={userLocation || center}
         zoom={13}
@@ -280,6 +278,8 @@ export const Map: React.FC<MapProps> = ({
           <Vector className="stroke-foreground w-5 h-5" />
         </Button>
       </MapContainer>
+      <SearchInput />
+      <TasksList />
     </Container>
   );
 };

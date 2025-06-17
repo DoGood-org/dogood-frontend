@@ -47,9 +47,9 @@ export const TasksList: React.FC = () => {
   };
 
   return (
-    <div className="flex absolute z-[450] top-36 left-12">
+    <div className="md:flex md:absolute md:z-[450] md:top-36 md:left-24">
       {/* Tasks List Panel */}
-      <div className="w-[313px] md:w-[358px] xl:w-[478px] h-[580px] bg-background p-8 rounded-[10px] shadow-lg overflow-y-auto custom-scrollbar">
+      <div className="w-full md:w-[358px] xl:w-[478px] h-[580px] bg-background p-8 rounded-[10px] shadow-lg overflow-y-auto custom-scrollbar">
         <h3 className="text-2xl font-bold mb-8">{t('tasksTitle')}</h3>
         <ul className="list-none">
           {TASKS.map((task, idx) => (
