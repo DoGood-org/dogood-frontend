@@ -61,9 +61,9 @@ these breakpoints:
 
 | Breakpoint | Variable name   | Width  | Horisontal paddings |
 | ---------- | --------------- | ------ | ------------------- |
-| xs         | --breakpoint-xs | 393px  | 20px                |
-| sm         | --breakpoint-sm | 768px  | 60px                |
-| md         | --breakpoint-md | 1440px | 80px                |
+| sm         | --breakpoint-sm | 393px  | 20px                |
+| md         | --breakpoint-md | 768px  | 60px                |
+| lg         | --breakpoint-lg | 1440px | 80px                |
 | xl         | --breakpoint-xl | 1920px | 80px                |
 
 Applied styles The .my-container class uses Tailwind utilities and custom CSS
@@ -72,9 +72,9 @@ variables:
 ```css
 .my-container {
   @apply w-full mx-auto px-5;
-  @apply xs:px-5 xs:max-w-[var(--breakpoint-xs)];
-  @apply sm:px-15 sm:max-w-[var(--breakpoint-sm)];
-  @apply md:px-20 md:max-w-[var(--breakpoint-md)];
+  @apply sm:px-5 sm:max-w-[var(--breakpoint-sm)];
+  @apply md:px-15 md:max-w-[var(--breakpoint-md)];
+  @apply lg:px-20 lg:max-w-[var(--breakpoint-lg)];
   @apply xl:px-20 xl:max-w-[var(--breakpoint-xl)];
 }
 ```
