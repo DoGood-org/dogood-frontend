@@ -15,7 +15,7 @@
   --breakpoint-*: initial;
   --breakpoint-xs: 24.5625rem; /*393px*/
   --breakpoint-sm: 48rem; /*768px*/
-  --breakpoint-md: 74.625rem; /*1194px*/
+  --breakpoint-md: 90rem; /*1440px*/
   --breakpoint-xl: 120rem; /*1920px*/
 
   --container-mobile: var(--mobile);
@@ -217,7 +217,7 @@
     @apply w-full mx-auto px-5;
     @apply xs:px-5 xs:max-w-[var(--breakpoint-xs)];
     @apply sm:px-15 sm:max-w-[var(--breakpoint-sm)];
-    @apply md:px-15 md:max-w-[var(--breakpoint-md)];
+    @apply md:px-20 md:max-w-[var(--breakpoint-md)];
     @apply xl:px-20 xl:max-w-[var(--breakpoint-xl)];
   }
 
