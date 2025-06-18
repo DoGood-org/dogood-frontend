@@ -148,7 +148,7 @@
 --color-btn-text: var(--btn-text); --color-btn-hover: var(--btn-hover);
 --color-btn-active: var(--btn-active); --color-btn-outline: var(--btn-outline);
 --color-btn-outline-hover: var(--btn-outline-hover); --color-btn-outline-active:
-var(--btn-outline-active); --color-destructive: var(--destructive);
+var(--btn-outline-active); --color-tag: var(--tag);
 
 --color-error: var(--error); --color-attention: var(--attention);
 
@@ -167,7 +167,7 @@ Light theme variables
 --text-help: #696969;
 --text-gray: #999999;
 --text-white: #f1f1f1;
---destructive: #696969;
+--tag: #696969;
 
 --card: #e6e6e6;
 --toggle: #303030;
@@ -207,7 +207,7 @@ Dark theme variables
 | text-help            | #696969     |            | form-placeholders, filter-background              |
 | text-gray            | #999999     |            | gray-text, lable-color                            |
 | white                | #f1f1f1     |            | for text and bg that doesn't change in dark theme |
-| desctuctive          | #696969     |            | for desctuctive buttons                           |
+| tag                  | #696969     |            | for tags (filter-buttons)                         |
 | card                 | #e6e6e6     | #303030    | background for cards (task, form-input)           |
 | toggle               | #303030     |            | for toggles (theme, special)                      |
 | border               | #17814b     |            | for borders                                       |

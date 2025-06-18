@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { NavItemRendererProps } from '@/types';
 import { NavDropdown } from './NavDropdown';
 import { SettingsList } from './SettingList';
+import { Button } from '@/components/ui/Button';
 
 export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   navItem,
@@ -11,12 +12,14 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
     case 'link':
       return (
         <li>
-          <Link
-            href={navItem.src}
-            className="nav-link text-white flex h-[104px] items-center"
-          >
-            {navItem.title}
-          </Link>
+          <Button asChild variant="ghost" size="md">
+            <Link
+              href={navItem.src}
+              className="nav-link text-white flex items-center"
+            >
+              {navItem.title}
+            </Link>
+          </Button>
         </li>
       );
 
