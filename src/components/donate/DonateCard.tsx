@@ -11,13 +11,15 @@ const DonateCard = ({
   description,
 }: DonateCardProps): React.ReactElement => {
   return (
-    <div className="max-w-[202px] xl:max-w-[405px] w-full mx-auto">
-      <div className="flex flex-col justify-center items-center gap-[8px] xl:gap-[16px]">
-        <div className="w-[50px] h-[50px] xl:w-[100px] xl:h-[100px]">
+    <div className="sm:max-w-[202px] lg:max-w-[405px] w-full mx-auto">
+      <div className="sm:p-[12px] lg:p-[24px] flex flex-col justify-center items-center gap-[8px] lg:gap-[16px]">
+        <div className="sm:w-[50px] sm:h-[50px] lg:w-[100px] lg:h-[100px]">
           {icon}
         </div>
-        <h4 className="text-[36px] xl:text-[72px]">{title}</h4>
-        <p className="text-p3-m xl:text-h3-d text-center">{description}</p>
+        <h4 className="text-[36px] lg:text-[72px]">{title}</h4>
+        <p className="montserrat text-p3-m lg:text-h3-d text-center">
+          {description}
+        </p>
       </div>
     </div>
   );

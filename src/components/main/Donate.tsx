@@ -5,12 +5,12 @@ import { Drop, Pill, Heart } from '@/components/icons';
 
 const Donate = (): React.JSX.Element => {
   const t = useTranslations('donate');
-  const donateText = (t.raw('donate') as any[])[0]; // беремо перший об’єкт масиву
+  const donateText = (t.raw('donate') as any[])[0];
 
   return (
-    <section className="bg-background mx-auto w-full py-[100px]">
+    <section className="bg-background mx-auto w-full sm:py-[60px] lg:py-[80px] xl:py-[100px]">
       <Container>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 sm:gap-8 md:gap-4 lg:gap-8 xl:gap-40">
           <DonateCard
             icon={<Drop />}
             title="$10"
