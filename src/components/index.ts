@@ -51,3 +51,4 @@ export * from './ui/Accordion';
 export * from './ui/Button';
 export * from './ui/Container';
 export * from './ui/Input';
+export * from './ui/Section';
