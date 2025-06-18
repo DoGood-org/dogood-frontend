@@ -37,7 +37,7 @@
   --color-btn-outline: var(--btn-outline);
   --color-btn-outline-hover: var(--btn-outline-hover);
   --color-btn-outline-active: var(--btn-outline-active);
-  --color-destructive: var(--destructive);
+  --color-tag: var(--tag);
 
   --color-error: var(--error);
   --color-attention: var(--attention);
@@ -87,7 +87,7 @@
   --text-help: #696969;
   --text-gray: #999999;
   --white: #f1f1f1;
-  --destructive: #696969;
+  --tag: #696969;
 
   --card: #e6e6e6;
   --toggle: #303030;

@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown } from '@/components/icons';
 import { NavDropdownProps } from '@/types';
+import { Button } from '@/components/ui/Button';
 
 export const NavDropdown = ({
   trigger,
@@ -30,17 +31,19 @@ export const NavDropdown = ({
 
   return (
     <li ref={containerRef}>
-      <button
+      <Button
+        variant="ghost"
+        size="md"
         onClick={() => setOpen((prev) => !prev)}
-        className="focus:outline-none flex items-baseline gap-[10px] h-[104px] items-center cursor-pointer"
+        className="p-4 focus:outline-none flex items-baseline items-center cursor-pointer"
       >
         {trigger}
         <ChevronDown
-          className={`w-[14px] h-[8px] fill-border transition-transform duration-700
+          className={`w-[14px] h-[8px] fill-current transition-transform duration-700
             ${open ? 'rotate-180' : ''}
             `}
         />
-      </button>
+      </Button>
       <AnimatePresence>
         {open && (
           <motion.div

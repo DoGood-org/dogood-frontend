@@ -70,8 +70,8 @@
     }
   ],
   "buttons": [
-    { "name": "Log in", "src": "/login", "variant": "primary" },
-    { "name": "Sign up", "src": "/register", "variant": "outline" }
+    { "name": "Log in", "src": "/login" },
+    { "name": "Sign up", "src": "/register" }
   ],
   "toggle": "Theme toggle"
 }
