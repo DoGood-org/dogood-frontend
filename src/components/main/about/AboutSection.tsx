@@ -65,8 +65,8 @@ export const AboutSection: React.FC = () => {
                 </div>
 
                 <Button
-                  variant="outline"
-                  size="2xl"
+                  variant="ghost"
+                  size="md"
                   className="w-[145px] self-center md:w-auto flex-shrink-0 flex-grow-0 md:self-start gap-[10px] md:gap-[10px] xl:gap-3 hover:border-btn-hover hover:text-btn-text"
                   onClick={() => router.push(`/${locale}/about`)}
                 >

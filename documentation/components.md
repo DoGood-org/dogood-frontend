@@ -111,15 +111,61 @@ variables:
 <details>
 <summary><b>Button</b></summary>
 
+This component renders a customizable button with support for multiple visual
+`variants`, `sizes`, and `asChild` rendering via Radix UI's Slot.
+
+| Prop        | Default value | Description                                                                                       |
+| ----------- | ------------- | ------------------------------------------------------------------------------------------------- |
+| `variant`   | `default`     | Optional. One of the options: `ghost`, `primary`, `secondary`, `filters`, `tag`                   |
+| `size`      | `default`     | Optional. One of the options: `sm`, `md`, `lg`, `xl`                                              |
+| `asChild`   | `false`       | Optional. If `true`, renders the component using a Radix <Slot /> instead of a native \<button\>. |
+| `className` | —             | Optional. Additional classes merged into the button's styles.                                     |
+| `...props`  | —             | Any native props for \<button\> or the custom component passed through asChild.                   |
+
+**Variants**
+
+| Variant   | Styles                                                                                                                                                | Description                                  |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| default   | `bg-btn hover:bg-btn-hover active:bg-btn-hover text-btn-primary rounded-sm px-3 text-base`                                                            |                                              |
+| ghost     | `text-btn-text text-base active:border-btn-outline-hover`                                                                                             | buttons without bg and border, hover- border |
+| primary   | `'relative px-8 py-3 text-btn-primary text-base bg-btn overflow-hidden hover:bg-btn-hover active:bg-btn-active group transition-colors duration-500'` | buttons with bg                              |
+| secondary | `'text-btn-secondary border-1 border-btn-outline hover:border-btn-outline-hover'`                                                                     | buttons without bg, with border              |
+| filters   | `'bg-card text-base'`                                                                                                                                 | buttons with bg-card                         |
+| tag       | `'bg-tag text-base gap-2'`                                                                                                                            | buttons-tag (light-gray)                     |
+
+**Sizes**
+
+| Size    | Height | Horisontal paddings | Vertical paddings | Border-radius       | Usage                     |
+| ------- | ------ | ------------------- | ----------------- | ------------------- | ------------------------- |
+| default | 48px   | 24px                | 12px              | 4px                 |                           |
+| sm      | 36px   | 16px                | 8px               | 4px                 | header-auth-buttons       |
+| md      | 48px   | 12px                |                   | 12px                | menu-buttons              |
+| lg      | 48px   | 48px                |                   | 4px                 | buttons with big paddings |
+| xl      | 52px   | 16px                | 16px              | 10px                | filter-tags               |
+| icon    | 36px   | —                   | —                 | square button shape | button-icon               |
+
+**Usage with asChild**
+
+Use asChild when you want the button styles applied to a different element such
+as an anchor \<a\> or custom component. Internally, it uses Radix’s <Slot /> to
+preserve semantic HTML.
+
+```tsx
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+
+<Button asChild variant="primary">
+  <Link href="/contact">Contact us</Link>
+</Button>;
+```
+
+In the example above, the <Link> tag will inherit all button styles and
+behaviors while preserving proper routing.
+
 </details>
 
 <details>
 <summary><b>Input</b></summary>
-
-</details>
-
-<details>
-<summary><b>Accordion</b></summary>
 
 </details>
 
