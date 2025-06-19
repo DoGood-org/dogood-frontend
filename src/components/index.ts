@@ -53,3 +53,4 @@ export * from './ui/Button';
 export * from './ui/Container';
 export * from './ui/Input';
 export * from './ui/LinkWithArrow';
+export * from './ui/Section';
