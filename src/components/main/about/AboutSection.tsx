@@ -3,13 +3,17 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
-import { AboutAnimationTabs, Container, LinkWithArrow } from '@/components';
+import {
+  AboutAnimationTabs,
+  Container,
+  LinkWithArrow,
+  Section,
+} from '@/components';
 import { AboutSectionProps } from '@/types';
 import { AboutImages } from './AboutImages';
 
 export const AboutSection: React.FC = () => {
   const t = useTranslations('about');
-  // const router = useRouter();
   const locale = useLocale();
   const views = t.raw('views') as AboutSectionProps[];
 
@@ -17,7 +21,10 @@ export const AboutSection: React.FC = () => {
   const activeData = views.find(({ view }) => view === activeView);
 
   return (
-    <section className="pt-[100px] pb-[206px] md:pb-[216px] xl:pb-[226px] bg-background  transition-color transition-background duration-800 relative z-20 ">
+    <Section
+      withContainer={false}
+      className="pt-[100px] pb-[206px] md:pb-[216px] xl:pb-[226px] bg-background  transition-color transition-background duration-800 relative z-20 "
+    >
       <motion.div
         initial={{ y: 0, opacity: 0 }}
         whileInView={{ y: 176, opacity: 1 }}
@@ -27,7 +34,7 @@ export const AboutSection: React.FC = () => {
       >
         <Container>
           {activeData && (
-            <div className="flex flex-col md:flex-row gap-7 md:gap-15 xl:gap-6 transition-opacity duration-500 ease-in-out opacity-100">
+            <div className="flex flex-col lg:flex-row gap-7 gap-10 md:gap-15 lg:gap-6 transition-opacity duration-500 ease-in-out opacity-100">
               <div>
                 <AboutAnimationTabs
                   views={views}
@@ -36,24 +43,25 @@ export const AboutSection: React.FC = () => {
                 />
                 <AboutImages activeData={activeData} />
               </div>
-              <div className="xl:py-39 flex flex-col justify-between">
-                <h2 className="font-bold text-[24px] md:text-[28px] xl:text-[48px] mb-8 xl:mb-12]">
-                  {activeData.title}
-                </h2>
-                <div className="space-y-2 mb-7 xl:mb-4">
-                  <p className="text-p2-d md:text-p1-d font-normal mb-[18px] xl:mb-[35px]">
+              <div className="pb-8 md:pb-14 lg:py-28 ">
+                <div className="flex flex-col h-[400px] md:h-[348px] lg:h-[488px]">
+                  <h2 className="text-h3 lg:text-h3-d">{activeData.title}</h2>
+                  {/* <div className="space-y-2"> */}
+                  <p className="text-base mt-8 lg:mt-12">
                     {activeData.description}
                   </p>
+                  {/* </div> */}
+                  <LinkWithArrow
+                    href={`/${locale}/about`}
+                    text={t('aboutButton')}
+                    className="mt-auto"
+                  />
                 </div>
-                <LinkWithArrow
-                  href={`/${locale}/about`}
-                  text={t('aboutButton')}
-                />
               </div>
             </div>
           )}
         </Container>
       </motion.div>
-    </section>
+    </Section>
   );
 };

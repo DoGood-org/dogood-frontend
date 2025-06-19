@@ -1,9 +1,13 @@
 'use client';
 
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components';
 import { AboutTabsProps } from '@/types';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useSwipe } from '@/hooks/useSwipe';
+import { useScrollToActive } from '@/hooks/useScrollToActive';
+import { CarouselItem, getVisibleItems } from '@/lib/carouselUtils';
+import { Button } from '@/components';
 import { CaretDoubleRight } from '@/components/icons';
 
 export const AboutAnimationTabs = ({
@@ -11,86 +15,55 @@ export const AboutAnimationTabs = ({
   activeView,
   onChange,
 }: AboutTabsProps): React.JSX.Element => {
+  const isTabletOrLarger = useMediaQuery('(min-width: 768px)');
+
+  const carouselItems: CarouselItem[] = views.map((viewObj) => viewObj.view);
+  const activeIndex = carouselItems.findIndex((item) => item === activeView);
+
+  const visibleItems = isTabletOrLarger
+    ? carouselItems
+    : getVisibleItems(carouselItems, activeIndex);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [rect, setRect] = useState<{ left: number; width: number } | null>(
     null
   );
-  const [startIndex, setStartIndex] = useState(0);
 
-  const buttonWidthRef = useRef<number>(0);
+  const handleNext = useCallback(() => {
+    const nextIndex = (activeIndex + 3) % carouselItems.length;
+    onChange(carouselItems[nextIndex]);
+  }, [activeIndex, carouselItems, onChange]);
 
-  useLayoutEffect(() => {
-    if (!containerRef.current) return;
-
-    const container = containerRef.current;
-    const activeBtn = container.querySelector(
-      `[data-view="${activeView}"]`
-    ) as HTMLElement;
-
-    if (activeBtn) {
-      activeBtn.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'nearest',
-      });
-
-      const btnRect = activeBtn.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-      const left = btnRect.left - containerRect.left + container.scrollLeft;
-      const width = btnRect.width;
-      setRect({ left, width });
-    }
-  }, [activeView]);
-
-  useLayoutEffect(() => {
-    // Зберігаємо ширину кнопки для розрахунку скролу
-    if (containerRef.current) {
-      const firstBtn = containerRef.current.querySelector(
-        'button'
-      ) as HTMLElement;
-      if (firstBtn) {
-        buttonWidthRef.current = firstBtn.offsetWidth + 8; // 8 = gap-2
-      }
-    }
-  }, []);
-
-  const handleArrowClick = (): void => {
-    if (!containerRef.current) return;
-    const newIndex = (startIndex + 3) % views.length;
-    setStartIndex(newIndex);
-
-    const scrollX = newIndex * buttonWidthRef.current;
-    containerRef.current.scrollTo({
-      left: scrollX,
-      behavior: 'smooth',
-    });
-  };
+  useSwipe({
+    ref: containerRef,
+    onSwipeLeft: handleNext,
+    // onSwipeRight: handlePrev (якщо реалізується)
+  });
+  useScrollToActive({ containerRef, activeView, isTabletOrLarger, setRect });
 
   return (
-    <div className="relative mb-[25px]">
+    <div className="relative flex items-center md:justify-center">
       <div
         ref={containerRef}
-        className="relative flex gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none]
-               [&::-webkit-scrollbar]:hidden whitespace-nowrap scroll-smooth md:justify-center"
+        className="relative flex gap-2 md:justify-center overflow-x-auto md:overflow-x-visible [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden whitespace-nowrap scroll-smooth "
       >
         {rect && (
           <motion.div
             layout
-            className="absolute top-0 left-0 h-full rounded-md border-2 border-primary pointer-events-none"
+            className="absolute top-0 left-0 h-full rounded-md border-1 border-border pointer-events-none"
             initial={false}
             animate={{ left: rect.left, width: rect.width }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           />
         )}
-
-        {views.map(({ view }, index) => (
+        {visibleItems.map((view, index) => (
           <Button
             variant="ghost"
             size="sm"
             key={`${index}-${view}`}
             data-view={view}
             onClick={() => onChange(view)}
-            className={`relative z-10 text-p2-d px-4 py-2 rounded-md transition-color duration-800 ${
+            className={`relative z-10 text-p2-d px-4 py-2 rounded-md transition-color duration-500 ${
               activeView === view ? 'text-primary' : 'text-muted'
             }`}
           >
@@ -98,14 +71,14 @@ export const AboutAnimationTabs = ({
           </Button>
         ))}
       </div>
-
-      {/* Стрілка справа */}
-      <button
-        onClick={handleArrowClick}
-        className="md:hidden absolute right-0 top-1/2 -translate-y-1/2 bg-transparent p-2 z-20"
-      >
-        <CaretDoubleRight />
-      </button>
+      {!isTabletOrLarger && (
+        <button
+          onClick={handleNext}
+          className="md:hidden absolute right-0 top-1/2 -translate-y-1/2 bg-transparent z-20 cursor-pointer"
+        >
+          <CaretDoubleRight className="size-8" />
+        </button>
+      )}
     </div>
   );
 };

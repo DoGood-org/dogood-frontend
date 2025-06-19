@@ -2,7 +2,7 @@
   "views": [
     {
       "view": "About us",
-      "title": "At DoGood kindness is not a transaction, it's a way of life.",
+      "title": "\"At DoGood kindness is not a transaction, it's a way of life.\"",
       "description": "We believe that kindness and mutual support can transform the world. DoGood brings together volunteers, nonprofits, socially responsible businesses, and anyone who wants to make a difference — in a simple, transparent, and meaningful way. Our mission is not just to provide one-time help, but to build a global culture of doing good as part of daily life.",
       "img": ["about1.png", "about2.png", "about3.png", "about4.png"]
     },
@@ -21,7 +21,7 @@
       "view": "GoodBot",
       "title": "DoGood is on the phone - meet GoodBot.",
       "description": "DoGood Bot is your assistant in the world of good deeds. It will tell you where you need help, remind you of the task, help you choose a direction, and answer your questions when you are just starting out. You are always in touch with the platform: in messenger, without unnecessary transitions and forms. Just write - and good will become even more accessible.",
-      "img": ["goodBot.png"]
+      "img": ["", "", "", "goodBot.png"]
     },
     {
       "view": "Grants",
