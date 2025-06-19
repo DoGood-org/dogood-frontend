@@ -18,7 +18,6 @@ export const HeroSection: React.FC = () => {
     offset: ['start end', 'end start'],
   });
 
-  // Adjust these values to control when the content starts moving
   const yContent = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0, -500]);
   const yPlanet = useTransform(scrollYProgress, [0, 1], [500, -500]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
@@ -31,32 +30,28 @@ export const HeroSection: React.FC = () => {
 
       {/* Content layer (under planet) */}
       <motion.div
-        className="my-container fixed top-[166px] md:top-[220px] xl:top-[320px] left-1/2 transform -translate-x-1/2 text-white text-center"
+        className="px-5 fixed top-[166px] md:top-[220px] md:w-[393px] lg:w-full lg:top-[320px] left-1/2 transform -translate-x-1/2 text-foreground text-center"
         style={{
           y: yContent,
           opacity: contentOpacity,
         }}
       >
-        <h1 className="text-[32px] mb-8 font-bold md:text-[40px] xl:text-[72px] xl:font-normal xl:mb-6">
-          {t('title')}
-        </h1>
-        <h2 className="text-2xl font-semibold md:text-[28px] xl:text-[32px] xl:font-normal mb-[52px] md:mb-[36px] xl:mb-[40px]">
+        <h1 className="text-[32px] mb-6 lg:text-[72px]">{t('title')}</h1>
+        <h2 className="text-base mb-8 lg:text-[32px] lg:mb-[40px]">
           {t('subtitle')}
         </h2>
-        <div className="flex flex-col gap-6 md:flex-row md:gap-5 xl:gap-15 justify-center my-container">
+        <div className="flex flex-col gap-6 items-center lg:flex-row lg:gap-15 lg:justify-center">
           <Button
             variant="primary"
-            size="lg"
             onClick={() => router.push(`/${localActive}/register`)}
-            className="min-w-[186px] md:min-w-[232px] xl:min-w-[147px] btn-expand-hover"
+            className="w-[255px] h-[48px] text-base py-3 lg:w-[147px] btn-expand-hover"
           >
             {t('volunteerBtn')}
           </Button>
           <Button
             variant="outline"
-            size="lg"
             onClick={() => router.push(`/${localActive}/about`)}
-            className="min-w-[186px] md:min-w-[232px] btn-expand-hover"
+            className="w-[255px] h-[48px] text-base py-3 lg:w-[147px] btn-expand-hover"
           >
             {t('learnMoreBtn')}
           </Button>

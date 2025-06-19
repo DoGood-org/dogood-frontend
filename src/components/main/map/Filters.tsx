@@ -15,7 +15,7 @@ export const Filters: FC<FiltersProps> = ({
 }) => {
   const t = useTranslations('map');
   return (
-    <div className="absolute top-[50px] left-0 w-[313px] md:w-[358px] xl:w-[478px] bg-background z-[1000] px-[35px] py-10 rounded-b-[10px]">
+    <div className="absolute lg:top-24 lg:left-0 w-[353px] md:w-[648px] md:h-[682px] lg:w-[487px] bg-toggle z-[1000] px-[35px] py-10 rounded-xl">
       <div className="flex justify-between align-text-bottom mb-[25px]">
         <h3 className="text-xl font-semibold">{t('title')}</h3>
         <Close
@@ -32,16 +32,16 @@ export const Filters: FC<FiltersProps> = ({
         onDistanceToggle={onDistanceToggle}
       />
       <div className="flex justify-between">
-        <Button variant="outline" size="xl" className="text-lg">
-          Cancel
-        </Button>
         <Button
           variant="outline"
           size="xl"
           className="text-lg"
           onClick={() => setIsSettingOpen(false)}
         >
-          Apply
+          {t('applyBtn')}
+        </Button>
+        <Button variant="outline" size="xl" className="text-lg">
+          {t('cancelBtn')}
         </Button>
       </div>
     </div>

@@ -2,6 +2,7 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { LatLngLiteral } from 'leaflet';
+import { Section } from '@/components';
 
 const Map = dynamic(() => import('@/components/main/map/Map'), { ssr: false });
 
@@ -38,7 +39,7 @@ export const MapSection: React.FC = () => {
     lng: -82.4497,
   };
   return (
-    <section className="bg-background pt-[100px]">
+    <Section withContainer={false}>
       <Map
         center={floridaCenter}
         locations={locations}
@@ -47,6 +48,6 @@ export const MapSection: React.FC = () => {
         }
         allowClickToAddMarker={false}
       />
-    </section>
+    </Section>
   );
 };

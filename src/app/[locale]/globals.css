@@ -287,41 +287,33 @@
 .bg-dots {
   background-image:
     radial-gradient(circle, rgba(0, 0, 0, 0.2) 1px, transparent 2px),
-    linear-gradient(to bottom left, rgba(26, 211, 170, 0.5), rgba(0, 0, 0, 0.5));
+    linear-gradient(to bottom left, rgba(26, 211, 170), rgba(0, 0, 0));
 
   background-size:
-    13px 13px,
+    25px 25px,
     100% 100%;
 }
 /*------------------utilities for scrollbar---------------------------*/
 @layer utilities {
-  /* WebKit browsers (Chrome, Safari, Edge) */
   .custom-scrollbar::-webkit-scrollbar {
-    width: 15px; /* 14px thumb + 1px track border */
+    width: 15px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
-    background-color: black;
-    border-left: 1px solid #999999; /* 1px track line */
+    background-color: transparent;
+    margin: 20px 0 !important;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: var(--btn);
-    height: 44px !important; /* Minimum height (will grow with content) */
-    width: 14px;
-    border-radius: 0;
-    border: none;
-    position: relative;
-  }
-
-  /* Constrain thumb height while allowing it to scale with content */
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    height: 44px;
-    max-height: 44px !important;
+    border: 4px solid transparent;
+    border-radius: 8px;
+    background-clip: padding-box;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: var(--btn);
+    background-clip: padding-box;
   }
 }
 

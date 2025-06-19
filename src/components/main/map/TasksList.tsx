@@ -1,7 +1,7 @@
 'use client';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
-import { Description, TaskItem } from '@/components';
+import { TaskItem } from '@/components';
 
 const TASKS = [
   {
@@ -47,24 +47,25 @@ export const TasksList: React.FC = () => {
   };
 
   return (
-    <div className="md:flex md:absolute md:z-[450] md:top-36 md:left-24">
-      {/* Tasks List Panel */}
-      <div className="w-full md:w-[358px] xl:w-[478px] h-[580px] bg-background p-8 rounded-[10px] shadow-lg overflow-y-auto custom-scrollbar">
-        <h3 className="text-2xl font-bold mb-8">{t('tasksTitle')}</h3>
-        <ul className="list-none">
-          {TASKS.map((task, idx) => (
-            <li key={idx} className="mb-8 last:mb-0">
-              <TaskItem
-                {...task}
-                isSelected={selectedTask === idx}
-                onToggleDescription={() => handleTaskSelect(idx)}
-              />
-            </li>
-          ))}
-        </ul>
+    <div className="block static lg:flex lg:absolute lg:z-[450] lg:top-36 lg:left-32">
+      <div className="relative w-full lg:w-[487px] overflow-hidden">
+        <div className="w-full h-[650px] md:h-[658px] lg:h-[650px] bg-toggle pt-[40px] pl-8 pr-[20px] pb-8 lg:p-8 lg:rounded-xl shadow-lg custom-scrollbar overflow-y-auto">
+          <h3 className="text-2xl mb-6">{t('tasksTitle')}</h3>
+          <ul className="list-none">
+            {TASKS.map((task, idx) => (
+              <li key={idx} className="mb-6 last:mb-0">
+                <TaskItem
+                  {...task}
+                  isSelected={selectedTask === idx}
+                  onToggleDescription={() => handleTaskSelect(idx)}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
-      {/* Description Panel - shown only when a task is selected */}
+      {/* Description Panel - shown only when a task is selected
       {selectedTask !== null && (
         <Description
           description={TASKS[selectedTask].description}
@@ -74,7 +75,7 @@ export const TasksList: React.FC = () => {
           subtitle={TASKS[selectedTask].subtitle}
           onToggleDescription={() => handleTaskSelect(selectedTask)}
         />
-      )}
+      )} */}
     </div>
   );
 };
