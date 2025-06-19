@@ -33,12 +33,13 @@ const ContactForm = (): React.ReactElement => {
   }, [messageValue]);
   return (
     <div className="w-full flex justify-center content-center flex-col">
-      <h2 className="text-[24px] md:text-[28px] xl:text-[48px] flex items-center justify-center">
+      <h2 className="sm:text-[32px] md:text-[32px] lg:text-[48px] flex items-center justify-center">
         {contact.heading}
       </h2>
       <form
+        id="contact-form"
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-[24px] py-[24px] md:space-y-[36px] md:pt-[40px] xl:py[0] xl:w-[655px] m-auto z-6"
+        className="space-y-[24px] py-[24px] md:space-y-[36px] md:pt-[40px] xl:py[0] md:w-[427px] lg:w-[655px] m-auto z-6"
       >
         <div className="relative">
           <div className="mb-4">
@@ -121,21 +122,22 @@ const ContactForm = (): React.ReactElement => {
             {charCount}/200
           </div>
         </div>
-        <div className="pt-[40px] flex flex-col-reverse items-center sm:flex-row sm:items-start sm:justify-between gap-[20px] ">
-          <p className="text-[#999999] text-p4-m md:text-p2-d max-w-[365px]">
-            {downText.text}
-          </p>
-          <Button
-            variant="outline"
-            size="lg"
-            type="submit"
-            // onClick={() => }
-            className="min-w-[186px] md:min-w-[180px] btn-expand-hover xl:text-p2-d"
-          >
-            {downText.btn}
-          </Button>
-        </div>
       </form>
+      <div className="pt-[40px] flex sm:flex-col items-center md:flex-row sm:items-start sm:justify-between gap-[20px] md:justify-center md:gap-[110px]">
+        <p className="text-[#999999] text-p4-m md:text-p2-d max-w-[365px]">
+          {downText.text}
+        </p>
+        <Button
+          variant="outline"
+          size="lg"
+          type="submit"
+          form="contact-form"
+          // onClick={() => }
+          className="sm:min-w-[353px] h-[48px] lg:min-w-[186px] md:min-w-[180px] btn-expand-hover xl:text-p2-d"
+        >
+          {downText.btn}
+        </Button>
+      </div>
     </div>
   );
 };

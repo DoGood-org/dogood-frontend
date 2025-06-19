@@ -2,19 +2,17 @@
 
 import React from 'react';
 import ContactForm from '../faq/ContactForm';
-import { Container } from '../ui/Container';
 import Line6 from '@/components/icons/Line6';
+import { Section } from '../ui/Section';
 
 const Faq = (): React.JSX.Element => {
   return (
-    <section className="relative bg-background mx-auto w-full py-[100px] overflow-hidden">
+    <Section className="relative">
       <div className="absolute inset-0 z-6 pointer-events-none">
         <Line6 />
       </div>
-      <Container>
-        <ContactForm />
-      </Container>
-    </section>
+      <ContactForm />
+    </Section>
   );
 };
 

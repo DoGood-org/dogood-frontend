@@ -7,34 +7,33 @@ import { Container } from '@/components/ui/Container';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="w-full bg-[#111215]">
-      <Container>
-        <div className="max-w-[1920px] flex flex-col mx-auto px-4 md:px-10 lg:px-[100px] py-10 lg:py-[74px] md:flex-row items-center justify-between h-[188px] gap-6 lg:gap-0">
-          <div className="hidden md:block">
-            <Link href="/">
-              <Image
-                src={icon}
-                alt="Logo"
-                className="w-[135px] h-[40px]"
-                priority
-              />
-            </Link>
-          </div>
-          <p className="font-normal text-[18px] text-white">
-            © 2025 DoGood. All rights reserved.
-          </p>
-
-          <div className="flex flex-col items-center lg:items-end gap-3">
-            <SocialLinks />
-            <a
-              href="mailto:startup.dogood@gmail.com"
-              className="font-normal text-[18px] text-white hover:text-[#999] duration-300"
-            >
-              startup.dogood@gmail.com
-            </a>
-          </div>
+    <footer className="w-full bg-[#111215] sm:py-[36px]">
+      <Container className="flex sm:flex-col sm:items-center sm:gap-[32px] lg:flex-row lg:justify-between">
+        <div>
+          <Link href="/">
+            <Image
+              src={icon}
+              alt="Logo"
+              className="w-[135px] h-[40px]"
+              priority
+            />
+          </Link>
+        </div>
+        <div className="sm:flex sm:flex-col-reverse sm:pb-[32px] lg:pb-[0] sm:gap-[16px] items-center lg:flex-col lg:items-end gap-3">
+          <SocialLinks />
+          <a
+            href="mailto:startup.dogood@gmail.com"
+            className="font-normal sm:text-[16px] lg:text-[18px] text-white hover:text-[#999] duration-300"
+          >
+            startup.dogood@gmail.com
+          </a>
         </div>
       </Container>
+      <div className="block text-center">
+        <p className="font-normal sm:text-[12px] lg:text-[14px] text-white">
+          © 2025 DoGood. All rights reserved.
+        </p>
+      </div>
     </footer>
   );
 };
