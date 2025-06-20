@@ -232,7 +232,7 @@ export const Map: React.FC<MapProps> = ({
   };
 
   return (
-    <Container className=" mx-auto relative">
+    <Container className="mx-auto relative">
       <div className="h-[547px] lg:h-[919px]">
         {showGeolocationPopup && (
           <GeolocationPopup

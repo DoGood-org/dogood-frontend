@@ -15,13 +15,16 @@ export const DistanceFilter: FC<DistanceFilterProps> = ({
 
   return (
     <>
-      <h4 className="text-lg font-semibold mb-[13px]">{t('distance')}</h4>
-      <ul className="flex gap-[10px] flex-wrap w-full mb-[95px]">
+      <h4 className="text-base">{t('distance')}</h4>
+      <div className="w-full bg-[#999999] h-[1px] mb-4" />
+
+      <ul className="flex gap-[10px] flex-wrap w-full mb-[80px]">
         {DISTANCE_LIST.map((distance, index) => (
           <li key={index}>
             <Button
-              variant="filters"
-              className={`flex gap-[10px] bg-card ${
+              variant="tag"
+              size="xl"
+              className={`flex gap-[10px]${
                 selectedDistances.includes(distance.title) ? 'clickedBtn' : ''
               }`}
               onClick={() => onDistanceToggle(distance.title)}

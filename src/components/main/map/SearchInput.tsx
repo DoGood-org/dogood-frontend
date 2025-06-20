@@ -42,7 +42,7 @@ const SearchInput: React.FC = () => {
     );
   };
 
-  //Function for Render Category and Distance Buttons for Filter Panel
+  //Function for Render Category and Distance Buttons for Filter Panel only for descktop
   const selectedCategoryButtons = renderFilterButtons({
     items: selectedCategories,
     onRemove: handleCategoryToggle,
@@ -55,7 +55,7 @@ const SearchInput: React.FC = () => {
   });
 
   return (
-    <div className="bg-toggle py-6 lg:bg-transparent lg:py-0 lg:absolute lg:flex lg:top-12 lg:left-32 lg:z-[500]">
+    <div className="bg-card py-6 lg:bg-transparent lg:py-0 lg:absolute lg:flex lg:top-12 lg:left-32 lg:z-[500]">
       <FilterPannel
         selectedCategories={selectedCategories}
         selectedDistances={selectedDistances}
@@ -63,11 +63,11 @@ const SearchInput: React.FC = () => {
         selectedDistanceButtons={selectedDistanceButtons}
       />
       <div className="relative flex items-center justify-center mx-auto w-[328px] md:w-[608px] lg:w-[487px]">
-        <Search className="absolute left-5 stroke-black dark:stroke-white fill-black dark:fill-white w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
+        <Search className="absolute left-5 stroke-foreground fill-foreground w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
         <Input
           type="text"
           placeholder="Search..."
-          className="bg-background lg:bg-toggle shadow-lg border-none rounded-none lg:rounded-[20px] px-5 py-[20px] text-base italic pl-[50px] focus:ring focus:ring-background h-12 placeholder-black dark:placeholder-white"
+          className="bg-background lg:bg-card shadow-lg border-none rounded-none lg:rounded-[20px] px-5 py-[20px] text-base italic pl-[50px] focus:ring focus:ring-background h-12 placeholder-foreground"
         />
         <Faders
           className="absolute stroke-foreground stroke-1 right-[18px] w-[16px] h-[16px] lg:w-[24px] lg:h-[24px] z-[600]"

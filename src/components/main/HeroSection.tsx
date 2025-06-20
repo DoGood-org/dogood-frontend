@@ -36,22 +36,22 @@ export const HeroSection: React.FC = () => {
           opacity: contentOpacity,
         }}
       >
-        <h1 className="text-[32px] mb-6 lg:text-[72px]">{t('title')}</h1>
-        <h2 className="text-base mb-8 lg:text-[32px] lg:mb-[40px]">
+        <h1 className="text-h1 text-white mb-6 lg:text-h1-d">{t('title')}</h1>
+        <h2 className="text-white mb-8 lg:text-lg lg:mb-[40px]">
           {t('subtitle')}
         </h2>
         <div className="flex flex-col gap-6 items-center lg:flex-row lg:gap-15 lg:justify-center">
           <Button
             variant="primary"
             onClick={() => router.push(`/${localActive}/register`)}
-            className="w-[255px] h-[48px] text-base py-3 lg:w-[147px] btn-expand-hover"
+            className="w-[255px] h-[48px] text-base text-white py-3 lg:w-[147px] btn-expand-hover"
           >
             {t('volunteerBtn')}
           </Button>
           <Button
-            variant="outline"
+            variant="secondary"
             onClick={() => router.push(`/${localActive}/about`)}
-            className="w-[255px] h-[48px] text-base py-3 lg:w-[147px] btn-expand-hover"
+            className="w-[255px] h-[48px] text-base text-white py-3 lg:w-[147px] btn-expand-hover"
           >
             {t('learnMoreBtn')}
           </Button>

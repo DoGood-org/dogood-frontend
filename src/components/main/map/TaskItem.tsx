@@ -9,19 +9,19 @@ import CategoryIconsList from './CategoryIconList';
 
 export const iconMap: IconMap = {
   Medicine: {
-    icon: <Medicine className="stroke-foreground fill-foreground" />,
+    icon: <Medicine className="fill-icon-color stroke-icon-color" />,
     color: 'bg-[#FFC3C3]',
   },
   Animal: {
-    icon: <Animal className="stroke-foreground fill-foreground" />,
+    icon: <Animal className="fill-icon-color stroke-icon-color" />,
     color: 'bg-[#D2EDFF]',
   },
   Nature: {
-    icon: <Nature className="stroke-foreground fill-foreground" />,
+    icon: <Nature className="fill-icon-color stroke-icon-color" />,
     color: 'bg-[#FF7D57]',
   },
   Food: {
-    icon: <Food className="stroke-foreground fill-foreground" />,
+    icon: <Food className="fill-icon-color stroke-icon-color" />,
     color: 'bg-[#FF7D57]',
   },
 };
@@ -40,8 +40,8 @@ export const TaskItem: FC<ExtendedITasksProps> = ({
       <h3 className="text-base underline lg:text-xl font-semibold mb-3">
         {title}
       </h3>
-      <h4 className="mb-5 md:mb-3">{subtitle}</h4>
-      <div className="flex justify-between items-center mb-5 md:mb-3">
+      <h4 className="mb-5 md:mb-3 lg:mb-5">{subtitle}</h4>
+      <div className="flex justify-between items-center mb-5 md:mb-3 lg:mb-5">
         <CategoryIconsList
           categories={category}
           getCategoryIcon={getCategoryIcon}
@@ -49,14 +49,14 @@ export const TaskItem: FC<ExtendedITasksProps> = ({
         {distance}
       </div>
       <div className="flex justify-between mb-6">
-        <Button variant="primary" size="md" className="text-[14px]">
+        <Button variant="primary" size="lg" className="text-[14px] w-[156px]">
           {t('donateBtn')}
         </Button>
         <Button
-          variant="outline"
-          size="md"
+          variant="secondary"
+          size="lg"
           onClick={onToggleDescription}
-          className={`bg-card text-[14px] ${isSelected ? 'clickedBtn' : ''}`}
+          className={`bg-card text-[14px] w-[82px] px-3 ${isSelected ? 'clickedBtn' : ''}`}
         >
           {t('joinBtn')}
         </Button>

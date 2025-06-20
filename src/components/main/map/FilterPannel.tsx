@@ -19,7 +19,7 @@ export const FilterPannel: FC<IPropsFilterPanel> = ({
   return (
     <div className="hidden lg:block">
       {(selectedCategories.length > 0 || selectedDistances.length > 0) && (
-        <div className="absolute z-[500] top-[5px] left-[508px] flex flex-wrap gap-[10px] w-[500px] max-w-[500px]">
+        <div className="absolute z-[500] top-0 left-[508px] flex flex-wrap gap-[10px] min-w-[700px] max-w-[500px]">
           {categoryButtons}
           {distanceButtons}
         </div>

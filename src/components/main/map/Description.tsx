@@ -39,7 +39,7 @@ export const Description: FC<ITasksProps> = ({
         <Button variant="primary" size="md" className="text-[14px]">
           {t('donate')}
         </Button>
-        <Button variant="outline" size="md">
+        <Button variant="secondary" size="md">
           {t('join')}
         </Button>
       </div>

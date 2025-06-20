@@ -27,6 +27,8 @@
   --color-card: var(--card);
   --color-toggle: var(--toggle);
   --color-gradient: var(--gradient);
+  --color-bg-icon: var(--bg-icon);
+  --color-icon-color: var(--icon-color);
 
   /* buttons */
   --color-border: var(--border);
@@ -317,15 +319,6 @@
 .clickedBtn {
   background-color: var(--btn);
   color: #ffffff;
-}
-.bg-dots {
-  background-image:
-    radial-gradient(circle, rgba(0, 0, 0, 0.2) 1px, transparent 2px),
-    linear-gradient(to bottom left, rgba(26, 211, 170), rgba(0, 0, 0));
-
-  background-size:
-    25px 25px,
-    100% 100%;
 }
 /*------------------utilities for scrollbar---------------------------*/
 @layer utilities {
