@@ -172,4 +172,48 @@ behaviors while preserving proper routing.
 <details>
 <summary><b>LinkWithArrow</b></summary>
 
+This React component renders a styled link with accompanying right-pointing
+arrow icon. It's built on top of Next.js's Link component and is designed for
+internal navigation within your app.
+
+**Props:**
+
+| Name      | Type   | default | Description                                                                   |
+| --------- | ------ | ------- | ----------------------------------------------------------------------------- |
+| href      | string | -       | Requered. The URL or route to navigate to (e.g., /about, /contact).           |
+| text      | string | -       | requered. The text label displayed inside the link.                           |
+| className | string | ""      | Optional. additional Tailwind classes to customize the appearance externally. |
+
+**Styling:**
+
+- `text-p2-d/[24px]`: Default text style.
+
+- `hover:text-btn-hover, focus:text-btn-hover, active:text-btn-active`: Color
+  changes on interaction.
+
+- `flex items-center gap-2`: Aligns text and icon horizontally with spacing.
+
+Arrow Icon:
+
+- Uses the `ArrowRight` icon component.
+
+- Inherits text color via stroke-current.
+
+- Sized with size-6 for consistency.
+
+**Class Merging:**
+
+Uses a utility function cn to conditionally and safely combine base and custom
+class names.
+
+**Example Usage:**
+
+```tsx
+<LinkWithArrow
+  href={`/${locale}/about`}
+  text={t('aboutButton')}
+  className="mt-auto"
+/>
+```
+
 </details>

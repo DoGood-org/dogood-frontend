@@ -1,4 +1,6 @@
 export { default as Animal } from './Animal';
+export { default as ArrowRight } from './ArrowRight';
+export { default as CaretDoubleRight } from './CaretDoubleRight';
 export { default as ChevronDown } from './ChevronDown';
 export { default as Close } from './Close';
 export { default as Drop } from './Drop';
