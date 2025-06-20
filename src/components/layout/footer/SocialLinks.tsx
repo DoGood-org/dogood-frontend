@@ -15,7 +15,7 @@ const socialLinks = [
 
 export const SocialLinks: React.FC = () => {
   return (
-    <ul className="flex gap-4 ">
+    <ul className="flex sm:gap-4 lg:gap-6 ">
       {socialLinks.map(({ icon: Icon, url }, index) => (
         <li key={index}>
           <a
@@ -24,7 +24,7 @@ export const SocialLinks: React.FC = () => {
             rel="noopener noreferrer"
             className="inline-block"
           >
-            <Icon className="w-[30px] h-[30px] text-[white] hover:text-[#999] transition duration-300" />
+            <Icon className="sm:w-[30px] sm:h-[30px] lg:w-[32px] lg:h-[32px] text-[white] hover:text-[#999] transition duration-300" />
           </a>
         </li>
       ))}
