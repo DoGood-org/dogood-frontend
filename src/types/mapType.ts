@@ -80,6 +80,7 @@ export type MarkerCategory =
 export interface CategoryItem {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
+  color: string;
 }
 
 export interface DistanceItem {

@@ -8,7 +8,6 @@ export const FilterPannel: FC<IPropsFilterPanel> = ({
   selectedCategoryButtons,
   selectedDistanceButtons,
 }) => {
-  // Convert single ReactNode to array if needed
   const normalizeButtons = (buttons: ReactNode | ReactNode[]): ReactNode[] => {
     return Array.isArray(buttons) ? buttons : [buttons];
   };

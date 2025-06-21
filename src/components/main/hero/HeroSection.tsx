@@ -1,12 +1,13 @@
 'use client';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import Planet from '../../assets/images/hero/planet.png';
+import Planet from '../../../assets/images/hero/planet.png';
 import { Button } from '@/components';
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
+import HeroSocialLink from './HeroSocialLink';
 
 export const HeroSection: React.FC = () => {
   const t = useTranslations('common');
@@ -17,6 +18,11 @@ export const HeroSection: React.FC = () => {
     target: sectionRef,
     offset: ['start end', 'end start'],
   });
+
+  // Scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const yContent = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0, -500]);
   const yPlanet = useTransform(scrollYProgress, [0, 1], [500, -500]);
@@ -57,6 +63,7 @@ export const HeroSection: React.FC = () => {
           </Button>
         </div>
       </motion.div>
+      <HeroSocialLink />
       {/* Planet layer */}
       <div className="absolute bottom-[-500px] w-full pointer-events-none z-25">
         <div className="sticky top-0 h-screen flex items-end justify-center ">

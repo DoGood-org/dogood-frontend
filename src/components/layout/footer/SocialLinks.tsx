@@ -13,9 +13,17 @@ const socialLinks = [
   { icon: RiInstagramLine, url: 'https://instagram.com' },
 ];
 
-export const SocialLinks: React.FC = () => {
+interface SocialLinksProps {
+  className?: string;
+  iconClassName?: string;
+}
+
+export const SocialLinks: React.FC<SocialLinksProps> = ({
+  className = '',
+  iconClassName = '',
+}) => {
   return (
-    <ul className="flex sm:gap-4 lg:gap-6 ">
+    <ul className={className}>
       {socialLinks.map(({ icon: Icon, url }, index) => (
         <li key={index}>
           <a
@@ -24,7 +32,7 @@ export const SocialLinks: React.FC = () => {
             rel="noopener noreferrer"
             className="inline-block"
           >
-            <Icon className="sm:w-[30px] sm:h-[30px] lg:w-[32px] lg:h-[32px] text-[white] hover:text-[#999] transition duration-300" />
+            <Icon className={iconClassName} />
           </a>
         </li>
       ))}

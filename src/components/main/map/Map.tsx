@@ -6,7 +6,7 @@ import {
   getMarkerIcon,
   isMarkerExists,
   getUserGeolocation,
-} from '@/lib/utils';
+} from '@/lib/mapUtils';
 import {
   LeafletType,
   MapClickHandlerProps,

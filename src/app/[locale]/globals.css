@@ -46,6 +46,9 @@
   --color-attention: var(--attention);
 
   --color-star: var(--star);
+  --color-medicine: var(--medicine);
+  --color-animal: var(--animal);
+  --color-nature: var(--nature);
 
   /* font sizes and line-height desktop */
   --text-sm: 14px;
@@ -116,6 +119,9 @@
   --error: #ee0606;
 
   --star: #ffee00;
+  --medicine: #1f5eff;
+  --animal: #ff7d57;
+  --nature: #4caf50;
 
   /* font sizes and line-height desktop */
   --h1-d: 72px;

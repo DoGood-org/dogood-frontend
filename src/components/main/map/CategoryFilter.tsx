@@ -17,19 +17,26 @@ export const CategoryFilter: FC<CategoryFilterProps> = ({
       <h4 className="text-base">{t('category')}</h4>
       <div className="w-full bg-[#999999] h-[1px] mb-4" />
 
-      <ul className="flex gap-[10px] flex-wrap w-full mb-6">
+      <ul className="flex gap-4 flex-wrap w-full mb-6">
         {CATEGOTY_LIST.map((category, index) => (
           <li key={index}>
             <Button
               variant="tag"
               size="xl"
-              className={`flex gap-[10px]${
+              className={` ${category.color} flex gap-[10px] text-sm w-[146px] ${
                 selectedCategories.includes(category.title) ? 'clickedBtn' : ''
               }`}
               onClick={() => onCategoryToggle(category.title)}
               id={category.title}
             >
-              <category.icon className="fill-foreground" />
+              <category.icon
+                style={{
+                  width: '24px',
+                  height: '24px',
+                  stroke: '#FFFFFF',
+                  fill: '#FFFFFF',
+                }}
+              />
               {category.title}
             </Button>
           </li>
@@ -38,7 +45,7 @@ export const CategoryFilter: FC<CategoryFilterProps> = ({
           <Button
             variant="tag"
             size="xl"
-            className={`flex gap-[10px]${
+            className={`flex gap-[10px] text-sm${
               selectedCategories.includes('Doesn\"t matter') ? 'clickedBtn' : ''
             }`}
             onClick={() => onCategoryToggle('Doesn\"t matter')}

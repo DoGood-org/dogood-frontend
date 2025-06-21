@@ -10,19 +10,19 @@ import CategoryIconsList from './CategoryIconList';
 export const iconMap: IconMap = {
   Medicine: {
     icon: <Medicine className="fill-icon-color stroke-icon-color" />,
-    color: 'bg-[#FFC3C3]',
+    color: 'bg-medicine',
   },
   Animal: {
     icon: <Animal className="fill-icon-color stroke-icon-color" />,
-    color: 'bg-[#D2EDFF]',
+    color: 'bg-animal',
   },
   Nature: {
     icon: <Nature className="fill-icon-color stroke-icon-color" />,
-    color: 'bg-[#FF7D57]',
+    color: 'bg-nature',
   },
   Food: {
     icon: <Food className="fill-icon-color stroke-icon-color" />,
-    color: 'bg-[#FF7D57]',
+    color: 'bg-star',
   },
 };
 export const TaskItem: FC<ExtendedITasksProps> = ({
@@ -40,7 +40,7 @@ export const TaskItem: FC<ExtendedITasksProps> = ({
       <h3 className="text-base underline lg:text-xl font-semibold mb-3">
         {title}
       </h3>
-      <h4 className="mb-5 md:mb-3 lg:mb-5">{subtitle}</h4>
+      <h4 className="text-base mb-5 md:mb-3 lg:mb-5">{subtitle}</h4>
       <div className="flex justify-between items-center mb-5 md:mb-3 lg:mb-5">
         <CategoryIconsList
           categories={category}

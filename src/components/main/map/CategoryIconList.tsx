@@ -9,8 +9,19 @@ const CategoryIconsList: React.FC<CategoryIconsListProps> = ({
     <ul className="flex gap-4">
       {categories.map((item: any, idx: React.Key | null | undefined) => (
         <li key={idx}>
-          <button className="bg-bg-icon w-[50px] h-[50px] flex justify-center items-center rounded-full">
-            {getCategoryIcon(item).icon}
+          <button
+            className={`${getCategoryIcon(item).color} w-[50px] h-[50px] flex justify-center items-center rounded-full`}
+          >
+            <span
+              style={{
+                width: '24px',
+                height: '24px',
+                stroke: '#000000',
+                fill: '#000000',
+              }}
+            >
+              {getCategoryIcon(item).icon}
+            </span>
           </button>
         </li>
       ))}
