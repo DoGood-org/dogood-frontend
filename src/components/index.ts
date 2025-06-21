@@ -30,6 +30,7 @@ export * from './main/auth/RegisterLoginSocial';
 export * from './main/auth/RegisterPageContent';
 export * from './main/auth/Verification';
 export * from './main/hero/HeroSection';
+export * from './main/hero/HeroSocialLink';
 export * from './main/howItWorks/HowItWorks';
 export * from './main/map/CategoryFilter';
 export * from './main/map/CategoryIconList';

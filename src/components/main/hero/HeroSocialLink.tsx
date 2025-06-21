@@ -1,3 +1,4 @@
+'use client';
 import { SocialLinks } from '@/components/layout/footer/SocialLinks';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import React, { useRef } from 'react';
