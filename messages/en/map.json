@@ -16,6 +16,11 @@
   "yesBtn": "Yes, share",
   "noBtn": "No, thanks",
   "tasksTitle": "Tasks",
-  "respondBtn": "Respond",
-  "descriptionBtn": "Description"
+  "donateBtn": "Donate",
+  "joinBtn": "Join",
+  "applyBtn": "Apply",
+  "cancelBtn": "Cancel",
+  "task": "Task",
+  "donate": "Donate",
+  "join": "Join"
 }

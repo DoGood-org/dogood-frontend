@@ -13,6 +13,7 @@ export const renderFilterButtons = ({
     <Button
       key={`${keyPrefix}-${title}`}
       variant="filters"
+      size="lg"
       className={buttonClassName}
       onClick={() => onRemove(title)}
     >

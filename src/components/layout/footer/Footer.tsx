@@ -20,7 +20,10 @@ export const Footer: React.FC = () => {
           </Link>
         </div>
         <div className="sm:flex sm:flex-col-reverse sm:pb-[32px] lg:pb-[0] sm:gap-[16px] items-center lg:flex-col lg:items-end gap-3">
-          <SocialLinks />
+          <SocialLinks
+            className="flex sm:gap-4 lg:gap-6"
+            iconClassName="sm:w-[30px] sm:h-[30px] lg:w-[32px] lg:h-[32px] text-[white] hover:text-[#999] transition duration-300"
+          />
           <a
             href="mailto:startup.dogood@gmail.com"
             className="font-normal sm:text-[16px] lg:text-[18px] text-white hover:text-[#999] duration-300"

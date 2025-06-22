@@ -15,9 +15,9 @@ export const Filters: FC<FiltersProps> = ({
 }) => {
   const t = useTranslations('map');
   return (
-    <div className="absolute top-[50px] left-0 w-[313px] md:w-[358px] xl:w-[478px] bg-background z-[1000] px-[35px] py-10 rounded-b-[10px]">
-      <div className="flex justify-between align-text-bottom mb-[25px]">
-        <h3 className="text-xl font-semibold">{t('title')}</h3>
+    <div className="absolute lg:top-24 lg:left-0 w-[353px] md:w-[648px] md:h-[682px] lg:w-[487px] lg:h-[722px] bg-card z-[1000] px-[20px] py-10 rounded-xl">
+      <div className="flex justify-between align-text-bottom mb-4">
+        <h3 className="text-h3">{t('title')}</h3>
         <Close
           className="w-[22px] h-[21px]"
           onClick={() => setIsSettingOpen(false)}
@@ -31,17 +31,17 @@ export const Filters: FC<FiltersProps> = ({
         selectedDistances={selectedDistances}
         onDistanceToggle={onDistanceToggle}
       />
-      <div className="flex justify-between">
-        <Button variant="outline" size="xl" className="text-lg">
-          Cancel
-        </Button>
+      <div className="flex justify-center gap-10">
         <Button
-          variant="outline"
-          size="xl"
-          className="text-lg"
+          variant="primary"
+          className="w-[104px]"
+          size="lg"
           onClick={() => setIsSettingOpen(false)}
         >
-          Apply
+          {t('applyBtn')}
+        </Button>
+        <Button variant="secondary" className="w-[104px]" size="lg">
+          {t('cancelBtn')}
         </Button>
       </div>
     </div>
