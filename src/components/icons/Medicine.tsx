@@ -3,8 +3,8 @@ import type { SVGProps } from 'react';
 const SvgMedicine = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="1em"
-    height="1em"
+    width="100%"
+    height="100%"
     fill="none"
     viewBox="0 0 23 25"
     {...props}

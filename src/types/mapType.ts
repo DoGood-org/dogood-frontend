@@ -80,6 +80,7 @@ export type MarkerCategory =
 export interface CategoryItem {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
+  color: string;
 }
 
 export interface DistanceItem {
@@ -93,10 +94,8 @@ export interface ITasksProps {
   subtitle: string;
   category: string[];
   description: string;
-}
-
-export interface IDescriptionProps {
-  description: string;
+  distance: string;
+  onToggleDescription: () => void;
 }
 
 export interface ExtendedITasksProps extends ITasksProps {
@@ -120,6 +119,11 @@ export type MapIcons = {
   foodIcon: Icon | null;
   myPositionIcon: Icon | null;
 };
+
+export interface CategoryIconsListProps {
+  categories: any[]; // Replace 'any' with your specific category type if known
+  getCategoryIcon: (item: any) => IconData; // Replace 'any' with your category item type
+}
 
 export type LeafletModule = {
   Icon: typeof Icon;

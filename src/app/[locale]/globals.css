@@ -47,6 +47,9 @@
   --color-attention: var(--attention);
 
   --color-star: var(--star);
+  --color-medicine: var(--medicine);
+  --color-animal: var(--animal);
+  --color-nature: var(--nature);
 
   /* font sizes and line-height desktop */
   --text-sm: 14px;
@@ -81,6 +84,7 @@
 
 :root {
   --font-montserrat: 'Montserrat', sans-serif;
+  --font-size: 16px;
 
   /* --breakpoint-sm: 24.5625rem; 393px */
   /* --breakpoint-md: 48rem; 768px */
@@ -127,6 +131,9 @@
   --error: #ee0606;
 
   --star: #ffee00;
+  --medicine: #1f5eff;
+  --animal: #ff7d57;
+  --nature: #4caf50;
 
   /* font sizes and line-height desktop */
   --h1-d: 72px;
@@ -155,6 +162,9 @@
     radial-gradient(circle, rgba(26, 211, 170, 0.1) 2px, transparent 2px),
     linear-gradient(0deg, #0a6f3c, #0a6f3c);
   --font-size: 16px;
+}
+html {
+  font-size: var(--font-size);
 }
 html {
   font-size: var(--font-size);
@@ -338,36 +348,27 @@ html {
   background-color: var(--btn);
   color: #ffffff;
 }
-
 /*------------------utilities for scrollbar---------------------------*/
 @layer utilities {
-  /* WebKit browsers (Chrome, Safari, Edge) */
   .custom-scrollbar::-webkit-scrollbar {
-    width: 15px; /* 14px thumb + 1px track border */
+    width: 15px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
-    background-color: black;
-    border-left: 1px solid #999999; /* 1px track line */
+    background-color: transparent;
+    margin: 20px 0 !important;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: var(--btn);
-    height: 44px !important; /* Minimum height (will grow with content) */
-    width: 14px;
-    border-radius: 0;
-    border: none;
-    position: relative;
-  }
-
-  /* Constrain thumb height while allowing it to scale with content */
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    height: 44px;
-    max-height: 44px !important;
+    border: 4px solid transparent;
+    border-radius: 8px;
+    background-clip: padding-box;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: var(--btn);
+    background-clip: padding-box;
   }
 
   /*----------------- Font-size utilites -------------------------------*/

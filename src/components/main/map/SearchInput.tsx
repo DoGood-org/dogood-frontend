@@ -1,10 +1,10 @@
 'use client';
-import { Search, Settings } from '@/components/icons';
+import { Faders, Search } from '@/components/icons';
 import { Input } from '@/components/ui/Input';
 import React, { useState, useEffect } from 'react';
 import { Filters, FilterPannel, renderFilterButtons } from '@/components';
 
-export const SearchInput: React.FC = () => {
+const SearchInput: React.FC = () => {
   const [isSettingOpen, setIsSettingOpen] = useState<boolean>(false);
 
   //Initialize states of Categories and Distances from localStorage, if there is nothing - empty array
@@ -42,7 +42,7 @@ export const SearchInput: React.FC = () => {
     );
   };
 
-  //Function for Render Category and Distance Buttons for Filter Panel
+  //Function for Render Category and Distance Buttons for Filter Panel only for descktop
   const selectedCategoryButtons = renderFilterButtons({
     items: selectedCategories,
     onRemove: handleCategoryToggle,
@@ -55,22 +55,22 @@ export const SearchInput: React.FC = () => {
   });
 
   return (
-    <div className="absolute flex top-12 left-12 z-[500]">
+    <div className="bg-card py-6 lg:bg-transparent lg:py-0 lg:absolute lg:flex lg:top-12 lg:left-32 lg:z-[500]">
       <FilterPannel
         selectedCategories={selectedCategories}
         selectedDistances={selectedDistances}
         selectedCategoryButtons={selectedCategoryButtons}
         selectedDistanceButtons={selectedDistanceButtons}
       />
-      <div className="relative flex items-center w-[313px] md:w-[358px] xl:w-[478px]">
-        <Search className="absolute left-5 stroke-black dark:stroke-white fill-black dark:fill-white w-[30px] h-[30px]" />
+      <div className="relative flex items-center justify-center mx-auto w-[328px] md:w-[608px] lg:w-[487px]">
+        <Search className="absolute left-5 stroke-foreground fill-foreground w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
         <Input
           type="text"
-          placeholder="Search"
-          className="bg-background shadow-lg border-none rounded-[20px] px-5 py-[20px] text-base  pl-[70px] focus:ring focus:ring-background w-full min-h-[60px] placeholder-black dark:placeholder-white"
+          placeholder="Search..."
+          className="bg-background lg:bg-card shadow-lg border-none rounded-none lg:rounded-[20px] px-5 py-[20px] text-base italic pl-[50px] focus:ring focus:ring-background h-12 placeholder-foreground"
         />
-        <Settings
-          className="absolute stroke-black stroke-1 right-[14px] w-[32px] h-[32px] z-[600] dark:stroke-white"
+        <Faders
+          className="absolute stroke-foreground stroke-1 right-[18px] w-[16px] h-[16px] lg:w-[24px] lg:h-[24px] z-[600]"
           onClick={toggleFilters}
         />
       </div>
@@ -86,3 +86,4 @@ export const SearchInput: React.FC = () => {
     </div>
   );
 };
+export default SearchInput;

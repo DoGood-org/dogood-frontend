@@ -1,7 +1,7 @@
 'use client';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
-import { Description, TaskItem } from '@/components';
+import { TaskItem } from '@/components';
 
 const TASKS = [
   {
@@ -47,27 +47,35 @@ export const TasksList: React.FC = () => {
   };
 
   return (
-    <div className="flex absolute z-[450] top-36 left-12">
-      {/* Tasks List Panel */}
-      <div className="w-[313px] md:w-[358px] xl:w-[478px] h-[580px] bg-background p-8 rounded-[10px] shadow-lg overflow-y-auto custom-scrollbar">
-        <h3 className="text-2xl font-bold mb-8">{t('tasksTitle')}</h3>
-        <ul className="list-none">
-          {TASKS.map((task, idx) => (
-            <li key={idx} className="mb-8 last:mb-0">
-              <TaskItem
-                {...task}
-                isSelected={selectedTask === idx}
-                onToggleDescription={() => handleTaskSelect(idx)}
-              />
-            </li>
-          ))}
-        </ul>
+    <div className="block static lg:flex lg:absolute lg:z-[450] lg:top-36 lg:left-32">
+      <div className="relative w-full lg:w-[487px] overflow-hidden">
+        <div className="w-full h-[650px] md:h-[658px] lg:h-[650px] bg-card pt-[40px] pl-8 pr-[20px] pb-8 lg:p-8 lg:rounded-xl shadow-lg custom-scrollbar overflow-y-auto">
+          <h2 className="text-h3 mb-6">{t('tasksTitle')}</h2>
+          <ul className="list-none">
+            {TASKS.map((task, idx) => (
+              <li key={idx} className="mb-6 last:mb-0">
+                <TaskItem
+                  {...task}
+                  isSelected={selectedTask === idx}
+                  onToggleDescription={() => handleTaskSelect(idx)}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
-      {/* Description Panel - shown only when a task is selected */}
+      {/* Description Panel - shown only when a task is selected (maybe in the future wi will need it, that's why you see commented code!)
       {selectedTask !== null && (
-        <Description description={TASKS[selectedTask].description} />
-      )}
+        <Description
+          description={TASKS[selectedTask].description}
+          title={TASKS[selectedTask].title}
+          distance={TASKS[selectedTask].distance}
+          category={TASKS[selectedTask].category}
+          subtitle={TASKS[selectedTask].subtitle}
+          onToggleDescription={() => handleTaskSelect(selectedTask)}
+        />
+      )} */}
     </div>
   );
 };

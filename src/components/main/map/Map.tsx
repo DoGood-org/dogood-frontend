@@ -6,7 +6,7 @@ import {
   getMarkerIcon,
   isMarkerExists,
   getUserGeolocation,
-} from '@/lib/utils';
+} from '@/lib/mapUtils';
 import {
   LeafletType,
   MapClickHandlerProps,
@@ -15,14 +15,9 @@ import {
   MarkerCategory,
   ReactLeafletModule,
 } from '@/types/mapType';
-import {
-  GeolocationPopup,
-  SearchInput,
-  Container,
-  TasksList,
-  Button,
-} from '@/components';
+import { GeolocationPopup, Container, Button, TasksList } from '@/components';
 import { Vector } from '@/components/icons';
+import SearchInput from './SearchInput';
 
 export const Map: React.FC<MapProps> = ({
   center,
@@ -237,49 +232,51 @@ export const Map: React.FC<MapProps> = ({
   };
 
   return (
-    <Container className="h-[919px] mx-auto relative px-0">
-      {showGeolocationPopup && (
-        <GeolocationPopup
-          requestGeolocation={requestGeolocation}
-          declineGeolocation={declineGeolocation}
-        />
-      )}
-      {locationError && (
-        <div className="text-red-500 p-2 bg-white rounded shadow mb-2">
-          Location Error: {locationError}
-        </div>
-      )}
+    <Container className="mx-auto relative">
+      <div className="h-[547px] lg:h-[919px]">
+        {showGeolocationPopup && (
+          <GeolocationPopup
+            requestGeolocation={requestGeolocation}
+            declineGeolocation={declineGeolocation}
+          />
+        )}
+        {locationError && (
+          <div className="text-red-500 p-2 bg-white rounded shadow mb-2">
+            Location Error: {locationError}
+          </div>
+        )}
+        <MapContainer
+          center={userLocation || center}
+          zoom={13}
+          minZoom={5}
+          zoomControl={false}
+          attributionControl={false}
+          className="h-full w-full"
+          key={userLocation ? 'user-location' : 'default-location'}
+        >
+          <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" />
+          {selectedLocation && (
+            <SelectedLocation center={userLocation || center} />
+          )}
+          <MapClickHandler
+            onClick={handleMapClick}
+            allowClickToAddMarker={allowClickToAddMarker}
+          />
+          {renderMarks()}
+          {renderCustomMarkers()}
+          {renderUserLocation()}
+          <ZoomControl position="topright" />
+          <Button
+            variant="filters"
+            className="z-[700] absolute top-[95px] right-[10px] p-[10px]"
+            onClick={requestGeolocation}
+          >
+            <Vector className="stroke-foreground w-5 h-5" />
+          </Button>
+        </MapContainer>
+      </div>
       <SearchInput />
       <TasksList />
-      <MapContainer
-        center={userLocation || center}
-        zoom={13}
-        minZoom={5}
-        zoomControl={false}
-        attributionControl={false}
-        className="h-full w-full"
-        key={userLocation ? 'user-location' : 'default-location'}
-      >
-        <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" />
-        {selectedLocation && (
-          <SelectedLocation center={userLocation || center} />
-        )}
-        <MapClickHandler
-          onClick={handleMapClick}
-          allowClickToAddMarker={allowClickToAddMarker}
-        />
-        {renderMarks()}
-        {renderCustomMarkers()}
-        {renderUserLocation()}
-        <ZoomControl position="topright" />
-        <Button
-          variant="filters"
-          className="z-[700] absolute top-[95px] right-[10px] p-[10px]"
-          onClick={requestGeolocation}
-        >
-          <Vector className="stroke-foreground w-5 h-5" />
-        </Button>
-      </MapContainer>
     </Container>
   );
 };
