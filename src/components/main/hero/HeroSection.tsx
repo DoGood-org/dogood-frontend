@@ -4,10 +4,9 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Planet from '../../../assets/images/hero/planet.png';
-import { Button } from '@/components';
+import { Button, HeroSocialLink } from '@/components';
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
-import HeroSocialLink from './HeroSocialLink';
 
 export const HeroSection: React.FC = () => {
   const t = useTranslations('common');
@@ -50,14 +49,14 @@ export const HeroSection: React.FC = () => {
           <Button
             variant="primary"
             onClick={() => router.push(`/${localActive}/register`)}
-            className="w-[255px] h-[48px] text-base text-white py-3 lg:w-[147px] btn-expand-hover"
+            className="w-[255px] h-[48px] text-base text-white py-3 lg:w-[147px]"
           >
             {t('volunteerBtn')}
           </Button>
           <Button
             variant="secondary"
             onClick={() => router.push(`/${localActive}/about`)}
-            className="w-[255px] h-[48px] text-base text-white py-3 lg:w-[147px] btn-expand-hover"
+            className="w-[255px] h-[48px] text-base text-white py-3 lg:w-[147px]"
           >
             {t('learnMoreBtn')}
           </Button>
