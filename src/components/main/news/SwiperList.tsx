@@ -34,7 +34,6 @@ export const SwiperList: React.FC<Props> = (props) => {
         speed={1000}
         spaceBetween={0}
         direction="horizontal"
-
         navigation={{
           prevEl: `.${props.prevClass}`,
           nextEl: `.${props.nextClass}`,
@@ -47,12 +46,10 @@ export const SwiperList: React.FC<Props> = (props) => {
           },
         }}
         updateOnWindowResize={true}
-
         breakpoints={{
           0: {
             slidesPerView: 3,
             direction: 'vertical',
-
           },
           768: {
             allowTouchMove: false,
@@ -71,7 +68,7 @@ export const SwiperList: React.FC<Props> = (props) => {
         }}
       >
         {props.newsItems.map((item) => (
-          <SwiperSlide key={item.id} className='w-full'>
+          <SwiperSlide key={item.id} className="w-full">
             <NewsItem item={item} />
           </SwiperSlide>
         ))}
@@ -79,5 +76,3 @@ export const SwiperList: React.FC<Props> = (props) => {
     </div>
   );
 };
-
-
