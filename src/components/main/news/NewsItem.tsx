@@ -23,7 +23,7 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
 
   return (
     <div
-      role="button"
+ 
       tabIndex={0}
       onClick={navigateToNewsItem}
       key={props.item.id}
@@ -43,17 +43,22 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
         {props.item.title}
       </h2>
       <p className="text-left mb-1">{props.item.category}</p>
-      <p className="flex text-[14px] items-center gap-1 line-clamp-1 ">
+      <div className="flex text-[14px] items-center">
         <span>
           {props.item.date
-            ? new Date(props.item.date).toLocaleDateString()
+            ? new Date(props.item.date).toLocaleDateString('en-US', {
+                month: 'short', 
+                day: 'numeric',
+                year: 'numeric',
+                timeZone: 'UTC',
+              })
             : ''}
         </span>
-        <span className="w-[4px] h-[4px] bg-white rounded-full line-clamp-1 mx-2" />
+        <span className="w-[4px] h-[4px] bg-white rounded-full line-clamp-1 mx-1" />
         {props.item.tags && props.item.tags.length > 0 && (
           <span className="line-clamp-1"> #{props.item.tags.join(' #')}</span>
         )}
-      </p>
+      </div>
     </div>
   );
 };
