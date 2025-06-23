@@ -11,7 +11,7 @@ type FormData = {
   interest: string;
 };
 
-const ContactForm = (): React.ReactElement => {
+export const ContactForm = (): React.ReactElement => {
   const t = useTranslations('faq');
   const contact = (t.raw('contact') as any[])[0];
   const downText = (t.raw('downtext') as any[])[0];
@@ -32,14 +32,14 @@ const ContactForm = (): React.ReactElement => {
     setCharCount(messageValue?.length || 0);
   }, [messageValue]);
   return (
-    <div className="w-full flex justify-center content-center flex-col">
+    <div className="w-full flex justify-center items-center flex-col">
       <h2 className="sm:text-[32px] md:text-[32px] lg:text-[48px] flex items-center justify-center">
         {contact.heading}
       </h2>
       <form
         id="contact-form"
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-[24px] py-[24px] md:space-y-[36px] md:pt-[40px] xl:py[0] md:w-[427px] lg:w-[655px] m-auto z-6"
+        className="w-full space-y-[24px] py-[24px] md:space-y-[36px] md:pt-[40px] xl:py[0] md:w-[427px] lg:w-[655px] z-6"
       >
         <div className="relative">
           <div className="mb-4">
@@ -123,17 +123,17 @@ const ContactForm = (): React.ReactElement => {
           </div>
         </div>
       </form>
-      <div className="pt-[40px] flex sm:flex-col items-center md:flex-row sm:items-start sm:justify-between gap-[20px] md:justify-center md:gap-[110px]">
+      <div className="pt-[20px] flex flex-col items-center md:flex-row justify-between gap-[20px] md:justify-center md:gap-[110px]">
         <p className="text-[#999999] text-p4-m md:text-p2-d max-w-[365px]">
           {downText.text}
         </p>
         <Button
-          variant="outline"
+          variant="secondary"
           size="lg"
           type="submit"
           form="contact-form"
           // onClick={() => }
-          className="sm:min-w-[353px] h-[48px] lg:min-w-[186px] md:min-w-[180px] btn-expand-hover xl:text-p2-d"
+          className="w-full h-[48px] lg:max-w-[186px] md:max-w-[180px] btn-expand-hover"
         >
           {downText.btn}
         </Button>
@@ -141,5 +141,3 @@ const ContactForm = (): React.ReactElement => {
     </div>
   );
 };
-
-export default ContactForm;

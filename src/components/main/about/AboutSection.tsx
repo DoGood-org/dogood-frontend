@@ -5,12 +5,12 @@ import { motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
 import {
   AboutAnimationTabs,
+  AboutImages,
   Container,
   LinkWithArrow,
   Section,
 } from '@/components';
 import { AboutSectionProps } from '@/types';
-import { AboutImages } from './AboutImages';
 
 export const AboutSection: React.FC = () => {
   const t = useTranslations('about');
@@ -33,6 +33,8 @@ export const AboutSection: React.FC = () => {
         className="relative z-10 items-center overflow-hidden"
       >
         <Container>
+          <h2 className="sr-only">About</h2>
+
           {activeData && (
             <div className="flex flex-col lg:flex-row gap-7 gap-10 md:gap-15 lg:gap-6 transition-opacity duration-500 ease-in-out opacity-100">
               <div>
@@ -44,13 +46,9 @@ export const AboutSection: React.FC = () => {
                 <AboutImages activeData={activeData} />
               </div>
               <div className="pb-8 md:pb-14 lg:py-28 ">
-                <div className="flex flex-col h-[400px] md:h-[348px] lg:h-[488px]">
-                  <h2 className="text-h3 lg:text-h3-d">{activeData.title}</h2>
-                  {/* <div className="space-y-2"> */}
-                  <p className="text-base mt-8 lg:mt-12">
-                    {activeData.description}
-                  </p>
-                  {/* </div> */}
+                <div className="flex flex-col gap-8 lg:gap-12">
+                  <h3 className="text-h3 lg:text-h3-d">{activeData.title}</h3>
+                  <p className="text-base">{activeData.description}</p>
                   <LinkWithArrow
                     href={`/${locale}/about`}
                     text={t('aboutButton')}
