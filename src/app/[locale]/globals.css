@@ -80,6 +80,8 @@
   --radius-md: calc(var(--radius) - 2px); /*10px*/
   --radius-lg: var(--radius); /*12px*/
   --radius-xl: calc(var(--radius) + 4px); /*16px*/
+
+  --spacing: 4px;
 }
 
 :root {
@@ -126,7 +128,7 @@
   --image-bg: #999999;
 
   /* --radius: 0.625rem; */
-  --radius: 0.75rem;
+  --radius: 12px; /*0.75rem */
 
   --error: #ee0606;
 
