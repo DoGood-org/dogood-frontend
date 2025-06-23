@@ -16,5 +16,9 @@
     "typescriptreact": true
   },
   "github.copilot.nextEditSuggestions.fixes": true,
-  "github.copilot.chat.codesearch.enabled": true
+  "github.copilot.advanced": {
+    "inlineSuggestions": true,
+    "autoImport": true,
+    "codeCompletion": true
+  }
 }

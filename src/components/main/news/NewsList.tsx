@@ -1,7 +1,6 @@
 'use client';
 
 import { ArrowBigLeft, ArrowBigRight, ArrowRight } from 'lucide-react';
-import Link from 'next/link';
 import React, { JSX } from 'react';
 
 import 'swiper/css';
@@ -12,6 +11,8 @@ import { mockNews } from '@/components/main/news/mockNews';
 import { useTranslations } from 'next-intl';
 import { SwiperPagination } from '@/components/main/news/SwiperPagination';
 import { SwiperNavButton } from '@/components/main/news/SwiperNavButton';
+import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
+import { NewsSlideTablet } from '@/components/main/news/NewsSlideTablet';
 
 export const NewsList = (): JSX.Element => {
   const t = useTranslations('news');
@@ -19,13 +20,13 @@ export const NewsList = (): JSX.Element => {
     <section className=" mx-auto w-full bg-background text-[var(--foreground)] py-[40px] ">
       <div className="my-container">
         <h2
-          className="text-[var(--foreground)] text-[32px] font-normal leading-12
-        xl:text-[48px] xl:font-normal mb-4
+          className="text-[var(--foreground)] text-[32px] font-normal leading-12 mb-4
+        lg:text-[48px]
         "
         >
           {t('newsListMain.title')}
         </h2>
-        <div className="flex justify-between items-center mb-4">
+        {/* <div className="flex justify-between items-center mb-4">
           <div className=" flex gap-4">
             <SwiperPagination
               className="news-pagination flex gap-2"
@@ -46,25 +47,22 @@ export const NewsList = (): JSX.Element => {
               icon={ArrowBigRight}
             />
           </div>
-        </div>
-
-        <SwiperList
-          newsItems={mockNews}
-          swiperContainerClass="flex h-[1380px] my-[40px] sm:h-[480px]"
-          prevClass="prevNews"
-          nextClass="nextNews"
-          paginationClass="news-pagination"
-          bulletClass="news-pagination-bullet"
-          bulletActiveClass="news-pagination-bullet-active"
-        />
+        </div> */}
+          <SwiperList
+            newsItems={mockNews}
+            swiperContainerClass="h-[1323px] my-10 md:hidden lg:block lg:h-[425px] "
+            prevClass="prevNews"
+            nextClass="nextNews"
+            paginationClass="news-pagination"
+            bulletClass="news-pagination-bullet"
+            bulletActiveClass="news-pagination-bullet-active"
+          />
+          <NewsSlideTablet newsItems={mockNews} containerClass="my-10 md:block lg:hidden" />
 
         <div
-          className="mt-4 text-[16px] text-[var(--foreground)] text-left leading-6 
-        md:text-right"
+          className=" mx-1 text-[16px] flex text-[var(--foreground)] justify-end leading-6 "
         >
-          <Link href="/news" className="text-sm hover:underline">
-            {t('newsListMain.seeAll')} <ArrowRight className="inline" />
-          </Link>
+          <LinkWithArrow href='/news' className="text-sm hover:underline" text={t('newsListMain.seeAll')} />
         </div>
       </div>
     </section>

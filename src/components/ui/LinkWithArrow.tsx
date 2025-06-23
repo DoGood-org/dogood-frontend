@@ -18,7 +18,7 @@ export const LinkWithArrow = ({
     <Link
       href={href}
       className={cn(
-        'text-p2-d/[24px] hover:text-btn-hover focus:text-btn-hover acvtive:text-btn-active flex items-center gap-2',
+        'text-p2-d/[24px] hover:text-btn-hover focus:text-btn-hover acvtive:text-btn-active flex items-center gap-2 cursor-pointer',
         className
       )}
     >
