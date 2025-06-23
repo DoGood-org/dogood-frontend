@@ -1,12 +1,12 @@
 import React from 'react';
-import Faq from '@/components/main/Faq';
-import Donate from '@/components/main/Donate';
 import {
   AboutSection,
   HeroSection,
   HowItWorks,
   MapSection,
   NewsList,
+  Donate,
+  Faq,
 } from '@/components';
 
 export default function Home(): React.JSX.Element {
@@ -17,8 +17,8 @@ export default function Home(): React.JSX.Element {
       <HowItWorks />
       <MapSection />
       <Donate />
-      <Faq />
       <NewsList />
+      <Faq />
     </>
   );
 }
