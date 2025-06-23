@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { NavItem } from '@/types';
 import { NavItemRenderer } from './NavItemRenderer';
-import { NavButtons } from './NavButtons';
 
 export const Navigation: React.FC = () => {
   const t = useTranslations('header');
@@ -17,7 +16,7 @@ export const Navigation: React.FC = () => {
   };
 
   return (
-    <nav className="hidden md:flex text-white relative z-[9998] gap-10 items-center">
+    <nav className="hidden lg:flex text-white relative z-[9998] gap-10 items-center">
       <ul className="flex gap-4 pl-10 text-base items-center">
         {navList.map((navItem, index) => (
           <NavItemRenderer
@@ -28,7 +27,6 @@ export const Navigation: React.FC = () => {
           />
         ))}
       </ul>
-      <NavButtons />
     </nav>
   );
 };

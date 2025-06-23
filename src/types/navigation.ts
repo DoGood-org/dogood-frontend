@@ -30,12 +30,17 @@ export type NavItem =
       type: 'settings';
       title: string;
       content: SettingContentItem[];
+    }
+  | {
+      type: 'icon';
+      title: string;
+      content: NavButtonProps[];
     };
 
 export type NavButtonProps = {
   name: string;
   src: string;
-  variant: 'primary' | 'outline';
+  // variant: 'primary' | 'outline';
 };
 
 export interface NavItemRendererProps {
@@ -50,4 +55,7 @@ export interface NavDropdownProps {
   children: React.ReactNode;
   isOpen: boolean;
   className?: string;
+  // iconSize?: string; //size for CaretDown-icon - default 'size-6'
+  // padding?: string; //padding between trigger and CaretDown-icon - default 'p-4'
+  isIcon?: boolean; //if true - trigger is icon
 }

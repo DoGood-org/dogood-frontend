@@ -3,6 +3,8 @@ import { NavItemRendererProps } from '@/types';
 import { NavDropdown } from './NavDropdown';
 import { SettingsList } from './SettingList';
 import { Button } from '@/components/ui/Button';
+import { User } from '@/components/icons';
+import { NavButtons } from './NavButtons';
 
 export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   navItem,
@@ -28,33 +30,42 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
         <NavDropdown
           isOpen={isOpen}
           trigger={navItem.title}
-          className="xl:w-[631px]"
+          className="min-w-[330px]"
         >
-          <div className="z-10 grid grid-cols-[62%_auto] grid-rows-2 gap-3 min-w-[400px] ">
+          <ul className="z-10">
             {navItem.content.map(({ src, name, description }, index) => (
-              <Link
-                key={`${index}-${name}`}
-                href={src}
-                className={`${index === 1 ? 'row-span-2 col-start-2 h-full flex flex-col justify-between' : ''}  dropdown-link block p-5 rounded-md transition duration-700 text-white `}
-              >
-                <h4 className="mb-[10px]">{name}</h4>
-                <p className="text-p2-d text-text-gray">{description}</p>
-              </Link>
+              <li key={`${index}-${name}`}>
+                <Link
+                  href={src}
+                  className="dropdown-link block p-5 rounded-md transition duration-700 text-white px-6 py-3"
+                >
+                  <p className="">{name}</p>
+                  <p className="text-[14px]/5 text-text-gray mt-2">
+                    {description}
+                  </p>
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </NavDropdown>
       );
 
     case 'settings':
       return (
+        <NavDropdown isOpen={isOpen} trigger={navItem.title} className="">
+          <SettingsList settingItem={navItem} />
+        </NavDropdown>
+      );
+
+    case 'icon':
+      return (
         <NavDropdown
           isOpen={isOpen}
-          trigger={navItem.title}
-          className="left-20 p-10"
+          trigger={<User className="size-6" />}
+          className=""
+          isIcon
         >
-          <ul>
-            <SettingsList settingItem={navItem} />
-          </ul>
+          <NavButtons />
         </NavDropdown>
       );
 
