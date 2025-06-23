@@ -21,7 +21,7 @@
       "view": "GoodBot",
       "title": "DoGood is on the phone - meet GoodBot.",
       "description": "DoGood Bot is your assistant in the world of good deeds. It will tell you where you need help, remind you of the task, help you choose a direction, and answer your questions when you are just starting out. You are always in touch with the platform: in messenger, without unnecessary transitions and forms. Just write - and good will become even more accessible.",
-      "img": ["", "", "", "goodBot.png"]
+      "img": ["goodBot1.png", "goodBot2.png", "goodBot3.png", "goodBot4.png"]
     },
     {
       "view": "Grants",

@@ -6,7 +6,10 @@ import donate1 from './donate1.png';
 import donate2 from './donate2.png';
 import donate3 from './donate3.png';
 import donate4 from './donate4.png';
-import goodBot from './goodBot.png';
+import goodBot1 from './goodBot1.png';
+import goodBot2 from './goodBot2.png';
+import goodBot3 from './goodBot3.png';
+import goodBot4 from './goodBot4.png';
 import grants1 from './grants1.png';
 import grants2 from './grants2.png';
 import grants3 from './grants3.png';
@@ -29,7 +32,10 @@ export const images = {
   'donate2.png': donate2,
   'donate3.png': donate3,
   'donate4.png': donate4,
-  'goodBot.png': goodBot,
+  'goodBot1.png': goodBot1,
+  'goodBot2.png': goodBot2,
+  'goodBot3.png': goodBot3,
+  'goodBot4.png': goodBot4,
   'grants1.png': grants1,
   'grants2.png': grants2,
   'grants3.png': grants3,
