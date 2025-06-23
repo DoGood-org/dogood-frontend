@@ -1,6 +1,5 @@
 'use client';
 
-import { ArrowBigLeft, ArrowBigRight, ArrowRight } from 'lucide-react';
 import React, { JSX } from 'react';
 
 import 'swiper/css';
@@ -9,8 +8,7 @@ import 'swiper/css/pagination';
 import { SwiperList } from '@/components/main/news/SwiperList';
 import { mockNews } from '@/components/main/news/mockNews';
 import { useTranslations } from 'next-intl';
-import { SwiperPagination } from '@/components/main/news/SwiperPagination';
-import { SwiperNavButton } from '@/components/main/news/SwiperNavButton';
+
 import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { NewsSlideTablet } from '@/components/main/news/NewsSlideTablet';
 
@@ -48,21 +46,26 @@ export const NewsList = (): JSX.Element => {
             />
           </div>
         </div> */}
-          <SwiperList
-            newsItems={mockNews}
-            swiperContainerClass="h-[1323px] my-10 md:hidden lg:block lg:h-[425px] "
-            prevClass="prevNews"
-            nextClass="nextNews"
-            paginationClass="news-pagination"
-            bulletClass="news-pagination-bullet"
-            bulletActiveClass="news-pagination-bullet-active"
-          />
-          <NewsSlideTablet newsItems={mockNews} containerClass="my-10 md:block lg:hidden" />
+        <SwiperList
+          newsItems={mockNews}
+          swiperContainerClass="h-[1323px] my-10 md:hidden lg:block lg:h-[425px] "
+          prevClass="prevNews"
+          nextClass="nextNews"
+          paginationClass="news-pagination"
+          bulletClass="news-pagination-bullet"
+          bulletActiveClass="news-pagination-bullet-active"
+        />
+        <NewsSlideTablet
+          newsItems={mockNews}
+          containerClass="my-10 md:block lg:hidden"
+        />
 
-        <div
-          className=" mx-1 text-[16px] flex text-[var(--foreground)] justify-end leading-6 "
-        >
-          <LinkWithArrow href='/news' className="text-sm hover:underline" text={t('newsListMain.seeAll')} />
+        <div className=" mx-1 text-[16px] flex text-[var(--foreground)] justify-end leading-6 ">
+          <LinkWithArrow
+            href="/news"
+            className="text-sm hover:underline"
+            text={t('newsListMain.seeAll')}
+          />
         </div>
       </div>
     </section>
