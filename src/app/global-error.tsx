@@ -14,7 +14,7 @@ const GlobalErrorPage = ({
       <body>
         <h2>Something went wrong!</h2>
         <p>{error.message}</p>
-        <Button variant="outline" onClick={() => reset()}>
+        <Button variant="default" onClick={() => reset()}>
           Try again
         </Button>
       </body>
