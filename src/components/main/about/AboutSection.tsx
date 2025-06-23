@@ -23,14 +23,14 @@ export const AboutSection: React.FC = () => {
   return (
     <Section
       withContainer={false}
-      className="pt-[100px] pb-[206px] md:pb-[216px] xl:pb-[226px] bg-background  transition-color transition-background duration-800 relative z-20 "
+      className="bg-background  transition-color transition-background duration-800 relative z-20 "
     >
       <motion.div
         initial={{ y: 0, opacity: 0 }}
         whileInView={{ y: 176, opacity: 1 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative z-10 items-center overflow-hidden"
+        className="relative z-10 items-center overflow-hidden pt-[100px] pb-[206px] md:pb-[216px] lg:pb-[226px] "
       >
         <Container>
           <h2 className="sr-only">About</h2>
