@@ -38,9 +38,9 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
           />
         )}
       </div>
-      <h2 className=" mb-[53px] text-[18px] font-normal leading-6 line-clamp-2">
+      <h3 className=" mb-[53px] text-[18px] font-normal leading-6 line-clamp-2">
         {props.item.title}
-      </h2>
+      </h3>
       <p className="text-left mb-3 text-[16px]">{props.item.category}</p>
       <div className="flex text-[14px] items-center mb-3">
         <span>
