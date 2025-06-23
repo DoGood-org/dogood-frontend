@@ -15,35 +15,14 @@
           "src": "/support"
         },
         {
-          "name": "About DoGood",
-          "description": "DoGood is a community of people for whom kindness is an active act.",
-          "src": "/about"
-        },
-        {
           "name": "Grants",
           "description": "We support initiatives that make a difference in the community.",
           "src": "/grants"
-        }
-      ]
-    },
-    {
-      "title": "News",
-      "type": "list",
-      "content": [
-        {
-          "name": "News",
-          "description": "Keep up to date with DoGood events.",
-          "src": "/news"
         },
         {
-          "name": "Volunteer stories",
-          "description": "Real stories of people who are doing good.",
-          "src": "/volunteerStories"
-        },
-        {
-          "name": "Blog",
-          "description": "Ideas, tips and inspiration for those who want to change the world.",
-          "src": "/blog"
+          "name": "About DoGood",
+          "description": "DoGood is a community of people for whom kindness is an active act.",
+          "src": "/about"
         }
       ]
     },
@@ -66,6 +45,36 @@
           "name": "Theme",
           "description": "Display theme"
         }
+      ]
+    },
+    {
+      "title": "News",
+      "type": "link",
+      "src": "/news",
+      "content": [
+        {
+          "name": "News",
+          "description": "Keep up to date with DoGood events.",
+          "src": "/news"
+        },
+        {
+          "name": "Volunteer stories",
+          "description": "Real stories of people who are doing good.",
+          "src": "/volunteerStories"
+        },
+        {
+          "name": "Blog",
+          "description": "Ideas, tips and inspiration for those who want to change the world.",
+          "src": "/blog"
+        }
+      ]
+    },
+    {
+      "title": "Accout",
+      "type": "icon",
+      "content": [
+        { "name": "Log in", "src": "/login" },
+        { "name": "Sign up", "src": "/register" }
       ]
     }
   ],
