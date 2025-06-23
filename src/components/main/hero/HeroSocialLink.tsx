@@ -14,16 +14,14 @@ export const HeroSocialLink: React.FC = () => {
     <motion.div
       ref={sectionRef}
       style={{ opacity }}
-      className="fixed flex flex-col items-center left-8 top-[450px] lg:top-[200px] z-[5000]"
+      className="fixed flex flex-col gap-6 items-center left-8 top-[450px] lg:top-[200px] z-[5000]"
     >
-      <div className="w-px h-20 lg:h-[260px] bg-gray-300 mb-4" />
+      <div className="w-px h-20 lg:h-[260px] bg-gray-300" />
       <SocialLinks
-        className="flex-col gap-2 lg:gap-6"
-        iconClassName="w-6 h-6 lg:w-8 h-8"
+        className="flex flex-col gap-2 lg:gap-6"
+        iconClassName="w-6 h-6 lg:w-8 lg:h-8"
       />
-      <div className="w-px h-20 lg:h-[260px] bg-gray-300 mb-4" />
+      <div className="w-px h-20 lg:h-[260px] bg-gray-300" />
     </motion.div>
   );
 };
-
-export default HeroSocialLink;

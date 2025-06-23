@@ -18,7 +18,7 @@ export const HowItWorks: React.FC = () => {
             className="bg-dots p-8 text-center rounded-xl border border-[#1AD3AA] md:w-[353px] lg:w-full lg:p-12"
           >
             <item.icon className="h-12 w-auto mx-auto mb-6 lg:w-[100px] lg:h-auto lg:mb-10" />
-            <p className="text-base lg:text-lg">{item.title}</p>
+            <p className="text-base text-white lg:text-lg">{item.title}</p>
           </li>
         ))}
       </ul>
