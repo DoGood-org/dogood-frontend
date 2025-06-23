@@ -23,7 +23,6 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
 
   return (
     <div
- 
       tabIndex={0}
       onClick={navigateToNewsItem}
       key={props.item.id}
@@ -47,7 +46,7 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
         <span>
           {props.item.date
             ? new Date(props.item.date).toLocaleDateString('en-US', {
-                month: 'short', 
+                month: 'short',
                 day: 'numeric',
                 year: 'numeric',
                 timeZone: 'UTC',
