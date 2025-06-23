@@ -3,7 +3,7 @@ import React from 'react';
 import { NewsItem } from '@/components/main/news/NewsItem';
 import { INewsItem } from '@/types/news.interface';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Grid } from 'swiper/modules';
 
 type Props = {
   newsItems: INewsItem[];
@@ -19,11 +19,11 @@ export const SwiperList: React.FC<Props> = (props) => {
   return (
     <div className={`${props.swiperContainerClass}`}>
       <Swiper
+        className="w-full h-[1323px] md:hidden lg:block "
         observer={true}
         observeParents={true}
-        autoHeight
-        loop
-        modules={[Navigation, Pagination]}
+        loop={false}
+        modules={[Navigation, Pagination, Grid]}
         keyboard={{
           enabled: true,
         }}
@@ -33,7 +33,8 @@ export const SwiperList: React.FC<Props> = (props) => {
         slidesPerGroup={1}
         speed={1000}
         spaceBetween={0}
-        direction="vertical"
+        direction="horizontal"
+
         navigation={{
           prevEl: `.${props.prevClass}`,
           nextEl: `.${props.nextClass}`,
@@ -45,35 +46,32 @@ export const SwiperList: React.FC<Props> = (props) => {
             return `<span class="${props.bulletClass} ${className}">${index + 1}</span>`;
           },
         }}
-        edgeSwipeDetection={true}
-        onResize={(swiper) => swiper.update()}
+        updateOnWindowResize={true}
+
         breakpoints={{
-          960: {
-            slidesPerView: 2,
-            direction: 'horizontal',
-            spaceBetween: 16,
-            edgeSwipeDetection: true,
-          },
-          1494: {
+          0: {
             slidesPerView: 3,
-            direction: 'horizontal',
-            spaceBetween: 16,
-            edgeSwipeDetection: true,
+            direction: 'vertical',
+
           },
-          1920: {
+          768: {
+            allowTouchMove: false,
+            slidesPerView: 1,
+            direction: 'vertical',
+            spaceBetween: 0,
+          },
+
+          1440: {
+            allowTouchMove: true,
+
             slidesPerView: 4,
             direction: 'horizontal',
             spaceBetween: 16,
-            edgeSwipeDetection: true,
           },
         }}
-        className=" w-full h-full cursor-all-scroll "
       >
         {props.newsItems.map((item) => (
-          <SwiperSlide
-            key={item.id}
-            className="h-full flex items-center justify-center"
-          >
+          <SwiperSlide key={item.id} className='w-full'>
             <NewsItem item={item} />
           </SwiperSlide>
         ))}
@@ -81,3 +79,5 @@ export const SwiperList: React.FC<Props> = (props) => {
     </div>
   );
 };
+
+

@@ -26,9 +26,9 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
       tabIndex={0}
       onClick={navigateToNewsItem}
       key={props.item.id}
-      className="mx-auto news-item w-[300px] flex flex-col  p-[20px] border-1 border-[var(--text-gray)] rounded-lg shadow-md cursor-pointer"
+      className="mx-auto my-1 news-item w-[300px] flex flex-col  p-[20px] border-1 border-[var(--text-gray)] rounded-lg shadow-md cursor-pointer"
     >
-      <div className="mx-auto mb-[24px] relative rounded-lg w-[260px] h-[198px] overflow-hidden">
+      <div className="mx-auto mb-[25px] relative rounded-lg w-[260px] h-[198px] overflow-hidden">
         {props.item.img && (
           <Image
             src={props.item.img}
@@ -38,11 +38,11 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
           />
         )}
       </div>
-      <h2 className=" mb-[48px] roboto text-[20px] font-normal leading-6 line-clamp-2">
+      <h2 className=" mb-[53px] text-[18px] font-normal leading-6 line-clamp-2">
         {props.item.title}
       </h2>
-      <p className="text-left mb-1">{props.item.category}</p>
-      <div className="flex text-[14px] items-center">
+      <p className="text-left mb-3 text-[16px]">{props.item.category}</p>
+      <div className="flex text-[14px] items-center mb-3">
         <span>
           {props.item.date
             ? new Date(props.item.date).toLocaleDateString('en-US', {

@@ -49,4 +49,20 @@ export const mockNews: INewsItem[] = [
     tags: ['helping', 'choice'],
     category: 'Lifestyle',
   },
+  {
+    id: 'news_7',
+    title: 'When Helping Isn’t a Trend — It’s a Daily Choice Part 2',
+    img: '/news/news3.png',
+    date: '2023-10-03T12:00:00Z',
+    tags: ['helping', 'choice'],
+    category: 'Lifestyle',
+  },
+  {
+    id: 'news_8',
+    title: 'When Helping Isn’t a Trend — It’s a Daily Choice Part 2',
+    img: '/news/news3.png',
+    date: '2023-10-03T12:00:00Z',
+    tags: ['helping', 'choice'],
+    category: 'Lifestyle',
+  },
 ];
