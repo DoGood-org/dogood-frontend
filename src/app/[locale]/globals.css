@@ -83,6 +83,7 @@
 
 :root {
   --font-montserrat: 'Montserrat', sans-serif;
+  --font-size: 16px;
 
   --background: #f1f1f1;
   --background-secondary: #303030;
@@ -150,6 +151,10 @@
     radial-gradient(circle, rgba(26, 211, 170, 0.1) 2px, transparent 2px),
     linear-gradient(0deg, #0a6f3c, #0a6f3c);
 }
+html {
+  font-size: var(--font-size);
+}
+
 
 .montserrat {
   font-family: var(--font-montserrat);
