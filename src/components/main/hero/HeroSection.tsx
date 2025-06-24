@@ -11,7 +11,6 @@ import bgHero from '@/assets/images/hero/bg-hero.png';
 import mobHero from '@/assets/images/hero/mob-hero.png';
 import tabletHero from '@/assets/images/hero/tablet-hero.png';
 
-
 export const HeroSection: React.FC = () => {
   const t = useTranslations('common');
   const router = useRouter();
@@ -28,8 +27,8 @@ export const HeroSection: React.FC = () => {
   }, []);
 
   const yContent = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0, -500]);
-  const yPlanet = useTransform(scrollYProgress, [0, 1], [500, -500]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+  // const yPlanet = useTransform(scrollYProgress, [0, 1], [500, -500]);
+  // const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
   const contentOpacity = useTransform(scrollYProgress, [0.5, 0.8], [1, 0]);
 
   return (
