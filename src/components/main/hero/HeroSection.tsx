@@ -3,10 +3,14 @@ import { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import Planet from '../../../assets/images/hero/planet.png';
+import Planet from '@/assets/images/hero/planet.png';
 import { Button, HeroSocialLink } from '@/components';
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
+import bgHero from '@/assets/images/hero/bg-hero.png';
+import mobHero from '@/assets/images/hero/mob-hero.png';
+import tabletHero from '@/assets/images/hero/tablet-hero.png';
+
 
 export const HeroSection: React.FC = () => {
   const t = useTranslations('common');
@@ -29,10 +33,47 @@ export const HeroSection: React.FC = () => {
   const contentOpacity = useTransform(scrollYProgress, [0.5, 0.8], [1, 0]);
 
   return (
-    <section ref={sectionRef} className="relative h-[1080px] w-full">
+    <section
+      ref={sectionRef}
+      className="relative h-dvh w-full bg-background text-foreground overflow-visible"
+    >
       {/* Background layer */}
-      <div className="fixed inset-0 bg-hero bg-center bg-cover -z-10" />
+      {/* <div className="fixed inset-0 bg-hero bg-center bg-cover -z-10" /> */}
+      <div className="relative w-full h-dvh pt-[104px] hidden lg:block">
+        <Image
+          src={bgHero}
+          alt="Background"
+          fill
+          className="object-cover"
+          quality={100}
+          priority
+        />
+      </div>
+      <div className="relative w-full h-dvh pt-[104px] block md:hidden lg:hidden ">
+        <Image
+          src={mobHero}
+          alt="Background"
+          fill
+          className="object-cover"
+          quality={100}
+          priority
+        />
+      </div>
+      <div className="relative w-full h-dvh pt-[104px] hidden md:block lg:hidden ">
+        <Image
+          src={tabletHero}
+          alt="Background"
+          fill
+          className="object-cover"
+          quality={100}
+          priority
+        />
+      </div>
 
+      {/* <div className="absolute inset-0  opacity-50" /> */}
+      <div className="relative z-10">
+        <HeroSocialLink />
+      </div>
       {/* Content layer (under planet) */}
       <motion.div
         className="px-5 fixed top-[166px] md:top-[220px] md:w-[393px] lg:w-full lg:top-[320px] left-1/2 transform -translate-x-1/2 text-foreground text-center"
@@ -62,23 +103,23 @@ export const HeroSection: React.FC = () => {
           </Button>
         </div>
       </motion.div>
-      <HeroSocialLink />
       {/* Planet layer */}
       <div className="absolute bottom-[-500px] w-full pointer-events-none z-25">
-        <div className="sticky top-0 h-screen flex items-end justify-center ">
+        <div className="sticky bottom-0 h-screen flex items-end justify-center">
           <motion.div
-            style={{ y: yPlanet, opacity }}
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.5 }} // start animating when 50% in view
             transition={{ duration: 2, ease: 'easeOut' }}
+            className="relative w-[990px] max-w-full"
           >
             <Image
               src={Planet}
               alt="Planet"
               width={990}
               height={990}
-              className="drop-shadow-2xl"
+              className="drop-shadow"
+              priority
             />
           </motion.div>
         </div>
