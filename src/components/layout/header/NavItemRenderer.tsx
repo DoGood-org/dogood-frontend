@@ -1,75 +1,98 @@
+'use client';
+
 import Link from 'next/link';
-import { NavItemRendererProps } from '@/types';
+import { NavItem, NavItemRendererProps } from '@/types';
 import { NavDropdown } from './NavDropdown';
 import { SettingsList } from './SettingList';
 import { Button } from '@/components/ui/Button';
 import { User } from '@/components/icons';
-import { NavButtons } from './NavButtons';
+import { AccountLinks } from './AccountLinks';
+import { useState } from 'react';
+import { ListDropdown } from './ListDropdown';
 
 export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   navItem,
-  isOpen,
 }) => {
-  switch (navItem.type) {
-    case 'link':
-      return (
-        <li>
-          <Button asChild variant="ghost" size="md">
-            <Link
-              href={navItem.src}
-              className="nav-link text-white flex items-center"
-            >
-              {navItem.title}
-            </Link>
-          </Button>
-        </li>
-      );
+  const [isOpen, setIsOpen] = useState(false);
 
-    case 'list':
-      return (
-        <NavDropdown
-          isOpen={isOpen}
-          trigger={navItem.title}
-          className="min-w-[330px]"
+  if (navItem.type === 'link') {
+    return (
+      <li>
+        <Button
+          asChild
+          variant="ghost"
+          size="md"
+          className="hover:border-btn-outline-hover"
         >
-          <ul className="z-10">
-            {navItem.content.map(({ src, name, description }, index) => (
-              <li key={`${index}-${name}`}>
-                <Link
-                  href={src}
-                  className="dropdown-link block p-5 rounded-md transition duration-700 text-white px-6 py-3"
-                >
-                  <p className="">{name}</p>
-                  <p className="text-[14px]/5 text-text-gray mt-2">
-                    {description}
-                  </p>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </NavDropdown>
-      );
-
-    case 'settings':
-      return (
-        <NavDropdown isOpen={isOpen} trigger={navItem.title} className="">
-          <SettingsList settingItem={navItem} />
-        </NavDropdown>
-      );
-
-    case 'icon':
-      return (
-        <NavDropdown
-          isOpen={isOpen}
-          trigger={<User className="size-6" />}
-          className=""
-          isIcon
-        >
-          <NavButtons />
-        </NavDropdown>
-      );
-
-    default:
-      return null;
+          <Link
+            href={navItem.src}
+            className="nav-link text-white flex items-center"
+          >
+            {navItem.title}
+          </Link>
+        </Button>
+      </li>
+    );
   }
+
+  const configMap: Record<
+    string,
+    | {
+        className: string;
+        trigger: React.ReactNode;
+        content: React.ReactNode;
+        isIcon?: boolean;
+      }
+    | undefined
+  > = {
+    list: {
+      className: 'min-w-[330px]',
+      trigger: navItem.title,
+      content: (
+        <ListDropdown
+          listItem={navItem as Extract<NavItem, { type: 'list' }>}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
+      ),
+    },
+
+    settings: {
+      className: 'min-w-[450px]',
+      trigger: navItem.title,
+      content: (
+        <SettingsList
+          settingItem={navItem as Extract<NavItem, { type: 'setting' }>}
+        />
+      ),
+    },
+
+    icon: {
+      className: 'min-w-[146px]',
+      trigger: <User className="size-6" />,
+      content: (
+        <AccountLinks
+          accountItem={navItem as Extract<NavItem, { type: 'icon' }>}
+          onClose={() => setIsOpen(false)}
+        />
+      ),
+      isIcon: true,
+    },
+  };
+
+  const config = configMap[navItem.type];
+
+  if (!config) return null;
+
+  return (
+    <NavDropdown
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      trigger={config.trigger}
+      className={config.className}
+      isIcon={config.isIcon}
+    >
+      {config.content}
+    </NavDropdown>
+  );
 };

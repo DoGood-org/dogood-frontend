@@ -12,7 +12,7 @@ export const Header: React.FC = () => {
             <Image
               src={logo}
               alt="Logo DoGood"
-              className="w-[135px] h-[40px]"
+              className="w-[135px] h-auto"
               priority
             />
           </Link>

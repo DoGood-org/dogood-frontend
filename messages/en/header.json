@@ -70,17 +70,40 @@
       ]
     },
     {
-      "title": "Accout",
+      "title": "Account",
       "type": "icon",
-      "content": [
-        { "name": "Log in", "src": "/login" },
-        { "name": "Sign up", "src": "/register" }
-      ]
+      "content": {
+        "logged": [
+          {
+            "name": "Account",
+            "src": "/account",
+            "icon": "ArrowRight"
+          },
+          {
+            "name": "Log out",
+            "src": "/logout",
+            "icon": "LogOut"
+          }
+        ],
+        "noLogged": [
+          {
+            "name": "Log in",
+            "src": "/login",
+            "icon": "LogIn"
+          },
+          {
+            "name": "Sign up",
+            "src": "/register",
+            "icon": "ArrowRight"
+          }
+        ]
+      }
     }
   ],
   "buttons": [
     { "name": "Log in", "src": "/login" },
     { "name": "Sign up", "src": "/register" }
   ],
-  "toggle": "Theme toggle"
+  "toggle": "Theme toggle",
+  "special": "Special toggle"
 }
