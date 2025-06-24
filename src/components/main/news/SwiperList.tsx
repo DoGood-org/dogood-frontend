@@ -19,7 +19,7 @@ export const SwiperList: React.FC<Props> = (props) => {
   return (
     <div className={`${props.swiperContainerClass}`}>
       <Swiper
-        className="w-full h-[1323px] md:hidden lg:block "
+        className="w-full h-[1323px] md:hidden lg:block lg:h-[430px]"
         observer={true}
         observeParents={true}
         loop={false}
