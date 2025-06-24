@@ -1,18 +1,15 @@
 'use client';
 import { SocialLinks } from '@/components/layout/footer/SocialLinks';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import React, { useRef } from 'react';
+import React from 'react';
 
 export const HeroSocialLink: React.FC = () => {
-  const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  });
-  const opacity = useTransform(scrollYProgress, [1, 0.5], [0, 1]);
+  const { scrollYProgress } = useScroll();
+
+  const opacity = useTransform(scrollYProgress, [0.5, 0.8], [1, 0]);
+
   return (
     <motion.div
-      ref={sectionRef}
       style={{ opacity }}
       className="fixed flex flex-col gap-6 items-center left-8 top-[450px] lg:top-[200px] z-[5000]"
     >
