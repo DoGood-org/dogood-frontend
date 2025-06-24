@@ -12,7 +12,7 @@ export const Section = ({
   return (
     <section
       className={cn(
-        'py-[30px] xl:py-[50px] bg-background transition-color transition-background duration-800',
+        'py-[30px] lg:py-[50px] bg-background transition-color transition-background duration-800',
         className
       )}
     >

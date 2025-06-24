@@ -13,10 +13,11 @@
 @theme inline {
   /* breakpoints */
   --breakpoint-*: initial;
-  --breakpoint-sm: 24.5625rem; /*393px*/
-  --breakpoint-md: 48rem; /*768px*/
-  --breakpoint-lg: 90rem; /*1440px*/
-  --breakpoint-xl: 120rem; /*1920px*/
+
+  --breakpoint-sm: 393px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1440px;
+  --breakpoint-xl: 1920px;
 
   /* colors */
   --color-background: var(--background);
@@ -81,11 +82,23 @@
   --radius-md: calc(var(--radius) - 2px); /*10px*/
   --radius-lg: var(--radius); /*12px*/
   --radius-xl: calc(var(--radius) + 4px); /*16px*/
+
+  --spacing: 4px;
 }
 
 :root {
   --font-montserrat: 'Montserrat', sans-serif;
   --font-size: 16px;
+
+  /* --breakpoint-sm: 24.5625rem; 393px */
+  /* --breakpoint-md: 48rem; 768px */
+  /* --breakpoint-lg: 90rem; 1440px */
+  /* --breakpoint-xl: 120rem; 1920px */
+
+  --breakpoint-sm: 393px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1440px;
+  --breakpoint-xl: 1920px;
 
   --background: #f1f1f1;
   --background-secondary: #303030;
@@ -117,7 +130,7 @@
   --image-bg: #999999;
 
   /* --radius: 0.625rem; */
-  --radius: 0.75rem;
+  --radius: 12px; /*0.75rem */
 
   --error: #ee0606;
 
@@ -152,6 +165,10 @@
     ),
     radial-gradient(circle, rgba(26, 211, 170, 0.1) 2px, transparent 2px),
     linear-gradient(0deg, #0a6f3c, #0a6f3c);
+  --font-size: 16px;
+}
+html {
+  font-size: var(--font-size);
 }
 html {
   font-size: var(--font-size);
@@ -256,6 +273,7 @@ html {
     font-family: var(--font-montserrat);
     line-height: 1.2;
     margin: 0 auto;
+    zoom: 1;
   }
 
   button {
@@ -269,7 +287,6 @@ html {
     @apply sm:px-5 sm:max-w-[var(--breakpoint-sm)];
     @apply md:px-15 md:max-w-[var(--breakpoint-md)];
     @apply lg:px-20 lg:max-w-[var(--breakpoint-lg)];
-    /* @apply xl:px-20 xl:max-w-[var(--breakpoint-xl)]; */
   }
 
   .bg-hero {
