@@ -48,6 +48,7 @@ export * from './main/map/TasksList';
 export * from './main/news/mockNews';
 export * from './main/news/NewsItem';
 export * from './main/news/NewsList';
+export * from './main/news/NewsSlideTablet';
 export * from './main/news/SwiperList';
 export * from './main/news/SwiperNavButton';
 export * from './main/news/SwiperPagination';
