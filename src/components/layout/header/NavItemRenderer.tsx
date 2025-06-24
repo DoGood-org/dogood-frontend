@@ -9,11 +9,13 @@ import { User } from '@/components/icons';
 import { AccountLinks } from './AccountLinks';
 import { useState } from 'react';
 import { ListDropdown } from './ListDropdown';
+import { useLocale } from 'next-intl';
 
 export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   navItem,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const locale = useLocale();
 
   if (navItem.type === 'link') {
     return (
@@ -25,7 +27,7 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
           className="hover:border-btn-outline-hover"
         >
           <Link
-            href={navItem.src}
+            href={`${locale}${navItem.src}`}
             className="nav-link text-white flex items-center"
           >
             {navItem.title}
