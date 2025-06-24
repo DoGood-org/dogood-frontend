@@ -61,10 +61,7 @@ export const NewsList = (): JSX.Element => {
         />
 
         <div className="mt-4 flex justify-end">
-          <LinkWithArrow
-            href="/news"
-            text={t('newsListMain.seeAll')}
-          />
+          <LinkWithArrow href="/news" text={t('newsListMain.seeAll')} />
         </div>
       </div>
     </section>
