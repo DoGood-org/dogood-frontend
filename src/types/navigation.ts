@@ -1,7 +1,13 @@
+import type { IconName } from '@/components/layout/header/IconConponents';
 export interface NavContentItem {
   name: string;
   description: string;
   src: string;
+}
+export interface ListDropdownProps {
+  listItem: Extract<NavItem, { type: 'list' }>;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
 }
 
 export interface SettingContentItem {
@@ -13,6 +19,19 @@ export interface SettingContentItem {
 export interface SettingsContentProps {
   settingItem: Extract<NavItem, { type: 'settings' }>;
   children?: React.ReactNode;
+}
+
+export type AccountContentItem = {
+  name: string;
+  src: string;
+  icon: IconName;
+  isLogged: boolean;
+};
+
+export interface AccountContentProps {
+  accountItem: Extract<NavItem, { type: 'icon' }>;
+  children?: React.ReactNode;
+  onClose?: () => void;
 }
 
 export type NavItem =
@@ -34,14 +53,11 @@ export type NavItem =
   | {
       type: 'icon';
       title: string;
-      content: NavButtonProps[];
+      content: {
+        logged: AccountContentItem[];
+        noLogged: AccountContentItem[];
+      };
     };
-
-export type NavButtonProps = {
-  name: string;
-  src: string;
-  // variant: 'primary' | 'outline';
-};
 
 export interface NavItemRendererProps {
   navItem: NavItem;
@@ -54,8 +70,7 @@ export interface NavDropdownProps {
   trigger: React.ReactNode;
   children: React.ReactNode;
   isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
   className?: string;
-  // iconSize?: string; //size for CaretDown-icon - default 'size-6'
-  // padding?: string; //padding between trigger and CaretDown-icon - default 'p-4'
   isIcon?: boolean; //if true - trigger is icon
 }
