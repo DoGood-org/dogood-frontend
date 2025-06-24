@@ -4,7 +4,7 @@ import { authStore } from '@/zustand/stores/authStore';
 import { AccountContentProps } from '@/types';
 import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { useLocale } from 'next-intl';
-import { iconComponents } from './IconConponents';
+import { useIconComponents } from '@/hooks/useIconComponents';
 
 export const AccountLinks: React.FC<AccountContentProps> = ({
   accountItem,
@@ -15,6 +15,7 @@ export const AccountLinks: React.FC<AccountContentProps> = ({
 
   const isLoggedIn = authStore((state) => state.isLoggedIn);
   const logout = authStore((state) => state.logout);
+  const icons = useIconComponents();
 
   const activeList = isLoggedIn ? logged : noLogged;
 
@@ -34,13 +35,13 @@ export const AccountLinks: React.FC<AccountContentProps> = ({
                 className="flex items-center gap-3 cursor-pointer hover:text-btn-hover w-full justify-between"
               >
                 {name}
-                {iconComponents[icon]}
+                {icons[icon]}
               </button>
             ) : (
               <LinkWithArrow
                 text={name}
                 href={`/${locale}${src}`}
-                icon={iconComponents[icon]}
+                icon={icons[icon]}
                 onClick={onClose}
                 className="flex items-center gap-3 w-full justify-between"
               />

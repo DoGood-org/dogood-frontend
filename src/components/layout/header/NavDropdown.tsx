@@ -38,7 +38,7 @@ export const NavDropdown = ({
           variant="ghost"
           size="md"
           onClick={() => setIsOpen(!isOpen)}
-          className="p-4 focus:outline-none flex items-baseline items-center cursor-pointer hover:border-btn-outline-hover"
+          className={`p-4 focus:outline-none flex items-baseline items-center cursor-pointer hover:border-btn-outline-hover ${isOpen && 'border-btn-outline-active'}`}
         >
           {trigger}
           <CaretDown

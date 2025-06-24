@@ -22,7 +22,7 @@ export const Navigation: React.FC = () => {
           <NavItemRenderer
             key={`${index}-${navItem.title}`}
             navItem={navItem}
-            isOpen={activeIndex === index}
+            isActive={activeIndex === index}
             onToggle={() => handleToggle(index)}
           />
         ))}

@@ -77,7 +77,7 @@
           {
             "name": "Account",
             "src": "/account",
-            "icon": "ArrowRight"
+            "icon": "User"
           },
           {
             "name": "Log out",

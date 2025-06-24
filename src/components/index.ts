@@ -8,7 +8,6 @@ export * from './layout/footer/Footer';
 export * from './layout/footer/SocialLinks';
 export * from './layout/header/AccountLinks';
 export * from './layout/header/Header';
-export * from './layout/header/IconConponents';
 export * from './layout/header/LanguageSwitcher';
 export * from './layout/header/ListDropdown';
 export * from './layout/header/NavDropdown';

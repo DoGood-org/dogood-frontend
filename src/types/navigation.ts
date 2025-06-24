@@ -1,4 +1,4 @@
-import type { IconName } from '@/components/layout/header/IconConponents';
+import type { IconName } from '@/hooks/useIconComponents';
 export interface NavContentItem {
   name: string;
   description: string;
@@ -6,7 +6,6 @@ export interface NavContentItem {
 }
 export interface ListDropdownProps {
   listItem: Extract<NavItem, { type: 'list' }>;
-  isOpen: boolean;
   setIsOpen: (open: boolean) => void;
 }
 
@@ -61,7 +60,7 @@ export type NavItem =
 
 export interface NavItemRendererProps {
   navItem: NavItem;
-  isOpen: boolean;
+  isActive: boolean;
   onToggle: () => void;
   children?: React.ReactNode;
 }

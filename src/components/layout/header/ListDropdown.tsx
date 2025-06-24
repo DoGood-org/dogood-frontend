@@ -15,7 +15,7 @@ export const ListDropdown: React.FC<ListDropdownProps> = ({
       {content.map(({ src, name, description }, index) => (
         <li key={`${index}-${name}`}>
           <Link
-            href={`${locale}${src}`}
+            href={`/${locale}${src}`}
             onClick={() => setIsOpen(false)}
             className="dropdown-link block p-5 rounded-md transition duration-700 text-white px-6 py-3"
           >

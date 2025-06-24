@@ -1,13 +1,10 @@
+import { AuthState } from '@/types/authType';
 import { create } from 'zustand';
-
-type AuthState = {
-  isLoggedIn: boolean;
-  login: () => void;
-  logout: () => void;
-};
 
 export const authStore = create<AuthState>((set) => ({
   isLoggedIn: true,
-  login: (): void => set({ isLoggedIn: true }),
-  logout: (): void => set({ isLoggedIn: false }),
+  // user: null,
+  user: { id: '', email: 'user@mail.com', name: 'User Name', avatarUrl: '' },
+  login: (userData): void => set({ user: userData, isLoggedIn: true }),
+  logout: (): void => set({ user: null, isLoggedIn: false }),
 }));

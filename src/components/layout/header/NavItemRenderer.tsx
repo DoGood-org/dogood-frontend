@@ -5,17 +5,21 @@ import { NavItem, NavItemRendererProps } from '@/types';
 import { NavDropdown } from './NavDropdown';
 import { SettingsList } from './SettingList';
 import { Button } from '@/components/ui/Button';
-import { User } from '@/components/icons';
 import { AccountLinks } from './AccountLinks';
 import { useState } from 'react';
 import { ListDropdown } from './ListDropdown';
 import { useLocale } from 'next-intl';
+import { UserAvatar } from './UserAvatar';
+import { useAuth } from '@/hooks/useAuth';
 
 export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   navItem,
+  isActive,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const locale = useLocale();
+  const { isLoggedIn, user } = useAuth();
+  const safeUser = user ?? undefined;
 
   if (navItem.type === 'link') {
     return (
@@ -24,10 +28,10 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
           asChild
           variant="ghost"
           size="md"
-          className="hover:border-btn-outline-hover"
+          className={`hover:border-btn-outline-hover ${isActive && 'border-btn-outline-active'}`}
         >
           <Link
-            href={`${locale}${navItem.src}`}
+            href={`/${locale}${navItem.src}`}
             className="nav-link text-white flex items-center"
           >
             {navItem.title}
@@ -53,7 +57,6 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
       content: (
         <ListDropdown
           listItem={navItem as Extract<NavItem, { type: 'list' }>}
-          isOpen={isOpen}
           setIsOpen={setIsOpen}
         />
       ),
@@ -71,7 +74,13 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
 
     icon: {
       className: 'min-w-[146px]',
-      trigger: <User className="size-6" />,
+      trigger: (
+        <UserAvatar
+          isLoggedIn={isLoggedIn}
+          user={safeUser}
+          className="size-6 w-6 h-6"
+        />
+      ),
       content: (
         <AccountLinks
           accountItem={navItem as Extract<NavItem, { type: 'icon' }>}
