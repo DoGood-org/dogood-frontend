@@ -1,5 +1,7 @@
 'use client';
-import React, { useState, useEffect, JSX, useRef } from 'react';
+import React, { useState, useEffect, JSX } from 'react';
+import { useInView } from 'react-intersection-observer';
+
 import { Icon, LatLngLiteral } from 'leaflet';
 import {
   initializeMapIcons,
@@ -18,6 +20,9 @@ import {
 import { GeolocationPopup, Container, Button, TasksList } from '@/components';
 import { Vector } from '@/components/icons';
 import SearchInput from './SearchInput';
+import Portal from '@/components/portal/Portal';
+import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
+import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 
 export const Map: React.FC<MapProps> = ({
   center,
@@ -25,9 +30,14 @@ export const Map: React.FC<MapProps> = ({
   onLocationSelect,
   allowClickToAddMarker = true,
 }) => {
-  const [selectedLocation, setSelectedLocation] = useState<
-    MapLocation | undefined
-  >();
+  const { ref: mapContainerRef, inView: isInView } = useInView({
+    threshold: 0.6,
+    triggerOnce: true,
+    delay: 100,
+  });
+  const [selectedLocation, setSelectedLocation] = useState<MapLocation | null>(
+    null
+  );
   const [clickedCoords, setClickedCoords] = useState<LatLngLiteral | null>(
     null
   );
@@ -49,36 +59,15 @@ export const Map: React.FC<MapProps> = ({
   });
   const [userLocation, setUserLocation] = useState<LatLngLiteral | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
-  const [showGeolocationPopup, setShowGeolocationPopup] = useState(false);
-  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const [showGeolocationPopup, setShowGeolocationPopup] =
+    useState<boolean>(false);
 
-  // Show popup immediately when component mounts
   useEffect(() => {
-    const timer = setTimeout(() => {
+    if (isInView) {
+      console.log('Map in view:', isInView);
       setShowGeolocationPopup(true);
-    }, 300);
-    return (): void => clearTimeout(timer);
-  }, []);
-
-  // Handle scroll prevention
-  useEffect(() => {
-    const mapContainer = mapContainerRef.current;
-    if (!mapContainer) return;
-
-    const preventScroll = (e: WheelEvent): false | undefined => {
-      if (!mapContainer.contains(e.target as Node)) return;
-      if (e.deltaY !== 0) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }
-    };
-    mapContainer.addEventListener('wheel', preventScroll, { passive: false });
-
-    return (): void => {
-      mapContainer.removeEventListener('wheel', preventScroll);
-    };
-  }, []);
+    }
+  }, [isInView]);
 
   // Load all leaflet components
   useEffect(() => {
@@ -121,7 +110,9 @@ export const Map: React.FC<MapProps> = ({
 
   if (
     !leafletComponents ||
-    !Object.values(mapIcons).every((icon) => icon !== null)
+    !mapIcons ||
+    Object.values(mapIcons).length === 0 ||
+    Object.values(mapIcons).some((icon) => !icon)
   ) {
     return (
       <div className="w-full bg-background">
@@ -212,7 +203,7 @@ export const Map: React.FC<MapProps> = ({
 
   const handleMapClick = (latlng: LatLngLiteral): void => {
     setClickedCoords(latlng);
-    setSelectedLocation(undefined);
+    setSelectedLocation(null);
     console.log(clickedCoords);
     if (isMarkerExists(customMarkers, latlng)) {
       setCustomMarkers((prev) =>
@@ -232,51 +223,62 @@ export const Map: React.FC<MapProps> = ({
   };
 
   return (
-    <Container className="mx-auto relative">
-      <div className="h-[547px] lg:h-[919px]">
-        {showGeolocationPopup && (
-          <GeolocationPopup
-            requestGeolocation={requestGeolocation}
-            declineGeolocation={declineGeolocation}
-          />
-        )}
-        {locationError && (
-          <div className="text-red-500 p-2 bg-white rounded shadow mb-2">
-            Location Error: {locationError}
-          </div>
-        )}
-        <MapContainer
-          center={userLocation || center}
-          zoom={13}
-          minZoom={5}
-          zoomControl={false}
-          attributionControl={false}
-          className="h-full w-full"
-          key={userLocation ? 'user-location' : 'default-location'}
-        >
-          <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" />
-          {selectedLocation && (
-            <SelectedLocation center={userLocation || center} />
+    <Container className="mx-auto relative flex flex-col ">
+      <>
+        <div ref={mapContainerRef} className="h-[547px] lg:h-[919px]">
+          {showGeolocationPopup && (
+            <Portal>
+              <AnimatedModalWrapper
+                isVisible={true}
+                onClose={declineGeolocation}
+              >
+                <GeolocationPopup
+                  requestGeolocation={requestGeolocation}
+                  declineGeolocation={declineGeolocation}
+                />
+              </AnimatedModalWrapper>
+            </Portal>
           )}
-          <MapClickHandler
-            onClick={handleMapClick}
-            allowClickToAddMarker={allowClickToAddMarker}
-          />
-          {renderMarks()}
-          {renderCustomMarkers()}
-          {renderUserLocation()}
-          <ZoomControl position="topright" />
-          <Button
-            variant="filters"
-            className="z-[700] absolute top-[95px] right-[10px] p-[10px]"
-            onClick={requestGeolocation}
+          {locationError && (
+            <div className="text-red-500 p-2 bg-white rounded shadow mb-2">
+              Location Error: {locationError}
+            </div>
+          )}
+          <MapContainer
+            center={userLocation || center}
+            zoom={13}
+            minZoom={5}
+            zoomControl={false}
+            attributionControl={false}
+            className="h-full w-full"
+            key={userLocation ? 'user-location' : 'default-location'}
+            scrollWheelZoom={false}
           >
-            <Vector className="stroke-foreground w-5 h-5" />
-          </Button>
-        </MapContainer>
-      </div>
-      <SearchInput />
-      <TasksList />
+            <ScrollAfterDelay delay={2000} />
+            <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" />
+            {selectedLocation && (
+              <SelectedLocation center={userLocation || center} />
+            )}
+            <MapClickHandler
+              onClick={handleMapClick}
+              allowClickToAddMarker={allowClickToAddMarker}
+            />
+            {renderMarks()}
+            {renderCustomMarkers()}
+            {renderUserLocation()}
+            <ZoomControl position="topright" />
+            <Button
+              variant="filters"
+              className="z-[700] absolute top-[95px] right-[10px] p-[10px]"
+              onClick={requestGeolocation}
+            >
+              <Vector className="stroke-foreground w-5 h-5" />
+            </Button>
+          </MapContainer>
+        </div>
+        <SearchInput />
+        <TasksList />
+      </>
     </Container>
   );
 };

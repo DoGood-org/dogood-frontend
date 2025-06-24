@@ -52,6 +52,8 @@ export * from './main/news/NewsSlideTablet';
 export * from './main/news/SwiperList';
 export * from './main/news/SwiperNavButton';
 export * from './main/news/SwiperPagination';
+export * from './portal/AnimatedModalWrapper';
+export * from './portal/Portal';
 export * from './ui/Accordion';
 export * from './ui/Button';
 export * from './ui/Container';
