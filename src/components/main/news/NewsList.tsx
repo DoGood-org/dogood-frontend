@@ -60,10 +60,9 @@ export const NewsList = (): JSX.Element => {
           containerClass="my-10 md:block lg:hidden"
         />
 
-        <div className=" mx-1 text-[16px] flex text-[var(--foreground)] justify-end leading-6 ">
+        <div className="mt-4 flex justify-end">
           <LinkWithArrow
             href="/news"
-            className="text-sm hover:underline"
             text={t('newsListMain.seeAll')}
           />
         </div>

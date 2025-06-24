@@ -26,7 +26,11 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
       tabIndex={0}
       onClick={navigateToNewsItem}
       key={props.item.id}
-      className="mx-auto my-1 news-item w-[300px] flex flex-col  p-[20px] border-1 border-[var(--text-gray)] rounded-lg shadow-md cursor-pointer"
+      className="
+      mx-auto my-1 w-[300px] p-5 flex flex-col rounded-lg shadow-md cursor-pointer
+      border border-[var(--text-gray)] hover:border-[var(--btn-hover)]
+      transition-colors duration-200
+    "
     >
       <div className="mx-auto mb-[25px] relative rounded-lg w-[260px] h-[198px] overflow-hidden">
         {props.item.img && (
