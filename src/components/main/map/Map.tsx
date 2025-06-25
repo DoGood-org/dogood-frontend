@@ -64,7 +64,6 @@ export const Map: React.FC<MapProps> = ({
 
   useEffect(() => {
     if (isInView) {
-      console.log('Map in view:', isInView);
       setShowGeolocationPopup(true);
     }
   }, [isInView]);
@@ -204,7 +203,7 @@ export const Map: React.FC<MapProps> = ({
   const handleMapClick = (latlng: LatLngLiteral): void => {
     setClickedCoords(latlng);
     setSelectedLocation(null);
-    console.log(clickedCoords);
+    console.log('Clicked coordinates:', clickedCoords, 'new coord', latlng);
     if (isMarkerExists(customMarkers, latlng)) {
       setCustomMarkers((prev) =>
         prev.filter(
@@ -224,61 +223,59 @@ export const Map: React.FC<MapProps> = ({
 
   return (
     <Container className="mx-auto relative flex flex-col ">
-      <>
-        <div ref={mapContainerRef} className="h-[547px] lg:h-[919px]">
-          {showGeolocationPopup && (
-            <Portal>
-              <AnimatedModalWrapper
-                isVisible={true}
-                onClose={declineGeolocation}
-              >
-                <GeolocationPopup
-                  requestGeolocation={requestGeolocation}
-                  declineGeolocation={declineGeolocation}
-                />
-              </AnimatedModalWrapper>
-            </Portal>
+      <div ref={mapContainerRef} className="h-[547px] lg:h-[919px]">
+        {showGeolocationPopup && leafletComponents && (
+          <Portal>
+            <AnimatedModalWrapper isVisible={true} onClose={declineGeolocation}>
+              <GeolocationPopup
+                requestGeolocation={requestGeolocation}
+                declineGeolocation={declineGeolocation}
+              />
+            </AnimatedModalWrapper>
+          </Portal>
+        )}
+        {locationError && (
+          <div className="text-red-500 p-2 bg-white rounded shadow mb-2">
+            Location Error: {locationError}
+          </div>
+        )}
+        <MapContainer
+          whenReady={() => {
+            // This is a workaround to ensure the map is initialized
+          }}
+          className="h-full w-full cursor-default"
+          center={userLocation || center}
+          zoom={13}
+          minZoom={5}
+          zoomControl={false}
+          attributionControl={false}
+          key={userLocation ? 'user-location' : 'default-location'}
+          scrollWheelZoom={false}
+        >
+          <ScrollAfterDelay delay={2000} />
+          <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" />
+          {selectedLocation && (
+            <SelectedLocation center={userLocation || center} />
           )}
-          {locationError && (
-            <div className="text-red-500 p-2 bg-white rounded shadow mb-2">
-              Location Error: {locationError}
-            </div>
-          )}
-          <MapContainer
-            center={userLocation || center}
-            zoom={13}
-            minZoom={5}
-            zoomControl={false}
-            attributionControl={false}
-            className="h-full w-full"
-            key={userLocation ? 'user-location' : 'default-location'}
-            scrollWheelZoom={false}
+          <MapClickHandler
+            onClick={handleMapClick}
+            allowClickToAddMarker={allowClickToAddMarker}
+          />
+          {renderMarks()}
+          {renderCustomMarkers()}
+          {renderUserLocation()}
+          <ZoomControl position="topright" />
+          <Button
+            variant="filters"
+            className="z-[700] absolute top-[95px] right-[10px] p-[10px]"
+            onClick={requestGeolocation}
           >
-            <ScrollAfterDelay delay={2000} />
-            <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" />
-            {selectedLocation && (
-              <SelectedLocation center={userLocation || center} />
-            )}
-            <MapClickHandler
-              onClick={handleMapClick}
-              allowClickToAddMarker={allowClickToAddMarker}
-            />
-            {renderMarks()}
-            {renderCustomMarkers()}
-            {renderUserLocation()}
-            <ZoomControl position="topright" />
-            <Button
-              variant="filters"
-              className="z-[700] absolute top-[95px] right-[10px] p-[10px]"
-              onClick={requestGeolocation}
-            >
-              <Vector className="stroke-foreground w-5 h-5" />
-            </Button>
-          </MapContainer>
-        </div>
-        <SearchInput />
-        <TasksList />
-      </>
+            <Vector className="stroke-foreground w-5 h-5" />
+          </Button>
+        </MapContainer>
+      </div>
+      <SearchInput />
+      <TasksList />
     </Container>
   );
 };

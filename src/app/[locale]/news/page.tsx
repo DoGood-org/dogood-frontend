@@ -2,15 +2,14 @@ const NewsPage: React.FC = () => {
   return (
     <div
       className=" 
-  bg-[var(--background)]
+  bg-background
       px-[4px]
       pt-[168px]
   pb-[64px]
   my-container
   w-full
   min-h-[calc(100dvh-188px)]
-  text-[var(--foreground)]
-  
+text-foreground  
   flex
   flex-col
   items-center
