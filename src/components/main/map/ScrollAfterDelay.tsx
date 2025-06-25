@@ -36,7 +36,7 @@ export const ScrollAfterDelay: React.FC<Props> = ({
         timeoutRef.current = null;
       }
       map.scrollWheelZoom.disable();
-      container.style.cursor = '';
+      container.style.cursor = 'default';
     };
 
     const handleMouseDown = (): void => {

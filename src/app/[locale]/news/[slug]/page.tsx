@@ -58,19 +58,18 @@ pb-[64px]
 my-container
 w-full
 min-h-[calc(100dvh-188px)]
-text-[var(--foreground)]
-
+text-foreground
 flex
 flex-col
 items-center
 justify-center
 "
     >
-      <h2 className="text-[var(--foreground)]">
+      <h2 className="text-foreground">
         {t('newsItemPage.title', { title: newsItem.title })}
       </h2>
-      <p className="text-[var(--foreground)]">{newsItem.date}</p>
-      <p className="text-[var(--foreground)]">{newsItem.title}</p>
+      <p className="text-foreground">{newsItem.date}</p>
+      <p className="text-foreground">{newsItem.title}</p>
       <Image
         src={newsItem.img}
         alt={newsItem.title}
