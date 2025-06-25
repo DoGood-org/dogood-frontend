@@ -37,7 +37,7 @@ export const RegisterLoginSocial: React.FC<Props> = ({
             title={button.label}
             onClick={() => onSocialLogin && onSocialLogin(button.label)}
           >
-            <button.icon className="w-6 h-6 text-[var(--foreground)]" />
+            <button.icon className="w-6 h-6 text-foreground" />
           </button>
         ))}
       </div>

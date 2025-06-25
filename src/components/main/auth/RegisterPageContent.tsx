@@ -9,7 +9,7 @@ export const RegisterPageContent = (): React.ReactElement => {
   const [step, setStep] = useState<null | 'verification'>(null);
 
   return (
-    <div className=" flex flex-col items-center justify-center  text-[var(--foreground)] w-full">
+    <div className=" flex flex-col items-center justify-center  text-foreground w-full">
       {!choice && <AuthChoice onChoice={setChoice} />}
       {choice === 'human' && !step && (
         <AuthForm

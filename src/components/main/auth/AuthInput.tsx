@@ -23,7 +23,7 @@ export const AuthInput = forwardRef<HTMLInputElement, Props>((props, ref) => (
   <>
     <div className="flex flex-col gap-[12px] w-full">
       <label
-        className="roboto block text-[16px] sm:text-[18px] font-normal"
+        className="roboto block text-[16px] md:text-[18px] font-normal"
         htmlFor={props.htmlFor}
       >
         {props.label}

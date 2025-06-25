@@ -86,29 +86,29 @@ export const AuthForm: React.FC<Props> = (props) => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center  rounded-[12px] bg-[var(--card)] text-[var(--foreground)] shadow-md
+      className="flex flex-col items-center justify-center  rounded-[12px] bg-card text-foreground shadow-md
      p-[24px] w-full 
-     sm:w-[554px] sm:p-[60px]
-     xl:w-[514px]  xl:p-[40px]"
+     md:w-[554px] md:p-[60px]
+     lg:w-[514px]  lg:p-[40px]"
     >
       {/* Title and Subtitle */}
-      <div className=" mb-[40px] sm:mb-[24px] xl:mb-[24px] text-center">
+      <div className=" mb-[40px] md:mb-[24px] lg:mb-[24px] text-center">
         {type === 'login' && (
           <>
-            <h2 className="text-[24px] font-bold mb-[16px] sm:text-[32px]">
+            <h2 className="text-[24px] font-bold mb-[16px] md:text-[32px]">
               {t('loginFormTitle')}
             </h2>
-            <h3 className="text-[16px] sm:text-[20px]">
+            <h3 className="text-[16px] md:text-[20px]">
               {t('loginFormSubtitle')}
             </h3>
           </>
         )}
         {(type === 'registerCompany' || type === 'registerPerson') && (
           <>
-            <h2 className="text-[24px] font-bold mb-[16px] sm:text-[32px]">
+            <h2 className="text-[24px] font-bold mb-[16px] md:text-[32px]">
               {t('registerFormTitle')}
             </h2>
-            <h3 className="text-[16px] sm:text-[20px]">
+            <h3 className="text-[16px] md:text-[20px]">
               {t('registerFormSubtitle')}
             </h3>
           </>
@@ -277,12 +277,12 @@ export const AuthForm: React.FC<Props> = (props) => {
           type="submit"
           variant={'default'}
           size={'md'}
-          className="btn-auth mt-[4px] sm:mt-[36px] btn-expand-hover text-[var(--foreground)] h-[44px]"
+          className="btn-auth mt-[4px] md:mt-[36px] btn-expand-hover text-foreground h-[44px]"
         >
           {t('nextStep')}
         </Button>
         <RegisterLoginSocial
-          className="mt-[36px] sm:mt-[16px] text-[var(--foreground)]"
+          className="mt-[36px] md:mt-[16px] text-foreground"
           onSocialLogin={(provider) => console.log(provider)}
         />
       </form>

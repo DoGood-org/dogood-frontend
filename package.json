@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
-    "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-slot": "^1.2.2",
     "@types/leaflet": "^1.9.18",
     "class-variance-authority": "^0.7.1",
