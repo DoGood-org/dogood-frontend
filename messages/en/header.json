@@ -15,35 +15,14 @@
           "src": "/support"
         },
         {
-          "name": "About DoGood",
-          "description": "DoGood is a community of people for whom kindness is an active act.",
-          "src": "/about"
-        },
-        {
           "name": "Grants",
           "description": "We support initiatives that make a difference in the community.",
           "src": "/grants"
-        }
-      ]
-    },
-    {
-      "title": "News",
-      "type": "list",
-      "content": [
-        {
-          "name": "News",
-          "description": "Keep up to date with DoGood events.",
-          "src": "/news"
         },
         {
-          "name": "Volunteer stories",
-          "description": "Real stories of people who are doing good.",
-          "src": "/volunteerStories"
-        },
-        {
-          "name": "Blog",
-          "description": "Ideas, tips and inspiration for those who want to change the world.",
-          "src": "/blog"
+          "name": "About DoGood",
+          "description": "DoGood is a community of people for whom kindness is an active act.",
+          "src": "/about"
         }
       ]
     },
@@ -67,11 +46,64 @@
           "description": "Display theme"
         }
       ]
+    },
+    {
+      "title": "News",
+      "type": "link",
+      "src": "/news",
+      "content": [
+        {
+          "name": "News",
+          "description": "Keep up to date with DoGood events.",
+          "src": "/news"
+        },
+        {
+          "name": "Volunteer stories",
+          "description": "Real stories of people who are doing good.",
+          "src": "/volunteerStories"
+        },
+        {
+          "name": "Blog",
+          "description": "Ideas, tips and inspiration for those who want to change the world.",
+          "src": "/blog"
+        }
+      ]
+    },
+    {
+      "title": "Account",
+      "type": "icon",
+      "content": {
+        "logged": [
+          {
+            "name": "Account",
+            "src": "/account",
+            "icon": "User"
+          },
+          {
+            "name": "Log out",
+            "src": "/logout",
+            "icon": "LogOut"
+          }
+        ],
+        "noLogged": [
+          {
+            "name": "Log in",
+            "src": "/login",
+            "icon": "LogIn"
+          },
+          {
+            "name": "Sign up",
+            "src": "/register",
+            "icon": "ArrowRight"
+          }
+        ]
+      }
     }
   ],
   "buttons": [
     { "name": "Log in", "src": "/login" },
     { "name": "Sign up", "src": "/register" }
   ],
-  "toggle": "Theme toggle"
+  "toggle": "Theme toggle",
+  "special": "Special toggle"
 }

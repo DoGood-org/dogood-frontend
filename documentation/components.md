@@ -178,15 +178,17 @@ internal navigation within your app.
 
 **Props:**
 
-| Name      | Type   | default | Description                                                                   |
-| --------- | ------ | ------- | ----------------------------------------------------------------------------- |
-| href      | string | -       | Requered. The URL or route to navigate to (e.g., /about, /contact).           |
-| text      | string | -       | requered. The text label displayed inside the link.                           |
-| className | string | ""      | Optional. additional Tailwind classes to customize the appearance externally. |
+| Name      | Type            | default                                            | Description                                                                   |
+| --------- | --------------- | -------------------------------------------------- | ----------------------------------------------------------------------------- |
+| href      | string          | -                                                  | Requered. The URL or route to navigate to (e.g., /about, /contact).           |
+| text      | string          | -                                                  | Requered. The text label displayed inside the link.                           |
+| className | string          | ""                                                 | Optional. additional Tailwind classes to customize the appearance externally. |
+| icon      | React.ReactNode | `<ArrowRight className="stroke-current size-6" />` | Optional. Use to change default icon                                          |
+| onClick   | `() => void;`   | Optional. Use to pass the handler to the click     |
 
 **Styling:**
 
-- `text-p2-d/[24px]`: Default text style.
+- `text-base`: Default text style.
 
 - `hover:text-btn-hover, focus:text-btn-hover, active:text-btn-active`: Color
   changes on interaction.
@@ -195,7 +197,7 @@ internal navigation within your app.
 
 Arrow Icon:
 
-- Uses the `ArrowRight` icon component.
+- Uses the `ArrowRight` icon component (default). To change use `icon` props
 
 - Inherits text color via stroke-current.
 
@@ -214,6 +216,17 @@ class names.
   text={t('aboutButton')}
   className="mt-auto"
 />
+
+// with optional props
+
+<LinkWithArrow
+  text={name}
+  href={`/${locale}${src}`}
+  icon={iconComponents[icon]}
+  onClick={onClose}
+  className="flex items-center gap-3 w-full justify-between"
+/>
+
 ```
 
 </details>

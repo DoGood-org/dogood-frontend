@@ -1,64 +1,109 @@
+'use client';
+
 import Link from 'next/link';
-import { NavItemRendererProps } from '@/types';
+import { NavItem, NavItemRendererProps } from '@/types';
 import { NavDropdown } from './NavDropdown';
 import { SettingsList } from './SettingList';
 import { Button } from '@/components/ui/Button';
+import { AccountLinks } from './AccountLinks';
+import { useState } from 'react';
+import { ListDropdown } from './ListDropdown';
+import { useLocale } from 'next-intl';
+import { UserAvatar } from './UserAvatar';
+import { useAuth } from '@/hooks/useAuth';
 
 export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   navItem,
-  isOpen,
+  isActive,
 }) => {
-  switch (navItem.type) {
-    case 'link':
-      return (
-        <li>
-          <Button asChild variant="ghost" size="md">
-            <Link
-              href={navItem.src}
-              className="nav-link text-white flex items-center"
-            >
-              {navItem.title}
-            </Link>
-          </Button>
-        </li>
-      );
+  const [isOpen, setIsOpen] = useState(false);
+  const locale = useLocale();
+  const { isLoggedIn, user } = useAuth();
+  const safeUser = user ?? undefined;
 
-    case 'list':
-      return (
-        <NavDropdown
-          isOpen={isOpen}
-          trigger={navItem.title}
-          className="xl:w-[631px]"
+  if (navItem.type === 'link') {
+    return (
+      <li>
+        <Button
+          asChild
+          variant="ghost"
+          size="md"
+          className={`hover:border-btn-outline-hover ${isActive && 'border-btn-outline-active'}`}
         >
-          <div className="z-10 grid grid-cols-[62%_auto] grid-rows-2 gap-3 min-w-[400px] ">
-            {navItem.content.map(({ src, name, description }, index) => (
-              <Link
-                key={`${index}-${name}`}
-                href={src}
-                className={`${index === 1 ? 'row-span-2 col-start-2 h-full flex flex-col justify-between' : ''}  dropdown-link block p-5 rounded-md transition duration-700 text-white `}
-              >
-                <h4 className="mb-[10px]">{name}</h4>
-                <p className="text-p2-d text-text-gray">{description}</p>
-              </Link>
-            ))}
-          </div>
-        </NavDropdown>
-      );
-
-    case 'settings':
-      return (
-        <NavDropdown
-          isOpen={isOpen}
-          trigger={navItem.title}
-          className="left-20 p-10"
-        >
-          <ul>
-            <SettingsList settingItem={navItem} />
-          </ul>
-        </NavDropdown>
-      );
-
-    default:
-      return null;
+          <Link
+            href={`/${locale}${navItem.src}`}
+            className="nav-link text-white flex items-center"
+          >
+            {navItem.title}
+          </Link>
+        </Button>
+      </li>
+    );
   }
+
+  const configMap: Record<
+    string,
+    | {
+        className: string;
+        trigger: React.ReactNode;
+        content: React.ReactNode;
+        isIcon?: boolean;
+      }
+    | undefined
+  > = {
+    list: {
+      className: 'min-w-[330px]',
+      trigger: navItem.title,
+      content: (
+        <ListDropdown
+          listItem={navItem as Extract<NavItem, { type: 'list' }>}
+          setIsOpen={setIsOpen}
+        />
+      ),
+    },
+
+    settings: {
+      className: 'min-w-[450px]',
+      trigger: navItem.title,
+      content: (
+        <SettingsList
+          settingItem={navItem as Extract<NavItem, { type: 'setting' }>}
+        />
+      ),
+    },
+
+    icon: {
+      className: 'min-w-[146px]',
+      trigger: (
+        <UserAvatar
+          isLoggedIn={isLoggedIn}
+          user={safeUser}
+          className="size-6 w-6 h-6"
+        />
+      ),
+      content: (
+        <AccountLinks
+          accountItem={navItem as Extract<NavItem, { type: 'icon' }>}
+          onClose={() => setIsOpen(false)}
+        />
+      ),
+      isIcon: true,
+    },
+  };
+
+  const config = configMap[navItem.type];
+
+  if (!config) return null;
+
+  return (
+    <NavDropdown
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      trigger={config.trigger}
+      className={config.className}
+      isIcon={config.isIcon}
+    >
+      {config.content}
+    </NavDropdown>
+  );
 };

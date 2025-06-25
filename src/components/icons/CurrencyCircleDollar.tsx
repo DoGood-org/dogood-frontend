@@ -1,11 +1,11 @@
 import type { SVGProps } from 'react';
-const Sun = (props: SVGProps<SVGSVGElement>) => (
+const CurrencyCircleDollar = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
-    viewBox="0 0 16 16"
+    viewBox="0 0 25 24"
     {...props}
   >
     <g
@@ -14,13 +14,14 @@ const Sun = (props: SVGProps<SVGSVGElement>) => (
       strokeLinejoin="round"
       clipPath="url(#prefix__a)"
     >
-      <path d="M8 2.5V1M8 11.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M4 4 3 3M4 12l-1 1M12 4l1-1M12 12l1 1M2.5 8H1M8 13.5V15M13.5 8H15" />
+      <path d="M12.5 6.75v1.5M12.5 15.75v1.5M12.5 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18" />
+      <path d="M10.25 15.75h3.375a1.875 1.875 0 1 0 0-3.75h-2.25a1.875 1.875 0 1 1 0-3.75h3.375" />
     </g>
     <defs>
       <clipPath id="prefix__a">
-        <path fill="#fff" d="M0 0h16v16H0z" />
+        <path fill="#fff" d="M.5 0h24v24H.5z" />
       </clipPath>
     </defs>
   </svg>
 );
-export default Sun;
+export default CurrencyCircleDollar;

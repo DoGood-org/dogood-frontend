@@ -1,5 +1,6 @@
 import { SettingsContentProps } from '@/types';
 import { LanguageSwitcher, ThemeToggle } from '@/components';
+import { SpecialToggle } from './SpecialToggle';
 
 export const SettingsList: React.FC<SettingsContentProps> = ({
   settingItem,
@@ -8,19 +9,21 @@ export const SettingsList: React.FC<SettingsContentProps> = ({
 
   const settingsComponents: Record<string, React.ReactNode> = {
     languages: <LanguageSwitcher />,
-    accessibility: <p>features switch</p>,
+    accessibility: <SpecialToggle />,
     theme: <ThemeToggle />,
   };
 
   return (
-    <ul className="flex flex-col gap-[25px]">
+    <ul className="">
       {content.map(({ id, name, description }, index) => (
-        <li className="flex gap-10 justify-between" key={`${index}-${id}`}>
-          <div className="w-[215px]">
-            <h4 className="mb-[22px]">{name}</h4>
-            <p className="text-p2-d text-text-gray">{description}</p>
+        <li className="px-8 py-3" key={`${index}-${id}`}>
+          <div className="">
+            <p className="text-base">{name}</p>
+            <div className="flex justify-between items-center mt-2">
+              <p className="text-[14px]/5 text-text-gray">{description}</p>
+              {settingsComponents[id]}
+            </div>
           </div>
-          {settingsComponents[id]}
         </li>
       ))}
     </ul>
