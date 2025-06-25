@@ -1,3 +1,4 @@
+'use client';
 import { useMap } from 'react-leaflet';
 import { JSX, useEffect, useRef } from 'react';
 
