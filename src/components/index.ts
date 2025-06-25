@@ -29,6 +29,8 @@ export * from './main/auth/LoginPageContent';
 export * from './main/auth/RegisterLoginSocial';
 export * from './main/auth/RegisterPageContent';
 export * from './main/auth/Verification';
+export * from './main/hero/HeroContentLayer';
+export * from './main/hero/HeroPlanetLayer';
 export * from './main/hero/HeroSection';
 export * from './main/hero/HeroSocialLink';
 export * from './main/howItWorks/HowItWorks';

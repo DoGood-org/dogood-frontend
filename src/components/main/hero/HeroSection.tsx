@@ -1,24 +1,32 @@
 'use client';
 import { useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useTranslations } from 'next-intl';
+import { useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
-import Planet from '../../../assets/images/hero/planet.png';
-import { Button, HeroSocialLink } from '@/components';
-import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { HeroContentLayer } from './HeroContentLayer';
+import { HeroPlanetLayer } from './HeroPlanetLayer';
+import { HeroSocialLink } from '@/components';
+
+import HeroBgMobile from '@/assets/images/hero/mob-hero.png';
+import HeroBgTablet from '@/assets/images/hero/tablet-hero.png';
+import HeroBgDesktop from '@/assets/images/hero/bg-hero.png';
 
 export const HeroSection: React.FC = () => {
-  const t = useTranslations('common');
-  const router = useRouter();
-  const localActive = useLocale();
   const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
   });
 
-  // Scroll to top on component mount
+  const isMobile = useMediaQuery('(max-width: 767px)');
+  const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1440px)');
+
+  const backgroundImage = isMobile
+    ? HeroBgMobile
+    : isTablet
+      ? HeroBgTablet
+      : HeroBgDesktop;
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -30,59 +38,19 @@ export const HeroSection: React.FC = () => {
 
   return (
     <section ref={sectionRef} className="relative h-[1080px] w-full">
-      {/* Background layer */}
-      <div className="fixed inset-0 bg-hero bg-center bg-cover -z-10" />
-
-      {/* Content layer (under planet) */}
-      <motion.div
-        className="px-5 fixed top-[166px] md:top-[220px] md:w-[393px] lg:w-full lg:top-[320px] left-1/2 transform -translate-x-1/2 text-foreground text-center"
-        style={{
-          y: yContent,
-          opacity: contentOpacity,
-        }}
-      >
-        <h1 className="text-h1 text-white mb-6 lg:text-h1-d">{t('title')}</h1>
-        <h2 className="text-white mb-8 lg:text-lg lg:mb-[40px]">
-          {t('subtitle')}
-        </h2>
-        <div className="flex flex-col gap-6 items-center lg:flex-row lg:gap-15 lg:justify-center">
-          <Button
-            variant="primary"
-            onClick={() => router.push(`/${localActive}/register`)}
-            className="w-[255px] h-[48px] text-base text-white py-3 lg:w-[147px]"
-          >
-            {t('volunteerBtn')}
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={() => router.push(`/${localActive}/about`)}
-            className="w-[255px] h-[48px] text-base text-white py-3 lg:w-[147px]"
-          >
-            {t('learnMoreBtn')}
-          </Button>
-        </div>
-      </motion.div>
-      <HeroSocialLink />
-      {/* Planet layer */}
-      <div className="absolute bottom-[-500px] w-full pointer-events-none z-25">
-        <div className="sticky top-0 h-screen flex items-end justify-center ">
-          <motion.div
-            style={{ y: yPlanet, opacity }}
-            initial={{ opacity: 0, y: 100 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 2, ease: 'easeOut' }}
-          >
-            <Image
-              src={Planet}
-              alt="Planet"
-              width={990}
-              height={990}
-              className="drop-shadow-2xl"
-            />
-          </motion.div>
-        </div>
+      <div className="fixed inset-0 -z-10">
+        <Image
+          src={backgroundImage}
+          alt="Hero background"
+          fill
+          priority
+          quality={100}
+          className="object-cover object-center"
+        />
       </div>
+      <HeroContentLayer yContent={yContent} contentOpacity={contentOpacity} />
+      <HeroSocialLink />
+      <HeroPlanetLayer yPlanet={yPlanet} opacity={opacity} />
     </section>
   );
 };

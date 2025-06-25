@@ -170,6 +170,8 @@ html {
 }
 html {
   font-size: var(--font-size);
+  position: relative;
+  min-height: 100vh;
 }
 
 .montserrat {
@@ -285,10 +287,6 @@ html {
     @apply sm:px-5 sm:max-w-[var(--breakpoint-sm)];
     @apply md:px-15 md:max-w-[var(--breakpoint-md)];
     @apply lg:px-20 lg:max-w-[var(--breakpoint-lg)];
-  }
-
-  .bg-hero {
-    background-image: url(../../assets/images/hero/bg-hero.png);
   }
 
   .dropdown-link {
