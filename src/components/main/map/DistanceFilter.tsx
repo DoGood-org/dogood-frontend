@@ -24,8 +24,10 @@ export const DistanceFilter: FC<DistanceFilterProps> = ({
             <Button
               variant="tag"
               size="xl"
-              className={`flex gap-[10px] text-sm${
-                selectedDistances.includes(distance.title) ? 'clickedBtn' : ''
+              className={`flex gap-[10px] text-sm w-[140px] md:[167px] lg:[136px] ${
+                selectedDistances.includes(distance.title)
+                  ? 'clickedBtn text-sm'
+                  : ''
               }`}
               onClick={() => onDistanceToggle(distance.title)}
               id={distance.title}

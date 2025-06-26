@@ -17,15 +17,15 @@ const buttonVariants = cva(
           'text-btn-primary text-base bg-btn overflow-hidden hover:bg-btn-hover active:bg-btn-active group transition-colors duration-500',
         secondary:
           'text-btn-secondary border-1 border-btn-outline hover:border-btn-outline-hover',
-        filters: 'bg-card text-base',
-        tag: 'bg-tag text-base gap-2',
+        filters: 'bg-card',
+        tag: 'bg-tag gap-2',
       },
       size: {
         default: 'h-12 px-8 py-3',
         sm: 'h-9 px-4 py-2 rounded-sm',
         md: 'h-10 rounded-lg px-3',
         lg: 'h-12 rounded-sm px-12',
-        xl: 'h-[52px] rounded-[10px] px-[24px] py-[19px]',
+        xl: 'h-[52px] rounded-[10px] py-[19px]',
         icon: 'size-9',
       },
     },

@@ -13,27 +13,7 @@ export type MapLocation = LatLngLiteral & { id: string; title: string };
 
 export type MapProps = {
   center: LatLngLiteral;
-  locations: MapLocation[];
-  onLocationSelect?: (coords: LatLngLiteral) => void;
-  allowClickToAddMarker?: boolean;
 };
-
-export interface IGeolocationPopupProps {
-  requestGeolocation: () => void;
-  declineGeolocation: () => void;
-}
-
-export interface SelectedLocationProps {
-  center: LatLngLiteral;
-  userLocation?: LatLngLiteral;
-}
-
-export interface RenderMarksProps {
-  locations: Location[];
-  setSelectedLocation: (location: Location) => void;
-  setClickedCoords: (coords: LatLngLiteral) => void;
-  onLocationSelect?: (coords: LatLngLiteral) => void;
-}
 
 //filter types
 export interface IPropsFilters {
@@ -121,8 +101,8 @@ export type MapIcons = {
 };
 
 export interface CategoryIconsListProps {
-  categories: any[]; // Replace 'any' with your specific category type if known
-  getCategoryIcon: (item: any) => IconData; // Replace 'any' with your category item type
+  categories: any[];
+  getCategoryIcon: (item: any) => IconData;
 }
 
 export type LeafletModule = {

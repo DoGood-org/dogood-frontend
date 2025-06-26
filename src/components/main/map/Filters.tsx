@@ -14,12 +14,14 @@ export const Filters: FC<FiltersProps> = ({
   onDistanceToggle,
 }) => {
   const t = useTranslations('map');
+
   return (
-    <div className="absolute lg:top-24 lg:left-0 w-[353px] md:w-[648px] md:h-[682px] lg:w-[487px] lg:h-[722px] bg-card z-[1000] px-[20px] py-10 rounded-xl">
+    <div className="absolute lg:top-24 lg:left-0 w-[353px] md:w-[648px] md:h-[682px] lg:w-[487px] lg:h-[722px] bg-card z-[1000] px-3 py-10 lg:px-[46px] lg:py-8 rounded-xl">
       <div className="flex justify-between align-text-bottom mb-4">
         <h3 className="text-h3">{t('title')}</h3>
+
         <Close
-          className="w-[22px] h-[21px]"
+          className="w-[22px] h-[21px] stroke-foreground"
           onClick={() => setIsSettingOpen(false)}
         />
       </div>
@@ -31,7 +33,7 @@ export const Filters: FC<FiltersProps> = ({
         selectedDistances={selectedDistances}
         onDistanceToggle={onDistanceToggle}
       />
-      <div className="flex justify-center gap-10">
+      <div className="flex justify-center lg:justify-start gap-10">
         <Button
           variant="primary"
           className="w-[104px]"

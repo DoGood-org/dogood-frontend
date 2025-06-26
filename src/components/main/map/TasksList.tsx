@@ -64,18 +64,6 @@ export const TasksList: React.FC = () => {
           </ul>
         </div>
       </div>
-
-      {/* Description Panel - shown only when a task is selected (maybe in the future wi will need it, that's why you see commented code!)
-      {selectedTask !== null && (
-        <Description
-          description={TASKS[selectedTask].description}
-          title={TASKS[selectedTask].title}
-          distance={TASKS[selectedTask].distance}
-          category={TASKS[selectedTask].category}
-          subtitle={TASKS[selectedTask].subtitle}
-          onToggleDescription={() => handleTaskSelect(selectedTask)}
-        />
-      )} */}
     </div>
   );
 };
