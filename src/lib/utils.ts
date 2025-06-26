@@ -22,10 +22,10 @@ export function cn(...inputs: ClassValue[]): string {
 }
 
 export const getCategoryList = (t: TranslationFunction): CategoryItem[] => [
-  { icon: MedicineSvg, title: t('medicineBtn'), color: 'bg-[#1F5EFF]' },
-  { icon: NatureSvg, title: t('natureBtn'), color: 'bg-[#4CAF50]' },
-  { icon: AnimalSvg, title: t('animalBtn'), color: 'bg-[#FF7D57]' },
-  { icon: FoodSvg, title: t('foodBtn'), color: 'bg-[#FF7D57]' },
+  { icon: MedicineSvg, title: t('medicineBtn'), color: 'bg-medicine' },
+  { icon: NatureSvg, title: t('natureBtn'), color: 'bg-nature' },
+  { icon: AnimalSvg, title: t('animalBtn'), color: 'bg-animal' },
+  { icon: FoodSvg, title: t('foodBtn'), color: 'bg-food' },
 ];
 
 export const getDistancesList = (t: TranslationFunction): DistanceItem[] => [

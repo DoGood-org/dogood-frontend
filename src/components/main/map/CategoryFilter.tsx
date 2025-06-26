@@ -23,8 +23,10 @@ export const CategoryFilter: FC<CategoryFilterProps> = ({
             <Button
               variant="tag"
               size="xl"
-              className={` ${category.color} flex gap-[10px] text-sm w-[146px] ${
-                selectedCategories.includes(category.title) ? 'clickedBtn' : ''
+              className={` ${category.color} flex gap-[10px] w-[140px] md:[167px] lg:[136px] text-sm ${
+                selectedCategories.includes(category.title)
+                  ? 'clickedBtn text-sm'
+                  : ''
               }`}
               onClick={() => onCategoryToggle(category.title)}
               id={category.title}
@@ -45,8 +47,10 @@ export const CategoryFilter: FC<CategoryFilterProps> = ({
           <Button
             variant="tag"
             size="xl"
-            className={`flex gap-[10px] text-sm${
-              selectedCategories.includes('Doesn\"t matter') ? 'clickedBtn' : ''
+            className={`flex gap-[10px] w-[140px] md:[167px] lg:[136px] text-sm ${
+              selectedCategories.includes('Doesn\"t matter')
+                ? 'clickedBtn text-sm'
+                : ''
             }`}
             onClick={() => onCategoryToggle('Doesn\"t matter')}
             id="Does'n matter"
