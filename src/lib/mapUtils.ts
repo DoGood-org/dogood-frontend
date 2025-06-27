@@ -1,4 +1,4 @@
-import { LeafletType, MapIcons, MarkerCategory } from '@/types/mapType';
+import { LeafletType, MapIcons, MarkerCategoryEnum } from '@/types/mapType';
 import MedicineMarker from '@/assets/images/map/medicine-marker.png';
 import NatureMarker from '@/assets/images/map/nature-marker.png';
 import AnimalMarker from '@/assets/images/map/animal-marker.png';
@@ -43,7 +43,7 @@ export const initializeMapIcons = (L: LeafletType): MapIcons => {
  * @param icons Map icons collection
  * @returns The corresponding Leaflet Icon
  */
-export const getMarkerIcon = (title: MarkerCategory, icons: MapIcons): Icon => {
+export const getMarkerIcon = (title: MarkerCategoryEnum, icons: MapIcons): Icon => {
   // Validate all icons exist
   const requiredIcons = [
     icons.medicineIcon,
@@ -57,12 +57,12 @@ export const getMarkerIcon = (title: MarkerCategory, icons: MapIcons): Icon => {
     throw new Error('Not all icons are loaded');
   }
 
-  const iconMap: { [key in MarkerCategory]: Icon } = {
-    Medicine: icons.medicineIcon!,
-    Nature: icons.natureIcon!,
-    Animal: icons.animalIcon!,
-    Food: icons.foodIcon!,
-    myPosition: icons.myPositionIcon!,
+  const iconMap: { [key in MarkerCategoryEnum]: Icon } = {
+    [MarkerCategoryEnum.Medicine]: icons.medicineIcon!,
+    [MarkerCategoryEnum.Nature]: icons.natureIcon!,
+    [MarkerCategoryEnum.Animal]: icons.animalIcon!,
+    [MarkerCategoryEnum.Food]: icons.foodIcon!,
+    [MarkerCategoryEnum.MyPosition]: icons.myPositionIcon!,
   };
 
   return iconMap[title];
@@ -90,31 +90,31 @@ export const isMarkerExists = (
  * Gets the user's current geolocation
  * @returns Promise that resolves with the coordinates or rejects with an error
  */
-export const getUserGeolocation = (): Promise<LatLngLiteral> => {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) {
-      reject(new Error('Geolocation is not supported by this browser.'));
-      return;
-    }
+// export const getUserGeolocation = (): Promise<LatLngLiteral> => {
+//   return new Promise((resolve, reject) => {
+//     if (!navigator.geolocation) {
+//       reject(new Error('Geolocation is not supported by this browser.'));
+//       return;
+//     }
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        resolve({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      },
-      (error: GeolocationPositionError) => {
-        reject(error);
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0,
-      }
-    );
-  });
-};
+//     navigator.geolocation.getCurrentPosition(
+//       (position) => {
+//         resolve({
+//           lat: position.coords.latitude,
+//           lng: position.coords.longitude,
+//         });
+//       },
+//       (error: GeolocationPositionError) => {
+//         reject(error);
+//       },
+//       {
+//         enableHighAccuracy: true,
+//         timeout: 5000,
+//         maximumAge: 0,
+//       }
+//     );
+//   });
+// };
 
 /**
  * Utility function to remove a marker at specific coordinates

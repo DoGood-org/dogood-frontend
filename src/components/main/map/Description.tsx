@@ -1,10 +1,10 @@
+import { Close } from '@/components/icons';
+import { Button } from '@/components/ui/Button';
 import { getCategoryIcon } from '@/lib/utils';
 import { ITasksProps } from '@/types/mapType';
 import { useTranslations } from 'next-intl';
-import React, { FC } from 'react';
-import CategoryIconsList from './CategoryIconList';
-import { Close } from '@/components/icons';
-import { Button } from '@/components/ui/Button';
+import { FC } from 'react';
+import CategoryIconsList from './filters/CategoryIconList';
 
 export const Description: FC<ITasksProps> = ({
   description,

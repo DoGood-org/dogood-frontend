@@ -1,47 +1,80 @@
 'use client';
-import React, { useState, useEffect, JSX } from 'react';
+import React, { JSX, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { Icon, LatLngLiteral } from 'leaflet';
 import {
-  initializeMapIcons,
   getMarkerIcon,
+  initializeMapIcons,
   isMarkerExists,
-  getUserGeolocation,
 } from '@/lib/mapUtils';
+import { Icon, LatLngLiteral } from 'leaflet';
+
 import {
   LeafletType,
   MapClickHandlerProps,
-  MapLocation,
-  MapProps,
-  MarkerCategory,
+  MarkerCategoryEnum,
   ReactLeafletModule,
 } from '@/types/mapType';
-import { GeolocationPopup, Container, Button, TasksList } from '@/components';
-import { Vector } from '@/components/icons';
-import SearchInput from './SearchInput';
-import Portal from '@/components/portal/Portal';
-import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
-import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 
-export const Map: React.FC<MapProps> = ({
-  center,
-  locations,
-  onLocationSelect,
-  allowClickToAddMarker = true,
-}) => {
+import {
+  Button,
+  Container,
+  GeolocationPopup,
+  TASKS,
+  TasksList,
+  UserLocation,
+} from '@/components';
+import { Vector } from '@/components/icons';
+import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
+import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
+import Portal from '@/components/portal/Portal';
+import { useMapStore } from '@/zustand/stores/mapStore';
+import SearchInput from './filters/SearchInput';
+
+const coordsMatch = (a: LatLngLiteral, b: LatLngLiteral) =>
+  Math.abs(a.lat - b.lat) < 0.0001 && Math.abs(a.lng - b.lng) < 0.0001;
+
+// const getDynamicIcon = (
+//   marker: LatLngLiteral & { category?: MarkerCategory },
+//   icons: typeof mapIcons
+// ): Icon => {
+//   const type: MarkerCategory = marker.category || 'food';
+//   return getMarkerIcon(type, icons);
+// };
+
+export const Map: React.FC = () => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
     threshold: 0.6,
     triggerOnce: true,
     delay: 100,
   });
-  const [selectedLocation, setSelectedLocation] = useState<MapLocation | null>(
-    null
-  );
+
+  const {
+    userLocation,
+    setUserLocation,
+    customMarkers,
+    requestGeolocation,
+    selectedTask,
+    setSelectedTask,
+    hasAgreedToLocation,
+    setHasAgreedToLocation,
+    showGeolocationPopup,
+    setShowGeolocationPopup,
+    locationError,
+    checkLocationPermission,
+    addMarker,
+    removeMarker,
+    setCustomMarkers,
+  } = useMapStore();
+
+  // const memoizedCustomMarkers = React.useMemo<TCustomMarker[]>(
+  //   () => customMarkers as TCustomMarker[],
+  //   [customMarkers]
+  // );
+
   const [clickedCoords, setClickedCoords] = useState<LatLngLiteral | null>(
     null
   );
-  const [customMarkers, setCustomMarkers] = useState<LatLngLiteral[]>([]);
   const [leafletComponents, setLeafletComponents] =
     useState<ReactLeafletModule | null>(null);
   const [mapIcons, setMapIcons] = useState<{
@@ -57,56 +90,42 @@ export const Map: React.FC<MapProps> = ({
     foodIcon: null,
     myPositionIcon: null,
   });
-  const [userLocation, setUserLocation] = useState<LatLngLiteral | null>(null);
-  const [locationError, setLocationError] = useState<string | null>(null);
-  const [showGeolocationPopup, setShowGeolocationPopup] =
-    useState<boolean>(false);
-
-  useEffect(() => {
-    if (isInView) {
-      setShowGeolocationPopup(true);
-    }
-  }, [isInView]);
 
   // Load all leaflet components
   useEffect(() => {
     if (typeof window !== 'undefined') {
       Promise.all([import('react-leaflet'), import('leaflet')])
         .then(([reactLeafletModule, L]) => {
+          const customIcons = initializeMapIcons(L as unknown as LeafletType);
           setLeafletComponents(reactLeafletModule);
-          setMapIcons(initializeMapIcons(L as unknown as LeafletType));
+          setMapIcons(customIcons);
+          console.log('Map icons initialized:', customIcons);
         })
         .catch((error) => {
           console.error('Error loading map components:', error);
-          setLocationError('Failed to load map components');
         });
     }
   }, []);
 
-  // Handle accept geolocation
-  const requestGeolocation = async (): Promise<void> => {
-    setShowGeolocationPopup(false);
-    try {
-      const location = await getUserGeolocation();
-      setUserLocation(location);
-      setLocationError(null);
-      setSelectedLocation({
-        ...location,
-        id: 'user-location',
-        title: 'myPosition',
-      });
-    } catch (error) {
-      setLocationError(error instanceof Error ? error.message : String(error));
-      console.error('Error getting location:', error);
+  useEffect(() => {
+    if (isInView) {
+      console.log('Map is in view, checking location permission...');
+      checkLocationPermission();
     }
-  };
+  }, [isInView, checkLocationPermission]);
 
-  // Handle decline geolocation
-  const declineGeolocation = (): void => {
+  // Handle accept geolocation
+  const acceptToShareLocation = () => {
+    if (!hasAgreedToLocation) {
+      setHasAgreedToLocation(true);
+    }
     setShowGeolocationPopup(false);
-    setLocationError('User declined geolocation access.');
+    requestGeolocation();
   };
-
+  const declinedToShareLocation = () => {
+    setHasAgreedToLocation(false);
+    setShowGeolocationPopup(false);
+  };
   if (
     !leafletComponents ||
     !mapIcons ||
@@ -125,47 +144,32 @@ export const Map: React.FC<MapProps> = ({
   const { MapContainer, TileLayer, Marker, useMap, ZoomControl, useMapEvents } =
     leafletComponents;
 
-  const SelectedLocation: React.FC<{ center: LatLngLiteral }> = ({
-    center,
-  }) => {
-    const map = useMap();
-    useEffect(() => {
-      map.panTo(userLocation || center, { animate: true });
-    }, [center, map]);
-    return null;
-  };
-
-  const renderMarks = (): JSX.Element[] => {
-    return locations.map((location: MapLocation) => (
-      <div key={location.id}>
-        <Marker
-          icon={getMarkerIcon(location.title as MarkerCategory, mapIcons)}
-          position={{ lat: location.lat, lng: location.lng }}
-          eventHandlers={{
-            click: () => {
-              setSelectedLocation(location);
-              setClickedCoords({ lat: location.lat, lng: location.lng });
-              onLocationSelect?.({ lat: location.lat, lng: location.lng });
-            },
-          }}
-        />
-      </div>
-    ));
-  };
-
-  const renderCustomMarkers = (): JSX.Element[] => {
-    return customMarkers.map((marker, index) => (
+  const renderTaskMarkers = () => {
+    return TASKS.map((task, index) => (
       <Marker
-        key={`custom-marker-${index}`}
-        position={marker}
-        icon={mapIcons.medicineIcon!}
+        key={`task-marker-${index}`}
+        position={{ lat: task.lat, lng: task.lng }}
+        icon={getMarkerIcon(task.category[0] as MarkerCategoryEnum, mapIcons)}
         eventHandlers={{
-          click: () => handleMapClick(marker),
+          click: () => {
+            setSelectedTask({
+              id: task.id,
+              lat: task.lat,
+              lng: task.lng,
+              title: task.title,
+              category: task.category,
+              distance: task.distance,
+              description: task.description,
+            });
+            console.log('Task selected:', task);
+            <div className="text-red-500 p-2 bg-white rounded shadow mb-2">
+              Task selected: {task.title}
+            </div>;
+          },
         }}
       />
     ));
   };
-
   const renderUserLocation = (): JSX.Element | null => {
     if (!userLocation) return null;
     return (
@@ -174,17 +178,37 @@ export const Map: React.FC<MapProps> = ({
         icon={mapIcons.myPositionIcon!}
         eventHandlers={{
           click: () => {
-            setSelectedLocation({
+            setUserLocation({
               ...userLocation,
-              id: 'user-location',
-              title: 'myPosition',
             });
-            onLocationSelect?.(userLocation);
+            console.log('User location selected:', userLocation);
+            // onLocationSelect?.({ lat: userLocation.lat, lng: userLocation.lng });
           },
         }}
       />
     );
   };
+  // const renderCustomMarkers = (): JSX.Element[] =>
+  //   memoizedCustomMarkers.map((marker, index) => (
+  //     <Marker
+  //       key={`custom-marker-${index}`}
+  //       position={marker}
+  //       icon={getMarkerIcon(marker.category ?? MarkerCategoryEnum.Food, mapIcons)}
+  //       eventHandlers={{
+  //         click: () => {
+  //           if (isMarkerExists(memoizedCustomMarkers, marker)) {
+  //             if (marker.category) {
+  //               removeMarker({ ...marker, category: marker.category });
+  //             }
+  //           } else {
+  //             if (marker.category) {
+  //               addMarker({ ...marker, category: marker.category });
+  //             }
+  //           }
+  //         },
+  //       }}
+  //     />
+  //   ));
 
   const MapClickHandler: React.FC<MapClickHandlerProps> = ({
     onClick,
@@ -194,6 +218,7 @@ export const Map: React.FC<MapProps> = ({
       click: (e: { latlng: LatLngLiteral }) => {
         if (allowClickToAddMarker) {
           onClick(e.latlng);
+          console.log('Clicked coordinates:', e.latlng);
         }
       },
     });
@@ -201,35 +226,25 @@ export const Map: React.FC<MapProps> = ({
   };
 
   const handleMapClick = (latlng: LatLngLiteral): void => {
-    setClickedCoords(latlng);
-    setSelectedLocation(null);
-    console.log('Clicked coordinates:', clickedCoords, 'new coord', latlng);
-    if (isMarkerExists(customMarkers, latlng)) {
-      setCustomMarkers((prev) =>
-        prev.filter(
-          (marker) =>
-            !(
-              Math.abs(marker.lat - latlng.lat) < 0.0001 &&
-              Math.abs(marker.lng - latlng.lng) < 0.0001
-            )
-        )
-      );
-    } else {
-      setCustomMarkers((prev) => [...prev, latlng]);
+    const newMarker = { ...latlng, category: MarkerCategoryEnum.Animal };
+    if (!isMarkerExists(customMarkers, newMarker)) {
+      addMarker(newMarker);
     }
-
-    onLocationSelect?.(latlng);
+    console.log('Clicked coordinates:', clickedCoords, 'new coord', latlng);
   };
 
   return (
     <Container className="mx-auto relative flex flex-col ">
       <div ref={mapContainerRef} className="h-[547px] lg:h-[919px]">
-        {showGeolocationPopup && leafletComponents && (
+        {showGeolocationPopup && (
           <Portal>
-            <AnimatedModalWrapper isVisible={true} onClose={declineGeolocation}>
+            <AnimatedModalWrapper
+              isVisible={showGeolocationPopup}
+              onClose={declinedToShareLocation}
+            >
               <GeolocationPopup
-                requestGeolocation={requestGeolocation}
-                declineGeolocation={declineGeolocation}
+                requestGeolocation={acceptToShareLocation}
+                declineGeolocation={declinedToShareLocation}
               />
             </AnimatedModalWrapper>
           </Portal>
@@ -240,11 +255,8 @@ export const Map: React.FC<MapProps> = ({
           </div>
         )}
         <MapContainer
-          whenReady={() => {
-            // This is a workaround to ensure the map is initialized
-          }}
           className="h-full w-full cursor-default"
-          center={userLocation || center}
+          center={userLocation || { lat: 27.9944024, lng: -81.7602544 }}
           zoom={13}
           minZoom={5}
           zoomControl={false}
@@ -254,21 +266,19 @@ export const Map: React.FC<MapProps> = ({
         >
           <ScrollAfterDelay delay={2000} />
           <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" />
-          {selectedLocation && (
-            <SelectedLocation center={userLocation || center} />
-          )}
+          {userLocation && <UserLocation />}
           <MapClickHandler
             onClick={handleMapClick}
-            allowClickToAddMarker={allowClickToAddMarker}
+            allowClickToAddMarker={true}
           />
-          {renderMarks()}
-          {renderCustomMarkers()}
+          {renderTaskMarkers()}
+          {/* {renderCustomMarkers()} */}
           {renderUserLocation()}
           <ZoomControl position="topright" />
           <Button
             variant="filters"
             className="z-[700] absolute top-[95px] right-[10px] p-[10px]"
-            onClick={requestGeolocation}
+            onClick={() => checkLocationPermission()}
           >
             <Vector className="stroke-foreground w-5 h-5" />
           </Button>
