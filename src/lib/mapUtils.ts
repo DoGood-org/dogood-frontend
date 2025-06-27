@@ -43,7 +43,10 @@ export const initializeMapIcons = (L: LeafletType): MapIcons => {
  * @param icons Map icons collection
  * @returns The corresponding Leaflet Icon
  */
-export const getMarkerIcon = (title: MarkerCategoryEnum, icons: MapIcons): Icon => {
+export const getMarkerIcon = (
+  title: MarkerCategoryEnum,
+  icons: MapIcons
+): Icon => {
   // Validate all icons exist
   const requiredIcons = [
     icons.medicineIcon,

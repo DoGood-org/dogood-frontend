@@ -1,9 +1,7 @@
-
 'use client';
-import { useMapStore } from "@/zustand/stores/mapStore";
-import { useEffect } from "react";
-import { useMap } from "react-leaflet";
-
+import { useMapStore } from '@/zustand/stores/mapStore';
+import { useEffect } from 'react';
+import { useMap } from 'react-leaflet';
 
 export const UserLocation: React.FC = () => {
   const map = useMap();
@@ -16,4 +14,3 @@ export const UserLocation: React.FC = () => {
 
   return null;
 };
-

@@ -31,18 +31,10 @@ import Portal from '@/components/portal/Portal';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import SearchInput from './filters/SearchInput';
 
-const coordsMatch = (a: LatLngLiteral, b: LatLngLiteral) =>
-  Math.abs(a.lat - b.lat) < 0.0001 && Math.abs(a.lng - b.lng) < 0.0001;
+// const coordsMatch = (a: LatLngLiteral, b: LatLngLiteral) =>
+//   Math.abs(a.lat - b.lat) < 0.0001 && Math.abs(a.lng - b.lng) < 0.0001;
 
-// const getDynamicIcon = (
-//   marker: LatLngLiteral & { category?: MarkerCategory },
-//   icons: typeof mapIcons
-// ): Icon => {
-//   const type: MarkerCategory = marker.category || 'food';
-//   return getMarkerIcon(type, icons);
-// };
-
-export const Map: React.FC = () => {
+export const Map: React.FC = (): JSX.Element => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
     threshold: 0.6,
     triggerOnce: true,
@@ -54,7 +46,6 @@ export const Map: React.FC = () => {
     setUserLocation,
     customMarkers,
     requestGeolocation,
-    selectedTask,
     setSelectedTask,
     hasAgreedToLocation,
     setHasAgreedToLocation,
@@ -63,8 +54,6 @@ export const Map: React.FC = () => {
     locationError,
     checkLocationPermission,
     addMarker,
-    removeMarker,
-    setCustomMarkers,
   } = useMapStore();
 
   // const memoizedCustomMarkers = React.useMemo<TCustomMarker[]>(
@@ -72,9 +61,6 @@ export const Map: React.FC = () => {
   //   [customMarkers]
   // );
 
-  const [clickedCoords, setClickedCoords] = useState<LatLngLiteral | null>(
-    null
-  );
   const [leafletComponents, setLeafletComponents] =
     useState<ReactLeafletModule | null>(null);
   const [mapIcons, setMapIcons] = useState<{
@@ -92,7 +78,7 @@ export const Map: React.FC = () => {
   });
 
   // Load all leaflet components
-  useEffect(() => {
+  useEffect((): void => {
     if (typeof window !== 'undefined') {
       Promise.all([import('react-leaflet'), import('leaflet')])
         .then(([reactLeafletModule, L]) => {
@@ -107,7 +93,7 @@ export const Map: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
+  useEffect((): void => {
     if (isInView) {
       console.log('Map is in view, checking location permission...');
       checkLocationPermission();
@@ -115,14 +101,14 @@ export const Map: React.FC = () => {
   }, [isInView, checkLocationPermission]);
 
   // Handle accept geolocation
-  const acceptToShareLocation = () => {
+  const acceptToShareLocation = (): void => {
     if (!hasAgreedToLocation) {
       setHasAgreedToLocation(true);
     }
     setShowGeolocationPopup(false);
     requestGeolocation();
   };
-  const declinedToShareLocation = () => {
+  const declinedToShareLocation = (): void => {
     setHasAgreedToLocation(false);
     setShowGeolocationPopup(false);
   };
@@ -141,10 +127,10 @@ export const Map: React.FC = () => {
     );
   }
 
-  const { MapContainer, TileLayer, Marker, useMap, ZoomControl, useMapEvents } =
+  const { MapContainer, TileLayer, Marker, ZoomControl, useMapEvents } =
     leafletComponents;
 
-  const renderTaskMarkers = () => {
+  const renderTaskMarkers = (): JSX.Element[] => {
     return TASKS.map((task, index) => (
       <Marker
         key={`task-marker-${index}`}
@@ -213,7 +199,7 @@ export const Map: React.FC = () => {
   const MapClickHandler: React.FC<MapClickHandlerProps> = ({
     onClick,
     allowClickToAddMarker,
-  }) => {
+  }): JSX.Element | null => {
     useMapEvents({
       click: (e: { latlng: LatLngLiteral }) => {
         if (allowClickToAddMarker) {
@@ -230,7 +216,7 @@ export const Map: React.FC = () => {
     if (!isMarkerExists(customMarkers, newMarker)) {
       addMarker(newMarker);
     }
-    console.log('Clicked coordinates:', clickedCoords, 'new coord', latlng);
+    console.log('Clicked coordinates:', 'new coord', latlng);
   };
 
   return (
