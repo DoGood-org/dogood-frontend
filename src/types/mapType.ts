@@ -11,8 +11,6 @@ export interface ReactLeafletModule {
 }
 export type MapLocation = LatLngLiteral & { id: string; title: string };
 
-
-
 export interface IGeolocationPopupProps {
   requestGeolocation: () => void;
   declineGeolocation: () => void;
@@ -25,11 +23,6 @@ export enum MarkerCategoryEnum {
   MyPosition = 'myPosition',
 }
 export type TCustomMarker = LatLngLiteral & { category?: MarkerCategoryEnum };
-
-
-
-
-
 
 export interface SelectedLocationProps {
   center: LatLngLiteral;
@@ -77,8 +70,6 @@ export interface MapClickHandlerProps {
   onClick: (latlng: LatLngLiteral) => void;
   allowClickToAddMarker?: boolean;
 }
-
-
 
 export interface CategoryItem {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;

@@ -6,11 +6,9 @@ import { Section } from '@/components';
 const Map = dynamic(() => import('@/components/main/map/Map'), { ssr: false });
 
 export const MapSection: React.FC = () => {
-
-
   return (
     <Section withContainer={false}>
-      <Map/>
+      <Map />
     </Section>
   );
 };

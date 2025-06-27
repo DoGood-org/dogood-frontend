@@ -14,7 +14,6 @@ type TTask = {
   distance?: string;
 };
 
-
 type TMapState = {
   map: LeafletMap | null;
   hasAgreedToLocation: boolean;
@@ -41,10 +40,7 @@ type TMapActions = {
 
 export type TMapProps = TMapState & TMapActions;
 
-
-const LS_KEY = 'userAgreeToShareLocation';
-
-const coordsMatch = (a: LatLngLiteral, b: LatLngLiteral) =>
+const coordsMatch = (a: LatLngLiteral, b: LatLngLiteral): boolean =>
   Math.abs(a.lat - b.lat) < 0.0001 && Math.abs(a.lng - b.lng) < 0.0001;
 
 function getGeolocationPromise(): Promise<LatLngLiteral> {
@@ -60,7 +56,7 @@ function getGeolocationPromise(): Promise<LatLngLiteral> {
 }
 export const useMapStore = create<TMapState & TMapActions>()(
   persist(
-    (set, get) => ({
+    (set, get): TMapState & TMapActions => ({
       map: null,
       userLocation: null,
       selectedTask: null,
@@ -75,14 +71,15 @@ export const useMapStore = create<TMapState & TMapActions>()(
       setLocationError: (error) => set({ locationError: error }),
       setCustomMarkers: (markers) => set({ customMarkers: markers }),
 
-      setHasAgreedToLocation: (value) => {
+      setHasAgreedToLocation: (value): void => {
         console.log('[Zustand] agreeToShareLocation set to:', value);
         set({ hasAgreedToLocation: value });
       },
 
-      setShowGeolocationPopup: (value) => set({ showGeolocationPopup: value }),
+      setShowGeolocationPopup: (value): void =>
+        set({ showGeolocationPopup: value }),
 
-      addMarker: (loc) => {
+      addMarker: (loc): void => {
         const exists = get().customMarkers.some((m) => coordsMatch(m, loc));
         if (!exists) {
           set((state) => ({
@@ -91,25 +88,27 @@ export const useMapStore = create<TMapState & TMapActions>()(
         }
       },
 
-      removeMarker: (loc) =>
+      removeMarker: (loc): void =>
         set((state) => ({
           customMarkers: state.customMarkers.filter(
             (m) => !coordsMatch(m, loc)
           ),
         })),
 
-      checkLocationPermission: () => {
+      checkLocationPermission: (): void => {
         if (typeof window === 'undefined') return;
         if (get().hasAgreedToLocation) {
-          get().requestGeolocation();     
-          console.log('User already agreed, requesting geolocation, dont bother with popup...');
+          get().requestGeolocation();
+          console.log(
+            'User already agreed, requesting geolocation, dont bother with popup...'
+          );
         } else {
           set({ showGeolocationPopup: true });
           console.log('User has not agreed, showing popup...');
         }
       },
 
-      requestGeolocation: async (manualLoc) => {
+      requestGeolocation: async (manualLoc?: LatLngLiteral): Promise<void> => {
         try {
           const coords = manualLoc ?? (await getGeolocationPromise());
           set({ userLocation: coords, locationError: null });
@@ -124,7 +123,12 @@ export const useMapStore = create<TMapState & TMapActions>()(
     }),
     {
       name: 'map-storage',
-      partialize: (state) => ({
+      partialize: (
+        state
+      ): Pick<
+        TMapState,
+        'hasAgreedToLocation' | 'userLocation' | 'customMarkers'
+      > => ({
         hasAgreedToLocation: state.hasAgreedToLocation,
         userLocation: state.userLocation,
         customMarkers: state.customMarkers,

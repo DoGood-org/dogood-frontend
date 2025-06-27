@@ -1,4 +1,4 @@
-import { MarkerCategoryEnum } from "@/types/mapType";
+import { MarkerCategoryEnum } from '@/types/mapType';
 
 export const TASKS = [
   {
@@ -61,8 +61,8 @@ export const TASKS = [
     subtitle: 'Monitor and protect local fauna',
     category: [MarkerCategoryEnum.Animal],
     distance: '3 km',
-    lat: 45.8850,
-    lng: 6.8000,
+    lat: 45.885,
+    lng: 6.8,
     description:
       'Help track and protect wildlife in the area by monitoring their habitats.',
   },
@@ -76,5 +76,5 @@ export const TASKS = [
     lng: 6.8015,
     description:
       'Create picnic areas using local materials and promote eco-friendly practices.',
-  }
+  },
 ];
