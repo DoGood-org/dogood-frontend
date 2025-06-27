@@ -123,16 +123,14 @@ export const useMapStore = create<TMapState & TMapActions>()(
     }),
     {
       name: 'map-storage',
-      partialize: (
-        state
-      ): Pick<
-        TMapState,
-        'hasAgreedToLocation' | 'userLocation' | 'customMarkers'
-      > => ({
-        hasAgreedToLocation: state.hasAgreedToLocation,
-        userLocation: state.userLocation,
-        customMarkers: state.customMarkers,
-      }),
+      partialize: function (state): Pick<
+        TMapState, 'hasAgreedToLocation' | 'customMarkers'
+      > {
+        return ({
+          hasAgreedToLocation: state.hasAgreedToLocation,
+          customMarkers: state.customMarkers,
+        });
+      },
     }
   )
 );
