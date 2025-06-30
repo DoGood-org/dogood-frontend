@@ -1,10 +1,10 @@
 'use client';
 
 import { authStore } from '@/zustand/stores/authStore';
-import { AccountContentProps } from '@/types';
-import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { useLocale } from 'next-intl';
-import { useIconComponents } from '@/hooks/useIconComponents';
+import { AccountContentProps } from '@/types';
+import { LinkWithArrow } from '@/components';
+import { useIconComponents } from '@/hooks';
 
 export const AccountLinks: React.FC<AccountContentProps> = ({
   accountItem,

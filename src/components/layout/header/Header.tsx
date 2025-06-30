@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import logo from '@/assets/logo.png';
 import { Container, MobileMenu, Navigation } from '@/components';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useMediaQuery } from '@/hooks';
 
 export const Header: React.FC = () => {
   const isDesktop = useMediaQuery('(min-width: 1440px)');

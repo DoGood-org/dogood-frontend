@@ -1,5 +1,5 @@
-import { User } from '@/components/icons';
 import Image from 'next/image';
+import { User } from '@/components/icons';
 
 interface UserAvatarProps {
   isLoggedIn: boolean;

@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { NavItem } from '@/types';
 import { NavItemRenderer, useMobileMenu } from '@/components';
-import { useTranslations } from 'next-intl';
 import { Burger, CloseMenu } from '@/components/icons';
 import Portal from '@/components/portal/Portal';
 

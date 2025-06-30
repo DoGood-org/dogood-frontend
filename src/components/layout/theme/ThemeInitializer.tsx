@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { getInitialTheme, applyTheme } from '@/zustand/services/themeService';
 import type { Theme } from '@/types';
-import { useTheme } from '@/hooks/useTheme';
+import { useTheme } from '@/hooks';
 
 export const ThemeInitializer = (): null => {
   const { setTheme } = useTheme();

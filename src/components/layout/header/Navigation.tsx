@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { NavItem } from '@/types';
-import { NavItemRenderer } from './NavItemRenderer';
+import { NavItemRenderer } from '@/components';
 
 export const Navigation: React.FC = () => {
   const t = useTranslations('header');

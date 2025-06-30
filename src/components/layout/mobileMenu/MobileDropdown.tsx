@@ -10,7 +10,7 @@ import {
   Button,
 } from '@/components';
 import { CaretDown } from '@/components/icons';
-import { useIconComponents } from '@/hooks/useIconComponents';
+import { useIconComponents } from '@/hooks';
 
 export const MobileDropdown = ({
   trigger,

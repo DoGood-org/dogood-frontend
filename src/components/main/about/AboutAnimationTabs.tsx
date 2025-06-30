@@ -3,9 +3,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { AboutTabsProps } from '@/types';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { useSwipe } from '@/hooks/useSwipe';
-import { useScrollToActive } from '@/hooks/useScrollToActive';
+import { useMediaQuery, useScrollToActive, useSwipe } from '@/hooks';
 import { CarouselItem, getVisibleItems } from '@/lib/carouselUtils';
 import { Button } from '@/components';
 import { CaretDoubleRight } from '@/components/icons';

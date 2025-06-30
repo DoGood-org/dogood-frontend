@@ -2,10 +2,10 @@
 
 import React, { useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { CaretDown } from '@/components/icons';
 import { NavDropdownProps } from '@/types';
-import { Button } from '@/components/ui/Button';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { CaretDown } from '@/components/icons';
+import { Button } from '@/components';
+import { useMediaQuery } from '@/hooks';
 
 export const NavDropdown = ({
   trigger,
