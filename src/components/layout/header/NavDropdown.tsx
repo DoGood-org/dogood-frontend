@@ -5,17 +5,19 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { CaretDown } from '@/components/icons';
 import { NavDropdownProps } from '@/types';
 import { Button } from '@/components/ui/Button';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 export const NavDropdown = ({
   trigger,
   children,
   className,
   isIcon = false,
-  isOpen,
+  isOpen = false,
   setIsOpen,
 }: NavDropdownProps): React.JSX.Element => {
   const containerRef = useRef<HTMLLIElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
+  const isDesktop = useMediaQuery('(min-width: 1440px)');
 
   // Закриття по кліку поза дропдауном
   useEffect((): (() => void) | void => {
@@ -33,23 +35,9 @@ export const NavDropdown = ({
 
   return (
     <li ref={containerRef} className="relative h-[72px] flex items-center">
-      {!isIcon ? (
-        <Button
-          variant="ghost"
-          size="md"
-          onClick={() => setIsOpen(!isOpen)}
-          className={`p-4 focus:outline-none flex items-baseline items-center cursor-pointer hover:border-btn-outline-hover ${isOpen && 'border-btn-outline-active'}`}
-        >
-          {trigger}
-          <CaretDown
-            className={`stroke-current transition-transform duration-700 size-6
-            ${isOpen ? 'rotate-180' : ''}
-            `}
-          />
-        </Button>
-      ) : (
+      {isIcon && isDesktop ? (
         <button
-          className="flex items-center cursor-pointer gap-1 "
+          className="flex items-center cursor-pointer gap-1 lg:hover:border-btn-outline-hover"
           onClick={() => setIsOpen(!isOpen)}
         >
           {trigger}
@@ -59,6 +47,20 @@ export const NavDropdown = ({
             `}
           />
         </button>
+      ) : (
+        <Button
+          variant="ghost"
+          size="md"
+          onClick={() => setIsOpen(!isOpen)}
+          className={`p-4 focus:outline-none flex items-baseline items-center cursor-pointer hover:border-transparent lg:hover:border-btn-outline-hover ${isOpen && 'border-btn-outline-active'}`}
+        >
+          {trigger}
+          <CaretDown
+            className={`stroke-current transition-transform duration-700 size-6
+            ${isOpen ? 'rotate-180' : ''}
+            `}
+          />
+        </Button>
       )}
       <AnimatePresence>
         {isOpen && (

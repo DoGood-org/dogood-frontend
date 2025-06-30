@@ -20,6 +20,7 @@ export const Navigation: React.FC = () => {
       <ul className="flex gap-4 pl-10 text-base items-center">
         {navList.map((navItem, index) => (
           <NavItemRenderer
+            variant="desktop"
             key={`${index}-${navItem.title}`}
             navItem={navItem}
             isActive={activeIndex === index}

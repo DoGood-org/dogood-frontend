@@ -1,25 +1,41 @@
 'use client';
 
+import { useState } from 'react';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { NavItem, NavItemRendererProps } from '@/types';
-import { NavDropdown } from './NavDropdown';
-import { SettingsList } from './SettingList';
-import { Button } from '@/components/ui/Button';
-import { AccountLinks } from './AccountLinks';
-import { useState } from 'react';
-import { ListDropdown } from './ListDropdown';
-import { useLocale } from 'next-intl';
-import { UserAvatar } from './UserAvatar';
-import { useAuth } from '@/hooks/useAuth';
+import {
+  AccountLinks,
+  Button,
+  ListDropdown,
+  MobileDropdown,
+  NavDropdown,
+  SettingsList,
+  UserAvatar,
+} from '@/components';
+import { useAuth, useIconComponents } from '@/hooks';
 
 export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   navItem,
   isActive,
+  variant,
+  openItem,
+  setOpenItem,
+  toggleMenu,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  // const [openItem, setOpenItem] = useState<string>('');
+  console.log(navItem.title, isOpen);
+
   const locale = useLocale();
   const { isLoggedIn, user } = useAuth();
   const safeUser = user ?? undefined;
+  const icons = useIconComponents();
+
+  const handleLinkOnClick = (): void => {
+    setIsOpen(false);
+    if (variant === 'mobile') toggleMenu();
+  };
 
   if (navItem.type === 'link') {
     return (
@@ -28,12 +44,14 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
           asChild
           variant="ghost"
           size="md"
-          className={`hover:border-btn-outline-hover ${isActive && 'border-btn-outline-active'}`}
+          className={`max-lg:px-0 active:border-transparent lg:hover:border-btn-outline-hover ${isActive && 'lg:border-btn-outline-active'}`}
         >
           <Link
             href={`/${locale}${navItem.src}`}
-            className="nav-link text-white flex items-center"
+            onClick={handleLinkOnClick}
+            className="text-white flex items-center gap-5"
           >
+            {variant === 'mobile' && icons[navItem.icon as keyof typeof icons]}
             {navItem.title}
           </Link>
         </Button>
@@ -58,6 +76,7 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
         <ListDropdown
           listItem={navItem as Extract<NavItem, { type: 'list' }>}
           setIsOpen={setIsOpen}
+          {...(variant === 'mobile' ? { toggleMenu } : {})}
         />
       ),
     },
@@ -74,13 +93,16 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
 
     icon: {
       className: 'min-w-[146px]',
-      trigger: (
-        <UserAvatar
-          isLoggedIn={isLoggedIn}
-          user={safeUser}
-          className="size-6 w-6 h-6"
-        />
-      ),
+      trigger:
+        variant === 'mobile' ? (
+          navItem.title
+        ) : (
+          <UserAvatar
+            isLoggedIn={isLoggedIn}
+            user={safeUser}
+            className="size-6 w-6 h-6 min-w-6"
+          />
+        ),
       content: (
         <AccountLinks
           accountItem={navItem as Extract<NavItem, { type: 'icon' }>}
@@ -96,14 +118,30 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   if (!config) return null;
 
   return (
-    <NavDropdown
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      trigger={config.trigger}
-      className={config.className}
-      isIcon={config.isIcon}
-    >
-      {config.content}
-    </NavDropdown>
+    <>
+      {variant === 'desktop' && (
+        <NavDropdown
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          trigger={config.trigger}
+          className={config.className}
+          isIcon={config.isIcon}
+        >
+          {config.content}
+        </NavDropdown>
+      )}
+      {variant === 'mobile' && (
+        <MobileDropdown
+          openItem={openItem}
+          setOpenItem={setOpenItem ?? ((_: string): void => {})}
+          trigger={config.trigger}
+          className={config.className}
+          icon={navItem.icon}
+          navItem={navItem}
+        >
+          {config.content}
+        </MobileDropdown>
+      )}
+    </>
   );
 };

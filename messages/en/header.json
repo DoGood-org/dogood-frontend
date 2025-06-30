@@ -2,11 +2,13 @@
   "nav": [
     {
       "title": "Donate",
+      "icon": "Dollar",
       "type": "link",
       "src": "/donate"
     },
     {
       "title": "Company",
+      "icon": "UsersThree",
       "type": "list",
       "content": [
         {
@@ -28,6 +30,7 @@
     },
     {
       "title": "Settings",
+      "icon": "Gear",
       "type": "settings",
       "content": [
         {
@@ -49,6 +52,7 @@
     },
     {
       "title": "News",
+      "icon": "Megaphone",
       "type": "link",
       "src": "/news",
       "content": [
@@ -71,6 +75,7 @@
     },
     {
       "title": "Account",
+      "icon": "User",
       "type": "icon",
       "content": {
         "logged": [
