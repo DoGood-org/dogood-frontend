@@ -20,7 +20,6 @@ import {
   Button,
   Container,
   generateTasks,
-  TASKS,
   TasksList,
   UserLocation,
 } from '@/components';
@@ -56,7 +55,7 @@ export const Map: React.FC = (): JSX.Element => {
     addMarker,
   } = useMapStore();
 
-   const [leafletComponents, setLeafletComponents] =
+  const [leafletComponents, setLeafletComponents] =
     useState<ReactLeafletModule | null>(null);
   const [mapIcons, setMapIcons] = useState<{
     medicineIcon: Icon | null;
@@ -87,7 +86,7 @@ export const Map: React.FC = (): JSX.Element => {
         });
     }
   }, []);
-//  // Check if map is in view and request geolocation permission
+  //  // Check if map is in view and request geolocation permission
   useEffect((): void => {
     if (isInView) {
       console.log('Map is in view, checking location permission...');

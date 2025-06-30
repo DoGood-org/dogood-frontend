@@ -121,8 +121,9 @@ const CATEGORIES = [
 ];
 
 export function generateTasks(userLat: number, userLng: number): Task[] {
-
-  console.log(`Generating tasks based on user location: ${userLat}, ${userLng}`);
+  console.log(
+    `Generating tasks based on user location: ${userLat}, ${userLng}`
+  );
 
   return TITLES.map(([title, subtitle], i) => {
     const offsetLat = (Math.random() - 0.5) * 0.01;
@@ -131,7 +132,9 @@ export function generateTasks(userLat: number, userLng: number): Task[] {
     const lng = parseFloat((userLng + offsetLng).toFixed(6));
     const distance = `${(Math.random() * 4 + 0.5).toFixed(1)} km`;
 
-    console.log(`Task ${i + 1}: ${title}, Location: ${lat}, ${lng}, Distance: ${distance}`);
+    console.log(
+      `Task ${i + 1}: ${title}, Location: ${lat}, ${lng}, Distance: ${distance}`
+    );
 
     return {
       id: (i + 1).toString(),
@@ -145,4 +148,3 @@ export function generateTasks(userLat: number, userLng: number): Task[] {
     };
   });
 }
-
