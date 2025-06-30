@@ -6,8 +6,6 @@ import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import CategoryIconsList from './filters/CategoryIconList';
 
-
-
 export const Description: FC<ITasksProps> = ({
   description,
   title,
