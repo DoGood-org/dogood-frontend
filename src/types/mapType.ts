@@ -11,7 +11,7 @@ export interface ReactLeafletModule {
 }
 export type MapLocation = LatLngLiteral & { id: string; title: string };
 
-export interface IGeolocationPopupProps {
+export interface IAcceptShareLocationProps {
   requestGeolocation: () => void;
   declineGeolocation: () => void;
 }

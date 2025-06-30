@@ -19,7 +19,6 @@ import {
 import {
   Button,
   Container,
-  GeolocationPopup,
   TASKS,
   TasksList,
   UserLocation,
@@ -29,8 +28,8 @@ import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
 import Portal from '@/components/portal/Portal';
 import { useMapStore } from '@/zustand/stores/mapStore';
+import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 import SearchInput from './filters/SearchInput';
-
 // const coordsMatch = (a: LatLngLiteral, b: LatLngLiteral) =>
 //   Math.abs(a.lat - b.lat) < 0.0001 && Math.abs(a.lng - b.lng) < 0.0001;
 
@@ -228,7 +227,7 @@ export const Map: React.FC = (): JSX.Element => {
               isVisible={showGeolocationPopup}
               onClose={declinedToShareLocation}
             >
-              <GeolocationPopup
+              <AcceptShareLocationPopUp
                 requestGeolocation={acceptToShareLocation}
                 declineGeolocation={declinedToShareLocation}
               />
