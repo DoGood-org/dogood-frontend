@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/Button';
 import { getCategoryIcon } from '@/lib/utils';
 import { ExtendedITasksProps, IconMap } from '@/types/mapType';
 import { useTranslations } from 'next-intl';
-import React, { FC } from 'react';
-import CategoryIconsList from './CategoryIconList';
+import { FC } from 'react';
+import CategoryIconsList from './filters/CategoryIconList';
 
 export const iconMap: IconMap = {
   Medicine: {
