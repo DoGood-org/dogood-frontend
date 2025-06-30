@@ -4,7 +4,7 @@ import NatureMarker from '@/assets/images/map/nature-marker.png';
 import AnimalMarker from '@/assets/images/map/animal-marker.png';
 import FoodMarker from '@/assets/images/map/food-marker.png';
 import MyPositionMarker from '@/assets/images/map/my-position.png';
-import { Icon } from 'leaflet';
+import { Icon, LatLngLiteral } from 'leaflet';
 
 export const createIcon = (
   L: LeafletType,

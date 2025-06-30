@@ -19,6 +19,7 @@ import {
 import {
   Button,
   Container,
+  generateTasks,
   TASKS,
   TasksList,
   UserLocation,
@@ -55,12 +56,7 @@ export const Map: React.FC = (): JSX.Element => {
     addMarker,
   } = useMapStore();
 
-  // const memoizedCustomMarkers = React.useMemo<TCustomMarker[]>(
-  //   () => customMarkers as TCustomMarker[],
-  //   [customMarkers]
-  // );
-
-  const [leafletComponents, setLeafletComponents] =
+   const [leafletComponents, setLeafletComponents] =
     useState<ReactLeafletModule | null>(null);
   const [mapIcons, setMapIcons] = useState<{
     medicineIcon: Icon | null;
@@ -91,14 +87,13 @@ export const Map: React.FC = (): JSX.Element => {
         });
     }
   }, []);
-
+//  // Check if map is in view and request geolocation permission
   useEffect((): void => {
     if (isInView) {
       console.log('Map is in view, checking location permission...');
       checkLocationPermission();
     }
   }, [isInView, checkLocationPermission]);
-
   // Handle accept geolocation
   const acceptToShareLocation = (): void => {
     if (!hasAgreedToLocation) {
@@ -107,6 +102,7 @@ export const Map: React.FC = (): JSX.Element => {
     setShowGeolocationPopup(false);
     requestGeolocation();
   };
+  // Handle decline geolocation
   const declinedToShareLocation = (): void => {
     setHasAgreedToLocation(false);
     setShowGeolocationPopup(false);
@@ -130,7 +126,7 @@ export const Map: React.FC = (): JSX.Element => {
     leafletComponents;
 
   const renderTaskMarkers = (): JSX.Element[] => {
-    return TASKS.map((task, index) => (
+    return generatedTasks.map((task, index) => (
       <Marker
         key={`task-marker-${index}`}
         position={{ lat: task.lat, lng: task.lng }}
@@ -209,7 +205,6 @@ export const Map: React.FC = (): JSX.Element => {
     });
     return null;
   };
-
   const handleMapClick = (latlng: LatLngLiteral): void => {
     const newMarker = { ...latlng, category: MarkerCategoryEnum.Animal };
     if (!isMarkerExists(customMarkers, newMarker)) {
@@ -217,6 +212,10 @@ export const Map: React.FC = (): JSX.Element => {
     }
     console.log('Clicked coordinates:', 'new coord', latlng);
   };
+  const generatedTasks = generateTasks(
+    userLocation?.lat || 27.9944024,
+    userLocation?.lng || -81.7602544
+  );
 
   return (
     <Container className="mx-auto relative flex flex-col ">

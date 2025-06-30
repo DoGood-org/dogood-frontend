@@ -78,3 +78,71 @@ export const TASKS = [
       'Create picnic areas using local materials and promote eco-friendly practices.',
   },
 ];
+
+type Task = {
+  id: string;
+  title: string;
+  subtitle: string;
+  category: MarkerCategoryEnum[];
+  distance: string;
+  lat: number;
+  lng: number;
+  description: string;
+};
+
+const TITLES = [
+  ['Mountain health checkpoint', 'Help set up first aid at trails'],
+  ['Clean up alpine lakes', 'Preserve biodiversity at altitude'],
+  ['Rescue center animal support', 'Help care for rescued wildlife'],
+  ['Hiker nutrition booth', 'Distribute snacks and info at trailhead'],
+  ['Trail maintenance crew', 'Repair paths and signage'],
+  ['Wildlife observation post', 'Monitor and protect fauna'],
+  ['Eco-friendly picnic area', 'Set up sustainable dining spots'],
+];
+
+const DESCRIPTIONS = [
+  'Set up temporary medical aid near common hiking paths.',
+  'Join efforts to clean lakes and remove plastic waste.',
+  'Volunteer for basic animal care and feeding.',
+  'Support trekkers with food and trail info.',
+  'Fix damaged trails and install new signs.',
+  'Monitor and protect wildlife habitats.',
+  'Create picnic areas and promote sustainability.',
+];
+
+const CATEGORIES = [
+  [MarkerCategoryEnum.Medicine],
+  [MarkerCategoryEnum.Nature],
+  [MarkerCategoryEnum.Animal],
+  [MarkerCategoryEnum.Food],
+  [MarkerCategoryEnum.Medicine, MarkerCategoryEnum.Nature],
+  [MarkerCategoryEnum.Animal],
+  [MarkerCategoryEnum.Food],
+];
+
+export function generateTasks(userLat: number, userLng: number): Task[] {
+
+  console.log(`Generating tasks based on user location: ${userLat}, ${userLng}`);
+
+  return TITLES.map(([title, subtitle], i) => {
+    const offsetLat = (Math.random() - 0.5) * 0.01;
+    const offsetLng = (Math.random() - 0.5) * 0.01;
+    const lat = parseFloat((userLat + offsetLat).toFixed(6));
+    const lng = parseFloat((userLng + offsetLng).toFixed(6));
+    const distance = `${(Math.random() * 4 + 0.5).toFixed(1)} km`;
+
+    console.log(`Task ${i + 1}: ${title}, Location: ${lat}, ${lng}, Distance: ${distance}`);
+
+    return {
+      id: (i + 1).toString(),
+      title,
+      subtitle,
+      category: CATEGORIES[i],
+      distance,
+      lat,
+      lng,
+      description: DESCRIPTIONS[i],
+    };
+  });
+}
+
