@@ -76,9 +76,9 @@ export const MobileMenu = (): React.JSX.Element => {
         >
           <div
             ref={menuRef}
-            className="md:w-[393px] h-full bg-layout-background text-white"
+            className="md:w-[393px] min-h-[350px] h-full md:h-auto bg-layout-background text-white md:-mr-15"
           >
-            <ul className="flex flex-col gap-2 max-w-[393px] px-[42px] py-10 mx-auto">
+            <ul className="flex flex-col gap-2 max-w-[393px] px-[62px] py-10 mx-auto">
               {mobileNav.map((item, idx) => (
                 <NavItemRenderer
                   key={idx}

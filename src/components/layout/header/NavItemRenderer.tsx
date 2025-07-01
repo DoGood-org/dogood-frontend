@@ -24,9 +24,6 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   toggleMenu,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  // const [openItem, setOpenItem] = useState<string>('');
-  console.log(navItem.title, isOpen);
-
   const locale = useLocale();
   const { isLoggedIn, user } = useAuth();
   const safeUser = user ?? undefined;

@@ -34,8 +34,8 @@
       "type": "settings",
       "content": [
         {
-          "id": "languages",
-          "name": "Languages",
+          "id": "language",
+          "name": "Language",
           "description": "Select a language"
         },
         {

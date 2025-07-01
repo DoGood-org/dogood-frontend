@@ -37,7 +37,7 @@ export const MobileDropdown = ({
       <AccordionItem key={navItem.title} value={navItem.title}>
         <AccordionTrigger>
           <Button asChild variant="ghost" size="md">
-            <div className="py-4 max-lg:px-0 focus:outline-none flex gap-5 items-center cursor-pointer hover:border-transparent w-full">
+            <div className="h-6 lg:h-10 lg:py-4 max-lg:px-0 focus:outline-none flex gap-5 items-center cursor-pointer hover:border-transparent w-full">
               {icons[icon as keyof typeof icons]}
               <div className="flex justify-between w-full">
                 {trigger}
@@ -50,7 +50,7 @@ export const MobileDropdown = ({
             </div>
           </Button>
         </AccordionTrigger>
-        <AccordionContent className="pl-10">{children}</AccordionContent>
+        <AccordionContent className="pl-12">{children}</AccordionContent>
       </AccordionItem>
     </Accordion>
   );
