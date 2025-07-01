@@ -1,8 +1,8 @@
 'use client';
 
-import { Subtract } from '@/components/icons';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { Subtract } from '@/components/icons';
 
 export const SpecialToggle: React.FC = () => {
   const t = useTranslations('header');

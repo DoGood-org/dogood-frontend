@@ -1,4 +1,3 @@
-// useSwipe.ts
 import { SwipeProps } from '@/types';
 import { useEffect } from 'react';
 

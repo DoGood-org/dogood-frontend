@@ -1,9 +1,9 @@
 'use client';
 
-import { Moon, Sun } from '@/components/icons';
-import { useTheme } from '@/hooks/useTheme';
-import { toggleTheme } from '@/zustand/services/themeService';
 import { useTranslations } from 'next-intl';
+import { Moon, Sun } from '@/components/icons';
+import { useTheme } from '@/hooks';
+import { toggleTheme } from '@/zustand/services/themeService';
 
 export const ThemeToggle: React.FC = () => {
   const { theme } = useTheme();

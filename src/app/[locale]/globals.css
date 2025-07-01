@@ -24,6 +24,7 @@
   --color-foreground: var(--foreground);
   --color-text-help: var(--text-help);
   --color-text-gray: var(--text-gray);
+  --color-white: var(--white);
   --color-header-bg: var(--header-bg);
   --color-footer-bg: var(--footer-bg);
   --color-layout-background: var(--layout-background);
