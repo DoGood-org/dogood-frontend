@@ -103,7 +103,7 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
       content: (
         <AccountLinks
           accountItem={navItem as Extract<NavItem, { type: 'icon' }>}
-          onClose={() => setIsOpen(false)}
+          onClose={handleLinkOnClick}
         />
       ),
       isIcon: true,
