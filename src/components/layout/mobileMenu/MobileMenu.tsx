@@ -3,9 +3,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { NavItem } from '@/types';
-import { NavItemRenderer, useMobileMenu } from '@/components';
+import { NavItemRenderer } from '@/components';
 import { Burger, CloseMenu } from '@/components/icons';
 import Portal from '@/components/portal/Portal';
+import { useMobileMenu } from '@/hooks';
 
 export const MobileMenu = (): React.JSX.Element => {
   const { isOpen, toggleMenu } = useMobileMenu();
