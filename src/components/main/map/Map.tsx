@@ -1,5 +1,5 @@
 'use client';
-import React, { JSX, useEffect, useState } from 'react';
+import React, { JSX, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import {
@@ -34,6 +34,8 @@ import SearchInput from './filters/SearchInput';
 //   Math.abs(a.lat - b.lat) < 0.0001 && Math.abs(a.lng - b.lng) < 0.0001;
 
 export const Map: React.FC = (): JSX.Element => {
+
+
   const { ref: mapContainerRef, inView: isInView } = useInView({
     threshold: 0.6,
     triggerOnce: true,
@@ -57,6 +59,7 @@ export const Map: React.FC = (): JSX.Element => {
 
   const [leafletComponents, setLeafletComponents] =
     useState<ReactLeafletModule | null>(null);
+
   const [mapIcons, setMapIcons] = useState<{
     medicineIcon: Icon | null;
     natureIcon: Icon | null;
@@ -70,6 +73,7 @@ export const Map: React.FC = (): JSX.Element => {
     foodIcon: null,
     myPositionIcon: null,
   });
+
 
   // Load all leaflet components
   useEffect((): void => {
@@ -106,6 +110,14 @@ export const Map: React.FC = (): JSX.Element => {
     setHasAgreedToLocation(false);
     setShowGeolocationPopup(false);
   };
+  
+  const generatedTasks = useMemo(() => {
+    return generateTasks(
+      userLocation?.lat || 27.9944024,
+      userLocation?.lng || -81.7602544
+    );
+  }, [userLocation?.lat, userLocation?.lng]);
+
   if (
     !leafletComponents ||
     !mapIcons ||
@@ -211,10 +223,7 @@ export const Map: React.FC = (): JSX.Element => {
     }
     console.log('Clicked coordinates:', 'new coord', latlng);
   };
-  const generatedTasks = generateTasks(
-    userLocation?.lat || 27.9944024,
-    userLocation?.lng || -81.7602544
-  );
+
 
   return (
     <Container className="mx-auto relative flex flex-col ">
@@ -268,7 +277,7 @@ export const Map: React.FC = (): JSX.Element => {
         </MapContainer>
       </div>
       <SearchInput />
-      <TasksList />
+      {/* <TasksList /> */}
     </Container>
   );
 };
