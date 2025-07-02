@@ -34,8 +34,6 @@ import SearchInput from './filters/SearchInput';
 //   Math.abs(a.lat - b.lat) < 0.0001 && Math.abs(a.lng - b.lng) < 0.0001;
 
 export const Map: React.FC = (): JSX.Element => {
-
-
   const { ref: mapContainerRef, inView: isInView } = useInView({
     threshold: 0.6,
     triggerOnce: true,
@@ -74,7 +72,6 @@ export const Map: React.FC = (): JSX.Element => {
     myPositionIcon: null,
   });
 
-
   // Load all leaflet components
   useEffect((): void => {
     if (typeof window !== 'undefined') {
@@ -110,7 +107,7 @@ export const Map: React.FC = (): JSX.Element => {
     setHasAgreedToLocation(false);
     setShowGeolocationPopup(false);
   };
-  
+
   const generatedTasks = useMemo(() => {
     return generateTasks(
       userLocation?.lat || 27.9944024,
@@ -224,7 +221,6 @@ export const Map: React.FC = (): JSX.Element => {
     console.log('Clicked coordinates:', 'new coord', latlng);
   };
 
-
   return (
     <Container className="mx-auto relative flex flex-col ">
       <div ref={mapContainerRef} className="h-[547px] lg:h-[919px]">
@@ -277,7 +273,7 @@ export const Map: React.FC = (): JSX.Element => {
         </MapContainer>
       </div>
       <SearchInput />
-      {/* <TasksList /> */}
+      <TasksList />
     </Container>
   );
 };
