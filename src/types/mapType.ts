@@ -15,7 +15,14 @@ export interface ReactLeafletModule {
   ZoomControl: typeof import('react-leaflet').ZoomControl;
   useMapEvents: typeof import('react-leaflet').useMapEvents;
 }
-export type MapLocation = LatLngLiteral & { id: string; title: string, category?: string[], distance?: string, description?: string, icon?: Icon | null };
+export type MapLocation = LatLngLiteral & {
+  id: string;
+  title: string;
+  category?: string[];
+  distance?: string;
+  description?: string;
+  icon?: Icon | null;
+};
 
 export interface IAcceptShareLocationProps {
   requestGeolocation: () => void;
