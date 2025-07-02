@@ -6,6 +6,7 @@ import {
   MapSection,
   NewsList,
   Donate,
+  ReviewsSection,
   Faq,
 } from '@/components';
 
@@ -17,6 +18,7 @@ export default function Home(): React.JSX.Element {
       <HowItWorks />
       <MapSection />
       <Donate />
+      <ReviewsSection />
       <NewsList />
       <Faq />
     </>
