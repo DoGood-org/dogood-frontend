@@ -1,6 +1,12 @@
 import { Icon, LatLngLiteral } from 'leaflet';
 import { ReactElement } from 'react';
-
+export enum MarkerCategoryEnum {
+  Medicine = 'medicine',
+  Nature = 'nature',
+  Animal = 'animal',
+  Food = 'food',
+  MyPosition = 'myPosition',
+}
 export interface ReactLeafletModule {
   MapContainer: typeof import('react-leaflet').MapContainer;
   TileLayer: typeof import('react-leaflet').TileLayer;
@@ -9,19 +15,13 @@ export interface ReactLeafletModule {
   ZoomControl: typeof import('react-leaflet').ZoomControl;
   useMapEvents: typeof import('react-leaflet').useMapEvents;
 }
-export type MapLocation = LatLngLiteral & { id: string; title: string };
+export type MapLocation = LatLngLiteral & { id: string; title: string, category?: string[], distance?: string, description?: string, icon?: Icon | null };
 
 export interface IAcceptShareLocationProps {
   requestGeolocation: () => void;
   declineGeolocation: () => void;
 }
-export enum MarkerCategoryEnum {
-  Medicine = 'medicine',
-  Nature = 'nature',
-  Animal = 'animal',
-  Food = 'food',
-  MyPosition = 'myPosition',
-}
+
 export type TCustomMarker = LatLngLiteral & { category?: MarkerCategoryEnum };
 
 export interface SelectedLocationProps {
