@@ -80,7 +80,6 @@ export const Map: React.FC = (): JSX.Element => {
           const customIcons = initializeMapIcons(L as unknown as LeafletType);
           setLeafletComponents(reactLeafletModule);
           setMapIcons(customIcons);
-          console.log('Map icons initialized:', customIcons);
         })
         .catch((error) => {
           console.error('Error loading map components:', error);
@@ -130,8 +129,17 @@ export const Map: React.FC = (): JSX.Element => {
     );
   }
 
-  const { MapContainer, TileLayer, Marker, ZoomControl, useMapEvents } =
-    leafletComponents;
+  const {
+    MapContainer,
+    TileLayer,
+    Marker,
+    ZoomControl,
+    useMapEvents,
+    useMap,
+    useMapEvent,
+    LayersControl,
+    LayerGroup,
+  } = leafletComponents;
 
   const renderTaskMarkers = (): JSX.Element[] => {
     return generatedTasks.map((task, index) => (
@@ -253,7 +261,22 @@ export const Map: React.FC = (): JSX.Element => {
           scrollWheelZoom={false}
         >
           <ScrollAfterDelay delay={2000} />
-          <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" />
+          {/* <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" /> */}
+
+          <LayersControl position="topright">
+            {/* 🌐 Base layers */}
+            <LayersControl.BaseLayer checked name="Google Maps">
+              <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" />
+            </LayersControl.BaseLayer>
+            <LayersControl.BaseLayer name="OpenStreetMap">
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            </LayersControl.BaseLayer>
+
+            {/* 📍 Overlays */}
+       
+          </LayersControl>
+          <>{renderUserLocation()}</>
+
           {userLocation && <UserLocation />}
           <MapClickHandler
             onClick={handleMapClick}
@@ -262,7 +285,7 @@ export const Map: React.FC = (): JSX.Element => {
           {renderTaskMarkers()}
           {/* {renderCustomMarkers()} */}
           {renderUserLocation()}
-          <ZoomControl position="topright" />
+          <ZoomControl position="bottomright" />
           <Button
             variant="filters"
             className="z-[700] absolute top-[95px] right-[10px] p-[10px]"
