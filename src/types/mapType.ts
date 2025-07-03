@@ -13,14 +13,12 @@ export interface ReactLeafletModule {
   Marker: typeof import('react-leaflet').Marker;
   useMap: typeof import('react-leaflet').useMap;
   ZoomControl: typeof import('react-leaflet').ZoomControl;
-  useMapEvents: typeof import('react-leaflet').useMapEvents;
   LayersControl: typeof import('react-leaflet').LayersControl;
-  LayerGroup: typeof import('react-leaflet').LayerGroup;
   Popup: typeof import('react-leaflet').Popup;
   Circle: typeof import('react-leaflet').Circle;
   Polyline: typeof import('react-leaflet').Polyline;
-  useMapEvent: typeof import('react-leaflet').useMapEvent;
   GeoJSON: typeof import('react-leaflet').GeoJSON;
+  useMapEvent: typeof import('react-leaflet').useMapEvent;
 }
 export type MapLocation = LatLngLiteral & {
   id: string;
