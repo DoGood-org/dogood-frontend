@@ -128,7 +128,6 @@ export function generateTasks(userLat: number, userLng: number): ITasks[] {
     const lng = parseFloat((userLng + offsetLng).toFixed(6));
     const distance = `${(Math.random() * 4 + 0.5).toFixed(1)} km`;
 
-
     return {
       id: (i + 1).toString(),
       title,
