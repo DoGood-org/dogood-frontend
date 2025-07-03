@@ -134,7 +134,9 @@ export const useMapStore = create<TMapState & TMapActions>()(
           // If we have coordinates from geolocation navigator, use them
           if (coords) {
             const userLocation = get().userLocation;
-            const alreadyUpToDate = userLocation ? coordsMatch(userLocation, coords) : false;
+            const alreadyUpToDate = userLocation
+              ? coordsMatch(userLocation, coords)
+              : false;
             if (!alreadyUpToDate) {
               set({
                 userLocation: coords,
@@ -149,7 +151,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
           }
 
           // If manual location is provided, use it
-      
+
           if (manualLoc) {
             set({
               userLocation: manualLoc,
@@ -159,21 +161,22 @@ export const useMapStore = create<TMapState & TMapActions>()(
             console.log('Manual location set:', manualLoc);
             return;
           }
-      
+
           // Nothing available
           set({
-            locationError: 'No coordinates available from geolocation or manual input',
+            locationError:
+              'No coordinates available from geolocation or manual input',
             inviteToShareLocationManually: true,
           });
           console.warn('Failed to set user location');
         } catch (error) {
           console.warn('Geolocation error:', error);
           set({
-            locationError: error instanceof Error ? error.message : String(error),
+            locationError:
+              error instanceof Error ? error.message : String(error),
           });
         }
       },
-      
     }),
     {
       name: 'map-storage',
