@@ -134,11 +134,8 @@ export const Map: React.FC = (): JSX.Element => {
     TileLayer,
     Marker,
     ZoomControl,
-    useMapEvents,
-    useMap,
     useMapEvent,
     LayersControl,
-    LayerGroup,
   } = leafletComponents;
 
   const renderTaskMarkers = (): JSX.Element[] => {
@@ -211,13 +208,11 @@ export const Map: React.FC = (): JSX.Element => {
     onClick,
     allowClickToAddMarker,
   }): JSX.Element | null => {
-    useMapEvents({
-      click: (e: { latlng: LatLngLiteral }) => {
-        if (allowClickToAddMarker) {
-          onClick(e.latlng);
-          console.log('Clicked coordinates:', e.latlng);
-        }
-      },
+    useMapEvent('click', (e: { latlng: LatLngLiteral }) => {
+      if (allowClickToAddMarker) {
+        onClick(e.latlng);
+        console.log('Clicked coordinates:', e.latlng);
+      }
     });
     return null;
   };
@@ -273,7 +268,6 @@ export const Map: React.FC = (): JSX.Element => {
             </LayersControl.BaseLayer>
 
             {/* 📍 Overlays */}
-       
           </LayersControl>
           <>{renderUserLocation()}</>
 
