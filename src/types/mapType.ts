@@ -95,16 +95,19 @@ export interface DistanceItem {
 
 export type TranslationFunction = (key: string) => string;
 
-export interface ITasksProps {
+export interface ITasks {
   title: string;
   subtitle: string;
-  category: string[];
+  icon?: ReactElement;
+  category: MarkerCategoryEnum[];
   description: string;
   distance: string;
-  onToggleDescription: () => void;
+  lat: number;
+  lng: number;
+  id: string;
 }
 
-export interface ExtendedITasksProps extends ITasksProps {
+export interface ExtendedITasksProps extends ITasks {
   isSelected: boolean;
   onToggleDescription: () => void;
 }

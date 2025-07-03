@@ -158,7 +158,7 @@ export const Map: React.FC = (): JSX.Element => {
             console.log('Task selected:', task);
             <div className="text-red-500 p-2 bg-white rounded shadow mb-2">
               Task selected: {task.title}
-            </div>;
+            </div>
           },
         }}
       />
