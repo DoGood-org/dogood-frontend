@@ -617,3 +617,61 @@ html {
   background-color: transparent;
   transition: transform 0.3s ease;
 }
+
+
+.leaflet-bottom.leaflet-right {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+
+.leaflet-control-layers.leaflet-control.leaflet-control-layers-expanded {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  color: var(--text);
+}
+.leaflet-control-layers.leaflet-control{
+  background-color: transparent;
+}
+.leaflet-control-layers-toggle {
+  background-color: var(--btn);
+  color: var(--btn-text);
+  border-radius: var(--radius);
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.leaflet-control-layers label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  gap: 6px;
+}
+.leaflet-control-layers-selector[type="radio"] {
+  appearance: none;
+  padding: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--background-secondary);
+  background-color: var(--background-secondary);
+  cursor: pointer;
+  position: relative;
+  margin-right: 6px;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+}
+.leaflet-control-layers-selector[type="radio"]::before {
+  content: '';
+ 
+  width: 8px;
+  height: 8px;
+  background-color: var(--btn-text);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  position: absolute;
+}
+
+.leaflet-control-layers-selector[type="radio"]:checked::before {
+  opacity: 1;
+}

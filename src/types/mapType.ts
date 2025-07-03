@@ -1,4 +1,4 @@
-import { Icon, LatLngLiteral } from 'leaflet';
+import { Control, Icon, LatLngLiteral } from 'leaflet';
 import { ReactElement } from 'react';
 export enum MarkerCategoryEnum {
   Medicine = 'medicine',
@@ -19,11 +19,12 @@ export interface ReactLeafletModule {
   Polyline: typeof import('react-leaflet').Polyline;
   GeoJSON: typeof import('react-leaflet').GeoJSON;
   useMapEvent: typeof import('react-leaflet').useMapEvent;
+  Control: typeof import('leaflet').Control;
 }
 export type MapLocation = LatLngLiteral & {
   id: string;
   title: string;
-  category?: string[];
+  category?: MarkerCategoryEnum;
   distance?: string;
   description?: string;
   icon?: Icon | null;
@@ -34,6 +35,14 @@ export interface IAcceptShareLocationProps {
   declineGeolocation: () => void;
 }
 
+export interface IFormLocation {
+  location: string;
+}
+
+export interface TCustomForm {
+  control: L.Control;
+  data?: IFormLocation;
+}
 export type TCustomMarker = LatLngLiteral & { category?: MarkerCategoryEnum };
 
 export interface SelectedLocationProps {
@@ -42,8 +51,8 @@ export interface SelectedLocationProps {
 }
 
 export interface RenderMarksProps {
-  locations: Location[];
-  setSelectedLocation: (location: Location) => void;
+  locations: MapLocation[];
+  setSelectedLocation: (location: MapLocation) => void;
   setClickedCoords: (coords: LatLngLiteral) => void;
   onLocationSelect?: (coords: LatLngLiteral) => void;
 }
@@ -139,6 +148,7 @@ export type LeafletModule = {
   icon: typeof Icon;
 };
 
-import type L from 'leaflet';
 
+import L from 'leaflet';
 export type LeafletType = typeof L;
+

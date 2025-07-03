@@ -19,6 +19,8 @@ type TMapState = {
   hasAgreedToLocation: boolean;
   showGeolocationPopup: boolean;
   inviteToShareLocationManually: boolean;
+  inputActive: boolean;
+
   userLocation: LatLngLiteral | null;
   locationError: string | null;
   selectedTask: TTask | null;
@@ -30,8 +32,11 @@ type TMapActions = {
   setHasAgreedToLocation: (value: boolean) => void;
   setShowGeolocationPopup: (value: boolean) => void;
   setInviteToShareLocationManually: (value: boolean) => void;
+  setHideInviteAfterDelay: (ms: number) => void;
   setLocationError: (error: string | null) => void;
   setUserLocation: (loc: LatLngLiteral) => void;
+  setInputActive: (value: boolean) => void;
+  setInputInactiveAndHide: () => void;
   setSelectedTask: (task: TTask | null) => void;
   setCustomMarkers: (markers: TCustomMarker[]) => void;
   addMarker: (loc: TCustomMarker) => void;
@@ -56,16 +61,19 @@ const coordsMatch = (a: LatLngLiteral, b: LatLngLiteral): boolean =>
 function getGeolocationPromise(): Promise<LatLngLiteral> {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
-      return reject(new Error('Geolocation not supported'));
+      return reject(
+        new Error(
+          'Geolocation not supported, please enable it in your browser settings.'
+        )
+      );
     }
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         console.log('Geolocation position shared by navigator:', pos);
         resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude });
       },
-      (err: GeolocationPositionError) => {
-        console.log('Geolocation error:', err);
-        reject(err);
+      (error) => {
+        reject(error);
       }
     );
   });
@@ -81,6 +89,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
       hasAgreedToLocation: false,
       showGeolocationPopup: false,
       inviteToShareLocationManually: false,
+      inputActive: false,
 
       setMap: (map) => set({ map }),
       setUserLocation: (loc) => set({ userLocation: loc }),
@@ -96,8 +105,43 @@ export const useMapStore = create<TMapState & TMapActions>()(
       setShowGeolocationPopup: (value): void =>
         set({ showGeolocationPopup: value }),
 
-      setInviteToShareLocationManually: (value): void =>
-        set({ inviteToShareLocationManually: value }),
+      setHideInviteAfterDelay: (ms: number): void => {
+        if (typeof window === 'undefined') return;
+
+        const w = window as typeof window & {
+          __hideInviteTimeout?: ReturnType<typeof setTimeout> | null;
+        };
+
+        if (w.__hideInviteTimeout) {
+          clearTimeout(w.__hideInviteTimeout);
+        }
+
+        w.__hideInviteTimeout = setTimeout(() => {
+          const state = get();
+          if (!state.inputActive) {
+            set({ inviteToShareLocationManually: false });
+            console.log('Invite hidden after delay');
+          } else {
+            console.log('User is typing — skipping hide');
+          }
+          w.__hideInviteTimeout = null;
+        }, ms);
+      },
+
+      setInputActive: (value: boolean): void => {
+        set({ inputActive: value });
+      },
+
+      setInputInactiveAndHide: () => {
+        const state = get();
+        if (!state.inputActive) {
+          set({ inviteToShareLocationManually: false });
+        }
+      },
+
+      setInviteToShareLocationManually: (value: boolean): void => {
+        set({ inviteToShareLocationManually: value });
+      },
 
       addMarker: (loc): void => {
         const exists = get().customMarkers.some((m) => coordsMatch(m, loc));
@@ -164,17 +208,22 @@ export const useMapStore = create<TMapState & TMapActions>()(
 
           // Nothing available
           set({
-            locationError:
-              'No coordinates available from geolocation or manual input',
             inviteToShareLocationManually: true,
+            locationError: 'Failed to retrieve geolocation from navigator',
           });
-          console.warn('Failed to set user location');
+
+          get().setHideInviteAfterDelay(5000);
         } catch (error) {
-          console.warn('Geolocation error:', error);
+          console.warn('nothing provided:', error);
           set({
             locationError:
-              error instanceof Error ? error.message : String(error),
+              error && typeof error === 'object' && 'message' in error
+                ? (error as { message: string }).message +
+                  ' tried failed showing input'
+                : 'Failed to retrieve geolocation from all sources',
+            inviteToShareLocationManually: true,
           });
+          get().setHideInviteAfterDelay(5000);
         }
       },
     }),

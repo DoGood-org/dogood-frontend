@@ -1,6 +1,8 @@
 'use client';
 import React, { JSX, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { createRoot } from 'react-dom/client';
+import dynamic from 'next/dynamic';
 
 import {
   getMarkerIcon,
@@ -14,6 +16,7 @@ import {
   MapClickHandlerProps,
   MarkerCategoryEnum,
   ReactLeafletModule,
+  TCustomForm,
 } from '@/types/mapType';
 
 import {
@@ -23,16 +26,22 @@ import {
   TasksList,
   UserLocation,
 } from '@/components';
-import { Vector } from '@/components/icons';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
 import Portal from '@/components/portal/Portal';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 import SearchInput from './filters/SearchInput';
-// const coordsMatch = (a: LatLngLiteral, b: LatLngLiteral) =>
-//   Math.abs(a.lat - b.lat) < 0.0001 && Math.abs(a.lng - b.lng) < 0.0001;
-
+import { FormLocationComponent } from '@/components/main/map/FormLocationComponent';
+import { ButtonLocation } from '@/components/main/map/ButtonLocation';
+const CustomFormControl = dynamic(
+  () => import('@/components/main/map/CustomFormControl'),
+  { ssr: false }
+);
+const CustomButtonControl = dynamic(
+  () => import('@/components/main/map/CustomButtonControl'),
+  { ssr: false }
+);
 export const Map: React.FC = (): JSX.Element => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
     threshold: 0.6,
@@ -53,6 +62,9 @@ export const Map: React.FC = (): JSX.Element => {
     locationError,
     checkLocationPermission,
     addMarker,
+    setInviteToShareLocationManually,
+    inviteToShareLocationManually,
+    setHideInviteAfterDelay,
   } = useMapStore();
 
   const [leafletComponents, setLeafletComponents] =
@@ -72,20 +84,80 @@ export const Map: React.FC = (): JSX.Element => {
     myPositionIcon: null,
   });
 
-  // Load all leaflet components
-  useEffect((): void => {
-    if (typeof window !== 'undefined') {
-      Promise.all([import('react-leaflet'), import('leaflet')])
-        .then(([reactLeafletModule, L]) => {
-          const customIcons = initializeMapIcons(L as unknown as LeafletType);
-          setLeafletComponents(reactLeafletModule);
-          setMapIcons(customIcons);
-        })
-        .catch((error) => {
-          console.error('Error loading map components:', error);
-        });
-    }
+
+ 
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    Promise.all([import('react-leaflet'), import('leaflet')])
+      .then(([reactLeafletModule, L]) => {
+        const customIcons = initializeMapIcons(L as unknown as LeafletType);
+     setLeafletComponents({
+          MapContainer: reactLeafletModule.MapContainer,
+          TileLayer: reactLeafletModule.TileLayer,
+          Marker: reactLeafletModule.Marker,
+          ZoomControl: reactLeafletModule.ZoomControl,
+          useMapEvent: reactLeafletModule.useMapEvent,
+          LayersControl: reactLeafletModule.LayersControl,
+          useMap: reactLeafletModule.useMap,
+          Popup: reactLeafletModule.Popup,
+          Circle: reactLeafletModule.Circle,
+          Polyline: reactLeafletModule.Polyline,
+          GeoJSON: reactLeafletModule.GeoJSON,
+          Control: L.Control,
+        } as ReactLeafletModule);
+        setMapIcons(customIcons);
+
+        // Mount Leaflet Control
+        
+        const formContainer = L.DomUtil.create(
+          'div',
+          'leaflet-control form-location'
+        );
+        L.DomEvent.disableClickPropagation(formContainer);
+        L.DomEvent.disableScrollPropagation(formContainer);
+        const formControl = new L.Control({ position: 'bottomright' });
+
+        const buttonContainer = L.DomUtil.create('div', 'leaflet-control button-location');
+        L.DomEvent.disableClickPropagation(buttonContainer);
+        L.DomEvent.disableScrollPropagation(buttonContainer);
+        const buttonControl = new L.Control({ position: 'bottomright' });
+        formControl.onAdd = () => formContainer;
+        buttonControl.onAdd = () => buttonContainer;
+
+
+   
+        // Defer until map is mounted
+        const interval = setInterval(() => {
+        const mapInstances = (L as any).map?.instances || [];
+        const mapInstance = mapInstances[0];
+        if (mapInstance && formControl && buttonControl) {
+          mapInstance.addControl(formControl);
+          mapInstance.addControl(buttonControl);
+          createRoot(formContainer).render(
+            <FormLocationComponent
+              forForm={{
+                customForm: {
+                  control: formControl,
+                  data: { location: '' },
+                },
+              }}
+            />
+          );
+
+          createRoot(buttonContainer).render(
+            <ButtonLocation
+            />
+          );
+          clearInterval(interval);
+        }
+      }, 100);
+      })
+      .catch((error) => {
+        console.error('Error loading map components:', error);
+      });
   }, []);
+
   //  // Check if map is in view and request geolocation permission
   useEffect((): void => {
     if (isInView) {
@@ -136,6 +208,13 @@ export const Map: React.FC = (): JSX.Element => {
     ZoomControl,
     useMapEvent,
     LayersControl,
+    useMap,
+    Popup,
+    Circle,
+    Polyline,
+    GeoJSON,
+    Control,
+
   } = leafletComponents;
 
   const renderTaskMarkers = (): JSX.Element[] => {
@@ -182,27 +261,7 @@ export const Map: React.FC = (): JSX.Element => {
       />
     );
   };
-  // const renderCustomMarkers = (): JSX.Element[] =>
-  //   memoizedCustomMarkers.map((marker, index) => (
-  //     <Marker
-  //       key={`custom-marker-${index}`}
-  //       position={marker}
-  //       icon={getMarkerIcon(marker.category ?? MarkerCategoryEnum.Food, mapIcons)}
-  //       eventHandlers={{
-  //         click: () => {
-  //           if (isMarkerExists(memoizedCustomMarkers, marker)) {
-  //             if (marker.category) {
-  //               removeMarker({ ...marker, category: marker.category });
-  //             }
-  //           } else {
-  //             if (marker.category) {
-  //               addMarker({ ...marker, category: marker.category });
-  //             }
-  //           }
-  //         },
-  //       }}
-  //     />
-  //   ));
+
 
   const MapClickHandler: React.FC<MapClickHandlerProps> = ({
     onClick,
@@ -212,8 +271,15 @@ export const Map: React.FC = (): JSX.Element => {
       if (allowClickToAddMarker) {
         onClick(e.latlng);
         console.log('Clicked coordinates:', e.latlng);
-      }
-    });
+        return (
+        <Popup>
+          <div className="text-red-500 p-2 bg-white rounded shadow mb-2">
+            Coordinates: {e.latlng.lat}, {e.latlng.lng}
+          </div>
+        </Popup>
+      );
+    }
+  });
     return null;
   };
   const handleMapClick = (latlng: LatLngLiteral): void => {
@@ -223,10 +289,14 @@ export const Map: React.FC = (): JSX.Element => {
     }
     console.log('Clicked coordinates:', 'new coord', latlng);
   };
+  
 
   return (
     <Container className="mx-auto relative flex flex-col ">
-      <div ref={mapContainerRef} className="h-[547px] lg:h-[919px]">
+      <div
+        ref={mapContainerRef}
+        className="block overflow-hidden rounded-[10px] h-[547px] lg:h-[919px]"
+      >
         {showGeolocationPopup && (
           <Portal>
             <AnimatedModalWrapper
@@ -240,13 +310,9 @@ export const Map: React.FC = (): JSX.Element => {
             </AnimatedModalWrapper>
           </Portal>
         )}
-        {locationError && (
-          <div className="text-red-500 p-2 bg-white rounded shadow mb-2">
-            Location Error: {locationError}
-          </div>
-        )}
+
         <MapContainer
-          className="h-full w-full cursor-default"
+          className="h-full w-full cursor-default relative"
           center={userLocation || { lat: 27.9944024, lng: -81.7602544 }}
           zoom={13}
           minZoom={5}
@@ -256,10 +322,9 @@ export const Map: React.FC = (): JSX.Element => {
           scrollWheelZoom={false}
         >
           <ScrollAfterDelay delay={2000} />
-          {/* <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" /> */}
-
           <LayersControl position="topright">
             {/* 🌐 Base layers */}
+
             <LayersControl.BaseLayer checked name="Google Maps">
               <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" />
             </LayersControl.BaseLayer>
@@ -270,7 +335,6 @@ export const Map: React.FC = (): JSX.Element => {
             {/* 📍 Overlays */}
           </LayersControl>
           <>{renderUserLocation()}</>
-
           {userLocation && <UserLocation />}
           <MapClickHandler
             onClick={handleMapClick}
@@ -279,14 +343,14 @@ export const Map: React.FC = (): JSX.Element => {
           {renderTaskMarkers()}
           {/* {renderCustomMarkers()} */}
           {renderUserLocation()}
-          <ZoomControl position="bottomright" />
-          <Button
-            variant="filters"
-            className="z-[700] absolute top-[95px] right-[10px] p-[10px]"
-            onClick={() => checkLocationPermission()}
-          >
-            <Vector className="stroke-foreground w-5 h-5" />
-          </Button>
+          <ZoomControl position="topright" />
+          <CustomButtonControl position="bottomright" />
+          <CustomFormControl visible={inviteToShareLocationManually} position="bottomright" />
+          {/* <div className="absolute z-[700] bottom-0 left-100">
+            <Button variant="filters" onClick={() => checkLocationPermission()}>
+              <Vector className="stroke-foreground w-5 h-5" />
+            </Button>
+          </div> */}
         </MapContainer>
       </div>
       <SearchInput />
