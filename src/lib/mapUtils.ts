@@ -79,36 +79,6 @@ export const isMarkerExists = (
 };
 
 /**
- * Gets the user's current geolocation
- * @returns Promise that resolves with the coordinates or rejects with an error
- */
-// export const getUserGeolocation = (): Promise<LatLngLiteral> => {
-//   return new Promise((resolve, reject) => {
-//     if (!navigator.geolocation) {
-//       reject(new Error('Geolocation is not supported by this browser.'));
-//       return;
-//     }
-
-//     navigator.geolocation.getCurrentPosition(
-//       (position) => {
-//         resolve({
-//           lat: position.coords.latitude,
-//           lng: position.coords.longitude,
-//         });
-//       },
-//       (error: GeolocationPositionError) => {
-//         reject(error);
-//       },
-//       {
-//         enableHighAccuracy: true,
-//         timeout: 5000,
-//         maximumAge: 0,
-//       }
-//     );
-//   });
-// };
-
-/**
  * Utility function to remove a marker at specific coordinates
  * @param markers Array of existing markers
  * @param latlng Coordinates to remove
@@ -126,3 +96,4 @@ export const removeMarker = (
       Math.abs(marker.lng - latlng.lng) >= tolerance
   );
 };
+

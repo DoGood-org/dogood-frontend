@@ -55,6 +55,7 @@ export * from './main/map/filters/FilterButton';
 export * from './main/map/filters/FilterPannel';
 export * from './main/map/filters/Filters';
 export * from './main/map/filters/SearchInput';
+
 export * from './main/news/mockNews';
 export * from './main/news/NewsItem';
 export * from './main/news/NewsList';
