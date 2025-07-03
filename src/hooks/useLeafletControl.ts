@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 
-export function useLeafletControl(position: L.ControlPosition = 'topright') {
+export function useLeafletControl(
+  position: L.ControlPosition = 'topright'
+): HTMLElement | null {
   const map = useMap();
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
@@ -13,12 +15,12 @@ export function useLeafletControl(position: L.ControlPosition = 'topright') {
     L.DomEvent.disableScrollPropagation(el);
 
     const control = new L.Control({ position });
-    control.onAdd = () => el;
+    control.onAdd = (): HTMLElement => el;
 
     map.addControl(control);
     setContainer(el);
 
-    return () => {
+    return (): void => {
       map.removeControl(control);
     };
   }, [map, position]);

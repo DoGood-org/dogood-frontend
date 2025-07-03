@@ -1,8 +1,7 @@
 import { useLeafletControl } from '@/hooks/useLeafletControl';
-import { FormLocationComponent } from '@/components/main/map/FormLocationComponent';
 import { createPortal } from 'react-dom';
 import { ButtonLocation } from '@/components/main/map/ButtonLocation';
-
+import { JSX } from 'react';
 
 // CustomButtonControl component to render a button in the Leaflet map control
 // This component uses the useLeafletControl hook to create a control in the Leaflet map
@@ -12,7 +11,9 @@ import { ButtonLocation } from '@/components/main/map/ButtonLocation';
 type CustomButtonControlProps = {
   position?: 'topleft' | 'topright' | 'bottomleft' | 'bottomright';
 };
-const CustomButtonControl = ({ position }: CustomButtonControlProps) => {
+const CustomButtonControl = ({
+  position,
+}: CustomButtonControlProps): JSX.Element | null => {
   const container = useLeafletControl(position);
 
   if (!container) return null;
