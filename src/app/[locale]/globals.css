@@ -597,11 +597,10 @@ html {
   transition: transform 0.3s ease;
 }
 
-
 .leaflet-bottom.leaflet-right {
- display: flex;
- align-items: center;
- justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .leaflet-control-layers.leaflet-control.leaflet-control-layers-expanded {
@@ -609,7 +608,7 @@ html {
   border-radius: var(--radius);
   color: var(--text);
 }
-.leaflet-control-layers.leaflet-control{
+.leaflet-control-layers.leaflet-control {
   background-color: transparent;
 }
 .leaflet-control-layers-toggle {
@@ -625,7 +624,7 @@ html {
   font-size: 14px;
   gap: 6px;
 }
-.leaflet-control-layers-selector[type="radio"] {
+.leaflet-control-layers-selector[type='radio'] {
   appearance: none;
   padding: 2px;
   width: 16px;
@@ -639,9 +638,9 @@ html {
   vertical-align: middle;
   transition: all 0.2s ease;
 }
-.leaflet-control-layers-selector[type="radio"]::before {
+.leaflet-control-layers-selector[type='radio']::before {
   content: '';
- 
+
   width: 8px;
   height: 8px;
   background-color: var(--btn-text);
@@ -651,6 +650,6 @@ html {
   position: absolute;
 }
 
-.leaflet-control-layers-selector[type="radio"]:checked::before {
+.leaflet-control-layers-selector[type='radio']:checked::before {
   opacity: 1;
 }

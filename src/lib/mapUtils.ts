@@ -96,4 +96,3 @@ export const removeMarker = (
       Math.abs(marker.lng - latlng.lng) >= tolerance
   );
 };
-

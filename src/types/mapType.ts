@@ -1,4 +1,4 @@
-import { Control, Icon, LatLngLiteral } from 'leaflet';
+import { Icon, LatLngLiteral } from 'leaflet';
 import { ReactElement } from 'react';
 export enum MarkerCategoryEnum {
   Medicine = 'medicine',
@@ -148,7 +148,5 @@ export type LeafletModule = {
   icon: typeof Icon;
 };
 
-
 import L from 'leaflet';
 export type LeafletType = typeof L;
-

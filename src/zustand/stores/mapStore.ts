@@ -132,7 +132,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
         set({ inputActive: value });
       },
 
-      setInputInactiveAndHide: () => {
+      setInputInactiveAndHide: (): void => {
         const state = get();
         if (!state.inputActive) {
           set({ inviteToShareLocationManually: false });

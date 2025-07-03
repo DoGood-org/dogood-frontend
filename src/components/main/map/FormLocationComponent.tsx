@@ -2,6 +2,7 @@
 import { Input } from '@/components/ui/Input';
 import { IFormLocation } from '@/types/mapType';
 import { useMapStore } from '@/zustand/stores/mapStore';
+import { JSX } from 'react';
 import { useForm } from 'react-hook-form';
 
 type Props = {
@@ -12,18 +13,13 @@ type Props = {
     [key: string]: any;
   };
 };
-export const FormLocationComponent = (props: Props) => {
- 
-
+export const FormLocationComponent = (props: Props): JSX.Element | null => {
   const { register, handleSubmit, reset } = useForm<IFormLocation>({
     defaultValues: {
       location: props.forInput?.value || '',
     },
-
   });
   const { name, onChange, onBlur: rhfOnBlur, ref } = register('location');
-
-
 
   const submitHandler = (data: IFormLocation): void => {
     console.log('Submitted location:', data.location);
@@ -51,7 +47,6 @@ export const FormLocationComponent = (props: Props) => {
           await rhfOnBlur(e);
           useMapStore.getState().setInputInactiveAndHide();
         }}
-
       />
     </form>
   );

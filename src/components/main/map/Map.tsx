@@ -16,11 +16,9 @@ import {
   MapClickHandlerProps,
   MarkerCategoryEnum,
   ReactLeafletModule,
-  TCustomForm,
 } from '@/types/mapType';
 
 import {
-  Button,
   Container,
   generateTasks,
   TasksList,
@@ -35,11 +33,17 @@ import SearchInput from './filters/SearchInput';
 import { FormLocationComponent } from '@/components/main/map/FormLocationComponent';
 import { ButtonLocation } from '@/components/main/map/ButtonLocation';
 const CustomFormControl = dynamic(
-  () => import('@/components/main/map/CustomFormControl'),
+  () =>
+    import('@/components/main/map/CustomFormControl').then(
+      (mod) => mod.default
+    ),
   { ssr: false }
 );
 const CustomButtonControl = dynamic(
-  () => import('@/components/main/map/CustomButtonControl'),
+  () =>
+    import('@/components/main/map/CustomButtonControl').then(
+      (mod) => mod.default
+    ),
   { ssr: false }
 );
 export const Map: React.FC = (): JSX.Element => {
@@ -59,12 +63,9 @@ export const Map: React.FC = (): JSX.Element => {
     setHasAgreedToLocation,
     showGeolocationPopup,
     setShowGeolocationPopup,
-    locationError,
     checkLocationPermission,
     addMarker,
-    setInviteToShareLocationManually,
     inviteToShareLocationManually,
-    setHideInviteAfterDelay,
   } = useMapStore();
 
   const [leafletComponents, setLeafletComponents] =
@@ -84,15 +85,12 @@ export const Map: React.FC = (): JSX.Element => {
     myPositionIcon: null,
   });
 
-
- 
-
   useEffect(() => {
     if (typeof window === 'undefined') return;
     Promise.all([import('react-leaflet'), import('leaflet')])
       .then(([reactLeafletModule, L]) => {
         const customIcons = initializeMapIcons(L as unknown as LeafletType);
-     setLeafletComponents({
+        setLeafletComponents({
           MapContainer: reactLeafletModule.MapContainer,
           TileLayer: reactLeafletModule.TileLayer,
           Marker: reactLeafletModule.Marker,
@@ -109,7 +107,7 @@ export const Map: React.FC = (): JSX.Element => {
         setMapIcons(customIcons);
 
         // Mount Leaflet Control
-        
+
         const formContainer = L.DomUtil.create(
           'div',
           'leaflet-control form-location'
@@ -118,40 +116,38 @@ export const Map: React.FC = (): JSX.Element => {
         L.DomEvent.disableScrollPropagation(formContainer);
         const formControl = new L.Control({ position: 'bottomright' });
 
-        const buttonContainer = L.DomUtil.create('div', 'leaflet-control button-location');
+        const buttonContainer = L.DomUtil.create(
+          'div',
+          'leaflet-control button-location'
+        );
         L.DomEvent.disableClickPropagation(buttonContainer);
         L.DomEvent.disableScrollPropagation(buttonContainer);
         const buttonControl = new L.Control({ position: 'bottomright' });
-        formControl.onAdd = () => formContainer;
-        buttonControl.onAdd = () => buttonContainer;
+        formControl.onAdd = (): HTMLElement => formContainer;
+        buttonControl.onAdd = (): HTMLElement => buttonContainer;
 
-
-   
         // Defer until map is mounted
-        const interval = setInterval(() => {
-        const mapInstances = (L as any).map?.instances || [];
-        const mapInstance = mapInstances[0];
-        if (mapInstance && formControl && buttonControl) {
-          mapInstance.addControl(formControl);
-          mapInstance.addControl(buttonControl);
-          createRoot(formContainer).render(
-            <FormLocationComponent
-              forForm={{
-                customForm: {
-                  control: formControl,
-                  data: { location: '' },
-                },
-              }}
-            />
-          );
+        const interval = setInterval((): void => {
+          const mapInstances = (L as any).map?.instances || [];
+          const mapInstance = mapInstances[0];
+          if (mapInstance && formControl && buttonControl) {
+            mapInstance.addControl(formControl);
+            mapInstance.addControl(buttonControl);
+            createRoot(formContainer).render(
+              <FormLocationComponent
+                forForm={{
+                  customForm: {
+                    control: formControl,
+                    data: { location: '' },
+                  },
+                }}
+              />
+            );
 
-          createRoot(buttonContainer).render(
-            <ButtonLocation
-            />
-          );
-          clearInterval(interval);
-        }
-      }, 100);
+            createRoot(buttonContainer).render(<ButtonLocation />);
+            clearInterval(interval);
+          }
+        }, 100);
       })
       .catch((error) => {
         console.error('Error loading map components:', error);
@@ -208,13 +204,7 @@ export const Map: React.FC = (): JSX.Element => {
     ZoomControl,
     useMapEvent,
     LayersControl,
-    useMap,
     Popup,
-    Circle,
-    Polyline,
-    GeoJSON,
-    Control,
-
   } = leafletComponents;
 
   const renderTaskMarkers = (): JSX.Element[] => {
@@ -262,7 +252,6 @@ export const Map: React.FC = (): JSX.Element => {
     );
   };
 
-
   const MapClickHandler: React.FC<MapClickHandlerProps> = ({
     onClick,
     allowClickToAddMarker,
@@ -272,14 +261,14 @@ export const Map: React.FC = (): JSX.Element => {
         onClick(e.latlng);
         console.log('Clicked coordinates:', e.latlng);
         return (
-        <Popup>
-          <div className="text-red-500 p-2 bg-white rounded shadow mb-2">
-            Coordinates: {e.latlng.lat}, {e.latlng.lng}
-          </div>
-        </Popup>
-      );
-    }
-  });
+          <Popup>
+            <div className="text-red-500 p-2 bg-white rounded shadow mb-2">
+              Coordinates: {e.latlng.lat}, {e.latlng.lng}
+            </div>
+          </Popup>
+        );
+      }
+    });
     return null;
   };
   const handleMapClick = (latlng: LatLngLiteral): void => {
@@ -289,7 +278,6 @@ export const Map: React.FC = (): JSX.Element => {
     }
     console.log('Clicked coordinates:', 'new coord', latlng);
   };
-  
 
   return (
     <Container className="mx-auto relative flex flex-col ">
@@ -345,7 +333,10 @@ export const Map: React.FC = (): JSX.Element => {
           {renderUserLocation()}
           <ZoomControl position="topright" />
           <CustomButtonControl position="bottomright" />
-          <CustomFormControl visible={inviteToShareLocationManually} position="bottomright" />
+          <CustomFormControl
+            visible={inviteToShareLocationManually}
+            position="bottomright"
+          />
           {/* <div className="absolute z-[700] bottom-0 left-100">
             <Button variant="filters" onClick={() => checkLocationPermission()}>
               <Vector className="stroke-foreground w-5 h-5" />
