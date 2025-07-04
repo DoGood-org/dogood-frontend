@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/Button';
 import { ChevronDown } from 'lucide-react';
+import { JSX } from 'react';
 
 type Props = {
   className?: string;
@@ -11,7 +11,7 @@ export const ButtonOpenTasks = ({
   className = '',
   onClick,
   isOpen = false,
-}: Props) => {
+}: Props): JSX.Element => {
   return (
     <button
       type="button"

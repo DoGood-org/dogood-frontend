@@ -6,7 +6,7 @@ const Faders = (props: SVGProps<SVGSVGElement>) => (
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
-    {...props} 
+    {...props}
   >
     <g
       stroke="currentColor"
