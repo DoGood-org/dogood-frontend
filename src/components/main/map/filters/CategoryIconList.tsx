@@ -1,9 +1,5 @@
-import { Animal, Food, Medicine, Nature } from '@/components/icons';
 import { CategoryLabel } from '@/components/main/map/filters/CategoryLabel';
-import { IIconMap } from '@/types/mapType';
 import React, { JSX } from 'react';
-
-
 
 type Props = {
   categories: string[];

@@ -1,7 +1,6 @@
 'use client';
 import React, { JSX, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { createRoot } from 'react-dom/client';
 import dynamic from 'next/dynamic';
 
 import {
@@ -30,8 +29,7 @@ import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
 import Portal from '@/components/portal/Portal';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
-import SearchInput from './filters/SearchInput';
-import { ButtonLocation } from '@/components/main/map/ButtonLocation';
+
 import { FormSearch } from '@/components/main/map/filters/FormSearch';
 
 const CustomButtonControl = dynamic(
@@ -294,9 +292,7 @@ export const Map: React.FC = (): JSX.Element => {
           </MapContainer>
         </div>
         {/* <SearchInput /> */}
-        <ButtonOpenTasks
-          onClick={() => console.log('Open tasks clicked')}
-        />
+        <ButtonOpenTasks onClick={() => console.log('Open tasks clicked')} />
         <FormSearch
           toggleFilters={() => console.log('Toggle filters clicked')}
         />

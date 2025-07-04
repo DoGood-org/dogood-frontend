@@ -1,8 +1,7 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/Input';
-import { Search, SlidersHorizontal, SlidersVertical } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
+import { Search, SlidersVertical } from 'lucide-react';
 import { JSX, useEffect } from 'react';
 
 type Props = {
