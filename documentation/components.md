@@ -1,10 +1,9 @@
-## 📚 Components API
+# 📚 Components API
 
 Each component has its own API. You can find it in the component's folder. This
 is a list of more common components and their API.
 
-<details>
-<summary><b>Section</b></summary>
+## Section
 
 This component renders a section element with default top and bottom paddings.
 It wraps its content in a `Container` component to center and limit the content
@@ -15,6 +14,9 @@ width. You can extend or override styles via the `className` prop.
 | `children`\*    | `undefined`              | Required. Any text content                                       |
 | `className`     | `py-[30px] xl:py-[50px]` | Optional. Additional CSS classes to override or extend styling.  |
 | `withContainer` | `true`                   | Optional. Wrap children in a Container. Set to false to disable. |
+
+  <details>
+  <summary><b>Details</b></summary>
 
 **Notes**
 
@@ -41,10 +43,9 @@ width. You can extend or override styles via the `className` prop.
 </Section>
 ```
 
-</details>
+  </details>
 
-<details>
-<summary><b>Container</b></summary>
+## Container
 
 This component renders a div that centers and constrains its content width
 according to responsive breakpoints. It also applies horizontal padding that
@@ -55,6 +56,9 @@ extend or override styles.
 | ------------ | -------------- | ----------------------------------------------------------- |
 | `children`\* | —              | Required. The content to be wrapped inside the container.   |
 | `className`  | `my-container` | Optional. Additional CSS classes to apply to the container. |
+
+<details>
+<summary><b>Details</b></summary>
 
 Responsive breakpoints (CSS variables) The container width is limited based on
 these breakpoints:
@@ -108,8 +112,21 @@ variables:
 
 </details>
 
+## Button
+
+This component renders a customizable button with support for multiple visual
+`variants`, `sizes`, and `asChild` rendering via Radix UI's Slot.
+
+| Prop        | Default value | Description                                                                                       |
+| ----------- | ------------- | ------------------------------------------------------------------------------------------------- |
+| `variant`   | `default`     | Optional. One of the options: `ghost`, `primary`, `secondary`, `filters`, `tag`                   |
+| `size`      | `default`     | Optional. One of the options: `sm`, `md`, `lg`, `xl`                                              |
+| `asChild`   | `false`       | Optional. If `true`, renders the component using a Radix <Slot /> instead of a native \<button\>. |
+| `className` | —             | Optional. Additional classes merged into the button's styles.                                     |
+| `...props`  | —             | Any native props for \<button\> or the custom component passed through asChild.                   |
+
 <details>
-<summary><b>Button</b></summary>
+<summary><b>Details</b></summary>
 
 This component renders a customizable button with support for multiple visual
 `variants`, `sizes`, and `asChild` rendering via Radix UI's Slot.
@@ -164,13 +181,7 @@ behaviors while preserving proper routing.
 
 </details>
 
-<details>
-<summary><b>Input</b></summary>
-
-</details>
-
-<details>
-<summary><b>LinkWithArrow</b></summary>
+## LinkWithArrow
 
 This React component renders a styled link with accompanying right-pointing
 arrow icon. It's built on top of Next.js's Link component and is designed for
@@ -184,7 +195,10 @@ internal navigation within your app.
 | text      | string          | -                                                  | Requered. The text label displayed inside the link.                           |
 | className | string          | ""                                                 | Optional. additional Tailwind classes to customize the appearance externally. |
 | icon      | React.ReactNode | `<ArrowRight className="stroke-current size-6" />` | Optional. Use to change default icon                                          |
-| onClick   | `() => void;`   | Optional. Use to pass the handler to the click     |
+| onClick   | `() => void;`   |                                                    | Optional. Use to pass the handler to the click                                |
+
+<details>
+<summary><b>Details</b></summary>
 
 **Styling:**
 
@@ -227,6 +241,116 @@ class names.
   className="flex items-center gap-3 w-full justify-between"
 />
 
+```
+
+</details>
+
+## Accordion
+
+This component renders a list item (\<li>) that serves as the root of an
+accordion. It uses Radix UI’s Accordion.Root under the hood and supports
+multiple or single item expansion. Useful for organizing collapsible content
+like FAQs, lists, or settings panels.
+
+It accepts all native props supported by Radix Accordion and passes through any
+additional props.
+
+| Prop          | Default value | Description                                                              |
+| ------------- | ------------- | ------------------------------------------------------------------------ |
+| `children`    | —             | Required. The accordion items to be displayed inside the root element.   |
+| `type`        | —             | Optional. Radix prop to set accordion behavior — 'single' or 'multiple'. |
+| `collapsible` | —             | Optional. Whether all items can be collapsed (used with type='single').  |
+
+<details>
+<summary><b>Details</b></summary>
+
+**Notes**
+
+- The component renders as \<li> with data-slot="accordion" for consistent
+  theming or targeting.
+
+- Supports accessibility out of the box via Radix primitives.
+
+- You can wrap this in a \<ul> or \<div> depending on semantics of the parent
+  layout.
+
+**AccordionItem**
+
+This component renders a single collapsible item in the accordion. It adds
+spacing below each item (except the last one) to visually separate them.
+
+| Prop        | Default value           | Description                                                      |
+| ----------- | ----------------------- | ---------------------------------------------------------------- |
+| `children`  | —                       | Required. Usually includes AccordionTrigger and ccordionContent. |
+| `className` | mb-[30px] last:mb-[0px] | Optional. Additional classes to customize spacing or style.      |
+
+**Notes**
+
+- Adds data-slot="accordion-item" for easier styling or testing.
+
+- Margin is automatically removed on the last item.
+
+**AccordionTrigger**
+
+This component renders the clickable header of the accordion item. It uses
+AccordionPrimitive.Trigger inside a header element and includes accessibility
+features and focus styles.
+
+| Prop        | Default value | Description                                          |
+| ----------- | ------------- | ---------------------------------------------------- |
+| `children`  | —             | Required. The label for the accordion toggle.        |
+| `className` | —             | Optional. Custom classes to override default styles. |
+
+**Notes**
+
+- Wrapped in a \<header> for semantic correctness.
+
+- Adds data-slot="accordion-trigger" for styling hooks.
+
+- Includes focus and hover styling via Tailwind utilities.
+
+- Fully accessible via keyboard navigation.
+
+**AccordionContent**
+
+This component renders the collapsible panel of an item. It animates open/close
+transitions and wraps children with inner padding.
+
+| Prop        | Default value | Description                                               |
+| ----------- | ------------- | --------------------------------------------------------- |
+| `children`  | —             | Required. The content to show when item is expanded.      |
+| `className` | pt-0 pb-4     | Optional. Additional classes to modify padding or layout. |
+
+**Notes**
+
+- Applies built-in Radix animation utilities via data-state.
+
+- The content is wrapped in a \<div> to control vertical spacing.
+
+- Adds data-slot="accordion-content" for advanced theming.
+
+**Example usage**
+
+```tsx
+<ul>
+  <Accordion type="single" collapsible>
+    <AccordionItem value="faq-1">
+      <AccordionTrigger>What is DoGood?</AccordionTrigger>
+      <AccordionContent>
+        DoGood is a kindness-powered platform connecting people through
+        volunteerism.
+      </AccordionContent>
+    </AccordionItem>
+
+    <AccordionItem value="faq-2">
+      <AccordionTrigger>How can I contribute?</AccordionTrigger>
+      <AccordionContent>
+        You can join community efforts, donate, or volunteer for specific tasks
+        listed on the site.
+      </AccordionContent>
+    </AccordionItem>
+  </Accordion>
+</ul>
 ```
 
 </details>
