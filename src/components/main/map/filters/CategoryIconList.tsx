@@ -1,32 +1,21 @@
-import { CategoryIconsListProps } from '@/types/mapType';
-import React from 'react';
+import { Animal, Food, Medicine, Nature } from '@/components/icons';
+import { CategoryLabel } from '@/components/main/map/filters/CategoryLabel';
+import { IIconMap } from '@/types/mapType';
+import React, { JSX } from 'react';
 
-const CategoryIconsList: React.FC<CategoryIconsListProps> = ({
+
+
+type Props = {
+  categories: string[];
+};
+export const CategoryIconsList = ({
   categories,
-  getCategoryIcon,
-}) => {
+}: Props): JSX.Element | null => {
   return (
     <ul className="flex gap-4">
-      {categories.map((item: any, idx: React.Key | null | undefined) => (
-        <li key={idx}>
-          <button
-            className={`${getCategoryIcon(item).color} w-[50px] h-[50px] flex justify-center items-center rounded-full`}
-          >
-            <span
-              style={{
-                width: '24px',
-                height: '24px',
-                stroke: '#000000',
-                fill: '#000000',
-              }}
-            >
-              {getCategoryIcon(item).icon}
-            </span>
-          </button>
-        </li>
+      {categories.map((category: string, idx: React.Key | null | undefined) => (
+        <CategoryLabel key={idx} category={category} />
       ))}
     </ul>
   );
 };
-
-export default CategoryIconsList;

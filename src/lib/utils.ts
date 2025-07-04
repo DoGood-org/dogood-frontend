@@ -11,10 +11,8 @@ import HandHeart from '@/components/icons/HandHeart';
 import {
   CategoryItem,
   DistanceItem,
-  IconData,
   TranslationFunction,
 } from '@/types/mapType';
-import { iconMap } from '@/components';
 import { IHowItWorksItem } from '@/types/howItWorksItem';
 
 export function cn(...inputs: ClassValue[]): string {
@@ -35,10 +33,6 @@ export const getDistancesList = (t: TranslationFunction): DistanceItem[] => [
   { title: t('10km') },
   { title: t('neutroBtn') },
 ];
-
-export const getCategoryIcon = (category: keyof typeof iconMap): IconData => {
-  return iconMap[category];
-};
 
 export const getHowItWorks = (t: TranslationFunction): IHowItWorksItem[] => [
   { icon: NotePencil, title: t('block1') },

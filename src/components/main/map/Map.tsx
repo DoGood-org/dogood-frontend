@@ -19,6 +19,7 @@ import {
 } from '@/types/mapType';
 
 import {
+  ButtonOpenTasks,
   Container,
   generateTasks,
   TasksList,
@@ -30,15 +31,9 @@ import Portal from '@/components/portal/Portal';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 import SearchInput from './filters/SearchInput';
-import { FormLocationComponent } from '@/components/main/map/FormLocationComponent';
 import { ButtonLocation } from '@/components/main/map/ButtonLocation';
-const CustomFormControl = dynamic(
-  () =>
-    import('@/components/main/map/CustomFormControl').then(
-      (mod) => mod.default
-    ),
-  { ssr: false }
-);
+import { FormSearch } from '@/components/main/map/filters/FormSearch';
+
 const CustomButtonControl = dynamic(
   () =>
     import('@/components/main/map/CustomButtonControl').then(
@@ -65,7 +60,6 @@ export const Map: React.FC = (): JSX.Element => {
     setShowGeolocationPopup,
     checkLocationPermission,
     addMarker,
-    inviteToShareLocationManually,
   } = useMapStore();
 
   const [leafletComponents, setLeafletComponents] =
@@ -105,49 +99,6 @@ export const Map: React.FC = (): JSX.Element => {
           Control: L.Control,
         } as ReactLeafletModule);
         setMapIcons(customIcons);
-
-        // Mount Leaflet Control
-
-        const formContainer = L.DomUtil.create(
-          'div',
-          'leaflet-control form-location'
-        );
-        L.DomEvent.disableClickPropagation(formContainer);
-        L.DomEvent.disableScrollPropagation(formContainer);
-        const formControl = new L.Control({ position: 'bottomright' });
-
-        const buttonContainer = L.DomUtil.create(
-          'div',
-          'leaflet-control button-location'
-        );
-        L.DomEvent.disableClickPropagation(buttonContainer);
-        L.DomEvent.disableScrollPropagation(buttonContainer);
-        const buttonControl = new L.Control({ position: 'bottomright' });
-        formControl.onAdd = (): HTMLElement => formContainer;
-        buttonControl.onAdd = (): HTMLElement => buttonContainer;
-
-        // Defer until map is mounted
-        const interval = setInterval((): void => {
-          const mapInstances = (L as any).map?.instances || [];
-          const mapInstance = mapInstances[0];
-          if (mapInstance && formControl && buttonControl) {
-            mapInstance.addControl(formControl);
-            mapInstance.addControl(buttonControl);
-            createRoot(formContainer).render(
-              <FormLocationComponent
-                forForm={{
-                  customForm: {
-                    control: formControl,
-                    data: { location: '' },
-                  },
-                }}
-              />
-            );
-
-            createRoot(buttonContainer).render(<ButtonLocation />);
-            clearInterval(interval);
-          }
-        }, 100);
       })
       .catch((error) => {
         console.error('Error loading map components:', error);
@@ -281,71 +232,76 @@ export const Map: React.FC = (): JSX.Element => {
 
   return (
     <Container className="mx-auto relative flex flex-col ">
-      <div
-        ref={mapContainerRef}
-        className="block overflow-hidden rounded-[10px] h-[547px] lg:h-[919px]"
-      >
-        {showGeolocationPopup && (
-          <Portal>
-            <AnimatedModalWrapper
-              isVisible={showGeolocationPopup}
-              onClose={declinedToShareLocation}
-            >
-              <AcceptShareLocationPopUp
-                requestGeolocation={acceptToShareLocation}
-                declineGeolocation={declinedToShareLocation}
-              />
-            </AnimatedModalWrapper>
-          </Portal>
-        )}
-
-        <MapContainer
-          className="h-full w-full cursor-default relative"
-          center={userLocation || { lat: 27.9944024, lng: -81.7602544 }}
-          zoom={13}
-          minZoom={5}
-          zoomControl={false}
-          attributionControl={false}
-          key={'default-location'}
-          scrollWheelZoom={false}
+      <div className="flex flex-col justify-center rounded-[10px] bg-card ">
+        <div
+          ref={mapContainerRef}
+          className="block overflow-hidden border-background text-foreground rounded-t-[10px] h-[547px] lg:h-[919px]"
         >
-          <ScrollAfterDelay delay={2000} />
-          <LayersControl position="topright">
-            {/* 🌐 Base layers */}
+          {showGeolocationPopup && (
+            <Portal>
+              <AnimatedModalWrapper
+                isVisible={showGeolocationPopup}
+                onClose={declinedToShareLocation}
+              >
+                <AcceptShareLocationPopUp
+                  requestGeolocation={acceptToShareLocation}
+                  declineGeolocation={declinedToShareLocation}
+                />
+              </AnimatedModalWrapper>
+            </Portal>
+          )}
 
-            <LayersControl.BaseLayer checked name="Google Maps">
-              <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" />
-            </LayersControl.BaseLayer>
-            <LayersControl.BaseLayer name="OpenStreetMap">
-              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            </LayersControl.BaseLayer>
+          <MapContainer
+            className="h-full w-full cursor-default relative"
+            center={userLocation || { lat: 27.9944024, lng: -81.7602544 }}
+            zoom={14}
+            minZoom={5}
+            zoomControl={false}
+            attributionControl={false}
+            key={'default-location'}
+            scrollWheelZoom={false}
+          >
+            <ScrollAfterDelay delay={2000} />
+            <LayersControl position="topright">
+              {/* 🌐 Base layers */}
 
-            {/* 📍 Overlays */}
-          </LayersControl>
-          <>{renderUserLocation()}</>
-          {userLocation && <UserLocation />}
-          <MapClickHandler
-            onClick={handleMapClick}
-            allowClickToAddMarker={true}
-          />
-          {renderTaskMarkers()}
-          {/* {renderCustomMarkers()} */}
-          {renderUserLocation()}
-          <ZoomControl position="topright" />
-          <CustomButtonControl position="bottomright" />
-          <CustomFormControl
-            visible={inviteToShareLocationManually}
+              <LayersControl.BaseLayer checked name="Google Maps">
+                <TileLayer url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}" />
+              </LayersControl.BaseLayer>
+              <LayersControl.BaseLayer name="OpenStreetMap">
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              </LayersControl.BaseLayer>
+
+              {/* 📍 Overlays */}
+            </LayersControl>
+            <>{renderUserLocation()}</>
+            {userLocation && <UserLocation />}
+            <MapClickHandler
+              onClick={handleMapClick}
+              allowClickToAddMarker={true}
+            />
+            {renderTaskMarkers()}
+            {/* {renderCustomMarkers()} */}
+            {renderUserLocation()}
+
+            <ZoomControl position="bottomright" />
+            <CustomButtonControl position="bottomright" />
+
+            {/* <CustomFormControl
+            visible={true}
             position="bottomright"
-          />
-          {/* <div className="absolute z-[700] bottom-0 left-100">
-            <Button variant="filters" onClick={() => checkLocationPermission()}>
-              <Vector className="stroke-foreground w-5 h-5" />
-            </Button>
-          </div> */}
-        </MapContainer>
+          /> */}
+          </MapContainer>
+        </div>
+        {/* <SearchInput /> */}
+        <ButtonOpenTasks
+          onClick={() => console.log('Open tasks clicked')}
+        />
+        <FormSearch
+          toggleFilters={() => console.log('Toggle filters clicked')}
+        />
+        <TasksList tasks={generatedTasks} />
       </div>
-      <SearchInput />
-      <TasksList />
     </Container>
   );
 };

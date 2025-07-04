@@ -6,7 +6,6 @@ import { Filters, FilterPannel, renderFilterButtons } from '@/components';
 
 const SearchInput: React.FC = () => {
   const [isSettingOpen, setIsSettingOpen] = useState<boolean>(false);
-
   //Initialize states of Categories and Distances from localStorage, if there is nothing - empty array
   const [selectedCategories, setSelectedCategories] = useState<string[]>(() => {
     const savedCategories = localStorage.getItem('Categories');

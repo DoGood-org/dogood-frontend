@@ -617,15 +617,37 @@ html {
   background-color: transparent;
   transition: transform 0.3s ease;
 }
-
+/* map */
 .leaflet-bottom.leaflet-right {
   display: flex;
-  align-items: center;
-  justify-content: center;
+}
+.leaflet-control-zoom.leaflet-bar.leaflet-control {
+  display: none;
+}
+@media screen and (min-width: 90rem) {
+  .leaflet-bottom.leaflet-right {
+    display: flex;
+    align-items: center;
+  }
+  .leaflet-control-zoom.leaflet-bar.leaflet-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Zoom Control */
+.leaflet-control-zoom.leaflet-bar.leaflet-control {
+  display: none;
+}
+@media screen and (min-width: 90rem) {
+  .leaflet-control-zoom.leaflet-bar.leaflet-control {
+    display: flex;
+  }
 }
 
 .leaflet-control-layers.leaflet-control.leaflet-control-layers-expanded {
-  background-color: var(--card);
+  background-color: var(--background-secondary);
   border-radius: var(--radius);
   color: var(--text);
 }
@@ -633,26 +655,33 @@ html {
   background-color: transparent;
 }
 .leaflet-control-layers-toggle {
-  background-color: var(--btn);
+  background-color: var(--background-secondary);
   color: var(--btn-text);
-  border-radius: var(--radius);
-
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: var(--font-montserrat);
 }
 .leaflet-control-layers label {
   display: flex;
   align-items: center;
   font-size: 14px;
   gap: 6px;
+  font-family: var(--font-montserrat);
+  color: var(--btn-text);
+  cursor: pointer;
+  font-weight: 400;
 }
 .leaflet-control-layers-selector[type='radio'] {
   appearance: none;
-  padding: 2px;
+  background-color: transparent;
+  padding: 1px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 2px solid var(--background-secondary);
-  background-color: var(--background-secondary);
+  border: 2px solid var(--btn-text);
   cursor: pointer;
   position: relative;
   margin-right: 6px;
@@ -661,7 +690,6 @@ html {
 }
 .leaflet-control-layers-selector[type='radio']::before {
   content: '';
-
   width: 8px;
   height: 8px;
   background-color: var(--btn-text);

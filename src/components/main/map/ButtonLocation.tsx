@@ -9,15 +9,10 @@ import { JSX } from 'react';
 // and displays a vector icon inside the button.
 
 export const ButtonLocation = (): JSX.Element => {
-  const { requestGeolocation, userLocation, setInviteToShareLocationManually } =
-    useMapStore();
+  const { requestGeolocation } = useMapStore();
 
   const onClickHandler = (): void => {
     requestGeolocation();
-
-    if (!userLocation) {
-      setInviteToShareLocationManually(true);
-    }
     console.log('Requesting geolocation...');
   };
 

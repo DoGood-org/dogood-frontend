@@ -1,7 +1,6 @@
 'use client';
 import { Input } from '@/components/ui/Input';
 import { IFormLocation } from '@/types/mapType';
-import { useMapStore } from '@/zustand/stores/mapStore';
 import { JSX } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -19,7 +18,7 @@ export const FormLocationComponent = (props: Props): JSX.Element | null => {
       location: props.forInput?.value || '',
     },
   });
-  const { name, onChange, onBlur: rhfOnBlur, ref } = register('location');
+  const { name, onChange } = register('location');
 
   const submitHandler = (data: IFormLocation): void => {
     console.log('Submitted location:', data.location);
@@ -40,13 +39,7 @@ export const FormLocationComponent = (props: Props): JSX.Element | null => {
         placeholder={props.forInput?.placeholder || 'Enter location'}
         className={props.forInput?.className || ''}
         name={name}
-        ref={ref}
         onChange={onChange}
-        onFocus={() => useMapStore.getState().setInputActive(true)}
-        onBlur={async (e) => {
-          await rhfOnBlur(e);
-          useMapStore.getState().setInputInactiveAndHide();
-        }}
       />
     </form>
   );
