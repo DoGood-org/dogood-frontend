@@ -44,7 +44,6 @@ export const CategoryLabel: React.FC<CategoryLabelProps> = ({ category }) => {
             height: '24px',
             stroke: 'currentColor',
             fill: 'currentColor',
-        
           }}
         >
           {iconData.icon}
