@@ -104,7 +104,7 @@ export interface DistanceItem {
 
 export type TranslationFunction = (key: string) => string;
 
-export interface ITasks {
+export interface ITask {
   title: string;
   subtitle: string;
   icon?: ReactElement;
@@ -116,18 +116,18 @@ export interface ITasks {
   id: string;
 }
 
-export interface ExtendedITasksProps extends ITasks {
+export interface IExtendedITaskProps extends ITask {
   isSelected: boolean;
   onToggleDescription: () => void;
 }
 
-export interface IconData {
+export interface IIconData {
   icon: ReactElement;
   color: string;
 }
 
-export interface IconMap {
-  [key: string]: IconData;
+export interface IIconMap {
+  [key: string]: IIconData;
 }
 
 export type MapIcons = {
@@ -137,11 +137,6 @@ export type MapIcons = {
   foodIcon: Icon | null;
   myPositionIcon: Icon | null;
 };
-
-export interface CategoryIconsListProps {
-  categories: any[];
-  getCategoryIcon: (item: any) => IconData;
-}
 
 export type LeafletModule = {
   Icon: typeof Icon;

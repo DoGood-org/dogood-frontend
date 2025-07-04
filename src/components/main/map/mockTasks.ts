@@ -1,4 +1,4 @@
-import { ITasks, MarkerCategoryEnum } from '@/types/mapType';
+import { ITask, MarkerCategoryEnum } from '@/types/mapType';
 
 // export const TASKS = [
 //   {
@@ -120,7 +120,7 @@ const CATEGORIES = [
   [MarkerCategoryEnum.Food],
 ];
 
-export function generateTasks(userLat: number, userLng: number): ITasks[] {
+export function generateTasks(userLat: number, userLng: number): ITask[] {
   return TITLES.map(([title, subtitle], i) => {
     const offsetLat = (Math.random() - 0.5) * 0.01;
     const offsetLng = (Math.random() - 0.5) * 0.01;

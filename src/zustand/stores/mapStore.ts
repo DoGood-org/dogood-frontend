@@ -18,7 +18,6 @@ type TMapState = {
   map: LeafletMap | null;
   hasAgreedToLocation: boolean;
   showGeolocationPopup: boolean;
-  inviteToShareLocationManually: boolean;
   inputActive: boolean;
 
   userLocation: LatLngLiteral | null;
@@ -31,12 +30,8 @@ type TMapActions = {
   setMap: (map: LeafletMap) => void;
   setHasAgreedToLocation: (value: boolean) => void;
   setShowGeolocationPopup: (value: boolean) => void;
-  setInviteToShareLocationManually: (value: boolean) => void;
-  setHideInviteAfterDelay: (ms: number) => void;
   setLocationError: (error: string | null) => void;
   setUserLocation: (loc: LatLngLiteral) => void;
-  setInputActive: (value: boolean) => void;
-  setInputInactiveAndHide: () => void;
   setSelectedTask: (task: TTask | null) => void;
   setCustomMarkers: (markers: TCustomMarker[]) => void;
   addMarker: (loc: TCustomMarker) => void;
@@ -88,7 +83,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
       locationError: null,
       hasAgreedToLocation: false,
       showGeolocationPopup: false,
-      inviteToShareLocationManually: false,
       inputActive: false,
 
       setMap: (map) => set({ map }),
@@ -104,45 +98,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
 
       setShowGeolocationPopup: (value): void =>
         set({ showGeolocationPopup: value }),
-
-      setHideInviteAfterDelay: (ms: number): void => {
-        if (typeof window === 'undefined') return;
-
-        const w = window as typeof window & {
-          __hideInviteTimeout?: ReturnType<typeof setTimeout> | null;
-        };
-
-        if (w.__hideInviteTimeout) {
-          clearTimeout(w.__hideInviteTimeout);
-        }
-
-        w.__hideInviteTimeout = setTimeout(() => {
-          const state = get();
-          if (!state.inputActive) {
-            set({ inviteToShareLocationManually: false });
-            console.log('Invite hidden after delay');
-          } else {
-            console.log('User is typing — skipping hide');
-          }
-          w.__hideInviteTimeout = null;
-        }, ms);
-      },
-
-      setInputActive: (value: boolean): void => {
-        set({ inputActive: value });
-      },
-
-      setInputInactiveAndHide: (): void => {
-        const state = get();
-        if (!state.inputActive) {
-          set({ inviteToShareLocationManually: false });
-        }
-      },
-
-      setInviteToShareLocationManually: (value: boolean): void => {
-        set({ inviteToShareLocationManually: value });
-      },
-
       addMarker: (loc): void => {
         const exists = get().customMarkers.some((m) => coordsMatch(m, loc));
         if (!exists) {
@@ -185,7 +140,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
               set({
                 userLocation: coords,
                 locationError: null,
-                inviteToShareLocationManually: false,
               });
               console.log('User location set from navigator:', coords);
             } else {
@@ -200,7 +154,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
             set({
               userLocation: manualLoc,
               locationError: null,
-              inviteToShareLocationManually: false,
             });
             console.log('Manual location set:', manualLoc);
             return;
@@ -208,11 +161,8 @@ export const useMapStore = create<TMapState & TMapActions>()(
 
           // Nothing available
           set({
-            inviteToShareLocationManually: true,
             locationError: 'Failed to retrieve geolocation from navigator',
           });
-
-          get().setHideInviteAfterDelay(5000);
         } catch (error) {
           console.warn('nothing provided:', error);
           set({
@@ -221,9 +171,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
                 ? (error as { message: string }).message +
                   ' tried failed showing input'
                 : 'Failed to retrieve geolocation from all sources',
-            inviteToShareLocationManually: true,
           });
-          get().setHideInviteAfterDelay(5000);
         }
       },
     }),
