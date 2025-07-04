@@ -35,14 +35,16 @@ export const CategoryLabel: React.FC<CategoryLabelProps> = ({ category }) => {
   return (
     <li>
       <button
-        className={`${iconData.color} w-[50px] h-[50px] flex justify-center items-center rounded-full`}
+        className={`${iconData.color} text-foreground  w-[50px] h-[50px] flex justify-center items-center rounded-full`}
       >
         <span
+          className="flex justify-center items-center text-foreground"
           style={{
             width: '24px',
             height: '24px',
-            stroke: '#000000',
-            fill: '#000000',
+            stroke: 'currentColor',
+            fill: 'currentColor',
+        
           }}
         >
           {iconData.icon}
