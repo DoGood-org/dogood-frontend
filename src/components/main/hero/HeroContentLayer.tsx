@@ -13,7 +13,9 @@ export const HeroContentLayer: React.FC<HeroContentLayerProps> = ({
   const t = useTranslations('common');
   const router = useRouter();
   const localActive = useLocale();
-
+  const handleClick = (): never => {
+    throw new Error('This is a test error!');
+  };
   return (
     <motion.div
       className="px-5 fixed top-[166px] md:top-[220px] md:w-[393px] lg:w-full lg:top-[320px] left-1/2 transform -translate-x-1/2 text-foreground text-center"
@@ -29,7 +31,8 @@ export const HeroContentLayer: React.FC<HeroContentLayerProps> = ({
       <div className="flex flex-col gap-6 items-center lg:flex-row lg:gap-15 lg:justify-center">
         <Button
           variant="primary"
-          onClick={() => router.push(`/${localActive}/register`)}
+          onClick={handleClick}
+          // onClick={() => router.push(`/${localActive}/register`)}
           className="w-[255px] h-[48px] text-base text-white py-3 lg:w-[147px]"
         >
           {t('volunteerBtn')}

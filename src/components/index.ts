@@ -16,6 +16,8 @@ export * from './layout/header/NavItemRenderer';
 export * from './layout/header/SettingList';
 export * from './layout/header/SpecialToggle';
 export * from './layout/header/UserAvatar';
+export * from './layout/not-found/ButtonPanel';
+export * from './layout/not-found/NotFoundComponent';
 export * from './layout/theme/ThemeInitializer';
 export * from './layout/theme/ThemeToggle';
 export * from './main/Donate';
