@@ -1,5 +1,5 @@
-import { User } from '@/components/icons';
 import Image from 'next/image';
+import { User } from '@/components/icons';
 
 interface UserAvatarProps {
   isLoggedIn: boolean;
@@ -37,7 +37,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
 
   return (
     <div
-      className={`rounded-full bg-btn text-white flex items-center justify-center ${className}`}
+      className={`rounded-full bg-btn text-white flex items-center justify-center min-w-6 ${className}`}
     >
       <p className="text-[12px]/[18px]">{initials || 'U'}</p>
     </div>

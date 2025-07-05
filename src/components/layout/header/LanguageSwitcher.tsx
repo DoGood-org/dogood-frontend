@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { useTransition, useState, useEffect, useRef } from 'react';
 import { routing } from '@/i18n/routing';
-import { ChevronDown } from '@/components/icons';
+import { CaretDown } from '@/components/icons';
 
 const localeLabels: Record<string, string> = {
   en: 'English',
@@ -63,11 +63,11 @@ export const LanguageSwitcher: React.FC = () => {
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
         onClick={() => setOpen(!open)}
-        className="w-[147px] flex items-center justify-between gap-2 rounded-md bg-toggle px-4 py-2 text-white hover:bg-neutral-700 transition duration-700 cursor-pointer"
+        className="lg:w-[147px] flex items-center justify-between gap-2  rounded-lg lg:rounded-md bg-toggle p-2 lg:px-4 py-2 text-white hover:bg-neutral-700 transition duration-700 cursor-pointer"
       >
         {localeLabels[currentLocale] ?? currentLocale}
-        <ChevronDown
-          className={`w-[14px] h-[8px] fill-current transition-transform duration-700 
+        <CaretDown
+          className={`size-4 fill-current transition-transform duration-700 
             ${open ? 'rotate-180' : ''}
             `}
         />
@@ -89,7 +89,7 @@ export const LanguageSwitcher: React.FC = () => {
               <button
                 key={locale}
                 onClick={() => handleChange(locale)}
-                className="px-4 py-2 text-left text-white hover:bg-neutral-700 transition duration-700 cursor-pointer"
+                className="p-2 lg:px-4 lg:py-2 text-left text-white hover:bg-neutral-700 transition duration-700 cursor-pointer"
               >
                 {localeLabels[locale] ?? locale}
               </button>

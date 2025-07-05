@@ -24,6 +24,7 @@
   --color-foreground: var(--foreground);
   --color-text-help: var(--text-help);
   --color-text-gray: var(--text-gray);
+  --color-white: var(--white);
   --color-header-bg: var(--header-bg);
   --color-footer-bg: var(--footer-bg);
   --color-layout-background: var(--layout-background);
@@ -74,6 +75,8 @@
   /* font sizes and line-height mobile */
   --text-h1: 32px;
   --leading-h1: 48px;
+  --text-h2-m: 24px;
+  --leading-h2-m: 32px;
   --text-h2: 32px;
   --leading-h2: 48px;
   --text-h3: 24px;
@@ -487,6 +490,25 @@ html {
     .lg\:text-h1-d {
       font-size: var(--text-h1-d);
       line-height: var(--leading-h1-d);
+    }
+  }
+
+  .text-h2-m {
+    font-size: var(--text-h2-m);
+    line-height: var(--leading-h2-m);
+  }
+
+  @media (min-width: 48rem) {
+    .md\:text-h2-m {
+      font-size: var(--text-h2-m);
+      line-height: var(--leading-h2-m);
+    }
+  }
+
+  @media (min-width: 90rem) {
+    .lg\:text-h2-m {
+      font-size: var(--text-h2-m);
+      line-height: var(--leading-h2-m);
     }
   }
 

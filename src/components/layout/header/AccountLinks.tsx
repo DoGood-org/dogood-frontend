@@ -1,10 +1,10 @@
 'use client';
 
 import { authStore } from '@/zustand/stores/authStore';
-import { AccountContentProps } from '@/types';
-import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { useLocale } from 'next-intl';
-import { useIconComponents } from '@/hooks/useIconComponents';
+import { AccountContentProps } from '@/types';
+import { LinkWithArrow } from '@/components';
+import { useIconComponents } from '@/hooks';
 
 export const AccountLinks: React.FC<AccountContentProps> = ({
   accountItem,
@@ -22,7 +22,7 @@ export const AccountLinks: React.FC<AccountContentProps> = ({
   if (!activeList.length) return null;
 
   return (
-    <ul className="flex gap-4 items-center flex-col">
+    <ul className="flex gap-4 items-center flex-col pt-2 pr-10 lg:p-0">
       {activeList.map(({ name, src, icon }, index) => {
         return (
           <li key={`${index}-${name}`} className="flex w-full">

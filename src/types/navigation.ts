@@ -7,6 +7,7 @@ export interface NavContentItem {
 export interface ListDropdownProps {
   listItem: Extract<NavItem, { type: 'list' }>;
   setIsOpen: (open: boolean) => void;
+  toggleMenu?: () => void;
 }
 
 export interface SettingContentItem {
@@ -38,32 +39,52 @@ export type NavItem =
       type: 'link';
       title: string;
       src: string;
+      icon: string;
     }
   | {
       type: 'list';
       title: string;
+      icon: string;
       content: NavContentItem[];
     }
   | {
       type: 'settings';
       title: string;
+      icon: string;
       content: SettingContentItem[];
     }
   | {
       type: 'icon';
       title: string;
+      icon: string;
       content: {
         logged: AccountContentItem[];
         noLogged: AccountContentItem[];
       };
     };
 
-export interface NavItemRendererProps {
+type BaseProps = {
   navItem: NavItem;
-  isActive: boolean;
-  onToggle: () => void;
+  isActive?: boolean;
   children?: React.ReactNode;
-}
+  onToggle?: () => void;
+};
+
+type DesktopProps = BaseProps & {
+  variant: 'desktop';
+  toggleMenu?: never;
+  openItem?: never;
+  setOpenItem?: never;
+};
+
+type MobileProps = BaseProps & {
+  variant: 'mobile';
+  toggleMenu: () => void;
+  openItem?: string;
+  setOpenItem?: (item: string) => void;
+};
+
+export type NavItemRendererProps = DesktopProps | MobileProps;
 
 export interface NavDropdownProps {
   trigger: React.ReactNode;
@@ -72,4 +93,14 @@ export interface NavDropdownProps {
   setIsOpen: (value: boolean) => void;
   className?: string;
   isIcon?: boolean; //if true - trigger is icon
+}
+
+export interface MobileDropdownProps {
+  trigger: React.ReactNode;
+  children: React.ReactNode;
+  icon: string;
+  navItem: NavItem;
+  openItem: string | undefined;
+  setOpenItem: (value: string) => void;
+  className?: string;
 }
