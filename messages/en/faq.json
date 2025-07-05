@@ -23,13 +23,16 @@
       "emailText": "ex. example@gmail.com",
       "emailError": "Email is required",
       "phoneText": "ex. +1 (111) 111-1111",
-      "messageText": "Type your message here ..."
+      "messageText": "Type your message here ...",
+      "phoneError": "Unknown phone format"
     }
   ],
   "downtext": [
     {
       "text": "By clicking on the button, you agree to the processing of personal data.",
-      "btn": "Send request"
+      "btn": "Send request",
+      "success": "Message sent successfully. Thank you!",
+      "error": "Error sending message. Please try again."
     }
   ]
 }
