@@ -1,9 +1,10 @@
 'use client';
 import { ButtonLocation } from '@/components/main/map/ButtonLocation';
 import { ButtonZoom } from '@/components/main/map/ButtonZoom';
+import { JSX } from 'react';
 import { useMap } from 'react-leaflet';
 
-export const CustomControl = () => {
+export const CustomControl = (): JSX.Element => {
   const map = useMap();
 
   return (
@@ -14,7 +15,7 @@ export const CustomControl = () => {
         right: '10px',
         zIndex: 1000,
         display: 'flex',
-        gap:'40px'
+        gap: '40px',
       }}
     >
       <div className=" gap-1 hidden lg:flex">

@@ -1,7 +1,6 @@
 'use client';
 import React, { JSX, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import dynamic from 'next/dynamic';
 
 import {
   getMarkerIcon,
@@ -37,13 +36,6 @@ import { useTaskStore } from '@/zustand/stores/taskStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
 
-const CustomButtonControl = dynamic(
-  () =>
-    import('@/components/main/map/CustomButtonControl').then(
-      (mod) => mod.default
-    ),
-  { ssr: false }
-);
 export const Map: React.FC = (): JSX.Element => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
     threshold: 0.6,
@@ -176,15 +168,8 @@ export const Map: React.FC = (): JSX.Element => {
     );
   }
 
-  const {
-    MapContainer,
-    TileLayer,
-    Marker,
-    ZoomControl,
-    useMapEvent,
-    LayersControl,
-    Popup,
-  } = leafletComponents;
+  const { MapContainer, TileLayer, Marker, useMapEvent, LayersControl, Popup } =
+    leafletComponents;
 
   const renderTaskMarkers = (): JSX.Element[] => {
     return noPaginatedTasks.map((task) => (

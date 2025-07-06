@@ -626,9 +626,6 @@ html {
 
 /* map */
 
-
-
-
 /* Layers Control */
 .leaflet-control-layers.leaflet-control.leaflet-control-layers-expanded {
   background-color: var(--map-btn-bg);
@@ -659,8 +656,8 @@ html {
   }
 }
 
-.leaflet-control-layers-base label span{
-display: flex;
+.leaflet-control-layers-base label span {
+  display: flex;
   align-items: center;
 
   padding: 2px;
@@ -669,12 +666,9 @@ display: flex;
   color: var(--map-btn-icon);
   cursor: pointer;
   font-weight: 400;
-
- 
 }
 
-
-.leaflet-control-layers input[type="radio"] {
+.leaflet-control-layers input[type='radio'] {
   appearance: none;
   width: 16px;
   height: 16px;
@@ -682,12 +676,12 @@ display: flex;
   border-radius: 50%;
   background-color: transparent;
   cursor: pointer;
-  position: relative; 
+  position: relative;
   padding: 0;
   margin-right: 4px;
 }
 
-.leaflet-control-layers input[type="radio"]::before {
+.leaflet-control-layers input[type='radio']::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -701,6 +695,6 @@ display: flex;
   transition: transform 0.2s ease;
 }
 
-.leaflet-control-layers input[type="radio"]:checked::before {
+.leaflet-control-layers input[type='radio']:checked::before {
   transform: translate(-50%, -50%) scale(1);
 }
