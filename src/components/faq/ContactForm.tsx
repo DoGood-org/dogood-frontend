@@ -20,7 +20,7 @@ export const ContactForm = (): React.ReactElement => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({ mode: 'onChange' });
   const [status, setStatus] = useState<'success' | 'error' | null>(null);
   const onSubmit = async (data: FormData): Promise<void> => {
     console.log('Дані форми:', data);
