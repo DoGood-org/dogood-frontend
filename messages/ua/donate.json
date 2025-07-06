@@ -1,9 +1,9 @@
 {
   "donate": [
     {
-      "water": "Can provide clean water for one person for a year",
-      "pills": "Can cover essential medicine for a refugee family",
-      "support": "Can support trauma counseling for a displaced child"
+      "water": "Може забезпечити чистою водою одну людину на рік",
+      "pills": "Може покрити витрати на основні ліки для сім'ї біженця",
+      "support": "Може підтримати консультування дитини-переселенця у зв'язку з травмою"
     }
   ]
 }
