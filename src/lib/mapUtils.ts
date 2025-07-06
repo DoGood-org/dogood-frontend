@@ -4,6 +4,7 @@ import NatureMarker from '@/assets/images/map/nature-marker.png';
 import AnimalMarker from '@/assets/images/map/animal-marker.png';
 import FoodMarker from '@/assets/images/map/food-marker.png';
 import MyPositionMarker from '@/assets/images/map/my-position.png';
+import DefaultMarker from '@/assets/images/map/default.png';
 import { Icon, LatLngLiteral } from 'leaflet';
 
 export const createIcon = (
@@ -23,6 +24,7 @@ export const initializeMapIcons = (L: LeafletType): MapIcons => {
     animalIcon: createIcon(L, AnimalMarker.src),
     foodIcon: createIcon(L, FoodMarker.src),
     myPositionIcon: createIcon(L, MyPositionMarker.src),
+    defaultIcon: createIcon(L, DefaultMarker.src)
   };
 };
 
@@ -43,10 +45,15 @@ export const getMarkerIcon = (
     icons.animalIcon,
     icons.foodIcon,
     icons.myPositionIcon,
+    icons.defaultIcon
   ];
 
   if (requiredIcons.some((icon) => !icon)) {
-    throw new Error('Not all icons are loaded');
+    const missingIcons = requiredIcons
+      .map((icon, index) => (icon ? null : Object.keys(icons)[index]))
+      .filter(Boolean)
+      .join(', ');
+    throw new Error(`Missing icons: ${missingIcons}`);
   }
 
   const iconMap: { [key in MarkerCategoryEnum]: Icon } = {
@@ -55,6 +62,7 @@ export const getMarkerIcon = (
     [MarkerCategoryEnum.Animal]: icons.animalIcon!,
     [MarkerCategoryEnum.Food]: icons.foodIcon!,
     [MarkerCategoryEnum.MyPosition]: icons.myPositionIcon!,
+    [MarkerCategoryEnum.Default]: icons.natureIcon!,
   };
 
   return iconMap[title];

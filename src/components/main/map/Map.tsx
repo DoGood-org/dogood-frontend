@@ -11,6 +11,7 @@ import {
 import { Icon, LatLngLiteral } from 'leaflet';
 
 import {
+  IExtendedCategoryFilter,
   LeafletType,
   MapClickHandlerProps,
   MarkerCategoryEnum,
@@ -20,6 +21,7 @@ import {
 import {
   ButtonOpenTasks,
   Container,
+  Filters,
   generateTasks,
   TasksList,
   UserLocation,
@@ -31,6 +33,9 @@ import { useMapStore } from '@/zustand/stores/mapStore';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 
 import { FormSearch } from '@/components/main/map/filters/FormSearch';
+import { useTaskStore } from '@/zustand/stores/taskStore';
+import { useFilterStore } from '@/zustand/stores/filterStore';
+import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
 
 const CustomButtonControl = dynamic(
   () =>
@@ -58,8 +63,14 @@ export const Map: React.FC = (): JSX.Element => {
     setShowGeolocationPopup,
     checkLocationPermission,
     addMarker,
+    taskListIsOpen,
+    toggleTaskList,
+    filtersIsOpen,
+    toggleFilters,
   } = useMapStore();
 
+  const { setTasks } = useTaskStore();
+  const { setCategories } = useFilterStore();
   const [leafletComponents, setLeafletComponents] =
     useState<ReactLeafletModule | null>(null);
 
@@ -69,12 +80,14 @@ export const Map: React.FC = (): JSX.Element => {
     animalIcon: Icon | null;
     foodIcon: Icon | null;
     myPositionIcon: Icon | null;
+    defaultIcon: Icon | null;
   }>({
     medicineIcon: null,
     natureIcon: null,
     animalIcon: null,
     foodIcon: null,
     myPositionIcon: null,
+    defaultIcon: null,
   });
 
   useEffect(() => {
@@ -101,6 +114,7 @@ export const Map: React.FC = (): JSX.Element => {
       .catch((error) => {
         console.error('Error loading map components:', error);
       });
+
   }, []);
 
   //  // Check if map is in view and request geolocation permission
@@ -131,6 +145,21 @@ export const Map: React.FC = (): JSX.Element => {
     );
   }, [userLocation?.lat, userLocation?.lng]);
 
+  useEffect(() => {
+    if (generatedTasks.length > 0) {
+      setTasks(generatedTasks);
+      const categories = Array.from(
+        new Set(generatedTasks.flatMap((task) => task.category))
+      );
+      setCategories(categories);
+      console.log('Generated tasks:', generatedTasks, 'Categories:', categories);
+    }
+  }, [generatedTasks]);
+
+
+
+  const { noPaginatedTasks } = useFilteredTasksSelector();
+
   if (
     !leafletComponents ||
     !mapIcons ||
@@ -157,11 +186,14 @@ export const Map: React.FC = (): JSX.Element => {
   } = leafletComponents;
 
   const renderTaskMarkers = (): JSX.Element[] => {
-    return generatedTasks.map((task, index) => (
+    return noPaginatedTasks.map((task) => (
       <Marker
-        key={`task-marker-${index}`}
+        key={`task-marker-${task.id}`}
         position={{ lat: task.lat, lng: task.lng }}
-        icon={getMarkerIcon(task.category[0] as MarkerCategoryEnum, mapIcons)}
+        icon={getMarkerIcon(
+          task.category?.[0] || MarkerCategoryEnum.Default,
+          mapIcons
+        )}
         eventHandlers={{
           click: () => {
             setSelectedTask({
@@ -169,6 +201,7 @@ export const Map: React.FC = (): JSX.Element => {
               lat: task.lat,
               lng: task.lng,
               title: task.title,
+              subtitle: task.subtitle,
               category: task.category,
               distance: task.distance,
               description: task.description,
@@ -200,7 +233,6 @@ export const Map: React.FC = (): JSX.Element => {
       />
     );
   };
-
   const MapClickHandler: React.FC<MapClickHandlerProps> = ({
     onClick,
     allowClickToAddMarker,
@@ -291,12 +323,15 @@ export const Map: React.FC = (): JSX.Element => {
           /> */}
           </MapContainer>
         </div>
-        {/* <SearchInput /> */}
-        <ButtonOpenTasks onClick={() => console.log('Open tasks clicked')} />
-        <FormSearch
-          toggleFilters={() => console.log('Toggle filters clicked')}
+        <ButtonOpenTasks
+          onClick={() => toggleTaskList()}
+          isOpen={taskListIsOpen}
         />
-        <TasksList tasks={generatedTasks} />
+        <FormSearch />
+        <div className="relative flex flex-col">
+          {taskListIsOpen && <TasksList />}
+          {filtersIsOpen && <Filters tasks={noPaginatedTasks} />}
+        </div>
       </div>
     </Container>
   );

@@ -6,6 +6,7 @@ export enum MarkerCategoryEnum {
   Animal = 'animal',
   Food = 'food',
   MyPosition = 'myPosition',
+  Default = 'default',
 }
 export interface ReactLeafletModule {
   MapContainer: typeof import('react-leaflet').MapContainer;
@@ -67,25 +68,19 @@ export interface IPropsFilterPanel {
   selectedCategoryButtons: React.ReactElement[];
   selectedDistanceButtons: React.ReactElement[];
 }
-export interface CategoryFilterProps {
-  selectedCategories: string[];
-  onCategoryToggle: (id: string) => void;
+export type IExtendedCategoryFilter = MarkerCategoryEnum | 'all' | null;
+export type IDistanceFilter = '1' | '5' | '10' | '20' | '50' | null;
+export interface IFilterStore {
+  choosenCategories: IExtendedCategoryFilter[];
+  distanceFilter: IDistanceFilter;
+  searchQuery: string;
+  sortBy: 'title' | 'distance';
 }
-export interface DistanceFilterProps {
-  selectedDistances: string[];
-  onDistanceToggle: (id: string) => void;
-}
-export interface FiltersProps
-  extends IPropsFilters,
-    CategoryFilterProps,
-    DistanceFilterProps {}
 
-export interface FilterButtonProps {
-  items: string[];
-  onRemove: (item: string) => void;
-  buttonClassName?: string;
-  keyPrefix?: string;
-}
+
+
+
+
 
 export interface MapClickHandlerProps {
   onClick: (latlng: LatLngLiteral) => void;
@@ -98,8 +93,9 @@ export interface CategoryItem {
   color: string;
 }
 
-export interface DistanceItem {
+export interface IDistanceItem {
   title: string;
+  value: string;
 }
 
 export type TranslationFunction = (key: string) => string;
@@ -117,8 +113,8 @@ export interface ITask {
 }
 
 export interface IExtendedITaskProps extends ITask {
-  isSelected: boolean;
-  onToggleDescription: () => void;
+  isSelected?: boolean;
+  onToggleDescription?: () => void;
 }
 
 export interface IIconData {
@@ -136,6 +132,7 @@ export type MapIcons = {
   animalIcon: Icon | null;
   foodIcon: Icon | null;
   myPositionIcon: Icon | null;
+  defaultIcon: Icon | null;
 };
 
 export type LeafletModule = {

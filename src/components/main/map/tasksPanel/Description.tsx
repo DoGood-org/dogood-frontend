@@ -1,9 +1,9 @@
 import { Close } from '@/components/icons';
+import { TaskCategoryIconsList } from '@/components/main/map/tasksPanel/TaskCategoryIconList';
 import { Button } from '@/components/ui/Button';
 import { IExtendedITaskProps } from '@/types/mapType';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
-import { CategoryIconsList } from '../filters/CategoryIconList';
 
 export const Description: FC<IExtendedITaskProps> = ({
   description,
@@ -28,7 +28,7 @@ export const Description: FC<IExtendedITaskProps> = ({
       <h3 className="mb-4 underline decoration-1">{subtitle}</h3>
       <p className="mb-5">{description}</p>
       <div className="flex justify-between">
-        <CategoryIconsList categories={category} />
+        <TaskCategoryIconsList categories={category} />
         {distance}
       </div>
       <div className="flex justify-between mb-8">

@@ -10,7 +10,7 @@ import HandHeart from '@/components/icons/HandHeart';
 
 import {
   CategoryItem,
-  DistanceItem,
+  IDistanceItem,
   TranslationFunction,
 } from '@/types/mapType';
 import { IHowItWorksItem } from '@/types/howItWorksItem';
@@ -26,12 +26,12 @@ export const getCategoryList = (t: TranslationFunction): CategoryItem[] => [
   { icon: FoodSvg, title: t('foodBtn'), color: 'bg-food' },
 ];
 
-export const getDistancesList = (t: TranslationFunction): DistanceItem[] => [
-  { title: t('1km') },
-  { title: t('3km') },
-  { title: t('5km') },
-  { title: t('10km') },
-  { title: t('neutroBtn') },
+export const getDistancesList = (t: TranslationFunction): IDistanceItem[] => [
+  { value: '1', title: t('1km') },
+  { value: '3', title: t('3km') },
+  { value: '5', title: t('5km') },
+  { value: '10', title: t('10km') },
+  { value: 'all', title: t('neutroBtn') },
 ];
 
 export const getHowItWorks = (t: TranslationFunction): IHowItWorksItem[] => [

@@ -2,17 +2,9 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
-import { MarkerCategoryEnum, TCustomMarker } from '@/types/mapType';
+import { IExtendedITaskProps, TCustomMarker } from '@/types/mapType';
 
-type TTask = {
-  id: string;
-  lat: number;
-  lng: number;
-  category: MarkerCategoryEnum[];
-  title: string;
-  description?: string;
-  distance?: string;
-};
+
 
 type TMapState = {
   map: LeafletMap | null;
@@ -22,8 +14,11 @@ type TMapState = {
 
   userLocation: LatLngLiteral | null;
   locationError: string | null;
-  selectedTask: TTask | null;
+  selectedTask: IExtendedITaskProps | null;
   customMarkers: TCustomMarker[] | [];
+
+  taskListIsOpen: boolean;
+  filtersIsOpen: boolean;
 };
 
 type TMapActions = {
@@ -31,9 +26,13 @@ type TMapActions = {
   setHasAgreedToLocation: (value: boolean) => void;
   setShowGeolocationPopup: (value: boolean) => void;
   setLocationError: (error: string | null) => void;
+
+  setInputActive: (isActive: boolean) => void;
   setUserLocation: (loc: LatLngLiteral) => void;
-  setSelectedTask: (task: TTask | null) => void;
-  setCustomMarkers: (markers: TCustomMarker[]) => void;
+  setSelectedTask: (task: IExtendedITaskProps | null) => void;
+  setCustomMarkers: (markers: TCustomMarker[]) => void;  
+  toggleTaskList: () => void; 
+  toggleFilters: () => void;
   addMarker: (loc: TCustomMarker) => void;
   removeMarker: (loc: TCustomMarker) => void;
   checkLocationPermission: () => void;
@@ -84,6 +83,8 @@ export const useMapStore = create<TMapState & TMapActions>()(
       hasAgreedToLocation: false,
       showGeolocationPopup: false,
       inputActive: false,
+      taskListIsOpen: false,
+      filtersIsOpen: false,
 
       setMap: (map) => set({ map }),
       setUserLocation: (loc) => set({ userLocation: loc }),
@@ -173,6 +174,18 @@ export const useMapStore = create<TMapState & TMapActions>()(
                 : 'Failed to retrieve geolocation from all sources',
           });
         }
+      },
+      setInputActive: (isActive): void => set({ inputActive: isActive }),
+    
+      toggleTaskList: (): void => {
+        set((state) => ({
+          taskListIsOpen: !state.taskListIsOpen,
+        }));
+      },
+      toggleFilters: (): void => {
+        set((state) => ({
+          filtersIsOpen: !state.filtersIsOpen,
+        }));
       },
     }),
     {
