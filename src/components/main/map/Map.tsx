@@ -48,7 +48,6 @@ export const Map: React.FC = (): JSX.Element => {
     setUserLocation,
     customMarkers,
     requestGeolocation,
-    setSelectedTask,
     hasAgreedToLocation,
     setHasAgreedToLocation,
     showGeolocationPopup,
@@ -182,19 +181,9 @@ export const Map: React.FC = (): JSX.Element => {
         )}
         eventHandlers={{
           click: () => {
-            setSelectedTask({
-              id: task.id,
-              lat: task.lat,
-              lng: task.lng,
-              title: task.title,
-              subtitle: task.subtitle,
-              category: task.category,
-              distance: task.distance,
-              description: task.description,
-            });
-            console.log('Task selected:', task);
+            console.log('Task clicked:', task);
             <div className="text-red-500 p-2 bg-white rounded shadow mb-2">
-              Task selected: {task.title}
+              Task clicked: {task.title}
             </div>;
           },
         }}
@@ -239,7 +228,7 @@ export const Map: React.FC = (): JSX.Element => {
     return null;
   };
   const handleMapClick = (latlng: LatLngLiteral): void => {
-    const newMarker = { ...latlng, category: MarkerCategoryEnum.Animal };
+    const newMarker = { ...latlng, category: MarkerCategoryEnum.Default };
     if (!isMarkerExists(customMarkers, newMarker)) {
       addMarker(newMarker);
     }
@@ -308,15 +297,27 @@ export const Map: React.FC = (): JSX.Element => {
           /> */}
           </MapContainer>
         </div>
-        <ButtonOpenTasks
-          onClick={() => toggleTaskList()}
-          isOpen={taskListIsOpen}
-        />
-        <FormSearch />
-        <div className="relative flex flex-col  lg:absolute lg:top-36 lg:left-32 lg:z-[500] lg:h-[722px] bg-red-500 ">
-          {taskListIsOpen && <TasksList />}
-          {filtersIsOpen && <Filters tasks={noPaginatedTasks} />}
+
+        <div className="flex flex-col relative lg:absolute lg:flex lg:top-12 lg:left-32 lg:z-[500]">
+          <ButtonOpenTasks
+            onClick={() => toggleTaskList()}
+            isOpen={taskListIsOpen}
+            className="mx-auto mb-2 lg:mb-0 lg:absolute lg:z-[500] lg:top-18 lg:left-1/2 lg:translate-x-[-50%] lg:bg-card lg:w-16"
+          />
+          <FormSearch />
         </div>
+        {(filtersIsOpen || taskListIsOpen) && (
+          <div
+            className={`
+    relative flex flex-col bg-card z-[1000]
+    w-full h-[675px] lg:mt-0
+    lg:absolute lg:top-36 lg:left-32 lg:w-[487px] lg:h-[790px] lg:rounded-md lg:shadow-xl
+  `}
+          >
+            {filtersIsOpen && <Filters tasks={noPaginatedTasks} />}
+            {taskListIsOpen && <TasksList />}
+          </div>
+        )}
       </div>
     </Container>
   );

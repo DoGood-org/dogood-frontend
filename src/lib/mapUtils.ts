@@ -13,7 +13,7 @@ export const createIcon = (
 ): ReturnType<LeafletType['icon']> => {
   return L.icon({
     iconUrl: src,
-    iconSize: [30, 35],
+    iconSize: [35,45],
   });
 };
 
@@ -85,7 +85,6 @@ export const isMarkerExists = (
       Math.abs(marker.lng - newLatlng.lng) < tolerance
   );
 };
-
 /**
  * Utility function to remove a marker at specific coordinates
  * @param markers Array of existing markers

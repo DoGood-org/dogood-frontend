@@ -593,6 +593,29 @@ html {
       line-height: var(--leading-h3-d);
     }
   }
+
+  /* Custom scrollbar styles  for tasks*/
+  .custom-scrollbar-tasks::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  .custom-scrollbar-tasks::-webkit-scrollbar-track {
+    background-color: var(--color-map-btn-icon);
+    margin: 20px !important;
+  }
+
+  .custom-scrollbar-tasks::-webkit-scrollbar-thumb {
+    background: var(--color-map-btn);
+    border: 4px solid transparent;
+    border-radius: 8px;
+    background-clip: padding-box;
+  }
+
+  .custom-scrollbar-tasks::-webkit-scrollbar-thumb:hover {
+    background: var(--color-map-btn);
+    background-clip: padding-box;
+  }
+
 }
 
 /* Firefox specific styles */
@@ -601,11 +624,18 @@ html {
     scrollbar-width: 14px;
     scrollbar-color: var(--btn) transparent;
   }
+  .custom-scrollbar-tasks{
+    scrollbar-width: 12px;
+    scrollbar-color: var(--map-btn) transparent;
+  }
 }
 
 /* Edge Legacy fix */
 @supports (-ms-ime-align: auto) {
   .custom-scrollbar {
+    -ms-overflow-style: none;
+  }
+  .custom-scrollbar-tasks {
     -ms-overflow-style: none;
   }
 }

@@ -24,10 +24,8 @@ type TMapActions = {
   setHasAgreedToLocation: (value: boolean) => void;
   setShowGeolocationPopup: (value: boolean) => void;
   setLocationError: (error: string | null) => void;
-
   setInputActive: (isActive: boolean) => void;
   setUserLocation: (loc: LatLngLiteral) => void;
-  setSelectedTask: (task: IExtendedITaskProps | null) => void;
   setCustomMarkers: (markers: TCustomMarker[]) => void;
   toggleTaskList: () => void;
   toggleFilters: () => void;
@@ -86,7 +84,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
 
       setMap: (map) => set({ map }),
       setUserLocation: (loc) => set({ userLocation: loc }),
-      setSelectedTask: (task) => set({ selectedTask: task }),
       setLocationError: (error) => set({ locationError: error }),
       setCustomMarkers: (markers) => set({ customMarkers: markers }),
 
