@@ -14,9 +14,11 @@ export const ButtonLocation = (): JSX.Element => {
     <button
       type="button"
       onClick={onClickHandler}
-      className="w-11 h-11 mx-auto p-0 flex items-center justify-center rounded-sm bg-[var(--map-btn-bg)]"
+      className="z-150 w-11 h-11 flex items-center justify-center rounded-sm bg-[var(--map-btn-bg)] cursor-pointer border-[var(--map-btn-border)]"
     >
-      <GpsIcon className=" w-6 h-6 text-icon-color" />
+      <span className="text-[var(--map-btn-icon)]">
+        <GpsIcon className=" w-6 h-6 " />
+      </span>
     </button>
   );
 };

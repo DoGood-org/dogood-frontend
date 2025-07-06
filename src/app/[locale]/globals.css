@@ -131,7 +131,7 @@
   --btn-outline-hover: #4caf50;
   --btn-outline-active: #0a6f3c;
   --map-btn-bg: #999999;
-  --map-btn-icon: #010101;
+  --map-btn-icon: #171b19;
 
   --bg-icon: #171b19;
   --icon-color: #f1f1f1;
@@ -625,33 +625,9 @@ html {
 }
 
 /* map */
-.leaflet-bottom.leaflet-right {
-  display: flex;
-}
-.leaflet-control-zoom.leaflet-bar.leaflet-control {
-  display: none;
-}
-@media screen and (min-width: 90rem) {
-  .leaflet-bottom.leaflet-right {
-    display: flex;
-    align-items: center;
-  }
-  .leaflet-control-zoom.leaflet-bar.leaflet-control {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
 
-/* Zoom Control */
-.leaflet-control-zoom.leaflet-bar.leaflet-control {
-  display: none;
-}
-@media screen and (min-width: 90rem) {
-  .leaflet-control-zoom.leaflet-bar.leaflet-control {
-    display: flex;
-  }
-}
+
+
 
 /* Layers Control */
 .leaflet-control-layers.leaflet-control.leaflet-control-layers-expanded {
@@ -659,6 +635,7 @@ html {
   border: 2px solid var(--map-btn-bg);
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--map-btn-icon);
 }
 .leaflet-top.leaflet-right {
   display: flex;
@@ -668,11 +645,7 @@ html {
 
 .leaflet-control-layers-toggle {
   display: flex;
-  position: relative;
-
   background-color: var(--map-btn-bg);
-  border: 2px solid var(--map-btn-bg);
-  /* border-radius: 4px; */
   overflow: hidden;
 }
 .leaflet-control-layers-toggle {
@@ -680,59 +653,54 @@ html {
     padding: 0;
     margin: 0;
     background-color: var(--map-btn-bg);
-    border: 2px solid var(--map-btn-bg);
-    text-decoration: none;
+    text-decoration: none !important;
     border-radius: 4px;
     overflow: hidden;
   }
 }
-/* .dark .leaflet-control-layers-toggle{
-  a{
-    background-color: #303030;
-    border: 2px solid #303030;
-    text-decoration: none;
-    border-radius: 4px;
-    width:48px;
-    height: 48px;
-  }
-} */
-.leaflet-control-layers label {
-  display: flex;
+
+.leaflet-control-layers-base label span{
+display: flex;
   align-items: center;
-  font-size: 14px;
-  gap: 6px;
+
+  padding: 2px;
   font-family: var(--font-montserrat);
-  color: var(--foreground);
+
+  color: var(--map-btn-icon);
   cursor: pointer;
   font-weight: 400;
+
+ 
 }
-.leaflet-control-layers-selector[type='radio'] {
+
+
+.leaflet-control-layers input[type="radio"] {
   appearance: none;
-  background-color: transparent;
-  padding: 1px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
   width: 16px;
   height: 16px;
+  border: 2px solid var(--map-btn-icon);
   border-radius: 50%;
-  border: 2px solid var(--foreground);
+  background-color: transparent;
   cursor: pointer;
-  position: relative;
-  margin-right: 6px;
-  vertical-align: middle;
-  transition: all 0.2s ease;
+  position: relative; 
+  padding: 0;
+  margin-right: 4px;
 }
-.leaflet-control-layers-selector[type='radio']::before {
+
+.leaflet-control-layers input[type="radio"]::before {
   content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 8px;
   height: 8px;
-  background-color: var(--foreground);
+  box-shadow: 0 0 0 2px var(--map-btn-bg);
+  background-color: var(--map-btn-icon);
   border-radius: 50%;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  position: absolute;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.2s ease;
 }
-.leaflet-control-layers-selector[type='radio']:checked::before {
-  opacity: 1;
+
+.leaflet-control-layers input[type="radio"]:checked::before {
+  transform: translate(-50%, -50%) scale(1);
 }

@@ -28,9 +28,9 @@ export const FormSearch = (): JSX.Element => {
   };
 
   return (
-    <div className="border bg-card lg:bg-transparent lg:py-0 lg:absolute lg:flex lg:top-12 lg:left-32 lg:z-[500]">
+    <div className="border bg-card lg:py-0 lg:absolute lg:flex lg:top-12 lg:left-32 lg:z-[500]">
       <form onSubmit={(e) => e.preventDefault()}>
-        <div className="relative overflow-hidden rounded-sm flex items-center justify-center mx-auto w-full md:w-[608px] lg:w-[487px] p-3">
+        <div className="relative bg-card overflow-hidden rounded-sm flex items-center justify-center mx-auto w-full md:w-[608px] lg:w-[487px] p-3">
           <Search className="absolute left-5  text-muted-foreground stroke-foreground w-6 h-6 lg:w-[24px] lg:h-[24px]" />
           <Input
             {...register('search')}

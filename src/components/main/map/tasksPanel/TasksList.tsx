@@ -9,8 +9,11 @@ export const TasksList = (): JSX.Element => {
   const { paginatedTasks } = useFilteredTasksSelector();
 
   return (
-    <div className=" lg:flex lg:absolute lg:z-[450] lg:top-36 lg:left-32">
-      <div className="mt-4 relative w-full lg:w-[487px] h-[660px] overflow-y-auto shadow-lg custom-scrollbar">
+    <div className="">
+      <div
+        className="mt-4 relative w-full h-[660px] overflow-y-auto shadow-lg custom-scrollbar
+      lg:w-[487px] lg:h-[722px] lg:mt-0 "
+      >
         <div className="w-full bg-card  pl-8 pr-[20px] pb-8 lg:p-8 lg:rounded-xl">
           <h2 className="text-h3 mb-6">{t('tasksTitle')}</h2>
           <ul className="list-none">

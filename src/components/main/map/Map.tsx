@@ -20,6 +20,7 @@ import {
 import {
   ButtonOpenTasks,
   Container,
+  CustomControl,
   Filters,
   generateTasks,
   TasksList,
@@ -261,8 +262,8 @@ export const Map: React.FC = (): JSX.Element => {
   };
 
   return (
-    <Container className="mx-auto relative flex flex-col ">
-      <div className="flex flex-col justify-center rounded-[10px] bg-card ">
+    <Container className="mx-auto flex flex-col ">
+      <div className="relative flex flex-col rounded-[12px] overflow-hidden bg-card ">
         <div
           ref={mapContainerRef}
           className="block overflow-hidden border-background text-foreground rounded-t-[10px] h-[547px] lg:h-[919px]"
@@ -314,8 +315,7 @@ export const Map: React.FC = (): JSX.Element => {
             {/* {renderCustomMarkers()} */}
             {renderUserLocation()}
 
-            <ZoomControl position="bottomright" />
-            <CustomButtonControl position="bottomright" />
+            <CustomControl />
 
             {/* <CustomFormControl
             visible={true}
@@ -328,7 +328,7 @@ export const Map: React.FC = (): JSX.Element => {
           isOpen={taskListIsOpen}
         />
         <FormSearch />
-        <div className="relative flex flex-col">
+        <div className="relative flex flex-col  lg:absolute lg:top-36 lg:left-32 lg:z-[500] lg:h-[722px] bg-red-500 ">
           {taskListIsOpen && <TasksList />}
           {filtersIsOpen && <Filters tasks={noPaginatedTasks} />}
         </div>

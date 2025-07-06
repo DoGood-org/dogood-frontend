@@ -22,7 +22,7 @@ export const Filters: FC<Props> = ({ tasks }): JSX.Element => {
   const { toggleFilters } = useMapStore();
 
   return (
-    <div className="absolute  z-[1000] bg-card px-3 py-6 lg:top-24 lg:left-0 lg:w-[487px] lg:h-[722px]  lg:px-[46px] lg:py-8 rounded-sm">
+    <div className="absolute z-[1000] bg-card px-3 py-6 lg:top-0 lg:left-0 lg:w-[487px] lg:h-full  lg:px-[46px] lg:py-8 rounded-sm">
       <div className="flex justify-between align-text-bottom mb-3">
         <h3 className="text-h3">{t('title')}</h3>
 
