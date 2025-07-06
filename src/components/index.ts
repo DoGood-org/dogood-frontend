@@ -59,6 +59,7 @@ export * from './main/map/filters/FilterPannel';
 export * from './main/map/filters/Filters';
 export * from './main/map/filters/FormSearch';
 export * from './main/map/filters/LineDivider';
+export * from './main/map/tasksPanel/AnimatedDrawler';
 export * from './main/map/tasksPanel/ButtonOpenTasks';
 export * from './main/map/tasksPanel/Description';
 export * from './main/map/tasksPanel/TaskCategoryIconList';

@@ -13,7 +13,7 @@ export const createIcon = (
 ): ReturnType<LeafletType['icon']> => {
   return L.icon({
     iconUrl: src,
-    iconSize: [35,45],
+    iconSize: [35, 45],
   });
 };
 

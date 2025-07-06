@@ -615,7 +615,6 @@ html {
     background: var(--color-map-btn);
     background-clip: padding-box;
   }
-
 }
 
 /* Firefox specific styles */
@@ -624,7 +623,7 @@ html {
     scrollbar-width: 14px;
     scrollbar-color: var(--btn) transparent;
   }
-  .custom-scrollbar-tasks{
+  .custom-scrollbar-tasks {
     scrollbar-width: 12px;
     scrollbar-color: var(--map-btn) transparent;
   }
