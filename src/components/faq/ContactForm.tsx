@@ -20,10 +20,36 @@ export const ContactForm = (): React.ReactElement => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({ mode: 'onChange' });
+  const [status, setStatus] = useState<'success' | 'error' | null>(null);
+  const onSubmit = async (data: FormData): Promise<void> => {
+    console.log('Дані форми:', data);
+    try {
+      await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const success = Math.random() > 0.3; // поки що рандомно, щоб показати статус
+          // зразок:
+          // await fetch('/api/send', {
+          //   method: 'POST',
+          //   body: JSON.stringify(data),
+          // });
 
-  const onSubmit = (data: FormData): void => {
-    console.log('Form submitted:', data);
+          if (success) resolve('OK');
+          else reject('ERROR');
+        }, 1000);
+      });
+
+      setStatus('success');
+    } catch {
+      setStatus('error');
+    }
+
+    setTimeout(() => {
+      (
+        document.getElementById('contact-form') as HTMLFormElement | null
+      )?.reset();
+    }, 1000);
+    setTimeout(() => setStatus(null), 3000);
   };
   const messageValue = useWatch({ name: 'interest', control });
   const [charCount, setCharCount] = useState(0);
@@ -96,10 +122,20 @@ export const ContactForm = (): React.ReactElement => {
             <input
               id="phone"
               type="tel"
-              {...register('phone')}
+              {...register('phone', {
+                pattern: {
+                  value: /^[0-9+\-()\s]+$/,
+                  message: contact.phoneError,
+                },
+              })}
               placeholder={contact.phoneText}
               className="placeholder:italic w-full pl-2 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-p2-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
             />
+            {errors.phone && (
+              <span className="absolute left-2 bottom-[-20px] text-red-500 text-sm pl-2">
+                {errors.phone.message}
+              </span>
+            )}
           </div>
         </div>
         <div className="relative mb-[25px]">
@@ -137,6 +173,15 @@ export const ContactForm = (): React.ReactElement => {
         >
           {downText.btn}
         </Button>
+        {status && (
+          <div
+            className={`fixed top-4 right-4 px-6 py-4 rounded-md shadow-md z-9999 text-white transition-all duration-300 ${
+              status === 'success' ? 'bg-green-600' : 'bg-red-600'
+            }`}
+          >
+            {status === 'success' ? downText.success : downText.error}
+          </div>
+        )}
       </div>
     </div>
   );
