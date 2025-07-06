@@ -11,7 +11,6 @@ import {
 import { Icon, LatLngLiteral } from 'leaflet';
 
 import {
-  IExtendedCategoryFilter,
   LeafletType,
   MapClickHandlerProps,
   MarkerCategoryEnum,
@@ -66,7 +65,6 @@ export const Map: React.FC = (): JSX.Element => {
     taskListIsOpen,
     toggleTaskList,
     filtersIsOpen,
-    toggleFilters,
   } = useMapStore();
 
   const { setTasks } = useTaskStore();
@@ -114,7 +112,6 @@ export const Map: React.FC = (): JSX.Element => {
       .catch((error) => {
         console.error('Error loading map components:', error);
       });
-
   }, []);
 
   //  // Check if map is in view and request geolocation permission
@@ -152,11 +149,14 @@ export const Map: React.FC = (): JSX.Element => {
         new Set(generatedTasks.flatMap((task) => task.category))
       );
       setCategories(categories);
-      console.log('Generated tasks:', generatedTasks, 'Categories:', categories);
+      console.log(
+        'Generated tasks:',
+        generatedTasks,
+        'Categories:',
+        categories
+      );
     }
   }, [generatedTasks]);
-
-
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
 

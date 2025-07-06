@@ -1,6 +1,5 @@
 import { ITask, MarkerCategoryEnum } from '@/types/mapType';
 
-
 // export const TASKS = [
 //   {
 //     id: '1',
@@ -126,7 +125,11 @@ const DESCRIPTIONS = [
 ];
 
 const CATEGORIES = [
-  [MarkerCategoryEnum.Medicine, MarkerCategoryEnum.Nature, MarkerCategoryEnum.Animal],
+  [
+    MarkerCategoryEnum.Medicine,
+    MarkerCategoryEnum.Nature,
+    MarkerCategoryEnum.Animal,
+  ],
   [MarkerCategoryEnum.Nature],
   [MarkerCategoryEnum.Animal, MarkerCategoryEnum.Medicine],
   [MarkerCategoryEnum.Food],
@@ -137,7 +140,7 @@ const CATEGORIES = [
   [MarkerCategoryEnum.Medicine],
   [MarkerCategoryEnum.Animal, MarkerCategoryEnum.Medicine],
   [MarkerCategoryEnum.Food, MarkerCategoryEnum.Nature],
-  [MarkerCategoryEnum.Medicine, MarkerCategoryEnum.Food], 
+  [MarkerCategoryEnum.Medicine, MarkerCategoryEnum.Food],
   [MarkerCategoryEnum.Nature, MarkerCategoryEnum.Animal],
   [MarkerCategoryEnum.Food, MarkerCategoryEnum.Medicine],
 ];
@@ -159,8 +162,7 @@ export function generateTasks(userLat: number, userLng: number): ITask[] {
       lat,
       lng,
       description: DESCRIPTIONS[i],
-      isSelected: false, 
+      isSelected: false,
     };
   });
 }
-

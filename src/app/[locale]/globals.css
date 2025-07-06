@@ -35,7 +35,6 @@
   --color-icon-color: var(--icon-color);
   --color-image-bg: var(--image-bg);
 
-
   /* buttons */
   --color-border: var(--border);
   --color-btn: var(--btn);
@@ -625,8 +624,6 @@ html {
   transition: transform 0.3s ease;
 }
 
-
-
 /* map */
 .leaflet-bottom.leaflet-right {
   display: flex;
@@ -656,7 +653,6 @@ html {
   }
 }
 
-
 /* Layers Control */
 .leaflet-control-layers.leaflet-control.leaflet-control-layers-expanded {
   background-color: var(--map-btn-bg);
@@ -679,8 +675,8 @@ html {
   /* border-radius: 4px; */
   overflow: hidden;
 }
-.leaflet-control-layers-toggle{
-  a{
+.leaflet-control-layers-toggle {
+  a {
     padding: 0;
     margin: 0;
     background-color: var(--map-btn-bg);
@@ -688,10 +684,7 @@ html {
     text-decoration: none;
     border-radius: 4px;
     overflow: hidden;
-
-  
   }
-
 }
 /* .dark .leaflet-control-layers-toggle{
   a{
@@ -743,4 +736,3 @@ html {
 .leaflet-control-layers-selector[type='radio']:checked::before {
   opacity: 1;
 }
-

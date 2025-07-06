@@ -1,9 +1,8 @@
 import React from 'react';
 
-
-type Props={
+type Props = {
   className?: string;
-}
+};
 export const GpsIcon = ({ className }: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

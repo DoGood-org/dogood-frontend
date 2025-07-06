@@ -9,7 +9,7 @@ export const useAvailableCategories = (): string[] => {
     tasks.forEach((task) => {
       task.category.forEach((cat) => categorySet.add(cat));
     });
-    
+
     return Array.from(categorySet);
   }, [tasks]);
 };

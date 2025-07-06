@@ -2,7 +2,6 @@ import { GpsIcon } from '@/components/icons/GPSicon';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { JSX } from 'react';
 
-
 export const ButtonLocation = (): JSX.Element => {
   const { requestGeolocation } = useMapStore();
 

@@ -24,7 +24,7 @@ export const initializeMapIcons = (L: LeafletType): MapIcons => {
     animalIcon: createIcon(L, AnimalMarker.src),
     foodIcon: createIcon(L, FoodMarker.src),
     myPositionIcon: createIcon(L, MyPositionMarker.src),
-    defaultIcon: createIcon(L, DefaultMarker.src)
+    defaultIcon: createIcon(L, DefaultMarker.src),
   };
 };
 
@@ -45,7 +45,7 @@ export const getMarkerIcon = (
     icons.animalIcon,
     icons.foodIcon,
     icons.myPositionIcon,
-    icons.defaultIcon
+    icons.defaultIcon,
   ];
 
   if (requiredIcons.some((icon) => !icon)) {

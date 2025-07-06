@@ -1,8 +1,9 @@
-type Props={
+import { JSX } from 'react';
+
+type Props = {
   className?: string;
+};
 
-}
-
-export const LineDivider = ({ className }: Props) => {
+export const LineDivider = ({ className }: Props): JSX.Element => {
   return <div className={`${className}`} />;
 };

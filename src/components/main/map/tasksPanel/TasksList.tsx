@@ -4,12 +4,9 @@ import React, { JSX } from 'react';
 import { TaskItem } from '@/components';
 import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
 
-
-
-export const TasksList= (): JSX.Element => {
+export const TasksList = (): JSX.Element => {
   const t = useTranslations('map');
   const { paginatedTasks } = useFilteredTasksSelector();
-
 
   return (
     <div className=" lg:flex lg:absolute lg:z-[450] lg:top-36 lg:left-32">
@@ -19,10 +16,7 @@ export const TasksList= (): JSX.Element => {
           <ul className="list-none">
             {paginatedTasks.map((task) => (
               <li key={task.id} className="mb-6 last:mb-0">
-                <TaskItem
-                  {...task}
-             
-                />
+                <TaskItem {...task} />
               </li>
             ))}
           </ul>

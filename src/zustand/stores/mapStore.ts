@@ -4,8 +4,6 @@ import { persist } from 'zustand/middleware';
 import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
 import { IExtendedITaskProps, TCustomMarker } from '@/types/mapType';
 
-
-
 type TMapState = {
   map: LeafletMap | null;
   hasAgreedToLocation: boolean;
@@ -30,8 +28,8 @@ type TMapActions = {
   setInputActive: (isActive: boolean) => void;
   setUserLocation: (loc: LatLngLiteral) => void;
   setSelectedTask: (task: IExtendedITaskProps | null) => void;
-  setCustomMarkers: (markers: TCustomMarker[]) => void;  
-  toggleTaskList: () => void; 
+  setCustomMarkers: (markers: TCustomMarker[]) => void;
+  toggleTaskList: () => void;
   toggleFilters: () => void;
   addMarker: (loc: TCustomMarker) => void;
   removeMarker: (loc: TCustomMarker) => void;
@@ -176,7 +174,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
         }
       },
       setInputActive: (isActive): void => set({ inputActive: isActive }),
-    
+
       toggleTaskList: (): void => {
         set((state) => ({
           taskListIsOpen: !state.taskListIsOpen,

@@ -10,17 +10,13 @@ type Props = {
 };
 export const CategoryFilter = ({ categories }: Props): JSX.Element | null => {
   const t = useTranslations('map');
-
   const { toggleCategory, choosenCategories } = useFilterStore();
-  console.log('choosenCategories', choosenCategories);
-
   return (
     <div className="mb-6">
       <h4 className="text-base">{t('category')}</h4>
       <LineDivider className={'flex w-full mb-4 bg-text-gray h-[1px]'} />
-
       <ul className="flex gap-4 flex-wrap w-full mb-6">
-        {categories.map((category) => {
+        {categories.map((category): JSX.Element => {
           return (
             <CategoryLabel
               key={category}
@@ -36,14 +32,14 @@ export const CategoryFilter = ({ categories }: Props): JSX.Element | null => {
         })}
 
         {categories.length > 0 &&
-          (() => {
+          ((): JSX.Element => {
             return (
               <CategoryLabel
                 category={'all'}
                 selected={choosenCategories.includes(
                   'all' as IExtendedCategoryFilter
                 )}
-                onCategoryToggle={() => {
+                onCategoryToggle={(): void => {
                   toggleCategory('all' as IExtendedCategoryFilter);
                 }}
               />

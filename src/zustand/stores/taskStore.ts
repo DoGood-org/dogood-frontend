@@ -2,10 +2,6 @@ import { create } from 'zustand';
 import { IExtendedITaskProps } from '@/types/mapType';
 import { persist } from 'zustand/middleware';
 
-
-
-
-
 interface TTaskState {
   tasks: IExtendedITaskProps[];
   selectedTasks: IExtendedITaskProps[];
@@ -17,7 +13,6 @@ interface TTaskActions {
   toggleTaskDescription: (taskId: string) => void;
 }
 
-
 type TTaskStore = TTaskState & TTaskActions;
 
 export const useTaskStore = create<TTaskStore>()(
@@ -25,9 +20,9 @@ export const useTaskStore = create<TTaskStore>()(
     (set, get) => ({
       tasks: [],
       selectedTasks: [],
-      setTasks: (tasks) => set({ tasks }),
-      setSelectedTasks: (tasks) => set({ selectedTasks: tasks }),
-      toggleTaskDescription: (taskId) => {
+      setTasks: (tasks): void => set({ tasks }),
+      setSelectedTasks: (tasks): void => set({ selectedTasks: tasks }),
+      toggleTaskDescription: (taskId): void => {
         const updated = get().tasks.map((task) => ({
           ...task,
           isSelected: task.id === taskId ? !task.isSelected : task.isSelected,

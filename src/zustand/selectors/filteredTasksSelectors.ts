@@ -1,8 +1,14 @@
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMemo } from 'react';
+import { IExtendedITaskProps } from '@/types/mapType';
 
-export const useFilteredTasksSelector = () => {
+export const useFilteredTasksSelector = (): {
+  paginatedTasks: IExtendedITaskProps[];
+  totalItems: number;
+  totalPages: number;
+  noPaginatedTasks: IExtendedITaskProps[];
+} => {
   const tasks = useTaskStore((state) => state.tasks);
   const choosenCategories = useFilterStore((state) => state.choosenCategories);
   const distanceFilter = useFilterStore((state) => state.distanceFilter);
@@ -30,19 +36,37 @@ export const useFilteredTasksSelector = () => {
 
       return isCategoryMatch && isDistanceMatch && isSearchMatch;
     });
- 
+
     if (sortBy === 'title') {
       tasksWithFilters.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortBy === 'distance') {
-      tasksWithFilters.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
+      tasksWithFilters.sort(
+        (a, b) => parseFloat(a.distance) - parseFloat(b.distance)
+      );
     }
     const totalItems = tasksWithFilters.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const startIdx = (currentPage - 1) * itemsPerPage;
-    const paginatedTasks = tasksWithFilters.slice(startIdx, startIdx + itemsPerPage);
+    const paginatedTasks = tasksWithFilters.slice(
+      startIdx,
+      startIdx + itemsPerPage
+    );
 
-    return { paginatedTasks, totalItems, totalPages, noPaginatedTasks: tasksWithFilters };
-  }, [tasks, choosenCategories, distanceFilter, searchQuery, sortBy, currentPage, itemsPerPage]);
+    return {
+      paginatedTasks,
+      totalItems,
+      totalPages,
+      noPaginatedTasks: tasksWithFilters,
+    };
+  }, [
+    tasks,
+    choosenCategories,
+    distanceFilter,
+    searchQuery,
+    sortBy,
+    currentPage,
+    itemsPerPage,
+  ]);
 
   return filteredTasks;
 };

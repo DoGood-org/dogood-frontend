@@ -81,4 +81,3 @@ export const useFilterStore = create<TFilterStore>()(
     { name: 'task-filters' }
   )
 );
-

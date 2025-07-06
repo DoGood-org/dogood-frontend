@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/Button";
-import { JSX } from "react";
+import { Button } from '@/components/ui/Button';
+import { JSX } from 'react';
 import { Animal, Food, Medicine, Nature } from '@/components/icons';
-import { IIconMap } from "@/types/mapType";
-
+import { IIconMap } from '@/types/mapType';
 
 export const iconFilterMap: IIconMap = {
   medicine: {
@@ -23,29 +22,25 @@ export const iconFilterMap: IIconMap = {
   },
 };
 
-
-type Props={
-  category:string,
+type Props = {
+  category: string;
   selectedCategories: string[];
   onCategoryToggle: (id: string) => void;
-}
+};
 export const FilterLabelCategory: React.FC<Props> = ({
   category,
   selectedCategories,
   onCategoryToggle,
 }: Props): JSX.Element => {
   return (
-    <li >
+    <li>
       <Button
         variant="tag"
         size="xl"
         className={` ${iconFilterMap[category].color} flex gap-[10px] w-[140px] md:[167px] lg:[136px] text-sm ${
-          selectedCategories.includes(category)
-            ? 'clickedBtn text-sm'
-            : ''
+          selectedCategories.includes(category) ? 'clickedBtn text-sm' : ''
         }`}
         onClick={() => onCategoryToggle(category)}
-      
       >
         {iconFilterMap[category].icon}
         {category}
@@ -53,7 +48,3 @@ export const FilterLabelCategory: React.FC<Props> = ({
     </li>
   );
 };
-
-
-     
-

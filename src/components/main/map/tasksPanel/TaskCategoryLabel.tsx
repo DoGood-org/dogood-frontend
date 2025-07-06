@@ -23,7 +23,9 @@ type CategoryLabelProps = {
   category: string;
 };
 
-export const TaskCategoryLabel: React.FC<CategoryLabelProps> = ({ category }) => {
+export const TaskCategoryLabel: React.FC<CategoryLabelProps> = ({
+  category,
+}) => {
   const iconData = taskIconMap[category as keyof typeof taskIconMap];
   if (!iconData)
     return (

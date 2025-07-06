@@ -25,14 +25,17 @@ export const icons: IIconMap = {
   },
 };
 
-
 type CategoryLabelProps = {
   category: string;
   selected?: boolean;
   onCategoryToggle?: (category: string) => void;
 };
 
-export const CategoryLabel: React.FC<CategoryLabelProps> = ({ category, selected, onCategoryToggle }) => {
+export const CategoryLabel: React.FC<CategoryLabelProps> = ({
+  category,
+  selected,
+  onCategoryToggle,
+}) => {
   const iconData = icons[category as keyof typeof icons];
   if (!iconData)
     return (
@@ -47,15 +50,11 @@ export const CategoryLabel: React.FC<CategoryLabelProps> = ({ category, selected
         variant="tag"
         size="xl"
         className={` ${icons[category].color} flex gap-[10px] w-[140px] md:[167px] lg:[136px] text-sm ${
-          selected
-            ? 'clickedBtn text-sm'
-            : ''
+          selected ? 'clickedBtn text-sm' : ''
         }`}
         onClick={() => onCategoryToggle && onCategoryToggle(category)}
       >
-        <span>
-          {icons[category].icon}
-        </span>
+        <span>{icons[category].icon}</span>
 
         <span>{category}</span>
       </Button>

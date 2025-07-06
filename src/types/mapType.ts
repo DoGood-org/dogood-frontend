@@ -77,11 +77,6 @@ export interface IFilterStore {
   sortBy: 'title' | 'distance';
 }
 
-
-
-
-
-
 export interface MapClickHandlerProps {
   onClick: (latlng: LatLngLiteral) => void;
   allowClickToAddMarker?: boolean;

@@ -19,10 +19,10 @@ export const FormSearch = (): JSX.Element => {
       setSearchQuery(searchValue || '');
     }, 500);
 
-    return () => clearTimeout(handler);
+    return (): void => clearTimeout(handler);
   }, [searchValue, setSearchQuery]);
 
-  const handleClear = () => {
+  const handleClear = (): void => {
     reset({ search: '' });
     setSearchQuery('');
   };
