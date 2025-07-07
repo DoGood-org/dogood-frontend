@@ -21,6 +21,7 @@ interface TFilterActions {
   setCurrentPage: (page: number) => void;
   setItemsPerPage: (items: number) => void;
   setSortBy: (sortBy: 'distance' | 'title') => void;
+  removeDistanceFilter: () => void;
   resetFilters: () => void;
 }
 type TFilterStore = TFilterState & TFilterActions;
@@ -61,6 +62,11 @@ export const useFilterStore = create<TFilterStore>()(
         }),
 
       setDistanceFilter: (distance): void => set({ distanceFilter: distance }),
+
+      removeDistanceFilter: (): void =>
+        set({ distanceFilter: null, currentPage: 1 }),
+
+ 
 
       setSearchQuery: debounce((query): void => {
         set({ searchQuery: query });

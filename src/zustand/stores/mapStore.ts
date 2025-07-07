@@ -70,7 +70,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
     (set, get): TMapState & TMapActions => ({
       map: null,
       setMap: (map: LeafletMap): void => {
-        console.log('[Zustand] Map instance set:', map);
         set({ map });
       },
       leafletComponents: null,

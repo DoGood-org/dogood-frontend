@@ -30,6 +30,7 @@ import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
 import { AnimatePresence, motion } from 'framer-motion';
 import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
+import { FilterBadges } from '@/components/main/map/filters/FilterBadges';
 
 export const Map: React.FC = (): JSX.Element => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
@@ -154,42 +155,51 @@ export const Map: React.FC = (): JSX.Element => {
   } = leafletComponents;
 
   const renderTaskMarkers = (): JSX.Element[] => {
-    return noPaginatedTasks.map((task) => {
-      const All =
-        choosenCategories.includes('all') ||
-        choosenCategories.length === categories.length ||
-        choosenCategories.length === 0;
+    const isAll =
+      choosenCategories.includes('all') ||
+      choosenCategories.length === 0 ||
+      choosenCategories.length === categories.length;
 
-      const categoryForIcon = All
-        ? task.category?.[0]
-        : task.category.some((cat) => choosenCategories.includes(cat))
-          ? choosenCategories.find((cat) =>
-              task.category.includes(cat as MarkerCategoryEnum)
-            ) ||
-            task.category[0] ||
-            MarkerCategoryEnum.Default
-          : MarkerCategoryEnum.Default;
+    return noPaginatedTasks.map((task) => {
+      const resolvedCategory = (() => {
+        if (isAll) return task.category?.[0] || MarkerCategoryEnum.Default;
+
+        const matched = task.category.find((cat) =>
+          choosenCategories.includes(cat)
+        );
+        return matched || MarkerCategoryEnum.Default;
+      })();
+
+      const icon = getMarkerIcon(
+        Object.values(MarkerCategoryEnum).includes(
+          resolvedCategory as MarkerCategoryEnum
+        )
+          ? (resolvedCategory as MarkerCategoryEnum)
+          : MarkerCategoryEnum.Default,
+        mapIcons
+      );
+
       return (
         <Marker
           key={`task-marker-${task.id}`}
           position={{ lat: task.lat, lng: task.lng }}
-          icon={getMarkerIcon(
-            (Object.values(MarkerCategoryEnum) as string[]).includes(
-              categoryForIcon as string
-            )
-              ? (categoryForIcon as MarkerCategoryEnum)
-              : MarkerCategoryEnum.Default,
-            mapIcons
-          )}
+          icon={icon}
           eventHandlers={{
-            click: () => {
-              console.log('Task clicked:', task);
-            },
+            click: () => console.log('Task clicked:', task),
           }}
-        />
+        >
+          <Popup>
+            <div className="text-sm max-w-[200px]">
+              <h4 className="font-bold mb-1">{task.title}</h4>
+              <p className="text-xs">{task.subtitle}</p>
+              <p className="text-xs text-muted mt-1">{task.distance}</p>
+            </div>
+          </Popup>
+        </Marker>
       );
     });
   };
+  
 
   const renderCustomMarkers = (): JSX.Element[] => {
     return customMarkers.map((marker, index) => {
@@ -205,8 +215,8 @@ export const Map: React.FC = (): JSX.Element => {
             },
           }}
         >
-          <Popup>
-            <div className="text-sm text-foreground">
+          <Popup >
+            <div className="">
               📍 Custom Marker
               <br />
               <strong>{marker.category}</strong>
@@ -363,14 +373,17 @@ export const Map: React.FC = (): JSX.Element => {
             <CustomControlPanel />
           </MapContainer>
         </div>
+        <div className='flex gap-6 lg:absolute lg:flex lg:top-12 lg:left-32 lg:z-[500]'>
+          <div className="flex flex-col relative">
+            <ButtonOpenTasks
+              onClick={() => toggleTaskList()}
+              isOpen={taskListIsOpen}
+              className="mx-auto mb-2 lg:mb-0 lg:absolute lg:z-[500] lg:top-18 lg:left-1/2 lg:translate-x-[-50%] lg:bg-card lg:w-16"
+            />
+            <FormSearch />
+          </div>
 
-        <div className="flex flex-col relative lg:absolute lg:flex lg:top-12 lg:left-32 lg:z-[500]">
-          <ButtonOpenTasks
-            onClick={() => toggleTaskList()}
-            isOpen={taskListIsOpen}
-            className="mx-auto mb-2 lg:mb-0 lg:absolute lg:z-[500] lg:top-18 lg:left-1/2 lg:translate-x-[-50%] lg:bg-card lg:w-16"
-          />
-          <FormSearch />
+          <FilterBadges />
         </div>
 
         <AnimatedDrawler
