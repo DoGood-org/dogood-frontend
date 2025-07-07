@@ -17,6 +17,7 @@ import {
 } from '@/types/mapType';
 
 import {
+  AnimatedDrawler,
   ButtonOpenTasks,
   Container,
   CustomControl,
@@ -35,6 +36,7 @@ import { FormSearch } from '@/components/main/map/filters/FormSearch';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export const Map: React.FC = (): JSX.Element => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
@@ -57,6 +59,7 @@ export const Map: React.FC = (): JSX.Element => {
     taskListIsOpen,
     toggleTaskList,
     filtersIsOpen,
+    activePanel,
   } = useMapStore();
 
   const { setTasks } = useTaskStore();
@@ -306,18 +309,42 @@ export const Map: React.FC = (): JSX.Element => {
           />
           <FormSearch />
         </div>
-        {(filtersIsOpen || taskListIsOpen) && (
-          <div
-            className={`
-    relative flex flex-col bg-card z-[1000]
-    w-full h-[675px] lg:mt-0
-    lg:absolute lg:top-36 lg:left-32 lg:w-[487px] lg:h-[790px] lg:rounded-md lg:shadow-xl
-  `}
-          >
-            {filtersIsOpen && <Filters tasks={noPaginatedTasks} />}
-            {taskListIsOpen && <TasksList />}
-          </div>
-        )}
+
+        <AnimatedDrawler
+          isVisible={!!activePanel}
+          direction="vertical"
+          className={`
+            relative flex flex-col bg-card z-[1000]
+            w-full h-[675px] lg:mt-0
+            lg:absolute lg:top-36 lg:left-32 lg:w-[487px] lg:h-[722px] lg:rounded-md lg:shadow-xl overflow-y-hidden
+          `}
+        >
+          <AnimatePresence mode="wait">
+            {activePanel === 'filters' && (
+              <motion.div
+                key="filters"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Filters tasks={noPaginatedTasks} />
+              </motion.div>
+            )}
+
+            {activePanel === 'tasks' && (
+              <motion.div
+                key="tasks"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+              >
+                <TasksList />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </AnimatedDrawler>
       </div>
     </Container>
   );

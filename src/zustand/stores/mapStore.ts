@@ -3,6 +3,8 @@ import { persist } from 'zustand/middleware';
 
 import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
 import { IExtendedITaskProps, TCustomMarker } from '@/types/mapType';
+import coordsMatch from '@/lib/coordinatesMatch';
+import getGeolocationPromise from '@/lib/getGeolocationPromise';
 
 type TMapState = {
   map: LeafletMap | null;
@@ -17,6 +19,8 @@ type TMapState = {
 
   taskListIsOpen: boolean;
   filtersIsOpen: boolean;
+
+  activePanel: 'filters' | 'tasks' | null;
 };
 
 type TMapActions = {
@@ -24,7 +28,6 @@ type TMapActions = {
   setHasAgreedToLocation: (value: boolean) => void;
   setShowGeolocationPopup: (value: boolean) => void;
   setLocationError: (error: string | null) => void;
-  setInputActive: (isActive: boolean) => void;
   setUserLocation: (loc: LatLngLiteral) => void;
   setCustomMarkers: (markers: TCustomMarker[]) => void;
   toggleTaskList: () => void;
@@ -33,41 +36,11 @@ type TMapActions = {
   removeMarker: (loc: TCustomMarker) => void;
   checkLocationPermission: () => void;
   requestGeolocation: (manualLoc?: LatLngLiteral) => Promise<void>;
+  setActivePanel: (panel: 'filters' | 'tasks' | null) => void;
 };
 
 export type TMapProps = TMapState & TMapActions;
 
-// Helper function to compare two coordinates from local storage and geolocation
-// *   @param {LatLngLiteral} a - The first set of coordinates.
-// *   @param {LatLngLiteral} b - The second set of coordinates.
-const coordsMatch = (a: LatLngLiteral, b: LatLngLiteral): boolean =>
-  Math.abs(a.lat - b.lat) < 0.0001 && Math.abs(a.lng - b.lng) < 0.0001;
-
-// *   Returns a promise that resolves with the user's geolocation coordinates
-// *   or rejects with an error if geolocation is not supported or fails.
-// *   @returns {Promise<LatLngLiteral>} A promise that resolves with the user's geolocation coordinates.
-// *   @throws {Error} If geolocation is not supported or an error occurs while retrieving the coordinates.
-
-function getGeolocationPromise(): Promise<LatLngLiteral> {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) {
-      return reject(
-        new Error(
-          'Geolocation not supported, please enable it in your browser settings.'
-        )
-      );
-    }
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        console.log('Geolocation position shared by navigator:', pos);
-        resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-      },
-      (error) => {
-        reject(error);
-      }
-    );
-  });
-}
 export const useMapStore = create<TMapState & TMapActions>()(
   persist(
     (set, get): TMapState & TMapActions => ({
@@ -81,6 +54,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
       inputActive: false,
       taskListIsOpen: false,
       filtersIsOpen: false,
+      activePanel: null,
 
       setMap: (map) => set({ map }),
       setUserLocation: (loc) => set({ userLocation: loc }),
@@ -170,18 +144,21 @@ export const useMapStore = create<TMapState & TMapActions>()(
           });
         }
       },
-      setInputActive: (isActive): void => set({ inputActive: isActive }),
+      setActivePanel: (panel): void => set({ activePanel: panel }),
 
-      toggleTaskList: (): void => {
-        set((state) => ({
-          taskListIsOpen: !state.taskListIsOpen,
-        }));
-      },
-      toggleFilters: (): void => {
+      toggleFilters: () =>
         set((state) => ({
           filtersIsOpen: !state.filtersIsOpen,
-        }));
-      },
+          taskListIsOpen: false,
+          activePanel: !state.filtersIsOpen ? 'filters' : null,
+        })),
+
+      toggleTaskList: () =>
+        set((state) => ({
+          taskListIsOpen: !state.taskListIsOpen,
+          filtersIsOpen: false,
+          activePanel: !state.taskListIsOpen ? 'tasks' : null,
+        })),
     }),
     {
       name: 'map-storage',
