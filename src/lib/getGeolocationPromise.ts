@@ -3,7 +3,7 @@
 // *   @returns {Promise<LatLngLiteral>} A promise that resolves with the user's geolocation coordinates.
 // *   @throws {Error} If geolocation is not supported or an error occurs while retrieving the coordinates.
 
-import { LatLngLiteral } from "leaflet";
+import { LatLngLiteral } from 'leaflet';
 
 function getGeolocationPromise(): Promise<LatLngLiteral> {
   return new Promise((resolve, reject) => {

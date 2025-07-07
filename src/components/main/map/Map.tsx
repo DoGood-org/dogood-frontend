@@ -58,7 +58,6 @@ export const Map: React.FC = (): JSX.Element => {
     addMarker,
     taskListIsOpen,
     toggleTaskList,
-    filtersIsOpen,
     activePanel,
   } = useMapStore();
 

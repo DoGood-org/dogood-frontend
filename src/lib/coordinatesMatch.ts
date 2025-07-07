@@ -1,7 +1,7 @@
 // Helper function to compare two coordinates from local storage and geolocation
 // *   @param {LatLngLiteral} a - The first set of coordinates.
 
-import { LatLngLiteral } from "leaflet";
+import { LatLngLiteral } from 'leaflet';
 
 // *   @param {LatLngLiteral} b - The second set of coordinates.
 const coordsMatch = (a: LatLngLiteral, b: LatLngLiteral): boolean =>
