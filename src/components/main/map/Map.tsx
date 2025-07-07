@@ -161,7 +161,7 @@ export const Map: React.FC = (): JSX.Element => {
       choosenCategories.length === categories.length;
 
     return noPaginatedTasks.map((task) => {
-      const resolvedCategory = (() => {
+      const resolvedCategory = ((): MarkerCategoryEnum => {
         if (isAll) return task.category?.[0] || MarkerCategoryEnum.Default;
 
         const matched = task.category.find((cat) =>
@@ -199,7 +199,6 @@ export const Map: React.FC = (): JSX.Element => {
       );
     });
   };
-  
 
   const renderCustomMarkers = (): JSX.Element[] => {
     return customMarkers.map((marker, index) => {
@@ -215,7 +214,7 @@ export const Map: React.FC = (): JSX.Element => {
             },
           }}
         >
-          <Popup >
+          <Popup>
             <div className="">
               📍 Custom Marker
               <br />
@@ -373,7 +372,7 @@ export const Map: React.FC = (): JSX.Element => {
             <CustomControlPanel />
           </MapContainer>
         </div>
-        <div className='flex gap-6 lg:absolute lg:flex lg:top-12 lg:left-32 lg:z-[500]'>
+        <div className="flex gap-6 lg:absolute lg:flex lg:top-12 lg:left-32 lg:z-[500]">
           <div className="flex flex-col relative">
             <ButtonOpenTasks
               onClick={() => toggleTaskList()}

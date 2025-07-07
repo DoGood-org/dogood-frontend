@@ -1,11 +1,9 @@
-import { FilterBadge } from "@/components/main/map/filters/FilterBadge";
-import { IExtendedCategoryFilter } from "@/types/mapType";
-import { useFilterStore } from "@/zustand/stores/filterStore"
-import { JSX } from "react";
-
+import { FilterBadge } from '@/components/main/map/filters/FilterBadge';
+import { IExtendedCategoryFilter } from '@/types/mapType';
+import { useFilterStore } from '@/zustand/stores/filterStore';
+import { JSX } from 'react';
 
 export const FilterBadges = (): JSX.Element | null => {
-
   const currentCategoriesFilter = useFilterStore((state) =>
     state.choosenCategories && state.choosenCategories.length > 0
       ? state.choosenCategories
@@ -19,15 +17,14 @@ export const FilterBadges = (): JSX.Element | null => {
           {currentCategoriesFilter
             .filter(
               (category): category is IExtendedCategoryFilter =>
-                category !== null && category !== undefined && category !== 'all'
+                category !== null &&
+                category !== undefined &&
+                category !== 'all'
             )
             .map((category) => (
-              
               <li key={category ?? 'unknown'}>
                 <FilterBadge
-                  category={
-                    category ? (category ?? '') : 'other'
-                  }
+                  category={category ? (category ?? '') : 'other'}
                   onRemove={() =>
                     useFilterStore.getState().toggleCategory(category)
                   }
@@ -48,5 +45,4 @@ export const FilterBadges = (): JSX.Element | null => {
       )}
     </div>
   );
-}
- 
+};

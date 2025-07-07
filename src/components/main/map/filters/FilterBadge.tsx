@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/Button";
-import { X } from "lucide-react";
-import { JSX } from "react";
+import { Button } from '@/components/ui/Button';
+import { X } from 'lucide-react';
+import { JSX } from 'react';
 
 type Props = {
   category: string;
   onRemove: () => void;
-}
+};
 export const FilterBadge = (props: Props): JSX.Element => {
   return (
     <div className="flex items-center gap-2 bg-card h-12 px-6 py-3 border border-card rounded-sm shadow-sm">
@@ -15,4 +15,4 @@ export const FilterBadge = (props: Props): JSX.Element => {
       </Button>
     </div>
   );
-}
+};

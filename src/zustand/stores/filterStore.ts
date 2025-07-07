@@ -66,8 +66,6 @@ export const useFilterStore = create<TFilterStore>()(
       removeDistanceFilter: (): void =>
         set({ distanceFilter: null, currentPage: 1 }),
 
- 
-
       setSearchQuery: debounce((query): void => {
         set({ searchQuery: query });
       }, 300),
