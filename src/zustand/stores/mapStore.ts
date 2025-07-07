@@ -2,10 +2,14 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
-import { IExtendedITaskProps, MarkerCategoryEnum, IReactLeafletModule, TCustomMarker } from '@/types/mapType';
+import {
+  IExtendedITaskProps,
+  MarkerCategoryEnum,
+  IReactLeafletModule,
+  TCustomMarker,
+} from '@/types/mapType';
 import coordsMatch from '@/lib/coordinatesMatch';
 import getGeolocationPromise from '@/lib/getGeolocationPromise';
-
 
 type TMapState = {
   map: LeafletMap | null;
@@ -70,8 +74,9 @@ export const useMapStore = create<TMapState & TMapActions>()(
         set({ map });
       },
       leafletComponents: null,
-      setLeafletComponents: (components) => set({ leafletComponents: components }),
-   
+      setLeafletComponents: (components) =>
+        set({ leafletComponents: components }),
+
       mapIcons: {
         medicine: null,
         nature: null,
@@ -79,7 +84,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
         food: null,
         myPosition: null,
         default: null,
-        myPin: null, 
+        myPin: null,
       },
       userLocation: null,
       selectedTask: null,
@@ -94,7 +99,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
 
       clickedCoords: null,
       showOptionsMenu: false,
-
 
       setMapIcons: (icons) => set({ mapIcons: icons }),
 

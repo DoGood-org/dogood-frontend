@@ -6,7 +6,7 @@ import FoodMarker from '@/assets/images/map/food-marker.png';
 import MyPositionMarker from '@/assets/images/map/my-position.png';
 import DefaultMarker from '@/assets/images/map/default.png';
 import MyPin from '@/assets/images/map/my-pin.png';
-import { Icon, LatLngLiteral } from 'leaflet';
+import { Icon } from 'leaflet';
 
 /**
  * Creates a Leaflet icon instance
@@ -81,4 +81,3 @@ export const getMarkerIcon = (
 
   return iconMap[title];
 };
-

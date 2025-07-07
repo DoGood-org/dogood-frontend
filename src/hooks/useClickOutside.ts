@@ -7,20 +7,16 @@ type UseClickOutsideOptions = {
   once?: boolean;
 };
 
-
 type Props = {
   ref: RefObject<HTMLElement | null>;
   callback: () => void;
   options?: UseClickOutsideOptions;
 };
 
-
-
-
 export const useClickOutside = ({
   ref,
   callback,
-  options = {}
+  options = {},
 }: Props): void => {
   const {
     enabled = true,
@@ -46,7 +42,7 @@ export const useClickOutside = ({
       }
     };
 
-    const cleanup = () => {
+    const cleanup = (): void => {
       eventTypes.forEach((event) =>
         document.removeEventListener(event, handleEvent)
       );

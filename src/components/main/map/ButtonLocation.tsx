@@ -3,7 +3,7 @@ import { useMapStore } from '@/zustand/stores/mapStore';
 import { JSX } from 'react';
 
 export const ButtonLocation = (): JSX.Element => {
-  const {checkLocationPermission } = useMapStore();
+  const { checkLocationPermission } = useMapStore();
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.stopPropagation();

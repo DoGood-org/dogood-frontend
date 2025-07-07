@@ -222,7 +222,7 @@ export const Map: React.FC = (): JSX.Element => {
   const renderUserLocation = (): JSX.Element | null => {
     if (!userLocation || !mapIcons?.myPosition) return null;
 
-    const handleClick = () => {
+    const handleClick = (): void => {
       console.log('User location selected:', userLocation);
       setUserLocation({ ...userLocation });
     };

@@ -1,7 +1,7 @@
 'use client';
-import { useMapStore } from "@/zustand/stores/mapStore";
-import { useEffect } from "react";
-import { useMap } from "react-leaflet";
+import { useMapStore } from '@/zustand/stores/mapStore';
+import { useEffect } from 'react';
+import { useMap } from 'react-leaflet';
 
 const StoreMapInstance = (): null => {
   const map = useMap();

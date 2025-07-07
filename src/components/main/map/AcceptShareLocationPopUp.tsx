@@ -11,7 +11,6 @@ export const AcceptShareLocationPopUp: FC<IAcceptShareLocationProps> = ({
   const t = useTranslations('map');
   const { acceptLocationSharing } = useMapStore();
 
-
   return (
     <div className="bg-background text-foreground p-4 rounded-lg shadow-lg max-w-md w-full mx-4">
       <h3 className="text-base font-semibold mb-4">{t('popupTitle')}</h3>

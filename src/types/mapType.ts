@@ -7,7 +7,7 @@ export enum MarkerCategoryEnum {
   Food = 'food',
   MyPosition = 'myPosition',
   Default = 'default',
-  MyPin= 'myPin',
+  MyPin = 'myPin',
 }
 export interface IReactLeafletModule {
   MapContainer: React.FC<any>;
@@ -24,7 +24,6 @@ export interface IReactLeafletModule {
   Control: typeof import('leaflet').Control;
   LayerGroup: typeof import('react-leaflet').LayerGroup;
   useMapEvents: typeof import('react-leaflet').useMapEvents;
-  
 }
 export type MapLocation = LatLngLiteral & {
   id: string;

@@ -20,5 +20,3 @@ export const CustomControlPanel = ({
 
   return createPortal(<CustomControlContent />, container);
 };
-
-
