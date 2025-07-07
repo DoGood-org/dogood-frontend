@@ -9,16 +9,13 @@ export const TasksList = (): JSX.Element => {
   const { paginatedTasks } = useFilteredTasksSelector();
 
   return (
-    <div className="pr-4">
-      <div
-        className="mt-4 relative w-full h-[660px] overflow-y-auto custom-scrollbar-tasks pr-2
-      lg:w-[487px] lg:h-[722px] lg:mt-0 "
-      >
-        <div className="w-full bg-card  pl-8 pr-[20px] pb-8 lg:p-8 lg:rounded-xl">
+    <div className="pl-2 pr-2 lg:px-8">
+      <div className="mt-4 h-[660px] lg:h-[722px] w-full lg:mt-0 overflow-y-auto custom-scrollbar-tasks ">
+        <div className="bg-card pl-3 pr-2 lg:px-6 pb-8 pt-4 lg:rounded-xl">
           <h2 className="text-h3 mb-6">{t('tasksTitle')}</h2>
-          <ul className="list-none ">
+          <ul className="list-none space-y-6">
             {paginatedTasks.map((task) => (
-              <li key={task.id} className="mb-6 last:mb-0">
+              <li key={task.id}>
                 <TaskItem {...task} />
               </li>
             ))}

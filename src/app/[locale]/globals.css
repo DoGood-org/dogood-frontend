@@ -600,7 +600,7 @@ html {
   }
 
   .custom-scrollbar-tasks::-webkit-scrollbar-track {
-    background-color: var(--color-map-btn-icon);
+    background-color: var(--background);
     margin: 20px !important;
   }
 

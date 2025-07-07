@@ -29,18 +29,20 @@ export const FormSearch = (): JSX.Element => {
 
   return (
     <div className="bg-card w-full lg:w-[487px] ">
-      <form onSubmit={(e) => e.preventDefault()} className='w-full'>
+      <form onSubmit={(e) => e.preventDefault()} className="w-full">
         <div className="relative p-3  overflow-hidden flex items-center justify-center lg:p-0 ">
           <Search className="absolute left-5  text-muted-foreground stroke-foreground w-6 h-6 lg:w-[24px] lg:h-[24px]" />
-          <Input
+          <input
             {...register('search')}
             name="search"
             id="search"
             autoComplete="off"
             type="text"
             placeholder="Search.."
-            className=" border-none text-base italic h-12 px-12
-            placeholder:font-normal placeholder:text-muted-foreground"
+            className="w-full h-12 px-12 text-base italic bg-background text-foreground rounded-sm
+        placeholder:font-normal placeholder:text-muted-foreground
+        border-none outline-none focus:ring-0 focus:outline-none shadow-none
+        disabled:pointer-events-none disabled:opacity-50 lg:bg-card"
             onBlur={(e) => {
               register('search').onBlur(e);
               console.log('Search input blurred', searchValue);
