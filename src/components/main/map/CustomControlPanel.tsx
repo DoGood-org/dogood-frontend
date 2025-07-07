@@ -1,24 +1,24 @@
 import { useLeafletControl } from '@/hooks/useLeafletControl';
 import { createPortal } from 'react-dom';
-import { ButtonLocation } from '@/components/main/map/ButtonLocation';
 import { JSX } from 'react';
+import { CustomControlContent } from '@/components/main/map/CustomControlContent';
 
-// CustomButtonControl component to render a button in the Leaflet map control
+// CustomControlPanel component to render a button in the Leaflet map control
 // This component uses the useLeafletControl hook to create a control in the Leaflet map
 // and renders the ButtonLocation component inside it using createPortal.
 // Default export due to the nature of Leaflet controls, which are not React components and need to be mounted directly to the DOM
 
-type CustomButtonControlProps = {
+type CustomControlPanelProps = {
   position?: 'topleft' | 'topright' | 'bottomleft' | 'bottomright';
 };
-const CustomButtonControl = ({
+export const CustomControlPanel = ({
   position,
-}: CustomButtonControlProps): JSX.Element | null => {
+}: CustomControlPanelProps): JSX.Element | null => {
   const container = useLeafletControl(position);
 
   if (!container) return null;
 
-  return createPortal(<ButtonLocation />, container);
+  return createPortal(<CustomControlContent />, container);
 };
 
-export default CustomButtonControl;
+

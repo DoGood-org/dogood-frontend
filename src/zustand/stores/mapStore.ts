@@ -2,41 +2,61 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
-import { IExtendedITaskProps, TCustomMarker } from '@/types/mapType';
+import { IExtendedITaskProps, MarkerCategoryEnum, IReactLeafletModule, TCustomMarker } from '@/types/mapType';
 import coordsMatch from '@/lib/coordinatesMatch';
 import getGeolocationPromise from '@/lib/getGeolocationPromise';
 
+
 type TMapState = {
   map: LeafletMap | null;
-  hasAgreedToLocation: boolean;
+  leafletComponents: IReactLeafletModule | null;
+  mapIcons: Record<MarkerCategoryEnum, L.Icon | null>;
+
+  hasAgreedToLocation: boolean | null;
   showGeolocationPopup: boolean;
-  inputActive: boolean;
 
   userLocation: LatLngLiteral | null;
   locationError: string | null;
+
   selectedTask: IExtendedITaskProps | null;
   customMarkers: TCustomMarker[] | [];
 
   taskListIsOpen: boolean;
   filtersIsOpen: boolean;
 
+  clickedCoords: LatLngLiteral | null;
+  showOptionsMenu: boolean;
+
   activePanel: 'filters' | 'tasks' | null;
 };
 
 type TMapActions = {
   setMap: (map: LeafletMap) => void;
+  setLeafletComponents: (components: IReactLeafletModule) => void;
+
+  setMapIcons: (icons: TMapState['mapIcons']) => void;
+
   setHasAgreedToLocation: (value: boolean) => void;
   setShowGeolocationPopup: (value: boolean) => void;
   setLocationError: (error: string | null) => void;
   setUserLocation: (loc: LatLngLiteral) => void;
   setCustomMarkers: (markers: TCustomMarker[]) => void;
+  setActivePanel: (panel: 'filters' | 'tasks' | null) => void;
+
+  acceptLocationSharing: () => Promise<void>;
+  declineLocationSharing: () => void;
+
   toggleTaskList: () => void;
   toggleFilters: () => void;
+
+  setClickedCoords: (coords: LatLngLiteral | null) => void;
+  setShowOptionsMenu: (visible: boolean) => void;
+  closeOptionsMenu: () => void;
+
   addMarker: (loc: TCustomMarker) => void;
   removeMarker: (loc: TCustomMarker) => void;
   checkLocationPermission: () => void;
   requestGeolocation: (manualLoc?: LatLngLiteral) => Promise<void>;
-  setActivePanel: (panel: 'filters' | 'tasks' | null) => void;
 };
 
 export type TMapProps = TMapState & TMapActions;
@@ -45,18 +65,39 @@ export const useMapStore = create<TMapState & TMapActions>()(
   persist(
     (set, get): TMapState & TMapActions => ({
       map: null,
+      setMap: (map: LeafletMap): void => {
+        console.log('[Zustand] Map instance set:', map);
+        set({ map });
+      },
+      leafletComponents: null,
+      setLeafletComponents: (components) => set({ leafletComponents: components }),
+   
+      mapIcons: {
+        medicine: null,
+        nature: null,
+        animal: null,
+        food: null,
+        myPosition: null,
+        default: null,
+        myPin: null, 
+      },
       userLocation: null,
       selectedTask: null,
       customMarkers: [],
       locationError: null,
-      hasAgreedToLocation: false,
+      hasAgreedToLocation: null,
       showGeolocationPopup: false,
-      inputActive: false,
+
       taskListIsOpen: false,
       filtersIsOpen: false,
       activePanel: null,
 
-      setMap: (map) => set({ map }),
+      clickedCoords: null,
+      showOptionsMenu: false,
+
+
+      setMapIcons: (icons) => set({ mapIcons: icons }),
+
       setUserLocation: (loc) => set({ userLocation: loc }),
       setLocationError: (error) => set({ locationError: error }),
       setCustomMarkers: (markers) => set({ customMarkers: markers }),
@@ -66,8 +107,50 @@ export const useMapStore = create<TMapState & TMapActions>()(
         set({ hasAgreedToLocation: value });
       },
 
-      setShowGeolocationPopup: (value): void =>
-        set({ showGeolocationPopup: value }),
+      setShowGeolocationPopup: (value: boolean): void => {
+        if (get().hasAgreedToLocation) {
+          set({ showGeolocationPopup: value });
+        }
+      },
+
+      acceptLocationSharing: async (): Promise<void> => {
+        const {
+          hasAgreedToLocation,
+          setHasAgreedToLocation,
+          setShowGeolocationPopup,
+          requestGeolocation,
+        } = get();
+
+        if (!hasAgreedToLocation) {
+          setHasAgreedToLocation(true);
+        }
+
+        setShowGeolocationPopup(false);
+
+        try {
+          await requestGeolocation();
+        } catch (err) {
+          console.error('Geolocation request failed:', err);
+        }
+
+        const error = get().locationError;
+        if (error) {
+          console.warn(
+            'User may need to enable location access manually in the browser.',
+            error
+          );
+        }
+      },
+      declineLocationSharing: (): void => {
+        console.log('User declined location sharing');
+        set({
+          hasAgreedToLocation: false,
+          showGeolocationPopup: false,
+          userLocation: null,
+          locationError: null,
+        });
+      },
+
       addMarker: (loc): void => {
         const exists = get().customMarkers.some((m) => coordsMatch(m, loc));
         if (!exists) {
@@ -84,6 +167,15 @@ export const useMapStore = create<TMapState & TMapActions>()(
           ),
         })),
 
+      setClickedCoords: (coords) => set({ clickedCoords: coords }),
+      setShowOptionsMenu: (visible) => set({ showOptionsMenu: visible }),
+
+      closeOptionsMenu: () =>
+        set({
+          showOptionsMenu: false,
+          clickedCoords: null,
+        }),
+
       checkLocationPermission: (): void => {
         if (typeof window === 'undefined') return;
         if (get().hasAgreedToLocation) {
@@ -96,7 +188,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
           console.log('User has not agreed, showing popup...');
         }
       },
-
       requestGeolocation: async (manualLoc?: LatLngLiteral): Promise<void> => {
         try {
           const coords = await getGeolocationPromise();
@@ -134,7 +225,10 @@ export const useMapStore = create<TMapState & TMapActions>()(
             locationError: 'Failed to retrieve geolocation from navigator',
           });
         } catch (error) {
-          console.warn('nothing provided:', error);
+          console.warn(
+            'navigator refused to share location, we may need to check the setting in the browser',
+            error
+          );
           set({
             locationError:
               error && typeof error === 'object' && 'message' in error
@@ -144,6 +238,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
           });
         }
       },
+
       setActivePanel: (panel): void => set({ activePanel: panel }),
 
       toggleFilters: () =>

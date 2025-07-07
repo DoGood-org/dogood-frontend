@@ -1,6 +1,7 @@
 'use client';
+import { useClickOutside } from '@/hooks/useClickOutside';
 import { AnimatePresence, motion } from 'framer-motion';
-import { JSX, useEffect } from 'react';
+import { JSX, useRef } from 'react';
 
 type Props = {
   isVisible: boolean;
@@ -12,24 +13,16 @@ export const AnimatedModalWrapper: React.FC<Props> = ({
   onClose,
   children,
 }): JSX.Element => {
-  useEffect((): (() => void) => {
-    const handleClickOutside = (event: MouseEvent): void => {
-      const target = event.target as HTMLElement;
-      if (target.classList.contains('modal-backdrop')) {
-        onClose();
-      }
-    };
+  const modalRef = useRef<HTMLDivElement>(null);
 
-    if (isVisible) {
-      document.body.style.overflow = 'hidden';
-      window.addEventListener('click', handleClickOutside);
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('click', handleClickOutside);
-    };
-  }, [isVisible, onClose]);
+  useClickOutside({
+    ref: modalRef,
+    callback: onClose,
+    options: {
+      enabled: isVisible,
+      detectEscapeKey: true,
+    },
+  });
 
   return (
     <AnimatePresence>
@@ -42,8 +35,8 @@ export const AnimatedModalWrapper: React.FC<Props> = ({
           transition={{ duration: 0.3 }}
         >
           <motion.div
+            ref={modalRef}
             className="modal-content"
-            onClick={(e) => e.stopPropagation()}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}

@@ -7,9 +7,10 @@ export enum MarkerCategoryEnum {
   Food = 'food',
   MyPosition = 'myPosition',
   Default = 'default',
+  MyPin= 'myPin',
 }
-export interface ReactLeafletModule {
-  MapContainer: typeof import('react-leaflet').MapContainer;
+export interface IReactLeafletModule {
+  MapContainer: React.FC<any>;
   TileLayer: typeof import('react-leaflet').TileLayer;
   Marker: typeof import('react-leaflet').Marker;
   useMap: typeof import('react-leaflet').useMap;
@@ -21,6 +22,9 @@ export interface ReactLeafletModule {
   GeoJSON: typeof import('react-leaflet').GeoJSON;
   useMapEvent: typeof import('react-leaflet').useMapEvent;
   Control: typeof import('leaflet').Control;
+  LayerGroup: typeof import('react-leaflet').LayerGroup;
+  useMapEvents: typeof import('react-leaflet').useMapEvents;
+  
 }
 export type MapLocation = LatLngLiteral & {
   id: string;
@@ -77,9 +81,18 @@ export interface IFilterStore {
   sortBy: 'title' | 'distance';
 }
 
-export interface MapClickHandlerProps {
+export interface IMapClickHandlerProps {
   onClick: (latlng: LatLngLiteral) => void;
   allowClickToAddMarker?: boolean;
+
+  clickOptions?: {
+    setMe: (location: LatLngLiteral) => void;
+    setMyMarker: (location: LatLngLiteral) => void;
+  };
+
+  setClickedCoords?: (latlng: LatLngLiteral) => void;
+  setShowOptionsMenu?: (visible: boolean) => void;
+  onCloseMenu?: () => void;
 }
 
 export interface CategoryItem {
@@ -122,12 +135,13 @@ export interface IIconMap {
 }
 
 export type MapIcons = {
-  medicineIcon: Icon | null;
-  natureIcon: Icon | null;
-  animalIcon: Icon | null;
-  foodIcon: Icon | null;
-  myPositionIcon: Icon | null;
-  defaultIcon: Icon | null;
+  medicine: Icon | null;
+  nature: Icon | null;
+  animal: Icon | null;
+  food: Icon | null;
+  myPosition: Icon | null;
+  default: Icon | null;
+  myPin: Icon | null;
 };
 
 export type LeafletModule = {
