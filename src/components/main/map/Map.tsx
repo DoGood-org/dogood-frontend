@@ -274,7 +274,7 @@ export const Map: React.FC = (): JSX.Element => {
   };
 
   return (
-    <Container className="mx-auto flex flex-col ">
+    <Container className="flex flex-col">
       <div className="relative flex flex-col rounded-[12px] overflow-hidden bg-card ">
         <div
           ref={mapContainerRef}
@@ -372,8 +372,8 @@ export const Map: React.FC = (): JSX.Element => {
             <CustomControlPanel />
           </MapContainer>
         </div>
-        <div className="flex gap-6 lg:absolute lg:flex lg:top-12 lg:left-32 lg:z-[500]">
-          <div className="flex flex-col relative">
+        <div className="lg:absolute lg:flex lg:gap-6 lg:items-start lg:top-12 lg:left-32 lg:z-[500]">
+          <div className="flex flex-col justify-center relative">
             <ButtonOpenTasks
               onClick={() => toggleTaskList()}
               isOpen={taskListIsOpen}
