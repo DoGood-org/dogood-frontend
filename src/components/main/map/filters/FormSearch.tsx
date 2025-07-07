@@ -1,6 +1,5 @@
 'use client';
 import { useForm } from 'react-hook-form';
-import { Input } from '@/components/ui/Input';
 import { Search, SlidersVertical, X } from 'lucide-react';
 import { JSX, useEffect } from 'react';
 import { useMapStore } from '@/zustand/stores/mapStore';
