@@ -2,5 +2,15 @@
   "title": "Welcome to DoGood",
   "subtitle": "A platform where kindness connects the world",
   "volunteerBtn": "Donate now",
-  "learnMoreBtn": "Learn more"
+  "learnMoreBtn": "Learn more",
+  "notFoundTitle": "Oopsie in the Galaxy of DoGood!",
+  "notFoundDescr": "The page you're looking for isn't here.",
+  "notFoundText": "Maybe it's out spreading good vibes somewhere else?",
+  "errorTitle": "Oopsie...something went wrong!",
+  "errorDescr": "Looks like we hit an unexpected error.",
+  "errorText": "But don't worry, we're already looking into it",
+  "backHomeBtn": "Back Home page",
+  "contactUsBtn": "Contact us",
+  "refreshBtn": "Refresh the page",
+  "stuckText": "Still stuck? Let us know: sturtup.dogood@gmail.com"
 }

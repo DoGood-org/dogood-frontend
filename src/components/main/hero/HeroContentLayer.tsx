@@ -13,7 +13,6 @@ export const HeroContentLayer: React.FC<HeroContentLayerProps> = ({
   const t = useTranslations('common');
   const router = useRouter();
   const localActive = useLocale();
-
   return (
     <motion.div
       className="px-5 fixed top-[166px] md:top-[220px] md:w-[393px] lg:w-full lg:top-[320px] left-1/2 transform -translate-x-1/2 text-foreground text-center"
