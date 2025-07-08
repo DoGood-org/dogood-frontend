@@ -18,7 +18,7 @@ export default function NotFound(): React.JSX.Element {
       : NotFoundDesk;
 
   return (
-    <Section className="pt-[80px] lg:pt-[200px]">
+    <Section className="pt-[80px] lg:pt-[200px] h-dvh">
       <NotFoundComponent
         scrImg={heroImage}
         title={t('notFoundTitle')}

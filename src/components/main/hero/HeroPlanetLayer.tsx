@@ -1,13 +1,21 @@
 'use client';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Planet from '../../../assets/images/hero/planet.png';
 import { HeroPlanetLayerProps } from '@/types/heroTypes';
+import { useMediaQuery } from '@/hooks';
+import PlanetMob from '@/assets/images/hero/PlanetMob.png';
+import PlanetTabl from '@/assets/images/hero/PlanetTabl.png';
+import PlanetDesk from '@/assets/images/hero/PlanetDesck.png';
 
 export const HeroPlanetLayer: React.FC<HeroPlanetLayerProps> = ({
   yPlanet,
   opacity,
 }) => {
+  const isMobile = useMediaQuery('(max-width: 767px)');
+  const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1440px)');
+
+  const heroImage = isMobile ? PlanetMob : isTablet ? PlanetTabl : PlanetDesk;
+
   return (
     <div className="absolute bottom-[-500px] w-full pointer-events-none z-25">
       <div className="sticky top-0 h-screen flex items-end justify-center ">
@@ -19,7 +27,7 @@ export const HeroPlanetLayer: React.FC<HeroPlanetLayerProps> = ({
           transition={{ duration: 2, ease: 'easeOut' }}
         >
           <Image
-            src={Planet}
+            src={heroImage}
             alt="Planet"
             width={990}
             height={990}

@@ -75,7 +75,7 @@ export default function GlobalError({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeInitializer />
           <Header />
-          <Section className="pt-[80px] lg:pt-[200px]">
+          <Section className="pt-[80px] lg:pt-[200px] h-dvh">
             <NotFoundComponent
               scrImg={heroImage}
               title={messages.common.errorTitle}

@@ -361,6 +361,7 @@ html {
   background-color: var(--btn);
   color: #ffffff;
 }
+
 /*------------------utilities for scrollbar---------------------------*/
 @layer utilities {
   .custom-scrollbar::-webkit-scrollbar {
