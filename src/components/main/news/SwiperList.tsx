@@ -52,15 +52,14 @@ export const SwiperList: React.FC<Props> = (props) => {
             direction: 'horizontal',
           },
           768: {
-            allowTouchMove: false,
             slidesPerView: 2,
+            slidesPerGroup: 2,
             direction: 'horizontal',
             spaceBetween: 0,
           },
 
           1440: {
             allowTouchMove: true,
-
             slidesPerView: 4,
             direction: 'horizontal',
             spaceBetween: 16,
