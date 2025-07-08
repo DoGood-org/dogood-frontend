@@ -37,7 +37,11 @@ export const HeroSection: React.FC = () => {
   const contentOpacity = useTransform(scrollYProgress, [0.5, 0.8], [1, 0]);
 
   return (
-    <section ref={sectionRef} className="relative h-[1080px] w-full">
+    <section
+      id="hero-section"
+      ref={sectionRef}
+      className="relative h-[1080px] w-full"
+    >
       <div className="fixed inset-0 -z-10">
         <Image
           src={backgroundImage}
