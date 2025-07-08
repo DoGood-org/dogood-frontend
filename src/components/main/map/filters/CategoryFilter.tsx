@@ -1,63 +1,50 @@
-'use client';
-import React, { FC } from 'react';
-import { Button } from '@/components/ui/Button';
+import { CategoryLabel } from '@/components/main/map/filters/CategoryLabel';
+import { LineDivider } from '@/components/main/map/filters/LineDivider';
+import { IExtendedCategoryFilter } from '@/types/mapType';
+import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useTranslations } from 'next-intl';
-import { getCategoryList } from '@/lib/utils';
-import { CategoryFilterProps } from '@/types/mapType';
+import React, { JSX } from 'react';
 
-export const CategoryFilter: FC<CategoryFilterProps> = ({
-  selectedCategories,
-  onCategoryToggle,
-}) => {
+type Props = {
+  categories: string[];
+};
+export const CategoryFilter = ({ categories }: Props): JSX.Element | null => {
   const t = useTranslations('map');
-
-  const CATEGOTY_LIST = getCategoryList(t);
+  const { toggleCategory, choosenCategories } = useFilterStore();
   return (
-    <div className="mb-9">
+    <div className="mb-6">
       <h4 className="text-base">{t('category')}</h4>
-      <div className="w-full bg-[#999999] h-[1px] mb-4" />
-
+      <LineDivider className={'flex w-full mb-4 bg-text-gray h-[1px]'} />
       <ul className="flex gap-4 flex-wrap w-full mb-6">
-        {CATEGOTY_LIST.map((category, index) => (
-          <li key={index}>
-            <Button
-              variant="tag"
-              size="xl"
-              className={` ${category.color} flex gap-[10px] w-[140px] md:[167px] lg:[136px] text-sm ${
-                selectedCategories.includes(category.title)
-                  ? 'clickedBtn text-sm'
-                  : ''
-              }`}
-              onClick={() => onCategoryToggle(category.title)}
-              id={category.title}
-            >
-              <category.icon
-                style={{
-                  width: '24px',
-                  height: '24px',
-                  stroke: '#FFFFFF',
-                  fill: '#FFFFFF',
+        {categories.map((category): JSX.Element => {
+          return (
+            <CategoryLabel
+              key={category}
+              category={category}
+              selected={choosenCategories.includes(
+                category as IExtendedCategoryFilter
+              )}
+              onCategoryToggle={(category) =>
+                toggleCategory(category as IExtendedCategoryFilter)
+              }
+            />
+          );
+        })}
+
+        {categories.length > 0 &&
+          ((): JSX.Element => {
+            return (
+              <CategoryLabel
+                category={'all'}
+                selected={choosenCategories.includes(
+                  'all' as IExtendedCategoryFilter
+                )}
+                onCategoryToggle={(): void => {
+                  toggleCategory('all' as IExtendedCategoryFilter);
                 }}
               />
-              {category.title}
-            </Button>
-          </li>
-        ))}
-        <li>
-          <Button
-            variant="tag"
-            size="xl"
-            className={`flex gap-[10px] w-[140px] md:[167px] lg:[136px] text-sm ${
-              selectedCategories.includes('Doesn\"t matter')
-                ? 'clickedBtn text-sm'
-                : ''
-            }`}
-            onClick={() => onCategoryToggle('Doesn\"t matter')}
-            id="Does'n matter"
-          >
-            {t('neutroBtn')}
-          </Button>
-        </li>
+            );
+          })()}
       </ul>
     </div>
   );

@@ -1,26 +1,51 @@
 import { Icon, LatLngLiteral } from 'leaflet';
 import { ReactElement } from 'react';
-
-export interface ReactLeafletModule {
-  MapContainer: typeof import('react-leaflet').MapContainer;
-  TileLayer: typeof import('react-leaflet').TileLayer;
-  Marker: typeof import('react-leaflet').Marker;
-  useMap: typeof import('react-leaflet').useMap;
-  ZoomControl: typeof import('react-leaflet').ZoomControl;
-  useMapEvents: typeof import('react-leaflet').useMapEvents;
-}
-export type MapLocation = LatLngLiteral & { id: string; title: string };
-
-export interface IAcceptShareLocationProps {
-  requestGeolocation: () => void;
-  declineGeolocation: () => void;
-}
 export enum MarkerCategoryEnum {
   Medicine = 'medicine',
   Nature = 'nature',
   Animal = 'animal',
   Food = 'food',
   MyPosition = 'myPosition',
+  Default = 'default',
+  MyPin = 'myPin',
+}
+export interface IReactLeafletModule {
+  MapContainer: React.FC<any>;
+  TileLayer: typeof import('react-leaflet').TileLayer;
+  Marker: typeof import('react-leaflet').Marker;
+  useMap: typeof import('react-leaflet').useMap;
+  ZoomControl: typeof import('react-leaflet').ZoomControl;
+  LayersControl: typeof import('react-leaflet').LayersControl;
+  Popup: typeof import('react-leaflet').Popup;
+  Circle: typeof import('react-leaflet').Circle;
+  Polyline: typeof import('react-leaflet').Polyline;
+  GeoJSON: typeof import('react-leaflet').GeoJSON;
+  useMapEvent: typeof import('react-leaflet').useMapEvent;
+  Control: typeof import('leaflet').Control;
+  LayerGroup: typeof import('react-leaflet').LayerGroup;
+  useMapEvents: typeof import('react-leaflet').useMapEvents;
+}
+export type MapLocation = LatLngLiteral & {
+  id: string;
+  title: string;
+  category?: MarkerCategoryEnum;
+  distance?: string;
+  description?: string;
+  icon?: Icon | null;
+};
+
+export interface IAcceptShareLocationProps {
+  requestGeolocation: () => void;
+  declineGeolocation: () => void;
+}
+
+export interface IFormLocation {
+  location: string;
+}
+
+export interface TCustomForm {
+  control: L.Control;
+  data?: IFormLocation;
 }
 export type TCustomMarker = LatLngLiteral & { category?: MarkerCategoryEnum };
 
@@ -30,8 +55,8 @@ export interface SelectedLocationProps {
 }
 
 export interface RenderMarksProps {
-  locations: Location[];
-  setSelectedLocation: (location: Location) => void;
+  locations: MapLocation[];
+  setSelectedLocation: (location: MapLocation) => void;
   setClickedCoords: (coords: LatLngLiteral) => void;
   onLocationSelect?: (coords: LatLngLiteral) => void;
 }
@@ -46,29 +71,27 @@ export interface IPropsFilterPanel {
   selectedCategoryButtons: React.ReactElement[];
   selectedDistanceButtons: React.ReactElement[];
 }
-export interface CategoryFilterProps {
-  selectedCategories: string[];
-  onCategoryToggle: (id: string) => void;
-}
-export interface DistanceFilterProps {
-  selectedDistances: string[];
-  onDistanceToggle: (id: string) => void;
-}
-export interface FiltersProps
-  extends IPropsFilters,
-    CategoryFilterProps,
-    DistanceFilterProps {}
-
-export interface FilterButtonProps {
-  items: string[];
-  onRemove: (item: string) => void;
-  buttonClassName?: string;
-  keyPrefix?: string;
+export type IExtendedCategoryFilter = MarkerCategoryEnum | 'all' | null;
+export type IDistanceFilter = '1' | '5' | '10' | '20' | '50' | null;
+export interface IFilterStore {
+  choosenCategories: IExtendedCategoryFilter[];
+  distanceFilter: IDistanceFilter;
+  searchQuery: string;
+  sortBy: 'title' | 'distance';
 }
 
-export interface MapClickHandlerProps {
+export interface IMapClickHandlerProps {
   onClick: (latlng: LatLngLiteral) => void;
   allowClickToAddMarker?: boolean;
+
+  clickOptions?: {
+    setMe: (location: LatLngLiteral) => void;
+    setMyMarker: (location: LatLngLiteral) => void;
+  };
+
+  setClickedCoords?: (latlng: LatLngLiteral) => void;
+  setShowOptionsMenu?: (visible: boolean) => void;
+  onCloseMenu?: () => void;
 }
 
 export interface CategoryItem {
@@ -77,53 +100,53 @@ export interface CategoryItem {
   color: string;
 }
 
-export interface DistanceItem {
+export interface IDistanceItem {
   title: string;
+  value: string;
 }
 
 export type TranslationFunction = (key: string) => string;
 
-export interface ITasksProps {
+export interface ITask {
   title: string;
   subtitle: string;
-  category: string[];
+  icon?: ReactElement;
+  category: MarkerCategoryEnum[];
   description: string;
   distance: string;
-  onToggleDescription: () => void;
+  lat: number;
+  lng: number;
+  id: string;
 }
 
-export interface ExtendedITasksProps extends ITasksProps {
-  isSelected: boolean;
-  onToggleDescription: () => void;
+export interface IExtendedITaskProps extends ITask {
+  isSelected?: boolean;
+  onToggleDescription?: () => void;
 }
 
-export interface IconData {
+export interface IIconData {
   icon: ReactElement;
   color: string;
 }
 
-export interface IconMap {
-  [key: string]: IconData;
+export interface IIconMap {
+  [key: string]: IIconData;
 }
 
 export type MapIcons = {
-  medicineIcon: Icon | null;
-  natureIcon: Icon | null;
-  animalIcon: Icon | null;
-  foodIcon: Icon | null;
-  myPositionIcon: Icon | null;
+  medicine: Icon | null;
+  nature: Icon | null;
+  animal: Icon | null;
+  food: Icon | null;
+  myPosition: Icon | null;
+  default: Icon | null;
+  myPin: Icon | null;
 };
-
-export interface CategoryIconsListProps {
-  categories: any[];
-  getCategoryIcon: (item: any) => IconData;
-}
 
 export type LeafletModule = {
   Icon: typeof Icon;
   icon: typeof Icon;
 };
 
-import type L from 'leaflet';
-
+import L from 'leaflet';
 export type LeafletType = typeof L;
