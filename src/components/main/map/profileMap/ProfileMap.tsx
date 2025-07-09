@@ -1,41 +1,40 @@
 'use client';
-import baseLayerConfig from "@/components/main/map/config/baseLayerConfig";
-import { CustomControlContent } from "@/components/main/map/CustomControlContent";
-import { CustomControlZoom } from "@/components/main/map/CustomControlZoom";
-import { MultiControlPanel } from "@/components/main/map/MultiControlPanel";
-import { IMapClickHandlerProps } from "@/types/mapType";
-import { useMapStore } from "@/zustand/stores/mapStore";
-import { useEffect } from "react";
-import { useMapEvent } from "react-leaflet";
+import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
+import { CustomControlContent } from '@/components/main/map/CustomControlContent';
+import { CustomControlZoom } from '@/components/main/map/CustomControlZoom';
+import { MultiControlPanel } from '@/components/main/map/MultiControlPanel';
+import { IMapClickHandlerProps } from '@/types/mapType';
+import { useMapStore } from '@/zustand/stores/mapStore';
+import { JSX, useEffect } from 'react';
+import { useMapEvent } from 'react-leaflet';
 
-type Props = {}
-export const ProfileMap = (props: Props) => {
-const {
-  initMap,
-  leafletComponents,
-  mapIcons,
-  baseLayer,
-  setClickedCoords,
-  setShowOptionsMenu,
-  selectedTask,
-  customMarkers,
-  setCustomMarkers,
-  clickedCoords,
-  showOptionsMenu,
-} = useMapStore();
+export const ProfileMap = (): JSX.Element => {
+  const {
+    initMap,
+    leafletComponents,
+    mapIcons,
+    baseLayer,
+    setClickedCoords,
+    setShowOptionsMenu,
+    // selectedTask,
+    // customMarkers,
+    // setCustomMarkers,
+    // clickedCoords,
+    // showOptionsMenu,
+  } = useMapStore();
 
-useEffect(() => {
-  initMap();
-}, []);
+  useEffect(() => {
+    initMap();
+  }, []);
 
-if (
-  !leafletComponents ||
-  !mapIcons ||
-  Object.values(mapIcons).some((icon) => !icon)
-) {
-  return <div>Loading map...</div>;
-}
-const { MapContainer, TileLayer, Marker, Popup } = leafletComponents;
+  if (
+    !leafletComponents ||
+    !mapIcons ||
+    Object.values(mapIcons).some((icon) => !icon)
+  ) {
+    return <div>Loading map...</div>;
+  }
+  const { MapContainer, TileLayer, Marker, Popup } = leafletComponents;
   const MapClickHandler: React.FC<IMapClickHandlerProps> = ({
     onClick,
     allowClickToAddMarker,
@@ -70,12 +69,12 @@ const { MapContainer, TileLayer, Marker, Popup } = leafletComponents;
             attribution={baseLayerConfig[baseLayer].attribution}
           />
         )}
-          <MultiControlPanel
-                      controls={[
-                        { position: 'bottomright', element: <CustomControlContent /> },
-                        { position: 'topright', element: <CustomControlZoom /> },
-                      ]}
-                    />
+        <MultiControlPanel
+          controls={[
+            { position: 'bottomright', element: <CustomControlContent /> },
+            { position: 'topright', element: <CustomControlZoom /> },
+          ]}
+        />
         <Marker
           position={{ lat: 48.8566, lng: 2.3522 }}
           icon={mapIcons.default!}
@@ -92,4 +91,4 @@ const { MapContainer, TileLayer, Marker, Popup } = leafletComponents;
       </MapContainer>
     </div>
   );
-}
+};

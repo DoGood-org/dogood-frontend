@@ -119,7 +119,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
       clickedCoords: null,
       showOptionsMenu: false,
 
-// *Actions*//
+      // *Actions*//
 
       setMap: (map: LeafletMap): void => {
         set({ map });
@@ -162,7 +162,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
             useMapEvents: reactLeafletModule.useMapEvents,
           } as IReactLeafletModule,
         });
-
       },
 
       setBaseLayer: (layer: EnumMapLayers): void => {
@@ -334,8 +333,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
           filtersIsOpen: false,
           activePanel: !state.taskListIsOpen ? 'tasks' : null,
         })),
-
-
     }),
     {
       name: 'map-storage',

@@ -18,7 +18,7 @@ export const ButtonOpenTasks = ({
       type="button"
       variant={'secondary'}
       onClick={onClick}
-      className={`transition py-1 w-full  flex items-center justify-center border-0  bg-[var(--map-btn-bg)] rounded-0] ${className}`}
+      className={`transition py-1 w-full  inline-flex items-center justify-center border-0  bg-[var(--map-btn-bg)] rounded-0] ${className}`}
     >
       <ChevronDown
         className={`mx-auto w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}

@@ -1,11 +1,8 @@
 'use client';
 import React, { JSX, useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { getMarkerIcon, initializeMapIcons } from '@/lib/mapUtils';
-import {
-  IMapClickHandlerProps,
-  MarkerCategoryEnum,
-} from '@/types/mapType';
+import { getMarkerIcon } from '@/lib/mapUtils';
+import { IMapClickHandlerProps, MarkerCategoryEnum } from '@/types/mapType';
 import {
   AnimatedDrawler,
   ButtonOpenTasks,
@@ -21,7 +18,7 @@ import {
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
 import Portal from '@/components/portal/Portal';
-import {  useMapStore } from '@/zustand/stores/mapStore';
+import { useMapStore } from '@/zustand/stores/mapStore';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 import { FormSearch } from '@/components/main/map/filters/FormSearch';
 import { useTaskStore } from '@/zustand/stores/taskStore';
@@ -65,7 +62,6 @@ export const Map: React.FC = (): JSX.Element => {
   const { choosenCategories, categories } = useFilterStore();
   const { setTasks } = useTaskStore();
   const { setCategories } = useFilterStore();
-
 
   useEffect(() => {
     initMap();
@@ -312,8 +308,8 @@ export const Map: React.FC = (): JSX.Element => {
             />
           </MapContainer>
         </div>
-        <div className="bg-card lg:w-[485px] lg:absolute lg:flex lg:items-start lg:top-12 lg:left-32 lg:z-[500]">
-          <div className="flex flex-col justify-center relative w-full">
+        <div className="lg:absolute lg:flex lg:items-start lg:top-12 lg:left-32 lg:z-[500]">
+          <div className="flex flex-col justify-center relative w-full bg-card lg:w-[485px]">
             <ButtonOpenTasks
               onClick={() => toggleTaskList()}
               isOpen={taskListIsOpen}

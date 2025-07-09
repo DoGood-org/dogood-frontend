@@ -1,5 +1,4 @@
 import { GpsIcon } from '@/components/icons/GPSicon';
-import { Button } from '@/components/ui/Button';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { JSX } from 'react';
 
