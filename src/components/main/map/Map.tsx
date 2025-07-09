@@ -11,7 +11,6 @@ import {
   AnimatedDrawler,
   ButtonOpenTasks,
   Container,
-
   MultiControlPanel,
   Filters,
   generateTasks,
@@ -308,7 +307,7 @@ export const Map: React.FC = (): JSX.Element => {
                 attribution={baseLayerConfig[baseLayer].attribution}
               />
             )}
-       
+
             {renderTaskMarkers()}
 
             {/* Passive overlays */}
@@ -339,8 +338,12 @@ export const Map: React.FC = (): JSX.Element => {
               </Popup>
             )}
 
-            <MultiControlPanel controls={[{ position: 'bottomright', element: <CustomControlContent /> },
-          { position: 'topright', element: <CustomControlZoom /> }]} />
+            <MultiControlPanel
+              controls={[
+                { position: 'bottomright', element: <CustomControlContent /> },
+                { position: 'topright', element: <CustomControlZoom /> },
+              ]}
+            />
           </MapContainer>
         </div>
         <div className="lg:absolute lg:flex lg:gap-6 lg:items-start lg:top-12 lg:left-32 lg:z-[500]">

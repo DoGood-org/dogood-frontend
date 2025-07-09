@@ -1,15 +1,12 @@
 'use client';
 import { ButtonLayers } from '@/components/main/map/ButtonLayers';
 import { ButtonLocation } from '@/components/main/map/ButtonLocation';
-import { ButtonZoom } from '@/components/main/map/ButtonZoom';
 import CustomLayerController from '@/components/main/map/CustomLayerController';
 import { AnimatedDrawler } from '@/components/main/map/tasksPanel/AnimatedDrawler';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { JSX } from 'react';
-import { useMap } from 'react-leaflet';
 
 export const CustomControlContent = (): JSX.Element => {
-  const map = useMap();
   const layerDropIsOpen = useMapStore((state) => state.layerDropIsOpen);
   const toggleLayerDrop = useMapStore((state) => state.toggleLayerDrop);
 
@@ -18,11 +15,10 @@ export const CustomControlContent = (): JSX.Element => {
       style={{
         width: '271px',
         position: 'relative',
-    
+
         display: 'flex',
       }}
     >
-
       {layerDropIsOpen && (
         <AnimatedDrawler
           isVisible={layerDropIsOpen}

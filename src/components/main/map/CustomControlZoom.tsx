@@ -23,14 +23,15 @@ export const CustomControlZoom = (): JSX.Element => {
     <div
       className=" gap-1 hidden lg:flex z-[5001] "
       style={{
-    
         position: 'relative',
-    
-  
       }}
     >
-      <ButtonZoom onClickHandler={handleZoomIn}><Plus /></ButtonZoom>
-      <ButtonZoom onClickHandler={handleZoomOut}><Minus /></ButtonZoom>
+      <ButtonZoom onClickHandler={handleZoomIn}>
+        <Plus />
+      </ButtonZoom>
+      <ButtonZoom onClickHandler={handleZoomOut}>
+        <Minus />
+      </ButtonZoom>
     </div>
   );
 };

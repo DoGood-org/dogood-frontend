@@ -1,32 +1,40 @@
 import { useLeafletControl } from '@/hooks/useLeafletControl';
+import { JSX } from 'react';
 import { createPortal } from 'react-dom';
-import { JSX, ReactNode } from 'react';
 
 type Position = 'topleft' | 'topright' | 'bottomleft' | 'bottomright';
 
-type ControlItem = {
+type SingleControlProps = {
   position: Position;
-  element: ReactNode;
+  children: React.ReactNode;
+};
+
+const SingleControl = ({
+  position,
+  children,
+}: SingleControlProps): JSX.Element | null => {
+  const container = useLeafletControl(position);
+  if (!container) return null;
+  return createPortal(children, container);
 };
 
 type MultiControlPanelProps = {
-  controls: ControlItem[];
+  controls: {
+    position: Position;
+    element: React.ReactNode;
+  }[];
 };
 
 export const MultiControlPanel = ({
   controls,
-}: MultiControlPanelProps): JSX.Element | null => {
+}: MultiControlPanelProps): JSX.Element => {
   return (
     <>
-      {controls.map(({ position, element }, index) => {
-        const container = useLeafletControl(position);
-        if (!container) return null;
-        return createPortal(
-          <>{element}</>,
-          container,
-          `leaflet-control-${index}`
-        );
-      })}
+      {controls.map(({ position, element }, index) => (
+        <SingleControl key={index} position={position}>
+          {element}
+        </SingleControl>
+      ))}
     </>
   );
 };
