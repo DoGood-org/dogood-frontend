@@ -16,7 +16,6 @@ export enum MarkerCategoryEnum {
 //   useMap: typeof import('react-leaflet').useMap;
 //   ZoomControl: typeof import('react-leaflet').ZoomControl;
 //   LayersControl: typeof import('react-leaflet').LayersControl;
- 
 
 //   Popup: typeof import('react-leaflet').Popup;
 //   Circle: typeof import('react-leaflet').Circle;

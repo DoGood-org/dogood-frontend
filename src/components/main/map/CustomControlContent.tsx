@@ -35,9 +35,7 @@ export const CustomControlContent = (): JSX.Element => {
         backgroundColor: 'red',
       }}
     >
-      <div
-        className=" gap-1 hidden lg:flex z-[5001]"
-      >
+      <div className=" gap-1 hidden lg:flex z-[5001]">
         <ButtonZoom onClickHandler={handleZoomIn}>+</ButtonZoom>
         <ButtonZoom onClickHandler={handleZoomOut}>-</ButtonZoom>
       </div>

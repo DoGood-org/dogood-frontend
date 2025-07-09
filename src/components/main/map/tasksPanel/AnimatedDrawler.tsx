@@ -1,7 +1,6 @@
 'use client';
 
 import { useClickOutside } from '@/hooks/useClickOutside';
-import { useMapStore } from '@/zustand/stores/mapStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import React, { JSX, ReactNode } from 'react';
 
@@ -29,13 +28,12 @@ export const AnimatedDrawler = ({
 
   useClickOutside({
     ref: ref,
-    callback: onClose ?? (() => {}),
+    callback: onClose ?? ((): void => {}),
     options: {
       enabled: isVisible,
       detectEscapeKey: true,
     },
   });
- 
 
   return (
     <AnimatePresence mode="wait">

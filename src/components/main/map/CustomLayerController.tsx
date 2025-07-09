@@ -1,8 +1,8 @@
-
 'use client';
-import { Button } from "@/components/ui/Button";
-import { EnumMapLayers } from "@/types/mapType";
-import { useMapStore } from "@/zustand/stores/mapStore";
+import { Button } from '@/components/ui/Button';
+import { EnumMapLayers } from '@/types/mapType';
+import { useMapStore } from '@/zustand/stores/mapStore';
+import { JSX } from 'react';
 
 const dropdownOptions = [
   {
@@ -25,11 +25,13 @@ const dropdownOptions = [
 type Props = {
   className?: string;
 };
-export const CustomLayerController = ({ className='' }: Props) => {
-  const baseLayer=useMapStore((state) => state.baseLayer);
-  const setBaseLayer=useMapStore((state) => state.setBaseLayer);
+export const CustomLayerController = ({
+  className = '',
+}: Props): JSX.Element => {
+  const baseLayer = useMapStore((state) => state.baseLayer);
+  const setBaseLayer = useMapStore((state) => state.setBaseLayer);
 
-  const handleOptionSelect = (optionId: string, optionLabel: string) => {
+  const handleOptionSelect = (optionId: string): void => {
     setBaseLayer(optionId as EnumMapLayers);
   };
 
@@ -37,8 +39,6 @@ export const CustomLayerController = ({ className='' }: Props) => {
     <div
       className={`inline-flex flex-col items-start gap-2 p-4 bg-[var(--map-btn-bg)] rounded-sm ${className}`}
       role="menu"
-      aria-label="Layer Controller"
-  
     >
       {dropdownOptions.map((option) => (
         <div
@@ -47,12 +47,12 @@ export const CustomLayerController = ({ className='' }: Props) => {
           role="menuitem"
           tabIndex={0}
           onClick={() => {
-            handleOptionSelect(option.id, option.label);
+            handleOptionSelect(option.id);
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
-              handleOptionSelect(option.id, option.label);
+              handleOptionSelect(option.id);
             }
           }}
           aria-selected={baseLayer === option.id}
@@ -63,7 +63,7 @@ export const CustomLayerController = ({ className='' }: Props) => {
               variant={'ghost'}
               className=" p-0 w-6 h-6  rounded-full border-map-btn-icon mr-2"
               onClick={() => {
-                handleOptionSelect(option.id, option.label);
+                handleOptionSelect(option.id);
               }}
             >
               <span
@@ -78,5 +78,5 @@ export const CustomLayerController = ({ className='' }: Props) => {
       ))}
     </div>
   );
-}
-export default CustomLayerController
+};
+export default CustomLayerController;

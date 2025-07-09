@@ -118,7 +118,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
       setMap: (map: LeafletMap): void => {
         set({ map });
       },
-      setLeafletComponents: (components) => {
+      setLeafletComponents: (components): void => {
         set({ leafletComponents: components });
       },
       setBaseLayer: (layer: EnumMapLayers): void => {
@@ -234,7 +234,10 @@ export const useMapStore = create<TMapState & TMapActions>()(
                 userLocation: coords,
                 locationError: null,
               });
-              console.log('[Zustand] User location set from navigator:', coords);
+              console.log(
+                '[Zustand] User location set from navigator:',
+                coords
+              );
             } else {
               console.log('[Zustand] Skipping update — same coordinates');
             }
@@ -254,7 +257,8 @@ export const useMapStore = create<TMapState & TMapActions>()(
 
           // Nothing available
           set({
-            locationError: '[Zustand] Failed to retrieve geolocation from navigator',
+            locationError:
+              '[Zustand] Failed to retrieve geolocation from navigator',
           });
         } catch (error) {
           console.warn(

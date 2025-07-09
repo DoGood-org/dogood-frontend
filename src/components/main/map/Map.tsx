@@ -3,7 +3,6 @@ import React, { JSX, useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { getMarkerIcon, initializeMapIcons } from '@/lib/mapUtils';
 import {
-  EnumMapLayers,
   IMapClickHandlerProps,
   LeafletType,
   MarkerCategoryEnum,
@@ -17,7 +16,6 @@ import {
   generateTasks,
   PopUpContent,
   TasksList,
-  UserLocation,
 } from '@/components';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
@@ -45,7 +43,6 @@ export const Map: React.FC = (): JSX.Element => {
     setLeafletComponents,
     leafletComponents,
     baseLayer,
-    setBaseLayer,
     setMapIcons,
     userLocation,
     setUserLocation,
@@ -148,15 +145,8 @@ export const Map: React.FC = (): JSX.Element => {
     );
   }
 
-  const {
-    MapContainer,
-    TileLayer,
-    Marker,
-    useMapEvent,
-    LayersControl,
-    Popup,
-    LayerGroup,
-  } = leafletComponents;
+  const { MapContainer, TileLayer, Marker, useMapEvent, Popup } =
+    leafletComponents;
 
   const renderTaskMarkers = (): JSX.Element[] => {
     const isAll =
@@ -333,17 +323,17 @@ export const Map: React.FC = (): JSX.Element => {
             {renderTaskMarkers()}
 
             {/* Passive overlays */}
-            {userLocation && <UserLocation />}
-
-
+            {renderUserLocation()}
             {/* USER ONLY */}
-            {/* <MapClickHandler
+            <MapClickHandler
               onClick={() => {}}
               allowClickToAddMarker
               setClickedCoords={setClickedCoords}
               setShowOptionsMenu={setShowOptionsMenu}
-            /> */}
-            {/* {renderCustomMarkers()} */}
+            />
+            {renderCustomMarkers()}
+
+            {/* Custom controls */}
             {clickedCoords && showOptionsMenu && (
               <Popup
                 position={clickedCoords}
