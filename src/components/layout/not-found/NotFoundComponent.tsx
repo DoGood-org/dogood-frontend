@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import ButtonPanel from './ButtonPanel';
 import { NotFoundProps } from '@/types/errorType';
+import Link from 'next/link';
 
 export const NotFoundComponent: React.FC<NotFoundProps> = ({
   scrImg,
@@ -42,9 +43,13 @@ export const NotFoundComponent: React.FC<NotFoundProps> = ({
           hrefBtn1={hrefBtn1}
           hrefBtn2={hrefBtn2}
         />
-        <p className="text-xs md:text-base text-start mt-4 md:mt-10">
+        <Link
+          href="mailto:sturtup.dogood@gmail.com"
+          className="text-xs md:text-base text-start mt-4 md:mt-10"
+          passHref
+        >
           {stuckText}
-        </p>
+        </Link>
       </div>
     </div>
   );
