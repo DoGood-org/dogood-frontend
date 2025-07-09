@@ -12,43 +12,27 @@ export const CustomControlContent = (): JSX.Element => {
   const map = useMap();
   const layerDropIsOpen = useMapStore((state) => state.layerDropIsOpen);
   const toggleLayerDrop = useMapStore((state) => state.toggleLayerDrop);
-  const handleZoomIn = (): void => {
-    if (map) {
-      map.zoomIn();
-    }
-  };
 
-  const handleZoomOut = (): void => {
-    if (map) {
-      map.zoomOut();
-    }
-  };
   return (
     <div
       style={{
-        height: '200px',
         width: '271px',
         position: 'relative',
-        bottom: '10px',
-        right: '10px',
+    
         display: 'flex',
-        backgroundColor: 'red',
       }}
     >
-      <div className=" gap-1 hidden lg:flex z-[5001]">
-        <ButtonZoom onClickHandler={handleZoomIn}>+</ButtonZoom>
-        <ButtonZoom onClickHandler={handleZoomOut}>-</ButtonZoom>
-      </div>
+
       {layerDropIsOpen && (
         <AnimatedDrawler
           isVisible={layerDropIsOpen}
           onClose={() => toggleLayerDrop()}
-          className="z-[5002]"
+          className="w-[160px] h-[168px]  rounded-sm"
         >
-          <CustomLayerController className="z-[5001] absolute bottom-0 left-0" />
+          <CustomLayerController className=" absolute bottom-0 left-0" />
         </AnimatedDrawler>
       )}
-      <div className="flex gap-2 z-[5001] absolute bottom-0 right-0">
+      <div className="flex gap-2 absolute bottom-0 right-0">
         <ButtonLayers />
         <ButtonLocation />
       </div>

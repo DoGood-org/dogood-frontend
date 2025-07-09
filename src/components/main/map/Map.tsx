@@ -11,11 +11,14 @@ import {
   AnimatedDrawler,
   ButtonOpenTasks,
   Container,
-  CustomControlPanel,
+
+  MultiControlPanel,
   Filters,
   generateTasks,
   PopUpContent,
   TasksList,
+  CustomControlContent,
+  CustomControlZoom,
 } from '@/components';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
@@ -305,21 +308,7 @@ export const Map: React.FC = (): JSX.Element => {
                 attribution={baseLayerConfig[baseLayer].attribution}
               />
             )}
-            {/* 
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution="&copy; <a href='https://www.openstreetmap.org
-              contributors'>OpenStreetMap</a> contributors"
-            />
-            <TileLayer
-              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-              attribution="Tiles © Esri"
-            />
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <TileLayer
-              url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
-              attribution="© Google"
-            /> */}
+       
             {renderTaskMarkers()}
 
             {/* Passive overlays */}
@@ -350,7 +339,8 @@ export const Map: React.FC = (): JSX.Element => {
               </Popup>
             )}
 
-            <CustomControlPanel />
+            <MultiControlPanel controls={[{ position: 'bottomright', element: <CustomControlContent /> },
+          { position: 'topright', element: <CustomControlZoom /> }]} />
           </MapContainer>
         </div>
         <div className="lg:absolute lg:flex lg:gap-6 lg:items-start lg:top-12 lg:left-32 lg:z-[500]">
