@@ -9,22 +9,24 @@ export enum MarkerCategoryEnum {
   Default = 'default',
   MyPin = 'myPin',
 }
-export interface IReactLeafletModule {
-  MapContainer: React.FC<any>;
-  TileLayer: typeof import('react-leaflet').TileLayer;
-  Marker: typeof import('react-leaflet').Marker;
-  useMap: typeof import('react-leaflet').useMap;
-  ZoomControl: typeof import('react-leaflet').ZoomControl;
-  LayersControl: typeof import('react-leaflet').LayersControl;
-  Popup: typeof import('react-leaflet').Popup;
-  Circle: typeof import('react-leaflet').Circle;
-  Polyline: typeof import('react-leaflet').Polyline;
-  GeoJSON: typeof import('react-leaflet').GeoJSON;
-  useMapEvent: typeof import('react-leaflet').useMapEvent;
-  Control: typeof import('leaflet').Control;
-  LayerGroup: typeof import('react-leaflet').LayerGroup;
-  useMapEvents: typeof import('react-leaflet').useMapEvents;
-}
+// export interface IReactLeafletModule {
+//   MapContainer: React.FC<any>;
+//   TileLayer: typeof import('react-leaflet').TileLayer;
+//   Marker: typeof import('react-leaflet').Marker;
+//   useMap: typeof import('react-leaflet').useMap;
+//   ZoomControl: typeof import('react-leaflet').ZoomControl;
+//   LayersControl: typeof import('react-leaflet').LayersControl;
+ 
+
+//   Popup: typeof import('react-leaflet').Popup;
+//   Circle: typeof import('react-leaflet').Circle;
+//   Polyline: typeof import('react-leaflet').Polyline;
+//   GeoJSON: typeof import('react-leaflet').GeoJSON;
+//   useMapEvent: typeof import('react-leaflet').useMapEvent;
+//   Control: typeof import('leaflet').Control;
+//   LayerGroup: typeof import('react-leaflet').LayerGroup;
+//   useMapEvents: typeof import('react-leaflet').useMapEvents;
+// }
 export type MapLocation = LatLngLiteral & {
   id: string;
   title: string;
@@ -32,6 +34,20 @@ export type MapLocation = LatLngLiteral & {
   distance?: string;
   description?: string;
   icon?: Icon | null;
+};
+
+export enum EnumMapLayers {
+  Satellite = 'EsriSatellite',
+  OpenStreetMap = 'OpenStreetMap',
+  GoogleMaps = 'GoogleMaps',
+}
+
+export type TMapLayerType = {
+  [key in EnumMapLayers]: {
+    name: string;
+    url: string;
+    attribution?: string;
+  };
 };
 
 export interface IAcceptShareLocationProps {

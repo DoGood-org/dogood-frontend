@@ -44,7 +44,6 @@ export const FormSearch = (): JSX.Element => {
         disabled:pointer-events-none disabled:opacity-50 lg:bg-card"
             onBlur={(e) => {
               register('search').onBlur(e);
-              console.log('Search input blurred', searchValue);
               reset();
             }}
           />

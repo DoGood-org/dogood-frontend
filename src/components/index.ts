@@ -46,6 +46,7 @@ export * from './main/map/ButtonLocation';
 export * from './main/map/ButtonZoom';
 export * from './main/map/CustomControlContent';
 export * from './main/map/CustomControlPanel';
+export * from './main/map/CustomLayerController';
 export * from './main/map/Map';
 export * from './main/map/MapSection';
 export * from './main/map/mockTasks';

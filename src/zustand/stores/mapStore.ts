@@ -3,18 +3,37 @@ import { persist } from 'zustand/middleware';
 
 import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
 import {
+  EnumMapLayers,
   IExtendedITaskProps,
   MarkerCategoryEnum,
-  IReactLeafletModule,
   TCustomMarker,
 } from '@/types/mapType';
 import coordsMatch from '@/lib/coordinatesMatch';
 import getGeolocationPromise from '@/lib/getGeolocationPromise';
 
+export interface IReactLeafletModule {
+  MapContainer: React.FC<any>;
+  TileLayer: typeof import('react-leaflet').TileLayer;
+  Marker: typeof import('react-leaflet').Marker;
+  useMap: typeof import('react-leaflet').useMap;
+  ZoomControl: typeof import('react-leaflet').ZoomControl;
+  LayersControl: typeof import('react-leaflet').LayersControl;
+  Popup: typeof import('react-leaflet').Popup;
+  Circle: typeof import('react-leaflet').Circle;
+  Polyline: typeof import('react-leaflet').Polyline;
+  GeoJSON: typeof import('react-leaflet').GeoJSON;
+  useMapEvent: typeof import('react-leaflet').useMapEvent;
+  Control: typeof import('leaflet').Control;
+  LayerGroup: typeof import('react-leaflet').LayerGroup;
+  useMapEvents: typeof import('react-leaflet').useMapEvents;
+}
+
 type TMapState = {
   map: LeafletMap | null;
   leafletComponents: IReactLeafletModule | null;
   mapIcons: Record<MarkerCategoryEnum, L.Icon | null>;
+  baseLayer: EnumMapLayers;
+  layerDropIsOpen: boolean;
 
   hasAgreedToLocation: boolean | null;
   showGeolocationPopup: boolean;
@@ -37,7 +56,8 @@ type TMapState = {
 type TMapActions = {
   setMap: (map: LeafletMap) => void;
   setLeafletComponents: (components: IReactLeafletModule) => void;
-
+  setBaseLayer: (layer: EnumMapLayers) => void;
+  toggleLayerDrop: () => void;
   setMapIcons: (icons: TMapState['mapIcons']) => void;
 
   setHasAgreedToLocation: (value: boolean) => void;
@@ -69,12 +89,9 @@ export const useMapStore = create<TMapState & TMapActions>()(
   persist(
     (set, get): TMapState & TMapActions => ({
       map: null,
-      setMap: (map: LeafletMap): void => {
-        set({ map });
-      },
       leafletComponents: null,
-      setLeafletComponents: (components) =>
-        set({ leafletComponents: components }),
+      baseLayer: EnumMapLayers.GoogleMaps,
+      layerDropIsOpen: false,
 
       mapIcons: {
         medicine: null,
@@ -98,7 +115,19 @@ export const useMapStore = create<TMapState & TMapActions>()(
 
       clickedCoords: null,
       showOptionsMenu: false,
-
+      setMap: (map: LeafletMap): void => {
+        set({ map });
+      },
+      setLeafletComponents: (components) => {
+        set({ leafletComponents: components });
+      },
+      setBaseLayer: (layer: EnumMapLayers): void => {
+        console.log('[Zustand] baseLayer set to:', layer);
+        set({ baseLayer: layer });
+      },
+      toggleLayerDrop: (): void => {
+        set((state) => ({ layerDropIsOpen: !state.layerDropIsOpen }));
+      },
       setMapIcons: (icons) => set({ mapIcons: icons }),
 
       setUserLocation: (loc) => set({ userLocation: loc }),
@@ -184,11 +213,11 @@ export const useMapStore = create<TMapState & TMapActions>()(
         if (get().hasAgreedToLocation) {
           get().requestGeolocation();
           console.log(
-            'User already agreed, requesting geolocation, dont bother with popup...'
+            '[Zustand] User already agreed, requesting geolocation, dont bother with popup...'
           );
         } else {
           set({ showGeolocationPopup: true });
-          console.log('User has not agreed, showing popup...');
+          console.log('[Zustand] User has not agreed, showing popup...');
         }
       },
       requestGeolocation: async (manualLoc?: LatLngLiteral): Promise<void> => {
@@ -205,9 +234,9 @@ export const useMapStore = create<TMapState & TMapActions>()(
                 userLocation: coords,
                 locationError: null,
               });
-              console.log('User location set from navigator:', coords);
+              console.log('[Zustand] User location set from navigator:', coords);
             } else {
-              console.log('Skipping update — same coordinates');
+              console.log('[Zustand] Skipping update — same coordinates');
             }
             return;
           }
@@ -219,17 +248,17 @@ export const useMapStore = create<TMapState & TMapActions>()(
               userLocation: manualLoc,
               locationError: null,
             });
-            console.log('Manual location set:', manualLoc);
+            console.log('[Zustand] Manual location set:', manualLoc);
             return;
           }
 
           // Nothing available
           set({
-            locationError: 'Failed to retrieve geolocation from navigator',
+            locationError: '[Zustand] Failed to retrieve geolocation from navigator',
           });
         } catch (error) {
           console.warn(
-            'navigator refused to share location, we may need to check the setting in the browser',
+            '[Zustand] navigator refused to share location, we may need to check the setting in the browser',
             error
           );
           set({

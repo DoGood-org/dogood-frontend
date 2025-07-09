@@ -3,10 +3,10 @@ import React, { JSX, useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { getMarkerIcon, initializeMapIcons } from '@/lib/mapUtils';
 import {
+  EnumMapLayers,
   IMapClickHandlerProps,
   LeafletType,
   MarkerCategoryEnum,
-  IReactLeafletModule,
 } from '@/types/mapType';
 import {
   AnimatedDrawler,
@@ -22,7 +22,7 @@ import {
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
 import Portal from '@/components/portal/Portal';
-import { useMapStore } from '@/zustand/stores/mapStore';
+import { IReactLeafletModule, useMapStore } from '@/zustand/stores/mapStore';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 import { FormSearch } from '@/components/main/map/filters/FormSearch';
 import { useTaskStore } from '@/zustand/stores/taskStore';
@@ -31,6 +31,7 @@ import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelec
 import { AnimatePresence, motion } from 'framer-motion';
 import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
 import { FilterBadges } from '@/components/main/map/filters/FilterBadges';
+import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
 
 export const Map: React.FC = (): JSX.Element => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
@@ -43,6 +44,8 @@ export const Map: React.FC = (): JSX.Element => {
     mapIcons,
     setLeafletComponents,
     leafletComponents,
+    baseLayer,
+    setBaseLayer,
     setMapIcons,
     userLocation,
     setUserLocation,
@@ -55,6 +58,7 @@ export const Map: React.FC = (): JSX.Element => {
     taskListIsOpen,
     toggleTaskList,
     activePanel,
+    setActivePanel,
     clickedCoords,
     showOptionsMenu,
     setClickedCoords,
@@ -305,54 +309,41 @@ export const Map: React.FC = (): JSX.Element => {
             <ScrollAfterDelay delay={2000} />
             <StoreMapInstance />
 
-            <LayersControl position="topright">
-              {/* 🌐 Base Layers */}{' '}
-              <LayersControl.BaseLayer name="Esri Satellite">
-                <TileLayer
-                  url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-                  attribution="Tiles © Esri"
-                />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="OpenStreetMap">
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer checked name="Google Maps (Standard)">
-                <TileLayer
-                  url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
-                  attribution="© Google"
-                />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="CartoDB Positron (Retina)">
-                <TileLayer
-                  url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png"
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors & CartoDB'
-                />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="CartoDB Dark Matter (Retina)">
-                <TileLayer
-                  url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png"
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors & CartoDB'
-                />
-              </LayersControl.BaseLayer>
-              {/* 👤 User Location */}
-              <LayerGroup>{renderUserLocation()}</LayerGroup>
-              {/* 📍 Task Markers */}
-              {renderTaskMarkers()}
-              {/* 📌 Custom Pins */}
-              <LayersControl.Overlay checked name="📌 Custom Markers">
-                <LayerGroup>{renderCustomMarkers()}</LayerGroup>
-              </LayersControl.Overlay>
-            </LayersControl>
+            {baseLayerConfig[baseLayer] && (
+              <TileLayer
+                url={baseLayerConfig[baseLayer].url}
+                attribution={baseLayerConfig[baseLayer].attribution}
+              />
+            )}
+            {/* 
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution="&copy; <a href='https://www.openstreetmap.org
+              contributors'>OpenStreetMap</a> contributors"
+            />
+            <TileLayer
+              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+              attribution="Tiles © Esri"
+            />
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <TileLayer
+              url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+              attribution="© Google"
+            /> */}
+            {renderTaskMarkers()}
 
             {/* Passive overlays */}
             {userLocation && <UserLocation />}
-            <MapClickHandler
+
+
+            {/* USER ONLY */}
+            {/* <MapClickHandler
               onClick={() => {}}
               allowClickToAddMarker
               setClickedCoords={setClickedCoords}
               setShowOptionsMenu={setShowOptionsMenu}
-            />
-
+            /> */}
+            {/* {renderCustomMarkers()} */}
             {clickedCoords && showOptionsMenu && (
               <Popup
                 position={clickedCoords}
@@ -387,6 +378,7 @@ export const Map: React.FC = (): JSX.Element => {
 
         <AnimatedDrawler
           isVisible={!!activePanel}
+          onClose={() => setActivePanel(null)}
           direction="vertical"
           className={`
             relative flex flex-col bg-card z-[1000]
