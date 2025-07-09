@@ -10,7 +10,6 @@ import { mockNews } from '@/components/main/news/mockNews';
 import { useTranslations } from 'next-intl';
 
 import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
-import { NewsSlideTablet } from '@/components/main/news/NewsSlideTablet';
 import { Section } from '@/components/ui/Section';
 
 export const NewsList = (): JSX.Element => {
@@ -30,16 +29,12 @@ export const NewsList = (): JSX.Element => {
 
       <SwiperList
         newsItems={mockNews}
-        swiperContainerClass="h-[1323px] my-10 md:hidden lg:block lg:h-[425px] "
+        swiperContainerClass="h-[425px] my-10"
         prevClass="prevNews"
         nextClass="nextNews"
         paginationClass="news-pagination"
         bulletClass="news-pagination-bullet"
         bulletActiveClass="news-pagination-bullet-active"
-      />
-      <NewsSlideTablet
-        newsItems={mockNews}
-        containerClass="my-10 md:block lg:hidden"
       />
 
       <div className="mt-4 flex justify-end">

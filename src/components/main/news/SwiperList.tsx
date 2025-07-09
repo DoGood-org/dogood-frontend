@@ -19,7 +19,7 @@ export const SwiperList: React.FC<Props> = (props) => {
   return (
     <div className={`${props.swiperContainerClass}`}>
       <Swiper
-        className="w-full h-[1323px] md:hidden lg:block lg:h-[430px]"
+        className="w-full lg:block h-[430px]"
         observer={true}
         observeParents={true}
         loop={false}
@@ -48,19 +48,18 @@ export const SwiperList: React.FC<Props> = (props) => {
         updateOnWindowResize={true}
         breakpoints={{
           0: {
-            slidesPerView: 3,
-            direction: 'vertical',
+            slidesPerView: 1,
+            direction: 'horizontal',
           },
           768: {
-            allowTouchMove: false,
-            slidesPerView: 1,
-            direction: 'vertical',
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+            direction: 'horizontal',
             spaceBetween: 0,
           },
 
           1440: {
             allowTouchMove: true,
-
             slidesPerView: 4,
             direction: 'horizontal',
             spaceBetween: 16,
