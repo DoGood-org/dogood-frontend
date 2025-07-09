@@ -13,15 +13,14 @@ export const ButtonLocation = (): JSX.Element => {
   };
 
   return (
-    <Button
-      variant={'secondary'}
+    <button
       type="button"
       onClick={handleClick}
-      className="w-12 h-12 flex items-center justify-center rounded-sm p-0 bg-[var(--map-btn-bg)] cursor-pointer border-0 border-[var(--map-btn-border)]"
+      className="w-12 h-12 flex items-center justify-center rounded-sm bg-[var(--map-btn-bg)] cursor-pointer border-0 border-[var(--map-btn-border)]"
     >
       <span className="text-[var(--map-btn-icon)] hover:text-btn-hover ">
-        <GpsIcon className=" w-6 h-6 " />
+        <GpsIcon className=" w-6 h-6" />
       </span>
-    </Button>
+    </button>
   );
 };

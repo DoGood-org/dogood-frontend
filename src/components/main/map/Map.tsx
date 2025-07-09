@@ -4,7 +4,6 @@ import { useInView } from 'react-intersection-observer';
 import { getMarkerIcon, initializeMapIcons } from '@/lib/mapUtils';
 import {
   IMapClickHandlerProps,
-  LeafletType,
   MarkerCategoryEnum,
 } from '@/types/mapType';
 import {
@@ -22,7 +21,7 @@ import {
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
 import Portal from '@/components/portal/Portal';
-import { IReactLeafletModule, useMapStore } from '@/zustand/stores/mapStore';
+import {  useMapStore } from '@/zustand/stores/mapStore';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 import { FormSearch } from '@/components/main/map/filters/FormSearch';
 import { useTaskStore } from '@/zustand/stores/taskStore';
@@ -42,10 +41,9 @@ export const Map: React.FC = (): JSX.Element => {
 
   const {
     mapIcons,
-    setLeafletComponents,
     leafletComponents,
     baseLayer,
-    setMapIcons,
+    initMap,
     userLocation,
     setUserLocation,
     customMarkers,
@@ -68,42 +66,10 @@ export const Map: React.FC = (): JSX.Element => {
   const { setTasks } = useTaskStore();
   const { setCategories } = useFilterStore();
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    Promise.all([import('react-leaflet'), import('leaflet')])
-      .then(([reactLeafletModule, L]) => {
-        const customIcons = initializeMapIcons(L as unknown as LeafletType);
-        setMapIcons({
-          medicine: customIcons.medicine,
-          nature: customIcons.nature,
-          animal: customIcons.animal,
-          food: customIcons.food,
-          myPosition: customIcons.myPosition,
-          default: customIcons.default,
-          myPin: customIcons.myPin,
-        });
-        setLeafletComponents({
-          MapContainer: reactLeafletModule.MapContainer,
-          TileLayer: reactLeafletModule.TileLayer,
-          Marker: reactLeafletModule.Marker,
-          ZoomControl: reactLeafletModule.ZoomControl,
-          useMapEvent: reactLeafletModule.useMapEvent,
-          LayersControl: reactLeafletModule.LayersControl,
-          LayerGroup: reactLeafletModule.LayerGroup,
-          useMap: reactLeafletModule.useMap,
-          Popup: reactLeafletModule.Popup,
-          Circle: reactLeafletModule.Circle,
-          Polyline: reactLeafletModule.Polyline,
-          GeoJSON: reactLeafletModule.GeoJSON,
-          Control: L.Control,
-          useMapEvents: reactLeafletModule.useMapEvents,
-        } as IReactLeafletModule);
-      })
-      .catch((error) => {
-        console.error('Error loading map components:', error);
-      });
-  }, []);
 
+  useEffect(() => {
+    initMap();
+  }, []);
   useEffect((): void => {
     if (isInView) {
       checkLocationPermission();
@@ -346,12 +312,12 @@ export const Map: React.FC = (): JSX.Element => {
             />
           </MapContainer>
         </div>
-        <div className="lg:absolute lg:flex lg:gap-6 lg:items-start lg:top-12 lg:left-32 lg:z-[500]">
-          <div className="flex flex-col justify-center relative">
+        <div className="bg-card lg:w-[485px] lg:absolute lg:flex lg:items-start lg:top-12 lg:left-32 lg:z-[500]">
+          <div className="flex flex-col justify-center relative w-full">
             <ButtonOpenTasks
               onClick={() => toggleTaskList()}
               isOpen={taskListIsOpen}
-              className="mx-auto mb-2 lg:mb-0 lg:absolute lg:z-[500] lg:top-18 lg:left-1/2 lg:translate-x-[-50%] lg:bg-card lg:w-16"
+              className="mx-auto mb-2 lg:mb-0 lg:absolute lg:z-[500]  lg:h-10 lg:top-12 lg:left-1/2 lg:translate-x-[-50%]"
             />
             <FormSearch />
           </div>
@@ -366,7 +332,7 @@ export const Map: React.FC = (): JSX.Element => {
           className={`
             relative flex flex-col bg-card z-[1000]
             w-full h-[675px] lg:mt-0
-            lg:absolute lg:top-36 lg:left-32 lg:w-[487px] lg:h-[722px] lg:rounded-md lg:shadow-xl overflow-y-hidden
+            lg:absolute lg:top-32 lg:left-32 lg:w-[485px] lg:h-[722px] lg:rounded-md  overflow-y-hidden
           `}
         >
           <AnimatePresence mode="wait">

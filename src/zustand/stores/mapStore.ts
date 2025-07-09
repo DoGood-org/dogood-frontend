@@ -5,11 +5,13 @@ import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
 import {
   EnumMapLayers,
   IExtendedITaskProps,
+  LeafletType,
   MarkerCategoryEnum,
   TCustomMarker,
 } from '@/types/mapType';
 import coordsMatch from '@/lib/coordinatesMatch';
 import getGeolocationPromise from '@/lib/getGeolocationPromise';
+import { initializeMapIcons } from '@/lib/mapUtils';
 
 export interface IReactLeafletModule {
   MapContainer: React.FC<any>;
@@ -59,6 +61,7 @@ type TMapActions = {
   setBaseLayer: (layer: EnumMapLayers) => void;
   toggleLayerDrop: () => void;
   setMapIcons: (icons: TMapState['mapIcons']) => void;
+  initMap: () => Promise<void>;
 
   setHasAgreedToLocation: (value: boolean) => void;
   setShowGeolocationPopup: (value: boolean) => void;
@@ -115,12 +118,53 @@ export const useMapStore = create<TMapState & TMapActions>()(
 
       clickedCoords: null,
       showOptionsMenu: false,
+
+// *Actions*//
+
       setMap: (map: LeafletMap): void => {
         set({ map });
       },
       setLeafletComponents: (components): void => {
         set({ leafletComponents: components });
       },
+      initMap: async (): Promise<void> => {
+        if (get().leafletComponents) return;
+        if (typeof window === 'undefined') return;
+        const [reactLeafletModule, L] = await Promise.all([
+          import('react-leaflet'),
+          import('leaflet'),
+        ]);
+        const customIcons = initializeMapIcons(L as unknown as LeafletType);
+        set({
+          mapIcons: {
+            medicine: customIcons.medicine,
+            nature: customIcons.nature,
+            animal: customIcons.animal,
+            food: customIcons.food,
+            myPosition: customIcons.myPosition,
+            default: customIcons.default,
+            myPin: customIcons.myPin,
+          },
+          leafletComponents: {
+            MapContainer: reactLeafletModule.MapContainer,
+            TileLayer: reactLeafletModule.TileLayer,
+            Marker: reactLeafletModule.Marker,
+            ZoomControl: reactLeafletModule.ZoomControl,
+            useMapEvent: reactLeafletModule.useMapEvent,
+            LayersControl: reactLeafletModule.LayersControl,
+            LayerGroup: reactLeafletModule.LayerGroup,
+            useMap: reactLeafletModule.useMap,
+            Popup: reactLeafletModule.Popup,
+            Circle: reactLeafletModule.Circle,
+            Polyline: reactLeafletModule.Polyline,
+            GeoJSON: reactLeafletModule.GeoJSON,
+            Control: L.Control,
+            useMapEvents: reactLeafletModule.useMapEvents,
+          } as IReactLeafletModule,
+        });
+
+      },
+
       setBaseLayer: (layer: EnumMapLayers): void => {
         console.log('[Zustand] baseLayer set to:', layer);
         set({ baseLayer: layer });
@@ -290,6 +334,8 @@ export const useMapStore = create<TMapState & TMapActions>()(
           filtersIsOpen: false,
           activePanel: !state.taskListIsOpen ? 'tasks' : null,
         })),
+
+
     }),
     {
       name: 'map-storage',
