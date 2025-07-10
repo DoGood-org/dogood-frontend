@@ -1,6 +1,7 @@
 'use client';
 import { ButtonLayers } from '@/components/main/map/ButtonLayers';
 import { ButtonLocation } from '@/components/main/map/ButtonLocation';
+import { CustomControlZoom } from '@/components/main/map/CustomControlZoom';
 import CustomLayerController from '@/components/main/map/CustomLayerController';
 import { AnimatedDrawler } from '@/components/main/map/tasksPanel/AnimatedDrawler';
 import { useMapStore } from '@/zustand/stores/mapStore';
@@ -11,27 +12,24 @@ export const CustomControlContent = (): JSX.Element => {
   const toggleLayerDrop = useMapStore((state) => state.toggleLayerDrop);
 
   return (
-    <div
-      style={{
-        width: '271px',
-        position: 'relative',
+    <>
+      <div className="flex w-[300px] gap-6 justify-end">
+        <CustomControlZoom />
+        <div className="flex gap-6 bottom-0 left-0">
+          <ButtonLayers />
+          <ButtonLocation />
+        </div>
+      </div>
 
-        display: 'flex',
-      }}
-    >
       {layerDropIsOpen && (
         <AnimatedDrawler
           isVisible={layerDropIsOpen}
           onClose={() => toggleLayerDrop()}
-          className="w-[160px] h-[168px]  rounded-sm"
+          className="absolute z-50 w-[160px] h-[168px] bottom-0 rounded-sm"
         >
-          <CustomLayerController className=" absolute bottom-0 left-0" />
+          <CustomLayerController className=" absolute z-50" />
         </AnimatedDrawler>
       )}
-      <div className="flex gap-2 absolute bottom-0 right-0">
-        <ButtonLayers />
-        <ButtonLocation />
-      </div>
-    </div>
+    </>
   );
 };

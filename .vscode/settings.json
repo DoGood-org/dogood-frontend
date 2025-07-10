@@ -2,7 +2,6 @@
   "files.eol": "\n",
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
-  "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "github.copilot.enable": {
     "typescript": true,
@@ -20,5 +19,8 @@
     "inlineSuggestions": true,
     "autoImport": true,
     "codeCompletion": true
-  }
+  },
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "github.copilot.chat.languageContext.fix.typescript.enabled": true
 }

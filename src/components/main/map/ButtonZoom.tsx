@@ -18,7 +18,7 @@ export const ButtonZoom = ({
     <button
       type="button"
       onClick={handleClick}
-      className="z-551 w-12 h-12 flex items-center justify-center  bg-[var(--map-btn-bg)] cursor-pointer  border-[var(--map-btn-border)] rounded-sm"
+      className="w-12 h-12 flex items-center justify-center  bg-[var(--map-btn-bg)] cursor-pointer  border-[var(--map-btn-border)] rounded-sm"
     >
       <span className="text-[var(--map-btn-icon)] text-2xl">{children}</span>
     </button>

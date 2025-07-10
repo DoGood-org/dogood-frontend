@@ -21,7 +21,7 @@ export const CustomControlZoom = (): JSX.Element => {
   };
   return (
     <div
-      className=" gap-1 hidden lg:flex z-[5001] "
+      className=" gap-1 hidden lg:flex"
       style={{
         position: 'relative',
       }}

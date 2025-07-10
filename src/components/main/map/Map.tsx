@@ -13,7 +13,6 @@ import {
   PopUpContent,
   TasksList,
   CustomControlContent,
-  CustomControlZoom,
 } from '@/components';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
@@ -303,7 +302,6 @@ export const Map: React.FC = (): JSX.Element => {
             <MultiControlPanel
               controls={[
                 { position: 'bottomright', element: <CustomControlContent /> },
-                { position: 'topright', element: <CustomControlZoom /> },
               ]}
             />
           </MapContainer>
