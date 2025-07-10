@@ -1,17 +1,15 @@
 import { BottomNavigation, SidebarNavigation } from '@/components';
 
-interface AccountLayoutProps {
-  children: React.ReactNode;
-}
-
-export default function AccountLayout({
+export default function AuthLayout({
   children,
-}: AccountLayoutProps): React.ReactElement {
+}: {
+  children: React.ReactNode;
+}): React.ReactNode {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen p-20">
       <SidebarNavigation />
-      <div className="flex flex-col flex-1">
-        <main className="flex-grow p-4">{children}</main>
+      <div className="flex">
+        {children}
         <BottomNavigation />
       </div>
     </div>
