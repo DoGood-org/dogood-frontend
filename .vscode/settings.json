@@ -20,7 +20,14 @@
     "autoImport": true,
     "codeCompletion": true
   },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll": true,
+    "source.fixAll.eslint": true
+  },
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
   "javascript.preferences.quoteStyle": "single",
   "typescript.preferences.quoteStyle": "single",
-  "github.copilot.chat.languageContext.fix.typescript.enabled": true
+  "typescript.updateImportsOnFileMove.enabled": "always",
 }

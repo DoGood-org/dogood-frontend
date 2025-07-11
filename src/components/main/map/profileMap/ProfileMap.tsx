@@ -9,7 +9,7 @@ import { PopUpContent } from '@/components/main/map/PopUpContent';
 import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
 import { UserLocation } from '@/components/main/map/UserLocation';
 import { getMarkerIcon, resolveTaskCategory } from '@/lib/mapUtils';
-import { IMapClickHandlerProps, MarkerCategoryEnum } from '@/types/mapType';
+import { MarkerCategoryEnum } from '@/types/mapType';
 import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
@@ -44,22 +44,22 @@ export const ProfileMap = (): JSX.Element => {
     initMap('user');
   }, []);
 
-  // const generatedTasks = useMemo(() => {
-  //   return generateTasks(
-  //     userLocation?.lat || 27.9944024,
-  //     userLocation?.lng || -81.7602544
-  //   );
-  // }, [userLocation?.lat, userLocation?.lng]);
+  const generatedTasks = useMemo(() => {
+    return generateTasks(
+      userLocation?.lat || 27.9944024,
+      userLocation?.lng || -81.7602544
+    );
+  }, [userLocation?.lat, userLocation?.lng]);
 
-  // useEffect(() => {
-  //   if (generatedTasks.length > 0) {
-  //     setTasks(generatedTasks);
-  //     const categories = Array.from(
-  //       new Set(generatedTasks.flatMap((task) => task.category))
-  //     );
-  //     setCategories(categories);
-  //   }
-  // }, [generatedTasks]);
+  useEffect(() => {
+    if (generatedTasks.length > 0) {
+      setTasks(generatedTasks);
+      const categories = Array.from(
+        new Set(generatedTasks.flatMap((task) => task.category))
+      );
+      setCategories(categories);
+    }
+  }, [generatedTasks]);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
 

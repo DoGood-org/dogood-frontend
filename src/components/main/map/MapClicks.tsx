@@ -1,13 +1,11 @@
 'use client';
-import { useMapEvent } from 'react-leaflet';
-import { LatLngLiteral } from 'leaflet';
 import { IMapClickHandlerProps, MapClickType } from '@/types/mapType';
+import { LatLngLiteral } from 'leaflet';
+import { useMapEvent } from 'react-leaflet';
 
 export const MapClickHandler: React.FC<IMapClickHandlerProps> = ({
   onClick,
   allowClickToAddMarker,
-  clickOptions,
-  setClickedCoords,
   setShowOptionsMenu,
 }) => {
   const handleClick = (

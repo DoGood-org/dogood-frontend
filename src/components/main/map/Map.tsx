@@ -1,38 +1,32 @@
 'use client';
-import React, { JSX, useEffect, useMemo } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { getMarkerIcon, resolveTaskCategory } from '@/lib/mapUtils';
-import {
-  IExtendedCategoryFilter,
-  IMapClickHandlerProps,
-  MarkerCategoryEnum,
-} from '@/types/mapType';
 import {
   AnimatedDrawler,
   ButtonOpenTasks,
   Container,
-  MultiControlPanel,
+  CustomControlContent,
   Filters,
   generateTasks,
-  PopUpContent,
+  MultiControlPanel,
   TasksList,
-  CustomControlContent,
   UserLocation,
 } from '@/components';
+import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
+import { FilterBadges } from '@/components/main/map/filters/FilterBadges';
+import { FormSearch } from '@/components/main/map/filters/FormSearch';
+import { MapClickHandler } from '@/components/main/map/MapClicks';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
+import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
 import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
 import Portal from '@/components/portal/Portal';
-import { useMapStore } from '@/zustand/stores/mapStore';
-import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
-import { FormSearch } from '@/components/main/map/filters/FormSearch';
-import { useTaskStore } from '@/zustand/stores/taskStore';
-import { useFilterStore } from '@/zustand/stores/filterStore';
+import { resolveTaskCategory } from '@/lib/mapUtils';
 import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
+import { useFilterStore } from '@/zustand/stores/filterStore';
+import { useMapStore } from '@/zustand/stores/mapStore';
+import { useTaskStore } from '@/zustand/stores/taskStore';
 import { AnimatePresence, motion } from 'framer-motion';
-import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
-import { FilterBadges } from '@/components/main/map/filters/FilterBadges';
-import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
-import { MapClickHandler } from '@/components/main/map/MapClicks';
+import React, { JSX, useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 
 export const Map: React.FC = (): JSX.Element => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
@@ -49,7 +43,6 @@ export const Map: React.FC = (): JSX.Element => {
     initMap,
     userLocation,
     setUserLocation,
-    customMarkers,
     acceptLocationSharing,
     declineLocationSharing,
     showGeolocationPopup,
@@ -243,7 +236,7 @@ export const Map: React.FC = (): JSX.Element => {
                 </Popup>
                 {Tooltip && (
                   <Tooltip permanent direction="top">
-                    I'm here! You can drag me.
+                    Im here! You can drag me.
                   </Tooltip>
                 )}
               </Marker>

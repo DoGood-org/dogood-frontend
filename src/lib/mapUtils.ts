@@ -1,19 +1,17 @@
+import AnimalMarker from '@/assets/images/map/animal-marker.png';
+import DefaultMarker from '@/assets/images/map/default.png';
+import FoodMarker from '@/assets/images/map/food-marker.png';
+import MedicineMarker from '@/assets/images/map/medicine-marker.png';
+import MyPin from '@/assets/images/map/my-pin.png';
+import MyPositionMarker from '@/assets/images/map/my-position.png';
+import NatureMarker from '@/assets/images/map/nature-marker.png';
 import {
-  EnumMapLayers,
   IExtendedCategoryFilter,
   LeafletType,
   MapIcons,
   MarkerCategoryEnum,
 } from '@/types/mapType';
-import MedicineMarker from '@/assets/images/map/medicine-marker.png';
-import NatureMarker from '@/assets/images/map/nature-marker.png';
-import AnimalMarker from '@/assets/images/map/animal-marker.png';
-import FoodMarker from '@/assets/images/map/food-marker.png';
-import MyPositionMarker from '@/assets/images/map/my-position.png';
-import DefaultMarker from '@/assets/images/map/default.png';
-import MyPin from '@/assets/images/map/my-pin.png';
-import { Icon, TileLayer } from 'leaflet';
-import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
+import { Icon } from 'leaflet';
 
 /**
  * Creates a Leaflet icon instance

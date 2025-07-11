@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
+import coordsMatch from '@/lib/coordinatesMatch';
+import getGeolocationPromise from '@/lib/getGeolocationPromise';
+import { initializeMapIcons } from '@/lib/mapUtils';
 import {
   EnumMapLayers,
   IExtendedITaskProps,
@@ -9,9 +11,7 @@ import {
   MarkerCategoryEnum,
   TCustomMarker,
 } from '@/types/mapType';
-import coordsMatch from '@/lib/coordinatesMatch';
-import getGeolocationPromise from '@/lib/getGeolocationPromise';
-import { initializeMapIcons } from '@/lib/mapUtils';
+import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
 
 export interface IReactLeafletModule {
   MapContainer: React.FC<any>;
