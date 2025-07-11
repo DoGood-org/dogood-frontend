@@ -314,8 +314,7 @@ export const Map: React.FC = (): JSX.Element => {
             {/* Custom controls */}
 
             <MapRightClicked
-              onClick={() => {
-              }}
+              onClick={() => {}}
               allowClickToAddMarker
               setClickedCoords={setClickedCoords}
               setShowOptionsMenu={setShowOptionsMenu}

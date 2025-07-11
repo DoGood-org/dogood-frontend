@@ -1,7 +1,7 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import { Search, SlidersVertical, X } from 'lucide-react';
-import { JSX, useEffect, useRef } from 'react';
+import { JSX, useEffect } from 'react';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 

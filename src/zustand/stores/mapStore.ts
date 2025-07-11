@@ -4,17 +4,14 @@ import { persist } from 'zustand/middleware';
 import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
 import {
   EnumMapLayers,
-  EnumUserLayers,
   IExtendedITaskProps,
   LeafletType,
   MarkerCategoryEnum,
   TCustomMarker,
-  TMapLayerType,
 } from '@/types/mapType';
 import coordsMatch from '@/lib/coordinatesMatch';
 import getGeolocationPromise from '@/lib/getGeolocationPromise';
-import { initializeMapIcons, initLayers } from '@/lib/mapUtils';
-import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
+import { initializeMapIcons } from '@/lib/mapUtils';
 
 export interface IReactLeafletModule {
   MapContainer: React.FC<any>;
@@ -113,7 +110,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
         main: null,
         user: null,
       },
-      setMapInstance: (key: 'main' | 'user', map: LeafletMap) => {
+      setMapInstance: (key: 'main' | 'user', map: LeafletMap): void => {
         set((state) => ({
           mapInstances: {
             ...state.mapInstances,
