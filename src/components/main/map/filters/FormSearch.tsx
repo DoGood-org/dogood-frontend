@@ -4,6 +4,7 @@ import { Search, SlidersVertical, X } from 'lucide-react';
 import { JSX, useEffect } from 'react';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
+import { Button } from '@/components/ui/Button';
 
 type FormData = { search: string };
 
@@ -51,10 +52,17 @@ export const FormSearch = (): JSX.Element => {
             onFocus={() => setSearchActive(true)}
           />
           {searchValue && (
-            <X
-              className="absolute z-25 right-13 w-5 h-5 cursor-pointer text-muted-foreground hover:text-foreground"
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-3 top-1/2 -translate-y-1/2"
               onClick={handleClear}
-            />
+            >
+              <X
+                className="absolute z-25 right-13 w-5 h-5 cursor-pointer text-muted-foreground hover:text-foreground"
+                onClick={handleClear}
+              />
+            </Button>
           )}
           <span
             className="absolute right-6 bg-transparent p-0 m-0"

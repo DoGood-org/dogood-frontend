@@ -79,5 +79,6 @@ export const useClickOutside = ({
     detectEscapeKey,
     once,
     isExceptionActive,
+    exeptionSelector,
   ]);
 };

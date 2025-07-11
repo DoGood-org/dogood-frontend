@@ -343,7 +343,7 @@ export const Map: React.FC = (): JSX.Element => {
             />
           </MapContainer>
         </div>
-        <div className="lg:absolute lg:flex lg:items-start lg:top-12 lg:left-32 lg:z-[500]">
+        <div className="lg:absolute lg:flex lg:items-start lg:top-12 lg:left-32 lg:gap-10 lg:z-[500]">
           <div className="flex flex-col justify-center relative w-full bg-card lg:w-[485px]">
             <ButtonOpenTasks
               onClick={() => toggleTaskList()}

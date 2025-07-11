@@ -31,7 +31,7 @@ export const FilterBadges = (): JSX.Element | null => {
                 />
               </li>
             ))}
-          {currentDistanceFilter && (
+          {currentDistanceFilter !== null && (
             <li key={`distance-${currentDistanceFilter}`}>
               <FilterBadge
                 category={`Up to ${currentDistanceFilter} km`}
