@@ -5,8 +5,8 @@ import { NavigationLinks } from './NavigationLinks';
 
 export const BottomNavigation: React.FC = () => {
   return (
-    <nav className="lg:hidden flex justify-center items-center w-full fixed bottom-6 pt-[60px] pb-[60px] left-1/2 transform -translate-x-1/2 z-50">
-      <div className="bg-[#0D0D0D] rounded-xl w-[280px]">
+    <nav className="lg:hidden flex justify-center items-center w-full sticky bottom-[258px] pt-[60px] md:pt-[38px] pb-[60px] md:pb-[64px] left-0 z-50">
+      <div className="bg-[#171b19] rounded-xl w-[280px]">
         <NavigationLinks
           showLabels={false}
           className="flex items-center justify-between gap-6"

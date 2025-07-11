@@ -2,28 +2,14 @@
 
 import React from 'react';
 import { Link, usePathname } from '../../i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 import SidebarUserIcon from '@/components/icons/SidebarUserIcon';
 import ChatIcon from '@/components/icons/ChatIcon';
 import MapIcon from '@/components/icons/MapIcon';
 import GoalsIcon from '@/components/icons/GoalsIcon';
 import SettingsIcon from '@/components/icons/SettingsIcon';
-
-const navigationLinks = [
-  { href: '/', label: 'Account', Icon: SidebarUserIcon },
-  { href: '/chat', label: 'Chat', Icon: ChatIcon },
-  { href: '/map', label: 'Map', Icon: MapIcon },
-  { href: '/goals', label: 'Goals', Icon: GoalsIcon },
-  { href: '/settings', label: 'Settings', Icon: SettingsIcon },
-];
-
-interface NavigationLinksProps {
-  showLabels?: boolean;
-  linkClassName?: string;
-  iconClassName?: string;
-  className?: string;
-  navLabels?: string;
-}
+import { NavigationLinksProps } from '@/types/navigationType';
 
 export const NavigationLinks: React.FC<NavigationLinksProps> = ({
   showLabels = true,
@@ -36,30 +22,41 @@ export const NavigationLinks: React.FC<NavigationLinksProps> = ({
 
   const locale = pathname.split('/')[1] || 'en';
 
+  const t = useTranslations('navigation');
+
+  const navigationLinks = [
+    { href: '/', label: t('account'), Icon: SidebarUserIcon },
+    { href: '/chat', label: t('chat'), Icon: ChatIcon },
+    { href: '/map', label: t('map'), Icon: MapIcon },
+    { href: '/goals', label: t('goals'), Icon: GoalsIcon },
+    { href: '/settings', label: t('settings'), Icon: SettingsIcon },
+  ];
+
   return (
     <ul className={className}>
       {navigationLinks.map(({ href, label, Icon }, index) => {
         const expectedPath = href === '/' ? `/${locale}` : `/${locale}${href}`;
-        const isActive = pathname === expectedPath;
+        const isActive =
+          pathname === expectedPath || pathname.startsWith(expectedPath + '/');
 
         return (
           <li key={index}>
             <Link
               href={expectedPath}
               className={`
-                flex items-center gap-3 lg:p-3 rounded-xl border-0 transition duration-300 text-[#1B1B1B] lg:border  
-                ${isActive ? 'lg:border-[#1B9757]' : 'lg:border-transparent hover:lg:border-[#1B9757] transition duration-300'}
-                ${linkClassName}
-              `}
+              flex items-center gap-3 lg:p-3 rounded-xl border-0 transition duration-300 text-bg-icon
+              lg:border  ${isActive ? 'lg:border-border' : 'lg:border-transparent hover:lg:border-border'}
+              ${linkClassName}
+           `}
             >
               <Icon
                 className={`
-                  w-6 h-6 transition-colors duration-300
-                  ${isActive ? 'text-[#1B9757] sm:text-[#1B9757] md:text-[#1B9757]' : 'text-[#f1f1f1] transition duration-300'}
-                  lg:text-[#1B1B1B]
-                  group-hover:text-[#1B9757]
-                  ${iconClassName}
-                `}
+                w-6 h-6 transition-colors duration-300
+                ${isActive ? 'text-btn-outline-active' : 'text-white'}
+                lg:text-bg-icon
+                group-hover:lg:text-btn-outline-active
+                ${iconClassName}
+              `}
               />
               {showLabels && <span className={navLabels}>{label}</span>}
             </Link>
