@@ -9,27 +9,26 @@
 @theme {
   --breakpoint-*: initial;
   /* --color-*: initial; */
-
 }
 
 @theme inline {
   /* breakpoints */
-  /* --breakpoint-*: initial;*/
+  --breakpoint-*: initial;
 
   --breakpoint-sm: 393px;
-  /*393px;*/
   --breakpoint-md: 768px;
   --breakpoint-lg: 1440px;
-  /*1440px;*/
   --breakpoint-xl: 1920px;
-  /*1920px;*/
-
 
   /* colors */
   --color-background: var(--background);
+  --color-post: var(--post);
+  --color-post_gray: var(--post_gray);
   --color-foreground: var(--foreground);
   --color-text-help: var(--text-help);
   --color-text-gray: var(--text-gray);
+  --color-white: var(--white);
+  --color-text_tag: var(--text_tag);
   --color-header-bg: var(--header-bg);
   --color-footer-bg: var(--footer-bg);
   --color-layout-background: var(--layout-background);
@@ -58,6 +57,9 @@
   --color-medicine: var(--medicine);
   --color-animal: var(--animal);
   --color-nature: var(--nature);
+  --color-food: var(--food);
+  --color-map-btn: var(--map-btn-bg);
+  --color-map-btn-icon: var(--map-btn-icon);
 
   /* font sizes and line-height desktop */
   --text-sm: 14px;
@@ -79,6 +81,8 @@
   /* font sizes and line-height mobile */
   --text-h1: 32px;
   --leading-h1: 48px;
+  --text-h2-m: 24px;
+  --leading-h2-m: 32px;
   --text-h2: 32px;
   --leading-h2: 48px;
   --text-h3: 24px;
@@ -106,15 +110,13 @@
   /* --breakpoint-xl: 120rem; 1920px */
 
   --breakpoint-sm: 393px;
-  /*393px;*/
   --breakpoint-md: 768px;
   --breakpoint-lg: 1440px;
-  /*1440px;*/
   --breakpoint-xl: 1920px;
-  /*1920px;*/
 
   --background: #f1f1f1;
   --background-secondary: #303030;
+  /*#171B19;*/
   --foreground: #1b1b1b;
   --header-bg: #171b19;
   --footer-bg: #111215;
@@ -122,8 +124,10 @@
   --text-help: #696969;
   --text-gray: #999999;
   --white: #f1f1f1;
+  --text_tag: #010101;
   --tag: #696969;
-
+  --post: #696969;
+  --post_gray: #f1f1f1;
   --card: #e6e6e6;
   --toggle: #303030;
 
@@ -137,6 +141,8 @@
   --btn-outline: #17814b;
   --btn-outline-hover: #4caf50;
   --btn-outline-active: #0a6f3c;
+  --map-btn-bg: #999999;
+  --map-btn-icon: #171b19;
 
   --bg-icon: #171b19;
   --icon-color: #f1f1f1;
@@ -152,6 +158,7 @@
   --medicine: #1f5eff;
   --animal: #ff7d57;
   --nature: #4caf50;
+  --food: #e4a23c;
 
   /* font sizes and line-height desktop */
   --h1-d: 72px;
@@ -200,6 +207,9 @@ html {
   --foreground: #f1f1f1;
   --card: #303030;
   --btn-secondary: #010101;
+  --post: #171b19;
+  --text_tag: #f1f1f1;
+  --post_gray: #696969;
   --gradient:
     linear-gradient(238.09deg,
       rgba(26, 211, 170, 0.15) 30.81%,
@@ -210,6 +220,8 @@ html {
   --bg-icon: #f1f1f1;
   --icon-color: #000000;
   --image-bg: #e9e9e9;
+  --map-btn-bg: #303030;
+  --map-btn-icon: #f1f1f1;
 }
 
 .bg-dots {
@@ -272,6 +284,7 @@ html {
   background-image: url('/src/assets/images/faq/Lines.png');
 }
 
+
 /*---------------------------------------------------------------*/
 @layer base {
   * {
@@ -301,313 +314,438 @@ html {
     @apply sm:px-5 sm:max-w-[var(--breakpoint-sm)];
     @apply md:px-15 md:max-w-[var(--breakpoint-md)];
     @apply lg:px-20 lg:max-w-[var(--breakpoint-lg)];
+  }
 
-    .dropdown-link {
-      border: 1px solid transparent;
-      transition: border 1s ease-in-out;
+  .dropdown-link {
+    border: 1px solid transparent;
+    transition: border 1s ease-in-out;
 
-      &:hover {
-        border: 1px solid var(--border);
-      }
+    &:hover {
+      border: 1px solid var(--border);
+    }
+  }
 
+  @keyframes dropdown-fade {
+    0% {
+      opacity: 0;
+      transform: scaleY(0.8);
     }
 
+    100% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
 
-    @keyframes dropdown-fade {
-      0% {
-        opacity: 0;
-        transform: scaleY(0.8);
-      }
+  .animate-dropdown-fade {
+    animation: dropdown-fade 200ms ease-out forwards;
+  }
 
-      100% {
-        opacity: 1;
-        transform: scaleY(1);
-      }
+  @keyframes dropdown-open {
+    0% {
+      opacity: 0;
+      transform: translateY(-100px);
+      max-height: 0;
     }
 
-    .animate-dropdown-fade {
-      animation: dropdown-fade 200ms ease-out forwards;
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 500px;
     }
+  }
 
-    @keyframes dropdown-open {
-      0% {
-        opacity: 0;
-        transform: translateY(-100px);
-        max-height: 0;
-      }
-
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-        max-height: 500px;
-      }
-    }
-
-    .animate-dropdown-open {
-      animation: dropdown-open 0.2s ease-out;
-      /* transform: scaleY(100);
+  .animate-dropdown-open {
+    animation: dropdown-open 0.2s ease-out;
+    /* transform: scaleY(100);
   max-height: 500px; */
-    }
+  }
+}
+
+/* Стиль для authForm*/
+
+.btn-auth {
+  @apply bg-btn text-white cursor-pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/*---------------------------------------------------------------*/
+
+.clickedBtn {
+  background-color: var(--btn);
+  color: #ffffff;
+}
+
+/*------------------utilities for scrollbar---------------------------*/
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 15px;
   }
 
-  /* Стиль для authForm*/
-
-  .btn-auth {
-    @apply bg-btn text-white cursor-pointer;
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+    margin: 20px 0 !important;
   }
 
-  /*---------------------------------------------------------------*/
-
-  .clickedBtn {
-    background-color: var(--btn);
-    color: #ffffff;
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--btn);
+    border: 4px solid transparent;
+    border-radius: 8px;
+    background-clip: padding-box;
   }
 
-  /*------------------utilities for scrollbar---------------------------*/
-  @layer utilities {
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 15px;
-    }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--btn);
+    background-clip: padding-box;
+  }
 
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background-color: transparent;
-      margin: 20px 0 !important;
-    }
+  /*----------------- Font-size utilites -------------------------------*/
+  .text-sm {
+    font-size: var(--text-sm);
+    line-height: var(--leading-sm);
+  }
 
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: var(--btn);
-      border: 4px solid transparent;
-      border-radius: 8px;
-      background-clip: padding-box;
-    }
-
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: var(--btn);
-      background-clip: padding-box;
-    }
-
-    /*----------------- Font-size utilites -------------------------------*/
-    .text-sm {
+  @media (min-width: 48rem) {
+    .md\:text-sm {
       font-size: var(--text-sm);
       line-height: var(--leading-sm);
     }
+  }
 
-    @media (min-width: 48rem) {
-      .md\:text-sm {
-        font-size: var(--text-sm);
-        line-height: var(--leading-sm);
-      }
+  @media (min-width: 90rem) {
+    .lg\:text-sm {
+      font-size: var(--text-sm);
+      line-height: var(--leading-sm);
     }
+  }
 
-    @media (min-width: 90rem) {
-      .lg\:text-sm {
-        font-size: var(--text-sm);
-        line-height: var(--leading-sm);
-      }
-    }
+  .text-base {
+    font-size: var(--text-base);
+    line-height: var(--leading-base);
+  }
 
-    .text-base {
+  @media (min-width: 48rem) {
+    .md\:text-base {
       font-size: var(--text-base);
       line-height: var(--leading-base);
     }
+  }
 
-    @media (min-width: 48rem) {
-      .md\:text-base {
-        font-size: var(--text-base);
-        line-height: var(--leading-base);
-      }
+  @media (min-width: 90rem) {
+    .lg\:text-base {
+      font-size: var(--text-base);
+      line-height: var(--leading-base);
     }
+  }
 
-    @media (min-width: 90rem) {
-      .lg\:text-base {
-        font-size: var(--text-base);
-        line-height: var(--leading-base);
-      }
-    }
+  .text-md {
+    font-size: var(--text-md);
+    line-height: var(--leading-md);
+  }
 
-    .text-md {
+  @media (min-width: 48rem) {
+    .md\:text-md {
       font-size: var(--text-md);
       line-height: var(--leading-md);
     }
+  }
 
-    @media (min-width: 48rem) {
-      .md\:text-md {
-        font-size: var(--text-md);
-        line-height: var(--leading-md);
-      }
+  @media (min-width: 90rem) {
+    .lg\:text-md {
+      font-size: var(--text-md);
+      line-height: var(--leading-md);
     }
+  }
 
-    @media (min-width: 90rem) {
-      .lg\:text-md {
-        font-size: var(--text-md);
-        line-height: var(--leading-md);
-      }
-    }
+  .text-lg {
+    font-size: var(--text-lg);
+    line-height: var(--leading-lg);
+  }
 
-    .text-lg {
+  @media (min-width: 48rem) {
+    .md\:text-lg {
       font-size: var(--text-lg);
       line-height: var(--leading-lg);
     }
+  }
 
-    @media (min-width: 48rem) {
-      .md\:text-lg {
-        font-size: var(--text-lg);
-        line-height: var(--leading-lg);
-      }
+  @media (min-width: 90rem) {
+    .lg\:text-lg {
+      font-size: var(--text-lg);
+      line-height: var(--leading-lg);
     }
+  }
 
-    @media (min-width: 90rem) {
-      .lg\:text-lg {
-        font-size: var(--text-lg);
-        line-height: var(--leading-lg);
-      }
-    }
+  .text-h1 {
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+  }
 
-    .text-h1 {
+  @media (min-width: 48rem) {
+    .md\:text-h1 {
       font-size: var(--text-h1);
       line-height: var(--leading-h1);
     }
+  }
 
-    @media (min-width: 48rem) {
-      .md\:text-h1 {
-        font-size: var(--text-h1);
-        line-height: var(--leading-h1);
-      }
+  @media (min-width: 90rem) {
+    .lg\:text-h1 {
+      font-size: var(--text-h1);
+      line-height: var(--leading-h1);
     }
+  }
 
-    @media (min-width: 90rem) {
-      .lg\:text-h1 {
-        font-size: var(--text-h1);
-        line-height: var(--leading-h1);
-      }
-    }
+  .text-h1-d {
+    font-size: var(--text-h1-d);
+    line-height: var(--leading-h1-d);
+  }
 
-    .text-h1-d {
+  @media (min-width: 48rem) {
+    .md\:text-h1-d {
       font-size: var(--text-h1-d);
       line-height: var(--leading-h1-d);
     }
+  }
 
-    @media (min-width: 48rem) {
-      .md\:text-h1-d {
-        font-size: var(--text-h1-d);
-        line-height: var(--leading-h1-d);
-      }
+  @media (min-width: 90rem) {
+    .lg\:text-h1-d {
+      font-size: var(--text-h1-d);
+      line-height: var(--leading-h1-d);
     }
+  }
 
-    @media (min-width: 90rem) {
-      .lg\:text-h1-d {
-        font-size: var(--text-h1-d);
-        line-height: var(--leading-h1-d);
-      }
+  .text-h2-m {
+    font-size: var(--text-h2-m);
+    line-height: var(--leading-h2-m);
+  }
+
+  @media (min-width: 48rem) {
+    .md\:text-h2-m {
+      font-size: var(--text-h2-m);
+      line-height: var(--leading-h2-m);
     }
+  }
 
-    .text-h2 {
+  @media (min-width: 90rem) {
+    .lg\:text-h2-m {
+      font-size: var(--text-h2-m);
+      line-height: var(--leading-h2-m);
+    }
+  }
+
+  .text-h2 {
+    font-size: var(--text-h2);
+    line-height: var(--leading-h2);
+  }
+
+  @media (min-width: 48rem) {
+    .md\:text-h2 {
       font-size: var(--text-h2);
       line-height: var(--leading-h2);
     }
+  }
 
-    @media (min-width: 48rem) {
-      .md\:text-h2 {
-        font-size: var(--text-h2);
-        line-height: var(--leading-h2);
-      }
+  @media (min-width: 90rem) {
+    .lg\:text-h2 {
+      font-size: var(--text-h2);
+      line-height: var(--leading-h2);
     }
+  }
 
-    @media (min-width: 90rem) {
-      .lg\:text-h2 {
-        font-size: var(--text-h2);
-        line-height: var(--leading-h2);
-      }
-    }
+  .text-h2-d {
+    font-size: var(--text-h2-d);
+    line-height: var(--leading-h2-d);
+  }
 
-    .text-h2-d {
+  @media (min-width: 48rem) {
+    .md\:text-h2-d {
       font-size: var(--text-h2-d);
       line-height: var(--leading-h2-d);
     }
+  }
 
-    @media (min-width: 48rem) {
-      .md\:text-h2-d {
-        font-size: var(--text-h2-d);
-        line-height: var(--leading-h2-d);
-      }
+  @media (min-width: 90rem) {
+    .lg\:text-h2-d {
+      font-size: var(--text-h2-d);
+      line-height: var(--leading-h2-d);
     }
+  }
 
-    @media (min-width: 90rem) {
-      .lg\:text-h2-d {
-        font-size: var(--text-h2-d);
-        line-height: var(--leading-h2-d);
-      }
-    }
+  .text-h3 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+  }
 
-    .text-h3 {
+  @media (min-width: 48rem) {
+    .md\:text-h3 {
       font-size: var(--text-h3);
       line-height: var(--leading-h3);
     }
+  }
 
-    @media (min-width: 48rem) {
-      .md\:text-h3 {
-        font-size: var(--text-h3);
-        line-height: var(--leading-h3);
-      }
+  @media (min-width: 90rem) {
+    .lg\:text-h3 {
+      font-size: var(--text-h3);
+      line-height: var(--leading-h3);
     }
+  }
 
-    @media (min-width: 90rem) {
-      .lg\:text-h3 {
-        font-size: var(--text-h3);
-        line-height: var(--leading-h3);
-      }
-    }
+  .text-h3-d {
+    font-size: var(--text-h3-d);
+    line-height: var(--leading-h3-d);
+  }
 
-    .text-h3-d {
+  @media (min-width: 48rem) {
+    .md\:text-h3-d {
       font-size: var(--text-h3-d);
       line-height: var(--leading-h3-d);
     }
+  }
 
-    @media (min-width: 48rem) {
-      .md\:text-h3-d {
-        font-size: var(--text-h3-d);
-        line-height: var(--leading-h3-d);
-      }
-    }
-
-    @media (min-width: 90rem) {
-      .lg\:text-h3-d {
-        font-size: var(--text-h3-d);
-        line-height: var(--leading-h3-d);
-      }
+  @media (min-width: 90rem) {
+    .lg\:text-h3-d {
+      font-size: var(--text-h3-d);
+      line-height: var(--leading-h3-d);
     }
   }
 
-  /* Firefox specific styles */
-  @supports (scrollbar-width: thin) {
-    .custom-scrollbar {
-      scrollbar-width: 14px;
-      scrollbar-color: var(--btn) transparent;
-    }
+  /* Custom scrollbar styles  for tasks*/
+  .custom-scrollbar-tasks::-webkit-scrollbar {
+    width: 12px;
   }
 
-  /* Edge Legacy fix */
-  @supports (-ms-ime-align: auto) {
-    .custom-scrollbar {
-      -ms-overflow-style: none;
-    }
+  .custom-scrollbar-tasks::-webkit-scrollbar-track {
+    background-color: var(--background);
+    margin: 20px !important;
   }
 
-  /* Swiper Pagination */
-  .swiper-pagination-bullet {
-    width: 10px;
-    height: 10px;
-    background-color: var(--btn);
-    border-radius: 50%;
-    opacity: 1;
+  .custom-scrollbar-tasks::-webkit-scrollbar-thumb {
+    background: var(--color-map-btn);
+    border: 4px solid transparent;
+    border-radius: 8px;
+    background-clip: padding-box;
   }
 
-  .swiper-pagination-bullet.swiper-pagination-bullet-active {
-    transform: scale(1.2);
-    background-color: transparent;
-    transition: transform 0.3s ease;
+  .custom-scrollbar-tasks::-webkit-scrollbar-thumb:hover {
+    background: var(--color-map-btn);
+    background-clip: padding-box;
   }
+}
+
+/* Firefox specific styles */
+@supports (scrollbar-width: thin) {
+  .custom-scrollbar {
+    scrollbar-width: 14px;
+    scrollbar-color: var(--btn) transparent;
+  }
+
+  .custom-scrollbar-tasks {
+    scrollbar-width: 12px;
+    scrollbar-color: var(--map-btn) transparent;
+  }
+}
+
+/* Edge Legacy fix */
+@supports (-ms-ime-align: auto) {
+  .custom-scrollbar {
+    -ms-overflow-style: none;
+  }
+
+  .custom-scrollbar-tasks {
+    -ms-overflow-style: none;
+  }
+}
+
+/* Swiper Pagination */
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background-color: var(--btn);
+  border-radius: 50%;
+  opacity: 1;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  transform: scale(1.2);
+  background-color: transparent;
+  transition: transform 0.3s ease;
+}
+
+/* map */
+
+/* Layers Control */
+.leaflet-control-layers.leaflet-control.leaflet-control-layers-expanded {
+  background-color: var(--map-btn-bg);
+  border: 2px solid var(--map-btn-bg);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--map-btn-icon);
+}
+
+.leaflet-top.leaflet-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leaflet-control-layers-toggle {
+  display: flex;
+  background-color: var(--map-btn-bg);
+  overflow: hidden;
+}
+
+.leaflet-control-layers-toggle {
+  a {
+    padding: 0;
+    margin: 0;
+    background-color: var(--map-btn-bg);
+    text-decoration: none !important;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+}
+
+.leaflet-control-layers-base label span {
+  display: flex;
+  align-items: center;
+
+  padding: 2px;
+  font-family: var(--font-montserrat);
+
+  color: var(--map-btn-icon);
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.leaflet-control-layers input[type='radio'] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--map-btn-icon);
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  margin-right: 4px;
+}
+
+.leaflet-control-layers input[type='radio']::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  box-shadow: 0 0 0 2px var(--map-btn-bg);
+  background-color: var(--map-btn-icon);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.2s ease;
+}
+
+.leaflet-control-layers input[type='radio']:checked::before {
+  transform: translate(-50%, -50%) scale(1);
 }
