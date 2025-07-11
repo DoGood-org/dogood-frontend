@@ -48,6 +48,7 @@ export * from './main/map/CustomControlContent';
 export * from './main/map/CustomControlPanel';
 export * from './main/map/Map';
 export * from './main/map/MapSection';
+export * from './main/ReviewsSection';
 export * from './main/map/mockTasks';
 export * from './main/map/PopUpContent';
 export * from './main/map/ScrollAfterDelay';
