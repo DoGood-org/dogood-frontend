@@ -4,14 +4,17 @@ import { persist } from 'zustand/middleware';
 import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
 import {
   EnumMapLayers,
+  EnumUserLayers,
   IExtendedITaskProps,
   LeafletType,
   MarkerCategoryEnum,
   TCustomMarker,
+  TMapLayerType,
 } from '@/types/mapType';
 import coordsMatch from '@/lib/coordinatesMatch';
 import getGeolocationPromise from '@/lib/getGeolocationPromise';
-import { initializeMapIcons } from '@/lib/mapUtils';
+import { initializeMapIcons, initLayers } from '@/lib/mapUtils';
+import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
 
 export interface IReactLeafletModule {
   MapContainer: React.FC<any>;
@@ -31,10 +34,20 @@ export interface IReactLeafletModule {
 }
 
 type TMapState = {
-  map: LeafletMap | null;
   leafletComponents: IReactLeafletModule | null;
+  mapInstances: Record<'main' | 'user', LeafletMap | null>;
+  setMapInstance: (key: 'main' | 'user', map: LeafletMap) => void;
   mapIcons: Record<MarkerCategoryEnum, L.Icon | null>;
-  baseLayer: EnumMapLayers;
+
+  defaultLayers: {
+    [key in EnumMapLayers]: {
+      name: string;
+      url: string;
+      attribution?: string;
+    } | null;
+  }[];
+  activeLayer: EnumMapLayers;
+
   layerDropIsOpen: boolean;
 
   hasAgreedToLocation: boolean | null;
@@ -48,6 +61,7 @@ type TMapState = {
 
   taskListIsOpen: boolean;
   filtersIsOpen: boolean;
+  searchIsActive: boolean;
 
   clickedCoords: LatLngLiteral | null;
   showOptionsMenu: boolean;
@@ -56,13 +70,11 @@ type TMapState = {
 };
 
 type TMapActions = {
-  setMap: (map: LeafletMap) => void;
   setLeafletComponents: (components: IReactLeafletModule) => void;
-  setBaseLayer: (layer: EnumMapLayers) => void;
+  setActiveLayer: (layer: EnumMapLayers) => void;
   toggleLayerDrop: () => void;
   setMapIcons: (icons: TMapState['mapIcons']) => void;
-  initMap: () => Promise<void>;
-
+  initMap: (key: 'main' | 'user') => Promise<void>;
   setHasAgreedToLocation: (value: boolean) => void;
   setShowGeolocationPopup: (value: boolean) => void;
   setLocationError: (error: string | null) => void;
@@ -75,6 +87,7 @@ type TMapActions = {
 
   toggleTaskList: () => void;
   toggleFilters: () => void;
+  setSearchActive: (active: boolean) => void;
 
   setClickedCoords: (coords: LatLngLiteral | null) => void;
   setShowOptionsMenu: (visible: boolean) => void;
@@ -91,10 +104,23 @@ export type TMapProps = TMapState & TMapActions;
 export const useMapStore = create<TMapState & TMapActions>()(
   persist(
     (set, get): TMapState & TMapActions => ({
-      map: null,
       leafletComponents: null,
-      baseLayer: EnumMapLayers.GoogleMaps,
+      activeLayer: EnumMapLayers.GoogleMaps,
+      defaultLayers: [],
+
       layerDropIsOpen: false,
+      mapInstances: {
+        main: null,
+        user: null,
+      },
+      setMapInstance: (key: 'main' | 'user', map: LeafletMap) => {
+        set((state) => ({
+          mapInstances: {
+            ...state.mapInstances,
+            [key]: map,
+          },
+        }));
+      },
 
       mapIcons: {
         medicine: null,
@@ -114,6 +140,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
 
       taskListIsOpen: false,
       filtersIsOpen: false,
+      searchIsActive: false,
       activePanel: null,
 
       clickedCoords: null,
@@ -121,9 +148,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
 
       // *Actions*//
 
-      setMap: (map: LeafletMap): void => {
-        set({ map });
-      },
       setLeafletComponents: (components): void => {
         set({ leafletComponents: components });
       },
@@ -135,6 +159,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
           import('leaflet'),
         ]);
         const customIcons = initializeMapIcons(L as unknown as LeafletType);
+
         set({
           mapIcons: {
             medicine: customIcons.medicine,
@@ -145,6 +170,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
             default: customIcons.default,
             myPin: customIcons.myPin,
           },
+
           leafletComponents: {
             MapContainer: reactLeafletModule.MapContainer,
             TileLayer: reactLeafletModule.TileLayer,
@@ -164,9 +190,8 @@ export const useMapStore = create<TMapState & TMapActions>()(
         });
       },
 
-      setBaseLayer: (layer: EnumMapLayers): void => {
-        console.log('[Zustand] baseLayer set to:', layer);
-        set({ baseLayer: layer });
+      setActiveLayer: (layer: EnumMapLayers): void => {
+        set({ activeLayer: layer });
       },
       toggleLayerDrop: (): void => {
         set((state) => ({ layerDropIsOpen: !state.layerDropIsOpen }));
@@ -319,7 +344,9 @@ export const useMapStore = create<TMapState & TMapActions>()(
       },
 
       setActivePanel: (panel): void => set({ activePanel: panel }),
-
+      setSearchActive: (active: boolean): void => {
+        set({ searchIsActive: active });
+      },
       toggleFilters: () =>
         set((state) => ({
           filtersIsOpen: !state.filtersIsOpen,

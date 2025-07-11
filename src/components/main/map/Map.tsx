@@ -38,7 +38,8 @@ export const Map: React.FC = (): JSX.Element => {
   const {
     mapIcons,
     leafletComponents,
-    baseLayer,
+    activeLayer,
+    defaultLayers,
     initMap,
     userLocation,
     setUserLocation,
@@ -57,20 +58,20 @@ export const Map: React.FC = (): JSX.Element => {
     setClickedCoords,
     setShowOptionsMenu,
     closeOptionsMenu,
+    searchIsActive,
   } = useMapStore();
   const { choosenCategories, categories } = useFilterStore();
   const { setTasks } = useTaskStore();
   const { setCategories } = useFilterStore();
 
   useEffect(() => {
-    initMap();
+    initMap('main');
   }, []);
   useEffect((): void => {
     if (isInView) {
       checkLocationPermission();
     }
   }, [isInView, checkLocationPermission]);
-
   // Imitate backend data generation
   // This should be replaced with actual data fetching logic
   // For now, we generate tasks based on the user's location
@@ -96,6 +97,8 @@ export const Map: React.FC = (): JSX.Element => {
   if (
     !leafletComponents ||
     !mapIcons ||
+    !defaultLayers ||
+    !activeLayer ||
     Object.values(mapIcons).length === 0 ||
     Object.values(mapIcons).some((icon) => !icon)
   ) {
@@ -210,16 +213,42 @@ export const Map: React.FC = (): JSX.Element => {
     );
   };
 
-  const MapClickHandler: React.FC<IMapClickHandlerProps> = ({
+  // const MapClickHandler: React.FC<IMapClickHandlerProps> = ({
+  //   onClick,
+  //   allowClickToAddMarker = true,
+
+  //   clickOptions,
+  //   setClickedCoords,
+  //   setShowOptionsMenu,
+  // }) => {
+  //   useMapEvent('click', (e) => {
+  //     const latlng = e.latlng;
+  //     if (!allowClickToAddMarker) return;
+  //     onClick(latlng);
+  //     clickOptions?.setMe(latlng);
+  //     clickOptions?.setMyMarker(latlng);
+  //     setClickedCoords?.(latlng);
+  //     setShowOptionsMenu?.(true);
+  //   });
+
+  //   return null;
+  // };
+
+  const MapRightClicked: React.FC<IMapClickHandlerProps> = ({
     onClick,
-    allowClickToAddMarker,
+    allowRBClick = true,
+
     clickOptions,
     setClickedCoords,
     setShowOptionsMenu,
   }) => {
-    useMapEvent('click', (e) => {
+    useMapEvent('contextmenu', (e) => {
+      console.log('Map right-clicked:', e.latlng);
       const latlng = e.latlng;
-      if (!allowClickToAddMarker) return;
+      if (!allowRBClick) return;
+      e.originalEvent.preventDefault(); // Prevent default context menu
+      e.originalEvent.stopPropagation(); // Stop propagation to prevent other handlers from firing
+      console.log('Right click on map at:', latlng);
       onClick(latlng);
       clickOptions?.setMe(latlng);
       clickOptions?.setMyMarker(latlng);
@@ -250,6 +279,7 @@ export const Map: React.FC = (): JSX.Element => {
           </Portal>
 
           <MapContainer
+            doubleClickZoom={false}
             className="h-full w-full cursor-default relative"
             center={userLocation || { lat: 27.9944024, lng: -81.7602544 }}
             zoom={14}
@@ -260,29 +290,37 @@ export const Map: React.FC = (): JSX.Element => {
             scrollWheelZoom={false}
           >
             <ScrollAfterDelay delay={2000} />
-            <StoreMapInstance />
+            <StoreMapInstance mapKey="main" />
 
-            {baseLayerConfig[baseLayer] && (
-              <TileLayer
-                url={baseLayerConfig[baseLayer].url}
-                attribution={baseLayerConfig[baseLayer].attribution}
-              />
-            )}
+            <TileLayer
+              url={baseLayerConfig[activeLayer].url}
+              maxZoom={18}
+              minZoom={1}
+            />
 
+            {/* Custom controls */}
             {renderTaskMarkers()}
 
             {/* Passive overlays */}
             {renderUserLocation()}
             {/* USER ONLY */}
-            <MapClickHandler
+            {/* <MapClickHandler
               onClick={() => {}}
+              allowClickToAddMarker
+              setClickedCoords={setClickedCoords}
+              setShowOptionsMenu={setShowOptionsMenu}
+            /> */}
+
+            {/* Custom controls */}
+
+            <MapRightClicked
+              onClick={() => {
+              }}
               allowClickToAddMarker
               setClickedCoords={setClickedCoords}
               setShowOptionsMenu={setShowOptionsMenu}
             />
             {renderCustomMarkers()}
-
-            {/* Custom controls */}
             {clickedCoords && showOptionsMenu && (
               <Popup
                 position={clickedCoords}
@@ -311,7 +349,7 @@ export const Map: React.FC = (): JSX.Element => {
             <ButtonOpenTasks
               onClick={() => toggleTaskList()}
               isOpen={taskListIsOpen}
-              className="mx-auto mb-2 lg:mb-0 lg:absolute lg:z-[500]  lg:h-10 lg:top-12 lg:left-1/2 lg:translate-x-[-50%]"
+              className="mx-auto mb-2 bg-card lg:mb-0 lg:absolute lg:z-50  lg:h-10 lg:top-12 lg:border-t lg:border-t-foreground  lg:w-full  lg:hover:border-t-foreground"
             />
             <FormSearch />
           </div>
@@ -321,7 +359,11 @@ export const Map: React.FC = (): JSX.Element => {
 
         <AnimatedDrawler
           isVisible={!!activePanel}
-          onClose={() => setActivePanel(null)}
+          onClose={() => {
+            if (!searchIsActive) setActivePanel(null);
+          }}
+          exeptionForClickOutside={searchIsActive}
+          exeptionSelector="search"
           direction="vertical"
           className={`
             relative flex flex-col bg-card z-[1000]

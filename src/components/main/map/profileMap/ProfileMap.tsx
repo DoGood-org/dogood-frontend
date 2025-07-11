@@ -3,6 +3,7 @@ import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
 import { CustomControlContent } from '@/components/main/map/CustomControlContent';
 import { CustomControlZoom } from '@/components/main/map/CustomControlZoom';
 import { MultiControlPanel } from '@/components/main/map/MultiControlPanel';
+import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
 import { IMapClickHandlerProps } from '@/types/mapType';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { JSX, useEffect } from 'react';
@@ -13,7 +14,7 @@ export const ProfileMap = (): JSX.Element => {
     initMap,
     leafletComponents,
     mapIcons,
-    baseLayer,
+    activeLayer,
     setClickedCoords,
     setShowOptionsMenu,
     // selectedTask,
@@ -24,7 +25,7 @@ export const ProfileMap = (): JSX.Element => {
   } = useMapStore();
 
   useEffect(() => {
-    initMap();
+    initMap('user');
   }, []);
 
   if (
@@ -63,10 +64,12 @@ export const ProfileMap = (): JSX.Element => {
         zoomControl={false}
         attributionControl={false}
       >
-        {baseLayerConfig[baseLayer] && (
+        <StoreMapInstance mapKey="user" />
+
+        {baseLayerConfig[activeLayer] && (
           <TileLayer
-            url={baseLayerConfig[baseLayer].url}
-            attribution={baseLayerConfig[baseLayer].attribution}
+            url={baseLayerConfig[activeLayer].url}
+            attribution={baseLayerConfig[activeLayer].attribution}
           />
         )}
         <MultiControlPanel

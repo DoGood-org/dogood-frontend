@@ -1,13 +1,14 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import { Search, SlidersVertical, X } from 'lucide-react';
-import { JSX, useEffect } from 'react';
+import { JSX, useEffect, useRef } from 'react';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 
 type FormData = { search: string };
 
 export const FormSearch = (): JSX.Element => {
+  const { setSearchActive } = useMapStore();
   const { toggleFilters } = useMapStore();
   const { setSearchQuery } = useFilterStore();
 
@@ -17,17 +18,19 @@ export const FormSearch = (): JSX.Element => {
     const handler = setTimeout((): void => {
       setSearchQuery(searchValue || '');
     }, 500);
+    setSearchActive(!!searchValue);
 
     return (): void => clearTimeout(handler);
-  }, [searchValue, setSearchQuery]);
+  }, [searchValue, setSearchQuery, setSearchActive]);
 
   const handleClear = (): void => {
     reset({ search: '' });
     setSearchQuery('');
+    setSearchActive(false);
   };
 
   return (
-    <div className="bg-card w-full ">
+    <div className="bg-card w-full " itemRef="search">
       <form onSubmit={(e) => e.preventDefault()} className="w-full">
         <div className="relative p-3  overflow-hidden flex items-center justify-center lg:p-0 ">
           <Search className="absolute left-5  text-muted-foreground stroke-foreground w-6 h-6 lg:w-[24px] lg:h-[24px]" />
@@ -43,9 +46,9 @@ export const FormSearch = (): JSX.Element => {
         border-none outline-none focus:ring-0 focus:outline-none shadow-none
         disabled:pointer-events-none disabled:opacity-50 lg:bg-card"
             onBlur={(e) => {
-              register('search').onBlur(e);
-              reset();
+              if (!e.target.value.trim()) setSearchActive(false);
             }}
+            onFocus={() => setSearchActive(true)}
           />
           {searchValue && (
             <X

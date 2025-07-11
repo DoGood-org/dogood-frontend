@@ -5,6 +5,8 @@ type UseClickOutsideOptions = {
   eventTypes?: ('mousedown' | 'click' | 'touchstart')[];
   detectEscapeKey?: boolean;
   once?: boolean;
+  isExceptionActive?: boolean;
+  exeptionSelector?: string;
 };
 
 type Props = {
@@ -23,16 +25,25 @@ export const useClickOutside = ({
     eventTypes = ['mousedown'],
     detectEscapeKey = true,
     once = false,
+    isExceptionActive = false,
+    exeptionSelector = '',
   } = options;
 
   useEffect(() => {
     if (!enabled) return;
 
     const handleEvent = (e: Event): void => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        callback();
-        if (once) cleanup();
-      }
+      requestAnimationFrame(() => {
+        // if drawler is open and exception is active, do not trigger callback
+        if (
+          ref.current &&
+          !ref.current.contains(e.target as Node) &&
+          document.activeElement?.id !== exeptionSelector
+        ) {
+          callback();
+          if (once) cleanup();
+        }
+      });
     };
 
     const handleEscape = (e: KeyboardEvent): void => {
@@ -60,5 +71,13 @@ export const useClickOutside = ({
     }
 
     return cleanup;
-  }, [ref, callback, enabled, eventTypes, detectEscapeKey, once]);
+  }, [
+    ref,
+    callback,
+    enabled,
+    eventTypes,
+    detectEscapeKey,
+    once,
+    isExceptionActive,
+  ]);
 };

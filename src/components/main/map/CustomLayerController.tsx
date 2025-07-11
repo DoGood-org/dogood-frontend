@@ -28,11 +28,10 @@ type Props = {
 export const CustomLayerController = ({
   className = '',
 }: Props): JSX.Element => {
-  const baseLayer = useMapStore((state) => state.baseLayer);
-  const setBaseLayer = useMapStore((state) => state.setBaseLayer);
-
+  const { activeLayer, setActiveLayer, toggleLayerDrop } = useMapStore();
   const handleOptionSelect = (optionId: string): void => {
-    setBaseLayer(optionId as EnumMapLayers);
+    setActiveLayer(optionId as EnumMapLayers);
+    toggleLayerDrop();
   };
 
   return (
@@ -55,7 +54,7 @@ export const CustomLayerController = ({
               handleOptionSelect(option.id);
             }
           }}
-          aria-selected={baseLayer === option.id}
+          aria-selected={activeLayer === option.id}
         >
           <div className="flex items-center gap-2">
             <Button
@@ -67,7 +66,7 @@ export const CustomLayerController = ({
               }}
             >
               <span
-                className={`text-xs font-medium rounded-full  border-transparent ${baseLayer === option.id ? 'bg-btn-hover' : 'bg-transparent'} p-[6px]`}
+                className={`text-xs font-medium rounded-full  border-transparent ${activeLayer === option.id ? 'bg-btn-hover' : 'bg-transparent'} p-[6px]`}
               ></span>
             </Button>
             <span className="text-[var(--map-btn-icon)] text-base font-medium">

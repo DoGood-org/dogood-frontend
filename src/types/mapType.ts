@@ -9,23 +9,7 @@ export enum MarkerCategoryEnum {
   Default = 'default',
   MyPin = 'myPin',
 }
-// export interface IReactLeafletModule {
-//   MapContainer: React.FC<any>;
-//   TileLayer: typeof import('react-leaflet').TileLayer;
-//   Marker: typeof import('react-leaflet').Marker;
-//   useMap: typeof import('react-leaflet').useMap;
-//   ZoomControl: typeof import('react-leaflet').ZoomControl;
-//   LayersControl: typeof import('react-leaflet').LayersControl;
 
-//   Popup: typeof import('react-leaflet').Popup;
-//   Circle: typeof import('react-leaflet').Circle;
-//   Polyline: typeof import('react-leaflet').Polyline;
-//   GeoJSON: typeof import('react-leaflet').GeoJSON;
-//   useMapEvent: typeof import('react-leaflet').useMapEvent;
-//   Control: typeof import('leaflet').Control;
-//   LayerGroup: typeof import('react-leaflet').LayerGroup;
-//   useMapEvents: typeof import('react-leaflet').useMapEvents;
-// }
 export type MapLocation = LatLngLiteral & {
   id: string;
   title: string;
@@ -40,7 +24,12 @@ export enum EnumMapLayers {
   OpenStreetMap = 'OpenStreetMap',
   GoogleMaps = 'GoogleMaps',
 }
+export enum EnumUserLayers {
+  CustomMarkers = 'CustomMarkers',
+  MyTasks = 'MyTasks',
+}
 
+// for <TileLayer> component
 export type TMapLayerType = {
   [key in EnumMapLayers]: {
     name: string;
@@ -98,6 +87,7 @@ export interface IFilterStore {
 export interface IMapClickHandlerProps {
   onClick: (latlng: LatLngLiteral) => void;
   allowClickToAddMarker?: boolean;
+  allowRBClick?: boolean; // Optional prop to allow double-click events
 
   clickOptions?: {
     setMe: (location: LatLngLiteral) => void;

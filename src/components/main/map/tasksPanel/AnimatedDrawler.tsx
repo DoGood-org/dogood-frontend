@@ -12,6 +12,8 @@ type AnimatedDrawlerProps = {
   duration?: number;
   offset?: number;
   direction?: 'vertical' | 'horizontal';
+  exeptionForClickOutside?: boolean;
+  exeptionSelector?: string;
 };
 
 export const AnimatedDrawler = ({
@@ -22,6 +24,8 @@ export const AnimatedDrawler = ({
   duration = 0.3,
   offset = 40,
   direction = 'vertical',
+  exeptionForClickOutside = false,
+  exeptionSelector = '',
 }: AnimatedDrawlerProps): JSX.Element => {
   const axis = direction === 'horizontal' ? { x: offset } : { y: offset };
   const ref = React.useRef<HTMLDivElement | null>(null);
@@ -32,6 +36,8 @@ export const AnimatedDrawler = ({
     options: {
       enabled: isVisible,
       detectEscapeKey: true,
+      isExceptionActive: exeptionForClickOutside,
+      exeptionSelector: exeptionSelector,
     },
   });
 

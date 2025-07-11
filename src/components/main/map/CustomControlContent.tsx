@@ -24,6 +24,7 @@ export const CustomControlContent = (): JSX.Element => {
       {layerDropIsOpen && (
         <AnimatedDrawler
           isVisible={layerDropIsOpen}
+          direction="horizontal"
           onClose={() => toggleLayerDrop()}
           className="absolute z-50 w-[160px] h-[168px] bottom-0 rounded-sm"
         >

@@ -1,4 +1,9 @@
-import { LeafletType, MapIcons, MarkerCategoryEnum } from '@/types/mapType';
+import {
+  EnumMapLayers,
+  LeafletType,
+  MapIcons,
+  MarkerCategoryEnum,
+} from '@/types/mapType';
 import MedicineMarker from '@/assets/images/map/medicine-marker.png';
 import NatureMarker from '@/assets/images/map/nature-marker.png';
 import AnimalMarker from '@/assets/images/map/animal-marker.png';
@@ -6,7 +11,8 @@ import FoodMarker from '@/assets/images/map/food-marker.png';
 import MyPositionMarker from '@/assets/images/map/my-position.png';
 import DefaultMarker from '@/assets/images/map/default.png';
 import MyPin from '@/assets/images/map/my-pin.png';
-import { Icon } from 'leaflet';
+import { Icon, TileLayer } from 'leaflet';
+import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
 
 /**
  * Creates a Leaflet icon instance
@@ -22,6 +28,28 @@ export const createIcon = (
     iconUrl: src,
     iconSize: [35, 45],
   });
+};
+
+export const createLayer = (
+  L: LeafletType,
+  baseLayerUrl: string
+): ReturnType<LeafletType['tileLayer']> => {
+  return L.tileLayer(baseLayerUrl, {
+    maxZoom: 18,
+    minZoom: 1,
+  });
+};
+
+export const initLayers = (
+  L: LeafletType
+): Record<EnumMapLayers, TileLayer> => {
+  return Object.entries(baseLayerConfig).reduce(
+    (acc, [key, val]) => {
+      acc[key as EnumMapLayers] = createLayer(L, val.url);
+      return acc;
+    },
+    {} as Record<EnumMapLayers, TileLayer>
+  );
 };
 
 /**

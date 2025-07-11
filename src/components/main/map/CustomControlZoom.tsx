@@ -1,6 +1,6 @@
 'use client';
 
-import { ButtonZoom } from '@/components/main/map/ButtonZoom';
+import { ButtonMap } from '@/components/main/map/ButtonMap';
 import { Minus, Plus } from 'lucide-react';
 import { JSX } from 'react';
 import { useMap } from 'react-leaflet';
@@ -26,12 +26,12 @@ export const CustomControlZoom = (): JSX.Element => {
         position: 'relative',
       }}
     >
-      <ButtonZoom onClickHandler={handleZoomIn}>
+      <ButtonMap onClickHandler={handleZoomIn}>
         <Plus />
-      </ButtonZoom>
-      <ButtonZoom onClickHandler={handleZoomOut}>
+      </ButtonMap>
+      <ButtonMap onClickHandler={handleZoomOut}>
         <Minus />
-      </ButtonZoom>
+      </ButtonMap>
     </div>
   );
 };
