@@ -6,9 +6,9 @@ export default function AuthLayout({
   children: React.ReactNode;
 }): React.ReactNode {
   return (
-    <div className="flex min-h-screen p-20">
+    <div className="flex min-h-screen px-20 pt-20">
       <SidebarNavigation />
-      <div className="flex">
+      <div className="flex flex-col flex-grow">
         {children}
         <BottomNavigation />
       </div>

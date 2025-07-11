@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, usePathname } from '../../i18n/navigation';
 
 import SidebarUserIcon from '@/components/icons/SidebarUserIcon';
 import ChatIcon from '@/components/icons/ChatIcon';
@@ -34,16 +33,13 @@ export const NavigationLinks: React.FC<NavigationLinksProps> = ({
   navLabels = '',
 }) => {
   const pathname = usePathname();
-  const locale = pathname.split('/')[1];
 
-  const filteredLinks = navigationLinks;
+  const locale = pathname.split('/')[1] || 'en';
 
   return (
     <ul className={className}>
-      {filteredLinks.map(({ href, label, Icon }, index) => {
-        const expectedPath = href.startsWith('/')
-          ? `/${locale}${href}`
-          : `/${locale}/${href}`;
+      {navigationLinks.map(({ href, label, Icon }, index) => {
+        const expectedPath = href === '/' ? `/${locale}` : `/${locale}${href}`;
         const isActive = pathname === expectedPath;
 
         return (
@@ -51,15 +47,17 @@ export const NavigationLinks: React.FC<NavigationLinksProps> = ({
             <Link
               href={expectedPath}
               className={`
-                flex items-center gap-3 p-3 w-full rounded-md border-2
-                ${isActive ? 'border-green-600 text-[#1B9757]' : 'border-transparent hover:border-green-600 transition duration-300'}
+                flex items-center gap-3 lg:p-3 rounded-xl border-0 transition duration-300 text-[#1B1B1B] lg:border  
+                ${isActive ? 'lg:border-[#1B9757]' : 'lg:border-transparent hover:lg:border-[#1B9757] transition duration-300'}
                 ${linkClassName}
-           `}
+              `}
             >
               <Icon
                 className={`
                   w-6 h-6 transition-colors duration-300
-                  ${isActive ? 'text-green-600' : 'text-gray-500 group-hover:text-green-600'}
+                  ${isActive ? 'text-[#1B9757] sm:text-[#1B9757] md:text-[#1B9757]' : 'text-[#f1f1f1] transition duration-300'}
+                  lg:text-[#1B1B1B]
+                  group-hover:text-[#1B9757]
                   ${iconClassName}
                 `}
               />
