@@ -107,34 +107,6 @@ export const Map: React.FC = (): JSX.Element => {
 
   const { MapContainer, TileLayer, Marker, Popup, Tooltip } = leafletComponents;
 
-  // const renderCustomMarkers = (): JSX.Element[] => {
-  //   return customMarkers.map((marker, index) => {
-  //     const icon = getMarkerIcon(MarkerCategoryEnum.Default, mapIcons);
-  //     return (
-  //       <Marker
-  //         key={`custom-marker-${index}`}
-  //         position={{ lat: marker.lat, lng: marker.lng }}
-  //         icon={icon}
-  //         eventHandlers={{
-  //           click: () => {
-  //             console.log('Custom marker clicked:', marker);
-  //           },
-  //         }}
-  //       >
-  //         <Popup>
-  //           <div className="">
-  //             📍 Custom Marker
-  //             <br />
-  //             <strong>{marker.category}</strong>
-  //             <br />
-  //             Lat: {marker.lat.toFixed(5)}, Lng: {marker.lng.toFixed(5)}
-  //           </div>
-  //         </Popup>
-  //       </Marker>
-  //     );
-  //   });
-  // };
-
   const handleMarkerClick = (task: any): void => {
     console.log('Task marker clicked:', task);
   };
@@ -159,7 +131,7 @@ export const Map: React.FC = (): JSX.Element => {
           </Portal>
 
           <MapContainer
-            center={userLocation || { lat: 48.8566, lng: 2.3522 }} // Default to Paris
+            center={userLocation || { lat: 48.8566, lng: 2.3522 }}
             style={{ height: '100%', width: '100%' }}
             doubleClickZoom={false}
             className="h-full w-full cursor-default relative"
