@@ -1,5 +1,6 @@
 import {
   EnumMapLayers,
+  IExtendedCategoryFilter,
   LeafletType,
   MapIcons,
   MarkerCategoryEnum,
@@ -38,18 +39,6 @@ export const createLayer = (
     maxZoom: 18,
     minZoom: 1,
   });
-};
-
-export const initLayers = (
-  L: LeafletType
-): Record<EnumMapLayers, TileLayer> => {
-  return Object.entries(baseLayerConfig).reduce(
-    (acc, [key, val]) => {
-      acc[key as EnumMapLayers] = createLayer(L, val.url);
-      return acc;
-    },
-    {} as Record<EnumMapLayers, TileLayer>
-  );
 };
 
 /**
@@ -108,4 +97,24 @@ export const getMarkerIcon = (
   };
 
   return iconMap[title];
+};
+
+export const resolveTaskCategory = (
+  taskCategories: IExtendedCategoryFilter[],
+  selectedCategories: IExtendedCategoryFilter[],
+  allAvailableCategories: IExtendedCategoryFilter[]
+): IExtendedCategoryFilter => {
+  const isAll =
+    selectedCategories.includes('all' as IExtendedCategoryFilter) ||
+    selectedCategories.length === 0 ||
+    selectedCategories.length === allAvailableCategories.length;
+
+  if (isAll) {
+    return taskCategories?.[0] || MarkerCategoryEnum.Default;
+  }
+
+  return (
+    taskCategories.find((cat) => selectedCategories.includes(cat)) ||
+    MarkerCategoryEnum.Default
+  );
 };

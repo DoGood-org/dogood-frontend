@@ -83,11 +83,11 @@ export interface IFilterStore {
   searchQuery: string;
   sortBy: 'title' | 'distance';
 }
+export type MapClickType = 'left' | 'right';
 
 export interface IMapClickHandlerProps {
-  onClick: (latlng: LatLngLiteral) => void;
+  onClick: (coords: LatLngLiteral, clickType: MapClickType) => void;
   allowClickToAddMarker?: boolean;
-  allowRBClick?: boolean; // Optional prop to allow double-click events
 
   clickOptions?: {
     setMe: (location: LatLngLiteral) => void;

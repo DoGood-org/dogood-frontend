@@ -28,6 +28,7 @@ export interface IReactLeafletModule {
   Control: typeof import('leaflet').Control;
   LayerGroup: typeof import('react-leaflet').LayerGroup;
   useMapEvents: typeof import('react-leaflet').useMapEvents;
+  Tooltip?: typeof import('react-leaflet').Tooltip; // Optional, if Tooltip is used
 }
 
 type TMapState = {

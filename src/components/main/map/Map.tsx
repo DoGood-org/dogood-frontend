@@ -1,8 +1,12 @@
 'use client';
 import React, { JSX, useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { getMarkerIcon } from '@/lib/mapUtils';
-import { IMapClickHandlerProps, MarkerCategoryEnum } from '@/types/mapType';
+import { getMarkerIcon, resolveTaskCategory } from '@/lib/mapUtils';
+import {
+  IExtendedCategoryFilter,
+  IMapClickHandlerProps,
+  MarkerCategoryEnum,
+} from '@/types/mapType';
 import {
   AnimatedDrawler,
   ButtonOpenTasks,
@@ -13,6 +17,7 @@ import {
   PopUpContent,
   TasksList,
   CustomControlContent,
+  UserLocation,
 } from '@/components';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { AnimatedModalWrapper } from '@/components/portal/AnimatedModalWrapper';
@@ -27,6 +32,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
 import { FilterBadges } from '@/components/main/map/filters/FilterBadges';
 import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
+import { MapClickHandler } from '@/components/main/map/MapClicks';
 
 export const Map: React.FC = (): JSX.Element => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
@@ -75,22 +81,17 @@ export const Map: React.FC = (): JSX.Element => {
   // Imitate backend data generation
   // This should be replaced with actual data fetching logic
   // For now, we generate tasks based on the user's location
-  const generatedTasks = useMemo(() => {
-    return generateTasks(
-      userLocation?.lat || 27.9944024,
-      userLocation?.lng || -81.7602544
-    );
-  }, [userLocation?.lat, userLocation?.lng]);
-
   useEffect(() => {
-    if (generatedTasks.length > 0) {
-      setTasks(generatedTasks);
-      const categories = Array.from(
-        new Set(generatedTasks.flatMap((task) => task.category))
-      );
-      setCategories(categories);
-    }
-  }, [generatedTasks]);
+    if (!userLocation) return;
+
+    const tasks = generateTasks(userLocation.lat, userLocation.lng);
+    setTasks(tasks);
+
+    const categories = Array.from(
+      new Set(tasks.flatMap((task) => task.category))
+    );
+    setCategories(categories);
+  }, [userLocation]);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
 
@@ -111,152 +112,38 @@ export const Map: React.FC = (): JSX.Element => {
     );
   }
 
-  const { MapContainer, TileLayer, Marker, useMapEvent, Popup } =
-    leafletComponents;
+  const { MapContainer, TileLayer, Marker, Popup, Tooltip } = leafletComponents;
 
-  const renderTaskMarkers = (): JSX.Element[] => {
-    const isAll =
-      choosenCategories.includes('all') ||
-      choosenCategories.length === 0 ||
-      choosenCategories.length === categories.length;
-
-    return noPaginatedTasks.map((task) => {
-      const resolvedCategory = ((): MarkerCategoryEnum => {
-        if (isAll) return task.category?.[0] || MarkerCategoryEnum.Default;
-
-        const matched = task.category.find((cat) =>
-          choosenCategories.includes(cat)
-        );
-        return matched || MarkerCategoryEnum.Default;
-      })();
-
-      const icon = getMarkerIcon(
-        Object.values(MarkerCategoryEnum).includes(
-          resolvedCategory as MarkerCategoryEnum
-        )
-          ? (resolvedCategory as MarkerCategoryEnum)
-          : MarkerCategoryEnum.Default,
-        mapIcons
-      );
-
-      return (
-        <Marker
-          key={`task-marker-${task.id}`}
-          position={{ lat: task.lat, lng: task.lng }}
-          icon={icon}
-          eventHandlers={{
-            click: () => console.log('Task clicked:', task),
-          }}
-        >
-          <Popup>
-            <div className="text-sm max-w-[200px]">
-              <h4 className="font-bold mb-1">{task.title}</h4>
-              <p className="text-xs">{task.subtitle}</p>
-              <p className="text-xs text-muted mt-1">{task.distance}</p>
-            </div>
-          </Popup>
-        </Marker>
-      );
-    });
-  };
-
-  const renderCustomMarkers = (): JSX.Element[] => {
-    return customMarkers.map((marker, index) => {
-      const icon = getMarkerIcon(MarkerCategoryEnum.Default, mapIcons);
-      return (
-        <Marker
-          key={`custom-marker-${index}`}
-          position={{ lat: marker.lat, lng: marker.lng }}
-          icon={icon}
-          eventHandlers={{
-            click: () => {
-              console.log('Custom marker clicked:', marker);
-            },
-          }}
-        >
-          <Popup>
-            <div className="">
-              📍 Custom Marker
-              <br />
-              <strong>{marker.category}</strong>
-              <br />
-              Lat: {marker.lat.toFixed(5)}, Lng: {marker.lng.toFixed(5)}
-            </div>
-          </Popup>
-        </Marker>
-      );
-    });
-  };
-
-  const renderUserLocation = (): JSX.Element | null => {
-    if (!userLocation || !mapIcons?.myPosition) return null;
-
-    const handleClick = (): void => {
-      console.log('User location selected:', userLocation);
-      setUserLocation({ ...userLocation });
-    };
-
-    return (
-      <Marker
-        position={userLocation}
-        icon={mapIcons.myPosition}
-        eventHandlers={{ click: handleClick }}
-      >
-        <Popup>
-          <div className="text-sm text-foreground">
-            📍 You are here: <br />
-            <strong>{userLocation.lat.toFixed(5)}</strong>,{' '}
-            <strong>{userLocation.lng.toFixed(5)}</strong>
-          </div>
-        </Popup>
-      </Marker>
-    );
-  };
-
-  // const MapClickHandler: React.FC<IMapClickHandlerProps> = ({
-  //   onClick,
-  //   allowClickToAddMarker = true,
-
-  //   clickOptions,
-  //   setClickedCoords,
-  //   setShowOptionsMenu,
-  // }) => {
-  //   useMapEvent('click', (e) => {
-  //     const latlng = e.latlng;
-  //     if (!allowClickToAddMarker) return;
-  //     onClick(latlng);
-  //     clickOptions?.setMe(latlng);
-  //     clickOptions?.setMyMarker(latlng);
-  //     setClickedCoords?.(latlng);
-  //     setShowOptionsMenu?.(true);
+  // const renderCustomMarkers = (): JSX.Element[] => {
+  //   return customMarkers.map((marker, index) => {
+  //     const icon = getMarkerIcon(MarkerCategoryEnum.Default, mapIcons);
+  //     return (
+  //       <Marker
+  //         key={`custom-marker-${index}`}
+  //         position={{ lat: marker.lat, lng: marker.lng }}
+  //         icon={icon}
+  //         eventHandlers={{
+  //           click: () => {
+  //             console.log('Custom marker clicked:', marker);
+  //           },
+  //         }}
+  //       >
+  //         <Popup>
+  //           <div className="">
+  //             📍 Custom Marker
+  //             <br />
+  //             <strong>{marker.category}</strong>
+  //             <br />
+  //             Lat: {marker.lat.toFixed(5)}, Lng: {marker.lng.toFixed(5)}
+  //           </div>
+  //         </Popup>
+  //       </Marker>
+  //     );
   //   });
-
-  //   return null;
   // };
 
-  const MapRightClicked: React.FC<IMapClickHandlerProps> = ({
-    onClick,
-    allowRBClick = true,
-
-    clickOptions,
-    setClickedCoords,
-    setShowOptionsMenu,
-  }) => {
-    useMapEvent('contextmenu', (e) => {
-      console.log('Map right-clicked:', e.latlng);
-      const latlng = e.latlng;
-      if (!allowRBClick) return;
-      e.originalEvent.preventDefault(); // Prevent default context menu
-      e.originalEvent.stopPropagation(); // Stop propagation to prevent other handlers from firing
-      console.log('Right click on map at:', latlng);
-      onClick(latlng);
-      clickOptions?.setMe(latlng);
-      clickOptions?.setMyMarker(latlng);
-      setClickedCoords?.(latlng);
-      setShowOptionsMenu?.(true);
-    });
-
-    return null;
+  const handleMarkerClick = (task: any): void => {
+    console.log('Task marker clicked:', task);
   };
 
   return (
@@ -279,11 +166,12 @@ export const Map: React.FC = (): JSX.Element => {
           </Portal>
 
           <MapContainer
+            center={userLocation || { lat: 48.8566, lng: 2.3522 }} // Default to Paris
+            style={{ height: '100%', width: '100%' }}
             doubleClickZoom={false}
             className="h-full w-full cursor-default relative"
-            center={userLocation || { lat: 27.9944024, lng: -81.7602544 }}
             zoom={14}
-            minZoom={5}
+            minZoom={1}
             zoomControl={false}
             attributionControl={false}
             key="default-location"
@@ -291,6 +179,7 @@ export const Map: React.FC = (): JSX.Element => {
           >
             <ScrollAfterDelay delay={2000} />
             <StoreMapInstance mapKey="main" />
+            <UserLocation />
 
             <TileLayer
               url={baseLayerConfig[activeLayer].url}
@@ -298,41 +187,100 @@ export const Map: React.FC = (): JSX.Element => {
               minZoom={1}
             />
 
-            {/* Custom controls */}
-            {renderTaskMarkers()}
+            {/* Task markers */}
 
-            {/* Passive overlays */}
-            {renderUserLocation()}
-            {/* USER ONLY */}
-            {/* <MapClickHandler
-              onClick={() => {}}
+            {noPaginatedTasks.map((task) => {
+              const resolvedCategory = resolveTaskCategory(
+                task.category,
+                choosenCategories,
+                categories
+              );
+              const icon =
+                mapIcons[resolvedCategory as keyof typeof mapIcons] ??
+                mapIcons.default;
+              return (
+                <Marker
+                  key={`task-marker-${task.id}`}
+                  position={{ lat: task.lat, lng: task.lng }}
+                  icon={icon === null ? undefined : icon}
+                  eventHandlers={{
+                    click: () => handleMarkerClick(task),
+                  }}
+                >
+                  <Popup>
+                    <div className="text-sm max-w-[200px]">
+                      <h4 className="font-bold mb-1">{task.title}</h4>
+                      <p className="text-xs">{task.subtitle}</p>
+                      <p className="text-xs text-muted mt-1">{task.distance}</p>
+                    </div>
+                  </Popup>
+                </Marker>
+              );
+            })}
+
+            {/* User location marker */}
+            {userLocation && mapIcons.myPosition && (
+              <Marker
+                position={userLocation}
+                icon={mapIcons.myPosition}
+                draggable={true}
+                eventHandlers={{
+                  dragend: (event) => {
+                    const newCoords = event.target.getLatLng();
+                    setUserLocation({
+                      lat: newCoords.lat,
+                      lng: newCoords.lng,
+                    });
+                  },
+                }}
+              >
+                <Popup>
+                  <div className="text-sm text-foreground">
+                    📍 You are here: <br />
+                    <strong>{userLocation.lat.toFixed(5)}</strong>,{' '}
+                    <strong>{userLocation.lng.toFixed(5)}</strong>
+                  </div>
+                </Popup>
+                {Tooltip && (
+                  <Tooltip permanent direction="top">
+                    I'm here! You can drag me.
+                  </Tooltip>
+                )}
+              </Marker>
+            )}
+
+            {/* Click handler */}
+
+            <MapClickHandler
               allowClickToAddMarker
-              setClickedCoords={setClickedCoords}
-              setShowOptionsMenu={setShowOptionsMenu}
-            /> */}
-
-            {/* Custom controls */}
-
-            <MapRightClicked
-              onClick={() => {}}
-              allowClickToAddMarker
-              setClickedCoords={setClickedCoords}
-              setShowOptionsMenu={setShowOptionsMenu}
+              onClick={(coords, clickType) => {
+                if (clickType === 'right') {
+                  setClickedCoords(coords);
+                  setShowOptionsMenu(true);
+                }
+              }}
+              clickOptions={{
+                setMe: (coords) => setUserLocation(coords),
+                setMyMarker: (coords) => addMarker(coords),
+              }}
             />
-            {renderCustomMarkers()}
-            {clickedCoords && showOptionsMenu && (
+            {showOptionsMenu && clickedCoords && (
               <Popup
                 position={clickedCoords}
                 eventHandlers={{ remove: closeOptionsMenu }}
                 closeOnClick={false}
                 autoPan={false}
               >
-                <PopUpContent
-                  clickedCoords={clickedCoords}
-                  addMarker={addMarker}
-                  setUserLocation={setUserLocation}
-                  closeOptionsMenu={closeOptionsMenu}
-                />
+                <div className="text-sm text-foreground">
+                  <button
+                    onClick={() => {
+                      setUserLocation(clickedCoords);
+                      closeOptionsMenu();
+                    }}
+                  >
+                    📍 Set My Location
+                  </button>
+                </div>
               </Popup>
             )}
 
@@ -352,7 +300,6 @@ export const Map: React.FC = (): JSX.Element => {
             />
             <FormSearch />
           </div>
-
           <FilterBadges />
         </div>
 
