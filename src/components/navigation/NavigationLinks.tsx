@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link, usePathname } from '../../i18n/navigation';
-import { useTranslations } from 'next-intl';
+// import { useTranslations } from 'next-intl';
 
 import SidebarUserIcon from '@/components/icons/SidebarUserIcon';
 import ChatIcon from '@/components/icons/ChatIcon';
@@ -10,6 +10,14 @@ import MapIcon from '@/components/icons/MapIcon';
 import GoalsIcon from '@/components/icons/GoalsIcon';
 import SettingsIcon from '@/components/icons/SettingsIcon';
 import { NavigationLinksProps } from '@/types/navigationType';
+
+const navigationLinks = [
+  { href: '/', label: 'Account', Icon: SidebarUserIcon },
+  { href: '/chat', label: 'Chat', Icon: ChatIcon },
+  { href: '/map', label: 'Map', Icon: MapIcon },
+  { href: '/goals', label: 'Goals', Icon: GoalsIcon },
+  { href: '/settings', label: 'Settings', Icon: SettingsIcon },
+];
 
 export const NavigationLinks: React.FC<NavigationLinksProps> = ({
   showLabels = true,
@@ -22,25 +30,17 @@ export const NavigationLinks: React.FC<NavigationLinksProps> = ({
 
   const locale = pathname.split('/')[1] || 'en';
 
-  const t = useTranslations('navigation');
-
-  const navigationLinks = [
-    { href: '/', label: t('account'), Icon: SidebarUserIcon },
-    { href: '/chat', label: t('chat'), Icon: ChatIcon },
-    { href: '/map', label: t('map'), Icon: MapIcon },
-    { href: '/goals', label: t('goals'), Icon: GoalsIcon },
-    { href: '/settings', label: t('settings'), Icon: SettingsIcon },
-  ];
+  // const t = useTranslations('navigation');
 
   return (
     <ul className={className}>
-      {navigationLinks.map(({ href, label, Icon }, index) => {
+      {navigationLinks.map(({ href, label, Icon }) => {
         const expectedPath = href === '/' ? `/${locale}` : `/${locale}${href}`;
         const isActive =
           pathname === expectedPath || pathname.startsWith(expectedPath + '/');
 
         return (
-          <li key={index}>
+          <li key={href}>
             <Link
               href={expectedPath}
               className={`
