@@ -21,6 +21,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     'donate',
     'news',
     'howItWorks',
+    'navigation',
   ];
 
   const messages = Object.fromEntries(
