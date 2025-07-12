@@ -29,7 +29,7 @@ export const NewsList = (): JSX.Element => {
 
       <SwiperList
         newsItems={mockNews}
-        swiperContainerClass="h-[425px] my-10"
+        swiperContainerClass="h-[425px] my-8"
         prevClass="prevNews"
         nextClass="nextNews"
         paginationClass="news-pagination"

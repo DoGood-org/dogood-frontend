@@ -45,7 +45,8 @@ type TMapState = {
     } | null;
   }[];
   activeLayer: EnumMapLayers;
-
+  radius: number;
+  setRadius: (radius: number) => void;
   layerDropIsOpen: boolean;
 
   hasAgreedToLocation: boolean | null;
@@ -53,6 +54,8 @@ type TMapState = {
 
   userLocation: LatLngLiteral | null;
   locationError: string | null;
+  offerPinLocation: boolean;
+  setOfferPinLocation: (value: boolean) => void;
 
   selectedTask: IExtendedITaskProps | null;
   customMarkers: TCustomMarker[] | [];
@@ -130,12 +133,23 @@ export const useMapStore = create<TMapState & TMapActions>()(
         myPin: null,
       },
       userLocation: null,
+      offerPinLocation: false,
+      setOfferPinLocation: (value: boolean): void => {
+        set({ offerPinLocation: value });
+      },
       selectedTask: null,
       customMarkers: [],
       locationError: null,
       hasAgreedToLocation: null,
       showGeolocationPopup: false,
-
+      radius: 3000,
+      setRadius: (r: number) =>
+        set((state) => {
+          if (Math.abs(r - state.radius) > 200) {
+            return { radius: r };
+          }
+          return state;
+        }),
       taskListIsOpen: false,
       filtersIsOpen: false,
       searchIsActive: false,

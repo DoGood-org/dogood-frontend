@@ -21,7 +21,7 @@ export const AnimatedDrawler = ({
   onClose,
   children,
   className = '',
-  duration = 0.3,
+  duration = 0.2,
   offset = 40,
   direction = 'vertical',
   exeptionForClickOutside = false,

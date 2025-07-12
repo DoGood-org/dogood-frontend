@@ -54,6 +54,8 @@ export * from './main/map/MapSection';
 export * from './main/map/mockTasks';
 export * from './main/map/MultiControlPanel';
 export * from './main/map/PopUpContent';
+export * from './main/map/Radius';
+export * from './main/map/RadiusWatcher';
 export * from './main/map/ScrollAfterDelay';
 export * from './main/map/StoreMapInstance';
 export * from './main/map/UserLocation';

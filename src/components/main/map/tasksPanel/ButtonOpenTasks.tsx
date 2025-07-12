@@ -27,7 +27,7 @@ export const ButtonOpenTasks = ({
           <motion.div
             className="flex items-center gap-2"
             animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
           >
             <AnimatePresence mode="wait">
               {!isOpen && (

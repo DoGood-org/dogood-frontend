@@ -15,9 +15,6 @@ export const MapClickHandler: React.FC<IMapClickHandlerProps> = ({
     if (!allowClickToAddMarker) return;
 
     onClick(latlng, clickType);
-    // clickOptions?.setMe?.(latlng);
-    // clickOptions?.setMyMarker?.(latlng);
-    // setClickedCoords?.(latlng);
     setShowOptionsMenu?.(true);
 
     console.log(`${clickType} click on map`, latlng);

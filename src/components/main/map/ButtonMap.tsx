@@ -16,7 +16,7 @@ export const ButtonMap = ({ onClickHandler, children }: Props): JSX.Element => {
     <Button
       type="button"
       onClick={handleClick}
-      className="w-12 h-12 flex items-center justify-center  bg-[var(--map-btn-bg)] cursor-pointer  border-[var(--map-btn-border)] rounded-sm p-0"
+      className="w-12 h-12 flex items-center justify-center bg-[var(--map-btn-bg)] cursor-pointer  border-[var(--map-btn-bg)] rounded-sm p-0 "
     >
       <span className="text-[var(--map-btn-icon)] text-2xl">{children}</span>
     </Button>
