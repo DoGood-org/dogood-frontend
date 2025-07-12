@@ -5,3 +5,5 @@ export interface NavigationLinksProps {
   className?: string;
   navLabels?: string;
 }
+
+export type Page = 'Account' | 'Chat' | 'Map' | 'Goals' | 'Settings';

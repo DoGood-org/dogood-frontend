@@ -79,6 +79,7 @@ export * from './main/news/SwiperNavButton';
 export * from './main/news/SwiperPagination';
 export * from './navigation/BottomNavigation';
 export * from './navigation/NavigationLinks';
+export * from './navigation/PageContent';
 export * from './navigation/SidebarNavigation';
 export * from './portal/AnimatedModalWrapper';
 export * from './portal/Portal';

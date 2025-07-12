@@ -5,7 +5,7 @@ import { NavigationLinks } from './NavigationLinks';
 
 export const SidebarNavigation: React.FC = () => {
   return (
-    <aside className="lg:w-[136px] bg-background pt-20">
+    <aside className="lg:block lg:w-[136px] bg-background pt-20">
       <nav className="hidden lg:flex flex-col gap-6">
         <NavigationLinks
           showLabels={true}
