@@ -122,7 +122,7 @@ export const Map: React.FC = (): JSX.Element => {
   const { MapContainer, TileLayer, Marker, Popup, Tooltip } = leafletComponents;
 
   const handleMarkerClick = (task: any): void => {
-    console.log('Task marker clicked:', task);
+    console.info('Task marker:', task);
   };
 
   return (

@@ -16,7 +16,7 @@ function getGeolocationPromise(): Promise<LatLngLiteral> {
     }
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        console.log('Geolocation position shared by navigator:', pos);
+        console.warn('Geolocation position shared by navigator:', pos);
         resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude });
       },
       (error) => {

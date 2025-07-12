@@ -16,8 +16,6 @@ export const MapClickHandler: React.FC<IMapClickHandlerProps> = ({
 
     onClick(latlng, clickType);
     setShowOptionsMenu?.(true);
-
-    console.log(`${clickType} click on map`, latlng);
   };
 
   useMapEvent('click', (e) => handleClick(e.latlng, 'left'));

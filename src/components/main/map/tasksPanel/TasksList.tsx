@@ -7,7 +7,6 @@ import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelec
 export const TasksList = (): JSX.Element => {
   const t = useTranslations('map');
   const { noPaginatedTasks } = useFilteredTasksSelector();
-  console.log('[TasksList] noPaginatedTasks:', noPaginatedTasks);
   return (
     <div className="pl-2 pr-2 lg:px-8">
       <div className="mt-4 h-[660px] lg:h-[722px] w-full lg:mt-0 overflow-y-auto custom-scrollbar-tasks ">

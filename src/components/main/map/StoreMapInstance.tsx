@@ -14,7 +14,6 @@ const StoreMapInstance = ({ mapKey }: Props): null => {
 
   useEffect(() => {
     if (map && map !== currentMapInstance) {
-      console.log('[Zustand] Storing map instance for key:', mapKey);
       setMapInstance(mapKey, map);
     }
   }, [map, mapKey, currentMapInstance, setMapInstance]);

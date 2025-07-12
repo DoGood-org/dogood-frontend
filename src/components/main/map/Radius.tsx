@@ -6,12 +6,12 @@ export const Radius = (): JSX.Element | null => {
   const map = useMap();
 
   useEffect(() => {
-    console.log('[RadiusDebug] useMap() fired:', !!map);
     const center = map.getCenter();
     const bounds = map.getBounds();
     const north = bounds.getNorth();
     const radius = map.distance(center, { lat: north, lng: center.lng });
-    console.log('[RadiusDebug] Visible radius:', radius, 'meters');
+
+    console.info('[Radius] Initial radius:', radius, 'meters');
   }, [map]);
 
   useMapEvent('moveend', () => {
@@ -19,7 +19,7 @@ export const Radius = (): JSX.Element | null => {
     const bounds = map.getBounds();
     const north = bounds.getNorth();
     const radius = map.distance(center, { lat: north, lng: center.lng });
-    console.log('[RadiusDebug] Radius after move/zoom:', radius, 'meters');
+    console.info('[Radius] Radius after move/zoom:', radius, 'meters');
   });
 
   return null;

@@ -215,7 +215,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
       setCustomMarkers: (markers) => set({ customMarkers: markers }),
 
       setHasAgreedToLocation: (value): void => {
-        console.log('[Zustand] agreeToShareLocation set to:', value);
+        console.info('[Zustand] agreeToShareLocation set to:', value);
         set({ hasAgreedToLocation: value });
       },
 
@@ -254,7 +254,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
         }
       },
       declineLocationSharing: (): void => {
-        console.log('User declined location sharing');
+        console.warn('User declined location sharing');
         set({
           hasAgreedToLocation: false,
           showGeolocationPopup: false,
@@ -292,12 +292,12 @@ export const useMapStore = create<TMapState & TMapActions>()(
         if (typeof window === 'undefined') return;
         if (get().hasAgreedToLocation) {
           get().requestGeolocation();
-          console.log(
+          console.info(
             '[Zustand] User already agreed, requesting geolocation, dont bother with popup...'
           );
         } else {
           set({ showGeolocationPopup: true });
-          console.log('[Zustand] User has not agreed, showing popup...');
+          console.warn('[Zustand] User has not agreed, showing popup...');
         }
       },
       requestGeolocation: async (manualLoc?: LatLngLiteral): Promise<void> => {
@@ -314,12 +314,12 @@ export const useMapStore = create<TMapState & TMapActions>()(
                 userLocation: coords,
                 locationError: null,
               });
-              console.log(
+              console.info(
                 '[Zustand] User location set from navigator:',
                 coords
               );
             } else {
-              console.log('[Zustand] Skipping update — same coordinates');
+              console.info('[Zustand] Skipping update — same coordinates');
             }
             return;
           }
@@ -331,7 +331,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
               userLocation: manualLoc,
               locationError: null,
             });
-            console.log('[Zustand] Manual location set:', manualLoc);
+            console.info('[Zustand] Manual location set:', manualLoc);
             return;
           }
 
