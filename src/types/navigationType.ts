@@ -1,4 +1,4 @@
-export interface NavigationLinksProps {
+export interface NavigationPageProps {
   showLabels?: boolean;
   linkClassName?: string;
   iconClassName?: string;

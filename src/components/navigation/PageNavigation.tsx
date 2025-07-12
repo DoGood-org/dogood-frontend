@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { NavigationLinksProps, Page } from '@/types/navigationType';
+import { NavigationPageProps, Page } from '@/types/navigationType';
 import { navigationStore } from '@/zustand/stores/navigationStore';
-// import { useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 import SidebarUserIcon from '@/components/icons/SidebarUserIcon';
 import ChatIcon from '@/components/icons/ChatIcon';
@@ -11,30 +11,31 @@ import MapIcon from '@/components/icons/MapIcon';
 import GoalsIcon from '@/components/icons/GoalsIcon';
 import SettingsIcon from '@/components/icons/SettingsIcon';
 
-const navigationLinks: {
+const navigationPages: {
   label: Page;
+  translationKey: string;
   Icon: React.FC<React.SVGProps<SVGSVGElement>>;
 }[] = [
-  { label: 'Account', Icon: SidebarUserIcon },
-  { label: 'Chat', Icon: ChatIcon },
-  { label: 'Map', Icon: MapIcon },
-  { label: 'Goals', Icon: GoalsIcon },
-  { label: 'Settings', Icon: SettingsIcon },
+  { label: 'Account', translationKey: 'account', Icon: SidebarUserIcon },
+  { label: 'Chat', translationKey: 'chat', Icon: ChatIcon },
+  { label: 'Map', translationKey: 'map', Icon: MapIcon },
+  { label: 'Goals', translationKey: 'goals', Icon: GoalsIcon },
+  { label: 'Settings', translationKey: 'settings', Icon: SettingsIcon },
 ];
 
-export const NavigationLinks: React.FC<NavigationLinksProps> = ({
+export const PageNavigation: React.FC<NavigationPageProps> = ({
   showLabels = true,
   linkClassName = '',
   iconClassName = '',
   className = '',
   navLabels = '',
 }) => {
-  // const t = useTranslations('navigation');
+  const t = useTranslations('navigation');
   const { currentPage, setCurrentPage } = navigationStore();
 
   return (
     <ul className={className}>
-      {navigationLinks.map(({ label, Icon }) => {
+      {navigationPages.map(({ label, translationKey, Icon }) => {
         const isActive = currentPage === label;
 
         return (
@@ -58,7 +59,9 @@ export const NavigationLinks: React.FC<NavigationLinksProps> = ({
                   ${iconClassName}
                 `}
               />
-              {showLabels && <span className={navLabels}>{label}</span>}
+              {showLabels && (
+                <span className={navLabels}>{t(translationKey)}</span>
+              )}
             </button>
           </li>
         );
