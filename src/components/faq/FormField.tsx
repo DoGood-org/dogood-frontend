@@ -1,6 +1,6 @@
+'use client';
 import React from 'react';
-import { Input } from '@/components/ui/Input';
-import { useFormContext, Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 
 type Props = {
@@ -11,6 +11,7 @@ type Props = {
   maxLength?: number;
   rows?: number;
   className?: string;
+  required?: boolean;
 };
 
 export const FormField = ({
@@ -21,13 +22,14 @@ export const FormField = ({
   maxLength = 200,
   rows = 4,
   className,
+  required,
 }: Props): React.ReactElement => {
   const {
     control,
     formState: { errors },
   } = useFormContext();
 
-  const error = (errors as any)[name]?.message;
+  const error = errors[name]?.message as string | undefined;
 
   return (
     <div className="relative mb-6">
@@ -37,12 +39,28 @@ export const FormField = ({
           className="block text-sm font-medium text-[#696969] mb-1"
         >
           {label}
+          {required && <span className="text-red-500">*</span>}
         </label>
       )}
 
       <Controller
-        control={control}
         name={name}
+        control={control}
+        rules={{
+          required: required ? 'This field is required' : false,
+          pattern:
+            type === 'email'
+              ? {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: 'Invalid email address',
+                }
+              : type === 'tel'
+                ? {
+                    value: /^[0-9+\-()\s]+$/,
+                    message: 'Invalid phone number',
+                  }
+                : undefined,
+        }}
         render={({ field }) =>
           type === 'textarea' ? (
             <div className="relative">
@@ -62,7 +80,7 @@ export const FormField = ({
               </div>
             </div>
           ) : (
-            <Input
+            <input
               id={name}
               {...field}
               type={type}
@@ -77,7 +95,7 @@ export const FormField = ({
       />
 
       {error && (
-        <span className="text-red-500 text-sm absolute left-2 -bottom-5">
+        <span className="absolute left-2 -bottom-5 text-red-500 text-sm">
           {error}
         </span>
       )}
