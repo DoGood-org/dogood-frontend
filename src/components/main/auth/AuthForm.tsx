@@ -244,9 +244,9 @@ export const AuthForm: React.FC<Props> = (props) => {
                   }}
                   icon={
                     showRepeatPassword ? (
-                      <EyeOff size={24} stroke="#000" />
+                      <EyeOff size={24} stroke="#696969" />
                     ) : (
-                      <Eye size={24} stroke="#000" />
+                      <Eye size={24} stroke="#696969" />
                     )
                   }
                   iconRight
