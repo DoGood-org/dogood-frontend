@@ -1,8 +1,10 @@
+import { JSX } from 'react';
+
 type Props = {
   title?: string;
   subtitle?: string;
 };
-export const AuthTitleSubtitle = (props: Props) => {
+export const AuthTitleSubtitle = (props: Props): JSX.Element => {
   return (
     <div className="flex flex-col items-center justify-center mb-[24px]">
       <h2

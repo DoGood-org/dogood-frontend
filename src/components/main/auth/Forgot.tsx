@@ -21,8 +21,6 @@ export const Forgot = (): JSX.Element => {
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
   const {
     control,
-    handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<IForgot>({
     resolver: yupResolver(forgotPasswordSchema),
