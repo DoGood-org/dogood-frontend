@@ -2,7 +2,7 @@
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { cn } from '@/lib/utils';
-
+import { Input } from '../ui/Input';
 type Props = {
   name: string;
   label?: string;
@@ -80,7 +80,7 @@ export const FormField = ({
               </div>
             </div>
           ) : (
-            <input
+            <Input
               id={name}
               {...field}
               type={type}
