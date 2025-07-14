@@ -4,6 +4,7 @@
 
 export * from './donate/DonateCard';
 export * from './faq/ContactForm';
+export * from './faq/FormField';
 export * from './layout/footer/Footer';
 export * from './layout/footer/SocialLinks';
 export * from './layout/header/AccountLinks';
