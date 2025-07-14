@@ -28,9 +28,18 @@ type Props = {
 export const CustomLayerController = ({
   className = '',
 }: Props): JSX.Element => {
-  const { activeLayer, setActiveLayer, toggleLayerDrop } = useMapStore();
-  const handleOptionSelect = (optionId: string): void => {
+  const { layerDropIsOpen, activeLayer, setActiveLayer, toggleLayerDrop } =
+    useMapStore();
+  const handleOptionSelect = (
+    optionId: string,
+    e?: React.MouseEvent | React.KeyboardEvent
+  ): void => {
     setActiveLayer(optionId as EnumMapLayers);
+    console.info(layerDropIsOpen, 'Layer dropdown is open');
+    if (layerDropIsOpen && e && 'stopPropagation' in e) {
+      e.stopPropagation();
+    }
+
     toggleLayerDrop();
   };
 
@@ -42,16 +51,15 @@ export const CustomLayerController = ({
       {dropdownOptions.map((option) => (
         <div
           key={option.id}
-          className="flex flex-col gap-2 px-4 py-2"
+          className="flex flex-col gap-2 px-4 py-2 cursor-pointer"
           role="menuitem"
           tabIndex={0}
-          onClick={() => {
-            handleOptionSelect(option.id);
+          onClick={(e) => {
+            handleOptionSelect(option.id, e);
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              handleOptionSelect(option.id);
+              handleOptionSelect(option.id, e);
             }
           }}
           aria-selected={activeLayer === option.id}
@@ -61,8 +69,8 @@ export const CustomLayerController = ({
               key={option.id}
               variant={'ghost'}
               className=" p-0 w-6 h-6  rounded-full border-map-btn-icon mr-2"
-              onClick={() => {
-                handleOptionSelect(option.id);
+              onClick={(e) => {
+                handleOptionSelect(option.id, e);
               }}
             >
               <span

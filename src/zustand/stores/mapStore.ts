@@ -51,6 +51,7 @@ type TMapState = {
 
   hasAgreedToLocation: boolean | null;
   showGeolocationPopup: boolean;
+  defaultLocation: LatLngLiteral | null;
 
   userLocation: LatLngLiteral | null;
   locationError: string | null;
@@ -132,6 +133,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
         default: null,
         myPin: null,
       },
+      defaultLocation: { lat: 48.8566, lng: 2.3522 }, // Default to Paris
       userLocation: null,
       offerPinLocation: false,
       setOfferPinLocation: (value: boolean): void => {
@@ -209,22 +211,18 @@ export const useMapStore = create<TMapState & TMapActions>()(
         set((state) => ({ layerDropIsOpen: !state.layerDropIsOpen }));
       },
       setMapIcons: (icons) => set({ mapIcons: icons }),
-
       setUserLocation: (loc) => set({ userLocation: loc }),
       setLocationError: (error) => set({ locationError: error }),
       setCustomMarkers: (markers) => set({ customMarkers: markers }),
-
       setHasAgreedToLocation: (value): void => {
         console.info('[Zustand] agreeToShareLocation set to:', value);
         set({ hasAgreedToLocation: value });
       },
-
       setShowGeolocationPopup: (value: boolean): void => {
         if (get().hasAgreedToLocation) {
           set({ showGeolocationPopup: value });
         }
       },
-
       acceptLocationSharing: async (): Promise<void> => {
         const {
           hasAgreedToLocation,
@@ -262,7 +260,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
           locationError: null,
         });
       },
-
       addMarker: (loc): void => {
         const exists = get().customMarkers.some((m) => coordsMatch(m, loc));
         if (!exists) {
@@ -271,7 +268,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
           }));
         }
       },
-
       removeMarker: (loc): void =>
         set((state) => ({
           customMarkers: state.customMarkers.filter(
@@ -313,6 +309,8 @@ export const useMapStore = create<TMapState & TMapActions>()(
               set({
                 userLocation: coords,
                 locationError: null,
+                offerPinLocation: false,
+                showGeolocationPopup: false,
               });
               console.info(
                 '[Zustand] User location set from navigator:',
@@ -330,27 +328,31 @@ export const useMapStore = create<TMapState & TMapActions>()(
             set({
               userLocation: manualLoc,
               locationError: null,
+              offerPinLocation: false,
+              showGeolocationPopup: false,
             });
             console.info('[Zustand] Manual location set:', manualLoc);
             return;
           }
 
-          // Nothing available
-          set({
-            locationError:
-              '[Zustand] Failed to retrieve geolocation from navigator',
-          });
-        } catch (error) {
+          // No navigator location and no manual fallback
           console.warn(
-            '[Zustand] navigator refused to share location, we may need to check the setting in the browser',
-            error
+            '[Zustand] No coordinates from navigator or manual input'
           );
           set({
+            locationError: 'Failed to retrieve geolocation from navigator',
+            offerPinLocation: true,
+            showGeolocationPopup: false,
+          });
+        } catch (error) {
+          console.warn('[Zustand] Geolocation access failed:', error);
+          set({
             locationError:
-              error && typeof error === 'object' && 'message' in error
-                ? (error as { message: string }).message +
-                  ' tried failed showing input'
+              typeof error === 'object' && error && 'message' in error
+                ? `${(error as { message: string }).message} — showing fallback pin`
                 : 'Failed to retrieve geolocation from all sources',
+            offerPinLocation: true,
+            showGeolocationPopup: false,
           });
         }
       },

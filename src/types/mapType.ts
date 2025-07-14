@@ -38,10 +38,10 @@ export type TMapLayerType = {
   };
 };
 
-export interface IAcceptShareLocationProps {
-  requestGeolocation: () => void;
-  declineGeolocation: () => void;
-}
+// export interface IAcceptShareLocationProps {
+//   requestGeolocation: () => void;
+//   declineGeolocation: () => void;
+// }
 
 export interface IFormLocation {
   location: string;

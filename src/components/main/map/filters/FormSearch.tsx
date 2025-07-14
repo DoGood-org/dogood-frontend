@@ -13,6 +13,13 @@ export const FormSearch = (): JSX.Element => {
   const { toggleFilters } = useMapStore();
   const { setSearchQuery } = useFilterStore();
 
+  const onButtonClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    e.stopPropagation();
+    toggleFilters();
+
+    e.nativeEvent.stopImmediatePropagation();
+  };
+
   const { register, watch, reset } = useForm<FormData>();
   const searchValue = watch('search');
   useEffect(() => {
@@ -67,8 +74,8 @@ export const FormSearch = (): JSX.Element => {
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-6  p-0 m-0 cursor-pointer text-foreground"
-            onClick={toggleFilters}
+            className="absolute z-1000 right-6  p-0 m-0 cursor-pointer text-foreground"
+            onClick={onButtonClick}
           >
             <SlidersVertical className="w-6 h-6 stroke-foreground text-foreground" />
           </Button>

@@ -7,7 +7,6 @@ export const RadiusWatcher = (): JSX.Element | null => {
   const map = useMap();
   const { setRadius } = useMapStore();
 
-  // const dynamicRadius = getVisibleRadius(map);
 
   const zoomToRadiusMap: Record<number, number> = {
     18: 100,
@@ -26,7 +25,6 @@ export const RadiusWatcher = (): JSX.Element | null => {
     const newRadius = zoomToRadiusMap[zoom] || 0;
     setRadius(newRadius);
   });
-  // useMapEvent('resize', refreshTasks);
 
   return null;
 };

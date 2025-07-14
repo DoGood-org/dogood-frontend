@@ -1,12 +1,14 @@
 'use client';
 import {
   AnimatedDrawler,
+  Button,
   ButtonOpenTasks,
   Container,
   CustomControlContent,
   Filters,
   generateTasks,
   MultiControlPanel,
+  OfferPinLocationContent,
   TasksList,
   UserLocation,
 } from '@/components';
@@ -24,11 +26,12 @@ import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { JSX, useEffect } from 'react';
+import React, { JSX, useEffect, useMemo, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
-import { Radius } from '@/components/main/map/Radius';
+// import { Radius } from '@/components/main/map/Radius';
 import { RadiusWatcher } from '@/components/main/map/RadiusWatcher';
+import { IExtendedITaskProps } from '@/types/mapType';
 
 export const Map: React.FC = (): JSX.Element => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
@@ -36,6 +39,7 @@ export const Map: React.FC = (): JSX.Element => {
     triggerOnce: true,
     delay: 100,
   });
+  const markerRef = useRef<L.Marker | null>(null);
 
   const {
     mapIcons,
@@ -45,11 +49,15 @@ export const Map: React.FC = (): JSX.Element => {
     initMap,
     userLocation,
     setUserLocation,
+    defaultLocation,
     acceptLocationSharing,
     declineLocationSharing,
     showGeolocationPopup,
     checkLocationPermission,
+    locationError,
+
     offerPinLocation,
+    setOfferPinLocation,
     radius,
     addMarker,
     taskListIsOpen,
@@ -66,15 +74,25 @@ export const Map: React.FC = (): JSX.Element => {
   const { choosenCategories, categories } = useFilterStore();
   const { tasks, setTasks } = useTaskStore();
   const { setCategories } = useFilterStore();
+  useEffect(() => {
+    if (!isInView) return;
+
+    const run = async () => {
+      checkLocationPermission();
+
+      if (locationError) {
+        setOfferPinLocation(true);
+        markerRef.current?.openPopup();
+      }
+    };
+
+    run();
+  }, [isInView, checkLocationPermission, setOfferPinLocation]);
 
   useEffect(() => {
     initMap('main');
   }, []);
-  useEffect((): void => {
-    if (isInView) {
-      checkLocationPermission();
-    }
-  }, [isInView, checkLocationPermission]);
+
   // Imitate backend data generation
   // This should be replaced with actual data fetching logic
   // For now, we generate tasks based on the user's location
@@ -84,16 +102,9 @@ export const Map: React.FC = (): JSX.Element => {
 
     const newTasks = generateTasks(userLocation.lat, userLocation.lng, radius);
     const oldTasks = tasks;
-    const existingTaskIds = Array.from(
-      new Set(oldTasks.map((task) => task.id))
-    );
-    const updatedTasks = [
-      ...oldTasks,
-      ...newTasks.filter((task) => !existingTaskIds.includes(task.id)),
-    ];
 
+    const updatedTasks = [...oldTasks, ...newTasks];
     setTasks(updatedTasks);
-
     const categories = Array.from(
       new Set(updatedTasks.flatMap((task) => task.category))
     );
@@ -137,15 +148,12 @@ export const Map: React.FC = (): JSX.Element => {
               isVisible={showGeolocationPopup}
               onClose={declineLocationSharing}
             >
-              <AcceptShareLocationPopUp
-                requestGeolocation={acceptLocationSharing}
-                declineGeolocation={declineLocationSharing}
-              />
+              <AcceptShareLocationPopUp />
             </AnimatedModalWrapper>
           </Portal>
 
           <MapContainer
-            center={userLocation || { lat: 48.8566, lng: 2.3522 }}
+            center={userLocation || defaultLocation}
             style={{ height: '100%', width: '100%' }}
             doubleClickZoom={false}
             className="h-full w-full cursor-default relative"
@@ -159,12 +167,28 @@ export const Map: React.FC = (): JSX.Element => {
             <ScrollAfterDelay delay={2000} />
             <StoreMapInstance mapKey="main" />
             <UserLocation />
-            <Radius />
             <RadiusWatcher />
             <TileLayer
               url={baseLayerConfig[activeLayer].url}
               maxZoom={18}
               minZoom={1}
+            />
+            {/* Click handler */}
+            <MapClickHandler
+              allowClickToAddMarker
+              onClick={(coords, clickType) => {
+                if (clickType === 'right') {
+                  setClickedCoords(coords);
+                  setShowOptionsMenu(true);
+                }
+                if (clickType === 'left') {
+                  closeOptionsMenu();
+                }
+              }}
+              clickOptions={{
+                setMe: (coords) => setUserLocation(coords),
+                setMyMarker: (coords) => addMarker(coords),
+              }}
             />
             {/* Task markers */}
             {noPaginatedTasks.map((task) => {
@@ -201,6 +225,8 @@ export const Map: React.FC = (): JSX.Element => {
                 position={userLocation}
                 icon={mapIcons.myPosition}
                 draggable={true}
+                title="Drag me to change your location"
+                zIndexOffset={10000}
                 eventHandlers={{
                   dragend: (event) => {
                     const newCoords = event.target.getLatLng();
@@ -220,30 +246,9 @@ export const Map: React.FC = (): JSX.Element => {
                     <strong>{userLocation.lng.toFixed(5)}</strong>
                   </div>
                 </Popup>
-                {Tooltip && (
-                  <Tooltip permanent direction="top">
-                    Im here! You can drag me.
-                  </Tooltip>
-                )}
               </Marker>
             )}
-            {/* Click handler */}
-            <MapClickHandler
-              allowClickToAddMarker
-              onClick={(coords, clickType) => {
-                if (clickType === 'right') {
-                  setClickedCoords(coords);
-                  setShowOptionsMenu(true);
-                }
-                if (clickType === 'left') {
-                  closeOptionsMenu();
-                }
-              }}
-              clickOptions={{
-                setMe: (coords) => setUserLocation(coords),
-                setMyMarker: (coords) => addMarker(coords),
-              }}
-            />
+
             {/* Options menu for right click */}
             {showOptionsMenu && clickedCoords && (
               <Popup
@@ -264,30 +269,35 @@ export const Map: React.FC = (): JSX.Element => {
                 </div>
               </Popup>
             )}
-            {/* Custom draggable pin for setting location  on location button click*/}
-            {offerPinLocation && mapIcons.myPosition && (
+            {offerPinLocation && defaultLocation && mapIcons.myPosition && (
               <Marker
-                position={{ lat: 48.8566, lng: 2.3522 }}
+                ref={(ref) => {
+                  if (ref) markerRef.current = ref;
+                  console.info('Marker ref set:', ref);
+                }}
+                position={clickedCoords || defaultLocation}
                 icon={mapIcons.myPosition}
+                draggable
                 zIndexOffset={10000}
+                riseOnHover
+                riseOffset={1000}
+                title="Drag me to change your location"
                 eventHandlers={{
+                  dragstart: () => {
+                    setClickedCoords(defaultLocation);
+                  },
                   dragend: (event) => {
-                    const newCoords = event.target.getLatLng();
-                    setClickedCoords({
-                      lat: newCoords.lat,
-                      lng: newCoords.lng,
-                    });
+                    const { lat, lng } = event.target.getLatLng();
+                    setClickedCoords({ lat, lng });
                   },
                 }}
               >
-                <Popup>
-                  <div>
-                    📍 Set My Location: <br />
-                    Im draggable pin!
-                  </div>
+                <Popup closeOnClick={false} autoPan={false}>
+                  <OfferPinLocationContent />
                 </Popup>
               </Marker>
             )}
+
             {/* Custom controls */}
             <MultiControlPanel
               controls={[
