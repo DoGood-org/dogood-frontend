@@ -53,7 +53,6 @@ export * from './main/map/MapClicks';
 export * from './main/map/MapSection';
 export * from './main/map/mockTasks';
 export * from './main/map/MultiControlPanel';
-export * from './main/map/OfferPinLocationContent';
 export * from './main/map/PopUpContent';
 export * from './main/map/RadiusWatcher';
 export * from './main/map/ScrollAfterDelay';
