@@ -32,8 +32,10 @@ export const AuthInput = forwardRef<HTMLInputElement, Props>((props, ref) => (
           id={props.id}
           className={`
           auth-input
+          border-none
+          focus:ring-0
             w-full h-[48px] px-4 py-3 text-base font-normal rounded-[4px] text-[#696969] bg-white
-            placeholder:text-[#999] focus:outline-none focus:ring-1 focus:ring-[var(--border)]
+            placeholder:text-[#999] focus:outline-none
             ${props.icon ? (props.iconRight ? 'pr-10' : 'pl-10') : ''}
             ${props.className}
           `}
