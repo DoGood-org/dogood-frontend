@@ -21,11 +21,8 @@ type Props = {
 
 export const AuthInput = forwardRef<HTMLInputElement, Props>((props, ref) => (
   <>
-    <div className="flex flex-col gap-[12px] w-full">
-      <label
-        className="roboto block text-[16px] md:text-[18px] font-normal"
-        htmlFor={props.htmlFor}
-      >
+    <div className="flex flex-col gap-[8px] w-full">
+      <label className=" block text-base font-normal" htmlFor={props.htmlFor}>
         {props.label}
       </label>
       <div className="relative flex items-center">
@@ -34,7 +31,7 @@ export const AuthInput = forwardRef<HTMLInputElement, Props>((props, ref) => (
           onChange={props.onChange}
           id={props.id}
           className={`
-            w-full px-4 py-2 text-[16px] font-normal rounded-[20px] text-[#696969] bg-white
+            w-full h-[48px] px-4 py-3 text-base font-normal rounded-[4px] text-[#696969] bg-white
             placeholder:text-[#696969] focus:outline-none focus:ring-2 focus:ring-[var(--border)]
             ${props.icon ? (props.iconRight ? 'pr-10' : 'pl-10') : ''}
             ${props.className}
@@ -48,7 +45,7 @@ export const AuthInput = forwardRef<HTMLInputElement, Props>((props, ref) => (
         />
         {props.iconRight && props.icon && (
           <span
-            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#696969]"
             onClick={props.onIconClick}
           >
             {props.icon}

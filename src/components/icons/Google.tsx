@@ -9,10 +9,10 @@ type Props = {
 };
 
 export const Google: React.FC<Props> = ({
-  width = 23,
-  height = 24,
+  width = 32,
+  height = 32,
   className,
-  fill = 'var(--foreground)',
+  fill = 'currentColor',
   stroke,
 }) => (
   <svg

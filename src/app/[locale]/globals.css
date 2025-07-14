@@ -21,6 +21,7 @@
 
   /* colors */
   --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
   --color-foreground: var(--foreground);
   --color-text-help: var(--text-help);
   --color-text-gray: var(--text-gray);
@@ -108,7 +109,7 @@
   --breakpoint-xl: 1920px;
 
   --background: #f1f1f1;
-  --background-secondary: #303030;
+  --background-secondary: #696969;
   --foreground: #1b1b1b;
   --header-bg: #171b19;
   --footer-bg: #111215;
@@ -193,7 +194,7 @@ html {
 
 .dark {
   --background: #171b19;
-  --background-secondary: #696969;
+  --background-secondary: #303030;
   --foreground: #f1f1f1;
   --card: #303030;
   --btn-secondary: #010101;
@@ -351,7 +352,7 @@ html {
 /* Стиль для authForm*/
 
 .btn-auth {
-  @apply bg-btn text-white cursor-pointer;
+  @apply bg-btn text-white cursor-pointer rounded-sm;
   transition:
     background-color 0.3s ease,
     color 0.3s ease;

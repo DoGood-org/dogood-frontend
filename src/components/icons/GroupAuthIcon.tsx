@@ -1,17 +1,13 @@
 import React from 'react';
 
 type Props = {
-  width?: number;
-  height?: number;
   className?: string;
   fill?: string;
 };
 
 const GroupAuthIcon: React.FC<Props> = ({
-  width = 102,
-  height = 60,
-  className = 'w-[68px] h-[40px] sm:w-[102px] sm:h-[60px] ',
-  fill = 'var(--foreground)',
+  className = 'w-[68px] h-[40px] md:h-[60px] md:w-[102px]',
+  fill = 'currentColor',
 }) => {
   return (
     <svg

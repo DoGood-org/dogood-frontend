@@ -18,3 +18,11 @@ export const loginSchema = yup.object({
   email: yup.string().email().required('Email is required'),
   password: yup.string().required('Password is required'),
 });
+
+export const forgotPasswordSchema = yup.object({
+  newPassword: yup.string().required('New password is required'),
+  repeatPassword: yup
+    .string()
+    .oneOf([yup.ref('newPassword')], 'Passwords must match')
+    .required('Repeat password is required'),
+});
