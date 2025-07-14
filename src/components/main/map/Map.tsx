@@ -1,14 +1,12 @@
 'use client';
 import {
   AnimatedDrawler,
-  Button,
   ButtonOpenTasks,
   Container,
   CustomControlContent,
   Filters,
   generateTasks,
   MultiControlPanel,
-  OfferPinLocationContent,
   TasksList,
   UserLocation,
 } from '@/components';
@@ -26,12 +24,11 @@ import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { JSX, useEffect, useMemo, useRef } from 'react';
+import React, { JSX, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 // import { Radius } from '@/components/main/map/Radius';
 import { RadiusWatcher } from '@/components/main/map/RadiusWatcher';
-import { IExtendedITaskProps } from '@/types/mapType';
 
 export const Map: React.FC = (): JSX.Element => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
@@ -50,7 +47,7 @@ export const Map: React.FC = (): JSX.Element => {
     userLocation,
     setUserLocation,
     defaultLocation,
-    acceptLocationSharing,
+
     declineLocationSharing,
     showGeolocationPopup,
     checkLocationPermission,
@@ -77,12 +74,11 @@ export const Map: React.FC = (): JSX.Element => {
   useEffect(() => {
     if (!isInView) return;
 
-    const run = async () => {
+    const run = async (): Promise<void> => {
       checkLocationPermission();
 
       if (locationError) {
         setOfferPinLocation(true);
-        markerRef.current?.openPopup();
       }
     };
 
@@ -130,7 +126,7 @@ export const Map: React.FC = (): JSX.Element => {
     );
   }
 
-  const { MapContainer, TileLayer, Marker, Popup, Tooltip } = leafletComponents;
+  const { MapContainer, TileLayer, Marker, Popup } = leafletComponents;
 
   const handleMarkerClick = (task: any): void => {
     console.info('Task marker:', task);
@@ -273,7 +269,6 @@ export const Map: React.FC = (): JSX.Element => {
               <Marker
                 ref={(ref) => {
                   if (ref) markerRef.current = ref;
-                  console.info('Marker ref set:', ref);
                 }}
                 position={clickedCoords || defaultLocation}
                 icon={mapIcons.myPosition}
@@ -283,6 +278,10 @@ export const Map: React.FC = (): JSX.Element => {
                 riseOffset={1000}
                 title="Drag me to change your location"
                 eventHandlers={{
+                  click: () => {
+                    setClickedCoords(defaultLocation);
+                    setShowOptionsMenu(true);
+                  },
                   dragstart: () => {
                     setClickedCoords(defaultLocation);
                   },
@@ -291,11 +290,7 @@ export const Map: React.FC = (): JSX.Element => {
                     setClickedCoords({ lat, lng });
                   },
                 }}
-              >
-                <Popup closeOnClick={false} autoPan={false}>
-                  <OfferPinLocationContent />
-                </Popup>
-              </Marker>
+              ></Marker>
             )}
 
             {/* Custom controls */}

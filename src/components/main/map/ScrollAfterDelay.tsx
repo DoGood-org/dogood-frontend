@@ -15,17 +15,17 @@ export const ScrollAfterDelay: React.FC<Props> = ({ delay = 2000 }) => {
     const container = map.getContainer();
     if (!container) return;
 
-    const handleMouseEnter = () => {
+    const handleMouseEnter = (): void => {
       if (scrollEnabledRef.current) return;
 
-      timeoutRef.current = setTimeout(() => {
+      timeoutRef.current = setTimeout((): void => {
         map.scrollWheelZoom.enable();
         container.style.cursor = 'grab';
         scrollEnabledRef.current = true;
       }, delay);
     };
 
-    const handleMouseLeave = () => {
+    const handleMouseLeave = (): void => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
         timeoutRef.current = null;
@@ -40,7 +40,7 @@ export const ScrollAfterDelay: React.FC<Props> = ({ delay = 2000 }) => {
     container.addEventListener('mouseenter', handleMouseEnter);
     container.addEventListener('mouseleave', handleMouseLeave);
 
-    return () => {
+    return (): void => {
       container.removeEventListener('mouseenter', handleMouseEnter);
       container.removeEventListener('mouseleave', handleMouseLeave);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);

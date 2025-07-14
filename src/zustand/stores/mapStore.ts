@@ -211,7 +211,15 @@ export const useMapStore = create<TMapState & TMapActions>()(
         set((state) => ({ layerDropIsOpen: !state.layerDropIsOpen }));
       },
       setMapIcons: (icons) => set({ mapIcons: icons }),
-      setUserLocation: (loc) => set({ userLocation: loc }),
+      setUserLocation: (loc) =>
+        set({
+          userLocation: loc,
+          locationError: null,
+          offerPinLocation: false,
+          showGeolocationPopup: false,
+          clickedCoords: null,
+        }),
+
       setLocationError: (error) => set({ locationError: error }),
       setCustomMarkers: (markers) => set({ customMarkers: markers }),
       setHasAgreedToLocation: (value): void => {
@@ -340,6 +348,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
             '[Zustand] No coordinates from navigator or manual input'
           );
           set({
+            userLocation: null,
             locationError: 'Failed to retrieve geolocation from navigator',
             offerPinLocation: true,
             showGeolocationPopup: false,
@@ -353,6 +362,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
                 : 'Failed to retrieve geolocation from all sources',
             offerPinLocation: true,
             showGeolocationPopup: false,
+            userLocation: null,
           });
         }
       },
