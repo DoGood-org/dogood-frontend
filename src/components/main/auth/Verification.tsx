@@ -22,14 +22,6 @@ export const Verification: React.FC = () => {
     buttonRef.current?.setAttribute('aria-disabled', String(isIncomplete));
   }, [isIncomplete]);
 
-  // // update aria-disabled when values change
-  // useEffect(() => {
-  //   buttonRef.current?.setAttribute('aria-disabled', String(isIncomplete));
-  // }, [isIncomplete]);
-
-  console.log('isIncomplete:', isIncomplete);
-  console.log('values:', inputValues);
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number

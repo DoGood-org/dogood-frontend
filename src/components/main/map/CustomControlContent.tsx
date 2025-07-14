@@ -1,40 +1,36 @@
 'use client';
+import { ButtonLayers } from '@/components/main/map/ButtonLayers';
 import { ButtonLocation } from '@/components/main/map/ButtonLocation';
-import { ButtonZoom } from '@/components/main/map/ButtonZoom';
+import { CustomControlZoom } from '@/components/main/map/CustomControlZoom';
+import CustomLayerController from '@/components/main/map/CustomLayerController';
+import { AnimatedDrawler } from '@/components/main/map/tasksPanel/AnimatedDrawler';
+import { useMapStore } from '@/zustand/stores/mapStore';
 import { JSX } from 'react';
-import { useMap } from 'react-leaflet';
 
 export const CustomControlContent = (): JSX.Element => {
-  const map = useMap();
-
-  const handleZoomIn = (): void => {
-    if (map) {
-      map.zoomIn();
-    }
-  };
-
-  const handleZoomOut = (): void => {
-    if (map) {
-      map.zoomOut();
-    }
-  };
+  const layerDropIsOpen = useMapStore((state) => state.layerDropIsOpen);
+  const toggleLayerDrop = useMapStore((state) => state.toggleLayerDrop);
 
   return (
-    <div
-      onClick={(e) => e.stopPropagation()}
-      onPointerDown={(e) => e.stopPropagation()}
-      style={{
-        bottom: '10px',
-        right: '10px',
-        display: 'flex',
-        gap: '40px',
-      }}
-    >
-      <div className=" gap-1 hidden lg:flex z-[5001]">
-        <ButtonZoom onClickHandler={handleZoomIn}>+</ButtonZoom>
-        <ButtonZoom onClickHandler={handleZoomOut}>-</ButtonZoom>
+    <>
+      <div className="flex w-[300px] gap-6 justify-end">
+        <CustomControlZoom />
+        <div className="flex gap-6 bottom-0 left-0">
+          <ButtonLayers />
+          <ButtonLocation />
+        </div>
       </div>
-      <ButtonLocation />
-    </div>
+
+      {layerDropIsOpen && (
+        <AnimatedDrawler
+          isVisible={layerDropIsOpen}
+          direction="horizontal"
+          onClose={() => toggleLayerDrop()}
+          className="absolute z-50 w-[160px] h-[168px] bottom-0 rounded-sm"
+        >
+          <CustomLayerController className=" absolute z-50" />
+        </AnimatedDrawler>
+      )}
+    </>
   );
 };

@@ -56,6 +56,7 @@
   --color-food: var(--food);
   --color-map-btn: var(--map-btn-bg);
   --color-map-btn-icon: var(--map-btn-icon);
+  --color-news-item-hover: var(--btn-hover);
 
   /* font sizes and line-height desktop */
   --text-sm: 14px;
@@ -132,6 +133,7 @@
   --btn-outline-active: #0a6f3c;
   --map-btn-bg: #999999;
   --map-btn-icon: #171b19;
+  --news-item-hover: #1ad3aa;
 
   --bg-icon: #171b19;
   --icon-color: #f1f1f1;
@@ -656,75 +658,11 @@ html {
 
 /* map */
 
-/* Layers Control */
-.leaflet-control-layers.leaflet-control.leaflet-control-layers-expanded {
-  background-color: var(--map-btn-bg);
-  border: 2px solid var(--map-btn-bg);
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: var(--map-btn-icon);
-}
-.leaflet-top.leaflet-right {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.leaflet-control-layers-toggle {
-  display: flex;
-  background-color: var(--map-btn-bg);
-  overflow: hidden;
-}
-.leaflet-control-layers-toggle {
-  a {
-    padding: 0;
-    margin: 0;
-    background-color: var(--map-btn-bg);
-    text-decoration: none !important;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-}
-
-.leaflet-control-layers-base label span {
-  display: flex;
-  align-items: center;
-
-  padding: 2px;
-  font-family: var(--font-montserrat);
-
-  color: var(--map-btn-icon);
-  cursor: pointer;
-  font-weight: 400;
-}
-
-.leaflet-control-layers input[type='radio'] {
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border: 2px solid var(--map-btn-icon);
-  border-radius: 50%;
-  background-color: transparent;
-  cursor: pointer;
-  position: relative;
-  padding: 0;
-  margin-right: 4px;
-}
-
-.leaflet-control-layers input[type='radio']::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  box-shadow: 0 0 0 2px var(--map-btn-bg);
-  background-color: var(--map-btn-icon);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform 0.2s ease;
-}
-
-.leaflet-control-layers input[type='radio']:checked::before {
-  transform: translate(-50%, -50%) scale(1);
+.leaflet-popup-content-wrapper {
+  background-color: var(--card);
+  color: var(--foreground);
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: var(--radius-lg);
 }
