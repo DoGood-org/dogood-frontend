@@ -1,7 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
 
 export default createMiddleware({
-  locales: ['en', 'ua'],
+  locales: ['en', 'de'],
   defaultLocale: 'en',
   localePrefix: 'as-needed',
   // Add this to prevent redirect loops

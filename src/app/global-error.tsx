@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Footer,
   Header,
@@ -14,28 +14,9 @@ import { useParams } from 'next/navigation';
 import ErrorDesk from '@/assets/images/notFound/errorDesck.png';
 import ErrorTabl from '@/assets/images/notFound/errorTabl.png';
 import ErrordMob from '@/assets/images/notFound/errorMob.png';
-import enCommon from '../../messages/en/common.json';
-import enHeader from '../../messages/en/header.json';
-import enFooter from '../../messages/en/footer.json';
-import uaCommon from '../../messages/ua/common.json';
-import uaHeader from '../../messages/ua/header.json';
-import uaFooter from '../../messages/ua/footer.json';
-
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { AppLocale, Messages } from '@/types/errorType';
-
-const allMessages: Record<AppLocale, Messages> = {
-  en: {
-    common: enCommon,
-    header: enHeader,
-    footer: enFooter,
-  },
-  ua: {
-    common: uaCommon,
-    header: uaHeader,
-    footer: uaFooter,
-  },
-};
+import { AppLocale } from '@/types/errorType';
+import { loadMessages } from '@/i18n/request';
 
 export default function GlobalError({
   reset,
@@ -55,7 +36,15 @@ export default function GlobalError({
       ? (rawLocale as AppLocale)
       : routing.defaultLocale;
 
-  const messages = allMessages[locale];
+  const [messages, setMessages] = useState<Record<string, any> | null>(null);
+
+  useEffect(() => {
+    loadMessages(locale).then(setMessages).catch(console.error);
+  }, [locale]);
+
+  if (!messages) {
+    return <div>Loading...</div>;
+  }
 
   const handleResetBtn = (): void => {
     try {
@@ -78,15 +67,15 @@ export default function GlobalError({
           <Section className="pt-[80px] lg:pt-[200px] h-dvh">
             <NotFoundComponent
               scrImg={heroImage}
-              title={messages.common.errorTitle}
-              description={messages.common.errorDescr}
-              text={messages.common.errorText}
+              title={messages?.common?.errorTitle}
+              description={messages?.common?.errorDescr}
+              text={messages?.common?.errorText}
               variantBtn1="primary"
               variantBtn2="secondary"
               hrefBtn2={`/${locale}/`}
-              nameBtn1={messages.common.refreshBtn}
-              nameBtn2={messages.common.backHomeBtn}
-              stuckText={messages.common.stuckText}
+              nameBtn1={messages?.common?.refreshBtn}
+              nameBtn2={messages?.common?.backHomeBtn}
+              stuckText={messages?.common?.stuckText}
               handleResetBtn={handleResetBtn}
             />
           </Section>

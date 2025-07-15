@@ -1,0 +1,38 @@
+{
+  "faq": [
+    {
+      "question": "Wie funktioniert das?",
+      "answer": [
+        "Die Nutzung von DoGood ist einfach und lohnend:",
+        "Erstelle oder durchsuche eine Anfrage – sei es für Einkäufe für Bedürftige, Unterstützung einer Initiative oder das Anbieten deiner Fähigkeiten.",
+        "Reagiere auf eine Anfrage – als Privatperson, Freiwilliger, Unternehmen oder Organisation."
+      ]
+    },
+    {
+      "question": "Wo kann ich meinen Fortschritt verfolgen?",
+      "answer": [
+        "Du kannst deinen Fortschritt in unserem Telegram-Kanal verfolgen. Wir zeigen regelmäßig, was bereits erreicht wurde und was als Nächstes geplant ist."
+      ]
+    }
+  ],
+  "contact": [
+    {
+      "heading": "Hast du Fragen?",
+      "nameText": "z. B. Michael",
+      "nameError": "Name ist erforderlich",
+      "emailText": "z. B. beispiel@gmail.com",
+      "emailError": "E-Mail ist erforderlich",
+      "phoneText": "z. B. +49 (160) 123-4567",
+      "messageText": "Gib hier deine Nachricht ein ...",
+      "phoneError": "Unbekanntes Telefonnummernformat"
+    }
+  ],
+  "downtext": [
+    {
+      "text": "Mit dem Klick auf den Button erklärst du dich mit der Verarbeitung personenbezogener Daten einverstanden.",
+      "btn": "Anfrage senden",
+      "success": "Nachricht erfolgreich gesendet. Vielen Dank!",
+      "error": "Fehler beim Senden der Nachricht. Bitte versuche es erneut."
+    }
+  ]
+}

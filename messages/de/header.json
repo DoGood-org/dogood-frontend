@@ -2,109 +2,109 @@
   "nav": [
     {
       "id": "Home",
-      "title": "Home",
+      "title": "Startseite",
       "type": "link",
       "icon": "House",
       "src": "/"
     },
     {
       "id": "Donate",
-      "title": "Donate",
+      "title": "Spenden",
       "icon": "Dollar",
       "type": "link",
       "src": "/donate"
     },
     {
       "id": "Company",
-      "title": "Company",
+      "title": "Unternehmen",
       "icon": "UsersThree",
       "type": "list",
       "content": [
         {
-          "name": "Support",
-          "description": "We're there for you when you need help.",
+          "name": "Unterstützung",
+          "description": "Wir sind für dich da, wenn du Hilfe brauchst.",
           "src": "/support"
         },
         {
-          "name": "Grants",
-          "description": "We support initiatives that make a difference in the community.",
+          "name": "Förderungen",
+          "description": "Wir unterstützen Initiativen, die einen Unterschied in der Gemeinschaft machen.",
           "src": "/grants"
         },
         {
-          "name": "About DoGood",
-          "description": "DoGood is a community of people for whom kindness is an active act.",
+          "name": "Über DoGood",
+          "description": "DoGood ist eine Gemeinschaft von Menschen, für die Freundlichkeit eine aktive Handlung ist.",
           "src": "/about"
         }
       ]
     },
     {
       "id": "Settings",
-      "title": "Settings",
+      "title": "Einstellungen",
       "icon": "Gear",
       "type": "settings",
       "content": [
         {
           "id": "language",
-          "name": "Language",
-          "description": "Select a language"
+          "name": "Sprache",
+          "description": "Sprache auswählen"
         },
         {
           "id": "theme",
-          "name": "Theme",
-          "description": "Display theme"
+          "name": "Thema",
+          "description": "Thema wechseln"
         }
       ]
     },
     {
       "id": "News",
-      "title": "News",
+      "title": "Neuigkeiten",
       "icon": "Megaphone",
       "type": "link",
       "src": "/news",
       "content": [
         {
-          "name": "News",
-          "description": "Keep up to date with DoGood events.",
+          "name": "Neuigkeiten",
+          "description": "Bleibe über DoGood-Veranstaltungen auf dem Laufenden.",
           "src": "/news"
         },
         {
-          "name": "Volunteer stories",
-          "description": "Real stories of people who are doing good.",
+          "name": "Freiwilligen-Geschichten",
+          "description": "Echte Geschichten von Menschen, die Gutes tun.",
           "src": "/volunteerStories"
         },
         {
           "name": "Blog",
-          "description": "Ideas, tips and inspiration for those who want to change the world.",
+          "description": "Ideen, Tipps und Inspiration für alle, die die Welt verändern wollen.",
           "src": "/blog"
         }
       ]
     },
     {
+      "title": "Konto",
       "id": "Account",
-      "title": "Account",
       "icon": "User",
       "type": "icon",
       "content": {
         "logged": [
           {
-            "name": "Account",
+            "name": "Konto",
             "src": "/account",
             "icon": "User"
           },
           {
-            "name": "Log out",
+            "name": "Abmelden",
             "src": "/logout",
             "icon": "LogOut"
           }
         ],
         "noLogged": [
           {
-            "name": "Log in",
+            "name": "Anmelden",
             "src": "/login",
             "icon": "LogIn"
           },
           {
-            "name": "Sign up",
+            "name": "Registrieren",
             "src": "/register",
             "icon": "ArrowRight"
           }
@@ -113,9 +113,9 @@
     }
   ],
   "buttons": [
-    { "name": "Log in", "src": "/login" },
-    { "name": "Sign up", "src": "/register" }
+    { "name": "Anmelden", "src": "/login" },
+    { "name": "Registrieren", "src": "/register" }
   ],
-  "toggle": "Theme toggle",
-  "special": "Special toggle"
+  "toggle": "Design-Umschalter",
+  "special": "Spezial-Umschalter"
 }
