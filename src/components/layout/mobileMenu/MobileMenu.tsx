@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { NavItem } from '@/types';
 import { NavItemRenderer } from '@/components';
 import { Burger, CloseMenu } from '@/components/icons';
 import Portal from '@/components/portal/Portal';
-import { useMobileMenu } from '@/hooks';
+import { useMobileMenu, useSortedMobileNav } from '@/hooks';
 
 export const MobileMenu = (): React.JSX.Element => {
   const { isOpen, toggleMenu } = useMobileMenu();
@@ -35,26 +35,7 @@ export const MobileMenu = (): React.JSX.Element => {
     };
   }, [isOpen, toggleMenu]);
 
-  // if (!isOpen) return null;
-
-  const mobileNav = useMemo(() => {
-    const homeItem: NavItem = {
-      title: 'Home',
-      type: 'link',
-      icon: 'House',
-      src: '/',
-    };
-
-    const accountIndex = nav.findIndex((item) => item.title === 'Account');
-    const accountItem = nav[accountIndex];
-
-    const navWithoutAccount = [...nav];
-    if (accountIndex !== -1) {
-      navWithoutAccount.splice(accountIndex, 1); // видаляємо Account
-    }
-
-    return [homeItem, accountItem, ...navWithoutAccount.filter(Boolean)];
-  }, [nav]);
+  const mobileNav = useSortedMobileNav(nav);
 
   return (
     <>
