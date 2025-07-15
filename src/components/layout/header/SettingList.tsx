@@ -1,5 +1,5 @@
 import { SettingsContentProps } from '@/types';
-import { LanguageSwitcher, SpecialToggle, ThemeToggle } from '@/components';
+import { LanguageSwitcher, ThemeToggle } from '@/components';
 
 export const SettingsList: React.FC<SettingsContentProps> = ({
   settingItem,
@@ -8,7 +8,6 @@ export const SettingsList: React.FC<SettingsContentProps> = ({
 
   const settingsComponents: Record<string, React.ReactNode> = {
     language: <LanguageSwitcher />,
-    accessibility: <SpecialToggle />,
     theme: <ThemeToggle />,
   };
 
