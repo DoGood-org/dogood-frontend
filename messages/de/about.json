@@ -1,0 +1,46 @@
+{
+  "views": [
+    {
+      "view": "Über uns",
+      "title": "\"Bei DoGood ist Freundlichkeit keine Transaktion, sondern eine Lebensweise.\"",
+      "description": "Wir glauben, dass Freundlichkeit und gegenseitige Unterstützung die Welt verändern können. DoGood bringt Freiwillige, gemeinnützige Organisationen, sozial verantwortungsbewusste Unternehmen und alle, die etwas bewirken wollen, auf einfache, transparente und sinnvolle Weise zusammen. Unsere Mission ist es nicht nur, einmalig zu helfen, sondern eine globale Kultur des Gutes-Tuns im Alltag aufzubauen.",
+      "img": ["about1.png", "about2.png", "about3.png", "about4.png"]
+    },
+    {
+      "view": "Freiwilligenarbeit",
+      "title": "Sei Teil einer guten Veränderung.",
+      "description": "Freiwilligenarbeit bedeutet nicht nur zu helfen, sondern die Welt um dich herum zu einem besseren Ort zu machen. Wenn du dich DoGood anschließt, wirst du Teil einer Gemeinschaft, in der jede Handlung zählt. Engagiere dich für die Themen, die dir wichtig sind – von der Hilfe für Menschen bis zum Schutz der Natur. Wir unterstützen dich auf jedem Schritt – fang einfach an.",
+      "img": [
+        "volunteer1.png",
+        "volunteer2.png",
+        "volunteer3.png",
+        "volunteer4.png"
+      ]
+    },
+    {
+      "view": "GoodBot",
+      "title": "DoGood ist am Handy – lerne GoodBot kennen.",
+      "description": "Der DoGood Bot ist dein Assistent in der Welt der guten Taten. Er zeigt dir, wo Hilfe gebraucht wird, erinnert dich an Aufgaben, hilft dir bei der Orientierung und beantwortet deine Fragen, wenn du gerade erst anfängst. Du bleibst immer mit der Plattform verbunden: im Messenger, ohne unnötige Schritte oder Formulare. Einfach schreiben – und Gutes tun wird noch zugänglicher.",
+      "img": ["goodBot1.png", "goodBot2.png", "goodBot3.png", "goodBot4.png"]
+    },
+    {
+      "view": "Förderungen",
+      "title": "Verwirkliche deine Idee.",
+      "description": "Du hast ein Projekt, das deine Gemeinschaft verbessern kann? Wir helfen dir. DoGood unterstützt soziale Initiativen mit Fördermitteln, damit Gutes systematisch wird. Fülle ein Antragsformular aus, erzähle uns von deiner Idee und erhalte nicht nur finanzielle Unterstützung, sondern auch Hilfe von unserem Team und der Community.",
+      "img": ["grants1.png", "grants2.png", "grants3.png", "grants4.png"]
+    },
+    {
+      "view": "Meine Taten",
+      "title": "Beginne mit einer guten Tat.",
+      "description": "Jede gute Tat ist eine Chance, jemandem den Tag zu verschönern. Unterstütze eine ältere Person, hilf einem Tierheim, säubere einen Park – einfache Handlungen, die Leben verändern. Auf der DoGood-Plattform entscheidest du selbst, wann und wo du helfen möchtest. Tu Gutes in deinem eigenen Tempo – wir sind auf jedem Schritt bei dir.",
+      "img": ["myDeeds1.png", "myDeeds2.png", "myDeeds3.png", "myDeeds4.png"]
+    },
+    {
+      "view": "Spenden",
+      "title": "Es ist einfach und wirkungsvoll.",
+      "description": "Auch wenn du keine Zeit hast, kannst du trotzdem helfen. Eine Spende reicht, und du bist Teil einer großen Sache: Menschen, Tieren und der Umwelt zu helfen. Jeder Betrag zählt. Du gibst anderen die Möglichkeit zu handeln und einen echten Unterschied zu machen – genau jetzt.",
+      "img": ["donate1.png", "donate2.png", "donate3.png", "donate4.png"]
+    }
+  ],
+  "aboutButton": "Mehr erfahren"
+}

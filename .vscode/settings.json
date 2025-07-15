@@ -2,7 +2,6 @@
   "files.eol": "\n",
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
-  "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "github.copilot.enable": {
     "typescript": true,
@@ -20,5 +19,15 @@
     "inlineSuggestions": true,
     "autoImport": true,
     "codeCompletion": true
-  }
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll": true,
+    "source.fixAll.eslint": true
+  },
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "typescript.updateImportsOnFileMove.enabled": "always",
 }

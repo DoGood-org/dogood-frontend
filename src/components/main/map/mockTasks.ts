@@ -1,3 +1,4 @@
+import { calculateDistanceInMeters } from '@/lib/mapUtils';
 import { ITask, MarkerCategoryEnum } from '@/types/mapType';
 
 const TITLES = [
@@ -55,20 +56,32 @@ const CATEGORIES = [
   [MarkerCategoryEnum.Food, MarkerCategoryEnum.Medicine],
 ];
 
-export function generateTasks(userLat: number, userLng: number): ITask[] {
+export function generateTasks(
+  userLat: number,
+  userLng: number,
+  radiusInMeters: number = 3000
+): ITask[] {
   return TITLES.map(([title, subtitle], i) => {
-    const offsetLat = (Math.random() - 0.5) * 0.01;
-    const offsetLng = (Math.random() - 0.5) * 0.01;
-    const lat = parseFloat((userLat + offsetLat).toFixed(6));
-    const lng = parseFloat((userLng + offsetLng).toFixed(6));
-    const distance = `${(Math.random() * 4 + 0.5).toFixed(1)} km`;
+    // Generate point within radius
+    const angle = Math.random() * 2 * Math.PI;
+    const distance = Math.random() * radiusInMeters;
+
+    const deltaLat = (distance * Math.cos(angle)) / 111320; // meters to degrees lat
+    const deltaLng =
+      (distance * Math.sin(angle)) /
+      (111320 * Math.cos((userLat * Math.PI) / 180)); // adjust for lng distortion
+
+    const lat = parseFloat((userLat + deltaLat).toFixed(6));
+    const lng = parseFloat((userLng + deltaLng).toFixed(6));
+    const realDistance = calculateDistanceInMeters(userLat, userLng, lat, lng);
+    const distanceStr = `${(realDistance / 1000).toFixed(2)} km`;
 
     return {
       id: `${Math.random().toString(36).substring(2, 15)}-${i}`,
       title,
       subtitle,
       category: CATEGORIES[i],
-      distance,
+      distance: distanceStr,
       lat,
       lng,
       description: DESCRIPTIONS[i],

@@ -9,22 +9,7 @@ export enum MarkerCategoryEnum {
   Default = 'default',
   MyPin = 'myPin',
 }
-export interface IReactLeafletModule {
-  MapContainer: React.FC<any>;
-  TileLayer: typeof import('react-leaflet').TileLayer;
-  Marker: typeof import('react-leaflet').Marker;
-  useMap: typeof import('react-leaflet').useMap;
-  ZoomControl: typeof import('react-leaflet').ZoomControl;
-  LayersControl: typeof import('react-leaflet').LayersControl;
-  Popup: typeof import('react-leaflet').Popup;
-  Circle: typeof import('react-leaflet').Circle;
-  Polyline: typeof import('react-leaflet').Polyline;
-  GeoJSON: typeof import('react-leaflet').GeoJSON;
-  useMapEvent: typeof import('react-leaflet').useMapEvent;
-  Control: typeof import('leaflet').Control;
-  LayerGroup: typeof import('react-leaflet').LayerGroup;
-  useMapEvents: typeof import('react-leaflet').useMapEvents;
-}
+
 export type MapLocation = LatLngLiteral & {
   id: string;
   title: string;
@@ -34,10 +19,29 @@ export type MapLocation = LatLngLiteral & {
   icon?: Icon | null;
 };
 
-export interface IAcceptShareLocationProps {
-  requestGeolocation: () => void;
-  declineGeolocation: () => void;
+export enum EnumMapLayers {
+  Satellite = 'EsriSatellite',
+  OpenStreetMap = 'OpenStreetMap',
+  GoogleMaps = 'GoogleMaps',
 }
+export enum EnumUserLayers {
+  CustomMarkers = 'CustomMarkers',
+  MyTasks = 'MyTasks',
+}
+
+// for <TileLayer> component
+export type TMapLayerType = {
+  [key in EnumMapLayers]: {
+    name: string;
+    url: string;
+    attribution?: string;
+  };
+};
+
+// export interface IAcceptShareLocationProps {
+//   requestGeolocation: () => void;
+//   declineGeolocation: () => void;
+// }
 
 export interface IFormLocation {
   location: string;
@@ -79,9 +83,10 @@ export interface IFilterStore {
   searchQuery: string;
   sortBy: 'title' | 'distance';
 }
+export type MapClickType = 'left' | 'right';
 
 export interface IMapClickHandlerProps {
-  onClick: (latlng: LatLngLiteral) => void;
+  onClick: (coords: LatLngLiteral, clickType: MapClickType) => void;
   allowClickToAddMarker?: boolean;
 
   clickOptions?: {

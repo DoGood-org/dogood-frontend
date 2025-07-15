@@ -1,3 +1,4 @@
+'use client';
 import { MarkerCategoryEnum } from '@/types/mapType';
 import { LatLngLiteral } from 'leaflet';
 import { JSX } from 'react';

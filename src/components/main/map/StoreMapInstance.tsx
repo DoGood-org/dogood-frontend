@@ -3,15 +3,20 @@ import { useMapStore } from '@/zustand/stores/mapStore';
 import { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 
-const StoreMapInstance = (): null => {
+type Props = {
+  mapKey: 'main' | 'user';
+};
+
+const StoreMapInstance = ({ mapKey }: Props): null => {
   const map = useMap();
-  const setMap = useMapStore((s) => s.setMap);
+  const setMapInstance = useMapStore((s) => s.setMapInstance);
+  const currentMapInstance = useMapStore((s) => s.mapInstances[mapKey]);
 
   useEffect(() => {
-    if (map) {
-      setMap(map);
+    if (map && map !== currentMapInstance) {
+      setMapInstance(mapKey, map);
     }
-  }, [map, setMap]);
+  }, [map, mapKey, currentMapInstance, setMapInstance]);
 
   return null;
 };

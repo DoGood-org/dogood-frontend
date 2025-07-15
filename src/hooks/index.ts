@@ -5,3 +5,4 @@ export * from './useMobileMenu';
 export * from './useScrollToActive';
 export * from './useSwipe';
 export * from './useTheme';
+export * from './useSortedMobileNav';

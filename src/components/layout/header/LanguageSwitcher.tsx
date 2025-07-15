@@ -7,7 +7,7 @@ import { CaretDown } from '@/components/icons';
 
 const localeLabels: Record<string, string> = {
   en: 'English',
-  ua: 'Українська',
+  de: 'Deutsch',
 };
 
 export const LanguageSwitcher: React.FC = () => {

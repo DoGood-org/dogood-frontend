@@ -1,0 +1,121 @@
+{
+  "nav": [
+    {
+      "id": "Home",
+      "title": "Startseite",
+      "type": "link",
+      "icon": "House",
+      "src": "/"
+    },
+    {
+      "id": "Donate",
+      "title": "Spenden",
+      "icon": "Dollar",
+      "type": "link",
+      "src": "/donate"
+    },
+    {
+      "id": "Company",
+      "title": "Unternehmen",
+      "icon": "UsersThree",
+      "type": "list",
+      "content": [
+        {
+          "name": "Unterstützung",
+          "description": "Wir sind für dich da, wenn du Hilfe brauchst.",
+          "src": "/support"
+        },
+        {
+          "name": "Förderungen",
+          "description": "Wir unterstützen Initiativen, die einen Unterschied in der Gemeinschaft machen.",
+          "src": "/grants"
+        },
+        {
+          "name": "Über DoGood",
+          "description": "DoGood ist eine Gemeinschaft von Menschen, für die Freundlichkeit eine aktive Handlung ist.",
+          "src": "/about"
+        }
+      ]
+    },
+    {
+      "id": "Settings",
+      "title": "Einstellungen",
+      "icon": "Gear",
+      "type": "settings",
+      "content": [
+        {
+          "id": "language",
+          "name": "Sprache",
+          "description": "Sprache auswählen"
+        },
+        {
+          "id": "theme",
+          "name": "Thema",
+          "description": "Thema wechseln"
+        }
+      ]
+    },
+    {
+      "id": "News",
+      "title": "Neuigkeiten",
+      "icon": "Megaphone",
+      "type": "link",
+      "src": "/news",
+      "content": [
+        {
+          "name": "Neuigkeiten",
+          "description": "Bleibe über DoGood-Veranstaltungen auf dem Laufenden.",
+          "src": "/news"
+        },
+        {
+          "name": "Freiwilligen-Geschichten",
+          "description": "Echte Geschichten von Menschen, die Gutes tun.",
+          "src": "/volunteerStories"
+        },
+        {
+          "name": "Blog",
+          "description": "Ideen, Tipps und Inspiration für alle, die die Welt verändern wollen.",
+          "src": "/blog"
+        }
+      ]
+    },
+    {
+      "title": "Konto",
+      "id": "Account",
+      "icon": "User",
+      "type": "icon",
+      "content": {
+        "logged": [
+          {
+            "name": "Konto",
+            "src": "/account",
+            "icon": "User"
+          },
+          {
+            "name": "Abmelden",
+            "src": "/logout",
+            "icon": "LogOut"
+          }
+        ],
+        "noLogged": [
+          {
+            "name": "Anmelden",
+            "src": "/login",
+            "icon": "LogIn"
+          },
+          {
+            "name": "Registrieren",
+            "src": "/register",
+            "icon": "ArrowRight"
+          }
+        ]
+      }
+    }
+  ],
+  "buttons": [
+    { "name": "Anmelden", "src": "/login" },
+    { "name": "Registrieren", "src": "/register" }
+  ],
+  "toggle": "Design-Umschalter",
+  "special": "Spezial-Umschalter"
+}
