@@ -37,24 +37,28 @@ export interface AccountContentProps {
 export type NavItem =
   | {
       type: 'link';
+      id: string;
       title: string;
       src: string;
       icon: string;
     }
   | {
       type: 'list';
+      id: string;
       title: string;
       icon: string;
       content: NavContentItem[];
     }
   | {
       type: 'settings';
+      id: string;
       title: string;
       icon: string;
       content: SettingContentItem[];
     }
   | {
       type: 'icon';
+      id: string;
       title: string;
       icon: string;
       content: {

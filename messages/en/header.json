@@ -1,12 +1,21 @@
 {
   "nav": [
     {
+      "id": "Home",
+      "title": "Home",
+      "type": "link",
+      "icon": "House",
+      "src": "/"
+    },
+    {
+      "id": "Donate",
       "title": "Donate",
       "icon": "Dollar",
       "type": "link",
       "src": "/donate"
     },
     {
+      "id": "Company",
       "title": "Company",
       "icon": "UsersThree",
       "type": "list",
@@ -29,6 +38,7 @@
       ]
     },
     {
+      "id": "Settings",
       "title": "Settings",
       "icon": "Gear",
       "type": "settings",
@@ -39,11 +49,6 @@
           "description": "Select a language"
         },
         {
-          "id": "accessibility",
-          "name": "Special features",
-          "description": "Mode for the visually impaired"
-        },
-        {
           "id": "theme",
           "name": "Theme",
           "description": "Display theme"
@@ -51,6 +56,7 @@
       ]
     },
     {
+      "id": "News",
       "title": "News",
       "icon": "Megaphone",
       "type": "link",
@@ -74,6 +80,7 @@
       ]
     },
     {
+      "id": "Account",
       "title": "Account",
       "icon": "User",
       "type": "icon",
