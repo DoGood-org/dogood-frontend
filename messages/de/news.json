@@ -1,0 +1,35 @@
+{
+  "newsPage": {
+    "title": "Neuigkeiten",
+    "description": "Bleibe auf dem Laufenden mit den neuesten Nachrichten, Geschichten und Blogbeiträgen von DoGood. Entdecke unsere Gemeinschaftsinitiativen und Veranstaltungen."
+  },
+  "newsPageMeta": {
+    "description": "Lies die neuesten Nachrichten, Geschichten und Blogbeiträge von DoGood. Bleibe über unsere Gemeinschaftsinitiativen und Veranstaltungen informiert.",
+    "title": "Neuigkeiten – DoGood"
+  },
+  "newsListPage": {
+    "title": "Neuigkeiten – DoGood",
+    "description": "Entdecke die neuesten Nachrichten, Geschichten und Blogbeiträge von DoGood. Bleibe über unsere Gemeinschaftsinitiativen und Veranstaltungen informiert."
+  },
+  "newsListPageMeta": {
+    "description": "Lies die neuesten Nachrichten, Geschichten und Blogbeiträge von DoGood. Bleibe über unsere Gemeinschaftsinitiativen und Veranstaltungen informiert.",
+    "title": "Neuigkeiten – DoGood"
+  },
+  "newsListMain": {
+    "title": "Neueste Nachrichten, Geschichten und Blogbeiträge",
+    "seeAll": "Alle Neuigkeiten anzeigen"
+  },
+  "newsItem": {
+    "notFoundTitle": "Nachricht nicht gefunden",
+    "notFoundDescription": "Der angeforderte Nachrichtenartikel existiert nicht."
+  },
+  "newsItemPage": {
+    "title": "Nachrichtenartikel – DoGood",
+    "notFoundTitle": "Nachricht nicht gefunden",
+    "notFoundDescription": "Der angeforderte Nachrichtenartikel existiert nicht."
+  },
+  "newsItemPageMeta": {
+    "title": "Nachrichtenartikel – DoGood",
+    "description": "Lies die neuesten Nachrichten, Geschichten und Blogbeiträge von DoGood. Bleibe über unsere Gemeinschaftsinitiativen und Veranstaltungen informiert."
+  }
+}

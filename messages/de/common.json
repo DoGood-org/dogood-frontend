@@ -1,0 +1,16 @@
+{
+  "title": "Willkommen bei DoGood",
+  "subtitle": "Eine Plattform, auf der Freundlichkeit die Welt verbindet",
+  "volunteerBtn": "Jetzt spenden",
+  "learnMoreBtn": "Mehr erfahren",
+  "notFoundTitle": "Hoppla in der Galaxie von DoGood!",
+  "notFoundDescr": "Die Seite, die Sie suchen, ist nicht hier.",
+  "notFoundText": "Vielleicht verbreitet sie gerade irgendwo gute Stimmung?",
+  "errorTitle": "Hoppla... etwas ist schiefgelaufen!",
+  "errorDescr": "Es ist ein unerwarteter Fehler aufgetreten.",
+  "errorText": "Aber keine Sorge, wir kümmern uns bereits darum.",
+  "backHomeBtn": "Zur Startseite",
+  "contactUsBtn": "Kontaktieren Sie uns",
+  "refreshBtn": "Seite neu laden",
+  "stuckText": "Immer noch Probleme? Schreiben Sie uns: sturtup.dogood@gmail.com"
+}
