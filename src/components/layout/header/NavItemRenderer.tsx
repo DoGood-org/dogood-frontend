@@ -35,6 +35,8 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   };
 
   if (navItem.type === 'link') {
+    if (variant === 'desktop' && navItem.id === 'Home') return;
+
     return (
       <li>
         <Button

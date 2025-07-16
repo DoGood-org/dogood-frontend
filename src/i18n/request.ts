@@ -1,14 +1,9 @@
-import { getRequestConfig } from 'next-intl/server';
 import { hasLocale } from 'next-intl';
 import { routing } from './routing';
 
-export default getRequestConfig(async ({ requestLocale }) => {
-  // Typically corresponds to the `[locale]` segment
-  const requested = await requestLocale;
-  const locale = hasLocale(routing.locales, requested)
-    ? requested
-    : routing.defaultLocale;
+type Messages = Record<string, Record<string, string>>;
 
+export async function loadMessages(locale: string): Promise<Messages> {
   const namespaces = [
     'common',
     'header',
@@ -21,6 +16,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     'donate',
     'news',
     'howItWorks',
+    'navigation',
   ];
 
   const messages = Object.fromEntries(
@@ -31,6 +27,19 @@ export default getRequestConfig(async ({ requestLocale }) => {
       })
     )
   );
+
+  return messages;
+}
+
+import { getRequestConfig } from 'next-intl/server';
+
+export default getRequestConfig(async ({ requestLocale }) => {
+  const requested = await requestLocale;
+  const locale = hasLocale(routing.locales, requested)
+    ? requested
+    : routing.defaultLocale;
+
+  const messages = await loadMessages(locale);
 
   return {
     locale,

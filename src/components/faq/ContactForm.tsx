@@ -1,9 +1,10 @@
 'use client';
-import { useForm, useWatch } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { FormField } from './FormField';
 
-import { useEffect, useState } from 'react';
 type FormData = {
   name: string;
   email: string;
@@ -15,174 +16,103 @@ export const ContactForm = (): React.ReactElement => {
   const t = useTranslations('faq');
   const contact = (t.raw('contact') as any[])[0];
   const downText = (t.raw('downtext') as any[])[0];
+
+  const methods = useForm<FormData>({ mode: 'onChange' });
   const {
-    register,
     handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<FormData>({ mode: 'onChange' });
+    reset,
+    formState: { isSubmitting },
+  } = methods;
+
   const [status, setStatus] = useState<'success' | 'error' | null>(null);
+
   const onSubmit = async (data: FormData): Promise<void> => {
-    console.log('Дані форми:', data);
+    console.log('📤 Дані форми:', data);
     try {
       await new Promise((resolve, reject) => {
         setTimeout(() => {
-          const success = Math.random() > 0.3; // поки що рандомно, щоб показати статус
-          // зразок:
-          // await fetch('/api/send', {
-          //   method: 'POST',
-          //   body: JSON.stringify(data),
-          // });
-
-          if (success) resolve('OK');
-          else reject('ERROR');
+          const success = Math.random() > 0.3;
+          if (success) {
+            resolve('OK');
+          } else {
+            reject('ERROR');
+          }
         }, 1000);
       });
 
       setStatus('success');
+      reset();
     } catch {
       setStatus('error');
     }
 
-    setTimeout(() => {
-      (
-        document.getElementById('contact-form') as HTMLFormElement | null
-      )?.reset();
-    }, 1000);
     setTimeout(() => setStatus(null), 3000);
   };
-  const messageValue = useWatch({ name: 'interest', control });
-  const [charCount, setCharCount] = useState(0);
 
-  useEffect(() => {
-    setCharCount(messageValue?.length || 0);
-  }, [messageValue]);
   return (
     <div className="w-full flex justify-center items-center flex-col">
       <h2 className="sm:text-[32px] md:text-[32px] lg:text-[48px] flex items-center justify-center">
         {contact.heading}
       </h2>
-      <form
-        id="contact-form"
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full space-y-[24px] py-[24px] md:space-y-[36px] md:pt-[40px] xl:py[0] md:w-[427px] lg:w-[655px] z-6"
-      >
-        <div className="relative">
-          <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-[#696969] mb-1"
-            >
-              Name*
-            </label>
-            <input
-              type="text"
-              id="name"
-              {...register('name', { required: true })}
-              placeholder={contact.nameText}
-              className="placeholder:italic w-full pl-2 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-p2-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
-            />
-            {errors.name && (
-              <span className="z-10 absolute left-2 bottom-[-20px] text-red-500 text-sm pl-2">
-                {contact.nameError}
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="relative">
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-[#696969] mb-1"
-            >
-              E-mail*
-            </label>
-            <input
-              type="email"
-              id="email"
-              {...register('email', { required: true })}
-              placeholder={contact.emailText}
-              className="placeholder:italic w-full pl-2 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-p2-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
-            />
-            {errors.email && (
-              <span className="absolute left-2 bottom-[-20px] text-red-500 text-sm pl-2">
-                {contact.emailError}
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="relative">
-          <div className="mb-4">
-            <label
-              htmlFor="phone"
-              className="block text-sm font-medium text-[#696969] mb-1"
-            >
-              Phone number(optional)
-            </label>
-            <input
-              id="phone"
-              type="tel"
-              {...register('phone', {
-                pattern: {
-                  value: /^[0-9+\-()\s]+$/,
-                  message: contact.phoneError,
-                },
-              })}
-              placeholder={contact.phoneText}
-              className="placeholder:italic w-full pl-2 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-p2-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
-            />
-            {errors.phone && (
-              <span className="absolute left-2 bottom-[-20px] text-red-500 text-sm pl-2">
-                {errors.phone.message}
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="relative mb-[25px]">
-          <div className="mb-4">
-            <label
-              htmlFor="message"
-              className="block text-sm font-medium text-[#696969] mb-1"
-            >
-              Add a message
-            </label>
-            <textarea
-              id="message"
-              maxLength={200}
-              {...register('interest')}
-              placeholder={contact.messageText}
-              className="placeholder:italic w-full h-[122px] pl-2 pr-4 py-[15px] text-p4-m md:py-[21px] md:text-p2-d bg-[#ffffff] text-[#303030] placeholder-[#999999] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#17814b] border border-[#696969]"
-            />
-          </div>
-          <div className="absolute bottom-2 right-4 text-xs text-[#999999]">
-            {charCount}/200
-          </div>
-        </div>
-      </form>
-      <div className="pt-[20px] flex flex-col items-center md:flex-row justify-between gap-[20px] md:justify-center md:gap-[110px]">
-        <p className="text-[#999999] text-p4-m md:text-p2-d max-w-[365px]">
-          {downText.text}
-        </p>
-        <Button
-          variant="secondary"
-          size="lg"
-          type="submit"
-          form="contact-form"
-          // onClick={() => }
-          className="w-full h-[48px] lg:max-w-[186px] md:max-w-[180px] btn-expand-hover"
+
+      <FormProvider {...methods}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full space-y-[24px] py-[24px] md:space-y-[36px] md:pt-[40px] xl:py[0] md:w-[427px] lg:w-[655px] z-10"
         >
-          {downText.btn}
-        </Button>
-        {status && (
-          <div
-            className={`fixed top-4 right-4 px-6 py-4 rounded-md shadow-md z-9999 text-white transition-all duration-300 ${
-              status === 'success' ? 'bg-green-600' : 'bg-red-600'
-            }`}
-          >
-            {status === 'success' ? downText.success : downText.error}
+          <FormField
+            name="name"
+            label="Name"
+            type="text"
+            placeholder={contact.nameText}
+            required
+          />
+          <FormField
+            name="email"
+            label="E-mail"
+            type="email"
+            placeholder={contact.emailText}
+            required
+          />
+          <FormField
+            name="phone"
+            label="Phone number (optional)"
+            type="tel"
+            placeholder={contact.phoneText}
+          />
+          <FormField
+            name="interest"
+            label="Add a message"
+            type="textarea"
+            placeholder={contact.messageText}
+          />
+
+          <div className="pt-[20px] flex flex-col items-center md:flex-row justify-between gap-[20px] md:justify-center md:gap-[110px]">
+            <p className="text-[#999999] text-p4-m md:text-p2-d max-w-[365px]">
+              {downText.text}
+            </p>
+            <Button
+              variant="secondary"
+              size="lg"
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full h-[48px] lg:max-w-[186px] md:max-w-[180px] btn-expand-hover"
+            >
+              {downText.btn}
+            </Button>
           </div>
-        )}
-      </div>
+        </form>
+      </FormProvider>
+
+      {status && (
+        <div
+          className={`fixed top-4 right-4 px-6 py-4 rounded-md shadow-md z-9999 text-white transition-all duration-300 ${
+            status === 'success' ? 'bg-green-600' : 'bg-red-600'
+          }`}
+        >
+          {status === 'success' ? downText.success : downText.error}
+        </div>
+      )}
     </div>
   );
 };
