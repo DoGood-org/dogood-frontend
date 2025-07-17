@@ -189,13 +189,13 @@ internal navigation within your app.
 
 **Props:**
 
-| Name      | Type            | default                                            | Description                                                                   |
-| --------- | --------------- | -------------------------------------------------- | ----------------------------------------------------------------------------- |
-| href      | string          | -                                                  | Requered. The URL or route to navigate to (e.g., /about, /contact).           |
-| text      | string          | -                                                  | Requered. The text label displayed inside the link.                           |
-| className | string          | ""                                                 | Optional. additional Tailwind classes to customize the appearance externally. |
-| icon      | React.ReactNode | `<ArrowRight className="stroke-current size-6" />` | Optional. Use to change default icon                                          |
-| onClick   | `() => void;`   |                                                    | Optional. Use to pass the handler to the click                                |
+| Name        | Type            | default                                            | Description                                                                   |
+| ----------- | --------------- | -------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `href`\*    | string          | -                                                  | Requered. The URL or route to navigate to (e.g., /about, /contact).           |
+| `text`\*    | string          | -                                                  | Requered. The text label displayed inside the link.                           |
+| `className` | string          | ""                                                 | Optional. additional Tailwind classes to customize the appearance externally. |
+| `icon`      | React.ReactNode | `<ArrowRight className="stroke-current size-6" />` | Optional. Use to change default icon                                          |
+| `onClick`   | `() => void;`   |                                                    | Optional. Use to pass the handler to the click                                |
 
 <details>
 <summary><b>Details</b></summary>
@@ -257,7 +257,7 @@ additional props.
 
 | Prop          | Default value | Description                                                              |
 | ------------- | ------------- | ------------------------------------------------------------------------ |
-| `children`    | —             | Required. The accordion items to be displayed inside the root element.   |
+| `children`\*  | —             | Required. The accordion items to be displayed inside the root element.   |
 | `type`        | —             | Optional. Radix prop to set accordion behavior — 'single' or 'multiple'. |
 | `collapsible` | —             | Optional. Whether all items can be collapsed (used with type='single').  |
 
@@ -296,10 +296,10 @@ This component renders the clickable header of the accordion item. It uses
 AccordionPrimitive.Trigger inside a header element and includes accessibility
 features and focus styles.
 
-| Prop        | Default value | Description                                          |
-| ----------- | ------------- | ---------------------------------------------------- |
-| `children`  | —             | Required. The label for the accordion toggle.        |
-| `className` | —             | Optional. Custom classes to override default styles. |
+| Prop         | Default value | Description                                          |
+| ------------ | ------------- | ---------------------------------------------------- |
+| `children`\* | —             | Required. The label for the accordion toggle.        |
+| `className`  | —             | Optional. Custom classes to override default styles. |
 
 **Notes**
 
@@ -316,10 +316,10 @@ features and focus styles.
 This component renders the collapsible panel of an item. It animates open/close
 transitions and wraps children with inner padding.
 
-| Prop        | Default value | Description                                               |
-| ----------- | ------------- | --------------------------------------------------------- |
-| `children`  | —             | Required. The content to show when item is expanded.      |
-| `className` | pt-0 pb-4     | Optional. Additional classes to modify padding or layout. |
+| Prop         | Default value | Description                                               |
+| ------------ | ------------- | --------------------------------------------------------- |
+| `children`\* | —             | Required. The content to show when item is expanded.      |
+| `className`  | pt-0 pb-4     | Optional. Additional classes to modify padding or layout. |
 
 **Notes**
 
@@ -351,6 +351,126 @@ transitions and wraps children with inner padding.
     </AccordionItem>
   </Accordion>
 </ul>
+```
+
+</details>
+
+## Rating
+
+This React component renders a 5-star rating UI. It supports both a read-only
+display mode and an editable mode where users can select a rating.
+
+**Props:**
+
+| Name         | Type                     | Default     | Description                                                                       |
+| ------------ | ------------------------ | ----------- | --------------------------------------------------------------------------------- |
+| `rating`\*   | number                   | -           | Required. Current rating value (1 to 5).                                          |
+| `isEditable` | boolean                  | `false`     | Optional. If `true`, allows the user to change the rating via mouse and keyboard. |
+| `setRating`  | (rating: number) => void | `undefined` | Optional. Function to update the rating when editable.                            |
+| `tabIndex`   | number                   | 0           | Optional. Sets the tabindex for keyboard accessibility.                           |
+| `error`      | FieldError               | `undefined` | Optional. Validation error object for displaying error message and styles.        |
+| `...props`   | React.HTMLAttributes     | -           | Additional props passed to the container \<ul>.                                   |
+
+<details> <summary><b>Details</b></summary>
+
+**Full Interactivity:**
+
+- Stars visually highlight on hover.
+
+- Clicking a star updates the rating (if `setRating` is provided).
+
+- Supports keyboard navigation (arrow keys).
+
+- Includes appropriate ARIA attributes for accessibility.
+
+- Displays error message below if `error` is present.
+
+**Read-Only Mode:**
+
+- If `isEditable` is `false` or omitted, the rating is displayed statically.
+
+- No interaction or keyboard support.
+
+**Implementation Notes:**
+
+- Uses internal state to show temporary hover effects without updating the main
+  rating state.
+
+**Example Usage:**
+
+```tsx
+// Simple read-only rating display
+<Rating rating={4} />;
+
+// Editable rating with change handler and error display
+const [rate, setRate] = useState(3);
+
+<Rating
+  rating={rate}
+  isEditable={true}
+  setRating={setRate}
+  error={errors.rating}
+/>;
+```
+
+</details>
+
+## StarItem
+
+This component renders a single star within the `Rating` component.
+
+**Props:**
+
+| Name            | Type                                      | Default     | Description                                                       |
+| --------------- | ----------------------------------------- | ----------- | ----------------------------------------------------------------- |
+| `index`\*       | number                                    | -           | Required. The star’s position index (0 to 4).                     |
+| `isFilled`\*    | boolean                                   | `false`     | Required. Whether the star is filled (highlighted).               |
+| `isEditable`    | boolean                                   | `false`     | Optional. Whether the star is interactive (clickable, focusable). |
+| `error`         | FieldError                                | `undefined` | Optional. Validation error for styling.                           |
+| `changeDisplay` | (index: number) => void                   | -           | Function called on mouse hover (to show temporary fill).          |
+| `resetDisplay`  | () => void                                | -           | Function called on mouse leave (to reset temporary fill).         |
+| `onClick`       | (index: number) => void                   | -           | Function called when the star is clicked.                         |
+| `handleKey`     | (e: KeyboardEvent) => void                | -           | Keyboard event handler (e.g., arrow keys).                        |
+| `computeFocus`  | (rating: number, index: number) => number | -           | Determines tabindex value for keyboard navigation.                |
+
+<details> <summary><b>Details</b></summary>
+
+- Responsible for the visual fill state of the star.
+
+- Handles mouse and keyboard events for interactivity.
+
+- Applies conditional styling depending on filled state, editability, and
+  errors.
+
+**Example Usage:**
+
+```tsx
+<StarItem
+  index={0}
+  isFilled={true}
+  isEditable={true}
+  changeDisplay={() => {}}
+  resetDisplay={() => {}}
+  onClick={() => {}}
+  handleKey={() => {}}
+  computeFocus={() => 0}
+/>
+
+//Exemple from Rating-component
+<StarItem
+  index={index}
+  isFilled={index < displayRating}
+  isEditable={isEditable}
+  error={error}
+  changeDisplay={changeDisplay}
+  resetDisplay={resetDisplay}
+  onClick={onClick}
+  handleKey={handleKey}
+  computeFocus={computeFocus}
+  ref={(el) => {
+    ratingArrayRef.current[index] = el;
+  }}
+/>
 ```
 
 </details>
