@@ -1,7 +1,7 @@
+import { Drop, Heart, Pill } from '@/components/icons';
 import { useTranslations } from 'next-intl';
-import { DonateCard } from '../donate/DonateCard';
-import { Drop, Pill, Heart } from '@/components/icons';
-import { Section } from '../ui/Section';
+import { Section } from '../../ui/Section';
+import { DonateCard } from './DonateCard';
 
 export const Donate = (): React.JSX.Element => {
   const t = useTranslations('donate');
