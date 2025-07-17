@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { useTranslations } from 'next-intl';
-import { NavItem } from '@/types';
 import { NavItemRenderer } from '@/components';
 import { Burger, CloseMenu } from '@/components/icons';
-import Portal from '@/components/portal/Portal';
+import Portal from '@/components/ui/portal/Portal';
 import { useMobileMenu, useSortedMobileNav } from '@/hooks';
+import { NavItem } from '@/types';
+import { useTranslations } from 'next-intl';
+import { useEffect, useRef, useState } from 'react';
 
 export const MobileMenu = (): React.JSX.Element => {
   const { isOpen, toggleMenu } = useMobileMenu();

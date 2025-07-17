@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
-import { ContactForm } from '../faq/ContactForm';
 import Line6 from '@/components/icons/Line6';
-import { Section } from '../ui/Section';
+import React from 'react';
+import { Section } from '../../ui/Section';
+import { ContactForm } from './ContactForm';
 import { useTranslations } from 'next-intl';
 
 export const Faq = (): React.JSX.Element => {
