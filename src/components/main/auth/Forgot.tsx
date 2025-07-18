@@ -9,8 +9,10 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { JSX, useRef, useState } from 'react';
 import { Controller, FieldErrors, useForm } from 'react-hook-form';
-
-export const Forgot = (): JSX.Element => {
+type Props = {
+  onSubmit?: (data: TForgotPassword) => void;
+};
+export const Forgot = ({ onSubmit }: Props): JSX.Element => {
   const t = useTranslations('auth');
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -25,6 +27,9 @@ export const Forgot = (): JSX.Element => {
   const { errors } = formState;
 
   const submitHandler = (data: TForgotPassword): void => {
+    if (onSubmit) {
+      onSubmit(data);
+    }
     console.log('New password submitted:', data);
     reset();
   };
@@ -35,7 +40,7 @@ export const Forgot = (): JSX.Element => {
    p-4 w-[353px]
    md:w-[486px] md:p-10"
     >
-      <div className="  text-start font-normal gap-3 mb-4">
+      <div className="text-start font-normal">
         <AuthTitleSubtitle
           title={t('forgotTitle')}
           subtitle={t('forgotSubtitle')}

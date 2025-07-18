@@ -35,6 +35,7 @@ export * from './main/auth/AuthForm';
 export * from './main/auth/AuthInput';
 export * from './main/auth/AuthTitleSubtitle';
 export * from './main/auth/Forgot';
+export * from './main/auth/ForgotEnterEmail';
 export * from './main/auth/LoginPageContent';
 export * from './main/auth/RegisterLoginSocial';
 export * from './main/auth/RegisterPageContent';
