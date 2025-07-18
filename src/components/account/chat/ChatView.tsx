@@ -4,7 +4,6 @@ import { ChatCardViewModel, MessageViewModel } from '@/types/viewModels';
 import { ChatCardsList } from './ChatCard/ChatCardsList';
 import { ChatMessageList } from './ChatMessage/ChatMessagesList';
 import { useState } from 'react';
-import { ChatSearchInput } from '@/components/account/chat/ChatSearchInput';
 
 type ChatInputProps = {
   selectedName: string;
@@ -125,17 +124,17 @@ export const ChatView: React.FC<ChatInputProps> = () => {
     },
   ];
 
-  const selectedChat = mockChats.find((chat) => chat.id === selectedChatId);
+  // const selectedChat = mockChats.find((chat) => chat.id === selectedChatId);
 
   const filteredMessages = selectedChatId
     ? mockMessages.filter((msg) => msg.chatId === selectedChatId)
     : [];
   return (
     <div className="relative flex">
-      <ChatSearchInput
+      {/* <ChatSearchInput
         selectedName={selectedChat ? selectedChat.userNickname : 'Виберіть чат'}
-        lastOnline={selectedChat ? selectedChat.lastMessageDate : ''}
-      />
+        // lastOnline={selectedChat ? selectedChat.lastMessageDate : ''}
+      /> */}
       <ChatCardsList
         chats={mockChats}
         selectedChatId={selectedChatId}
