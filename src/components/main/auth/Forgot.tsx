@@ -1,5 +1,4 @@
 'use client';
-import { AuthErrorBox } from '@/components/main/auth/AuthErrorBox';
 import { AuthInput } from '@/components/main/auth/AuthInput';
 import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
 import { Button } from '@/components/ui/Button';
@@ -33,9 +32,8 @@ export const Forgot = (): JSX.Element => {
   return (
     <div
       className="flex flex-col items-center justify-center  rounded-[10px] bg-background-secondary text-white shadow-md
-   p-4 w-full 
-   md:w-[554px] md:p-[60px]
-   lg:w-[514px]  lg:p-[40px]"
+   p-4 w-[353px]
+   md:w-[486px] md:p-10"
     >
       <div className="  text-start font-normal gap-3 mb-4">
         <AuthTitleSubtitle
@@ -135,17 +133,17 @@ export const Forgot = (): JSX.Element => {
               </>
             )}
           />
+          <Button
+            type="submit"
+            variant={'default'}
+            size={'md'}
+            className="btn-auth btn-expand-hover text-foreground h-[48px]"
+          >
+            {' '}
+            {t('submitNewPassword')}
+          </Button>
         </form>
       </div>
-      <Button
-        type="submit"
-        variant={'default'}
-        size={'md'}
-        className="btn-auth btn-expand-hover text-foreground h-[48px]"
-      >
-        {' '}
-        {t('submitNewPassword')}
-      </Button>
     </div>
   );
 };
