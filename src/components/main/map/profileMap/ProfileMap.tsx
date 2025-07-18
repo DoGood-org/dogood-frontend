@@ -28,8 +28,8 @@ export const ProfileMap = (): JSX.Element => {
     addMarker,
     customMarkers,
     userLocation,
-    selectedTask,
-    setCustomMarkers,
+    // selectedTask,
+    // setCustomMarkers,
     closeOptionsMenu,
     clickedCoords,
     showOptionsMenu,
@@ -108,7 +108,7 @@ export const ProfileMap = (): JSX.Element => {
     <div>
       <MapContainer
         zoom={13}
-        style={{ height: '400px', width: '100%' }}
+        style={{ height: '100%', width: '100%' }}
         center={userLocation || { lat: 48.8566, lng: 2.3522 }} // Default to Paris
         zoomControl={false}
         attributionControl={false}
