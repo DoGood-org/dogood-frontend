@@ -9,10 +9,10 @@ type Props = {
 };
 
 const LinkedIn: React.FC<Props> = ({
-  width = 30,
-  height = 30,
+  width = 32,
+  height = 32,
   className,
-  fill = 'var(--foreground)',
+  fill = 'currentColor',
   stroke,
 }) => (
   <svg

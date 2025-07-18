@@ -7,11 +7,11 @@ type Props = {
 };
 
 export const Facebook: React.FC<Props> = (
-  { width = 24, height = 24, className, fill = 'var(--foreground)', stroke } = {
-    width: 24,
-    height: 24,
+  { width = 32, height = 32, className, fill = 'currentColor', stroke } = {
+    width: 32,
+    height: 32,
     className: '',
-    fill: 'var(--foreground)',
+    fill: 'currentColor',
   }
 ) => {
   return (

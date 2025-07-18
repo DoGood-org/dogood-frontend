@@ -10,26 +10,19 @@ import {
   registerCompanySchema,
   registerPersonSchema,
 } from '@/lib/validation/authSchemas';
-import { AuthErrorBox } from './AuthErrorBox';
 import { useTranslations } from 'next-intl';
 import { RegisterLoginSocial } from '@/components/main/auth/RegisterLoginSocial';
+import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
+import {
+  FormLogin,
+  FormRegisterCompany,
+  FormRegisterPerson,
+} from '@/types/authType';
 
-interface FormRegister {
-  name: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
-}
-type FormRegisterPerson = FormRegister;
-type FormRegisterCompany = FormRegister & {
-  companyName: string;
-};
-type FormLogin = {
-  email: string;
-  password: string;
-};
 type Props = {
   type: 'registerCompany' | 'registerPerson' | 'login';
+  onForgotPassword?: () => void;
+  defaultValues?: FormRegisterCompany | FormRegisterPerson | FormLogin;
   onFormSubmit: (
     type: 'registerCompany' | 'registerPerson' | 'login',
     data: FormRegisterCompany | FormRegisterPerson | FormLogin
@@ -62,14 +55,11 @@ export const AuthForm: React.FC<Props> = (props) => {
       : type === 'registerPerson'
         ? registerPersonSchema
         : loginSchema;
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<FormRegisterCompany | FormRegisterPerson | FormLogin>({
+  const { control, handleSubmit, reset, formState } = useForm<
+    FormRegisterCompany | FormRegisterPerson | FormLogin
+  >({
     resolver: yupResolver(schema),
-    defaultValues: {
+    defaultValues: props.defaultValues || {
       name: '',
       email: '',
       password: '',
@@ -77,6 +67,7 @@ export const AuthForm: React.FC<Props> = (props) => {
       companyName: '',
     },
   });
+  const { errors } = formState;
   const submitHandler = (
     data: FormRegisterCompany | FormRegisterPerson | FormLogin
   ): void => {
@@ -86,34 +77,28 @@ export const AuthForm: React.FC<Props> = (props) => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center  rounded-[12px] bg-card text-foreground shadow-md
-     p-[24px] w-full 
-     md:w-[554px] md:p-[60px]
-     lg:w-[514px]  lg:p-[40px]"
+      className="flex flex-col items-center justify-center  rounded-[10px] bg-background-secondary text-white shadow-md
+     p-4 w-full
+     md:p-8 md:w-[446px]
+     lg:w-[462px]  lg:p-10
+     "
     >
       {/* Title and Subtitle */}
-      <div className=" mb-[40px] md:mb-[24px] lg:mb-[24px] text-center">
-        {type === 'login' && (
-          <>
-            <h2 className="text-[24px] font-bold mb-[16px] md:text-[32px]">
-              {t('loginFormTitle')}
-            </h2>
-            <h3 className="text-[16px] md:text-[20px]">
-              {t('loginFormSubtitle')}
-            </h3>
-          </>
-        )}
-        {(type === 'registerCompany' || type === 'registerPerson') && (
-          <>
-            <h2 className="text-[24px] font-bold mb-[16px] md:text-[32px]">
-              {t('registerFormTitle')}
-            </h2>
-            <h3 className="text-[16px] md:text-[20px]">
-              {t('registerFormSubtitle')}
-            </h3>
-          </>
-        )}
-      </div>
+
+      {type === 'login' && (
+        <AuthTitleSubtitle
+          title={t('loginFormTitle')}
+          subtitle={t('loginFormSubtitle')}
+        />
+      )}
+
+      {(type === 'registerCompany' || type === 'registerPerson') && (
+        <AuthTitleSubtitle
+          title={t('registerFormTitle')}
+          subtitle={t('registerFormSubtitle')}
+        />
+      )}
+
       <form
         onSubmit={handleSubmit(submitHandler)}
         className="w-full flex flex-col"
@@ -132,14 +117,18 @@ export const AuthForm: React.FC<Props> = (props) => {
                   type="text"
                   id={'name'}
                   placeholder={t('name')}
-                />
-                <AuthErrorBox
                   errorMessage={
                     (
                       errors as FieldErrors<
                         FormRegisterCompany | FormRegisterPerson
                       >
                     ).name?.message as string
+                  }
+                  touched={
+                    !!(
+                      'name' in formState.touchedFields &&
+                      formState.touchedFields.name
+                    )
                   }
                 />
               </>
@@ -153,17 +142,21 @@ export const AuthForm: React.FC<Props> = (props) => {
             render={({ field }) => (
               <>
                 <AuthInput
+                  {...field}
                   label={t('companyName')}
                   htmlFor="companyName"
                   type="text"
                   id="companyName"
                   placeholder={t('companyName')}
-                  {...field}
-                />
-                <AuthErrorBox
                   errorMessage={
                     (errors as FieldErrors<FormRegisterCompany>).companyName
                       ?.message as string
+                  }
+                  touched={
+                    !!(
+                      'companyName' in formState.touchedFields &&
+                      formState.touchedFields.companyName
+                    )
                   }
                 />
               </>
@@ -180,11 +173,17 @@ export const AuthForm: React.FC<Props> = (props) => {
                 ref={emailRef}
                 label={t('email')}
                 htmlFor="email"
-                type="email"
+                type="text"
                 id="email"
                 placeholder={t('email')}
+                errorMessage={errors.email?.message as string}
+                touched={
+                  !!(
+                    'email' in formState.touchedFields &&
+                    formState.touchedFields.email
+                  )
+                }
               />
-              <AuthErrorBox errorMessage={errors.email?.message as string} />
             </>
           )}
         />
@@ -210,9 +209,9 @@ export const AuthForm: React.FC<Props> = (props) => {
                 }}
                 icon={
                   showPassword ? (
-                    <EyeOff size={24} stroke="#000" />
+                    <EyeOff size={24} stroke="#696969" />
                   ) : (
-                    <Eye size={24} stroke="#000" />
+                    <Eye size={24} stroke="#696969" />
                   )
                 }
                 iconRight
@@ -220,9 +219,14 @@ export const AuthForm: React.FC<Props> = (props) => {
                   setShowPassword((prev) => !prev);
                   passwordRef.current?.focus();
                 }}
-                error={errors.password?.message}
+                errorMessage={errors.password?.message}
+                touched={
+                  !!(
+                    'password' in formState.touchedFields &&
+                    formState.touchedFields.password
+                  )
+                }
               />
-              <AuthErrorBox errorMessage={errors.password?.message} />
             </>
           )}
         />
@@ -240,6 +244,13 @@ export const AuthForm: React.FC<Props> = (props) => {
                   type={showRepeatPassword ? 'text' : 'password'}
                   id="repeatPassword"
                   placeholder={t('repeatPassword')}
+                  errorMessage={
+                    (
+                      errors as FieldErrors<
+                        FormRegisterCompany | FormRegisterPerson
+                      >
+                    ).repeatPassword?.message as string
+                  }
                   onBlur={() => {
                     field.onBlur();
                     setTimeout(() => {
@@ -248,9 +259,9 @@ export const AuthForm: React.FC<Props> = (props) => {
                   }}
                   icon={
                     showRepeatPassword ? (
-                      <EyeOff size={24} stroke="#000" />
+                      <EyeOff size={24} stroke="#696969" />
                     ) : (
-                      <Eye size={24} stroke="#000" />
+                      <Eye size={24} stroke="#696969" />
                     )
                   }
                   iconRight
@@ -258,14 +269,11 @@ export const AuthForm: React.FC<Props> = (props) => {
                     setShowRepeatPassword((prev) => !prev);
                     repeatPasswordRef.current?.focus();
                   }}
-                />
-                <AuthErrorBox
-                  errorMessage={
-                    (
-                      errors as FieldErrors<
-                        FormRegisterCompany | FormRegisterPerson
-                      >
-                    ).repeatPassword?.message as string
+                  touched={
+                    !!(
+                      'repeatPassword' in formState.touchedFields &&
+                      formState.touchedFields.repeatPassword
+                    )
                   }
                 />
               </>
@@ -277,14 +285,24 @@ export const AuthForm: React.FC<Props> = (props) => {
           type="submit"
           variant={'default'}
           size={'md'}
-          className="btn-auth mt-[4px] md:mt-[36px] btn-expand-hover text-foreground h-[44px]"
+          className="btn-auth btn-expand-hover text-foreground h-[48px]"
         >
           {t('nextStep')}
         </Button>
         <RegisterLoginSocial
-          className="mt-[36px] md:mt-[16px] text-foreground"
           onSocialLogin={(provider) => console.log(provider)}
         />
+        {type === 'login' && (
+          <Button
+            variant="ghost"
+            className="py-0 h-full mt-6"
+            onClick={props.onForgotPassword}
+          >
+            <a href="#" className="text-[var(--text-gray)] ">
+              <p>{t('forgotPass')} </p>
+            </a>
+          </Button>
+        )}
       </form>
     </div>
   );

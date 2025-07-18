@@ -2,6 +2,8 @@ import React from 'react';
 import { Google } from '@/components/icons/Google';
 import LinkedIn from '@/components/icons/LinkedIn';
 import { Facebook } from '@/components/icons/FaceBook';
+import SvgRiTwitterXLine from '@/components/icons/RiTwitterXLine';
+
 const socialButtons = [
   {
     icon: Google,
@@ -18,6 +20,11 @@ const socialButtons = [
     url: 'https://linkedin.com',
     label: 'LinkedIn',
   },
+  {
+    icon: SvgRiTwitterXLine,
+    url: 'https://x.com',
+    label: 'X',
+  },
 ];
 type Props = {
   onSocialLogin?: (provider: string) => void;
@@ -28,8 +35,8 @@ export const RegisterLoginSocial: React.FC<Props> = ({
   className,
 }) => {
   return (
-    <div className={`flex flex-col items-center ${className}`}>
-      <div className="flex gap-[30px]">
+    <div className={`flex flex-col mt-6 items-center ${className}`}>
+      <div className="flex gap-6">
         {socialButtons.map((button, index) => (
           <button
             key={index}
@@ -37,7 +44,7 @@ export const RegisterLoginSocial: React.FC<Props> = ({
             title={button.label}
             onClick={() => onSocialLogin && onSocialLogin(button.label)}
           >
-            <button.icon className="w-6 h-6 text-foreground" />
+            <button.icon className="w-8 h-8 text-white" />
           </button>
         ))}
       </div>
