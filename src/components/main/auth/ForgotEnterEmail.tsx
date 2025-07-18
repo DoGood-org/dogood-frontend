@@ -7,7 +7,7 @@ import { TForgotEmail } from '@/types/authType';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
-import { Controller, useForm, FieldErrors } from 'react-hook-form';
+import { Controller, FieldErrors, useForm } from 'react-hook-form';
 type Props = {
   onSubmit?: (data: TForgotEmail) => void;
 };
