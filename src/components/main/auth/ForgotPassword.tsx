@@ -12,7 +12,7 @@ import { Controller, FieldErrors, useForm } from 'react-hook-form';
 type Props = {
   onSubmit?: (data: TForgotPassword) => void;
 };
-export const Forgot = ({ onSubmit }: Props): JSX.Element => {
+export const ForgotPassword = ({ onSubmit }: Props): JSX.Element => {
   const t = useTranslations('auth');
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -151,4 +151,3 @@ export const Forgot = ({ onSubmit }: Props): JSX.Element => {
     </div>
   );
 };
-export default Forgot;

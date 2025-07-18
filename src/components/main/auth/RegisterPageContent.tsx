@@ -1,10 +1,14 @@
 'use client';
 import React, { useState } from 'react';
 import { AuthChoice } from './AuthChoice';
-import { AuthForm, FormRegisterCompany, FormRegisterPerson } from './AuthForm';
+import { AuthForm } from './AuthForm';
 import { Verification } from './Verification';
+import { FormRegisterCompany, FormRegisterPerson } from '@/types/authType';
+import { useRouter } from 'next/navigation';
 
 export const RegisterPageContent = (): React.ReactElement => {
+  const router = useRouter();
+
   const [choice, setChoice] = useState<'human' | 'company' | null>(null);
   const [step, setStep] = useState<
     null | 'verification' | 'success' | 'mistake' | 'resend'
@@ -64,6 +68,7 @@ export const RegisterPageContent = (): React.ReactElement => {
           onConfirm={(code) => {
             console.log('Verification code submitted:', code);
             setStep('success');
+            router.push('/login');
           }}
         />
       )}
@@ -97,11 +102,17 @@ export const RegisterPageContent = (): React.ReactElement => {
             onConfirm={(code) => {
               console.log('Verification code submitted:', code);
               setStep('success');
+              router.push('/login');
             }}
           />
         </>
       )}
-      {step === 'success' && <p>Registration successful!</p>}
+      {step === 'success' && (
+        <div>
+          <p>Registration successful!</p>
+          <p>Redirecting to login...</p>
+        </div>
+      )}
     </div>
   );
 };

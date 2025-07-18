@@ -1,13 +1,16 @@
 'use client';
 import { AuthForm } from '@/components';
-import Forgot from '@/components/main/auth/Forgot';
 import { ForgotEnterEmail } from '@/components/main/auth/ForgotEnterEmail';
+import { ForgotPassword } from '@/components/main/auth/ForgotPassword';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 export const LoginPageContent: React.FC = () => {
+  const router = useRouter();
   const [step, setStep] = useState<
     null | 'success' | 'forgotPassword' | 'forgotEmail'
   >(null);
+
   return (
     <div className=" login text-foreground flex flex-col items-center justify-center w-full">
       {!step && (
@@ -38,10 +41,11 @@ export const LoginPageContent: React.FC = () => {
       )}
       {step === 'forgotPassword' && (
         <div className="mt-4">
-          <Forgot
+          <ForgotPassword
             onSubmit={(data) => {
               console.log('Forgot password submitted:', data);
               setStep('success');
+              router.push('/login');
             }}
           />
         </div>
