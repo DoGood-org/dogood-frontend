@@ -13,9 +13,11 @@ const AuthChoiceButton: React.FC<Props> = (props: Props) => {
     <div
       onClick={handleAuthChoice}
       role="button"
-      className="flex flex-col items-center justify-center cursor-pointer bg-background-secondary text-white rounded-[12px]
+      className="flex flex-col items-center justify-center cursor-pointer bg-background-secondary text-white rounded-[12px] btn-expand-hover
       p-[16px] w-[157px] h-[143px]
-       md:w-[250px] md:h-[200px] btn-expand-hover"
+       md:w-[250px] md:h-[200px]
+       lg:w-[292px] lg:h-[232px]
+       lg:p-10"
     >
       <div className=" flex flex-col  gap-3 items-center justify-center w-full">
         <Icon />

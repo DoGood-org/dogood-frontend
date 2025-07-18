@@ -10,25 +10,15 @@ import {
   registerCompanySchema,
   registerPersonSchema,
 } from '@/lib/validation/authSchemas';
-import { AuthErrorBox } from './AuthErrorBox';
 import { useTranslations } from 'next-intl';
 import { RegisterLoginSocial } from '@/components/main/auth/RegisterLoginSocial';
 import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
+import {
+  FormLogin,
+  FormRegisterCompany,
+  FormRegisterPerson,
+} from '@/types/authType';
 
-export interface FormRegister {
-  name: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
-}
-export type FormRegisterPerson = FormRegister;
-export type FormRegisterCompany = FormRegister & {
-  companyName: string;
-};
-export type FormLogin = {
-  email: string;
-  password: string;
-};
 type Props = {
   type: 'registerCompany' | 'registerPerson' | 'login';
   onForgotPassword?: () => void;
@@ -65,12 +55,9 @@ export const AuthForm: React.FC<Props> = (props) => {
       : type === 'registerPerson'
         ? registerPersonSchema
         : loginSchema;
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<FormRegisterCompany | FormRegisterPerson | FormLogin>({
+  const { control, handleSubmit, reset, formState } = useForm<
+    FormRegisterCompany | FormRegisterPerson | FormLogin
+  >({
     resolver: yupResolver(schema),
     defaultValues: props.defaultValues || {
       name: '',
@@ -80,6 +67,7 @@ export const AuthForm: React.FC<Props> = (props) => {
       companyName: '',
     },
   });
+  const { errors } = formState;
   const submitHandler = (
     data: FormRegisterCompany | FormRegisterPerson | FormLogin
   ): void => {
@@ -90,9 +78,10 @@ export const AuthForm: React.FC<Props> = (props) => {
   return (
     <div
       className="flex flex-col items-center justify-center  rounded-[10px] bg-background-secondary text-white shadow-md
-     p-4 w-full 
+     p-4 w-full
      md:p-8 md:w-[446px]
-     lg:w-[462px]  lg:p-[40px]"
+     lg:w-[462px]  lg:p-[40px]
+     "
     >
       {/* Title and Subtitle */}
 
@@ -128,14 +117,18 @@ export const AuthForm: React.FC<Props> = (props) => {
                   type="text"
                   id={'name'}
                   placeholder={t('name')}
-                />
-                <AuthErrorBox
                   errorMessage={
                     (
                       errors as FieldErrors<
                         FormRegisterCompany | FormRegisterPerson
                       >
                     ).name?.message as string
+                  }
+                  touched={
+                    !!(
+                      'name' in formState.touchedFields &&
+                      formState.touchedFields.name
+                    )
                   }
                 />
               </>
@@ -149,17 +142,21 @@ export const AuthForm: React.FC<Props> = (props) => {
             render={({ field }) => (
               <>
                 <AuthInput
+                  {...field}
                   label={t('companyName')}
                   htmlFor="companyName"
                   type="text"
                   id="companyName"
                   placeholder={t('companyName')}
-                  {...field}
-                />
-                <AuthErrorBox
                   errorMessage={
                     (errors as FieldErrors<FormRegisterCompany>).companyName
                       ?.message as string
+                  }
+                  touched={
+                    !!(
+                      'companyName' in formState.touchedFields &&
+                      formState.touchedFields.companyName
+                    )
                   }
                 />
               </>
@@ -176,11 +173,17 @@ export const AuthForm: React.FC<Props> = (props) => {
                 ref={emailRef}
                 label={t('email')}
                 htmlFor="email"
-                type="email"
+                type="text"
                 id="email"
                 placeholder={t('email')}
+                errorMessage={errors.email?.message as string}
+                touched={
+                  !!(
+                    'email' in formState.touchedFields &&
+                    formState.touchedFields.email
+                  )
+                }
               />
-              <AuthErrorBox errorMessage={errors.email?.message as string} />
             </>
           )}
         />
@@ -216,9 +219,14 @@ export const AuthForm: React.FC<Props> = (props) => {
                   setShowPassword((prev) => !prev);
                   passwordRef.current?.focus();
                 }}
-                error={errors.password?.message}
+                errorMessage={errors.password?.message}
+                touched={
+                  !!(
+                    'password' in formState.touchedFields &&
+                    formState.touchedFields.password
+                  )
+                }
               />
-              <AuthErrorBox errorMessage={errors.password?.message} />
             </>
           )}
         />
@@ -236,6 +244,13 @@ export const AuthForm: React.FC<Props> = (props) => {
                   type={showRepeatPassword ? 'text' : 'password'}
                   id="repeatPassword"
                   placeholder={t('repeatPassword')}
+                  errorMessage={
+                    (
+                      errors as FieldErrors<
+                        FormRegisterCompany | FormRegisterPerson
+                      >
+                    ).repeatPassword?.message as string
+                  }
                   onBlur={() => {
                     field.onBlur();
                     setTimeout(() => {
@@ -254,14 +269,11 @@ export const AuthForm: React.FC<Props> = (props) => {
                     setShowRepeatPassword((prev) => !prev);
                     repeatPasswordRef.current?.focus();
                   }}
-                />
-                <AuthErrorBox
-                  errorMessage={
-                    (
-                      errors as FieldErrors<
-                        FormRegisterCompany | FormRegisterPerson
-                      >
-                    ).repeatPassword?.message as string
+                  touched={
+                    !!(
+                      'repeatPassword' in formState.touchedFields &&
+                      formState.touchedFields.repeatPassword
+                    )
                   }
                 />
               </>

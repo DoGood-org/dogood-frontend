@@ -15,12 +15,13 @@ export default function AuthLayout({
         flex-col
         items-center
         justify-center
- 
-        pt-[80px]
-        lg:pt-[76px]
+        pt-[110px] 
+        
+        lg:pt-[126px]
+
 
     w-full
-    h-dvh
+    min-h-dvh
     "
       >
         {children}

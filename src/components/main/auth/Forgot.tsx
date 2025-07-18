@@ -4,31 +4,31 @@ import { AuthInput } from '@/components/main/auth/AuthInput';
 import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
 import { Button } from '@/components/ui/Button';
 import { forgotPasswordSchema } from '@/lib/validation/authSchemas';
+import { IForgot } from '@/types/authType';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Eye, EyeOff } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { JSX, useRef, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, FieldErrors, useForm } from 'react-hook-form';
 
-interface IForgot {
-  newPassword: string;
-  repeatPassword: string;
-}
 export const Forgot = (): JSX.Element => {
   const t = useTranslations('auth');
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
-  const {
-    control,
-    formState: { errors },
-  } = useForm<IForgot>({
+  const { control, formState, reset, handleSubmit } = useForm<IForgot>({
     resolver: yupResolver(forgotPasswordSchema),
     defaultValues: {
       newPassword: '',
-      repeatPassword: '',
+      repeatNewPassword: '',
     },
   });
+  const { errors } = formState;
+
+  const submitHandler = (data: IForgot): void => {
+    console.log('New password submitted:', data);
+    reset();
+  };
 
   return (
     <div
@@ -43,7 +43,7 @@ export const Forgot = (): JSX.Element => {
           subtitle={t('forgotSubtitle')}
         />
 
-        <form>
+        <form onSubmit={handleSubmit(submitHandler)}>
           <Controller
             name="newPassword"
             control={control}
@@ -54,7 +54,7 @@ export const Forgot = (): JSX.Element => {
                   ref={passwordRef}
                   label={t('password')}
                   type={showPassword ? 'text' : 'password'}
-                  id="password"
+                  id="newPassword"
                   placeholder={t('newPassword')}
                   onBlur={() => {
                     field.onBlur();
@@ -76,14 +76,22 @@ export const Forgot = (): JSX.Element => {
                     setShowPassword((prev) => !prev);
                     passwordRef.current?.focus();
                   }}
-                  error={errors.newPassword?.message}
+                  errorMessage={
+                    (errors as FieldErrors<IForgot>).newPassword
+                      ?.message as string
+                  }
+                  touched={
+                    !!(
+                      'newPassword' in formState.touchedFields &&
+                      formState.touchedFields.newPassword
+                    )
+                  }
                 />
-                <AuthErrorBox errorMessage={errors.newPassword?.message} />
               </>
             )}
           />
           <Controller
-            name="repeatPassword"
+            name="repeatNewPassword"
             control={control}
             render={({ field }) => (
               <>
@@ -91,7 +99,7 @@ export const Forgot = (): JSX.Element => {
                   {...field}
                   label={t('repeatPassword')}
                   type={showRepeatPassword ? 'text' : 'password'}
-                  id="repeatPassword"
+                  id="repeatNewPassword"
                   placeholder={t('repeatNewPassword')}
                   onBlur={() => {
                     field.onBlur();
@@ -113,9 +121,17 @@ export const Forgot = (): JSX.Element => {
                     setShowRepeatPassword((prev) => !prev);
                     passwordRef.current?.focus();
                   }}
-                  error={errors.repeatPassword?.message}
+                  errorMessage={
+                    (errors as FieldErrors<IForgot>).repeatNewPassword
+                      ?.message as string
+                  }
+                  touched={
+                    !!(
+                      'repeatPassword' in formState.touchedFields &&
+                      formState.touchedFields.repeatNewPassword
+                    )
+                  }
                 />
-                <AuthErrorBox errorMessage={errors.repeatPassword?.message} />
               </>
             )}
           />

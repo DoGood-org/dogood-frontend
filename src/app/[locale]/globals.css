@@ -48,6 +48,7 @@
   --color-tag: var(--tag);
 
   --color-error: var(--error);
+  --color-success: var(--success);
   --color-attention: var(--attention);
 
   --color-star: var(--star);
@@ -144,6 +145,7 @@
   --radius: 12px; /*0.75rem */
 
   --error: #ee0606;
+  --success: #17814b;
 
   --star: #ffee00;
   --medicine: #1f5eff;
@@ -354,21 +356,8 @@ html {
 .btn-auth {
   @apply bg-btn text-white cursor-pointer rounded-sm;
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
-}
-.auth-input {
-  @apply w-full h-[48px] px-4 py-3 text-base font-normal rounded-[4px] text-[#696969] bg-white;
-  @apply placeholder:text-[#999] focus:outline-none focus:ring-1 focus:ring-[var(--border)];
-}
-.auth-input:focus {
-  @apply ring-1 ring-[var(--border)];
-}
-.auth-input:hover {
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-.dark .auth-input {
-  @apply bg-card text-white placeholder:text-[#999];
+    background-color 0.7s ease,
+    color 0.7s ease;
 }
 
 /*---------------------------------------------------------------*/
