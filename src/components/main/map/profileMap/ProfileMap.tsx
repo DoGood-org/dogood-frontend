@@ -101,13 +101,12 @@ export const ProfileMap = (): JSX.Element => {
 
   const handleMarkerClick = (task: any): void => {
     console.log('Task marker clicked:', task);
-    // Implement your marker click logic here
   };
 
   return (
     <div className="w-full h-full relative">
       <MapContainer
-        zoom={13}
+        zoom={16}
         style={{ height: '100%', width: '100%' }}
         center={userLocation || { lat: 48.8566, lng: 2.3522 }} // Default to Paris
         zoomControl={false}
@@ -127,12 +126,7 @@ export const ProfileMap = (): JSX.Element => {
             { position: 'topright', element: <CustomControlZoom /> },
           ]}
         />
-        <Marker
-          position={{ lat: 48.8566, lng: 2.3522 }}
-          icon={mapIcons.default!}
-        >
-          <Popup>Profile location</Popup>
-        </Marker>
+
         {renderCustomMarkers()}
         <MapClickHandler
           allowClickToAddMarker

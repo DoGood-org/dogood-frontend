@@ -81,6 +81,7 @@ export const Map: React.FC = (): JSX.Element => {
   // Imitate backend data generation
   // This should be replaced with actual data fetching logic
   // For now, we generate tasks based on the user's location
+
   useEffect(() => {
     if (!userLocation) return;
     if (tasksByRadius[radius]) return;
