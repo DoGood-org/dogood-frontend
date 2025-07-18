@@ -3,6 +3,7 @@
  */
 
 export * from './account/accountPage/Account';
+export * from './account/accountPage/AccountContent';
 export * from './account/accountPage/AccountContentPanel';
 export * from './account/navigation/BottomNavigation';
 export * from './account/navigation/PageContent';

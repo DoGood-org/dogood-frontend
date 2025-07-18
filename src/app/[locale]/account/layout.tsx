@@ -1,4 +1,5 @@
 import {
+  AccountContent,
   BottomNavigation,
   Container,
   PageContent,
@@ -9,12 +10,13 @@ export default function AuthLayout(): React.ReactNode {
   return (
     <>
       <Container>
-        <div className="flex min-h-screen pt-20">
+        <div className="flex">
           <SidebarNavigation />
           <div className="flex flex-col flex-grow">
             <PageContent />
           </div>
         </div>
+        <AccountContent />
         <BottomNavigation />
       </Container>
     </>
