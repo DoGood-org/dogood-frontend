@@ -5,12 +5,14 @@ import { persist } from 'zustand/middleware';
 interface TTaskState {
   tasks: IExtendedITaskProps[];
   selectedTasks: IExtendedITaskProps[];
+  tasksByRadius: Record<number, IExtendedITaskProps[]>;
 }
 
 interface TTaskActions {
   setTasks: (tasks: IExtendedITaskProps[]) => void;
   setSelectedTasks: (tasks: IExtendedITaskProps[]) => void;
   toggleTaskDescription: (taskId: string) => void;
+  setTasksByRadius: (radius: number, tasks: IExtendedITaskProps[]) => void;
 }
 
 type TTaskStore = TTaskState & TTaskActions;
@@ -20,6 +22,8 @@ export const useTaskStore = create<TTaskStore>()(
     (set, get) => ({
       tasks: [],
       selectedTasks: [],
+      tasksByRadius: {},
+
       setTasks: (tasks): void => set({ tasks }),
       setSelectedTasks: (tasks): void => set({ selectedTasks: tasks }),
       toggleTaskDescription: (taskId): void => {
@@ -31,6 +35,13 @@ export const useTaskStore = create<TTaskStore>()(
           tasks: updated,
           selectedTasks: updated.filter((task) => task.isSelected),
         });
+      },
+      setTasksByRadius: (radius, tasks): void => {
+        const updated = { ...get().tasksByRadius, [radius]: tasks };
+        set({ tasksByRadius: updated });
+        const allTasks = Object.values(updated).flat();
+
+        set({ tasks: allTasks });
       },
     }),
     {

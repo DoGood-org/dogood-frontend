@@ -24,7 +24,7 @@ import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { JSX, useEffect, useRef } from 'react';
+import React, { JSX, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 // import { Radius } from '@/components/main/map/Radius';
@@ -36,7 +36,6 @@ export const Map: React.FC = (): JSX.Element => {
     triggerOnce: true,
     delay: 100,
   });
-  const markerRef = useRef<L.Marker | null>(null);
 
   const {
     mapIcons,
@@ -51,10 +50,6 @@ export const Map: React.FC = (): JSX.Element => {
     declineLocationSharing,
     showGeolocationPopup,
     checkLocationPermission,
-    locationError,
-
-    offerPinLocation,
-    setOfferPinLocation,
     radius,
     addMarker,
     taskListIsOpen,
@@ -69,44 +64,34 @@ export const Map: React.FC = (): JSX.Element => {
     searchIsActive,
   } = useMapStore();
   const { choosenCategories, categories } = useFilterStore();
-  const { tasks, setTasks } = useTaskStore();
+  const { tasksByRadius, setTasksByRadius } = useTaskStore();
   const { setCategories } = useFilterStore();
-  useEffect(() => {
-    if (!isInView) return;
-
-    const run = async (): Promise<void> => {
-      checkLocationPermission();
-
-      if (locationError) {
-        setOfferPinLocation(true);
-      }
-    };
-
-    run();
-  }, [isInView, checkLocationPermission, setOfferPinLocation]);
-
   useEffect(() => {
     initMap('main');
   }, []);
 
+  useEffect(() => {
+    if (!isInView) return;
+    const run = async (): Promise<void> => {
+      checkLocationPermission();
+    };
+    run();
+  }, [isInView]);
+
   // Imitate backend data generation
   // This should be replaced with actual data fetching logic
   // For now, we generate tasks based on the user's location
-
   useEffect(() => {
-    if (!userLocation || radius === 0) return;
+    if (!userLocation) return;
+    if (tasksByRadius[radius]) return;
 
     const newTasks = generateTasks(userLocation.lat, userLocation.lng, radius);
-    const oldTasks = tasks;
-
-    const updatedTasks = [...oldTasks, ...newTasks];
-    setTasks(updatedTasks);
+    setTasksByRadius(radius, newTasks);
     const categories = Array.from(
-      new Set(updatedTasks.flatMap((task) => task.category))
+      new Set(newTasks.flatMap((task) => task.category))
     );
     setCategories(categories);
   }, [userLocation, radius]);
-
   const { noPaginatedTasks } = useFilteredTasksSelector();
 
   if (
@@ -153,7 +138,7 @@ export const Map: React.FC = (): JSX.Element => {
             style={{ height: '100%', width: '100%' }}
             doubleClickZoom={false}
             className="h-full w-full cursor-default relative"
-            zoom={14}
+            zoom={13}
             minZoom={1}
             zoomControl={false}
             attributionControl={false}
@@ -264,33 +249,6 @@ export const Map: React.FC = (): JSX.Element => {
                   </button>
                 </div>
               </Popup>
-            )}
-            {offerPinLocation && defaultLocation && mapIcons.myPosition && (
-              <Marker
-                ref={(ref) => {
-                  if (ref) markerRef.current = ref;
-                }}
-                position={clickedCoords || defaultLocation}
-                icon={mapIcons.myPosition}
-                draggable
-                zIndexOffset={10000}
-                riseOnHover
-                riseOffset={1000}
-                title="Drag me to change your location"
-                eventHandlers={{
-                  click: () => {
-                    setClickedCoords(defaultLocation);
-                    setShowOptionsMenu(true);
-                  },
-                  dragstart: () => {
-                    setClickedCoords(defaultLocation);
-                  },
-                  dragend: (event) => {
-                    const { lat, lng } = event.target.getLatLng();
-                    setClickedCoords({ lat, lng });
-                  },
-                }}
-              ></Marker>
             )}
 
             {/* Custom controls */}
