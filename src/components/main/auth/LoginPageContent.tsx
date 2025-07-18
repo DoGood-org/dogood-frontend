@@ -19,6 +19,8 @@ export const LoginPageContent: React.FC = () => {
           onForgotPassword={() => setStep('forgotEmail')}
           onFormSubmit={(type, data) => {
             console.log('Login person:', type, data);
+            setStep('success');
+            router.push('/');
           }}
         />
       )}

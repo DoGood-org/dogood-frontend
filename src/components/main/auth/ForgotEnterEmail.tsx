@@ -1,3 +1,4 @@
+'use client';
 import { AuthInput } from '@/components/main/auth/AuthInput';
 import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
 import { Button } from '@/components/ui/Button';
@@ -6,7 +7,7 @@ import { TForgotEmail } from '@/types/authType';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
-import { Controller, FieldErrors, useForm } from 'react-hook-form';
+import { Controller, useForm, FieldErrors } from 'react-hook-form';
 type Props = {
   onSubmit?: (data: TForgotEmail) => void;
 };
