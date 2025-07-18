@@ -1,7 +1,9 @@
 import { AuthInput } from '@/components/main/auth/AuthInput';
 import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
 import { Button } from '@/components/ui/Button';
+import { forgotEmailSchema } from '@/lib/validation/authSchemas';
 import { TForgotEmail } from '@/types/authType';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
 import { Controller, FieldErrors, useForm } from 'react-hook-form';
@@ -11,6 +13,7 @@ type Props = {
 export const ForgotEnterEmail = ({ onSubmit }: Props): JSX.Element => {
   const t = useTranslations('auth');
   const { control, formState, reset, handleSubmit } = useForm<TForgotEmail>({
+    resolver: yupResolver(forgotEmailSchema),
     defaultValues: {
       email: '',
     },
