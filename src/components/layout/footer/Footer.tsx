@@ -7,7 +7,7 @@ import { Container } from '@/components/ui/Container';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="w-full bg-[#111215] py-[36px] lg:py-[32px]">
+    <footer className="w-full bg-[#111215] py-[36px] lg:py-[32px] mt-auto">
       <Container className="flex flex-col items-center gap-[32px] lg:flex-row lg:justify-between">
         <div>
           <Link href="/">
