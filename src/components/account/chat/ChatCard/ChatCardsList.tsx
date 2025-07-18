@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { ChatCardItem } from './ChatCardItem';
 import { ChatCardsListProps } from '@/types/chatType';
 
@@ -21,8 +20,10 @@ const mockChats = [
   },
 ];
 
-export const ChatCardsList: React.FC<ChatCardsListProps> = () => {
-  const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
+export const ChatCardsList: React.FC<ChatCardsListProps> = ({
+  selectedChatId,
+  onSelectChat,
+}) => {
   return (
     <ul>
       {mockChats.map((chat) => (
@@ -30,7 +31,7 @@ export const ChatCardsList: React.FC<ChatCardsListProps> = () => {
           key={chat.id}
           chat={chat}
           isSelected={selectedChatId === chat.id}
-          onSelect={setSelectedChatId}
+          onSelect={onSelectChat}
         />
       ))}
     </ul>

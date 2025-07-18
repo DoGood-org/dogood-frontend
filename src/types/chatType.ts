@@ -1,3 +1,5 @@
+import { ChatCardViewModel } from './viewModels';
+
 export interface ChatType {
   id: string;
   userNickname: string;
@@ -13,6 +15,7 @@ export interface ChatCardProps {
 }
 
 export interface ChatCardsListProps {
+  chats: ChatCardViewModel[];
   selectedChatId: string | null;
   onSelectChat: (id: string) => void;
 }
@@ -24,6 +27,7 @@ export interface MessageType {
   senderAvatarUrl: string;
   createdAt: string;
   chatId: string;
+  isCurrentUser: boolean;
 }
 
 export interface MessagesListProps {
