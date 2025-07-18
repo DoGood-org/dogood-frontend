@@ -474,3 +474,72 @@ This component renders a single star within the `Rating` component.
 ```
 
 </details>
+
+## AnimationTabs
+
+This React component renders an animated tab selector, designed for use in
+account/profile pages where the user can switch between different content views
+(e.g. Tasks, Organization, Reviews). It supports swipe gestures on mobile,
+animated underline for active tab, and optional horizontal scrolling.
+
+**Props:**
+
+| Name                             | Type                   | Default | Description                                                              |
+| -------------------------------- | ---------------------- | ------- | ------------------------------------------------------------------------ |
+| `views`\*                        | { view: string }[]     | —       | Required. Array of tab view objects. Each must have a view string label. |
+| `activeView`\*                   | string                 | —       | Required. The currently selected tab value.                              |
+| `onChange`\*                     | (view: string) => void | —       | Required. Callback when a                                                |
+| different tab is clicked/swiped. |
+| `isScroll`                       | boolean                | `false` | Optional. Enables horizontal scroll for mobile if true.                  |
+| `buttonClass`                    | string                 | ""      | Optional. Additional Tailwind classes for tab buttons.                   |
+| `refClass`                       | string                 | ""      | Optional. Additional Tailwind classes for the container of tab buttons.  |
+| `headClass`                      | string                 | ""      | Optional. Classes for the outermost wrapper of the component.            |
+
+<details> <summary><b>Details</b></summary>
+
+**Behavior:**
+
+- On mobile with `isScroll: true`, tabs become horizontally scrollable and
+  swipeable (left swipe activates the next tab).
+
+- The active tab is visually highlighted with a motion.div underline animation.
+
+- An optional next arrow button (`CaretDoubleRight`) appears on mobile to jump
+  to the next tab manually.
+
+**Interactivity:**
+
+- Click or tap on a tab to trigger `onChange(view)`.
+
+- Swipe left to go to the next tab (only if `isScroll === true` and on mobile).
+
+- On `desktop/tablet (min-width: 768px)`, all tabs are visible statically (no
+  scrolling/swiping).
+
+**Dependencies:**
+
+- framer-motion is used for the animated active underline.
+
+- Custom hooks:
+
+  - `useMediaQuery` — detects screen size.
+
+  - `useScrollToActive` — scrolls the active tab into view.
+
+  - `useSwipe` — tracks swipe gestures.
+
+**Example Usage:**
+
+```tsx
+<AnimationTabs
+  views={[{ view: 'Tasks' }, { view: 'Organization' }, { view: 'Reviews' }]}
+  activeView={activeView}
+  onChange={setActiveView}
+  isScroll={true}
+  buttonClass="p-3"
+  refClass="gap-2"
+  headClass="mb-4"
+/>
+```
+
+</details>

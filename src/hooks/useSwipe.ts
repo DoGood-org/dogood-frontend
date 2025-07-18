@@ -5,10 +5,12 @@ export const useSwipe = ({
   ref,
   onSwipeLeft,
   onSwipeRight,
+  isEnabled = true,
 }: SwipeProps): void | (() => void) => {
   useEffect((): void | (() => void) => {
     const element = ref.current;
     if (!element) return;
+    if (!isEnabled) return;
 
     let startX: number;
 
@@ -34,5 +36,5 @@ export const useSwipe = ({
       element.removeEventListener('touchstart', onTouchStart);
       element.removeEventListener('touchend', onTouchEnd);
     };
-  }, [ref, onSwipeLeft, onSwipeRight]);
+  }, [ref, onSwipeLeft, onSwipeRight, isEnabled]);
 };
