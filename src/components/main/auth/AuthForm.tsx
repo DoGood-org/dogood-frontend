@@ -80,7 +80,7 @@ export const AuthForm: React.FC<Props> = (props) => {
       className="flex flex-col items-center justify-center  rounded-[10px] bg-background-secondary text-white shadow-md
      p-4 w-full
      md:p-8 md:w-[446px]
-     lg:w-[462px]  lg:p-[40px]
+     lg:w-[462px]  lg:p-10
      "
     >
       {/* Title and Subtitle */}
@@ -285,7 +285,7 @@ export const AuthForm: React.FC<Props> = (props) => {
           type="submit"
           variant={'default'}
           size={'md'}
-          className="btn-auth md:mt-[36px] btn-expand-hover text-foreground h-[48px]"
+          className="btn-auth btn-expand-hover text-foreground h-[48px]"
         >
           {t('nextStep')}
         </Button>

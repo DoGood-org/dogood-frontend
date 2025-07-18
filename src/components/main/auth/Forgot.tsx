@@ -137,9 +137,8 @@ export const Forgot = (): JSX.Element => {
             type="submit"
             variant={'default'}
             size={'md'}
-            className="btn-auth btn-expand-hover text-foreground h-[48px]"
+            className="btn-auth m-o mt-2 w-full btn-expand-hover text-foreground h-[48px]"
           >
-            {' '}
             {t('submitNewPassword')}
           </Button>
         </form>
