@@ -105,7 +105,7 @@ export const ProfileMap = (): JSX.Element => {
   };
 
   return (
-    <div>
+    <div className="w-full h-full relative">
       <MapContainer
         zoom={13}
         style={{ height: '100%', width: '100%' }}
