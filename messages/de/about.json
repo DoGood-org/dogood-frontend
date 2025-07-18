@@ -7,7 +7,7 @@
       "img": ["about1.png", "about2.png", "about3.png", "about4.png"]
     },
     {
-      "view": "Freiwilligenarbeit",
+      "view": "Ehrenamt",
       "title": "Sei Teil einer guten Veränderung.",
       "description": "Freiwilligenarbeit bedeutet nicht nur zu helfen, sondern die Welt um dich herum zu einem besseren Ort zu machen. Wenn du dich DoGood anschließt, wirst du Teil einer Gemeinschaft, in der jede Handlung zählt. Engagiere dich für die Themen, die dir wichtig sind – von der Hilfe für Menschen bis zum Schutz der Natur. Wir unterstützen dich auf jedem Schritt – fang einfach an.",
       "img": [
@@ -24,7 +24,7 @@
       "img": ["goodBot1.png", "goodBot2.png", "goodBot3.png", "goodBot4.png"]
     },
     {
-      "view": "Förderungen",
+      "view": "Förderung",
       "title": "Verwirkliche deine Idee.",
       "description": "Du hast ein Projekt, das deine Gemeinschaft verbessern kann? Wir helfen dir. DoGood unterstützt soziale Initiativen mit Fördermitteln, damit Gutes systematisch wird. Fülle ein Antragsformular aus, erzähle uns von deiner Idee und erhalte nicht nur finanzielle Unterstützung, sondern auch Hilfe von unserem Team und der Community.",
       "img": ["grants1.png", "grants2.png", "grants3.png", "grants4.png"]
