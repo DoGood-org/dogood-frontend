@@ -3,7 +3,7 @@ import { AuthInput } from '@/components/main/auth/AuthInput';
 import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
 import { Button } from '@/components/ui/Button';
 import { forgotPasswordSchema } from '@/lib/validation/authSchemas';
-import { IForgot } from '@/types/authType';
+import { TForgotPassword } from '@/types/authType';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Eye, EyeOff } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -15,7 +15,7 @@ export const Forgot = (): JSX.Element => {
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
-  const { control, formState, reset, handleSubmit } = useForm<IForgot>({
+  const { control, formState, reset, handleSubmit } = useForm<TForgotPassword>({
     resolver: yupResolver(forgotPasswordSchema),
     defaultValues: {
       newPassword: '',
@@ -24,7 +24,7 @@ export const Forgot = (): JSX.Element => {
   });
   const { errors } = formState;
 
-  const submitHandler = (data: IForgot): void => {
+  const submitHandler = (data: TForgotPassword): void => {
     console.log('New password submitted:', data);
     reset();
   };
@@ -75,7 +75,7 @@ export const Forgot = (): JSX.Element => {
                     passwordRef.current?.focus();
                   }}
                   errorMessage={
-                    (errors as FieldErrors<IForgot>).newPassword
+                    (errors as FieldErrors<TForgotPassword>).newPassword
                       ?.message as string
                   }
                   touched={
@@ -120,7 +120,7 @@ export const Forgot = (): JSX.Element => {
                     passwordRef.current?.focus();
                   }}
                   errorMessage={
-                    (errors as FieldErrors<IForgot>).repeatNewPassword
+                    (errors as FieldErrors<TForgotPassword>).repeatNewPassword
                       ?.message as string
                   }
                   touched={

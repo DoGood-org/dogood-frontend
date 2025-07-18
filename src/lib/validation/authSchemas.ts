@@ -26,6 +26,10 @@ export const forgotPasswordSchema = yup.object({
     .oneOf([yup.ref('newPassword')], 'Passwords must match')
     .required('Repeat password is required'),
 });
+
+export const forgotEmailSchema = yup.object({
+  email: yup.string().email().required('Email is required'),
+});
 // export const forgotPasswordSchema = yup.object({
 //   newPassword: yup
 //     .string()

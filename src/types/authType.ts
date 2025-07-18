@@ -16,10 +16,16 @@ export interface AuthState {
   login: (userData: User) => void;
   logout: () => void;
 }
-export interface IForgot {
+
+export type TForgotEmail = {
+  email: string;
+};
+
+export type TForgotPassword = {
   newPassword: string;
   repeatNewPassword: string;
-}
+};
+
 export interface FormRegister {
   name: string;
   email: string;
