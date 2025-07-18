@@ -1,4 +1,5 @@
 export * from './aboutType';
+export * from './accountType';
 export * from './authType';
 export * from './errorType';
 export * from './heroTypes';

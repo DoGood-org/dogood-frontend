@@ -3,6 +3,7 @@
  */
 
 export * from './account/accountPage/Account';
+export * from './account/accountPage/AccountContentPanel';
 export * from './account/navigation/BottomNavigation';
 export * from './account/navigation/PageContent';
 export * from './account/navigation/PageNavigation';
@@ -25,7 +26,6 @@ export * from './layout/not-found/ButtonPanel';
 export * from './layout/not-found/NotFoundComponent';
 export * from './layout/theme/ThemeInitializer';
 export * from './layout/theme/ThemeToggle';
-export * from './main/about/AboutAnimationTabs';
 export * from './main/about/AboutImages';
 export * from './main/about/AboutSection';
 export * from './main/auth/AuthChoice';
@@ -91,11 +91,13 @@ export * from './main/news/SwiperList';
 export * from './main/news/SwiperNavButton';
 export * from './main/news/SwiperPagination';
 export * from './ui/Accordion';
+export * from './ui/AnimationTabs';
 export * from './ui/Button';
 export * from './ui/Container';
 export * from './ui/Input';
 export * from './ui/LinkWithArrow';
 export * from './ui/Rating';
 export * from './ui/Section';
+export * from './ui/StarItem';
 export * from './ui/portal/AnimatedModalWrapper';
 export * from './ui/portal/Portal';
