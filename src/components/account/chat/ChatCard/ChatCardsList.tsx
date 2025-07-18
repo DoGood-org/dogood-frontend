@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ChatCardItem } from './ChatCardItem';
+import { ChatCardsListProps } from '@/types/chatType';
 
 const mockChats = [
   {
@@ -20,7 +21,7 @@ const mockChats = [
   },
 ];
 
-export const ChatCardsList: React.FC = () => {
+export const ChatCardsList: React.FC<ChatCardsListProps> = () => {
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
   return (
     <ul>

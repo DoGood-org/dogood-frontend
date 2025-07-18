@@ -18,7 +18,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
         alt={`${chat.userNickname} avatar`}
         width={40}
         height={40}
-        className="rounded-full object-cover"
+        className="rounded-full object-cover bg-amber-700"
       />
       <div className="flex flex-col flex-grow overflow-hidden">
         <span className="font-semibold truncate">{chat.userNickname}</span>
