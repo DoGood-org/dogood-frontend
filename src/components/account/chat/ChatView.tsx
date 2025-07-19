@@ -126,16 +126,10 @@ export const ChatView: React.FC = () => {
   const isMobileOrTablet = device === 'sm' || device === 'md';
 
   return (
-    <div className="relative flex w-full">
+    <div className="flex w-full">
       {isMobileOrTablet ? (
         selectedChatId ? (
           <div className="w-full flex flex-col">
-            <button
-              className="p-2 text-blue-600 text-left"
-              onClick={() => setSelectedChatId(null)}
-            >
-              Back
-            </button>
             <div className="p-2 border-b">
               <ChatSearchInput
                 selectedName={selectedChat ? selectedChat.userNickname : ''}
@@ -143,6 +137,11 @@ export const ChatView: React.FC = () => {
                   selectedChat ? selectedChat.lastMessageDate : ''
                 }
                 lastOnline={selectedChat ? selectedChat.lastMessageDate : ''}
+                showBackButton={isMobileOrTablet}
+                onBack={() => setSelectedChatId(null)}
+                onSearch={(query) => {
+                  console.log('Шукати:', query);
+                }}
               />
             </div>
             <ChatMessageList messages={filteredMessages} />
@@ -174,6 +173,11 @@ export const ChatView: React.FC = () => {
               selectedName={selectedChat ? selectedChat.userNickname : ''}
               lastMessageTime={selectedChat ? selectedChat.lastMessageDate : ''}
               lastOnline={selectedChat ? selectedChat.lastMessageDate : ''}
+              showBackButton={isMobileOrTablet}
+              onBack={() => setSelectedChatId(null)}
+              onSearch={(query) => {
+                console.log('Шукати:', query);
+              }}
             />
           </div>
         </>

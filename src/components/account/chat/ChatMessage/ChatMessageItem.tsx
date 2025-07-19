@@ -21,14 +21,15 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
         <span className="text-sm font-medium">{message.senderNickname}</span>
         <span className="text-base">{message.text}</span>
       </div>
-      <span className="ml-2 text-xs text-gray-400 whitespace-nowrap">
-        {formatTime(message.createdAt)}
+      <span className="text-amber-950 text-sm whitespace-nowrap">
+        {message.createdAt
+          ? new Date(message.createdAt).toLocaleTimeString('uk-UA', {
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false,
+            })
+          : ''}
       </span>
     </li>
   );
 };
-
-function formatTime(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleTimeString('uk-UA');
-}
