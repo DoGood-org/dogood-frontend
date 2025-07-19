@@ -79,7 +79,7 @@ export * from './main/map/filters/FilterPannel';
 export * from './main/map/filters/Filters';
 export * from './main/map/filters/FormSearch';
 export * from './main/map/filters/LineDivider';
-export * from './main/map/profileMap/ButtonLayers';
+export * from './main/map/profileMap/ButtonFullScreen';
 export * from './main/map/profileMap/ButtonLocation';
 export * from './main/map/profileMap/CustomControlContent';
 export * from './main/map/profileMap/CustomControlZoom';

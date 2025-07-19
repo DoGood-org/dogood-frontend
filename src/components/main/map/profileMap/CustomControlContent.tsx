@@ -1,6 +1,6 @@
 'use client';
 import CustomLayerController from '@/components/main/map/CustomLayerController';
-import { ButtonLayers } from '@/components/main/map/profileMap/ButtonLayers';
+import { ButtonFullScreen } from '@/components/main/map/profileMap/ButtonFullScreen';
 import { ButtonLocation } from '@/components/main/map/profileMap/ButtonLocation';
 import { CustomControlZoom } from '@/components/main/map/profileMap/CustomControlZoom';
 import { AnimatedDrawler } from '@/components/main/map/tasksPanel/AnimatedDrawler';
@@ -16,7 +16,7 @@ export const CustomControlContent = (): JSX.Element => {
       <div className="flex w-[300px] gap-5 justify-end items-end">
         <CustomControlZoom />
         <div className="flex flex-col gap-2 bottom-0 left-0">
-          <ButtonLayers />
+          <ButtonFullScreen />
           <ButtonLocation />
         </div>
       </div>
