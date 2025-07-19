@@ -2,9 +2,10 @@
 
 import React from 'react';
 import { navigationStore } from '@/zustand/stores/navigationStore';
+import { Account } from '@/components';
 
 const pages = {
-  Account: <div>Account</div>,
+  Account: <Account />,
   Chat: <div>Chat</div>,
   Map: <div>Map</div>,
   Goals: <div>Goals</div>,
