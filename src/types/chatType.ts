@@ -37,3 +37,13 @@ export interface MessagesListProps {
 export interface MessageItemProps {
   message: MessageType;
 }
+
+export type ChatInputProps = {
+  selectedName: string;
+  lastMessageTime: string;
+  lastOnline: string;
+  inputValue?: string;
+  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  className?: string;
+};

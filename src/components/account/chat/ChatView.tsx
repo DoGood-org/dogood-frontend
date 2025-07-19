@@ -1,22 +1,15 @@
 'use client';
 
+import { useDeviceType } from '@/hooks/useDeviceType';
 import { ChatCardViewModel, MessageViewModel } from '@/types/viewModels';
+import { useState } from 'react';
 import { ChatCardsList } from './ChatCard/ChatCardsList';
 import { ChatMessageList } from './ChatMessage/ChatMessagesList';
-import { useState } from 'react';
+import { ChatSearchInput } from './ChatSearchInput';
 
-type ChatInputProps = {
-  selectedName: string;
-  lastOnline: string;
-  icon?: React.ReactNode;
-  className?: string;
-  inputValue?: string;
-  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-};
-
-export const ChatView: React.FC<ChatInputProps> = () => {
+export const ChatView: React.FC = () => {
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
+  const device = useDeviceType();
 
   const mockChats: ChatCardViewModel[] = [
     {
@@ -124,23 +117,67 @@ export const ChatView: React.FC<ChatInputProps> = () => {
     },
   ];
 
-  // const selectedChat = mockChats.find((chat) => chat.id === selectedChatId);
+  const selectedChat = mockChats.find((chat) => chat.id === selectedChatId);
 
   const filteredMessages = selectedChatId
     ? mockMessages.filter((msg) => msg.chatId === selectedChatId)
     : [];
+
+  const isMobileOrTablet = device === 'sm' || device === 'md';
+
   return (
-    <div className="relative flex">
-      {/* <ChatSearchInput
-        selectedName={selectedChat ? selectedChat.userNickname : 'Виберіть чат'}
-        // lastOnline={selectedChat ? selectedChat.lastMessageDate : ''}
-      /> */}
-      <ChatCardsList
-        chats={mockChats}
-        selectedChatId={selectedChatId}
-        onSelectChat={setSelectedChatId}
-      />
-      <ChatMessageList messages={filteredMessages} />
+    <div className="relative flex w-full">
+      {isMobileOrTablet ? (
+        selectedChatId ? (
+          <div className="w-full flex flex-col">
+            <button
+              className="p-2 text-blue-600 text-left"
+              onClick={() => setSelectedChatId(null)}
+            >
+              Back
+            </button>
+            <div className="p-2 border-b">
+              <ChatSearchInput
+                selectedName={selectedChat ? selectedChat.userNickname : ''}
+                lastMessageTime={
+                  selectedChat ? selectedChat.lastMessageDate : ''
+                }
+                lastOnline={selectedChat ? selectedChat.lastMessageDate : ''}
+              />
+            </div>
+            <ChatMessageList messages={filteredMessages} />
+          </div>
+        ) : (
+          <div className="w-full flex flex-col">
+            <ChatCardsList
+              chats={mockChats}
+              selectedChatId={selectedChatId}
+              onSelectChat={setSelectedChatId}
+            />
+          </div>
+        )
+      ) : (
+        // Desktop
+        <>
+          <div className="w-1/3 flex flex-col border-r">
+            <ChatCardsList
+              chats={mockChats}
+              selectedChatId={selectedChatId}
+              onSelectChat={setSelectedChatId}
+            />
+          </div>
+          <div className="w-2/3">
+            <ChatMessageList messages={filteredMessages} />
+          </div>
+          <div className="p-2 border-b">
+            <ChatSearchInput
+              selectedName={selectedChat ? selectedChat.userNickname : ''}
+              lastMessageTime={selectedChat ? selectedChat.lastMessageDate : ''}
+              lastOnline={selectedChat ? selectedChat.lastMessageDate : ''}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

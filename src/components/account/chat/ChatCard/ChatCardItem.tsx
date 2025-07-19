@@ -1,3 +1,4 @@
+import EllipsisIcon from '@/components/icons/EllipsisIcon';
 import { ChatCardProps } from '@/types/chatType';
 import Image from 'next/image';
 
@@ -9,7 +10,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
   return (
     <li
       onClick={() => onSelect(chat.id)}
-      className={`flex items-center gap-4 p-3 rounded cursor-pointer ${
+      className={`flex items-center gap-4 p-3 bg-text-help rounded cursor-pointer ${
         isSelected ? 'border-2 border-green-500' : 'hover:border-green-500'
       }`}
     >
@@ -26,9 +27,12 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
           {chat.lastMessageText}
         </span>
       </div>
-      <span className="text-xs text-gray-400 whitespace-nowrap">
-        {chat.lastMessageDate}
-      </span>
+      <div className="flex flex-col">
+        <EllipsisIcon className="w-5 h-1 btn-primary" />
+        <span className="text-xs text-gray-400 whitespace-nowrap">
+          {chat.lastMessageDate}
+        </span>
+      </div>
     </li>
   );
 };

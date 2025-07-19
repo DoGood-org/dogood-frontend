@@ -1,22 +1,14 @@
 import SvgSearch from '@/components/icons/Search';
 import { Input } from '@/components/ui/Input';
 import { cn } from '@/lib/utils';
-
-type ChatInputProps = {
-  selectedName: string;
-  lastMessageTime: string;
-  inputValue?: string;
-  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-  className?: string;
-};
+import { ChatInputProps } from '@/types/chatType';
 
 export const ChatSearchInput: React.FC<ChatInputProps> = ({
   selectedName,
   lastMessageTime,
   inputValue = '',
   onInputChange = (): void => {},
-  placeholder = 'Search...',
+  placeholder = 'was on the network at ',
   className,
 }) => {
   return (
@@ -26,7 +18,6 @@ export const ChatSearchInput: React.FC<ChatInputProps> = ({
         className
       )}
     >
-      {/* Ліва частина: ім’я та час */}
       <div className="flex flex-col min-w-0">
         <span className="font-medium text-base truncate">{selectedName}</span>
         <span className="text-xs text-muted-foreground truncate">
@@ -34,7 +25,6 @@ export const ChatSearchInput: React.FC<ChatInputProps> = ({
         </span>
       </div>
 
-      {/* Input з нижнім бордером */}
       <div className="flex-1 mx-4">
         <Input
           value={inputValue}
@@ -46,7 +36,6 @@ export const ChatSearchInput: React.FC<ChatInputProps> = ({
         />
       </div>
 
-      {/* Іконка Search */}
       <div className="text-xl text-muted-foreground cursor-pointer">
         <SvgSearch />
       </div>
