@@ -51,7 +51,6 @@ export const Map: React.FC = (): JSX.Element => {
     showGeolocationPopup,
     checkLocationPermission,
     radius,
-    addMarker,
     taskListIsOpen,
     toggleTaskList,
     activePanel,
@@ -64,7 +63,7 @@ export const Map: React.FC = (): JSX.Element => {
     searchIsActive,
   } = useMapStore();
   const { choosenCategories, categories } = useFilterStore();
-  const { tasksByRadius, setTasksByRadius } = useTaskStore();
+  const { tasksByKey, setTasksByKey } = useTaskStore();
   const { setCategories } = useFilterStore();
   useEffect(() => {
     initMap('main');
@@ -82,17 +81,22 @@ export const Map: React.FC = (): JSX.Element => {
   // This should be replaced with actual data fetching logic
   // For now, we generate tasks based on the user's location
 
+  const key = userLocation
+    ? `${radius}:${userLocation.lat.toFixed(4)}:${userLocation.lng.toFixed(4)}`
+    : `${radius}:unknown:unknown`;
+
   useEffect(() => {
     if (!userLocation) return;
-    if (tasksByRadius[radius]) return;
+    if (tasksByKey[key]) return;
 
     const newTasks = generateTasks(userLocation.lat, userLocation.lng, radius);
-    setTasksByRadius(radius, newTasks);
+    setTasksByKey(key, newTasks);
     const categories = Array.from(
       new Set(newTasks.flatMap((task) => task.category))
     );
     setCategories(categories);
   }, [userLocation, radius]);
+
   const { noPaginatedTasks } = useFilteredTasksSelector();
 
   if (
@@ -157,20 +161,13 @@ export const Map: React.FC = (): JSX.Element => {
             />
             {/* Click handler */}
             <MapClickHandler
-              allowClickToAddMarker
               onClick={(coords, clickType) => {
                 if (clickType === 'right') {
                   setClickedCoords(coords);
                   setShowOptionsMenu(true);
                 }
-                if (clickType === 'left') {
-                  closeOptionsMenu();
-                }
               }}
-              clickOptions={{
-                setMe: (coords) => setUserLocation(coords),
-                setMyMarker: (coords) => addMarker(coords),
-              }}
+              allowClickToAddMarker
             />
             {/* Task markers */}
             {noPaginatedTasks.map((task) => {
@@ -216,6 +213,11 @@ export const Map: React.FC = (): JSX.Element => {
                       lat: newCoords.lat,
                       lng: newCoords.lng,
                     });
+                    console.log(
+                      'User location updated:',
+                      newCoords.lat.toFixed(5),
+                      newCoords.lng.toFixed(5)
+                    );
                   },
                 }}
               >
@@ -234,14 +236,22 @@ export const Map: React.FC = (): JSX.Element => {
             {/* Options menu for right click */}
             {showOptionsMenu && clickedCoords && (
               <Popup
+                key={`${clickedCoords.lat}-${clickedCoords.lng}`}
                 position={clickedCoords}
-                eventHandlers={{ remove: closeOptionsMenu }}
-                closeOnClick={false}
-                autoPan={false}
+                closeOnClick={true}
+                autoPan={true}
+                closeButton={true}
+                eventHandlers={{
+                  remove: () => {
+                    setShowOptionsMenu(false);
+                    setClickedCoords(null);
+                  },
+                }}
               >
                 <div>
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setUserLocation(clickedCoords);
                       closeOptionsMenu();
                     }}

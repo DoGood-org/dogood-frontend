@@ -1,25 +1,30 @@
 'use client';
 import { IMapClickHandlerProps, MapClickType } from '@/types/mapType';
 import { LatLngLiteral } from 'leaflet';
-import { useMapEvent } from 'react-leaflet';
+import { useMapEvents } from 'react-leaflet';
 
 export const MapClickHandler: React.FC<IMapClickHandlerProps> = ({
   onClick,
   allowClickToAddMarker,
   setShowOptionsMenu,
+  setClickedCoords,
 }) => {
-  const handleClick = (
-    latlng: LatLngLiteral,
-    clickType: MapClickType
-  ): void => {
-    if (!allowClickToAddMarker) return;
+  useMapEvents({
+    contextmenu: (event) => {
+      if (!allowClickToAddMarker) return;
 
-    onClick(latlng, clickType);
-    setShowOptionsMenu?.(true);
-  };
+      const coords = event.latlng as LatLngLiteral;
+      setClickedCoords?.(coords);
+      setShowOptionsMenu?.(true);
+      onClick(coords, 'right');
+    },
+    dblclick: (event) => {
+      if (!allowClickToAddMarker) return;
 
-  useMapEvent('click', (e) => handleClick(e.latlng, 'left'));
-  useMapEvent('contextmenu', (e) => handleClick(e.latlng, 'right'));
+      const coords = event.latlng as LatLngLiteral;
+      onClick(coords, 'double');
+    },
+  });
 
   return null;
 };

@@ -5,14 +5,14 @@ import { persist } from 'zustand/middleware';
 interface TTaskState {
   tasks: IExtendedITaskProps[];
   selectedTasks: IExtendedITaskProps[];
-  tasksByRadius: Record<number, IExtendedITaskProps[]>;
+  tasksByKey: Record<string, IExtendedITaskProps[]>;
 }
 
 interface TTaskActions {
   setTasks: (tasks: IExtendedITaskProps[]) => void;
   setSelectedTasks: (tasks: IExtendedITaskProps[]) => void;
   toggleTaskDescription: (taskId: string) => void;
-  setTasksByRadius: (radius: number, tasks: IExtendedITaskProps[]) => void;
+  setTasksByKey: (key: string, tasks: IExtendedITaskProps[]) => void;
 }
 
 type TTaskStore = TTaskState & TTaskActions;
@@ -22,7 +22,7 @@ export const useTaskStore = create<TTaskStore>()(
     (set, get) => ({
       tasks: [],
       selectedTasks: [],
-      tasksByRadius: {},
+      tasksByKey: {},
 
       setTasks: (tasks): void => set({ tasks }),
       setSelectedTasks: (tasks): void => set({ selectedTasks: tasks }),
@@ -36,11 +36,10 @@ export const useTaskStore = create<TTaskStore>()(
           selectedTasks: updated.filter((task) => task.isSelected),
         });
       },
-      setTasksByRadius: (radius, tasks): void => {
-        const updated = { ...get().tasksByRadius, [radius]: tasks };
-        set({ tasksByRadius: updated });
+      setTasksByKey: (key, tasks): void => {
+        const updated = { ...get().tasksByKey, [key]: tasks };
+        set({ tasksByKey: updated });
         const allTasks = Object.values(updated).flat();
-
         set({ tasks: allTasks });
       },
     }),
