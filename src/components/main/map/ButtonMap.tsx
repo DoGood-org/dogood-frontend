@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/Button';
 import { JSX } from 'react';
 
 type Props = {
