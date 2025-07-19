@@ -6,7 +6,7 @@ import {
   HowItWorks,
   MapSection,
   NewsList,
-  ReviewsSection
+  ReviewsSection,
 } from '@/components';
 import React from 'react';
 
