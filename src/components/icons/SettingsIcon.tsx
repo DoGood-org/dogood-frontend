@@ -9,16 +9,16 @@ const SettingsIcon = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-  <g clipPath="url(#clip0_5888_14451)">
-    <path
-      d="M12 15.75C14.0711 15.75 15.75 14.0711 15.75 12C15.75 9.92893 14.0711 8.25 12 
+    <g clipPath="url(#clip0_5888_14451)">
+      <path
+        d="M12 15.75C14.0711 15.75 15.75 14.0711 15.75 12C15.75 9.92893 14.0711 8.25 12 
       8.25C9.92893 8.25 8.25 9.92893 8.25 12C8.25 14.0711 9.92893 15.75 12 15.75Z"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M3.88156 16.6973C3.46716 15.9836 3.14968 15.2178 2.9375 14.4202L4.51062 12.4514C4.49281 
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M3.88156 16.6973C3.46716 15.9836 3.14968 15.2178 2.9375 14.4202L4.51062 12.4514C4.49281 
       12.1504 4.49281 11.8486 4.51062 11.5477L2.93844 9.57891C3.15026 8.78117 3.46709 8.01509 3.88062 
       7.30078L6.38469 7.01953C6.58465 6.79424 6.79784 6.58106 7.02313 6.38109L7.30438 3.87797C8.01766 
       3.4664 8.78248 3.15146 9.57875 2.94141L11.5475 4.51453C11.8485 4.49672 12.1503 4.49672 12.4512 
@@ -29,17 +29,17 @@ const SettingsIcon = (props: SVGProps<SVGSVGElement>) => (
       17.6245L16.7028 20.1277C15.989 20.5421 15.2232 20.8595 14.4256 21.0717L12.4569 19.4986C12.1559 
       19.5164 11.8541 19.5164 11.5531 19.4986L9.58438 21.0708C8.78687 20.8604 8.02081 20.5452 7.30625 
       20.1333L7.025 17.6292C6.79971 17.4293 6.58652 17.2161 6.38656 16.9908L3.88156 16.6973Z"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </g>
-  <defs>
-    <clipPath id="clip0_5888_14451">
-      <rect width="24" height="24" fill="white" />
-    </clipPath>
-  </defs>
-</svg>
-)
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_5888_14451">
+        <rect width="24" height="24" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
 
 export default SettingsIcon;

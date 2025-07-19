@@ -13,8 +13,14 @@ type AuthChoiceProps = {
 export const AuthChoice: React.FC<AuthChoiceProps> = ({ onChoice }) => {
   const t = useTranslations('auth');
   const AuthChoiceConfig = {
-    human: { title: t('personalAccount'), icon: <UserAuthIcon /> },
-    company: { title: t('businessAccount'), icon: <GroupAuthIcon /> },
+    human: {
+      title: t('personalAccount'),
+      icon: <UserAuthIcon />,
+    },
+    company: {
+      title: t('businessAccount'),
+      icon: <GroupAuthIcon />,
+    },
   };
   const title = t('chooseAccountType');
   const handleHumanAuth = (): void => {
@@ -32,16 +38,24 @@ export const AuthChoice: React.FC<AuthChoiceProps> = ({ onChoice }) => {
   };
   return (
     <div
-      className=" flex flex-col items-center justify-center gap-[60px]  max-w-full text-foreground z-10 my-0 mx-auto
+      className="flex flex-col items-center justify-center gap-6  max-w-full text-foreground z-10 my-0 mx-auto 
+      md:gap-10
+      lg:gap-16
 
-    md:gap-[48px] lg:max-w-[670px] lg:gap-[48px] "
+     "
     >
-      <div className="montserrat text-center ">
-        <h2 className="text-[24px] md:text-[44px] font-bold md:leading-[52px] text-foreground">
+      <div className="text-center">
+        <h2
+          className="text-[24px] leading-[32px]  text-foreground font-normal 
+        md:leading-[52px]
+        md:text-[44px]
+        lg:leading-[48px]
+        lg:text-[48px]"
+        >
           {title}
         </h2>
       </div>
-      <div className="flex flex-col gap-[48px]  md:flex-row md:gap-[44px] justify-center">
+      <div className="flex gap-[48px] md:gap-[44px] justify-center">
         <AuthChoiceButton
           icon={AuthChoiceConfig.human.icon}
           title={AuthChoiceConfig.human.title}

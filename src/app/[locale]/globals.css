@@ -22,6 +22,7 @@
 
   /* colors */
   --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
   --color-post: var(--post);
   --color-post_gray: var(--post_gray);
   --color-foreground: var(--foreground);
@@ -51,6 +52,7 @@
   --color-tag: var(--tag);
 
   --color-error: var(--error);
+  --color-success: var(--success);
   --color-attention: var(--attention);
 
   --color-star: var(--star);
@@ -116,7 +118,7 @@
   --breakpoint-xl: 1920px;
 
   --background: #f1f1f1;
-  --background-secondary: #303030;
+  --background-secondary: #696969;
   --foreground: #1b1b1b;
   --header-bg: #171b19;
   --footer-bg: #111215;
@@ -155,6 +157,7 @@
   /*0.75rem */
 
   --error: #ee0606;
+  --success: #17814b;
 
   --star: #ffee00;
   --medicine: #1f5eff;
@@ -179,11 +182,13 @@
   --line-h3: 32px;
 
   --gradient:
-    linear-gradient(238.09deg,
+    linear-gradient(
+      238.09deg,
       rgba(26, 211, 170, 0.15) 30.81%,
       rgba(0, 0, 0, 0.15) 82.23%,
       rgba(0, 0, 0, 0.15) 83.94%,
-      rgba(26, 211, 170, 0.15) 129.53%),
+      rgba(26, 211, 170, 0.15) 129.53%
+    ),
     radial-gradient(circle, rgba(26, 211, 170, 0.1) 2px, transparent 2px),
     linear-gradient(0deg, #0a6f3c, #0a6f3c);
   --font-size: 16px;
@@ -205,7 +210,7 @@ html {
 
 .dark {
   --background: #171b19;
-  --background-secondary: #696969;
+  --background-secondary: #303030;
   --foreground: #f1f1f1;
   --card: #303030;
   --btn-secondary: #010101;
@@ -213,11 +218,13 @@ html {
   --text_tag: #f1f1f1;
   --post_gray: #696969;
   --gradient:
-    linear-gradient(238.09deg,
+    linear-gradient(
+      238.09deg,
       rgba(26, 211, 170, 0.15) 30.81%,
       rgba(0, 0, 0, 0.15) 82.23%,
       rgba(0, 0, 0, 0.15) 83.94%,
-      rgba(26, 211, 170, 0.15) 129.53%),
+      rgba(26, 211, 170, 0.15) 129.53%
+    ),
     radial-gradient(circle, rgba(26, 211, 170, 0.1) 2px, transparent 2px);
   --bg-icon: #f1f1f1;
   --icon-color: #000000;
@@ -262,10 +269,12 @@ html {
   left: 50%;
   width: 0;
   height: 100%;
-  background: linear-gradient(to right,
-      transparent 0%,
-      var(--btn-hover) 50%,
-      transparent 100%);
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--btn-hover) 50%,
+    transparent 100%
+  );
   transform: translateX(-50%);
   transition: width 0.4s ease;
   z-index: -1;
@@ -366,10 +375,10 @@ html {
 /* Стиль для authForm*/
 
 .btn-auth {
-  @apply bg-btn text-white cursor-pointer;
+  @apply bg-btn text-white cursor-pointer rounded-sm;
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+    background-color 0.7s ease,
+    color 0.7s ease;
 }
 
 /*---------------------------------------------------------------*/

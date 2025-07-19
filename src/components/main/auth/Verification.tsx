@@ -1,10 +1,19 @@
 'use client';
+import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
 import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
 
 import React, { useEffect, useRef } from 'react';
-
-export const Verification: React.FC = () => {
+type Props = {
+  onResend: () => void;
+  onWrongEmail: () => void;
+  onConfirm: (code: string) => void;
+};
+export const Verification: React.FC<Props> = ({
+  onResend,
+  onWrongEmail,
+  onConfirm,
+}) => {
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [focusedIndex, setFocusedIndex] = React.useState<number | null>(0);
@@ -28,17 +37,22 @@ export const Verification: React.FC = () => {
   ): void => {
     const value = e.target.value;
 
+    const newValues = [...inputValues];
+
+    // Only allow digits
     if (/^\d$/.test(value)) {
-      const newValues = [...inputValues];
       newValues[index] = value;
       setInputValues(newValues);
 
+      // Move focus to next input if not last
       if (index < inputsRef.current.length - 1) {
         inputsRef.current[index + 1]?.focus();
         setFocusedIndex(index + 1);
       }
     } else {
-      e.target.value = '';
+      // Clear value on invalid input
+      newValues[index] = '';
+      setInputValues(newValues);
     }
   };
   const handleKeyDown = (
@@ -125,6 +139,7 @@ export const Verification: React.FC = () => {
 
     // all inputs are filled, reset the input
     console.log('Verification code submitted:', inputValues.join(''));
+    onConfirm(inputValues.join(''));
     setInputValues(Array(6).fill(''));
     setFocusedIndex(0);
     inputsRef.current.forEach((input) => input && (input.value = ''));
@@ -132,16 +147,26 @@ export const Verification: React.FC = () => {
   };
 
   return (
-    <div className=" dark bg-card flex flex-col gap-[16px] p-[24px] md:p-[40px]  md:w-[514px]  md:gap-[32px] justify-center items-center text-foreground rounded-[12px]  shadow-md">
-      <div className="flex flex-col  md:gap-[40px] w-full justify-center items-center">
-        <h2 className="text-[24px] md:text-[32px] mb-[16px] md:gap-0  font-bold ">
-          {t('verificationRequired')}{' '}
-        </h2>
-        <p className="roboto text-[16px] mb-[16px] md:mb-0 font-normal">
-          {t('enterVerificationCode')}
-          <span className="font-bold">{t('yourEmail')}</span>
-        </p>
-        <div className="mb-[32px] md:mb-0 flex gap-[24px]">
+    <div
+      className="bg-background-secondary flex flex-col gap-[16px] p-4 
+    
+    md:p-8  md:w-[446px] justify-center items-center text-white rounded-[10px]  shadow-md"
+    >
+      <div
+        className="flex flex-col  w-full justify-center items-center mb-4
+      md:mb-6
+      "
+      >
+        <AuthTitleSubtitle title={t('verificationRequired')} />
+
+        <div className="flex flex-col gap-6 mb-2 justify-start items-start w-full md:w-auto">
+          <p className="text-base font-normal">
+            {t('enterVerificationCode')}
+            <span className="font-normal">{t('yourEmail')}</span>
+          </p>
+          <p className="text-start">{t('verificationCodeLabel')}</p>
+        </div>
+        <div className="mb-[24px] flex gap-[24px]">
           {Array(6)
             .fill(0)
             .map((_, i) => (
@@ -154,7 +179,7 @@ export const Verification: React.FC = () => {
                 key={i}
                 maxLength={1}
                 type="text"
-                className={`w-[35px] md:w-[40px]  text-center border-b-[5px] border-foreground focus:outline-none focus:border-foreground focus:border-b-[5px] text-[24px] md:text-[32px] bg-transparent text-foreground placeholder:text-foreground ${i === 0 ? 'ml-0' : ''} ${
+                className={`w-[35px] md:w-[40px]  text-center border-b-[5px] border-white focus:outline-none focus:border-foreground focus:border-b-[4px] text-[24px] md:text-[32px] bg-transparent text-foreground placeholder:text-white ${i === 0 ? 'ml-0' : ''} ${
                   focusedIndex === i
                     ? 'focus:border-green-500'
                     : 'focus:border-white'
@@ -170,20 +195,24 @@ export const Verification: React.FC = () => {
           size={'md'}
           disabled={isIncomplete}
           aria-label="Confirm Verification Code"
-          className="btn-auth mt-[4px] btn-expand-hover  h-[44px] w-full  text-[16px] font-semibold"
+          className="btn-auth mt-[4px] btn-expand-hover h-[48px] w-full  text-base"
           aria-disabled={isIncomplete ? 'true' : 'false'}
         >
           {t('confirm')}
         </Button>
       </div>
 
-      <div className="flex flex-col items-center gap-[12px] roboto  text-[14px] md:text-[16px] font-normal ">
-        <a href="#" className="text-[var(--text-gray)] ">
-          <p>{t('didntGetEmail')} </p>
-        </a>
-        <a href="#" className="text-[var(--text-gray)] ">
-          <p>{t('madeMistakeInEmail')} </p>
-        </a>
+      <div className="flex flex-col gap-3 items-center  md:text-[16px] font-normal ">
+        <Button variant="ghost" className="py-0 h-full" onClick={onResend}>
+          <a href="#" className="text-[var(--text-gray)] ">
+            <p>{t('didntGetEmail')} </p>
+          </a>
+        </Button>
+        <Button variant="ghost" className="py-0 h-full" onClick={onWrongEmail}>
+          <a href="#" className="text-[var(--text-gray)] ">
+            <p>{t('madeMistakeInEmail')} </p>
+          </a>
+        </Button>
       </div>
     </div>
   );
