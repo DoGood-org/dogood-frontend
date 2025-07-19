@@ -43,8 +43,8 @@ export const PageNavigation: React.FC<NavigationPageProps> = ({
             <button
               onClick={() => setCurrentPage(label)}
               className={`
-              flex items-center gap-3 lg:p-3 rounded-xl border-[1px] transition duration-300 text-bg-icon
-              lg:border ${isActive ? 'lg:border-border' : 'lg:border-transparent hover:lg:border-border'}
+              flex items-center gap-3 lg:p-3 rounded-xl border-[1px] border-transparent transition duration-300 text-bg-icon
+              lg:border cursor-pointer ${isActive ? 'lg:border-border' : 'lg:border-transparent hover:lg:border-border'}
               ${linkClassName}
               w-full
               justify-start
@@ -53,7 +53,7 @@ export const PageNavigation: React.FC<NavigationPageProps> = ({
               <Icon
                 className={`
                   w-6 h-6 transition-colors duration-300
-                  ${isActive ? 'text-btn-outline-active' : 'text-white'}
+                  ${isActive ? 'text-btn-outline-active' : 'text-foreground'}
                   lg:text-bg-icon
                   group-hover:lg:text-btn-outline-active
                   ${iconClassName}

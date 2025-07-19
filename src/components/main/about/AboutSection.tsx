@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
 import {
-  AboutAnimationTabs,
   AboutImages,
+  AnimationTabs,
   Container,
   LinkWithArrow,
   Section,
@@ -38,10 +38,11 @@ export const AboutSection: React.FC = () => {
           {activeData && (
             <div className="flex flex-col lg:flex-row gap-7 gap-10 md:gap-15 lg:gap-6 transition-opacity duration-500 ease-in-out opacity-100">
               <div>
-                <AboutAnimationTabs
+                <AnimationTabs
                   views={views}
                   activeView={activeView}
                   onChange={setActiveView}
+                  isScroll
                 />
                 <AboutImages activeData={activeData} />
               </div>

@@ -5,8 +5,8 @@ import { PageNavigation } from './PageNavigation';
 
 export const BottomNavigation: React.FC = () => {
   return (
-    <nav className="lg:hidden flex justify-center items-center w-full sticky bottom-[258px] pt-[60px] md:pt-[38px] pb-[60px] md:pb-[64px] left-0 z-50">
-      <div className="bg-[#171b19] rounded-xl w-[280px]">
+    <nav className="lg:hidden flex justify-center items-center w-full sticky bottom-0 pt-[60px] md:pt-[38px] pb-[60px] md:pb-[64px] left-0 z-50">
+      <div className="bg-background rounded-xl w-[280px]">
         <PageNavigation
           showLabels={false}
           className="flex items-center justify-between gap-6"
