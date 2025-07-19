@@ -10,7 +10,7 @@ const AuthChoiceButton: React.FC<Props> = (props: Props) => {
   const Icon = icon.type as React.FC;
 
   return (
-    <div
+    <button
       onClick={handleAuthChoice}
       role="button"
       className="flex flex-col items-center justify-center cursor-pointer bg-background-secondary text-white rounded-[12px] btn-expand-hover
@@ -28,7 +28,7 @@ const AuthChoiceButton: React.FC<Props> = (props: Props) => {
           {title}
         </p>
       </div>
-    </div>
+    </button>
   );
 };
 
