@@ -6,7 +6,6 @@ import { CustomControlZoom } from '@/components/main/map/CustomControlZoom';
 import { MapClickHandler } from '@/components/main/map/MapClicks';
 import { generateTasks } from '@/components/main/map/mockTasks';
 import { MultiControlPanel } from '@/components/main/map/MultiControlPanel';
-import { PopUpContent } from '@/components/main/map/PopUpContent';
 import { RadiusWatcher } from '@/components/main/map/RadiusWatcher';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
@@ -19,7 +18,6 @@ import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelec
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
-import { AnimatePresence, motion } from 'framer-motion';
 import { JSX, useEffect, useMemo } from 'react';
 
 export const ProfileMap = (): JSX.Element => {

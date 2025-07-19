@@ -1,5 +1,5 @@
 'use client';
-import { IMapClickHandlerProps, MapClickType } from '@/types/mapType';
+import { IMapClickHandlerProps } from '@/types/mapType';
 import { LatLngLiteral } from 'leaflet';
 import { useMapEvents } from 'react-leaflet';
 
