@@ -38,11 +38,13 @@ export default async function LocaleLayout({
   }
   return (
     <html lang={locale}>
-      <body className={`${montserrat.variable} ${roboto.variable} antialiased`}>
+      <body
+        className={`${montserrat.variable} ${roboto.variable} antialiased flex flex-col justify-between min-h-[100vh]`}
+      >
         <ThemeInitializer />
         <NextIntlClientProvider locale={locale}>
           <Header />
-          <main>{children}</main>
+          <main className="pt-[80px] lg:pt-[72px]">{children}</main>
           <Footer />
         </NextIntlClientProvider>
       </body>

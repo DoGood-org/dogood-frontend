@@ -37,17 +37,22 @@ export const Verification: React.FC<Props> = ({
   ): void => {
     const value = e.target.value;
 
+    const newValues = [...inputValues];
+
+    // Only allow digits
     if (/^\d$/.test(value)) {
-      const newValues = [...inputValues];
       newValues[index] = value;
       setInputValues(newValues);
 
+      // Move focus to next input if not last
       if (index < inputsRef.current.length - 1) {
         inputsRef.current[index + 1]?.focus();
         setFocusedIndex(index + 1);
       }
     } else {
-      e.target.value = '';
+      // Clear value on invalid input
+      newValues[index] = '';
+      setInputValues(newValues);
     }
   };
   const handleKeyDown = (
