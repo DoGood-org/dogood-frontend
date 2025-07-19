@@ -1,13 +1,14 @@
-import React from 'react';
 import {
   AboutSection,
+  Donate,
+  Faq,
   HeroSection,
   HowItWorks,
   MapSection,
   NewsList,
-  Donate,
-  Faq,
+  ReviewsSection
 } from '@/components';
+import React from 'react';
 
 export default function Home(): React.JSX.Element {
   return (
@@ -17,6 +18,7 @@ export default function Home(): React.JSX.Element {
       <HowItWorks />
       <MapSection />
       <Donate />
+      <ReviewsSection />
       <NewsList />
       <Faq />
     </>
