@@ -264,6 +264,7 @@ export const ProfileMap = (): JSX.Element => {
                   onClick={(e) => {
                     e.stopPropagation();
                     setUserLocation(clickedCoords);
+
                     closeOptionsMenu();
                   }}
                 >

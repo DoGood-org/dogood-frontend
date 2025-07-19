@@ -12,7 +12,6 @@ export const MapClickHandler: React.FC<IMapClickHandlerProps> = ({
   useMapEvents({
     contextmenu: (event) => {
       if (!allowClickToAddMarker) return;
-
       const coords = event.latlng as LatLngLiteral;
       setClickedCoords?.(coords);
       setShowOptionsMenu?.(true);
@@ -20,7 +19,6 @@ export const MapClickHandler: React.FC<IMapClickHandlerProps> = ({
     },
     dblclick: (event) => {
       if (!allowClickToAddMarker) return;
-
       const coords = event.latlng as LatLngLiteral;
       onClick(coords, 'double');
     },
