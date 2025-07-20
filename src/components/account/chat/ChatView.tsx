@@ -126,24 +126,21 @@ export const ChatView: React.FC = () => {
   const isMobileOrTablet = device === 'sm' || device === 'md';
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-[338px] items-centr justify-center">
       {isMobileOrTablet ? (
         selectedChatId ? (
-          <div className="w-full flex flex-col">
-            <div className="p-2 border-b">
-              <ChatSearchInput
-                selectedName={selectedChat ? selectedChat.userNickname : ''}
-                lastMessageTime={
-                  selectedChat ? selectedChat.lastMessageDate : ''
-                }
-                lastOnline={selectedChat ? selectedChat.lastMessageDate : ''}
-                showBackButton={isMobileOrTablet}
-                onBack={() => setSelectedChatId(null)}
-                onSearch={(query) => {
-                  console.log('Шукати:', query);
-                }}
-              />
-            </div>
+          <div className="w-full flex flex-col justify-center">
+            <ChatSearchInput
+              selectedName={selectedChat ? selectedChat.userNickname : ''}
+              lastMessageTime={selectedChat ? selectedChat.lastMessageDate : ''}
+              lastOnline={selectedChat ? selectedChat.lastMessageDate : ''}
+              showBackButton={isMobileOrTablet}
+              onBack={() => setSelectedChatId(null)}
+              onSearch={(query) => {
+                console.log('Шукати:', query);
+              }}
+            />
+            <div className="border-b mt-5"></div>
             <ChatMessageList messages={filteredMessages} />
           </div>
         ) : (
@@ -168,7 +165,7 @@ export const ChatView: React.FC = () => {
           <div className="w-2/3">
             <ChatMessageList messages={filteredMessages} />
           </div>
-          <div className="p-2 border-b">
+          <div>
             <ChatSearchInput
               selectedName={selectedChat ? selectedChat.userNickname : ''}
               lastMessageTime={selectedChat ? selectedChat.lastMessageDate : ''}

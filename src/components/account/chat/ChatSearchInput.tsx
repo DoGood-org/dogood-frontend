@@ -46,38 +46,40 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
     : '';
 
   return (
-    <div className="flex items-center p-2 gap-2">
+    <div className="flex w-[338px] items-center">
       {showBackButton && (
         <button
           onClick={onBack}
-          className="p-2 text-current flex items-center"
-          aria-label="Назад"
+          className="text-current flex items-center pr-2 cursor-pointer"
+          aria-label="Back"
           type="button"
         >
           <Back className="w-5 h-5" />
-          Back
+          <span className="text-base">Back</span>
         </button>
       )}
-      <div className="flex flex-col">
-        {selectedName && (
-          <div className="text-sm font-medium pb-1 text-center">
-            {selectedName}
-          </div>
-        )}
-        <div className="relative flex-grow max-w-md">
+      <div className="flex items-center">
+        <div className="flex flex-col">
+          {selectedName && (
+            <p className="text-center mb-2 break-words">{selectedName}</p>
+          )}
           <Input
             type="text"
             placeholder={placeholderText}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={onKeyDown}
-            className="pl-4 pr-10 py-2 w-full text-current border-none shadow-none focus:ring-0 focus:border-none"
+            className="border-none focus:outline-none focus:ring-0 appearance-none w-[240px] h-[24px] p-0 text-current bg-transparent border-0 shadow-none outline-none placeholder:text-muted-foreground"
           />
-          <div className="absolute right-1 top-1/2 transform -translate-y-1/2 pointer-events-none text-current">
-            <ChatSearch className="w-5 h-5" />
-          </div>
         </div>
       </div>
+      <button
+        className="text-current cursor-pointer"
+        aria-label="search"
+        type="button"
+      >
+        <ChatSearch className="w-5 h-5" />
+      </button>
     </div>
   );
 };
