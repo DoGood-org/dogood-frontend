@@ -3,11 +3,11 @@
 import { Account } from '@/components';
 import { navigationStore } from '@/zustand/stores/navigationStore';
 import React from 'react';
-import { ChatView } from '../chat/ChatView';
+import { Chat } from '@/components/account/chatPage/Chat';
 
 const pages = {
   Account: <Account />,
-  Chat: <ChatView />,
+  Chat: <Chat />,
   Map: <div>Map</div>,
   Goals: <div>Goals</div>,
   Settings: <div>Settings</div>,

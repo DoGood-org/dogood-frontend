@@ -3,11 +3,12 @@
 import { useDeviceType } from '@/hooks/useDeviceType';
 import { ChatCardViewModel, MessageViewModel } from '@/types/viewModels';
 import { useState } from 'react';
-import { ChatCardsList } from './ChatCard/ChatCardsList';
+import { ChatCardsList } from '@/components/account/chatPage/ChatCard/ChatCardsList';
 import { ChatMessageList } from './ChatMessage/ChatMessagesList';
 import { ChatSearchInput } from './ChatSearchInput';
+import { Section } from '@/components/ui/Section';
 
-export const ChatView: React.FC = () => {
+export const Chat: React.FC = () => {
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
   const device = useDeviceType();
 
@@ -126,59 +127,65 @@ export const ChatView: React.FC = () => {
   const isMobileOrTablet = device === 'sm' || device === 'md';
 
   return (
-    <div className="flex w-[338px] items-centr justify-center">
-      {isMobileOrTablet ? (
-        selectedChatId ? (
-          <div className="w-full flex flex-col justify-center">
-            <ChatSearchInput
-              selectedName={selectedChat ? selectedChat.userNickname : ''}
-              lastMessageTime={selectedChat ? selectedChat.lastMessageDate : ''}
-              lastOnline={selectedChat ? selectedChat.lastMessageDate : ''}
-              showBackButton={isMobileOrTablet}
-              onBack={() => setSelectedChatId(null)}
-              onSearch={(query) => {
-                console.log('Шукати:', query);
-              }}
-            />
-            <div className="border-b mt-5"></div>
-            <ChatMessageList messages={filteredMessages} />
-          </div>
+    <Section withContainer={false}>
+      <div className="p-2 bg-text-gray">
+        {isMobileOrTablet ? (
+          selectedChatId ? (
+            <div className="w-full flex flex-col justify-center">
+              <ChatSearchInput
+                selectedName={selectedChat ? selectedChat.userNickname : ''}
+                lastMessageTime={
+                  selectedChat ? selectedChat.lastMessageDate : ''
+                }
+                lastOnline={selectedChat ? selectedChat.lastMessageDate : ''}
+                showBackButton={isMobileOrTablet}
+                onBack={() => setSelectedChatId(null)}
+                onSearch={(query) => {
+                  console.log('Шукати:', query);
+                }}
+              />
+              <div className="border-b border-b-foreground mt-5"></div>
+              <ChatMessageList messages={filteredMessages} />
+            </div>
+          ) : (
+            <div className="w-full flex flex-col">
+              <ChatCardsList
+                chats={mockChats}
+                selectedChatId={selectedChatId}
+                onSelectChat={setSelectedChatId}
+              />
+            </div>
+          )
         ) : (
-          <div className="w-full flex flex-col">
-            <ChatCardsList
-              chats={mockChats}
-              selectedChatId={selectedChatId}
-              onSelectChat={setSelectedChatId}
-            />
-          </div>
-        )
-      ) : (
-        // Desktop
-        <>
-          <div className="w-1/3 flex flex-col border-r">
-            <ChatCardsList
-              chats={mockChats}
-              selectedChatId={selectedChatId}
-              onSelectChat={setSelectedChatId}
-            />
-          </div>
-          <div className="w-2/3">
-            <ChatMessageList messages={filteredMessages} />
-          </div>
-          <div>
-            <ChatSearchInput
-              selectedName={selectedChat ? selectedChat.userNickname : ''}
-              lastMessageTime={selectedChat ? selectedChat.lastMessageDate : ''}
-              lastOnline={selectedChat ? selectedChat.lastMessageDate : ''}
-              showBackButton={isMobileOrTablet}
-              onBack={() => setSelectedChatId(null)}
-              onSearch={(query) => {
-                console.log('Шукати:', query);
-              }}
-            />
-          </div>
-        </>
-      )}
-    </div>
+          // Desktop
+          <>
+            <div className="w-1/3 flex flex-col border-r">
+              <ChatCardsList
+                chats={mockChats}
+                selectedChatId={selectedChatId}
+                onSelectChat={setSelectedChatId}
+              />
+            </div>
+            <div className="w-2/3">
+              <ChatMessageList messages={filteredMessages} />
+            </div>
+            <div>
+              <ChatSearchInput
+                selectedName={selectedChat ? selectedChat.userNickname : ''}
+                lastMessageTime={
+                  selectedChat ? selectedChat.lastMessageDate : ''
+                }
+                lastOnline={selectedChat ? selectedChat.lastMessageDate : ''}
+                showBackButton={isMobileOrTablet}
+                onBack={() => setSelectedChatId(null)}
+                onSearch={(query) => {
+                  console.log('Шукати:', query);
+                }}
+              />
+            </div>
+          </>
+        )}
+      </div>
+    </Section>
   );
 };

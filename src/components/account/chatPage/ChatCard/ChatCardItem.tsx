@@ -23,7 +23,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
         alt={`${chat.userNickname} avatar`}
         width={64}
         height={64}
-        className="rounded-full object-cover bg-amber-700"
+        className="w-[64px] h-[64px] rounded-full object-cover bg-amber-700"
       />
       <div className="flex flex-col flex-grow">
         <div className="flex justify-between items-center mb-2">

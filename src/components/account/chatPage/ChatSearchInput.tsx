@@ -54,14 +54,16 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
           aria-label="Back"
           type="button"
         >
-          <Back className="w-5 h-5" />
-          <span className="text-base">Back</span>
+          <Back className="w-5 h-5 text-bg-icon mr-2" />
+          <span className="text-base text-foreground">Back</span>
         </button>
       )}
       <div className="flex items-center">
         <div className="flex flex-col">
           {selectedName && (
-            <p className="text-center mb-2 break-words">{selectedName}</p>
+            <p className="text-center mb-2 break-words font-semibold text-foreground">
+              {selectedName}
+            </p>
           )}
           <Input
             type="text"
@@ -69,7 +71,24 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={onKeyDown}
-            className="border-none focus:outline-none focus:ring-0 appearance-none w-[240px] h-[24px] p-0 text-current bg-transparent border-0 shadow-none outline-none placeholder:text-muted-foreground"
+            className="    
+            w-[240px]
+            h-[24px]
+            p-0
+            bg-transparent
+            text-current
+            placeholder:text-foreground
+            border-none
+            border-0
+            focus:border-none
+            focus:border-transparent
+            outline-none
+            focus:outline-none
+            ring-0
+            focus:ring-0
+            focus:ring-transparent
+            appearance-none
+            shadow-none"
           />
         </div>
       </div>
@@ -78,7 +97,7 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
         aria-label="search"
         type="button"
       >
-        <ChatSearch className="w-5 h-5" />
+        <ChatSearch className="w-5 h-5 text-bg-icon" />
       </button>
     </div>
   );
