@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "prepare": "husky install",
+    "prepare": "husky",
     "svgr": "node scripts/svgr-conditional.mjs",
     "svgr:watch": "chokidar \"src/assets/svg/*.svg\" -c \"npm run svgr\"",
     "dev:all": "concurrently \"npm run dev\" \"npm run svgr:watch\""

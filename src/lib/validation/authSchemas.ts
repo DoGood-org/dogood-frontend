@@ -18,3 +18,30 @@ export const loginSchema = yup.object({
   email: yup.string().email().required('Email is required'),
   password: yup.string().required('Password is required'),
 });
+
+export const forgotPasswordSchema = yup.object({
+  newPassword: yup.string().required('New password is required'),
+  repeatNewPassword: yup
+    .string()
+    .oneOf([yup.ref('newPassword')], 'Passwords must match')
+    .required('Repeat password is required'),
+});
+
+export const forgotEmailSchema = yup.object({
+  email: yup.string().email().required('Email is required'),
+});
+// export const forgotPasswordSchema = yup.object({
+//   newPassword: yup
+//     .string()
+//     .required('New password is required')
+//     .min(8, 'Password must be at least 8 characters')
+//     .matches(/[A-Z]/, 'At least one uppercase letter required')
+//     .matches(/[a-z]/, 'At least one lowercase letter required')
+//     .matches(/[0-9]/, 'At least one digit required')
+//     .matches(/[^a-zA-Z0-9]/, 'At least one special character required'),
+
+//   repeatPassword: yup
+//     .string()
+//     .oneOf([yup.ref('newPassword')], 'Passwords must match')
+//     .required('Repeat password is required'),
+// });

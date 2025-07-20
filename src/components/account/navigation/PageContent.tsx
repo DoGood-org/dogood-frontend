@@ -1,11 +1,12 @@
 'use client';
 
-import React from 'react';
+import { Account } from '@/components';
 import { navigationStore } from '@/zustand/stores/navigationStore';
+import React from 'react';
 import { ChatView } from '../chat/ChatView';
 
 const pages = {
-  Account: <div>Account</div>,
+  Account: <Account />,
   Chat: <ChatView />,
   Map: <div>Map</div>,
   Goals: <div>Goals</div>,

@@ -7,10 +7,12 @@ export const useScrollToActive = ({
   activeView,
   isTabletOrLarger,
   setRect,
+  // isEnabled = true,
 }: TabScrollProps): void => {
   useLayoutEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+    // if (!isEnabled) return;
 
     const activeBtn = container.querySelector(
       `[data-view="${activeView}"]`

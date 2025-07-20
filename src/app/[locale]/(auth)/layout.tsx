@@ -10,13 +10,18 @@ export default function AuthLayout({
       <Section
         withContainer={true}
         className="  
+        auth
         flex
-        px-[4px]
-        pt-[168px]
-    pb-[64px]
-    my-container
+        flex-col
+        items-center
+        justify-center
+        pt-[110px] 
+        
+        lg:pt-[126px]
+
+
     w-full
-    min-h-[calc(100dvh-188px)]
+    min-h-dvh
     "
       >
         {children}
