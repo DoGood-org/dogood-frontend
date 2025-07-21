@@ -41,5 +41,6 @@ export { default as Subtract } from './Subtract';
 export { default as Sun } from './Sun';
 export { default as TelIcon } from './TelIcon';
 export { default as User } from './User';
+export { default as UserLocate } from './UserLocate';
 export { default as UsersThree } from './UsersThree';
 export { default as Vector } from './Vector';
