@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimationTabs, Section } from '@/components';
+import { AnimationTabs, OrganizationList, Section } from '@/components';
 import { useMediaQuery } from '@/hooks';
 import { ContentProps } from '@/types';
 import { useLocale, useTranslations } from 'next-intl';
@@ -18,7 +18,7 @@ export const AccountContentPanel = (): JSX.Element => {
 
   const viewComponents: Record<string, React.ReactNode> = {
     task: <div>TaskComponent</div>,
-    organisation: <div>OrganisationComponent</div>,
+    organization: <OrganizationList />,
     reviews: <div>ReviewsComponent</div>,
   };
 

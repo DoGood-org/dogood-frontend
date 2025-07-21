@@ -72,12 +72,44 @@
       "owner": { "id": 3, "name": "Mitchell", "avatar": "/account/rev3.png" }
     }
   ],
-  "organisations": [
+  "organizations": [
     {
       "id": 1,
       "name": "Peace Volunteers",
-      "decription": "Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.",
-      "members": [{}, {}, {}, {}]
+      "description": "Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.",
+      "members": [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+      ],
+      "logo": "/account/org1.png"
+    },
+    {
+      "id": 2,
+      "name": "Peace Volunteers",
+      "description": "Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.",
+      "members": [{}, {}, {}, {}],
+      "logo": "/account/org2.png"
+    },
+    {
+      "id": 3,
+      "name": "Peace Volunteers",
+      "description": "Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.",
+      "members": [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+      "logo": "/account/amazon.png"
     }
   ]
 }
