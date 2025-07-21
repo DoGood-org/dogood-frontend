@@ -21,7 +21,6 @@ import { MarkerCategoryEnum } from '@/types/mapType';
 import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
-import { useTaskStore } from '@/zustand/stores/taskStore';
 import { AnimatePresence } from 'framer-motion';
 import { JSX, useEffect } from 'react';
 import { Filters } from '@/components/main/map/filters/Filters';

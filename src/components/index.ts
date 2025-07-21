@@ -69,7 +69,7 @@ export * from './main/map/ScrollAfterDelay';
 export * from './main/map/StoreMapInstance';
 export * from './main/map/UserLocation';
 export * from './main/map/config/baseLayerConfig';
-export * from './main/map/filters/AutoZoomOnDistanceFilter ';
+export * from './main/map/filters/AutoZoomOnDistanceFilter';
 export * from './main/map/filters/CategoryFilter';
 export * from './main/map/filters/CategoryLabel';
 export * from './main/map/filters/DistanceFilter';

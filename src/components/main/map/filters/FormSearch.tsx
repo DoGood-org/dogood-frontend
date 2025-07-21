@@ -68,7 +68,9 @@ export const FormSearch = ({
             onClick={onSearchButtonClick}
           >
             <Search
-              className={`absolute text-muted-foreground stroke-foreground w-6 h-6`}
+              className={
+                'absolute text-muted-foreground stroke-foreground w-6 h-6'
+              }
             />
           </Button>
           <input

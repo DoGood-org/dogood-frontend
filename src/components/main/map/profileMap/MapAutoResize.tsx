@@ -8,12 +8,12 @@ export const MapAutoResize = (): JSX.Element | null => {
 
   useEffect(() => {
     const container = map.getContainer();
-    const resizeObserver = new ResizeObserver(() => {
+    const resizeObserver = new ResizeObserver((): void => {
       map.invalidateSize();
     });
     resizeObserver.observe(container);
 
-    return () => resizeObserver.disconnect();
+    return (): void => resizeObserver.disconnect();
   }, []);
 
   return null;

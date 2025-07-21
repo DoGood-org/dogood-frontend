@@ -26,8 +26,8 @@ import React, { JSX, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 // import { Radius } from '@/components/main/map/Radius';
+import { AutoZoomOnDistanceFilter } from '@/components/main/map/filters/AutoZoomOnDistanceFilter';
 import { RadiusWatcher } from '@/components/main/map/RadiusWatcher';
-import { AutoZoomOnDistanceFilter } from '@/components/main/map/filters/AutoZoomOnDistanceFilter ';
 import { AnimatedDrawler } from '@/components/ui/AnimatedDrawler';
 
 export const Map: React.FC = (): JSX.Element => {

@@ -19,12 +19,12 @@ export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
 
-// export const getCategoryList = (t: TranslationFunction): CategoryItem[] => [
-//   { icon: MedicineSvg, title: t('medicineBtn'), color: 'bg-medicine' },
-//   { icon: NatureSvg, title: t('natureBtn'), color: 'bg-nature' },
-//   { icon: AnimalSvg, title: t('animalBtn'), color: 'bg-animal' },
-//   { icon: FoodSvg, title: t('foodBtn'), color: 'bg-food' },
-// ];
+export const getCategoryList = (t: TranslationFunction): CategoryItem[] => [
+  { icon: MedicineSvg, title: t('medicineBtn'), color: 'bg-medicine' },
+  { icon: NatureSvg, title: t('natureBtn'), color: 'bg-nature' },
+  { icon: AnimalSvg, title: t('animalBtn'), color: 'bg-animal' },
+  { icon: FoodSvg, title: t('foodBtn'), color: 'bg-food' },
+];
 
 export const getDistancesList = (t: TranslationFunction): IDistanceItem[] => [
   { value: '1', title: t('1km') },

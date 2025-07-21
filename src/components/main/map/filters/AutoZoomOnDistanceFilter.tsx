@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { JSX, useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { IDistanceFilter } from '@/types';
@@ -12,7 +12,7 @@ const distanceToZoomMap: Record<Exclude<IDistanceFilter, null>, number> = {
   '20': 11,
   '50': 10,
 };
-export const AutoZoomOnDistanceFilter = () => {
+export const AutoZoomOnDistanceFilter = (): JSX.Element | null => {
   const map = useMap();
   const distanceFilter = useFilterStore((state) => state.distanceFilter);
 
