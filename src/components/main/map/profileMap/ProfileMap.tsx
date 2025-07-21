@@ -148,7 +148,7 @@ export const ProfileMap = (): JSX.Element => {
   return (
     <AnimatePresence mode="wait">
       <ResponsiveMapWrpr key={fullscreenMap ? 'fullscreen' : 'default'}>
-        <div className="w-full h-full relative ">
+        <div className="w-full h-full relative">
           <Portal>
             <AnimatedModalWrapper
               isVisible={showGeolocationPopup}
@@ -296,7 +296,7 @@ export const ProfileMap = (): JSX.Element => {
             />
           </MapContainer>
           <div className="absolute flex items-start top-2 left-2 gap-10 z-[500]">
-            <div className="flex flex-col justify-center relative bg-card w-[180px] rounded-sm overflow-hidden">
+            <div className="flex flex-col justify-center relative bg-card w-[180px] rounded-sm">
               <FormSearch
                 className="p-0 bg-card border-b border-b-foreground"
                 inputClassName="h-10 pl-7 pr-14 overflow-hidden"
@@ -319,21 +319,25 @@ export const ProfileMap = (): JSX.Element => {
             exeptionSelector="search"
             direction="vertical"
             className={`
-            relative flex flex-col bg-card z-[1000]
-            w-full h-[675px] lg:mt-0
-            lg:absolute lg:top-32 lg:left-32 lg:w-[485px] lg:h-[722px] lg:rounded-md  overflow-y-hidden
-          `}
+             flex flex-col bg-card z-[1000]
+             absolute
+             top-20 left-2 w-[180px] h-full
+           `}
           >
             <AnimatePresence mode="wait">
               {activePanel === 'filters' && (
                 <motion.div
+                  className="w-full h-full top-10"
                   key="filters"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Filters tasks={noPaginatedTasks} />
+                  <Filters
+                    tasks={noPaginatedTasks}
+                    className="w-full bg-card z-[1000]"
+                  />
                 </motion.div>
               )}
 

@@ -15,7 +15,7 @@ export const TaskItem = ({
   distance,
 }: IExtendedITaskProps): JSX.Element => {
   const t = useTranslations('map');
-  const { toggleTaskDescription } = useTaskStore();
+  const { joinTask } = useTaskStore();
 
   return (
     <div className="min-h-[200px]">
@@ -35,7 +35,7 @@ export const TaskItem = ({
           variant="secondary"
           size="lg"
           onClick={() => {
-            toggleTaskDescription(id);
+            joinTask(id);
           }}
           className={`bg-card text-[14px] w-[82px] px-3 ${isSelected ? 'clickedBtn' : ''}`}
         >
