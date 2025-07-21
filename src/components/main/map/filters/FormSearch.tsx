@@ -7,18 +7,21 @@ import { useFilterStore } from '@/zustand/stores/filterStore';
 import { Button } from '@/components/ui/Button';
 
 type FormData = { search: string };
-
-export const FormSearch = (): JSX.Element => {
+type Props = {
+  className?: string;
+  inputClassName?: string;
+  leftSVGClassName?: string;
+  rightSVGClassName?: string;
+};
+export const FormSearch = ({
+  className,
+  inputClassName,
+  leftSVGClassName,
+  rightSVGClassName,
+}: Props): JSX.Element => {
   const { setSearchActive } = useMapStore();
   const { toggleFilters } = useMapStore();
   const { setSearchQuery } = useFilterStore();
-
-  const onButtonClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    e.stopPropagation();
-    toggleFilters();
-
-    e.nativeEvent.stopImmediatePropagation();
-  };
 
   const { register, watch, reset } = useForm<FormData>();
   const searchValue = watch('search');
@@ -31,6 +34,20 @@ export const FormSearch = (): JSX.Element => {
     return (): void => clearTimeout(handler);
   }, [searchValue, setSearchQuery, setSearchActive]);
 
+  const onSearchButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    e.stopPropagation();
+    setSearchQuery(searchValue || '');
+    e.nativeEvent.stopImmediatePropagation();
+  };
+  const onButtonClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    e.stopPropagation();
+    toggleFilters();
+
+    e.nativeEvent.stopImmediatePropagation();
+  };
+
   const handleClear = (): void => {
     reset({ search: '' });
     setSearchQuery('');
@@ -40,8 +57,20 @@ export const FormSearch = (): JSX.Element => {
   return (
     <div className="bg-card w-full " itemRef="search">
       <form onSubmit={(e) => e.preventDefault()} className="w-full">
-        <div className="relative p-3  overflow-hidden flex items-center justify-center lg:p-0 ">
-          <Search className="absolute left-5  text-muted-foreground stroke-foreground w-6 h-6 lg:w-[24px] lg:h-[24px]" />
+        <div
+          className={`relative overflow-hidden flex items-center justify-center ${className}`}
+        >
+          {' '}
+          <Button
+            variant="ghost"
+            size="icon"
+            className={`absolute z-1000 p-0 m-0 cursor-pointer text-foreground ${leftSVGClassName}`}
+            onClick={onSearchButtonClick}
+          >
+            <Search
+              className={`absolute text-muted-foreground stroke-foreground w-6 h-6`}
+            />
+          </Button>
           <input
             {...register('search')}
             name="search"
@@ -49,10 +78,10 @@ export const FormSearch = (): JSX.Element => {
             autoComplete="off"
             type="text"
             placeholder="Search.."
-            className="w-full h-12 px-12 text-base italic bg-background text-foreground rounded-sm
+            className={`w-full text-base italic bg-card text-foreground rounded-sm
         placeholder:font-normal placeholder:text-muted-foreground
         border-none outline-none focus:ring-0 focus:outline-none shadow-none
-        disabled:pointer-events-none disabled:opacity-50 lg:bg-card"
+        disabled:pointer-events-none disabled:opacity-50 lg:bg-card ${inputClassName}`}
             onBlur={(e) => {
               if (!e.target.value.trim()) setSearchActive(false);
             }}
@@ -62,11 +91,11 @@ export const FormSearch = (): JSX.Element => {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-0 m-0 cursor-pointer text-foreground"
+              className="absolute w-6 right-9 top-1/2 -translate-y-1/2 p-0 m-0 cursor-pointer text-foreground"
               onClick={handleClear}
             >
               <X
-                className="absolute z-25 right-13 w-5 h-5 cursor-pointer text-foreground"
+                className="absolute z-25 w-4 h-4 cursor-pointer text-foreground"
                 onClick={handleClear}
               />
             </Button>
@@ -74,7 +103,7 @@ export const FormSearch = (): JSX.Element => {
           <Button
             variant="ghost"
             size="icon"
-            className="absolute z-1000 right-6  p-0 m-0 cursor-pointer text-foreground"
+            className={`absolute z-1000 p-0 m-0 cursor-pointer text-foreground ${rightSVGClassName}`}
             onClick={onButtonClick}
           >
             <SlidersVertical className="w-6 h-6 stroke-foreground text-foreground" />

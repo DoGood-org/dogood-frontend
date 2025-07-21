@@ -84,7 +84,7 @@ export interface IPropsFilterPanel {
   selectedDistanceButtons: React.ReactElement[];
 }
 export type IExtendedCategoryFilter = MarkerCategoryEnum | 'all' | null;
-export type IDistanceFilter = '1' | '5' | '10' | '20' | '50' | null;
+export type IDistanceFilter = '1' | '3' | '5' | '10' | '20' | '50' | null;
 export interface IFilterStore {
   choosenCategories: IExtendedCategoryFilter[];
   distanceFilter: IDistanceFilter;

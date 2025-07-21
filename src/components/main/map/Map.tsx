@@ -1,6 +1,5 @@
 'use client';
 import {
-  AnimatedDrawler,
   ButtonOpenTasks,
   Container,
   CustomControlContent,
@@ -28,6 +27,8 @@ import { useInView } from 'react-intersection-observer';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 // import { Radius } from '@/components/main/map/Radius';
 import { RadiusWatcher } from '@/components/main/map/RadiusWatcher';
+import { AutoZoomOnDistanceFilter } from '@/components/main/map/filters/AutoZoomOnDistanceFilter ';
+import { AnimatedDrawler } from '@/components/ui/AnimatedDrawler';
 
 export const Map: React.FC = (): JSX.Element => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
@@ -143,7 +144,8 @@ export const Map: React.FC = (): JSX.Element => {
             doubleClickZoom={false}
             className="h-full w-full cursor-default relative"
             zoom={13}
-            minZoom={1}
+            minZoom={10}
+            maxZoom={15}
             zoomControl={false}
             attributionControl={false}
             key="default-location"
@@ -153,6 +155,8 @@ export const Map: React.FC = (): JSX.Element => {
             <StoreMapInstance mapKey="main" />
             <UserLocation />
             <RadiusWatcher />
+            <AutoZoomOnDistanceFilter />
+
             <TileLayer
               url={baseLayerConfig[activeLayer].url}
               maxZoom={18}
@@ -276,7 +280,12 @@ export const Map: React.FC = (): JSX.Element => {
               isOpen={taskListIsOpen}
               className="mx-auto mb-2 bg-card lg:mb-0 lg:absolute lg:z-50  lg:h-10 lg:top-12 lg:border-t lg:border-t-foreground  lg:w-full  lg:hover:border-t-foreground"
             />
-            <FormSearch />
+            <FormSearch
+              className="p-3 lg:p-0"
+              inputClassName="h-12 px-12"
+              leftSVGClassName="left-5 "
+              rightSVGClassName="right-6"
+            />
           </div>
         </div>
 

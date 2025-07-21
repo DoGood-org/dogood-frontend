@@ -48,6 +48,7 @@ type TMapState = {
   radius: number;
   setRadius: (radius: number) => void;
   layerDropIsOpen: boolean;
+  fullscreenMap: boolean;
 
   hasAgreedToLocation: boolean | null;
   showGeolocationPopup: boolean;
@@ -85,6 +86,8 @@ type TMapActions = {
   acceptLocationSharing: () => Promise<void>;
   declineLocationSharing: () => void;
 
+  toggleFullscreenMap: (fullscreen: boolean) => void;
+
   toggleTaskList: () => void;
   toggleFilters: () => void;
   setSearchActive: (active: boolean) => void;
@@ -107,6 +110,9 @@ export const useMapStore = create<TMapState & TMapActions>()(
       leafletComponents: null,
       activeLayer: EnumMapLayers.GoogleMaps,
       defaultLayers: [],
+      fullscreenMap: false,
+      toggleFullscreenMap: () =>
+        set((state) => ({ fullscreenMap: !state.fullscreenMap })),
 
       layerDropIsOpen: false,
       mapInstances: {

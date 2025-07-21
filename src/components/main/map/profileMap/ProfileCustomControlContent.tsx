@@ -1,23 +1,23 @@
 'use client';
 import CustomLayerController from '@/components/main/map/CustomLayerController';
 import { ButtonFullScreen } from '@/components/main/map/profileMap/ButtonFullScreen';
-import { ButtonLocation } from '@/components/main/map/profileMap/ButtonLocation';
-import { CustomControlZoom } from '@/components/main/map/profileMap/CustomControlZoom';
-import { AnimatedDrawler } from '@/components/main/map/tasksPanel/AnimatedDrawler';
+import { ProfileButtonLocation } from '@/components/main/map/profileMap/ProfileButtonLocation';
+import { ProfileCustomControlZoom } from '@/components/main/map/profileMap/ProfileCustomControlZoom';
+import { AnimatedDrawler } from '@/components/ui/AnimatedDrawler';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { JSX } from 'react';
 
-export const CustomControlContent = (): JSX.Element => {
+export const ProfileCustomControlContent = (): JSX.Element => {
   const layerDropIsOpen = useMapStore((state) => state.layerDropIsOpen);
   const toggleLayerDrop = useMapStore((state) => state.toggleLayerDrop);
 
   return (
     <>
       <div className="flex w-[300px] gap-5 justify-end items-end">
-        <CustomControlZoom />
+        <ProfileCustomControlZoom />
         <div className="flex flex-col gap-2 bottom-0 left-0">
           <ButtonFullScreen />
-          <ButtonLocation />
+          <ProfileButtonLocation />
         </div>
       </div>
 
