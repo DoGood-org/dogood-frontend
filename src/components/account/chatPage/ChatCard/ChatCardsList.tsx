@@ -25,7 +25,7 @@ export const ChatCardsList: React.FC<ChatCardsListProps> = ({
   onSelectChat,
 }) => {
   return (
-    <ul className="flex flex-col gap-4">
+    <ul className="flex flex-col gap-6 md:gap4">
       {mockChats.map((chat) => (
         <ChatCardItem
           key={chat.id}

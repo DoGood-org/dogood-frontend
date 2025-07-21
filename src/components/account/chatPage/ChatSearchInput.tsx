@@ -46,7 +46,7 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
     : '';
 
   return (
-    <div className="flex w-[338px] items-center">
+    <div className="flex items-center justify-between">
       {showBackButton && (
         <button
           onClick={onBack}
@@ -61,7 +61,7 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
       <div className="flex items-center">
         <div className="flex flex-col">
           {selectedName && (
-            <p className="text-center mb-2 break-words font-semibold text-foreground">
+            <p className="text-center mb-2 break-words font-semibold md:font-bold text-foreground">
               {selectedName}
             </p>
           )}

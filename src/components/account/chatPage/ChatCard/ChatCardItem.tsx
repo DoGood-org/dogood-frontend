@@ -1,4 +1,5 @@
 import EllipsisIcon from '@/components/icons/EllipsisIcon';
+import { cn } from '@/lib/utils';
 import { ChatCardProps } from '@/types/chatType';
 
 import Image from 'next/image';
@@ -11,23 +12,24 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
   return (
     <li
       onClick={() => onSelect(chat.id)}
-      className={`relative flex items-center gap-4 py-5 px-6 bg-text-gray rounded cursor-pointer ${
-        isSelected ? 'border-2 border-green-500' : 'hover:border-green-500'
-      }`}
+      className={cn(
+        'relative flex items-center gap-4 py-5 px-6 bg-tag rounded-sm cursor-pointer border',
+        isSelected ? 'border-border' : 'border-transparent hover:border-border'
+      )}
     >
       <div className="absolute top-1 right-3 mb-2">
-        <EllipsisIcon className="w-5 h-5 text-icon-color hover:text-gray-600 cursor-pointer" />
+        <EllipsisIcon className="w-5 h-5 text-icon-color cursor-pointer" />
       </div>
       <Image
         src={chat.userAvatarUrl}
         alt={`${chat.userNickname} avatar`}
         width={64}
         height={64}
-        className="w-[64px] h-[64px] rounded-full object-cover bg-amber-700"
+        className="w-[64px] h-[64px] rounded-full object-cover bg-white"
       />
       <div className="flex flex-col flex-grow">
         <div className="flex justify-between items-center mb-2">
-          <p className="text-foreground text-base font-semibold truncate">
+          <p className="text-white font-semibold text-base truncate">
             {chat.userNickname}
           </p>
           <span className="text-white text-sm whitespace-nowrap">
