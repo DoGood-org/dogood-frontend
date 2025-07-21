@@ -29,7 +29,7 @@ export const Chat: React.FC = () => {
     },
     {
       id: '3',
-      userNickname: 'Andrii',
+      userNickname: 'Andriy',
       lastMessageText: 'Чекаю на відповідь!',
       lastMessageDate: '2025-07-15',
       userAvatarUrl: '/avatars/andrii.png',
@@ -44,6 +44,7 @@ export const Chat: React.FC = () => {
   ];
 
   const mockMessages: MessageViewModel[] = [
+    // Chat 1: Ivan
     {
       id: 'm1',
       chatId: '1',
@@ -63,6 +64,44 @@ export const Chat: React.FC = () => {
       isCurrentUser: false,
     },
     {
+      id: 'm9',
+      chatId: '1',
+      senderNickname: 'Ivan',
+      senderAvatarUrl: '/avatars/ivan.png',
+      text: 'Чи можеш сьогодні поговорити?',
+      createdAt: '2025-07-17T09:10:00Z',
+      isCurrentUser: true,
+    },
+    {
+      id: 'm10',
+      chatId: '1',
+      senderNickname: 'Oksana',
+      senderAvatarUrl: '/avatars/oksana.png',
+      text: 'Так, після обіду буде час.',
+      createdAt: '2025-07-17T09:15:00Z',
+      isCurrentUser: false,
+    },
+    {
+      id: 'm11',
+      chatId: '1',
+      senderNickname: 'Ivan',
+      senderAvatarUrl: '/avatars/ivan.png',
+      text: 'Супер, тоді на 15:00?',
+      createdAt: '2025-07-17T09:20:00Z',
+      isCurrentUser: true,
+    },
+    {
+      id: 'm12',
+      chatId: '1',
+      senderNickname: 'Oksana',
+      senderAvatarUrl: '/avatars/oksana.png',
+      text: 'Підходить!',
+      createdAt: '2025-07-17T09:25:00Z',
+      isCurrentUser: false,
+    },
+
+    // Chat 2: Oksana
+    {
       id: 'm3',
       chatId: '2',
       senderNickname: 'Oksana',
@@ -80,6 +119,44 @@ export const Chat: React.FC = () => {
       createdAt: '2025-07-16T14:02:00Z',
       isCurrentUser: false,
     },
+    {
+      id: 'm13',
+      chatId: '2',
+      senderNickname: 'Oksana',
+      senderAvatarUrl: '/avatars/oksana.png',
+      text: 'Чудово, тоді до зустрічі!',
+      createdAt: '2025-07-16T14:05:00Z',
+      isCurrentUser: true,
+    },
+    {
+      id: 'm14',
+      chatId: '2',
+      senderNickname: 'Ivan',
+      senderAvatarUrl: '/avatars/ivan.png',
+      text: 'До зустрічі!',
+      createdAt: '2025-07-16T14:10:00Z',
+      isCurrentUser: false,
+    },
+    {
+      id: 'm15',
+      chatId: '2',
+      senderNickname: 'Oksana',
+      senderAvatarUrl: '/avatars/oksana.png',
+      text: 'Я візьму документи.',
+      createdAt: '2025-07-16T14:15:00Z',
+      isCurrentUser: true,
+    },
+    {
+      id: 'm16',
+      chatId: '2',
+      senderNickname: 'Ivan',
+      senderAvatarUrl: '/avatars/ivan.png',
+      text: 'Окей, дякую!',
+      createdAt: '2025-07-16T14:20:00Z',
+      isCurrentUser: false,
+    },
+
+    // Chat 3: Andrii
     {
       id: 'm5',
       chatId: '3',
@@ -99,6 +176,44 @@ export const Chat: React.FC = () => {
       isCurrentUser: false,
     },
     {
+      id: 'm17',
+      chatId: '3',
+      senderNickname: 'Andrii',
+      senderAvatarUrl: '/avatars/andrii.png',
+      text: 'Потрібно обговорити дедлайни.',
+      createdAt: '2025-07-15T12:10:00Z',
+      isCurrentUser: true,
+    },
+    {
+      id: 'm18',
+      chatId: '3',
+      senderNickname: 'Ivan',
+      senderAvatarUrl: '/avatars/ivan.png',
+      text: 'Добре, сьогодні о 17:00 зручно?',
+      createdAt: '2025-07-15T12:15:00Z',
+      isCurrentUser: false,
+    },
+    {
+      id: 'm19',
+      chatId: '3',
+      senderNickname: 'Andrii',
+      senderAvatarUrl: '/avatars/andrii.png',
+      text: 'Так, підходить.',
+      createdAt: '2025-07-15T12:20:00Z',
+      isCurrentUser: true,
+    },
+    {
+      id: 'm20',
+      chatId: '3',
+      senderNickname: 'Ivan',
+      senderAvatarUrl: '/avatars/ivan.png',
+      text: 'Тоді домовились!',
+      createdAt: '2025-07-15T12:25:00Z',
+      isCurrentUser: false,
+    },
+
+    // Chat 4: Maria
+    {
       id: 'm7',
       chatId: '4',
       senderNickname: 'Maria',
@@ -114,6 +229,42 @@ export const Chat: React.FC = () => {
       senderAvatarUrl: '/avatars/ivan.png',
       text: 'Отримав, дякую!',
       createdAt: '2025-07-14T16:10:00Z',
+      isCurrentUser: false,
+    },
+    {
+      id: 'm21',
+      chatId: '4',
+      senderNickname: 'Maria',
+      senderAvatarUrl: '/avatars/maria.png',
+      text: 'Якщо щось буде потрібно, дай знати.',
+      createdAt: '2025-07-14T16:15:00Z',
+      isCurrentUser: true,
+    },
+    {
+      id: 'm22',
+      chatId: '4',
+      senderNickname: 'Ivan',
+      senderAvatarUrl: '/avatars/ivan.png',
+      text: 'Добре, перевірю сьогодні.',
+      createdAt: '2025-07-14T16:20:00Z',
+      isCurrentUser: false,
+    },
+    {
+      id: 'm23',
+      chatId: '4',
+      senderNickname: 'Maria',
+      senderAvatarUrl: '/avatars/maria.png',
+      text: 'Чекаю на фідбек.',
+      createdAt: '2025-07-14T16:25:00Z',
+      isCurrentUser: true,
+    },
+    {
+      id: 'm24',
+      chatId: '4',
+      senderNickname: 'Ivan',
+      senderAvatarUrl: '/avatars/ivan.png',
+      text: 'Дякую, дам відповідь завтра.',
+      createdAt: '2025-07-14T16:30:00Z',
       isCurrentUser: false,
     },
   ];
@@ -134,10 +285,10 @@ export const Chat: React.FC = () => {
 
   return (
     <Section withContainer={false}>
-      <div className="p-2 bg-background text-foreground lg:flep-2 lg:flex lg:gap-[38px] lg:px-20 lg:h-[856px]">
+      <div className="p-2 bg-background text-foreground h-[860px] pb-[60px] lg:flep-2 lg:flex lg:gap-[38px] lg:px-20">
         {isMobileOrTablet ? (
           selectedChatId ? (
-            <div className="w-full flex flex-col justify-center bg-text-gray md:bg-[#CFCFCF] py-5 px-2">
+            <div className="w-full flex flex-col justify-center bg-text-gray h-screen md:h-[860px] md:bg-[#CFCFCF] dark:bg-[#393939] py-5 px-2">
               <ChatSearchInput
                 selectedName={selectedChat ? selectedChat.userNickname : ''}
                 lastMessageTime={
@@ -151,7 +302,9 @@ export const Chat: React.FC = () => {
                 }}
               />
               <div className="border border-foreground mt-5 lg:border-none lg:mt-0"></div>
-              <ChatMessageList messages={filteredMessages} />
+              <div className="flex-1 overflow-y-auto pb-14 mt-2">
+                <ChatMessageList messages={filteredMessages} />
+              </div>
             </div>
           ) : (
             <div className="w-full flex flex-col">
@@ -172,7 +325,7 @@ export const Chat: React.FC = () => {
                 onSelectChat={setSelectedChatId}
               />
             </div>
-            <div className="w-2/3 flex flex-col text-foreground p-2 lg:bg-[#CFCFCF] lg:p-6">
+            <div className="w-2/3 flex flex-col text-foreground rounded-sm p-2 lg:bg-[#CFCFCF] dark:bg-[#393939] lg:p-6">
               <ChatSearchInput
                 selectedName={selectedChat ? selectedChat.userNickname : ''}
                 lastMessageTime={
@@ -185,8 +338,8 @@ export const Chat: React.FC = () => {
                   console.log('Шукати:', query);
                 }}
               />
-              <div className="border border-foreground mt-5"></div>
-              <div className="flex-1 overflow-y-auto mt-2">
+              <div className="border border-foreground mt-5 mb-12"></div>
+              <div className="flex-1 overflow-y-auto custom-scrollbar-tasks mt-2">
                 <ChatMessageList messages={filteredMessages} />
               </div>
             </div>

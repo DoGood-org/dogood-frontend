@@ -61,7 +61,7 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
       <div className="flex items-center">
         <div className="flex flex-col">
           {selectedName && (
-            <p className="text-center mb-2 break-words font-semibold md:font-bold text-foreground">
+            <p className="text-center mb-2 break-words font-semibold text-foreground md:font-bold lg:text-left">
               {selectedName}
             </p>
           )}

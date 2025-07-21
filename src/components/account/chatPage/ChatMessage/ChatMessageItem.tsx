@@ -7,7 +7,9 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
     <li
       className={cn(
         'flex items-start gap-4 p-5 relative w-[314px] md:w-[606px] rounded-sm mx-6',
-        message.isCurrentUser ? 'ml-auto bg-[#3D8940]' : 'mr-auto bg-tag'
+        message.isCurrentUser
+          ? 'ml-auto bg-[#3D8940] text-[#010101] dark:text-white'
+          : 'mr-auto bg-tag text-white dark:bg-[#DCDCDC] dark:text-[#010101]'
       )}
     >
       <div className={`${message.isCurrentUser ? 'order-2' : 'order-1'}`}>
@@ -26,8 +28,8 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
           message.isCurrentUser ? 'order-1' : 'order-2'
         )}
       >
-        <p className="text-base text-foreground">{message.text}</p>
-        <span className="text-xs self-end text-foreground mt-3">
+        <p className="text-base">{message.text}</p>
+        <span className="text-xs self-end mt-3">
           {message.createdAt
             ? new Date(message.createdAt).toLocaleTimeString('uk-UA', {
                 hour: '2-digit',

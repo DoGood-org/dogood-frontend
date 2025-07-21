@@ -13,12 +13,12 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
     <li
       onClick={() => onSelect(chat.id)}
       className={cn(
-        'relative flex items-center gap-4 py-5 px-6 bg-tag rounded-sm cursor-pointer border',
+        'relative flex items-center gap-4 py-5 px-6 bg-tag dark:bg-[#393939] rounded-sm cursor-pointer border',
         isSelected ? 'border-border' : 'border-transparent hover:border-border'
       )}
     >
       <div className="absolute top-1 right-3 mb-2">
-        <EllipsisIcon className="w-5 h-5 text-icon-color cursor-pointer" />
+        <EllipsisIcon className="w-5 h-5 text-white cursor-pointer" />
       </div>
       <Image
         src={chat.userAvatarUrl}
