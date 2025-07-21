@@ -11,7 +11,6 @@ import {
   UserLocation,
 } from '@/components';
 import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
-import { FilterBadges } from '@/components/main/map/filters/FilterBadges';
 import { FormSearch } from '@/components/main/map/filters/FormSearch';
 import { MapClickHandler } from '@/components/main/map/MapClicks';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
@@ -279,7 +278,6 @@ export const Map: React.FC = (): JSX.Element => {
             />
             <FormSearch />
           </div>
-          <FilterBadges />
         </div>
 
         <AnimatedDrawler
