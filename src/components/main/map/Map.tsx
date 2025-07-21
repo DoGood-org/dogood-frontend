@@ -330,7 +330,11 @@ export const Map: React.FC = (): JSX.Element => {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
               >
-                <Filters tasks={noPaginatedTasks} />
+                <Filters
+                  tasks={noPaginatedTasks}
+                  className="
+                absolute z-[1000] bg-card h-full lg:top-0 lg:left-0 lg:w-[487px]  lg:px-[46px] lg:py-8 rounded-sm"
+                />
               </motion.div>
             )}
 
