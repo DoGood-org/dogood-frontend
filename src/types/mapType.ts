@@ -51,7 +51,15 @@ export interface TCustomForm {
   control: L.Control;
   data?: IFormLocation;
 }
-export type TCustomMarker = LatLngLiteral & { category?: MarkerCategoryEnum };
+export type TCustomMarker = LatLngLiteral & {
+  id: string;
+  title?: string;
+  description?: string;
+  icon?: Icon | null;
+  category?: MarkerCategoryEnum;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
 
 export interface SelectedLocationProps {
   center: LatLngLiteral;
@@ -83,7 +91,7 @@ export interface IFilterStore {
   searchQuery: string;
   sortBy: 'title' | 'distance';
 }
-export type MapClickType = 'left' | 'right';
+export type MapClickType = 'left' | 'right' | 'double';
 
 export interface IMapClickHandlerProps {
   onClick: (coords: LatLngLiteral, clickType: MapClickType) => void;
