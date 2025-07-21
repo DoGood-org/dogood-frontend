@@ -11,7 +11,6 @@ import {
   UserLocation,
 } from '@/components';
 import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
-import { FilterBadges } from '@/components/main/map/filters/FilterBadges';
 import { FormSearch } from '@/components/main/map/filters/FormSearch';
 import { MapClickHandler } from '@/components/main/map/MapClicks';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
@@ -24,7 +23,7 @@ import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { JSX, useEffect, useRef } from 'react';
+import React, { JSX, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 // import { Radius } from '@/components/main/map/Radius';
@@ -36,7 +35,6 @@ export const Map: React.FC = (): JSX.Element => {
     triggerOnce: true,
     delay: 100,
   });
-  const markerRef = useRef<L.Marker | null>(null);
 
   const {
     mapIcons,
@@ -51,12 +49,7 @@ export const Map: React.FC = (): JSX.Element => {
     declineLocationSharing,
     showGeolocationPopup,
     checkLocationPermission,
-    locationError,
-
-    offerPinLocation,
-    setOfferPinLocation,
     radius,
-    addMarker,
     taskListIsOpen,
     toggleTaskList,
     activePanel,
@@ -69,40 +62,36 @@ export const Map: React.FC = (): JSX.Element => {
     searchIsActive,
   } = useMapStore();
   const { choosenCategories, categories } = useFilterStore();
-  const { tasks, setTasks } = useTaskStore();
+  const { tasksByKey, setTasksByKey } = useTaskStore();
   const { setCategories } = useFilterStore();
-  useEffect(() => {
-    if (!isInView) return;
-
-    const run = async (): Promise<void> => {
-      checkLocationPermission();
-
-      if (locationError) {
-        setOfferPinLocation(true);
-      }
-    };
-
-    run();
-  }, [isInView, checkLocationPermission, setOfferPinLocation]);
-
   useEffect(() => {
     initMap('main');
   }, []);
+
+  useEffect(() => {
+    if (!isInView) return;
+    const run = async (): Promise<void> => {
+      checkLocationPermission();
+    };
+    run();
+  }, [isInView]);
 
   // Imitate backend data generation
   // This should be replaced with actual data fetching logic
   // For now, we generate tasks based on the user's location
 
+  const key = userLocation
+    ? `${radius}:${userLocation.lat.toFixed(4)}:${userLocation.lng.toFixed(4)}`
+    : `${radius}:unknown:unknown`;
+
   useEffect(() => {
-    if (!userLocation || radius === 0) return;
+    if (!userLocation) return;
+    if (tasksByKey[key]) return;
 
     const newTasks = generateTasks(userLocation.lat, userLocation.lng, radius);
-    const oldTasks = tasks;
-
-    const updatedTasks = [...oldTasks, ...newTasks];
-    setTasks(updatedTasks);
+    setTasksByKey(key, newTasks);
     const categories = Array.from(
-      new Set(updatedTasks.flatMap((task) => task.category))
+      new Set(newTasks.flatMap((task) => task.category))
     );
     setCategories(categories);
   }, [userLocation, radius]);
@@ -153,7 +142,7 @@ export const Map: React.FC = (): JSX.Element => {
             style={{ height: '100%', width: '100%' }}
             doubleClickZoom={false}
             className="h-full w-full cursor-default relative"
-            zoom={14}
+            zoom={13}
             minZoom={1}
             zoomControl={false}
             attributionControl={false}
@@ -171,20 +160,13 @@ export const Map: React.FC = (): JSX.Element => {
             />
             {/* Click handler */}
             <MapClickHandler
-              allowClickToAddMarker
               onClick={(coords, clickType) => {
                 if (clickType === 'right') {
                   setClickedCoords(coords);
                   setShowOptionsMenu(true);
                 }
-                if (clickType === 'left') {
-                  closeOptionsMenu();
-                }
               }}
-              clickOptions={{
-                setMe: (coords) => setUserLocation(coords),
-                setMyMarker: (coords) => addMarker(coords),
-              }}
+              allowClickToAddMarker
             />
             {/* Task markers */}
             {noPaginatedTasks.map((task) => {
@@ -230,6 +212,11 @@ export const Map: React.FC = (): JSX.Element => {
                       lat: newCoords.lat,
                       lng: newCoords.lng,
                     });
+                    console.log(
+                      'User location updated:',
+                      newCoords.lat.toFixed(5),
+                      newCoords.lng.toFixed(5)
+                    );
                   },
                 }}
               >
@@ -248,14 +235,22 @@ export const Map: React.FC = (): JSX.Element => {
             {/* Options menu for right click */}
             {showOptionsMenu && clickedCoords && (
               <Popup
+                key={`${clickedCoords.lat}-${clickedCoords.lng}`}
                 position={clickedCoords}
-                eventHandlers={{ remove: closeOptionsMenu }}
-                closeOnClick={false}
-                autoPan={false}
+                closeOnClick={true}
+                autoPan={true}
+                closeButton={true}
+                eventHandlers={{
+                  remove: () => {
+                    setShowOptionsMenu(false);
+                    setClickedCoords(null);
+                  },
+                }}
               >
                 <div>
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setUserLocation(clickedCoords);
                       closeOptionsMenu();
                     }}
@@ -264,33 +259,6 @@ export const Map: React.FC = (): JSX.Element => {
                   </button>
                 </div>
               </Popup>
-            )}
-            {offerPinLocation && defaultLocation && mapIcons.myPosition && (
-              <Marker
-                ref={(ref) => {
-                  if (ref) markerRef.current = ref;
-                }}
-                position={clickedCoords || defaultLocation}
-                icon={mapIcons.myPosition}
-                draggable
-                zIndexOffset={10000}
-                riseOnHover
-                riseOffset={1000}
-                title="Drag me to change your location"
-                eventHandlers={{
-                  click: () => {
-                    setClickedCoords(defaultLocation);
-                    setShowOptionsMenu(true);
-                  },
-                  dragstart: () => {
-                    setClickedCoords(defaultLocation);
-                  },
-                  dragend: (event) => {
-                    const { lat, lng } = event.target.getLatLng();
-                    setClickedCoords({ lat, lng });
-                  },
-                }}
-              ></Marker>
             )}
 
             {/* Custom controls */}
@@ -310,7 +278,6 @@ export const Map: React.FC = (): JSX.Element => {
             />
             <FormSearch />
           </div>
-          <FilterBadges />
         </div>
 
         <AnimatedDrawler

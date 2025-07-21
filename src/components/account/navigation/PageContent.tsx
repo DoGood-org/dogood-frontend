@@ -1,12 +1,14 @@
 'use client';
 
-import React from 'react';
+import { Account } from '@/components';
+import { ProfileMap } from '@/components/main/map/profileMap/ProfileMap';
 import { navigationStore } from '@/zustand/stores/navigationStore';
+import React from 'react';
 
 const pages = {
-  Account: <div>Account</div>,
+  Account: <Account />,
   Chat: <div>Chat</div>,
-  Map: <div>Map</div>,
+  Map: <ProfileMap />,
   Goals: <div>Goals</div>,
   Settings: <div>Settings</div>,
 };

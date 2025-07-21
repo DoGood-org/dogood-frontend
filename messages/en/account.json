@@ -1,0 +1,19 @@
+{
+  "description": "Description",
+  "accountButton": "Learn more",
+  "contentViews": [
+    {
+      "id": "task",
+      "view": "My Task"
+    },
+    {
+      "id": "organisation",
+      "view": "Organization",
+      "people": "people"
+    },
+    {
+      "id": "reviews",
+      "view": "Reviews"
+    }
+  ]
+}

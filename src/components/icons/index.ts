@@ -36,6 +36,7 @@ export { default as RiInstagramLine } from './RiInstagramLine';
 export { default as RiTwitterXLine } from './RiTwitterXLine';
 export { default as Search } from './Search';
 export { default as Settings } from './Settings';
+export { default as Star } from './Star';
 export { default as Subtract } from './Subtract';
 export { default as Sun } from './Sun';
 export { default as TelIcon } from './TelIcon';
