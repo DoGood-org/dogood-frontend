@@ -111,6 +111,7 @@ export * from './ui/Input';
 export * from './ui/LinkWithArrow';
 export * from './ui/Rating';
 export * from './ui/Section';
+export * from './ui/Spinner';
 export * from './ui/StarItem';
 export * from './ui/portal/AnimatedModalWrapper';
 export * from './ui/portal/Portal';

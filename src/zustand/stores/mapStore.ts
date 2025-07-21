@@ -223,7 +223,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
           showGeolocationPopup: false,
           clickedCoords: null,
         }),
-      flyToCoords: (coords, zoom = 15) => {
+      flyToCoords: (coords, zoom = 15): void => {
         const map = get().mapInstances?.main;
         if (!map) {
           return;
