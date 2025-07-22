@@ -6,7 +6,7 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
   return (
     <li
       className={cn(
-        'flex items-start gap-4 p-5 relative rounded-sm mx-8',
+        'flex items-start gap-4 p-5 relative rounded-sm',
         message.isCurrentUser
           ? 'ml-auto bg-[#3D8940] text-[#010101] dark:text-white'
           : 'mr-auto bg-tag text-white dark:bg-[#DCDCDC] dark:text-[#010101]'

@@ -54,8 +54,10 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
           aria-label="Back"
           type="button"
         >
-          <Back className="w-5 h-5 text-bg-icon mr-2" />
-          <span className="text-base text-foreground">Back</span>
+          <Back className="w-5 h-5 text-bg-icon mr-2 hover:text-btn-hover active:text-btn-active" />
+          <span className="text-base text-foreground hover:text-btn-hover active:text-btn-active">
+            Back
+          </span>
         </button>
       )}
       <div className="flex items-center">

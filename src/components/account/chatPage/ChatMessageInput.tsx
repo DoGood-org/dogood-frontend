@@ -33,8 +33,11 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         w-full
         h-[48px]
         py-3 px-2 
-        placeholder:text-white
-        bg-text-gray
+        placeholder:text-[#010101]     
+        md:placeholder:text-white 
+        placeholder:text-base        
+        bg-white
+        md:bg-text-gray
         rounded-sm
         border border-transparent
         focus:border-border
@@ -45,10 +48,9 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         focus:ring-transparent
         appearance-none
         shadow-none
-        cursor-pointer
-        "
+        cursor-pointer"
       />
-      <MessageSend className="absolute right-4 top-3 text-[#1B9757] pointer-events-none" />
+      <MessageSend className="w-5 h-5 absolute right-4 top-3 text-[#1B9757] pointer-events-none" />
     </div>
   );
 };

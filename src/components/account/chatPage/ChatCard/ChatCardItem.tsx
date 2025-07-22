@@ -18,7 +18,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
       )}
     >
       <div className="absolute top-1 right-3 mb-2">
-        <EllipsisIcon className="w-5 h-5 text-white cursor-pointer" />
+        <EllipsisIcon className="w-5 h-5 text-white cursor-pointer hover:text-btn-hover active:text-btn-active" />
       </div>
       <Image
         src={chat.userAvatarUrl}
