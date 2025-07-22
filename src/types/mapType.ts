@@ -1,6 +1,7 @@
 import { Icon, LatLngLiteral } from 'leaflet';
 import { ReactElement } from 'react';
-export enum MarkerCategoryEnum {
+
+export const enum MarkerCategoryEnum {
   Medicine = 'medicine',
   Nature = 'nature',
   Animal = 'animal',
@@ -9,8 +10,16 @@ export enum MarkerCategoryEnum {
   Default = 'default',
   MyPin = 'myPin',
 }
-
-export type MapLocation = LatLngLiteral & {
+export const enum EnumMapLayers {
+  Satellite = 'EsriSatellite',
+  OpenStreetMap = 'OpenStreetMap',
+  GoogleMaps = 'GoogleMaps',
+}
+export const enum EnumUserLayers {
+  CustomMarkers = 'CustomMarkers',
+  MyTasks = 'MyTasks',
+}
+export type TLocation = LatLngLiteral & {
   id: string;
   title: string;
   category?: MarkerCategoryEnum;
@@ -18,16 +27,6 @@ export type MapLocation = LatLngLiteral & {
   description?: string;
   icon?: Icon | null;
 };
-
-export enum EnumMapLayers {
-  Satellite = 'EsriSatellite',
-  OpenStreetMap = 'OpenStreetMap',
-  GoogleMaps = 'GoogleMaps',
-}
-export enum EnumUserLayers {
-  CustomMarkers = 'CustomMarkers',
-  MyTasks = 'MyTasks',
-}
 
 // for <TileLayer> component
 export type TMapLayerType = {
@@ -38,18 +37,13 @@ export type TMapLayerType = {
   };
 };
 
-// export interface IAcceptShareLocationProps {
-//   requestGeolocation: () => void;
-//   declineGeolocation: () => void;
-// }
-
-export interface IFormLocation {
+export interface ILocation {
   location: string;
 }
 
 export interface TCustomForm {
   control: L.Control;
-  data?: IFormLocation;
+  data?: ILocation;
 }
 export type TCustomMarker = LatLngLiteral & {
   id: string;
@@ -61,40 +55,10 @@ export type TCustomMarker = LatLngLiteral & {
   updatedAt?: Date;
 };
 
-export interface SelectedLocationProps {
-  center: LatLngLiteral;
-  userLocation?: LatLngLiteral;
-}
-
-export interface RenderMarksProps {
-  locations: MapLocation[];
-  setSelectedLocation: (location: MapLocation) => void;
-  setClickedCoords: (coords: LatLngLiteral) => void;
-  onLocationSelect?: (coords: LatLngLiteral) => void;
-}
-
-//filter types
-export interface IPropsFilters {
-  setIsSettingOpen: (isOpen: boolean) => void;
-}
-export interface IPropsFilterPanel {
-  selectedCategories: string[];
-  selectedDistances: string[];
-  selectedCategoryButtons: React.ReactElement[];
-  selectedDistanceButtons: React.ReactElement[];
-}
-export type IExtendedCategoryFilter = MarkerCategoryEnum | 'all' | null;
-export type IDistanceFilter = '1' | '3' | '5' | '10' | '20' | '50' | null;
-export interface IFilterStore {
-  choosenCategories: IExtendedCategoryFilter[];
-  distanceFilter: IDistanceFilter;
-  searchQuery: string;
-  sortBy: 'title' | 'distance';
-}
-export type MapClickType = 'left' | 'right' | 'double';
+export type TMapClickType = 'left' | 'right' | 'double';
 
 export interface IMapClickHandlerProps {
-  onClick: (coords: LatLngLiteral, clickType: MapClickType) => void;
+  onClick: (coords: LatLngLiteral, clickType: TMapClickType) => void;
   allowClickToAddMarker?: boolean;
 
   clickOptions?: {
@@ -107,35 +71,7 @@ export interface IMapClickHandlerProps {
   onCloseMenu?: () => void;
 }
 
-export interface CategoryItem {
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  title: string;
-  color: string;
-}
-
-export interface IDistanceItem {
-  title: string;
-  value: string;
-}
-
 export type TranslationFunction = (key: string) => string;
-
-export interface ITask {
-  title: string;
-  subtitle: string;
-  icon?: ReactElement;
-  category: MarkerCategoryEnum[];
-  description: string;
-  distance: string;
-  lat: number;
-  lng: number;
-  id: string;
-}
-
-export interface IExtendedITaskProps extends ITask {
-  isSelected?: boolean;
-  onToggleDescription?: () => void;
-}
 
 export interface IIconData {
   icon: ReactElement;

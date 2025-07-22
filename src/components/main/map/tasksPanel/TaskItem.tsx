@@ -1,11 +1,11 @@
 'use client';
 import { Button } from '@/components/ui/Button';
-import { IExtendedITaskProps } from '@/types/mapType';
 import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
 import { TaskCategoryIconsList } from '@/components/main/map/tasksPanel/TaskCategoryIconList';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
+import { IExtendedITaskProps } from '@/types/tasks.type';
 
 export const TaskItem = ({
   id,

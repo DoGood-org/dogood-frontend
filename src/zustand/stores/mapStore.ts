@@ -6,12 +6,12 @@ import getGeolocationPromise from '@/lib/getGeolocationPromise';
 import { initializeMapIcons } from '@/lib/mapUtils';
 import {
   EnumMapLayers,
-  IExtendedITaskProps,
   LeafletType,
   MarkerCategoryEnum,
   TCustomMarker,
 } from '@/types/mapType';
 import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
+import { IExtendedITaskProps } from '@/types/tasks.type';
 
 export interface IReactLeafletModule {
   MapContainer: React.FC<any>;

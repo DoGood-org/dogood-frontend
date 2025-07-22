@@ -1,5 +1,5 @@
+import { IExtendedITaskProps } from '@/types/tasks.type';
 import { create } from 'zustand';
-import { IExtendedITaskProps } from '@/types/mapType';
 import { persist } from 'zustand/middleware';
 
 interface TTaskState {

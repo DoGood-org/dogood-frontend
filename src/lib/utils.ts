@@ -8,18 +8,15 @@ import NotePencil from '@/components/icons/NotePencil';
 import Binoculars from '@/components/icons/Binoculars';
 import HandHeart from '@/components/icons/HandHeart';
 
-import {
-  CategoryItem,
-  IDistanceItem,
-  TranslationFunction,
-} from '@/types/mapType';
+import { TranslationFunction } from '@/types/mapType';
 import { IHowItWorksItem } from '@/types/howItWorksItem';
+import { ICategoryItem, IDistanceItem } from '@/types/filter.type';
 
 export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
 
-export const getCategoryList = (t: TranslationFunction): CategoryItem[] => [
+export const getCategoryList = (t: TranslationFunction): ICategoryItem[] => [
   { icon: MedicineSvg, title: t('medicineBtn'), color: 'bg-medicine' },
   { icon: NatureSvg, title: t('natureBtn'), color: 'bg-nature' },
   { icon: AnimalSvg, title: t('animalBtn'), color: 'bg-animal' },

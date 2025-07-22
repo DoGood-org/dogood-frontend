@@ -6,7 +6,8 @@ import { DistanceFilter, CategoryFilter } from '@/components';
 import { Button } from '@/components/ui/Button';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
-import { IExtendedCategoryFilter, IExtendedITaskProps } from '@/types/mapType';
+import { IExtendedITaskProps } from '@/types/tasks.type';
+import { IExtendedCategoryFilter } from '@/types/filter.type';
 
 type Props = {
   tasks: IExtendedITaskProps[];

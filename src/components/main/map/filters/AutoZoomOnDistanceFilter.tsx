@@ -2,7 +2,7 @@
 import { JSX, useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import { useFilterStore } from '@/zustand/stores/filterStore';
-import { IDistanceFilter } from '@/types';
+import { IDistanceFilter } from '@/types/filter.type';
 
 const distanceToZoomMap: Record<Exclude<IDistanceFilter, null>, number> = {
   '1': 15,
@@ -19,7 +19,8 @@ export const AutoZoomOnDistanceFilter = (): JSX.Element | null => {
   useEffect(() => {
     if (!distanceFilter) return;
 
-    const zoom = distanceToZoomMap[distanceFilter];
+    const zoom =
+      distanceToZoomMap[distanceFilter as keyof typeof distanceToZoomMap];
     if (zoom !== undefined) {
       map.setZoom(zoom);
     }
