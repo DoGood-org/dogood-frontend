@@ -26,7 +26,7 @@ export const AccountContentPanel = (): JSX.Element => {
     <Section withContainer={false}>
       <h2 className="text-h2">{activeView}</h2>
       {activeData && (
-        <div className="mt-6 flex flex-col gap-7 gap-10 md:gap-15 lg:gap-6 transition-opacity duration-500 ease-in-out opacity-100">
+        <div className="mt-6 flex flex-col gap-10 md:gap-15 lg:gap-6 transition-opacity duration-500 ease-in-out opacity-100">
           <div>
             <AnimationTabs
               views={views}
