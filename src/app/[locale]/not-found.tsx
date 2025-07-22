@@ -52,16 +52,21 @@ export default function NotFound(): React.JSX.Element {
         handleContactBtn={handleContactBtn}
       />
       {isContactOpen && (
-        <div className="my-container fixed inset-0 w-dvw h-dvh z-[9991] flex flex-col items-center justify-center bg-text-help/70 pt-[100px]">
-          <div className="h-6 flex items-start">
-            <Close className="stroke-foreground w-6 h-6" />
+        <div className="fixed inset-0 w-screen h-screen z-[9991] flex items-center justify-center bg-text-help/90 overflow-y-auto py-40">
+          <div className="my-container bg-background pt-10 pb-10 relative mx-auto rounded-xl">
+            <ContactForm
+              buttonTxt={downText.contactUs}
+              title={contact.headingNotFound}
+            />
+            <button
+              className="absolute top-6 right-1 md:top-11 md:right-4 p-1"
+              onClick={handleContactBtn}
+            >
+              <Close className="stroke-foreground w-6 h-6" />
+            </button>
           </div>
-          <ContactForm
-            buttonTxt={downText.contactUs}
-            title={contact.headingNotFound}
-          />
         </div>
-      )}{' '}
+      )}
     </Section>
   );
 }
