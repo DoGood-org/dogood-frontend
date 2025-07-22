@@ -7,6 +7,7 @@ import { ChatCardsList } from '@/components/account/chatPage/ChatCard/ChatCardsL
 import { ChatMessageList } from './ChatMessage/ChatMessagesList';
 import { ChatSearchInput } from './ChatSearchInput';
 import { Section } from '@/components/ui/Section';
+import { ChatMessageInput } from './ChatMessageInput';
 
 export const Chat: React.FC = () => {
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
@@ -301,6 +302,10 @@ export const Chat: React.FC = () => {
     }
   }, [isMobileOrTablet, selectedChatId, mockChats]);
 
+  const handleSend = (message: string): void => {
+    console.log('Відправлене повідомлення:', message);
+  };
+
   return (
     <Section withContainer={false}>
       <div className="p-2 bg-background text-foreground h-screen pb-[60px] lg:flex lg:gap-[38px] lg:px-20">
@@ -319,9 +324,12 @@ export const Chat: React.FC = () => {
                   console.log('Шукати:', query);
                 }}
               />
-              <div className="border border-foreground mt-5 lg:border-none lg:mt-0"></div>
-              <div className="flex-1 overflow-y-auto custom-scrollbar-hide pb-14 mt-2">
+              <div className="border border-foreground mt-5 lg:border-none lg:mt-0 mb-12"></div>
+              <div className="flex-1 overflow-y-auto custom-scrollbar-hide mt-2">
                 <ChatMessageList messages={filteredMessages} />
+              </div>
+              <div className="mt-6">
+                <ChatMessageInput onSend={handleSend} />
               </div>
             </div>
           ) : (
@@ -359,6 +367,9 @@ export const Chat: React.FC = () => {
               <div className="border border-foreground mt-5 mb-12"></div>
               <div className="flex-1 overflow-y-auto custom-scrollbar-hide mt-2">
                 <ChatMessageList messages={filteredMessages} />
+              </div>
+              <div className="mt-6">
+                <ChatMessageInput onSend={handleSend} />
               </div>
             </div>
           </>
