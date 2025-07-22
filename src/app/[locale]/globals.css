@@ -644,6 +644,7 @@ html {
   }
 }
 
+
 /* Firefox specific styles */
 @supports (scrollbar-width: thin) {
   .custom-scrollbar {
@@ -666,6 +667,15 @@ html {
   .custom-scrollbar-tasks {
     -ms-overflow-style: none;
   }
+}
+
+/* custom scrollbar styles for tasks */
+.custom-scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.custom-scrollbar-hide {
+  -ms-overflow-style: none; /* IE і Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 /* Swiper Pagination */

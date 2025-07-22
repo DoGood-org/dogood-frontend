@@ -267,6 +267,24 @@ export const Chat: React.FC = () => {
       createdAt: '2025-07-14T16:30:00Z',
       isCurrentUser: false,
     },
+    {
+      id: 'm25',
+      chatId: '4',
+      senderNickname: 'Maria',
+      senderAvatarUrl: '/avatars/maria.png',
+      text: 'Чекаю на фідбек.',
+      createdAt: '2025-07-14T16:25:00Z',
+      isCurrentUser: true,
+    },
+    {
+      id: 'm26',
+      chatId: '4',
+      senderNickname: 'Ivan',
+      senderAvatarUrl: '/avatars/ivan.png',
+      text: 'Дякую, дам відповідь завтра.',
+      createdAt: '2025-07-14T16:30:00Z',
+      isCurrentUser: false,
+    },
   ];
 
   const selectedChat = mockChats.find((chat) => chat.id === selectedChatId);
@@ -285,10 +303,10 @@ export const Chat: React.FC = () => {
 
   return (
     <Section withContainer={false}>
-      <div className="p-2 bg-background text-foreground h-[860px] pb-[60px] lg:flep-2 lg:flex lg:gap-[38px] lg:px-20">
+      <div className="p-2 bg-background text-foreground h-screen pb-[60px] lg:flex lg:gap-[38px] lg:px-20">
         {isMobileOrTablet ? (
           selectedChatId ? (
-            <div className="w-full flex flex-col justify-center bg-text-gray h-screen md:h-[860px] md:bg-[#CFCFCF] dark:bg-[#393939] py-5 px-2">
+            <div className="w-full flex flex-col justify-center bg-text-gray h-screen md:bg-[#CFCFCF] dark:bg-[#393939] py-5 px-2">
               <ChatSearchInput
                 selectedName={selectedChat ? selectedChat.userNickname : ''}
                 lastMessageTime={
@@ -302,12 +320,12 @@ export const Chat: React.FC = () => {
                 }}
               />
               <div className="border border-foreground mt-5 lg:border-none lg:mt-0"></div>
-              <div className="flex-1 overflow-y-auto pb-14 mt-2">
+              <div className="flex-1 overflow-y-auto custom-scrollbar-hide pb-14 mt-2">
                 <ChatMessageList messages={filteredMessages} />
               </div>
             </div>
           ) : (
-            <div className="w-full flex flex-col">
+            <div className="w-full flex flex-1 flex-col overflow-y-auto custom-scrollbar-hide">
               <ChatCardsList
                 chats={mockChats}
                 selectedChatId={selectedChatId}
@@ -318,7 +336,7 @@ export const Chat: React.FC = () => {
         ) : (
           // Desktop
           <>
-            <div className="w-1/3 flex flex-col bg-background text-foreground">
+            <div className="w-1/3 flex flex-col bg-background text-foreground flex-1 overflow-y-auto custom-scrollbar-hide">
               <ChatCardsList
                 chats={mockChats}
                 selectedChatId={selectedChatId}
@@ -339,7 +357,7 @@ export const Chat: React.FC = () => {
                 }}
               />
               <div className="border border-foreground mt-5 mb-12"></div>
-              <div className="flex-1 overflow-y-auto custom-scrollbar-tasks mt-2">
+              <div className="flex-1 overflow-y-auto custom-scrollbar-hide mt-2">
                 <ChatMessageList messages={filteredMessages} />
               </div>
             </div>
