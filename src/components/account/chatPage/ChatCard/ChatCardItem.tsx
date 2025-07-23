@@ -1,8 +1,8 @@
-import EllipsisIcon from '@/components/icons/EllipsisIcon';
 import { cn } from '@/lib/utils';
 import { ChatCardProps } from '@/types/chatType';
 
 import Image from 'next/image';
+import { ChatEllipsisMenu } from '../ChatModal/ChatEllipsisMenu';
 
 export const ChatCardItem: React.FC<ChatCardProps> = ({
   chat,
@@ -18,7 +18,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
       )}
     >
       <div className="absolute top-1 right-3 mb-2">
-        <EllipsisIcon className="w-5 h-5 text-white cursor-pointer hover:text-btn-hover active:text-btn-active" />
+        <ChatEllipsisMenu chat={chat} />
       </div>
       <Image
         src={chat.userAvatarUrl}
