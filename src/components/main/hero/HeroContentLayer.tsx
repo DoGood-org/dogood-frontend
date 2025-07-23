@@ -19,6 +19,7 @@ export const HeroContentLayer: React.FC<HeroContentLayerProps> = ({
       style={{
         y: yContent,
         opacity: contentOpacity,
+        zIndex: 10,
       }}
     >
       <h1 className="text-h1 text-white mb-6 lg:text-h1-d">{t('title')}</h1>
