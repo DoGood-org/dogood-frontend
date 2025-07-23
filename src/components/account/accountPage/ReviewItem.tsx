@@ -1,31 +1,13 @@
 import { Rating } from '@/components';
 import { More } from '@/components/icons';
+import { formatDate } from '@/lib/formateDate';
 import { ReviewItemProps } from '@/types';
 import { useLocale } from 'next-intl';
 import Image from 'next/image';
 import { JSX } from 'react';
 
-// const formatDate = (dateString: string, locale: string): string => {
-//   const date = new Date(dateString);
-//   return new Intl.DateTimeFormat(locale, {
-//     day: 'numeric',
-//     month: 'short',
-//     year: 'numeric',
-//   }).format(date);
-// };
-
-const formatDate = (dateString: string, locale: string): string => {
-  const date = new Date(dateString);
-  const day = date.getDate();
-  const month = new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
-  const year = date.getFullYear();
-
-  return `${day} ${month} ${year}`;
-};
-
 export const ReviewItem = ({ review }: ReviewItemProps): JSX.Element => {
   const { rating, comment, createdAt, owner } = review;
-  //   console.log(owner);
 
   const locale = useLocale();
 
