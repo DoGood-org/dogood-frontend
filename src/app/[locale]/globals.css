@@ -693,3 +693,11 @@ html {
   padding: 10px;
   border-radius: var(--radius-lg);
 }
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateX(28px);
+  }
+  100% {
+    transform: rotate(360deg) translateX(28px);
+  }
+}

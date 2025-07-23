@@ -8,7 +8,7 @@ const createTrail = (count: number, startDelay = 0): React.JSX.Element[] => {
     return (
       <span
         key={i}
-        className="absolute top-80 left-240 w-2 h-2 bg-foreground rounded-full"
+        className="absolute top-50 left-190 w-2 h-2 bg-foreground rounded-full"
         style={{
           transformOrigin: 'center',
           animation: 'orbit 1s linear infinite',
@@ -21,7 +21,7 @@ const createTrail = (count: number, startDelay = 0): React.JSX.Element[] => {
   });
 };
 
-const DoubleDotSpinner: React.FC = () => {
+const Loader: React.FC = () => {
   return (
     <div className="relative w-16 h-16">
       {createTrail(6, 0)}
@@ -31,4 +31,4 @@ const DoubleDotSpinner: React.FC = () => {
   );
 };
 
-export default DoubleDotSpinner;
+export default Loader;
