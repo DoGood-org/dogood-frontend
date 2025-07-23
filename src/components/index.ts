@@ -7,6 +7,8 @@ export * from './account/accountPage/AccountContent';
 export * from './account/accountPage/AccountContentPanel';
 export * from './account/accountPage/OrganizationItem';
 export * from './account/accountPage/OrganizationList';
+export * from './account/accountPage/ReviewItem';
+export * from './account/accountPage/ReviewsList';
 export * from './account/accountPage/UserAvatar';
 export * from './account/accountPage/UserDescription';
 export * from './account/navigation/BottomNavigation';

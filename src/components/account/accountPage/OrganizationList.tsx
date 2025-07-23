@@ -9,7 +9,7 @@ export const OrganizationList = (): JSX.Element => {
   return (
     <ul className="">
       {organizations.map((organization, idx) => (
-        <li key={idx} className="p-2 md:p-6">
+        <li key={idx} className="p-2">
           <OrganizationItem organization={organization} />
         </li>
       ))}
