@@ -11,6 +11,9 @@
   "3km": "Up to 3 km",
   "5km": "Up to 5 km",
   "10km": "Up to 10 km",
+  "20km": "Up to 20 km",
+  "50km": "Up to 50 km",
+  "all": "All",
   "popupTitle": "Share your location?",
   "popupDescription": "Would you like to share your current location to center the map on your position?",
   "yesBtn": "Yes, share",
@@ -23,5 +26,10 @@
   "cancelBtn": "Cancel",
   "task": "Task",
   "donate": "Donate",
-  "join": "Join"
+  "join": "Join",
+  "category-medicine": "Medicine",
+  "category-nature": "Nature",
+  "category-animal": "Animal",
+  "category-food": "Food",
+  "category-all": "All"
 }

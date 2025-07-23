@@ -6,12 +6,14 @@ import { DistanceFilter, CategoryFilter } from '@/components';
 import { Button } from '@/components/ui/Button';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
-import { IExtendedCategoryFilter, IExtendedITaskProps } from '@/types/mapType';
+import { IExtendedITaskProps } from '@/types/tasks.type';
+import { IExtendedCategoryFilter } from '@/types/filter.type';
 
 type Props = {
   tasks: IExtendedITaskProps[];
+  className?: string;
 };
-export const Filters: FC<Props> = ({ tasks }): JSX.Element => {
+export const Filters: FC<Props> = ({ tasks, className }): JSX.Element => {
   const categories = useFilterStore(
     (state) => state.categories
   ) as IExtendedCategoryFilter[];
@@ -22,7 +24,7 @@ export const Filters: FC<Props> = ({ tasks }): JSX.Element => {
   const { toggleFilters } = useMapStore();
 
   return (
-    <div className="absolute z-[1000] bg-card px-3 py-6 h-full lg:top-0 lg:left-0 lg:w-[487px]  lg:px-[46px] lg:py-8 rounded-sm">
+    <div className={`px-3 py-6 ${className}`}>
       <div className="flex justify-between align-text-bottom mb-3">
         <h3 className="text-h3">{t('title')}</h3>
 

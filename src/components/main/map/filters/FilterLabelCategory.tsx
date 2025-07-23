@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/Button';
 import { JSX } from 'react';
 import { Animal, Food, Medicine, Nature } from '@/components/icons';
 import { IIconMap } from '@/types/mapType';
+import { useTranslations } from 'next-intl';
 
 export const iconFilterMap: IIconMap = {
   medicine: {
@@ -32,6 +33,7 @@ export const FilterLabelCategory: React.FC<Props> = ({
   selectedCategories,
   onCategoryToggle,
 }: Props): JSX.Element => {
+  const t = useTranslations('map');
   return (
     <li>
       <Button
@@ -43,7 +45,7 @@ export const FilterLabelCategory: React.FC<Props> = ({
         onClick={() => onCategoryToggle(category)}
       >
         {iconFilterMap[category].icon}
-        {category}
+        {t(`category-${category}`)}
       </Button>
     </li>
   );

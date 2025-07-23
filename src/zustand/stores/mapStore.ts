@@ -6,12 +6,12 @@ import getGeolocationPromise from '@/lib/getGeolocationPromise';
 import { initializeMapIcons } from '@/lib/mapUtils';
 import {
   EnumMapLayers,
-  IExtendedITaskProps,
   LeafletType,
   MarkerCategoryEnum,
   TCustomMarker,
 } from '@/types/mapType';
 import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
+import { IExtendedITaskProps } from '@/types/tasks.type';
 
 export interface IReactLeafletModule {
   MapContainer: React.FC<any>;
@@ -48,6 +48,7 @@ type TMapState = {
   radius: number;
   setRadius: (radius: number) => void;
   layerDropIsOpen: boolean;
+  fullscreenMap: boolean;
 
   hasAgreedToLocation: boolean | null;
   showGeolocationPopup: boolean;
@@ -57,6 +58,7 @@ type TMapState = {
   locationError: string | null;
 
   selectedTask: IExtendedITaskProps | null;
+  highlightedTaskId: string | null;
   customMarkers: TCustomMarker[] | [];
 
   taskListIsOpen: boolean;
@@ -85,7 +87,11 @@ type TMapActions = {
   acceptLocationSharing: () => Promise<void>;
   declineLocationSharing: () => void;
 
+  toggleFullscreenMap: (fullscreen: boolean) => void;
+
   toggleTaskList: () => void;
+  flyToCoords: (coords: LatLngLiteral, zoom?: number) => void;
+  setHighlightedTaskId: (id: string | null) => void;
   toggleFilters: () => void;
   setSearchActive: (active: boolean) => void;
 
@@ -107,6 +113,9 @@ export const useMapStore = create<TMapState & TMapActions>()(
       leafletComponents: null,
       activeLayer: EnumMapLayers.GoogleMaps,
       defaultLayers: [],
+      fullscreenMap: false,
+      toggleFullscreenMap: () =>
+        set((state) => ({ fullscreenMap: !state.fullscreenMap })),
 
       layerDropIsOpen: false,
       mapInstances: {
@@ -135,6 +144,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
       userLocation: null,
 
       selectedTask: null,
+      highlightedTaskId: null,
       customMarkers: [],
       locationError: null,
       hasAgreedToLocation: null,
@@ -213,6 +223,20 @@ export const useMapStore = create<TMapState & TMapActions>()(
           showGeolocationPopup: false,
           clickedCoords: null,
         }),
+      flyToCoords: (coords, zoom = 15): void => {
+        const map = get().mapInstances?.main;
+        if (!map) {
+          return;
+        }
+        if (map) {
+          map.flyTo(coords, zoom, {
+            duration: 1.5,
+          });
+        }
+      },
+      setHighlightedTaskId: (id: string | null): void => {
+        set({ highlightedTaskId: id });
+      },
 
       setLocationError: (error) => set({ locationError: error }),
       setCustomMarkers: (markers) => set({ customMarkers: markers }),

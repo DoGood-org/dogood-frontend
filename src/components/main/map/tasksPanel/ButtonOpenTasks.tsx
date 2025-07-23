@@ -33,11 +33,11 @@ export const ButtonOpenTasks = ({
               {!isOpen && (
                 <motion.p
                   key="tasks-label"
-                  className="hidden lg:block font-normal text-center"
+                  className="block font-normal text-center"
                   initial={{ opacity: 0, y: -6 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.4 }}
+                  transition={{ duration: 0.2, ease: 'easeInOut' }}
                 >
                   Tasks
                 </motion.p>

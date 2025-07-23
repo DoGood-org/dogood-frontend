@@ -1,6 +1,6 @@
 import { CategoryLabel } from '@/components/main/map/filters/CategoryLabel';
 import { LineDivider } from '@/components/main/map/filters/LineDivider';
-import { IExtendedCategoryFilter } from '@/types/mapType';
+import { IExtendedCategoryFilter } from '@/types/filter.type';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useTranslations } from 'next-intl';
 import React, { JSX } from 'react';

@@ -1,6 +1,5 @@
 'use client';
 import {
-  AnimatedDrawler,
   ButtonOpenTasks,
   Container,
   CustomControlContent,
@@ -23,11 +22,13 @@ import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { JSX, useEffect } from 'react';
+import React, { JSX, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 // import { Radius } from '@/components/main/map/Radius';
+import { AutoZoomOnDistanceFilter } from '@/components/main/map/filters/AutoZoomOnDistanceFilter';
 import { RadiusWatcher } from '@/components/main/map/RadiusWatcher';
+import { AnimatedDrawler } from '@/components/ui/AnimatedDrawler';
 
 export const Map: React.FC = (): JSX.Element => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
@@ -60,6 +61,7 @@ export const Map: React.FC = (): JSX.Element => {
     setShowOptionsMenu,
     closeOptionsMenu,
     searchIsActive,
+    highlightedTaskId,
   } = useMapStore();
   const { choosenCategories, categories } = useFilterStore();
   const { tasksByKey, setTasksByKey } = useTaskStore();
@@ -97,6 +99,13 @@ export const Map: React.FC = (): JSX.Element => {
   }, [userLocation, radius]);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
+  const highLightedRef = useRef<L.Marker | null>(null);
+
+  useEffect(() => {
+    if (highlightedTaskId && highLightedRef.current) {
+      highLightedRef.current.openPopup();
+    }
+  }, [highlightedTaskId]);
 
   if (
     !leafletComponents ||
@@ -116,10 +125,6 @@ export const Map: React.FC = (): JSX.Element => {
   }
 
   const { MapContainer, TileLayer, Marker, Popup } = leafletComponents;
-
-  const handleMarkerClick = (task: any): void => {
-    console.info('Task marker:', task);
-  };
 
   return (
     <Container className="flex flex-col">
@@ -143,7 +148,8 @@ export const Map: React.FC = (): JSX.Element => {
             doubleClickZoom={false}
             className="h-full w-full cursor-default relative"
             zoom={13}
-            minZoom={1}
+            minZoom={10}
+            maxZoom={17}
             zoomControl={false}
             attributionControl={false}
             key="default-location"
@@ -153,6 +159,8 @@ export const Map: React.FC = (): JSX.Element => {
             <StoreMapInstance mapKey="main" />
             <UserLocation />
             <RadiusWatcher />
+            <AutoZoomOnDistanceFilter />
+
             <TileLayer
               url={baseLayerConfig[activeLayer].url}
               maxZoom={18}
@@ -180,14 +188,28 @@ export const Map: React.FC = (): JSX.Element => {
                 mapIcons.default;
               return (
                 <Marker
+                  ref={highlightedTaskId === task.id ? highLightedRef : null}
                   key={`task-marker-${task.id}`}
                   position={{ lat: task.lat, lng: task.lng }}
-                  icon={icon === null ? undefined : icon}
+                  icon={icon ?? undefined}
+                  title={task.title}
+                  zIndexOffset={highlightedTaskId === task.id ? 1000 : 0}
+                  autoPanOnFocus={true}
+                  riseOnHover={true}
+                  riseOffset={100}
                   eventHandlers={{
-                    click: () => handleMarkerClick(task),
+                    click: () =>
+                      console.log('Marker clicked:', task.id, task.title),
                   }}
                 >
-                  <Popup>
+                  <Popup
+                    key={`popup-${task.id}`}
+                    position={{ lat: task.lat, lng: task.lng }}
+                    autoClose={false}
+                    closeButton={true}
+                    autoPanPadding={[10, 10]}
+                    autoPan
+                  >
                     <div className="text-sm max-w-[200px]">
                       <h4 className="font-bold mb-1">{task.title}</h4>
                       <p className="text-xs">{task.subtitle}</p>
@@ -276,7 +298,12 @@ export const Map: React.FC = (): JSX.Element => {
               isOpen={taskListIsOpen}
               className="mx-auto mb-2 bg-card lg:mb-0 lg:absolute lg:z-50  lg:h-10 lg:top-12 lg:border-t lg:border-t-foreground  lg:w-full  lg:hover:border-t-foreground"
             />
-            <FormSearch />
+            <FormSearch
+              className="p-3 lg:p-0"
+              inputClassName="h-12 px-12"
+              leftSVGClassName="left-5 "
+              rightSVGClassName="right-6"
+            />
           </div>
         </div>
 
@@ -303,7 +330,11 @@ export const Map: React.FC = (): JSX.Element => {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
               >
-                <Filters tasks={noPaginatedTasks} />
+                <Filters
+                  tasks={noPaginatedTasks}
+                  className="
+                absolute z-[1000] bg-card h-full lg:top-0 lg:left-0 lg:w-[487px]  lg:px-[46px] lg:py-8 rounded-sm"
+                />
               </motion.div>
             )}
 

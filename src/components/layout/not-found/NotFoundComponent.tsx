@@ -14,6 +14,7 @@ export const NotFoundComponent: React.FC<NotFoundProps> = ({
   variantBtn2,
   hrefBtn2,
   handleResetBtn,
+  handleContactBtn,
   nameBtn1,
   nameBtn2,
   stuckText,
@@ -40,11 +41,12 @@ export const NotFoundComponent: React.FC<NotFoundProps> = ({
           nameBtn1={nameBtn1}
           nameBtn2={nameBtn2}
           handleResetBtn={handleResetBtn}
+          handleContactBtn={handleContactBtn}
           hrefBtn1={hrefBtn1}
           hrefBtn2={hrefBtn2}
         />
         <Link
-          href="mailto:sturtup.dogood@gmail.com"
+          href="mailto:startup.dogood@gmail.com"
           className="text-xs md:text-base text-start mt-4 md:mt-10"
           passHref
         >

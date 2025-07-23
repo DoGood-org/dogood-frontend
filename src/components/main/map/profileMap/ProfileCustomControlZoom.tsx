@@ -5,7 +5,7 @@ import { Minus, Plus } from 'lucide-react';
 import { JSX } from 'react';
 import { useMap } from 'react-leaflet';
 
-export const CustomControlZoom = (): JSX.Element => {
+export const ProfileCustomControlZoom = (): JSX.Element => {
   const map = useMap();
 
   const handleZoomIn = (): void => {

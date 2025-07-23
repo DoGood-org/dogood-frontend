@@ -3,7 +3,8 @@ import { ButtonLayers } from '@/components/main/map/ButtonLayers';
 import { ButtonLocation } from '@/components/main/map/ButtonLocation';
 import { CustomControlZoom } from '@/components/main/map/CustomControlZoom';
 import CustomLayerController from '@/components/main/map/CustomLayerController';
-import { AnimatedDrawler } from '@/components/main/map/tasksPanel/AnimatedDrawler';
+import { AnimatedDrawler } from '@/components/ui/AnimatedDrawler';
+
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { JSX } from 'react';
 

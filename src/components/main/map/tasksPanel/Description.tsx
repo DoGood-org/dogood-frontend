@@ -1,7 +1,7 @@
 import { Close } from '@/components/icons';
 import { TaskCategoryIconsList } from '@/components/main/map/tasksPanel/TaskCategoryIconList';
 import { Button } from '@/components/ui/Button';
-import { IExtendedITaskProps } from '@/types/mapType';
+import { IExtendedITaskProps } from '@/types/tasks.type';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 
