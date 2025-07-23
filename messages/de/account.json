@@ -7,7 +7,7 @@
       "view": "Aufgabe"
     },
     {
-      "id": "organisation",
+      "id": "organization",
       "view": "Organisation",
       "people": "Personen"
     },

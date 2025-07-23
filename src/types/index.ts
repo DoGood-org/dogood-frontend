@@ -9,6 +9,7 @@ export * from './mapType';
 export * from './navigation';
 export * from './navigationType';
 export * from './news.interface';
+export * from './organization';
 export * from './reviewType';
 export * from './sectionTypes';
 export * from './theme';
