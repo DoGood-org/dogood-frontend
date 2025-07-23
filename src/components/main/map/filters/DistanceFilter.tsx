@@ -2,7 +2,7 @@
 import { LineDivider } from '@/components/main/map/filters/LineDivider';
 import { Button } from '@/components/ui/Button';
 import { getDistancesList } from '@/lib/utils';
-import { IDistanceFilter } from '@/types/mapType';
+import { IDistanceFilter } from '@/types/filter.type';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useTranslations } from 'next-intl';
 import React, { JSX } from 'react';

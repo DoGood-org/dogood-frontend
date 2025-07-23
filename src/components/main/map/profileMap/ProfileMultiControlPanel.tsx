@@ -25,7 +25,7 @@ type MultiControlPanelProps = {
   }[];
 };
 
-export const MultiControlPanel = ({
+export const ProfileMultiControlPanel = ({
   controls,
 }: MultiControlPanelProps): JSX.Element => {
   return (

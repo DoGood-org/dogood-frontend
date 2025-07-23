@@ -4,7 +4,7 @@ import { ButtonMap } from '@/components/main/map/ButtonMap';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { JSX } from 'react';
 
-export const ButtonLocation = (): JSX.Element => {
+export const ProfileButtonLocation = (): JSX.Element => {
   const { checkLocationPermission } = useMapStore();
   const handleClick = (): void => {
     checkLocationPermission();

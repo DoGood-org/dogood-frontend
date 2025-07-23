@@ -1,5 +1,6 @@
 import { calculateDistanceInMeters } from '@/lib/mapUtils';
-import { ITask, MarkerCategoryEnum } from '@/types/mapType';
+import { MarkerCategoryEnum } from '@/types/mapType';
+import { ITask } from '@/types/tasks.type';
 
 const TITLES = [
   ['Mountain health checkpoint', 'Help set up first aid at trails'],

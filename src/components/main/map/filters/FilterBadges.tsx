@@ -1,5 +1,5 @@
 import { FilterBadge } from '@/components/main/map/filters/FilterBadge';
-import { IExtendedCategoryFilter } from '@/types/mapType';
+import { IExtendedCategoryFilter } from '@/types/filter.type';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { JSX } from 'react';
 

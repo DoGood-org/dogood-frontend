@@ -1,10 +1,11 @@
 'use client';
 import { Button } from '@/components/ui/Button';
-import { IExtendedITaskProps } from '@/types/mapType';
 import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
 import { TaskCategoryIconsList } from '@/components/main/map/tasksPanel/TaskCategoryIconList';
 import { useTaskStore } from '@/zustand/stores/taskStore';
+import { useMapStore } from '@/zustand/stores/mapStore';
+import { IExtendedITaskProps } from '@/types/tasks.type';
 
 export const TaskItem = ({
   id,
@@ -13,12 +14,15 @@ export const TaskItem = ({
   category,
   isSelected,
   distance,
+  lat,
+  lng,
 }: IExtendedITaskProps): JSX.Element => {
   const t = useTranslations('map');
-  const { toggleTaskDescription } = useTaskStore();
+  const { joinTask } = useTaskStore();
+  const { flyToCoords, setHighlightedTaskId } = useMapStore();
 
   return (
-    <div className="min-h-[200px]">
+    <div className="min-h-[200px] relative">
       <h3 className="text-base underline lg:text-xl font-normal mb-3">
         {title}
       </h3>
@@ -35,7 +39,7 @@ export const TaskItem = ({
           variant="secondary"
           size="lg"
           onClick={() => {
-            toggleTaskDescription(id);
+            joinTask(id);
           }}
           className={`bg-card text-[14px] w-[82px] px-3 ${isSelected ? 'clickedBtn' : ''}`}
         >
@@ -46,6 +50,17 @@ export const TaskItem = ({
           )}
         </Button>
       </div>
+      <Button
+        variant="secondary"
+        size="lg"
+        className="absolute top-0 right-0 bg-card text-[14px] w-[82px] px-3"
+        onClick={() => {
+          flyToCoords({ lat, lng });
+          setHighlightedTaskId(id);
+        }}
+      >
+        {'on map'}
+      </Button>
       <div className="w-full bg-[#999999] h-[1px]" />
     </div>
   );
