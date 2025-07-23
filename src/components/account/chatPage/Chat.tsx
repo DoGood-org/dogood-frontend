@@ -8,10 +8,15 @@ import { ChatMessageList } from './ChatMessage/ChatMessagesList';
 import { ChatSearchInput } from './ChatSearchInput';
 import { Section } from '@/components/ui/Section';
 import { ChatMessageInput } from './ChatMessageInput';
+import { navigationStore } from '@/zustand/stores/navigationStore';
 
 export const Chat: React.FC = () => {
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
   const device = useDeviceType();
+
+  const setIsChatMessageOpen = navigationStore(
+    (state) => state.setIsChatMessageOpen
+  );
 
   const mockChats: ChatCardViewModel[] = [
     {
@@ -305,6 +310,14 @@ export const Chat: React.FC = () => {
   const handleSend = (message: string): void => {
     console.log('Відправлене повідомлення:', message);
   };
+
+  useEffect(() => {
+    if (selectedChatId) {
+      setIsChatMessageOpen(true);
+    } else {
+      setIsChatMessageOpen(false);
+    }
+  }, [selectedChatId, setIsChatMessageOpen]);
 
   return (
     <Section withContainer={false}>
