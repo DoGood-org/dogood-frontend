@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 
 type UseClickOutsideOptions = {
   enabled?: boolean;
@@ -7,6 +7,7 @@ type UseClickOutsideOptions = {
   once?: boolean;
   isExceptionActive?: boolean;
   exeptionSelector?: string;
+  delay?: number;
 };
 
 type Props = {
@@ -27,20 +28,32 @@ export const useClickOutside = ({
     once = false,
     isExceptionActive = false,
     exeptionSelector = '',
+    delay = 50,
   } = options;
-
+  const [delayGuard, setDelayGuard] = useState(false);
   useEffect(() => {
     if (!enabled) return;
 
+    const timeout = setTimeout(() => setDelayGuard(true), delay);
+    return () => clearTimeout(timeout);
+  }, [enabled, delay]);
+
+  useEffect(() => {
+    if (!enabled || !delayGuard) return;
+
     const handleEvent = (e: Event): void => {
       requestAnimationFrame(() => {
+        const target = e.target as Node;
+
         // if drawler is open and exception is active, do not trigger callback
         if (
           ref.current &&
-          !ref.current.contains(e.target as Node) &&
-          document.activeElement?.id !== exeptionSelector
+          !ref.current.contains(target) &&
+          (!isExceptionActive ||
+            document.activeElement?.id !== exeptionSelector)
         ) {
           callback();
+          console.log('useClickOutside triggered');
           if (once) cleanup();
         }
       });

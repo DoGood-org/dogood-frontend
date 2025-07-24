@@ -21,7 +21,7 @@ export const AnimatedDrawler = ({
   onClose,
   children,
   className = '',
-  duration = 0.2,
+  duration = 0.4,
   offset = 40,
   direction = 'vertical',
   exeptionForClickOutside = false,
@@ -46,6 +46,14 @@ export const AnimatedDrawler = ({
       {isVisible && (
         <motion.div
           ref={ref}
+          drag="y"
+          dragConstraints={{ top: 0, bottom: 0 }}
+          onDragEnd={(_, info) => {
+            if (info.offset.y > 100) {
+              // user dragged down >100px → treat as close
+              onClose?.();
+            }
+          }}
           initial={{ opacity: 0, ...axis }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           exit={{ opacity: 0, ...axis }}

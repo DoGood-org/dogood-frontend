@@ -294,7 +294,10 @@ export const Map: React.FC = (): JSX.Element => {
         <div className="lg:absolute lg:flex lg:items-start lg:top-12 lg:left-32 lg:gap-10 lg:z-[500]">
           <div className="flex flex-col justify-center relative w-full bg-card lg:w-[485px]">
             <ButtonOpenTasks
-              onClick={() => toggleTaskList()}
+              onClick={() => {
+                toggleTaskList();
+                console.log(taskListIsOpen, 'taskListIsOpen');
+              }}
               isOpen={taskListIsOpen}
               className="mx-auto mb-2 bg-card lg:mb-0 lg:absolute lg:z-50  lg:h-10 lg:top-12 lg:border-t lg:border-t-foreground  lg:w-full  lg:hover:border-t-foreground"
             />
@@ -316,7 +319,7 @@ export const Map: React.FC = (): JSX.Element => {
           exeptionSelector="search"
           direction="vertical"
           className={`
-            relative flex flex-col bg-card z-[1000]
+            relative flex flex-col bg-card 
             w-full h-[675px] lg:mt-0
             lg:absolute lg:top-32 lg:left-32 lg:w-[485px] lg:h-[722px] lg:rounded-md  overflow-y-hidden
           `}
@@ -333,7 +336,8 @@ export const Map: React.FC = (): JSX.Element => {
                 <Filters
                   tasks={noPaginatedTasks}
                   className="
-                absolute z-[1000] bg-card h-full lg:top-0 lg:left-0 lg:w-[487px]  lg:px-[46px] lg:py-8 rounded-sm"
+                absolute z-[1000] bg-card h-full 
+                lg:top-0 lg:left-0 lg:w-[487px]  lg:px-[46px] lg:py-8 rounded-sm"
                 />
               </motion.div>
             )}
@@ -346,7 +350,7 @@ export const Map: React.FC = (): JSX.Element => {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
               >
-                <TasksList />
+                <TasksList tasks={noPaginatedTasks} />
               </motion.div>
             )}
           </AnimatePresence>

@@ -19,8 +19,7 @@ export const FormSearch = ({
   leftSVGClassName,
   rightSVGClassName,
 }: Props): JSX.Element => {
-  const { setSearchActive } = useMapStore();
-  const { toggleFilters } = useMapStore();
+  const { setSearchActive, toggleFilters, filtersIsOpen } = useMapStore();
   const { setSearchQuery } = useFilterStore();
 
   const { register, watch, reset } = useForm<FormData>();
@@ -29,10 +28,13 @@ export const FormSearch = ({
     const handler = setTimeout((): void => {
       setSearchQuery(searchValue || '');
     }, 500);
-    setSearchActive(!!searchValue);
 
     return (): void => clearTimeout(handler);
-  }, [searchValue, setSearchQuery, setSearchActive]);
+  }, [searchValue, setSearchQuery]);
+
+  useEffect(() => {
+    setSearchActive(!!searchValue);
+  }, [searchValue, setSearchActive]);
 
   const onSearchButtonClick = (
     e: React.MouseEvent<HTMLButtonElement>
@@ -41,11 +43,16 @@ export const FormSearch = ({
     setSearchQuery(searchValue || '');
     e.nativeEvent.stopImmediatePropagation();
   };
-  const onButtonClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const onFilterButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ): void => {
     e.stopPropagation();
-    toggleFilters();
-
     e.nativeEvent.stopImmediatePropagation();
+    // setActivePanel('filters');
+
+    console.log('onFilterButtonClick', filtersIsOpen);
+    toggleFilters();
+    console.log('onFilterButtonClick after toggleFilters', filtersIsOpen);
   };
 
   const handleClear = (): void => {
@@ -55,16 +62,15 @@ export const FormSearch = ({
   };
 
   return (
-    <div className="bg-card w-full " itemRef="search">
+    <div className="bg-card w-full relative " itemRef="search">
       <form onSubmit={(e) => e.preventDefault()} className="w-full">
         <div
-          className={`relative overflow-hidden flex items-center justify-center ${className}`}
+          className={` overflow-hidden flex items-center justify-center ${className}`}
         >
-          {' '}
           <Button
             variant="ghost"
             size="icon"
-            className={`absolute z-1000 p-0 m-0 cursor-pointer text-foreground ${leftSVGClassName}`}
+            className={`absolute z-25 p-0 m-0 cursor-pointer text-foreground ${leftSVGClassName}`}
             onClick={onSearchButtonClick}
           >
             <Search
@@ -102,16 +108,17 @@ export const FormSearch = ({
               />
             </Button>
           )}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={`absolute z-1000 p-0 m-0 cursor-pointer text-foreground ${rightSVGClassName}`}
-            onClick={onButtonClick}
-          >
-            <SlidersVertical className="w-6 h-6 stroke-foreground text-foreground" />
-          </Button>
         </div>
       </form>
+      <Button
+        id="filtersButton"
+        variant="ghost"
+        size="icon"
+        className={`absolute top-0 z-25 p-0 m-0 cursor-pointer text-foreground ${rightSVGClassName}`}
+        onClick={onFilterButtonClick}
+      >
+        <SlidersVertical className="w-6 h-6 stroke-foreground text-foreground" />
+      </Button>
     </div>
   );
 };
