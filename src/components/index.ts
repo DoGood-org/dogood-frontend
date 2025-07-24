@@ -115,7 +115,7 @@ export * from './ui/Button';
 export * from './ui/Container';
 export * from './ui/Input';
 export * from './ui/LinkWithArrow';
-export * from './ui/Loader';
+export * from './ui/ContentLoader';
 export * from './ui/Rating';
 export * from './ui/Section';
 export * from './ui/Spinner';
