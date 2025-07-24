@@ -30,7 +30,7 @@ export const ReviewItem = ({ review }: ReviewItemProps): JSX.Element => {
             <h3 className="text-h3">{owner.name}</h3>
             <Rating rating={rating} />
           </div>
-          <button className="cursor-pointer">
+          <button className="cursor-pointer text-foreground">
             <More className="w-[34px]" />
           </button>
         </div>
