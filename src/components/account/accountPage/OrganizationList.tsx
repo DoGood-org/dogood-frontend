@@ -1,5 +1,5 @@
 import { JSX } from 'react';
-import { OrganizationItem } from './OrganizationItem';
+import { OrganizationItem, Slider } from '@/components';
 import userData from './user.json';
 import { OrganizationProps } from '@/types';
 
@@ -7,12 +7,15 @@ export const OrganizationList = (): JSX.Element => {
   const organizations = userData.organizations as OrganizationProps[];
 
   return (
-    <ul className="">
-      {organizations.map((organization, idx) => (
-        <li key={idx} className="p-2">
-          <OrganizationItem organization={organization} />
-        </li>
-      ))}
-    </ul>
+    <Slider
+      items={organizations}
+      itemsPerSlide={2}
+      renderItem={(organization, idx) => (
+        <OrganizationItem
+          key={`${idx}-${organization.name}`}
+          organization={organization}
+        />
+      )}
+    />
   );
 };
