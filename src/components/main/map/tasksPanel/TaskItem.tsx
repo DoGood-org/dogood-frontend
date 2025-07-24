@@ -22,7 +22,7 @@ export const TaskItem = ({
   const { flyToCoords, setHighlightedTaskId } = useMapStore();
 
   return (
-    <div className="min-h-[200px] relative">
+    <div className="min-h-[200px] relative w-full">
       <h3 className="text-base underline lg:text-xl font-normal mb-3">
         {title}
       </h3>

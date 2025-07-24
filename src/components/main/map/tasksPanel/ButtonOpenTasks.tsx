@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/Button';
 import { ChevronDown } from 'lucide-react';
 import { JSX } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useMapStore } from '@/zustand/stores/mapStore';
 
 type Props = {
   className?: string;
@@ -11,15 +12,25 @@ type Props = {
 };
 
 export const ButtonOpenTasks = ({
-  className = '',
   onClick,
   isOpen = false,
+  className = '',
 }: Props): JSX.Element => {
+  const {  toggleTaskList } = useMapStore();
+  const clickHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    onClick?.();
+    // setActivePanel('tasks');
+    toggleTaskList();
+    console.log('ButtonOpenTasks clicked, taskListIsOpen:', isOpen);
+  };
   return (
     <Button
+      id="tasksButton"
       type="button"
       variant={'secondary'}
-      onClick={onClick}
+      onClick={clickHandler}
       className={`transition py-1 p-0 w-full inline-flex items-center justify-center border-0 rounded-none ${className}`}
     >
       <div className="w-[76px] h-full">
@@ -27,7 +38,7 @@ export const ButtonOpenTasks = ({
           <motion.div
             className="flex items-center gap-2"
             animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            transition={{ duration: 0.4, ease: 'easeInOut' }}
           >
             <AnimatePresence mode="wait">
               {!isOpen && (
