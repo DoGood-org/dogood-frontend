@@ -43,12 +43,10 @@ export const ProfileMap = (): JSX.Element => {
     fullscreenMap,
     defaultLocation,
     taskListIsOpen,
-    toggleTaskList,
     activePanel,
     setActivePanel,
     searchIsActive,
     highlightedTaskId,
-    radius,
 
     // selectedTask,
     setCustomMarkers,

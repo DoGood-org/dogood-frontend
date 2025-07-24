@@ -18,7 +18,9 @@ export const TasksList: React.FC<Props> = ({
       className={`bg-card flex flex-col pl-2 pr-2 lg:px-8 border-4 ${className}`}
     >
       <div
-        className={`h-[745px] lg:h-[722px] w-full overflow-y-auto custom-scrollbar-tasks`}
+        className={
+          'h-[745px] lg:h-[722px] w-full overflow-y-auto custom-scrollbar-tasks'
+        }
       >
         <div className="flex flex-col w-full bg-card pl-3 pr-2 lg:px-6 pb-8 pt-4 lg:rounded-xl">
           <h2 className="text-h3 mb-6">{t('tasksTitle')}</h2>

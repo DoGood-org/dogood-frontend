@@ -34,8 +34,8 @@ export const useClickOutside = ({
   useEffect(() => {
     if (!enabled) return;
 
-    const timeout = setTimeout(() => setDelayGuard(true), delay);
-    return () => clearTimeout(timeout);
+    const timeout = setTimeout((): void => setDelayGuard(true), delay);
+    return (): void => clearTimeout(timeout);
   }, [enabled, delay]);
 
   useEffect(() => {
