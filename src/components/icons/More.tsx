@@ -8,9 +8,9 @@ const More = (props: SVGProps<SVGSVGElement>) => (
     viewBox="0 0 33 6"
     {...props}
   >
-    <circle cx={3.538} cy={3} r={2.976} fill="#0D0D0D" />
-    <circle cx={16.492} cy={3} r={2.976} fill="#0D0D0D" />
-    <circle cx={29.445} cy={3} r={2.976} fill="#0D0D0D" />
+    <circle cx={3.538} cy={3} r={2.976} fill="currentColor" />
+    <circle cx={16.492} cy={3} r={2.976} fill="currentColor" />
+    <circle cx={29.445} cy={3} r={2.976} fill="currentColor" />
   </svg>
 );
 export default More;

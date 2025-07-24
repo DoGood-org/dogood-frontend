@@ -8,6 +8,7 @@
     "text": "Hilfe ist näher, als du denkst – wähle ein Projekt, das dich anspricht. Jede kleine Handlung zählt. Starte jetzt – verändere die Welt.",
     "button": "Zur Karte"
   },
+  "noReview": "Noch hat niemand eine Bewertung für diesen Nutzer hinterlassen.",
   "contentViews": [
     {
       "id": "task",
