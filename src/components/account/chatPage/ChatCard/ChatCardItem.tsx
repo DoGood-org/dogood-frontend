@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import { ChatCardProps } from '@/types/chatType';
 
@@ -17,7 +19,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
         isSelected ? 'border-border' : 'border-transparent hover:border-border'
       )}
     >
-      <div className="absolute top-1 right-3 mb-2">
+      <div className="absolute top-1 right-0 mb-2">
         <ChatEllipsisMenu chat={chat} />
       </div>
       <Image

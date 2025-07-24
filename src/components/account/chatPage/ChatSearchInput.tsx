@@ -2,7 +2,6 @@
 
 import Back from '@/components/icons/Back';
 import ChatSearch from '@/components/icons/ChatSearch';
-import { Input } from '@/components/ui/Input';
 import { useState } from 'react';
 
 interface ChatSearchInputProps {
@@ -67,7 +66,7 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
               {selectedName}
             </p>
           )}
-          <Input
+          <input
             type="text"
             placeholder={placeholderText}
             value={searchQuery}

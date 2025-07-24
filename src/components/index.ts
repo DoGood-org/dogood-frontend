@@ -12,6 +12,7 @@ export * from './account/chatPage/ChatCard/ChatCardItem';
 export * from './account/chatPage/ChatCard/ChatCardsList';
 export * from './account/chatPage/ChatMessage/ChatMessageItem';
 export * from './account/chatPage/ChatMessage/ChatMessagesList';
+export * from './account/chatPage/ChatModal/ChatEllipsisMenu';
 export * from './account/chatPage/ChatModal/ChatModal';
 export * from './account/navigation/BottomNavigation';
 export * from './account/navigation/PageContent';
