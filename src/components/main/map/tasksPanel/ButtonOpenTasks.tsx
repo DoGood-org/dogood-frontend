@@ -16,7 +16,7 @@ export const ButtonOpenTasks = ({
   isOpen = false,
   className = '',
 }: Props): JSX.Element => {
-  const {  toggleTaskList } = useMapStore();
+  const { toggleTaskList } = useMapStore();
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
