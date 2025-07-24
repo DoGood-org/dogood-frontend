@@ -8,7 +8,7 @@ interface LinkProps {
   text: string;
   className?: string;
   icon?: React.ReactNode;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
 export const LinkWithArrow = ({
