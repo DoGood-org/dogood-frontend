@@ -1,4 +1,4 @@
-import { ChatCardViewModel } from './viewModels';
+// import { ChatCardViewModel } from './viewModels';
 
 export interface ChatType {
   id: string;
@@ -15,10 +15,11 @@ export interface ChatCardProps {
 }
 
 export interface ChatCardsListProps {
-  chats: ChatCardViewModel[];
+  chats: ChatType[];
   selectedChatId: string | null;
   onSelectChat: (id: string) => void;
 }
+//+++++++++++++++++++++++++++++++++++++
 
 export interface MessageType {
   id: string;
