@@ -5,6 +5,8 @@ export { default as Burger } from './Burger';
 export { default as CaretDoubleRight } from './CaretDoubleRight';
 export { default as CaretDown } from './CaretDown';
 export { default as ChevronDown } from './ChevronDown';
+export { default as ChevronLeft } from './ChevronLeft';
+export { default as ChevronRight } from './ChevronRight';
 export { default as Close } from './Close';
 export { default as CloseMenu } from './CloseMenu';
 export { default as Dollar } from './Dollar';

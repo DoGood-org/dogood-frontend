@@ -4,6 +4,7 @@ import userData from './user.json';
 import { useTranslations } from 'next-intl';
 import { UserLocate } from '@/components/icons';
 import { UserAavatar } from './UserAvatar';
+import { UserNoDescription } from './UserNoDescription';
 
 export const UserDescription = (): JSX.Element => {
   const { avatar, name, siteRole, bio, location } = userData;
@@ -31,8 +32,14 @@ export const UserDescription = (): JSX.Element => {
           <UserLocate />
           {location.city}
         </p>
-        <p className="mt-6">{t('description')}</p>
-        <p className="whitespace-pre-line mt-6 text-base">{bio}</p>
+        {bio ? (
+          <>
+            <p className="mt-6">{t('description')}</p>
+            <p className="whitespace-pre-line mt-6 text-base">{bio}</p>
+          </>
+        ) : (
+          <UserNoDescription />
+        )}
       </div>
     </div>
   );

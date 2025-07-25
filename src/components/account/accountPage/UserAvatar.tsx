@@ -8,7 +8,7 @@ export const UserAavatar = (): JSX.Element => {
       alt="No user avatar"
       width={353}
       height={352}
-      className="w-[353px] h-[352px] object-cover md:w-[270px] md:h-[323px] rounded-[10px]"
+      className="w-[353px] h-[352px] object-cover md:w-[270px] md:h-[323px] lg:w-[511px] lg:h-[611px]  rounded-[10px]"
     />
   );
 };

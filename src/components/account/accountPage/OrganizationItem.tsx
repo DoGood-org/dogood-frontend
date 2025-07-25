@@ -1,4 +1,4 @@
-import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
+import { LinkWithArrow } from '@/components';
 import { OrganizationItemProps } from '@/types';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -29,7 +29,7 @@ export const OrganizationItem = ({
         <p className="mt-4 text-base">
           {members.length}&nbsp;{people}
         </p>
-        <p className="mt-6 text-base">{description}</p>
+        <p className="whitespace-pre-line mt-6 text-base">{description}</p>
         <LinkWithArrow
           href=""
           text={t('accountButton')}

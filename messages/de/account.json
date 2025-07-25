@@ -1,6 +1,14 @@
 {
   "description": "Beschreibung",
+  "noDescription": "Erzähl uns ein wenig über dich – das hilft anderen, dich besser kennenzulernen. Wer bist du, was liegt dir am Herzen, was inspiriert dich?",
+  "noDescriptionButton": "Bio hinzufügen",
   "accountButton": "Mehr erfahren",
+  "task": {
+    "title": "Finde deine erste Aufgabe auf der Karte",
+    "text": "Hilfe ist näher, als du denkst – wähle ein Projekt, das dich anspricht. Jede kleine Handlung zählt. Starte jetzt – verändere die Welt.",
+    "button": "Zur Karte"
+  },
+  "noReview": "Noch hat niemand eine Bewertung für diesen Nutzer hinterlassen.",
   "contentViews": [
     {
       "id": "task",

@@ -5,6 +5,7 @@ import {
   OrganizationList,
   ReviewsList,
   Section,
+  AccountTaskList,
 } from '@/components';
 import { useMediaQuery } from '@/hooks';
 import { ContentProps } from '@/types';
@@ -22,7 +23,7 @@ export const AccountContentPanel = (): JSX.Element => {
   const activeData = views.find(({ view }) => view === activeView);
 
   const viewComponents: Record<string, React.ReactNode> = {
-    task: <div>TaskComponent</div>,
+    task: <AccountTaskList />,
     organization: <OrganizationList />,
     reviews: <ReviewsList />,
   };
