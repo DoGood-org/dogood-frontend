@@ -23,22 +23,22 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
         <ChatEllipsisMenu chat={chat} />
       </div>
       <Image
-        src={chat.userAvatarUrl}
-        alt={`${chat.userNickname} avatar`}
+        src={chat.avatar}
+        alt={`${chat.name} avatar`}
         width={64}
         height={64}
         className="w-[64px] h-[64px] rounded-full object-cover bg-white"
       />
-      <div className="flex flex-col flex-grow">
+      <div className="flex flex-col flex-grow min-w-0">
         <div className="flex justify-between items-center mb-2">
           <p className="text-white font-semibold text-base truncate">
-            {chat.userNickname}
+            {chat.name}
           </p>
           <span className="text-white text-sm whitespace-nowrap">
-            {chat.lastMessageDate}
+            {chat.createdAt}
           </span>
         </div>
-        <p className="text-white text-base truncate">{chat.lastMessageText}</p>
+        <p className="text-white text-base truncate">{chat.content}</p>
       </div>
     </li>
   );

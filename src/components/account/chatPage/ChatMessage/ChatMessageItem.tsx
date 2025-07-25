@@ -14,8 +14,8 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
     >
       <div className={`${message.isCurrentUser ? 'order-2' : 'order-1'}`}>
         <Image
-          src={message.senderAvatarUrl}
-          alt={`${message.senderNickname} avatar`}
+          src={message.avatar}
+          alt={`${message.name} avatar`}
           width={42}
           height={42}
           className="w-[42px] h-[42px] rounded-full object-cover bg-white shrink-0"
@@ -28,15 +28,13 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
           message.isCurrentUser ? 'order-1' : 'order-2'
         )}
       >
-        <p className="text-base">{message.text}</p>
+        <p className="text-base">{message.content}</p>
         <span className="text-xs self-end mt-3">
-          {message.createdAt
-            ? new Date(message.createdAt).toLocaleTimeString('uk-UA', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false,
-              })
-            : ''}
+          {new Date(message.createdAt).toLocaleDateString(undefined, {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+          })}
         </span>
       </div>
     </li>

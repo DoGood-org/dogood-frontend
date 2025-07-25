@@ -1,11 +1,9 @@
-// import { ChatCardViewModel } from './viewModels';
-
 export interface ChatType {
   id: string;
-  userNickname: string;
-  lastMessageText: string;
-  lastMessageDate: string;
-  userAvatarUrl: string;
+  name: string;
+  avatar: string;
+  content: string;
+  createdAt: string;
 }
 
 export interface ChatCardProps {
@@ -19,15 +17,14 @@ export interface ChatCardsListProps {
   selectedChatId: string | null;
   onSelectChat: (id: string) => void;
 }
-//+++++++++++++++++++++++++++++++++++++
 
 export interface MessageType {
   id: string;
-  text: string;
-  senderNickname: string;
-  senderAvatarUrl: string;
+  name: string;
+  avatar: string;
+  content: string;
   createdAt: string;
-  chatId: string;
+  roomId: string;
   isCurrentUser: boolean;
 }
 
