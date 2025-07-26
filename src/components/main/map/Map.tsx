@@ -28,7 +28,6 @@ import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
 // import { Radius } from '@/components/main/map/Radius';
 import { AutoZoomOnDistanceFilter } from '@/components/main/map/filters/AutoZoomOnDistanceFilter';
 import { RadiusWatcher } from '@/components/main/map/RadiusWatcher';
-import { AnimatedDrawler } from '@/components/ui/AnimatedDrawler';
 
 export const Map: React.FC = (): JSX.Element => {
   const { ref: mapContainerRef, inView: isInView } = useInView({
@@ -51,16 +50,13 @@ export const Map: React.FC = (): JSX.Element => {
     showGeolocationPopup,
     checkLocationPermission,
     radius,
-    taskListIsOpen,
-    toggleTaskList,
-    activePanel,
-    setActivePanel,
+
     clickedCoords,
     showOptionsMenu,
     setClickedCoords,
     setShowOptionsMenu,
     closeOptionsMenu,
-    searchIsActive,
+
     highlightedTaskId,
   } = useMapStore();
   const { choosenCategories, categories } = useFilterStore();
@@ -291,14 +287,13 @@ export const Map: React.FC = (): JSX.Element => {
             />
           </MapContainer>
         </div>
-        <div className="lg:absolute lg:flex lg:items-start lg:top-12 lg:left-32 lg:gap-10 lg:z-[500]">
+        {/* <div className="lg:absolute lg:flex lg:items-start lg:top-12 lg:left-32 lg:gap-10 lg:z-[500]">
           <div className="flex flex-col justify-center relative w-full bg-card lg:w-[485px]">
             <ButtonOpenTasks
               onClick={() => {
                 toggleTaskList();
                 console.log(taskListIsOpen, 'taskListIsOpen');
               }}
-              isOpen={taskListIsOpen}
               className="mx-auto mb-2 bg-card lg:mb-0 lg:absolute lg:z-50  lg:h-10 lg:top-12 lg:border-t lg:border-t-foreground  lg:w-full  lg:hover:border-t-foreground"
             />
             <FormSearch
@@ -354,7 +349,7 @@ export const Map: React.FC = (): JSX.Element => {
               </motion.div>
             )}
           </AnimatePresence>
-        </AnimatedDrawler>
+        </AnimatedDrawler> */}
       </div>
     </Container>
   );

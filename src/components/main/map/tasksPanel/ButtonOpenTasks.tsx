@@ -8,23 +8,19 @@ import { useMapStore } from '@/zustand/stores/mapStore';
 type Props = {
   className?: string;
   onClick?: () => void;
-  isOpen?: boolean;
 };
 
 export const ButtonOpenTasks = ({
   onClick,
-  isOpen = false,
   className = '',
 }: Props): JSX.Element => {
-  const { toggleTaskList } = useMapStore();
+  const { activePanel, togglePanel } = useMapStore();
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-    onClick?.();
-    // setActivePanel('tasks');
-    toggleTaskList();
-    console.log('ButtonOpenTasks clicked, taskListIsOpen:', isOpen);
+    togglePanel('tasks');
   };
+
   return (
     <Button
       id="tasksButton"
@@ -37,11 +33,11 @@ export const ButtonOpenTasks = ({
         <div className="w-full h-full flex items-center justify-center">
           <motion.div
             className="flex items-center gap-2"
-            animate={{ rotate: isOpen ? 180 : 0 }}
+            animate={{ rotate: activePanel === 'tasks' ? 180 : 0 }}
             transition={{ duration: 0.4, ease: 'easeInOut' }}
           >
             <AnimatePresence mode="wait">
-              {!isOpen && (
+              {activePanel !== 'tasks' && (
                 <motion.p
                   key="tasks-label"
                   className="block font-normal text-center"
