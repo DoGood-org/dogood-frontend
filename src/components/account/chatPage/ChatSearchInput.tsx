@@ -43,8 +43,8 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
     : '';
 
   const placeholderText = formattedTime
-    ? t('input.wasOnNetworkAt', { time: formattedTime })
-    : t('input.yourMessage');
+    ? `was on the network at ${formattedTime}`
+    : '';
 
   return (
     <div className="flex items-center justify-between">
