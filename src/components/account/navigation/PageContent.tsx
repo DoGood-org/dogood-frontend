@@ -1,6 +1,6 @@
 'use client';
 
-import { Account } from '@/components';
+import { Account, SettingsForm } from '@/components';
 import { ProfileMap } from '@/components/main/map/profileMap/ProfileMap';
 import { navigationStore } from '@/zustand/stores/navigationStore';
 import React from 'react';
@@ -10,7 +10,7 @@ const pages = {
   Chat: <div>Chat</div>,
   Map: <ProfileMap />,
   Goals: <div>Goals</div>,
-  Settings: <div>Settings</div>,
+  Settings: <SettingsForm />,
 };
 
 export const PageContent: React.FC = () => {

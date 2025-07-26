@@ -1,0 +1,21 @@
+{
+  "basic": {
+    "title": "Basic Information",
+    "name": "Name",
+    "birth": "Date of Birth",
+    "gender": "Gender"
+  },
+  "location": {
+    "title": "Location",
+    "country": "Counrty",
+    "region": "Region",
+    "city": "City"
+  },
+  "contact": {
+    "title": "Contact information",
+    "mail": "E-mail",
+    "phone": "Phone number"
+  },
+  "payment": "Payment",
+  "about": "About me"
+}
