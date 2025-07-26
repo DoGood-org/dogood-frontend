@@ -88,39 +88,42 @@ export const TasksOnMap = (props: Props): JSX.Element => {
         direction="vertical"
         className={`
       bg-card flex flex-col w-full overflow-hidden
-      ${activePanel ? 'h-[354px] md:h-[400px]' : 'h-0'}
       lg:mt-0
       lg:w-[487px]
       lg:left-0 
    `}
       >
-        <AnimatePresence mode="wait">
-          {activePanel === 'filters' && (
-            <motion.div
-              className="w-full h-full relative bg-card "
-              key="filters"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Filters tasks={noPaginatedTasks} className="w-full bg-card" />
-            </motion.div>
-          )}
+        <div
+          className={`transition-all duration-300 ${activePanel ? 'h-[400px]' : 'h-0'}`}
+        >
+          <AnimatePresence mode="wait">
+            {activePanel === 'filters' && (
+              <motion.div
+                className="w-full h-full relative bg-card "
+                key="filters"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Filters tasks={noPaginatedTasks} className="w-full bg-card" />
+              </motion.div>
+            )}
 
-          {activePanel === 'tasks' && (
-            <motion.div
-              key="tasks"
-              className="w-full h-full relative bg-card"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-            >
-              <TasksList tasks={noPaginatedTasks} className="w-full" />
-            </motion.div>
-          )}
-        </AnimatePresence>
+            {activePanel === 'tasks' && (
+              <motion.div
+                key="tasks"
+                className="w-full h-full relative bg-card"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <TasksList tasks={noPaginatedTasks} className="w-full" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </AnimatedDrawler>{' '}
     </motion.div>
   );
