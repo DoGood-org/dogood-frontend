@@ -384,7 +384,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
         set((state) => ({
           activePanel: state.activePanel === panel ? null : panel,
         })),
-
     }),
     {
       name: 'map-storage',

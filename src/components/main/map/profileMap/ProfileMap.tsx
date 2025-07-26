@@ -39,7 +39,6 @@ export const ProfileMap = (): JSX.Element => {
     userLocation,
     fullscreenMap,
     defaultLocation,
-    activePanel,
     highlightedTaskId,
 
     // selectedTask,
@@ -315,82 +314,12 @@ export const ProfileMap = (): JSX.Element => {
         </ResponsiveMapWrpr>
       </AnimatePresence>
       <div className="relative flex flex-col w-full lg:absolute  lg:items-start lg:top-16 lg:left-76 lg:z-[500]">
-        <div
-        // className={`absolute  z-[1000] flex flex-col justify-center  w-full bg-card transition-all duration-300 ${activePanel ? '-top-32' : 'top-0'}
-        // lg:top-0 lg:w-[487px] lg:left-0 lg:rounded-sm lg:border lg:border-foreground lg:shadow-lg`}
-        >
-          <TasksOnMap className={`absolute z-[1000] w-full top-0 `} />
+        <div>
+          <TasksOnMap
+            className={'absolute z-[1000] w-full top-0 bg-red-400 lg:w-[485px]'}
+          />
         </div>
       </div>
-      {/* <div className=" flex flex-col justify-center bg-card w-full rounded-sm lg:w-[485px]">
-            <FormSearch
-              className="p-0 bg-card border-b border-b-foreground"
-              inputClassName="h-10 pl-7 pr-14 overflow-hidden"
-              leftSVGClassName="left-0"
-              rightSVGClassName="right-0"
-            />
-            <ButtonOpenTasks
-              isOpen={taskListIsOpen}
-              className="mx-auto bg-card h-10 lg:mb-0 lg:z-500  lg:h-10  lg:border-t lg:border-t-foreground  lg:w-full  lg:hover:border-t-foreground"
-            />
-          </div>
-          <AnimatedDrawler
-            isVisible={!!activePanel}
-            onClose={() => {
-              if (!searchIsActive) setActivePanel(null);
-              console.log('Closing panel', activePanel);
-            }}
-            exeptionForClickOutside={searchIsActive || true}
-            exeptionSelector="search||filtersButton||tasksButton"
-            direction="vertical"
-            className={`
-          
-            
-              bg-card flex flex-col w-full overflow-hidden transition-[max-height] duration-300
-              
-              ${activePanel ? 'max-h-[calc(100vh-300px)]' : 'max-h-0'}
-              w-full
-
-              overflow-hidden
-              transition-all duration-300
-              lg:mt-0
-              lg:w-[487px]
-              lg:left-0 
-           `}
-          >
-            <AnimatePresence mode="wait">
-              {activePanel === 'filters' && (
-                <motion.div
-                  className="w-full h-full relative bg-card "
-                  key="filters"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Filters
-                    tasks={noPaginatedTasks}
-                    className="w-full bg-card"
-                  />
-                </motion.div>
-              )}
-
-              {activePanel === 'tasks' && (
-                <motion.div
-                  key="tasks"
-                  className="w-full h-full relative bg-card"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <TasksList tasks={noPaginatedTasks} className="w-full" />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </AnimatedDrawler>{' '} */}
-      {/* </div>
-      </div> */}
     </div>
   );
 };

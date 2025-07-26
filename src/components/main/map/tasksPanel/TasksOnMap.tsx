@@ -4,16 +4,17 @@ import { FormSearch } from '@/components/main/map/filters/FormSearch';
 import { ButtonOpenTasks } from '@/components/main/map/tasksPanel/ButtonOpenTasks';
 import { TasksList } from '@/components/main/map/tasksPanel/TasksList';
 import { AnimatedDrawler } from '@/components/ui/AnimatedDrawler';
+import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React, { JSX } from 'react';
 
 type Props = {
   className?: string;
 };
-export const TasksOnMap = (props: Props) => {
+export const TasksOnMap = (props: Props): JSX.Element => {
   const ref = React.useRef<HTMLDivElement | null>(null);
   const { activePanel, setActivePanel } = useMapStore();
 
@@ -21,7 +22,7 @@ export const TasksOnMap = (props: Props) => {
 
   useClickOutside({
     ref: ref,
-    callback: () => {
+    callback: (): void => {
       if (activePanel) setActivePanel(null);
       console.log('Closing panel', activePanel);
     },
@@ -30,42 +31,47 @@ export const TasksOnMap = (props: Props) => {
       detectEscapeKey: true,
     },
   });
-  console.log('Checking if tablet', window.innerWidth, window.innerHeight);
-
-  const useIsTablet = () => {
-    const [isTablet, setIsTablet] = useState(false);
-    useEffect(() => {
-      console.log('Checking if tablet', window.innerWidth, window.innerHeight);
-
-      const check = () => setIsTablet(window.innerWidth >= 768);
-      check();
-      window.addEventListener('resize', check);
-      return () => window.removeEventListener('resize', check);
-    }, []);
-    return isTablet;
-  };
-
-  const isTablet = useIsTablet();
-  const dragTop = isTablet ? -250 : -180;
+  const { isMobile, isTablet, isDesktop } = useBreakpoint();
+  const dragTop = isMobile ? -180 : isTablet ? -320 : undefined;
 
   return (
     <motion.div
-      className={`${props.className} touch-none`}
+      className={`${props.className} touch-none cursor-grab`}
       ref={ref}
-      drag="y"
-      dragConstraints={{ top: dragTop }}
+      drag={isDesktop ? false : 'y'}
+      dragConstraints={
+        isDesktop || dragTop === undefined
+          ? undefined
+          : { top: dragTop, bottom: 0 }
+      }
       dragElastic={0.2}
       dragMomentum={false}
-      animate={{ y: activePanel ? (isTablet ? -200 : -150) : 0 }}
-      onDragStart={() => setActivePanel('tasks')}
+      initial={{ y: isDesktop ? 0 : (dragTop ?? 0) }}
+      animate={activePanel && !isDesktop ? {} : { y: 0 }}
+      onDragStart={() => {
+        if (!isDesktop && activePanel === null) {
+          setActivePanel('tasks');
+        }
+      }}
       onDragEnd={(e, info) => {
-        if (info.offset.y > 100) {
+        if (isDesktop) return;
+
+        const dragY = info.offset.y;
+        const velocityY = info.velocity.y;
+
+        if (dragY > 80 || velocityY > 800) {
           setActivePanel(null);
+        } else if (dragY < -80 || velocityY < -800) {
+          setActivePanel('tasks');
         }
       }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
     >
-      <div className=" flex flex-col justify-center bg-card w-full rounded-sm lg:w-[485px]">
+      <div className="flex flex-col bg-card w-full rounded-sm lg:w-[485px]">
+        {/* Optional Drag Handle */}
+        <div className="w-full flex justify-center py-2">
+          <div className="w-10 h-1 rounded-full bg-muted" />
+        </div>
         <FormSearch
           className="p-0 bg-card border-b border-b-foreground"
           inputClassName="h-10 pl-7 pr-14 overflow-hidden"
