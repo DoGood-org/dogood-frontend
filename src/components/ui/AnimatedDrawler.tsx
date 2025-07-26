@@ -30,7 +30,7 @@ export const AnimatedDrawler = ({
     <AnimatePresence mode="wait">
       {isVisible && (
         <motion.div
-          ref={ref}
+          style={{ willChange: 'transform' }}
           initial={{ opacity: 0, ...axis }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           exit={{ opacity: 0, ...axis }}
