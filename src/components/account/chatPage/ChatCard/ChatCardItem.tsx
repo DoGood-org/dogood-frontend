@@ -10,7 +10,11 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
   chat,
   isSelected,
   onSelect,
+  onChatDeleted,
 }) => {
+  const handleDelete = (): void => {
+    onChatDeleted(chat.id);
+  };
   return (
     <li
       onClick={() => onSelect(chat.id)}
@@ -20,7 +24,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
       )}
     >
       <div className="absolute top-1 right-0 mb-2">
-        <ChatEllipsisMenu chat={chat} />
+        <ChatEllipsisMenu chat={chat} onChatDeleted={handleDelete} />
       </div>
       <Image
         src={chat.avatar}

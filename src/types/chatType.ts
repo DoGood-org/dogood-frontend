@@ -10,12 +10,14 @@ export interface ChatCardProps {
   chat: ChatType;
   isSelected: boolean;
   onSelect: (id: string) => void;
+  onChatDeleted: (chatId: string) => void;
 }
 
 export interface ChatCardsListProps {
   chats: ChatType[];
   selectedChatId: string | null;
   onSelectChat: (id: string) => void;
+  onChatDeleted: (chatId: string) => void;
 }
 
 export interface MessageType {

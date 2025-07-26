@@ -4,22 +4,29 @@ import MarkChat from '@/components/icons/MarkChat';
 import PinChat from '@/components/icons/PinChat';
 import TrashBinChat from '@/components/icons/TrashBinChat';
 import { ChatType } from '@/types/chatType';
+import { ChatServices } from '@/zustand/services/chatService';
 
 type ChatModalProps = {
   chat: ChatType;
   onClose: () => void;
   menuRef: React.RefObject<HTMLDivElement | null>;
+  onChatDeleted: (chatId: string) => void;
 };
 
 export const ChatModal: React.FC<ChatModalProps> = ({
   chat,
   onClose,
   menuRef,
+  onChatDeleted,
 }) => {
-  const handleDelete = (): void => {
-    // виклик API видалення
-    console.log('Deleted', chat.id);
-    onClose();
+  const handleDelete = async (): Promise<void> => {
+    try {
+      await ChatServices.deleteChat(chat.id);
+      onChatDeleted(chat.id);
+      onClose();
+    } catch (error) {
+      throw error;
+    }
   };
 
   const handlePin = (): void => {

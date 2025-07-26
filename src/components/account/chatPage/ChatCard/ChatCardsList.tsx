@@ -7,15 +7,17 @@ export const ChatCardsList: React.FC<ChatCardsListProps> = ({
   chats,
   selectedChatId,
   onSelectChat,
+  onChatDeleted,
 }) => {
   return (
-    <ul className="flex flex-col gap-6 md:gap4">
+    <ul className="flex flex-col gap-6 md:gap-4">
       {chats.map((chat) => (
         <ChatCardItem
           key={chat.id}
           chat={chat}
           isSelected={selectedChatId === chat.id}
           onSelect={onSelectChat}
+          onChatDeleted={onChatDeleted}
         />
       ))}
     </ul>

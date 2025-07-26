@@ -8,9 +8,10 @@ import { useEffect, useRef } from 'react';
 
 type Props = {
   chat: ChatType;
+  onChatDeleted: (chatId: string) => void;
 };
 
-export const ChatEllipsisMenu: React.FC<Props> = ({ chat }) => {
+export const ChatEllipsisMenu: React.FC<Props> = ({ chat, onChatDeleted }) => {
   const { isOpen, toggleMenu, closeMenu } = useMenuToggle();
   const buttonRef = useRef<HTMLDivElement>(null);
 
@@ -39,7 +40,12 @@ export const ChatEllipsisMenu: React.FC<Props> = ({ chat }) => {
         onClick={handleToggleMenu}
       />
       {isOpen && (
-        <ChatModal chat={chat} onClose={toggleMenu} menuRef={buttonRef} />
+        <ChatModal
+          chat={chat}
+          onClose={toggleMenu}
+          menuRef={buttonRef}
+          onChatDeleted={onChatDeleted}
+        />
       )}
     </div>
   );
