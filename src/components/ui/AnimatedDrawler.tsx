@@ -1,6 +1,5 @@
 'use client';
 
-import { useClickOutside } from '@/hooks/useClickOutside';
 import { motion, AnimatePresence } from 'framer-motion';
 import React, { JSX, ReactNode } from 'react';
 
@@ -18,7 +17,6 @@ type AnimatedDrawlerProps = {
 
 export const AnimatedDrawler = ({
   isVisible,
-  onClose,
   children,
   className = '',
   duration = 0.4,

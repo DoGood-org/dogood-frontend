@@ -10,10 +10,7 @@ type Props = {
   onClick?: () => void;
 };
 
-export const ButtonOpenTasks = ({
-  onClick,
-  className = '',
-}: Props): JSX.Element => {
+export const ButtonOpenTasks = ({ className = '' }: Props): JSX.Element => {
   const { activePanel, togglePanel } = useMapStore();
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.stopPropagation();
@@ -27,7 +24,7 @@ export const ButtonOpenTasks = ({
       type="button"
       variant={'secondary'}
       onClick={clickHandler}
-      className={`transition py-1 p-0 w-full inline-flex items-center justify-center border-0 rounded-none ${className}`}
+      className={`transition py-1 p-0  inline-flex items-center justify-center border-0 rounded-none ${className}`}
     >
       <div className="w-[76px] h-full">
         <div className="w-full h-full flex items-center justify-center">

@@ -1,16 +1,12 @@
 'use client';
 import {
-  ButtonOpenTasks,
   Container,
   CustomControlContent,
-  Filters,
   generateTasks,
   MultiControlPanel,
-  TasksList,
   UserLocation,
 } from '@/components';
 import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
-import { FormSearch } from '@/components/main/map/filters/FormSearch';
 import { MapClickHandler } from '@/components/main/map/MapClicks';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
@@ -21,7 +17,6 @@ import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelec
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
-import { AnimatePresence, motion } from 'framer-motion';
 import React, { JSX, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
