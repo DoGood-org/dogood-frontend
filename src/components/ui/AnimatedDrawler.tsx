@@ -24,7 +24,6 @@ export const AnimatedDrawler = ({
   direction = 'vertical',
 }: AnimatedDrawlerProps): JSX.Element => {
   const axis = direction === 'horizontal' ? { x: offset } : { y: offset };
-  const ref = React.useRef<HTMLDivElement | null>(null);
 
   return (
     <AnimatePresence mode="wait">
