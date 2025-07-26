@@ -24,36 +24,15 @@ export const AnimatedDrawler = ({
   duration = 0.4,
   offset = 40,
   direction = 'vertical',
-  exeptionForClickOutside = false,
-  exeptionSelector = '',
 }: AnimatedDrawlerProps): JSX.Element => {
   const axis = direction === 'horizontal' ? { x: offset } : { y: offset };
   const ref = React.useRef<HTMLDivElement | null>(null);
-
-  useClickOutside({
-    ref: ref,
-    callback: onClose ?? ((): void => {}),
-    options: {
-      enabled: isVisible,
-      detectEscapeKey: true,
-      isExceptionActive: exeptionForClickOutside,
-      exeptionSelector: exeptionSelector,
-    },
-  });
 
   return (
     <AnimatePresence mode="wait">
       {isVisible && (
         <motion.div
           ref={ref}
-          drag="y"
-          dragConstraints={{ top: 0, bottom: 0 }}
-          onDragEnd={(_, info) => {
-            if (info.offset.y > 100) {
-              // user dragged down >100px → treat as close
-              onClose?.();
-            }
-          }}
           initial={{ opacity: 0, ...axis }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           exit={{ opacity: 0, ...axis }}

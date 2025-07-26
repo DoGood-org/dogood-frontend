@@ -63,7 +63,6 @@ type TMapState = {
 
   taskListIsOpen: boolean;
   filtersIsOpen: boolean;
-  searchIsActive: boolean;
 
   clickedCoords: LatLngLiteral | null;
   showOptionsMenu: boolean;
@@ -89,11 +88,9 @@ type TMapActions = {
 
   toggleFullscreenMap: (fullscreen: boolean) => void;
 
-  toggleTaskList: () => void;
+  togglePanel: (panel: 'tasks' | 'filters') => void;
   flyToCoords: (coords: LatLngLiteral, zoom?: number) => void;
   setHighlightedTaskId: (id: string | null) => void;
-  toggleFilters: () => void;
-  setSearchActive: (active: boolean) => void;
 
   setClickedCoords: (coords: LatLngLiteral | null) => void;
   setShowOptionsMenu: (visible: boolean) => void;
@@ -159,7 +156,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
         }),
       taskListIsOpen: false,
       filtersIsOpen: false,
-      searchIsActive: false,
       activePanel: null,
 
       clickedCoords: null,
@@ -381,23 +377,14 @@ export const useMapStore = create<TMapState & TMapActions>()(
         }
       },
 
-      setActivePanel: (panel): void => set({ activePanel: panel }),
-      setSearchActive: (active: boolean): void => {
-        set({ searchIsActive: active });
-      },
-      toggleFilters: () =>
+      setActivePanel: (panel: 'tasks' | 'filters' | null): void =>
+        set({ activePanel: panel }),
+
+      togglePanel: (panel: 'tasks' | 'filters') =>
         set((state) => ({
-          filtersIsOpen: !state.filtersIsOpen,
-          taskListIsOpen: false,
-          activePanel: !state.filtersIsOpen ? 'filters' : null,
+          activePanel: state.activePanel === panel ? null : panel,
         })),
 
-      toggleTaskList: () =>
-        set((state) => ({
-          taskListIsOpen: !state.taskListIsOpen,
-          filtersIsOpen: false,
-          activePanel: !state.taskListIsOpen ? 'tasks' : null,
-        })),
     }),
     {
       name: 'map-storage',

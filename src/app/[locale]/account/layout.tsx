@@ -14,7 +14,6 @@ export default function AuthLayout(): React.ReactNode {
       <Container
         className="account-layout-container relative
         flex flex-col 
-
       min-h-[calc(100dvh-80px)]
       lg:min-h-[calc(100dvh-79px)]"
       >

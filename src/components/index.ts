@@ -105,6 +105,7 @@ export * from './main/map/tasksPanel/TaskCategoryIconList';
 export * from './main/map/tasksPanel/TaskCategoryLabel';
 export * from './main/map/tasksPanel/TaskItem';
 export * from './main/map/tasksPanel/TasksList';
+export * from './main/map/tasksPanel/TasksOnMap';
 export * from './main/news/mockNews';
 export * from './main/news/NewsItem';
 export * from './main/news/NewsList';

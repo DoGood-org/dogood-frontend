@@ -19,8 +19,8 @@ export const FormSearch = ({
   leftSVGClassName,
   rightSVGClassName,
 }: Props): JSX.Element => {
-  const { setSearchActive, toggleFilters, filtersIsOpen } = useMapStore();
-  const { setSearchQuery } = useFilterStore();
+  const { togglePanel } = useMapStore();
+  const { setSearchQuery, setSearchActive } = useFilterStore();
 
   const { register, watch, reset } = useForm<FormData>();
   const searchValue = watch('search');
@@ -48,17 +48,12 @@ export const FormSearch = ({
   ): void => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-    // setActivePanel('filters');
-
-    console.log('onFilterButtonClick', filtersIsOpen);
-    toggleFilters();
-    console.log('onFilterButtonClick after toggleFilters', filtersIsOpen);
+    togglePanel('filters');
   };
 
   const handleClear = (): void => {
     reset({ search: '' });
     setSearchQuery('');
-    setSearchActive(false);
   };
 
   return (
@@ -91,9 +86,12 @@ export const FormSearch = ({
         border-none outline-none focus:ring-0 focus:outline-none shadow-none
         disabled:pointer-events-none disabled:opacity-50 lg:bg-card ${inputClassName}`}
             onBlur={(e) => {
-              if (!e.target.value.trim()) setSearchActive(false);
+              if (!e.target.value.trim()) {
+                console.log('blurr');
+                setSearchQuery('');
+              }
             }}
-            onFocus={() => setSearchActive(true)}
+            onFocus={() => console.log('focus')}
           />
           {searchValue && (
             <Button

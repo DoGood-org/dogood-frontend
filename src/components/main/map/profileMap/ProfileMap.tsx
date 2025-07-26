@@ -1,8 +1,6 @@
 'use client';
-import { motion } from 'framer-motion';
 import { AcceptShareLocationPopUp } from '@/components/main/map/AcceptShareLocationPopUp';
 import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
-import { FormSearch } from '@/components/main/map/filters/FormSearch';
 import { MapClickHandler } from '@/components/main/map/MapClicks';
 import { MapAutoResize } from '@/components/main/map/profileMap/MapAutoResize';
 import { ProfileCustomControlContent } from '@/components/main/map/profileMap/ProfileCustomControlContent';
@@ -11,9 +9,8 @@ import { ResponsiveMapWrpr } from '@/components/main/map/profileMap/ResponsiveMa
 import { RadiusWatcher } from '@/components/main/map/RadiusWatcher';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
-import { ButtonOpenTasks } from '@/components/main/map/tasksPanel/ButtonOpenTasks';
+
 import { UserLocation } from '@/components/main/map/UserLocation';
-import { AnimatedDrawler } from '@/components/ui/AnimatedDrawler';
 import { AnimatedModalWrapper } from '@/components/ui/portal/AnimatedModalWrapper';
 import Portal from '@/components/ui/portal/Portal';
 import { getMarkerIcon, resolveTaskCategory } from '@/lib/mapUtils';
@@ -23,8 +20,8 @@ import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AnimatePresence } from 'framer-motion';
 import { JSX, useEffect, useRef } from 'react';
-import { Filters } from '@/components/main/map/filters/Filters';
-import { TasksList } from '@/components/main/map/tasksPanel/TasksList';
+
+import { TasksOnMap } from '@/components/main/map/tasksPanel/TasksOnMap';
 
 export const ProfileMap = (): JSX.Element => {
   const {
@@ -42,10 +39,7 @@ export const ProfileMap = (): JSX.Element => {
     userLocation,
     fullscreenMap,
     defaultLocation,
-    taskListIsOpen,
     activePanel,
-    setActivePanel,
-    searchIsActive,
     highlightedTaskId,
 
     // selectedTask,
@@ -151,7 +145,7 @@ export const ProfileMap = (): JSX.Element => {
     <div className="w-full h-full ">
       <AnimatePresence mode="wait">
         <ResponsiveMapWrpr key={fullscreenMap ? 'fullscreen' : 'default'}>
-          <div className="w-full h-full relative">
+          <div className="w-full h-full ">
             <Portal>
               <AnimatedModalWrapper
                 isVisible={showGeolocationPopup}
@@ -322,11 +316,13 @@ export const ProfileMap = (): JSX.Element => {
       </AnimatePresence>
       <div className="relative flex flex-col w-full lg:absolute  lg:items-start lg:top-16 lg:left-76 lg:z-[500]">
         <div
-          className={`absolute  z-[1000] flex flex-col justify-center  w-full bg-card transition-all duration-300 ${activePanel ? '-top-32' : 'top-0'} 
-        
-        lg:top-0 lg:w-[487px] lg:left-0 lg:rounded-sm lg:border lg:border-foreground lg:shadow-lg`}
+        // className={`absolute  z-[1000] flex flex-col justify-center  w-full bg-card transition-all duration-300 ${activePanel ? '-top-32' : 'top-0'}
+        // lg:top-0 lg:w-[487px] lg:left-0 lg:rounded-sm lg:border lg:border-foreground lg:shadow-lg`}
         >
-          <div className=" flex flex-col justify-center bg-card w-full rounded-sm lg:w-[485px]">
+          <TasksOnMap className={`absolute z-[1000] w-full top-0 `} />
+        </div>
+      </div>
+      {/* <div className=" flex flex-col justify-center bg-card w-full rounded-sm lg:w-[485px]">
             <FormSearch
               className="p-0 bg-card border-b border-b-foreground"
               inputClassName="h-10 pl-7 pr-14 overflow-hidden"
@@ -392,9 +388,9 @@ export const ProfileMap = (): JSX.Element => {
                 </motion.div>
               )}
             </AnimatePresence>
-          </AnimatedDrawler>{' '}
-        </div>
-      </div>
+          </AnimatedDrawler>{' '} */}
+      {/* </div>
+      </div> */}
     </div>
   );
 };
