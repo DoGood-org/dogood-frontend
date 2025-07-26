@@ -3,6 +3,7 @@
 import Back from '@/components/icons/Back';
 import ChatSearch from '@/components/icons/ChatSearch';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface ChatSearchInputProps {
   selectedName: string;
@@ -21,6 +22,7 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
   onSearch,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const t = useTranslations('chat');
 
   const handleSearch = (): void => {
     onSearch(searchQuery.trim());
@@ -41,8 +43,8 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
     : '';
 
   const placeholderText = formattedTime
-    ? `was on the network at ${formattedTime}`
-    : '';
+    ? t('input.wasOnNetworkAt', { time: formattedTime })
+    : t('input.yourMessage');
 
   return (
     <div className="flex items-center justify-between">
@@ -55,7 +57,7 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
         >
           <Back className="w-5 h-5 text-bg-icon mr-2 hover:text-btn-hover active:text-btn-active" />
           <span className="text-base text-foreground hover:text-btn-hover active:text-btn-active">
-            Back
+            {t('back')}
           </span>
         </button>
       )}

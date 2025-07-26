@@ -1,0 +1,7 @@
+{
+  "back": "Back",
+  "input": {
+    "yourMessage": "Your message",
+    "wasOnNetworkAt": "was on the network at {time}"
+  }
+}

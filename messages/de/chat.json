@@ -1,0 +1,7 @@
+{
+  "back": "Zurück",
+  "input": {
+    "yourMessage": "Deine Nachricht",
+    "wasOnNetworkAt": "war zuletzt online um {time}"
+  }
+}

@@ -3,6 +3,7 @@
 import MessageSend from '@/components/icons/MessageSend';
 import { Input } from '@/components/ui/Input';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface MessageInputProps {
   onSend: (message: string) => void;
@@ -10,6 +11,7 @@ interface MessageInputProps {
 
 export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
   const [message, setMessage] = useState('');
+  const t = useTranslations('chat');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setMessage(e.target.value);
@@ -28,7 +30,7 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         value={message}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        placeholder="Your message"
+        placeholder={t('input.yourMessage')}
         className="
         w-full
         h-[48px]
