@@ -21,7 +21,7 @@ export const ChatServices = {
   },
   deleteChat: async (roomId: string): Promise<void> => {
     try {
-      const response = await api.delete(`/room/${roomId}`);
+      const response = await api.delete(`/quit/${roomId}`);
       return response.data;
     } catch (error) {
       throw error;

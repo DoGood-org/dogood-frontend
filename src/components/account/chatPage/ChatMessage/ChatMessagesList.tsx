@@ -1,3 +1,5 @@
+'use client';
+
 import { MessagesListProps } from '@/types/chatType';
 import { ChatMessageItem } from './ChatMessageItem';
 

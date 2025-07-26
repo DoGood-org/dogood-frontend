@@ -1,6 +1,10 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import { MessageItemProps } from '@/types/chatType';
 import Image from 'next/image';
+
+const defaultAvatar = 'https://via.placeholder.com/64?text=Avatar';
 
 export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
   return (
@@ -14,7 +18,11 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
     >
       <div className={message.isCurrentUser ? 'order-2' : 'order-1'}>
         <Image
-          src={message.avatar}
+          src={
+            message.avatar && message.avatar.trim() !== ''
+              ? message.avatar
+              : defaultAvatar
+          }
           alt={`${message.name} avatar`}
           width={42}
           height={42}
@@ -29,10 +37,10 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
       >
         <p className="text-base break-words">{message.content}</p>
         <span className="text-xs self-end mt-2 opacity-70">
-          {new Date(message.createdAt).toLocaleDateString(undefined, {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
+          {new Date(message.createdAt).toLocaleTimeString(undefined, {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
           })}
         </span>
       </div>

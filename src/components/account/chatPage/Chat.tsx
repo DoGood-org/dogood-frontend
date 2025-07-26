@@ -406,7 +406,7 @@ export const Chat: React.FC = () => {
 
   return (
     <Section withContainer={false}>
-      <div className="bg-background items-stretch justify-stretch h-[80vh] text-foreground lg:flex lg:gap-9 lg:px-20 lg:min-h-0">
+      <div className="bg-background h-[80vh] text-foreground lg:flex lg:gap-9 lg:px-20 lg:min-h-0">
         {isMobileOrTablet ? (
           selectedChatId ? (
             <div className="flex flex-col justify-center bg-text-gray h-full md:bg-[#CFCFCF] dark:bg-[#393939] py-6 px-2 min-h-0">

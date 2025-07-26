@@ -34,13 +34,14 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
     }
   };
 
-  const formattedTime = lastMessageTime
-    ? new Date(lastMessageTime).toLocaleTimeString('uk-UA', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      })
-    : '';
+  function formatTime(dateString: string): string {
+    const d = new Date(dateString);
+    const h = d.getHours().toString().padStart(2, '0');
+    const m = d.getMinutes().toString().padStart(2, '0');
+    return `${h}:${m}`;
+  }
+
+  const formattedTime = lastMessageTime ? formatTime(lastMessageTime) : '';
 
   const placeholderText = formattedTime
     ? `was on the network at ${formattedTime}`
@@ -99,8 +100,9 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
         className="text-current cursor-pointer"
         aria-label="search"
         type="button"
+        onClick={handleSearch}
       >
-        <ChatSearch className="w-5 h-5 text-bg-icon" />
+        <ChatSearch className="w-5 h-5 text-bg-icon hover:text-btn-hover active:text-btn-active" />
       </button>
     </div>
   );

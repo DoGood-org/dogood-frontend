@@ -6,6 +6,8 @@ import { ChatCardProps } from '@/types/chatType';
 import Image from 'next/image';
 import { ChatEllipsisMenu } from '../ChatModal/ChatEllipsisMenu';
 
+const defaultAvatar = 'https://via.placeholder.com/64?text=Avatar';
+
 export const ChatCardItem: React.FC<ChatCardProps> = ({
   chat,
   isSelected,
@@ -15,6 +17,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
   const handleDelete = (): void => {
     onChatDeleted(chat.id);
   };
+
   return (
     <li
       onClick={() => onSelect(chat.id)}
@@ -27,7 +30,9 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
         <ChatEllipsisMenu chat={chat} onChatDeleted={handleDelete} />
       </div>
       <Image
-        src={chat.avatar}
+        src={
+          chat.avatar && chat.avatar.trim() !== '' ? chat.avatar : defaultAvatar
+        }
         alt={`${chat.name} avatar`}
         width={64}
         height={64}
