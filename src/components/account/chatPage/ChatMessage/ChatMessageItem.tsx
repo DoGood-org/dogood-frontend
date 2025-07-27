@@ -7,6 +7,11 @@ import Image from 'next/image';
 const defaultAvatar = 'https://via.placeholder.com/64?text=Avatar';
 
 export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
+  const avatarSrc =
+    message.avatar && message.avatar.trim() !== ''
+      ? message.avatar
+      : defaultAvatar;
+
   return (
     <li
       className={cn(
@@ -16,13 +21,15 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
           : 'mr-auto bg-tag text-white dark:bg-[#DCDCDC] dark:text-[#010101]'
       )}
     >
-      <div className={message.isCurrentUser ? 'order-2' : 'order-1'}>
+      <div
+        className={cn(
+          message.isCurrentUser
+            ? 'order-2 flex-shrink-0'
+            : 'order-1 flex-shrink-0'
+        )}
+      >
         <Image
-          src={
-            message.avatar && message.avatar.trim() !== ''
-              ? message.avatar
-              : defaultAvatar
-          }
+          src={avatarSrc}
           alt={`${message.name} avatar`}
           width={42}
           height={42}
@@ -31,7 +38,7 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
       </div>
       <div
         className={cn(
-          'flex flex-col justify-between flex-1 max-w-full',
+          'flex flex-col justify-between flex-1 max-w-full min-w-0',
           message.isCurrentUser ? 'order-1' : 'order-2'
         )}
       >

@@ -1,7 +1,7 @@
 'use client';
 
 import { useDeviceType } from '@/hooks/useDeviceType';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ChatCardsList } from '@/components/account/chatPage/ChatCard/ChatCardsList';
 import { ChatMessageList } from './ChatMessage/ChatMessagesList';
 import { ChatSearchInput } from './ChatSearchInput';
@@ -112,9 +112,10 @@ const mockChats: ChatType[] = [
   },
 ];
 
-const mockMessages: MessageType[] = [
+export const mockMessages = [
   {
     id: 'm1',
+    senderId: 1,
     name: 'Ivan',
     avatar: '/avatars/ivan.png',
     content: 'Привіт, як справи?',
@@ -124,6 +125,7 @@ const mockMessages: MessageType[] = [
   },
   {
     id: 'm2',
+    senderId: 2,
     name: 'Oksana',
     avatar: '/avatars/oksana.png',
     content: 'Все добре, дякую!',
@@ -133,6 +135,7 @@ const mockMessages: MessageType[] = [
   },
   {
     id: 'm9',
+    senderId: 1,
     name: 'Ivan',
     avatar: '/avatars/ivan.png',
     content: 'Чи можеш сьогодні поговорити?',
@@ -142,6 +145,7 @@ const mockMessages: MessageType[] = [
   },
   {
     id: 'm10',
+    senderId: 2,
     name: 'Oksana',
     avatar: '/avatars/oksana.png',
     content: 'Так, після обіду буде час.',
@@ -151,6 +155,7 @@ const mockMessages: MessageType[] = [
   },
   {
     id: 'm11',
+    senderId: 1,
     name: 'Ivan',
     avatar: '/avatars/ivan.png',
     content: 'Супер, тоді на 15:00?',
@@ -160,6 +165,7 @@ const mockMessages: MessageType[] = [
   },
   {
     id: 'm12',
+    senderId: 2,
     name: 'Oksana',
     avatar: '/avatars/oksana.png',
     content: 'Підходить!',
@@ -167,189 +173,207 @@ const mockMessages: MessageType[] = [
     roomId: '1',
     isCurrentUser: false,
   },
-
-  // Chat 2: Oksana
+  // Chat 2
   {
     id: 'm3',
+    senderId: 2,
     name: 'Oksana',
     avatar: '/avatars/oksana.png',
     content: 'Привіт, завтра зустрічаємось?',
     createdAt: '2025-07-16T14:00:00Z',
     roomId: '2',
-    isCurrentUser: true,
+    isCurrentUser: false,
   },
   {
     id: 'm4',
+    senderId: 1,
     name: 'Ivan',
     avatar: '/avatars/ivan.png',
     content: 'Так, об 11:00 буде зручно.',
     createdAt: '2025-07-16T14:02:00Z',
     roomId: '2',
-    isCurrentUser: false,
+    isCurrentUser: true,
   },
   {
     id: 'm13',
+    senderId: 2,
     name: 'Oksana',
     avatar: '/avatars/oksana.png',
     content: 'Чудово, тоді до зустрічі!',
     createdAt: '2025-07-16T14:05:00Z',
     roomId: '2',
-    isCurrentUser: true,
+    isCurrentUser: false,
   },
   {
     id: 'm14',
+    senderId: 1,
     name: 'Ivan',
     avatar: '/avatars/ivan.png',
     content: 'До зустрічі!',
     createdAt: '2025-07-16T14:10:00Z',
     roomId: '2',
-    isCurrentUser: false,
+    isCurrentUser: true,
   },
   {
     id: 'm15',
+    senderId: 2,
     name: 'Oksana',
     avatar: '/avatars/oksana.png',
     content: 'Я візьму документи.',
     createdAt: '2025-07-16T14:15:00Z',
     roomId: '2',
-    isCurrentUser: true,
+    isCurrentUser: false,
   },
   {
     id: 'm16',
+    senderId: 1,
     name: 'Ivan',
     avatar: '/avatars/ivan.png',
     content: 'Окей, дякую!',
     createdAt: '2025-07-16T14:20:00Z',
     roomId: '2',
-    isCurrentUser: false,
+    isCurrentUser: true,
   },
+  // Chat 3
   {
     id: 'm5',
+    senderId: 3,
     name: 'Andrii',
     avatar: '/avatars/andrii.png',
     content: 'Є питання по проекту.',
     createdAt: '2025-07-15T12:00:00Z',
     roomId: '3',
-    isCurrentUser: true,
+    isCurrentUser: false,
   },
   {
     id: 'm6',
+    senderId: 1,
     name: 'Ivan',
     avatar: '/avatars/ivan.png',
     content: 'Я слухаю.',
     createdAt: '2025-07-15T12:05:00Z',
     roomId: '3',
-    isCurrentUser: false,
+    isCurrentUser: true,
   },
   {
     id: 'm17',
+    senderId: 3,
     name: 'Andrii',
     avatar: '/avatars/andrii.png',
     content: 'Потрібно обговорити дедлайни.',
     createdAt: '2025-07-15T12:10:00Z',
     roomId: '3',
-    isCurrentUser: true,
+    isCurrentUser: false,
   },
   {
     id: 'm18',
+    senderId: 1,
     name: 'Ivan',
     avatar: '/avatars/ivan.png',
     content: 'Добре, сьогодні о 17:00 зручно?',
     createdAt: '2025-07-15T12:15:00Z',
     roomId: '3',
-    isCurrentUser: false,
+    isCurrentUser: true,
   },
   {
     id: 'm19',
+    senderId: 3,
     name: 'Andrii',
     avatar: '/avatars/andrii.png',
     content: 'Так, підходить.',
     createdAt: '2025-07-15T12:20:00Z',
     roomId: '3',
-    isCurrentUser: true,
+    isCurrentUser: false,
   },
   {
     id: 'm20',
+    senderId: 1,
     name: 'Ivan',
     avatar: '/avatars/ivan.png',
     content: 'Тоді домовились!',
     createdAt: '2025-07-15T12:25:00Z',
     roomId: '3',
-    isCurrentUser: false,
+    isCurrentUser: true,
   },
-
+  // Chat 4
   {
     id: 'm7',
+    senderId: 4,
     name: 'Maria',
     avatar: '/avatars/maria.png',
     content: 'Відправила документи для перевірки.',
     createdAt: '2025-07-14T16:00:00Z',
     roomId: '4',
-    isCurrentUser: true,
+    isCurrentUser: false,
   },
   {
     id: 'm8',
+    senderId: 1,
     name: 'Ivan',
     avatar: '/avatars/ivan.png',
     content: 'Отримав, дякую!',
     createdAt: '2025-07-14T16:10:00Z',
     roomId: '4',
-    isCurrentUser: false,
+    isCurrentUser: true,
   },
   {
     id: 'm21',
+    senderId: 4,
     name: 'Maria',
     avatar: '/avatars/maria.png',
     content: 'Якщо щось буде потрібно, дай знати.',
     createdAt: '2025-07-14T16:15:00Z',
     roomId: '4',
-    isCurrentUser: true,
+    isCurrentUser: false,
   },
   {
     id: 'm22',
+    senderId: 1,
     name: 'Ivan',
     avatar: '/avatars/ivan.png',
     content: 'Добре, перевірю сьогодні.',
     createdAt: '2025-07-14T16:20:00Z',
     roomId: '4',
-    isCurrentUser: false,
+    isCurrentUser: true,
   },
   {
     id: 'm23',
+    senderId: 4,
     name: 'Maria',
     avatar: '/avatars/maria.png',
     content: 'Чекаю на фідбек.',
     createdAt: '2025-07-14T16:25:00Z',
     roomId: '4',
-    isCurrentUser: true,
+    isCurrentUser: false,
   },
   {
     id: 'm24',
+    senderId: 1,
     name: 'Ivan',
     avatar: '/avatars/ivan.png',
     content: 'Дякую, дам відповідь завтра.',
     createdAt: '2025-07-14T16:30:00Z',
     roomId: '4',
-    isCurrentUser: false,
+    isCurrentUser: true,
   },
 ];
 
 export const Chat: React.FC = () => {
   const [chats, setChats] = useState<ChatType[]>(mockChats);
-  const [messages, setMessages] = useState<MessageType[]>(mockMessages);
+  const initialMessages: MessageType[] = mockMessages;
+  const [messages, setMessages] = useState<MessageType[]>(initialMessages);
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
 
   const handleChatDeleted = (chatId: string): void => {
     setChats((prevChats) => {
       const updatedChats = prevChats.filter((chat) => chat.id !== chatId);
-      console.log('Оновлені чати:', updatedChats);
       return updatedChats;
     });
+
     setMessages((prevMessages) => {
       const updatedMessages = prevMessages.filter(
         (msg) => msg.roomId !== chatId
       );
-      console.log('Оновлені повідомлення:', updatedMessages);
       return updatedMessages;
     });
 
@@ -366,31 +390,33 @@ export const Chat: React.FC = () => {
 
   const selectedChat = chats.find((chat) => chat.id === selectedChatId);
 
-  const filteredMessages = selectedChatId
-    ? messages.filter((msg) => msg.roomId === selectedChatId)
-    : [];
+  const userId = 1;
+
+  const preparedMessages = useMemo(() => {
+    if (!selectedChatId) return [];
+    return messages
+      .filter((msg) => msg.roomId === selectedChatId)
+      .map((msg) => ({
+        ...msg,
+        isCurrentUser: msg.senderId === userId,
+      }));
+  }, [selectedChatId, messages, userId]);
 
   const isMobileOrTablet = device === 'sm' || device === 'md';
 
   useEffect(() => {
-    if (!isMobileOrTablet && !selectedChatId && chats.length > 0) {
-      setSelectedChatId(chats[0].id);
-    }
-  }, [isMobileOrTablet, selectedChatId, chats]);
+    setIsChatMessageOpen(!!selectedChatId);
+  }, [selectedChatId, setIsChatMessageOpen]);
 
   const handleSend = async (message: string): Promise<void> => {
-    if (!selectedChatId) return;
-    if (!message.trim()) return;
-
-    const userId = 1;
-
+    if (!selectedChatId || !message.trim()) return;
     try {
       const newMessage: MessageType = await ChatServices.sendMessage(
         selectedChatId,
         message,
         userId
       );
-      console.log('Відправлено повідомлення:', newMessage);
+      setMessages((prev) => [...prev, newMessage]);
     } catch (error) {
       console.error('Не вдалося надіслати повідомлення:', error);
     }
@@ -422,7 +448,7 @@ export const Chat: React.FC = () => {
               />
               <div className="border border-foreground mt-5 lg:border-none lg:mt-0 mb-12"></div>
               <div className="flex-1 overflow-y-auto custom-scrollbar-hide min-h-0 mt-2">
-                <ChatMessageList messages={filteredMessages} />
+                <ChatMessageList messages={preparedMessages} />
               </div>
               <div className="mt-6">
                 <ChatMessageInput onSend={handleSend} />
@@ -440,35 +466,45 @@ export const Chat: React.FC = () => {
           )
         ) : (
           // Desktop
-          <>
-            <div className="w-1/3 flex flex-col bg-background text-foreground flex-1 overflow-y-auto custom-scrollbar-hide">
+          <div className="flex h-full gap-9">
+            <div className="w-[320px] flex flex-col bg-background text-foreground overflow-y-auto custom-scrollbar-hide">
               <ChatCardsList
-                chats={mockChats}
+                chats={chats}
                 selectedChatId={selectedChatId}
                 onSelectChat={setSelectedChatId}
                 onChatDeleted={handleChatDeleted}
               />
             </div>
-            <div className="w-2/3 flex flex-col text-foreground rounded-sm p-2 lg:bg-[#CFCFCF] dark:bg-[#393939] lg:p-6">
-              <ChatSearchInput
-                selectedName={selectedChat ? selectedChat.name : ''}
-                lastMessageTime={selectedChat ? selectedChat.createdAt : ''}
-                lastOnline={selectedChat ? selectedChat.createdAt : ''}
-                showBackButton={false}
-                onBack={() => setSelectedChatId(null)}
-                onSearch={(query) => {
-                  console.log('Шукати:', query);
-                }}
-              />
+
+            <div className="w-[704px] flex-1 flex flex-col text-foreground rounded-sm p-2 lg:bg-[#CFCFCF] dark:bg-[#393939] lg:p-6">
+              {selectedChatId ? (
+                <ChatSearchInput
+                  selectedName={selectedChat?.name || ''}
+                  lastMessageTime={selectedChat?.createdAt || ''}
+                  lastOnline={selectedChat?.createdAt || ''}
+                  showBackButton={false}
+                  onBack={() => setSelectedChatId(null)}
+                  onSearch={(query) => console.log('Шукати:', query)}
+                />
+              ) : null}
+
               <div className="border border-foreground mt-5 mb-12"></div>
-              <div className="flex-1 overflow-y-auto custom-scrollbar-hide mt-2">
-                <ChatMessageList messages={filteredMessages} />
+
+              <div className="flex-1 overflow-y-auto custom-scrollbar-hide mt-2 min-h-0">
+                {selectedChatId ? (
+                  <ChatMessageList messages={preparedMessages} />
+                ) : (
+                  <p className="text-center text-gray-500 mt-4 w-full">
+                    Оберіть чат, щоб почати спілкуватися
+                  </p>
+                )}
               </div>
+
               <div className="mt-6">
-                <ChatMessageInput onSend={handleSend} />
+                {selectedChatId && <ChatMessageInput onSend={handleSend} />}
               </div>
             </div>
-          </>
+          </div>
         )}
       </div>
     </Section>

@@ -82,6 +82,8 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
             bg-transparent
             text-current
             placeholder:text-foreground
+            hover:placeholder:text-btn-hover
+            focus:placeholder:text-btn-active
             border-none
             border-0
             focus:border-none

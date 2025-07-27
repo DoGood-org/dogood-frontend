@@ -27,6 +27,7 @@ export interface MessageType {
   content: string;
   createdAt: string;
   roomId: string;
+  senderId: number;
   isCurrentUser: boolean;
 }
 
