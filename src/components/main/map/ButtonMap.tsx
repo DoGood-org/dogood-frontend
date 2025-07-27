@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/Button';
 import { JSX } from 'react';
 
 type Props = {
@@ -13,12 +12,14 @@ export const ButtonMap = ({ onClickHandler, children }: Props): JSX.Element => {
   };
 
   return (
-    <Button
+    <button
       type="button"
       onClick={handleClick}
-      className="w-12 h-12 flex items-center justify-center bg-[var(--map-btn-bg)] cursor-pointer  border-[var(--map-btn-bg)] rounded-sm p-0 "
+      className="w-12 h-12 flex items-center justify-center bg-[var(--map-btn-bg)] cursor-pointer  border-[var(--map-btn-bg)] rounded-sm p-0 hover:bg-btn-hover active:bg-btn-hover outline-none focus-visible:border-btn-hover aria-invalid:border-destructive transition-all duration-500 disabled:pointer-events-none"
     >
-      <span className="text-[var(--map-btn-icon)] text-2xl">{children}</span>
-    </Button>
+      <span className="text-[var(--map-btn-icon)] flex items-center justify-center">
+        {children}
+      </span>
+    </button>
   );
 };

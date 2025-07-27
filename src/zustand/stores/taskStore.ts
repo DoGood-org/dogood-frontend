@@ -1,46 +1,54 @@
+import { IExtendedITaskProps } from '@/types/tasks.type';
 import { create } from 'zustand';
-import { IExtendedITaskProps } from '@/types/mapType';
 import { persist } from 'zustand/middleware';
 
 interface TTaskState {
   tasks: IExtendedITaskProps[];
-  selectedTasks: IExtendedITaskProps[];
+  joinedTasks: IExtendedITaskProps[];
+  tasksByKey: Record<string, IExtendedITaskProps[]>;
 }
 
 interface TTaskActions {
   setTasks: (tasks: IExtendedITaskProps[]) => void;
-  setSelectedTasks: (tasks: IExtendedITaskProps[]) => void;
-  toggleTaskDescription: (taskId: string) => void;
+  setJoinedTasks: (tasks: IExtendedITaskProps[]) => void;
+  joinTask: (taskId: string) => void;
+  setTasksByKey: (key: string, tasks: IExtendedITaskProps[]) => void;
 }
 
 type TTaskStore = TTaskState & TTaskActions;
 
 export const useTaskStore = create<TTaskStore>()(
-  persist<TTaskStore, [], [], Pick<TTaskState, 'tasks' | 'selectedTasks'>>(
+  persist<TTaskStore, [], [], Pick<TTaskState, 'tasks' | 'joinedTasks'>>(
     (set, get) => ({
       tasks: [],
-      selectedTasks: [],
+      joinedTasks: [],
+      tasksByKey: {},
+
       setTasks: (tasks): void => set({ tasks }),
-      setSelectedTasks: (tasks): void => set({ selectedTasks: tasks }),
-      toggleTaskDescription: (taskId): void => {
+      setJoinedTasks: (tasks): void => set({ joinedTasks: tasks }),
+      joinTask: (taskId): void => {
         const updated = get().tasks.map((task) => ({
           ...task,
           isSelected: task.id === taskId ? !task.isSelected : task.isSelected,
         }));
         set({
           tasks: updated,
-          selectedTasks: updated.filter((task) => task.isSelected),
+          joinedTasks: updated.filter((task) => task.isSelected),
         });
+      },
+      setTasksByKey: (key, tasks): void => {
+        const updated = { ...get().tasksByKey, [key]: tasks };
+        set({ tasksByKey: updated });
+        const allTasks = Object.values(updated).flat();
+        set({ tasks: allTasks });
       },
     }),
     {
       name: 'task-storage',
-      partialize: function (
-        state
-      ): Pick<TTaskState, 'tasks' | 'selectedTasks'> {
+      partialize: function (state): Pick<TTaskState, 'tasks' | 'joinedTasks'> {
         return {
           tasks: state.tasks,
-          selectedTasks: state.selectedTasks,
+          joinedTasks: state.joinedTasks,
         };
       },
     }

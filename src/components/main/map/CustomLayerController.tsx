@@ -52,7 +52,6 @@ export const CustomLayerController = ({
         <div
           key={option.id}
           className="flex flex-col gap-2 px-4 py-2 cursor-pointer"
-          role="menuitem"
           tabIndex={0}
           onClick={(e) => {
             handleOptionSelect(option.id, e);

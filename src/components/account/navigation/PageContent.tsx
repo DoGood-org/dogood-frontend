@@ -4,11 +4,12 @@ import { Account } from '@/components';
 import { navigationStore } from '@/zustand/stores/navigationStore';
 import React from 'react';
 import { Chat } from '@/components/account/chatPage/Chat';
+import { ProfileMap } from '@/components/main/map/profileMap/ProfileMap';
 
 const pages = {
   Account: <Account />,
   Chat: <Chat />,
-  Map: <div>Map</div>,
+  Map: <ProfileMap />,
   Goals: <div>Goals</div>,
   Settings: <div>Settings</div>,
 };

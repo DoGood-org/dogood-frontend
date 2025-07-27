@@ -1,5 +1,10 @@
 import { DetailedHTMLProps, HTMLAttributes, KeyboardEvent } from 'react';
 import { FieldError } from 'react-hook-form';
+export interface UserProps {
+  id: number;
+  name: string;
+  avatar?: string;
+}
 
 export interface RatingProps
   extends DetailedHTMLProps<
@@ -22,4 +27,16 @@ export interface StarItemProps {
   onClick: (index: number) => void;
   handleKey: (e: KeyboardEvent) => void;
   computeFocus: (rating: number, index: number) => number;
+}
+
+export interface ReviewProps {
+  id: number;
+  rating: number;
+  comment: string;
+  createdAt: string;
+  owner: UserProps;
+}
+
+export interface ReviewItemProps {
+  review: ReviewProps;
 }

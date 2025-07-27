@@ -1,13 +1,21 @@
 {
   "description": "Description",
+  "noDescription": "Tell us a bit about yourself — it helps others get to know you better. Who are you, what do you care about, what inspires you?",
+  "noDescriptionButton": "Add bio",
   "accountButton": "Learn more",
+  "task": {
+    "title": "Find your first task on the map",
+    "text": "Help is closer than you think — choose a project that speaks to you. Every small action matters. Start now — create real change.",
+    "button": "Go to map"
+  },
+  "noReview": "No one has left a review for this user yet.",
   "contentViews": [
     {
       "id": "task",
       "view": "My Task"
     },
     {
-      "id": "organisation",
+      "id": "organization",
       "view": "Organization",
       "people": "people"
     },

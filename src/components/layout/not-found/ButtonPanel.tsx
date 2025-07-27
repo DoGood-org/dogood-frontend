@@ -9,6 +9,7 @@ export const ButtonPanel: React.FC<ButtonPanelProps> = ({
   variantBtn2,
   hrefBtn2,
   handleResetBtn,
+  handleContactBtn,
   nameBtn1,
   nameBtn2,
 }): React.JSX.Element => {
@@ -31,15 +32,25 @@ export const ButtonPanel: React.FC<ButtonPanelProps> = ({
             {nameBtn1}
           </Button>
         </Link>
-      ) : null}{' '}
-      <Link href={hrefBtn2}>
+      ) : null}
+      {handleContactBtn ? (
         <Button
           variant={variantBtn2}
           className="w-full text-base text-foreground md:w-[185px]"
+          onClick={handleContactBtn}
         >
           {nameBtn2}
         </Button>
-      </Link>
+      ) : hrefBtn2 ? (
+        <Link href={hrefBtn2}>
+          <Button
+            variant={variantBtn2}
+            className="w-full text-base text-foreground md:w-[185px]"
+          >
+            {nameBtn2}
+          </Button>
+        </Link>
+      ) : null}
     </div>
   );
 };

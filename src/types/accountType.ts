@@ -3,3 +3,17 @@ export interface ContentProps {
   people?: string;
   id: string;
 }
+
+export type MarkerCategoryType = 'medicine' | 'nature' | 'animal' | 'food';
+
+export interface TaskProps {
+  id: number;
+  title: string;
+  description: string;
+  avatar: string;
+  category: MarkerCategoryType;
+}
+
+export interface TaskItemProps {
+  task: TaskProps;
+}

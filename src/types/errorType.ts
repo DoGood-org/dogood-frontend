@@ -8,8 +8,9 @@ export interface ButtonPanelProps {
   variantBtn1: 'primary' | 'secondary' | null | undefined;
   hrefBtn1?: string;
   variantBtn2: 'primary' | 'secondary' | null | undefined;
-  hrefBtn2: string;
+  hrefBtn2?: string;
   handleResetBtn?: () => void;
+  handleContactBtn?: () => void;
   nameBtn1: string;
   nameBtn2: string;
 }

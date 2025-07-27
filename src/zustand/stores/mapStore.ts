@@ -6,12 +6,12 @@ import getGeolocationPromise from '@/lib/getGeolocationPromise';
 import { initializeMapIcons } from '@/lib/mapUtils';
 import {
   EnumMapLayers,
-  IExtendedITaskProps,
   LeafletType,
   MarkerCategoryEnum,
   TCustomMarker,
 } from '@/types/mapType';
 import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
+import { IExtendedITaskProps } from '@/types/tasks.type';
 
 export interface IReactLeafletModule {
   MapContainer: React.FC<any>;
@@ -48,17 +48,17 @@ type TMapState = {
   radius: number;
   setRadius: (radius: number) => void;
   layerDropIsOpen: boolean;
+  fullscreenMap: boolean;
 
   hasAgreedToLocation: boolean | null;
   showGeolocationPopup: boolean;
-  defaultLocation: LatLngLiteral | null;
+  defaultLocation: LatLngLiteral;
 
   userLocation: LatLngLiteral | null;
   locationError: string | null;
-  offerPinLocation: boolean;
-  setOfferPinLocation: (value: boolean) => void;
 
   selectedTask: IExtendedITaskProps | null;
+  highlightedTaskId: string | null;
   customMarkers: TCustomMarker[] | [];
 
   taskListIsOpen: boolean;
@@ -87,7 +87,11 @@ type TMapActions = {
   acceptLocationSharing: () => Promise<void>;
   declineLocationSharing: () => void;
 
+  toggleFullscreenMap: (fullscreen: boolean) => void;
+
   toggleTaskList: () => void;
+  flyToCoords: (coords: LatLngLiteral, zoom?: number) => void;
+  setHighlightedTaskId: (id: string | null) => void;
   toggleFilters: () => void;
   setSearchActive: (active: boolean) => void;
 
@@ -109,6 +113,9 @@ export const useMapStore = create<TMapState & TMapActions>()(
       leafletComponents: null,
       activeLayer: EnumMapLayers.GoogleMaps,
       defaultLayers: [],
+      fullscreenMap: false,
+      toggleFullscreenMap: () =>
+        set((state) => ({ fullscreenMap: !state.fullscreenMap })),
 
       layerDropIsOpen: false,
       mapInstances: {
@@ -135,11 +142,9 @@ export const useMapStore = create<TMapState & TMapActions>()(
       },
       defaultLocation: { lat: 48.8566, lng: 2.3522 }, // Default to Paris
       userLocation: null,
-      offerPinLocation: false,
-      setOfferPinLocation: (value: boolean): void => {
-        set({ offerPinLocation: value });
-      },
+
       selectedTask: null,
+      highlightedTaskId: null,
       customMarkers: [],
       locationError: null,
       hasAgreedToLocation: null,
@@ -215,10 +220,23 @@ export const useMapStore = create<TMapState & TMapActions>()(
         set({
           userLocation: loc,
           locationError: null,
-          offerPinLocation: false,
           showGeolocationPopup: false,
           clickedCoords: null,
         }),
+      flyToCoords: (coords, zoom = 15): void => {
+        const map = get().mapInstances?.main;
+        if (!map) {
+          return;
+        }
+        if (map) {
+          map.flyTo(coords, zoom, {
+            duration: 1.5,
+          });
+        }
+      },
+      setHighlightedTaskId: (id: string | null): void => {
+        set({ highlightedTaskId: id });
+      },
 
       setLocationError: (error) => set({ locationError: error }),
       setCustomMarkers: (markers) => set({ customMarkers: markers }),
@@ -317,7 +335,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
               set({
                 userLocation: coords,
                 locationError: null,
-                offerPinLocation: false,
                 showGeolocationPopup: false,
               });
               console.info(
@@ -336,7 +353,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
             set({
               userLocation: manualLoc,
               locationError: null,
-              offerPinLocation: false,
               showGeolocationPopup: false,
             });
             console.info('[Zustand] Manual location set:', manualLoc);
@@ -350,7 +366,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
           set({
             userLocation: null,
             locationError: 'Failed to retrieve geolocation from navigator',
-            offerPinLocation: true,
             showGeolocationPopup: false,
           });
         } catch (error) {
@@ -360,9 +375,8 @@ export const useMapStore = create<TMapState & TMapActions>()(
               typeof error === 'object' && error && 'message' in error
                 ? `${(error as { message: string }).message} — showing fallback pin`
                 : 'Failed to retrieve geolocation from all sources',
-            offerPinLocation: true,
             showGeolocationPopup: false,
-            userLocation: null,
+            userLocation: get().defaultLocation,
           });
         }
       },

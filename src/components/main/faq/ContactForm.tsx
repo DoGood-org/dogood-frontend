@@ -12,7 +12,13 @@ type FormData = {
   interest: string;
 };
 
-export const ContactForm = (): React.ReactElement => {
+export const ContactForm = ({
+  title,
+  buttonTxt,
+}: {
+  buttonTxt: string;
+  title: string;
+}): React.ReactElement => {
   const t = useTranslations('faq');
   const contact = (t.raw('contact') as any[])[0];
   const downText = (t.raw('downtext') as any[])[0];
@@ -52,7 +58,7 @@ export const ContactForm = (): React.ReactElement => {
   return (
     <div className="w-full flex justify-center items-center flex-col">
       <h2 className="sm:text-[32px] md:text-[32px] lg:text-[48px] flex items-center justify-center">
-        {contact.heading}
+        {title}
       </h2>
 
       <FormProvider {...methods}>
@@ -98,7 +104,8 @@ export const ContactForm = (): React.ReactElement => {
               disabled={isSubmitting}
               className="w-full h-[48px] lg:max-w-[186px] md:max-w-[180px] btn-expand-hover"
             >
-              {downText.btn}
+              {/* {downText.btn} */}
+              {buttonTxt}
             </Button>
           </div>
         </form>

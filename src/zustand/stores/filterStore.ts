@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { IDistanceFilter, IExtendedCategoryFilter } from '@/types/mapType';
 import debounce from '@/lib/debounce';
+import { IDistanceFilter, IExtendedCategoryFilter } from '@/types/filter.type';
 
 interface TFilterState {
   currentPage: number;

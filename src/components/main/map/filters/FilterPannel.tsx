@@ -1,5 +1,5 @@
 'use client';
-import { IPropsFilterPanel } from '@/types/mapType';
+import { IPropsFilterPanel } from '@/types/filter.type';
 import React, { FC, ReactNode } from 'react';
 
 export const FilterPannel: FC<IPropsFilterPanel> = ({

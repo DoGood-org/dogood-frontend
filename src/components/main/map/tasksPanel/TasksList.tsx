@@ -4,7 +4,7 @@ import React, { JSX } from 'react';
 import { TaskItem } from '@/components';
 import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
 
-export const TasksList = (): JSX.Element => {
+export const TasksList: React.FC = (): JSX.Element => {
   const t = useTranslations('map');
   const { noPaginatedTasks } = useFilteredTasksSelector();
   return (

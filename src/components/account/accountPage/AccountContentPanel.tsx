@@ -1,6 +1,12 @@
 'use client';
 
-import { AnimationTabs, Section } from '@/components';
+import {
+  AnimationTabs,
+  OrganizationList,
+  ReviewsList,
+  Section,
+  AccountTaskList,
+} from '@/components';
 import { useMediaQuery } from '@/hooks';
 import { ContentProps } from '@/types';
 import { useLocale, useTranslations } from 'next-intl';
@@ -17,16 +23,16 @@ export const AccountContentPanel = (): JSX.Element => {
   const activeData = views.find(({ view }) => view === activeView);
 
   const viewComponents: Record<string, React.ReactNode> = {
-    task: <div>TaskComponent</div>,
-    organisation: <div>OrganisationComponent</div>,
-    reviews: <div>ReviewsComponent</div>,
+    task: <AccountTaskList />,
+    organization: <OrganizationList />,
+    reviews: <ReviewsList />,
   };
 
   return (
     <Section withContainer={false}>
       <h2 className="text-h2">{activeView}</h2>
       {activeData && (
-        <div className="mt-6 flex flex-col gap-7 gap-10 md:gap-15 lg:gap-6 transition-opacity duration-500 ease-in-out opacity-100">
+        <div className="mt-11 flex flex-col gap-5 transition-opacity duration-500 ease-in-out opacity-100">
           <div>
             <AnimationTabs
               views={views}

@@ -131,7 +131,7 @@
   --post: #696969;
   --post_gray: #f1f1f1;
 
-  --card: #e6e6e6;
+  --card: #cfcfcf;
   --toggle: #303030;
 
   --border: #17814b;
@@ -702,4 +702,12 @@ html {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 10px;
   border-radius: var(--radius-lg);
+}
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

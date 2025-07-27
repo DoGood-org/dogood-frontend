@@ -40,7 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 package-lock.json
-.vscode/settings.json
+# .vscode/settings.json
 
 
 
