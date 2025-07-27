@@ -2,14 +2,14 @@
 
 import { useDeviceType } from '@/hooks/useDeviceType';
 import { useEffect, useMemo, useState } from 'react';
-import { ChatCardsList } from '@/components/account/chatPage/ChatCard/ChatCardsList';
-import { ChatMessageList } from './ChatMessage/ChatMessagesList';
-import { ChatSearchInput } from './ChatSearchInput';
+import { ChatCardsList } from '@/components';
+import { ChatMessageList } from '@/components';
+import { ChatSearchInput } from '@/components';
 import { Section } from '@/components/ui/Section';
-import { ChatMessageInput } from './ChatMessageInput';
+import { ChatMessageInput } from '@/components';
 import { navigationStore } from '@/zustand/stores/navigationStore';
 import { ChatType, MessageType } from '@/types/chatType';
-import { ChatServices } from '@/zustand/services/chatService';
+import { EmptyChatMessage } from '@/components';
 
 const mockChats: ChatType[] = [
   {
@@ -410,16 +410,6 @@ export const Chat: React.FC = () => {
 
   const handleSend = async (message: string): Promise<void> => {
     if (!selectedChatId || !message.trim()) return;
-    try {
-      const newMessage: MessageType = await ChatServices.sendMessage(
-        selectedChatId,
-        message,
-        userId
-      );
-      setMessages((prev) => [...prev, newMessage]);
-    } catch (error) {
-      console.error('Не вдалося надіслати повідомлення:', error);
-    }
   };
 
   useEffect(() => {
@@ -494,9 +484,7 @@ export const Chat: React.FC = () => {
                 {selectedChatId ? (
                   <ChatMessageList messages={preparedMessages} />
                 ) : (
-                  <p className="text-center text-gray-500 mt-4 w-full">
-                    Оберіть чат, щоб почати спілкуватися
-                  </p>
+                  <EmptyChatMessage />
                 )}
               </div>
 

@@ -4,14 +4,7 @@ import { cn } from '@/lib/utils';
 import { MessageItemProps } from '@/types/chatType';
 import Image from 'next/image';
 
-const defaultAvatar = 'https://via.placeholder.com/64?text=Avatar';
-
 export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
-  const avatarSrc =
-    message.avatar && message.avatar.trim() !== ''
-      ? message.avatar
-      : defaultAvatar;
-
   return (
     <li
       className={cn(
@@ -29,8 +22,8 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
         )}
       >
         <Image
-          src={avatarSrc}
-          alt={`${message.name} avatar`}
+          src="/avatars/dmytro.png"
+          alt="avatar"
           width={42}
           height={42}
           className="w-[42px] h-[42px] rounded-full object-cover bg-white shrink-0"

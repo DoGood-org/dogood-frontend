@@ -8,6 +8,8 @@ export * from './account/accountPage/AccountContentPanel';
 export * from './account/chatPage/Chat';
 export * from './account/chatPage/ChatMessageInput';
 export * from './account/chatPage/ChatSearchInput';
+export * from './account/chatPage/EmptyChatMessage';
+export * from './account/chatPage/EmptyState';
 export * from './account/chatPage/ChatCard/ChatCardItem';
 export * from './account/chatPage/ChatCard/ChatCardsList';
 export * from './account/chatPage/ChatMessage/ChatMessageItem';

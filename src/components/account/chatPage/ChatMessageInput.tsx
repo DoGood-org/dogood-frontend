@@ -17,6 +17,13 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
     setMessage(e.target.value);
   };
 
+  const sendMessage = (): void => {
+    if (message.trim()) {
+      onSend(message.trim());
+      setMessage('');
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter' && message.trim()) {
       onSend(message.trim());
@@ -52,7 +59,13 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         shadow-none
         cursor-pointer"
       />
-      <MessageSend className="w-5 h-5 absolute right-4 top-3 text-[#1B9757] pointer-events-none" />
+      <button
+        type="button"
+        onClick={sendMessage}
+        className="absolute right-4 top-3 text-[#1B9757] focus:outline-none cursor-pointer"
+      >
+        <MessageSend className="w-5 h-5" />
+      </button>
     </div>
   );
 };

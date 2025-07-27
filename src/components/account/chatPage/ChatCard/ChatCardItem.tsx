@@ -4,9 +4,7 @@ import { cn } from '@/lib/utils';
 import { ChatCardProps } from '@/types/chatType';
 
 import Image from 'next/image';
-import { ChatEllipsisMenu } from '../ChatModal/ChatEllipsisMenu';
-
-const defaultAvatar = 'https://via.placeholder.com/64?text=Avatar';
+import { ChatEllipsisMenu } from '@/components';
 
 export const ChatCardItem: React.FC<ChatCardProps> = ({
   chat,
@@ -30,10 +28,8 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
         <ChatEllipsisMenu chat={chat} onChatDeleted={handleDelete} />
       </div>
       <Image
-        src={
-          chat.avatar && chat.avatar.trim() !== '' ? chat.avatar : defaultAvatar
-        }
-        alt={`${chat.name} avatar`}
+        src="/avatars/dmytro.png"
+        alt="avatar"
         width={64}
         height={64}
         className="w-[64px] h-[64px] rounded-full object-cover bg-white"

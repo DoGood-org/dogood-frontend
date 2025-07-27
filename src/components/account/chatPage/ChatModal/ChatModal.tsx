@@ -4,7 +4,6 @@ import MarkChat from '@/components/icons/MarkChat';
 import PinChat from '@/components/icons/PinChat';
 import TrashBinChat from '@/components/icons/TrashBinChat';
 import { ChatType } from '@/types/chatType';
-import { ChatServices } from '@/zustand/services/chatService';
 
 type ChatModalProps = {
   chat: ChatType;
@@ -17,26 +16,18 @@ export const ChatModal: React.FC<ChatModalProps> = ({
   chat,
   onClose,
   menuRef,
-  onChatDeleted,
 }) => {
   const handleDelete = async (): Promise<void> => {
-    try {
-      await ChatServices.deleteChat(chat.id);
-      onChatDeleted(chat.id);
-      onClose();
-    } catch (error) {
-      throw error;
-    }
+    console.log('Delete', chat.id);
+    onClose();
   };
 
   const handlePin = (): void => {
-    // виклик API закріплення
     console.log('Pinned', chat.id);
     onClose();
   };
 
   const handleMarkAsSpam = (): void => {
-    // виклик API позначення як спам
     console.log('Marked as spam', chat.id);
     onClose();
   };

@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 
 interface ChatSearchInputProps {
   selectedName: string;
-  lastMessageTime: string;
+  lastMessageTime: string | null;
   lastOnline: string;
   showBackButton: boolean;
   onBack: () => void;
