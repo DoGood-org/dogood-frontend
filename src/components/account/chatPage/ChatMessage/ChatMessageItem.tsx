@@ -29,8 +29,8 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
         )}
       >
         <Image
-          src="/avatars/dmytro.png"
-          alt="avatar"
+          src={message.avatar}
+          alt={message.name}
           width={42}
           height={42}
           className="w-[42px] h-[42px] rounded-full object-cover bg-white shrink-0"

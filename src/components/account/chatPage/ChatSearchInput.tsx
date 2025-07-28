@@ -52,12 +52,12 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
       {showBackButton && (
         <button
           onClick={onBack}
-          className="text-current flex items-center pr-2 cursor-pointer"
+          className="text-current flex items-center pr-2 cursor-pointer group"
           aria-label="Back"
           type="button"
         >
-          <Back className="w-5 h-5 text-bg-icon mr-2 hover:text-btn-hover active:text-btn-active" />
-          <span className="text-base text-foreground hover:text-btn-hover active:text-btn-active">
+          <Back className="w-5 h-5 text-bg-icon mr-2 group-hover:text-btn-hover group-active:text-btn-active" />
+          <span className="text-base text-foreground group-hover:text-btn-hover group-active:text-btn-active">
             {t('back')}
           </span>
         </button>
@@ -94,7 +94,10 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
             focus:ring-0
             focus:ring-transparent
             appearance-none
-            shadow-none"
+            shadow-none
+            transition-all 
+            duration-300 
+            ease-in-out"
           />
         </div>
       </div>

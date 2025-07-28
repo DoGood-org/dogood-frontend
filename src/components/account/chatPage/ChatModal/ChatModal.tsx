@@ -38,7 +38,7 @@ export const ChatModal: React.FC<ChatModalProps> = ({
   return (
     <div
       ref={menuRef}
-      className="w-[178px] absolute top-4 right-0 bg-background py-6 px-5 rounded-lg shadow-lg z-50"
+      className="absolute top-4 right-0 bg-background py-6 px-5 rounded-lg shadow-lg z-50 min-w-[178px]"
     >
       <ul className="flex flex-col gap-4">
         <li>
@@ -47,7 +47,7 @@ export const ChatModal: React.FC<ChatModalProps> = ({
             className="group flex items-center justify-between w-full 
                         hover:text-btn-hover active:text-btn-active cursor-pointer"
           >
-            {t('menu.delete')}
+            <span className="whitespace-nowrap">{t('menu.delete')}</span>
             <TrashBinChat className="w-6 h-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
           </button>
         </li>
@@ -57,7 +57,7 @@ export const ChatModal: React.FC<ChatModalProps> = ({
             className="group flex items-center justify-between w-full 
                         hover:text-btn-hover active:text-btn-active cursor-pointer"
           >
-            {t('menu.pin the chat')}
+            <span className="whitespace-nowrap">{t('menu.pin the chat')}</span>
             <PinChat className="w-6 h-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
           </button>
         </li>
@@ -67,7 +67,7 @@ export const ChatModal: React.FC<ChatModalProps> = ({
             className="group flex items-center justify-between w-full 
                         hover:text-btn-hover active:text-btn-active cursor-pointer"
           >
-            {t('menu.mark as spam')}
+            <span className="whitespace-nowrap">{t('menu.mark as spam')}</span>
             <MarkChat className="w-6 h-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
           </button>
         </li>

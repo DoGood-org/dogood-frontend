@@ -36,8 +36,8 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
         <ChatEllipsisMenu chat={chat} onChatDeleted={handleDelete} />
       </div>
       <Image
-        src="/avatars/dmytro.png"
-        alt="avatar"
+        src={chat.avatar}
+        alt={chat.name}
         width={64}
         height={64}
         className="w-[64px] h-[64px] rounded-full object-cover bg-white"

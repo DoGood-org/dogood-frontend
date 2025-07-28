@@ -15,16 +15,18 @@ export const ChatMessageList: React.FC<MessagesListProps> = ({ messages }) => {
   if (!mounted) return null;
 
   return (
-    <div className="flex flex-col flex-grow min-w-0 w-full">
-      {messages.length === 0 ? (
-        <EmptyChatMessage />
-      ) : (
-        <ul className="flex flex-col gap-6 mt-6 w-full max-w-[608px] md:max-w-none">
-          {messages.map((message) => (
-            <ChatMessageItem key={message.id} message={message} />
-          ))}
-        </ul>
-      )}
+    <div className="flex flex-col flex-grow min-w-0 w-full items-center">
+      <div className="w-full max-w-[608px] md:max-w-none">
+        {messages.length === 0 ? (
+          <EmptyChatMessage />
+        ) : (
+          <ul className="flex flex-col gap-6 mt-6 w-full">
+            {messages.map((message) => (
+              <ChatMessageItem key={message.id} message={message} />
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };
