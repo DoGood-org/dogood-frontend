@@ -1,5 +1,4 @@
 'use client';
-import { Button } from '@/components/ui/Button';
 import { ChevronDown } from 'lucide-react';
 import { JSX } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -14,19 +13,17 @@ export const ButtonOpenTasks = ({ className = '' }: Props): JSX.Element => {
   const { activePanel, togglePanel } = useMapStore();
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
     togglePanel('tasks');
   };
 
   return (
-    <Button
+    <button
       id="tasksButton"
       type="button"
-      variant={'secondary'}
       onClick={clickHandler}
-      className={`transition py-1 p-0  inline-flex items-center justify-center border-0 rounded-none ${className}`}
+      className={`transition py-2  inline-flex items-center justify-center border-0 rounded-none ${className}`}
     >
-      <div className="w-[76px] h-full">
+      <div className=" h-full">
         <div className="w-full h-full flex items-center justify-center">
           <motion.div
             className="flex items-center gap-2"
@@ -52,6 +49,6 @@ export const ButtonOpenTasks = ({ className = '' }: Props): JSX.Element => {
           </motion.div>
         </div>
       </div>
-    </Button>
+    </button>
   );
 };

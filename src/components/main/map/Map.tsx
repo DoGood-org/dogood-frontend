@@ -51,11 +51,9 @@ export const Map: React.FC = (): JSX.Element => {
     setClickedCoords,
     setShowOptionsMenu,
     closeOptionsMenu,
-
-    highlightedTaskId,
   } = useMapStore();
   const { choosenCategories, categories } = useFilterStore();
-  const { tasksByKey, setTasksByKey } = useTaskStore();
+  const { tasksByKey, setTasksByKey, highlightedTaskId } = useTaskStore();
   const { setCategories } = useFilterStore();
   useEffect(() => {
     initMap('main');

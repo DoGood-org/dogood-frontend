@@ -4,8 +4,9 @@ import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
 import { TaskCategoryIconsList } from '@/components/main/map/tasksPanel/TaskCategoryIconList';
 import { useTaskStore } from '@/zustand/stores/taskStore';
-import { useMapStore } from '@/zustand/stores/mapStore';
 import { IExtendedITaskProps } from '@/types/tasks.type';
+import { GpsIcon } from '@/components/icons/GPSicon';
+import { ButtonMap } from '@/components/main/map/ButtonMap';
 
 export const TaskItem = ({
   id,
@@ -14,15 +15,12 @@ export const TaskItem = ({
   category,
   isSelected,
   distance,
-  lat,
-  lng,
 }: IExtendedITaskProps): JSX.Element => {
   const t = useTranslations('map');
-  const { joinTask } = useTaskStore();
-  const { flyToCoords, setHighlightedTaskId } = useMapStore();
+  const { joinTask, setHighlightedTaskId, highlightedTaskId } = useTaskStore();
 
   return (
-    <div className="min-h-[200px] relative w-full">
+    <div className="min-h-[200px] relative w-full py-6">
       <h3 className="text-base underline lg:text-xl font-normal mb-3">
         {title}
       </h3>
@@ -50,17 +48,15 @@ export const TaskItem = ({
           )}
         </Button>
       </div>
-      <Button
-        variant="secondary"
-        size="lg"
-        className="absolute top-0 right-0 bg-card text-[14px] w-[82px] px-3"
-        onClick={() => {
-          flyToCoords({ lat, lng });
+      <ButtonMap
+        className="absolute top-0 right-0 z-10 m-0"
+        aria-label={t('showOnMap')}
+        onClickHandler={() => {
           setHighlightedTaskId(id);
         }}
       >
-        {'on map'}
-      </Button>
+        <GpsIcon className=" w-6 h-6" />
+      </ButtonMap>
       <div className="w-full bg-[#999999] h-[1px]" />
     </div>
   );

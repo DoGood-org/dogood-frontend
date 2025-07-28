@@ -58,7 +58,6 @@ type TMapState = {
   locationError: string | null;
 
   selectedTask: IExtendedITaskProps | null;
-  highlightedTaskId: string | null;
   customMarkers: TCustomMarker[] | [];
 
   taskListIsOpen: boolean;
@@ -90,7 +89,6 @@ type TMapActions = {
 
   togglePanel: (panel: 'tasks' | 'filters') => void;
   flyToCoords: (coords: LatLngLiteral, zoom?: number) => void;
-  setHighlightedTaskId: (id: string | null) => void;
 
   setClickedCoords: (coords: LatLngLiteral | null) => void;
   setShowOptionsMenu: (visible: boolean) => void;
@@ -141,7 +139,6 @@ export const useMapStore = create<TMapState & TMapActions>()(
       userLocation: null,
 
       selectedTask: null,
-      highlightedTaskId: null,
       customMarkers: [],
       locationError: null,
       hasAgreedToLocation: null,
@@ -220,18 +217,25 @@ export const useMapStore = create<TMapState & TMapActions>()(
           clickedCoords: null,
         }),
       flyToCoords: (coords, zoom = 15): void => {
-        const map = get().mapInstances?.main;
-        if (!map) {
-          return;
-        }
-        if (map) {
-          map.flyTo(coords, zoom, {
-            duration: 1.5,
-          });
-        }
-      },
-      setHighlightedTaskId: (id: string | null): void => {
-        set({ highlightedTaskId: id });
+        const map = get().mapInstances.main;
+        if (!map) return;
+
+        map.flyTo(coords, zoom, {
+          animate: true,
+          duration: 1.5,
+          easeLinearity: 0.5,
+        });
+
+        const isMobile = window.innerWidth < 768;
+        const isTablet = window.innerWidth >= 768 && window.innerWidth < 1440;
+
+        const offsetY = isMobile ? 180 : isTablet ? 300 : 150;
+
+        console.log('Flying to coords:', coords, 'with offset:', offsetY);
+
+        setTimeout(() => {
+          map.panBy([0, offsetY]);
+        }, 1600);
       },
 
       setLocationError: (error) => set({ locationError: error }),

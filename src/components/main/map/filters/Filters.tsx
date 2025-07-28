@@ -24,17 +24,20 @@ export const Filters: FC<Props> = ({ tasks, className }): JSX.Element => {
   const { setActivePanel } = useMapStore();
 
   return (
-    <div className={`flex flex-col h-full ${className}`}>
-      <div className="flex-1 overflow-auto px-3 py-6 scr">
-        <div className="flex justify-between align-text-bottom mb-3">
-          <h3 className="text-h3">{t('title')}</h3>
-          <Close
-            className="w-[22px] h-[21px] stroke-foreground"
-            onClick={() => setActivePanel(null)}
-          />
+    <div className={`flex flex-col h-full px-2 py-6 ${className}`}>
+      <div className="flex justify-between align-text-bottom mb-3">
+        <h3 className="text-h3">{t('title')}</h3>
+
+        <Close
+          className="w-[22px] h-[21px] stroke-foreground"
+          onClick={() => setActivePanel(null)}
+        />
+      </div>
+      <div className="flex-1 overflow-y-auto pl-3 w-full custom-scrollbar-tasks">
+        <div className="flex flex-col pr-2">
+          <CategoryFilter categories={categories as string[]} />
+          <DistanceFilter />
         </div>
-        <CategoryFilter categories={categories as string[]} />
-        <DistanceFilter />
         <div className="flex gap-10">
           <Button
             variant="primary"

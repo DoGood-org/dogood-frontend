@@ -20,7 +20,7 @@ export const FormSearch = ({
   rightSVGClassName,
 }: Props): JSX.Element => {
   const { togglePanel } = useMapStore();
-  const { setSearchQuery, setSearchActive } = useFilterStore();
+  const { setSearchQuery, setSearchActive, searchIsActive } = useFilterStore();
 
   const { register, watch, reset } = useForm<FormData>();
   const searchValue = watch('search');
@@ -57,23 +57,18 @@ export const FormSearch = ({
   };
 
   return (
-    <div className="bg-card w-full relative " itemRef="search">
+    <div className="bg-card w-full relative" itemRef="search">
       <form onSubmit={(e) => e.preventDefault()} className="w-full">
         <div
           className={` overflow-hidden flex items-center justify-center ${className}`}
         >
-          <Button
-            variant="ghost"
-            size="icon"
-            className={`absolute z-25 p-0 m-0 cursor-pointer text-foreground ${leftSVGClassName}`}
+          <button
+            id="searchButton"
+            className={`absolute inline-flex items-center justify-center p-2  z-25 cursor-pointer text-foreground ${leftSVGClassName}`}
             onClick={onSearchButtonClick}
           >
-            <Search
-              className={
-                'absolute text-muted-foreground stroke-foreground w-6 h-6'
-              }
-            />
-          </Button>
+            <Search className={'text-foreground stroke-foreground w-6 h-6'} />
+          </button>
           <input
             {...register('search')}
             name="search"
@@ -81,42 +76,44 @@ export const FormSearch = ({
             autoComplete="off"
             type="text"
             placeholder="Search.."
-            className={`w-full text-base italic bg-card text-foreground rounded-sm
+            className={`${searchIsActive ? 'cursor-default' : 'cursor-grab'}
+            px-10
+            w-full text-base italic bg-card text-foreground rounded-sm
         placeholder:font-normal placeholder:text-muted-foreground
         border-none outline-none focus:ring-0 focus:outline-none shadow-none
-        disabled:pointer-events-none disabled:opacity-50 lg:bg-card ${inputClassName}`}
+        disabled:pointer-events-none disabled:opacity-50 ${inputClassName}`}
             onBlur={(e) => {
               if (!e.target.value.trim()) {
                 console.log('blurr');
                 setSearchQuery('');
+                setSearchActive(false);
               }
             }}
-            onFocus={() => console.log('focus')}
+            onFocus={() => setSearchActive(true)}
           />
           {searchValue && (
             <Button
+              id="clearSearchButton"
               variant="ghost"
               size="icon"
               className="absolute w-6 right-9 top-1/2 -translate-y-1/2 p-0 m-0 cursor-pointer text-foreground"
               onClick={handleClear}
             >
               <X
-                className="absolute z-25 w-4 h-4 cursor-pointer text-foreground"
+                className="w-4 h-4 cursor-pointer text-foreground"
                 onClick={handleClear}
               />
             </Button>
           )}
         </div>
       </form>
-      <Button
+      <button
         id="filtersButton"
-        variant="ghost"
-        size="icon"
-        className={`absolute top-0 z-25 p-0 m-0 cursor-pointer text-foreground ${rightSVGClassName}`}
+        className={`inline-flex items-center justify-center p-2 absolute top-0 z-25 cursor-pointer text-foreground ${rightSVGClassName}`}
         onClick={onFilterButtonClick}
       >
         <SlidersVertical className="w-6 h-6 stroke-foreground text-foreground" />
-      </Button>
+      </button>
     </div>
   );
 };

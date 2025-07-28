@@ -12,10 +12,10 @@ export default function AuthLayout(): React.ReactNode {
   return (
     <>
       <Container
-        className="account-layout-container relative
+        className="account-layout-container
         flex flex-col 
-      min-h-[calc(100dvh-80px)]
-      lg:min-h-[calc(100dvh-79px)]"
+
+      min-h-[calc(100dvh-80px)]"
       >
         <div className="flex w-full lg:gap-20 justify-center">
           <SidebarNavigation />

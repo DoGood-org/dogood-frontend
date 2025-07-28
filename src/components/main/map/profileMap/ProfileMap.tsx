@@ -19,9 +19,10 @@ import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelec
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AnimatePresence } from 'framer-motion';
-import { JSX, useEffect, useRef } from 'react';
+import { JSX, useEffect, useRef, useState } from 'react';
 
 import { TasksOnMap } from '@/components/main/map/tasksPanel/TasksOnMap';
+import { useTaskStore } from '@/zustand/stores/taskStore';
 
 export const ProfileMap = (): JSX.Element => {
   const {
@@ -39,7 +40,7 @@ export const ProfileMap = (): JSX.Element => {
     userLocation,
     fullscreenMap,
     defaultLocation,
-    highlightedTaskId,
+    flyToCoords,
 
     // selectedTask,
     setCustomMarkers,
@@ -53,19 +54,39 @@ export const ProfileMap = (): JSX.Element => {
     initMap('user');
     const run = async (): Promise<void> => {
       checkLocationPermission();
+      console.log('ProfileMap initialized');
     };
     run();
   }, []);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
   const { choosenCategories, categories } = useFilterStore();
+  const { highlightedTaskId } = useTaskStore();
 
-  const highLightedRef = useRef<L.Marker | null>(null);
+  const markerRefs = useRef(new Map<string, L.Marker>());
+
   useEffect(() => {
-    if (highlightedTaskId && highLightedRef.current) {
-      highLightedRef.current.openPopup();
+    if (!highlightedTaskId) {
+      console.warn('No highlighted task ID set');
+      return;
     }
+
+    const marker = markerRefs.current.get(highlightedTaskId);
+    if (!marker) {
+      console.warn('Marker not found for ID:', highlightedTaskId);
+      return;
+    }
+    console.log(marker);
+    flyToCoords(marker.getLatLng(), 15);
+
+    marker.openPopup();
+    marker.isPopupOpen();
+
+    // Open popup
+    marker.openPopup();
+    marker.getPopup()?.setLatLng(marker.getLatLng());
   }, [highlightedTaskId]);
+
   if (
     !leafletComponents ||
     !mapIcons ||
@@ -81,6 +102,9 @@ export const ProfileMap = (): JSX.Element => {
       return (
         <Marker
           key={`custom-marker-${index}`}
+          ref={(ref) => {
+            if (ref) markerRefs.current.set(marker.id, ref);
+          }}
           draggable={true}
           zIndexOffset={10000}
           title="Drag me to change location"
@@ -92,7 +116,6 @@ export const ProfileMap = (): JSX.Element => {
             },
             dragend: (e) => {
               const newPosition = e.target.getLatLng();
-              console.log('Custom marker dragged to:', newPosition);
               setCustomMarkers(
                 customMarkers.map((m) =>
                   m.id === marker.id
@@ -141,10 +164,10 @@ export const ProfileMap = (): JSX.Element => {
   };
 
   return (
-    <div className="w-full h-full ">
+    <div className="profile-map-wrapper w-full h-full relative">
       <AnimatePresence mode="wait">
         <ResponsiveMapWrpr key={fullscreenMap ? 'fullscreen' : 'default'}>
-          <div className="w-full h-full ">
+          <div className="w-full h-full">
             <Portal>
               <AnimatedModalWrapper
                 isVisible={showGeolocationPopup}
@@ -154,11 +177,15 @@ export const ProfileMap = (): JSX.Element => {
               </AnimatedModalWrapper>
             </Portal>
             <MapContainer
-              zoom={13}
+              zoom={15}
               minZoom={10}
               maxZoom={17}
               style={{ height: '100%', width: '100%' }}
-              center={userLocation || defaultLocation}
+              center={
+                highlightedTaskId
+                  ? userLocation || defaultLocation
+                  : defaultLocation
+              }
               zoomControl={false}
               attributionControl={false}
               doubleClickZoom={false}
@@ -196,27 +223,31 @@ export const ProfileMap = (): JSX.Element => {
                   mapIcons.default;
                 return (
                   <Marker
-                    ref={highlightedTaskId === task.id ? highLightedRef : null}
+                    ref={(ref) => {
+                      if (ref) markerRefs.current.set(task.id, ref);
+                    }}
                     key={`task-marker-${task.id}`}
                     position={{ lat: task.lat, lng: task.lng }}
                     icon={icon ?? undefined}
                     title={task.title}
                     zIndexOffset={highlightedTaskId === task.id ? 1000 : 0}
+                    riseOffset={1000}
                     autoPanOnFocus={true}
+                    autoPan={true}
+                    autoPanPadding={[50, 180]}
                     riseOnHover={true}
-                    riseOffset={100}
                     eventHandlers={{
                       click: () =>
                         console.log('Marker clicked:', task.id, task.title),
                     }}
                   >
                     <Popup
+                      className="leaflet-popup-task"
                       key={`popup-${task.id}`}
                       position={{ lat: task.lat, lng: task.lng }}
                       autoClose={false}
+                      closeOnClick={false}
                       closeButton={true}
-                      autoPanPadding={[10, 10]}
-                      autoPan
                     >
                       <div className="text-sm max-w-[200px]">
                         <h4 className="font-bold mb-1">{task.title}</h4>
@@ -240,10 +271,6 @@ export const ProfileMap = (): JSX.Element => {
                     dragend: (e) => {
                       const newPosition = e.target.getLatLng();
                       setUserLocation(newPosition);
-                      console.log(
-                        'User location marker dragged to:',
-                        newPosition
-                      );
                     },
                   }}
                 >
@@ -313,13 +340,10 @@ export const ProfileMap = (): JSX.Element => {
           </div>
         </ResponsiveMapWrpr>
       </AnimatePresence>
-      <div className="relative flex flex-col w-full lg:absolute  lg:items-start lg:top-16 lg:left-76 lg:z-[500]">
-        <div>
-          <TasksOnMap
-            className={'absolute z-[1000] w-full top-0 bg-red-400 lg:w-[485px]'}
-          />
-        </div>
-      </div>
+
+      <TasksOnMap
+        className={' absolute z-[1000] w-full lg:w-[487px] lg:top-16 lg:left-5'}
+      />
     </div>
   );
 };
