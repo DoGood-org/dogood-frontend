@@ -5,6 +5,13 @@ import { MessageItemProps } from '@/types/chatType';
 import Image from 'next/image';
 
 export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
   return (
     <li
       className={cn(
@@ -37,11 +44,7 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
       >
         <p className="text-base break-words">{message.content}</p>
         <span className="text-xs self-end mt-2 opacity-70">
-          {new Date(message.createdAt).toLocaleTimeString(undefined, {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-          })}
+          {formatDate(message.createdAt)}
         </span>
       </div>
     </li>

@@ -2,14 +2,13 @@
 
 import { useDeviceType } from '@/hooks/useDeviceType';
 import { useEffect, useMemo, useState } from 'react';
-import { ChatCardsList } from '@/components';
+import { ChatCardsList, EmptyState } from '@/components';
 import { ChatMessageList } from '@/components';
 import { ChatSearchInput } from '@/components';
 import { Section } from '@/components/ui/Section';
 import { ChatMessageInput } from '@/components';
 import { navigationStore } from '@/zustand/stores/navigationStore';
 import { ChatType, MessageType } from '@/types/chatType';
-import { EmptyChatMessage } from '@/components';
 
 const mockChats: ChatType[] = [
   {
@@ -484,7 +483,7 @@ export const Chat: React.FC = () => {
                 {selectedChatId ? (
                   <ChatMessageList messages={preparedMessages} />
                 ) : (
-                  <EmptyChatMessage />
+                  <EmptyState />
                 )}
               </div>
 

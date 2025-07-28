@@ -16,6 +16,14 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
     onChatDeleted(chat.id);
   };
 
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
+
   return (
     <li
       onClick={() => onSelect(chat.id)}
@@ -40,7 +48,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
             {chat.name}
           </p>
           <span className="text-white text-sm whitespace-nowrap">
-            {chat.createdAt}
+            {formatDate(chat.createdAt)}
           </span>
         </div>
         <p className="text-white text-base truncate">{chat.content}</p>

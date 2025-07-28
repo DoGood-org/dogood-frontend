@@ -4,6 +4,7 @@ import MarkChat from '@/components/icons/MarkChat';
 import PinChat from '@/components/icons/PinChat';
 import TrashBinChat from '@/components/icons/TrashBinChat';
 import { ChatType } from '@/types/chatType';
+import { useTranslations } from 'next-intl';
 
 type ChatModalProps = {
   chat: ChatType;
@@ -17,6 +18,8 @@ export const ChatModal: React.FC<ChatModalProps> = ({
   onClose,
   menuRef,
 }) => {
+  const t = useTranslations('chat');
+
   const handleDelete = async (): Promise<void> => {
     console.log('Delete', chat.id);
     onClose();
@@ -44,8 +47,8 @@ export const ChatModal: React.FC<ChatModalProps> = ({
             className="group flex items-center justify-between w-full 
                         hover:text-btn-hover active:text-btn-active cursor-pointer"
           >
-            Delete
-            <TrashBinChat className="icon-color group-hover:text-btn-hover group-active:text-btn-active" />
+            {t('menu.delete')}
+            <TrashBinChat className="w-6 h-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
           </button>
         </li>
         <li>
@@ -54,8 +57,8 @@ export const ChatModal: React.FC<ChatModalProps> = ({
             className="group flex items-center justify-between w-full 
                         hover:text-btn-hover active:text-btn-active cursor-pointer"
           >
-            Pin the chat
-            <PinChat className="icon-color group-hover:text-btn-hover group-active:text-btn-active" />
+            {t('menu.pin the chat')}
+            <PinChat className="w-6 h-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
           </button>
         </li>
         <li>
@@ -64,8 +67,8 @@ export const ChatModal: React.FC<ChatModalProps> = ({
             className="group flex items-center justify-between w-full 
                         hover:text-btn-hover active:text-btn-active cursor-pointer"
           >
-            Mark as spam
-            <MarkChat className="icon-color group-hover:text-btn-hover group-active:text-btn-active" />
+            {t('menu.mark as spam')}
+            <MarkChat className="w-6 h-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
           </button>
         </li>
       </ul>
