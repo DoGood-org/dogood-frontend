@@ -174,15 +174,3 @@ export function calculateDistanceInMeters(
  * @param lng Longitude to pan to
  * @param offsetY Vertical offset in pixels
  */
-export function panToWithOffset(
-  map: L.Map,
-  lat: number,
-  lng: number,
-  offsetY: number
-) {
-  const target = map.project([lat, lng], map.getZoom());
-  const offsetTarget = target.subtract([0, offsetY]);
-  const finalLatLng = map.unproject(offsetTarget, map.getZoom());
-
-  map.flyTo(finalLatLng, map.getZoom(), { animate: true });
-}

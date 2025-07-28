@@ -19,7 +19,7 @@ import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelec
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AnimatePresence } from 'framer-motion';
-import { JSX, useEffect, useRef, useState } from 'react';
+import { JSX, useEffect, useRef } from 'react';
 
 import { TasksOnMap } from '@/components/main/map/tasksPanel/TasksOnMap';
 import { useTaskStore } from '@/zustand/stores/taskStore';

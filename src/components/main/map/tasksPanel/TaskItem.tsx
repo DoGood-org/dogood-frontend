@@ -17,7 +17,7 @@ export const TaskItem = ({
   distance,
 }: IExtendedITaskProps): JSX.Element => {
   const t = useTranslations('map');
-  const { joinTask, setHighlightedTaskId, highlightedTaskId } = useTaskStore();
+  const { joinTask, setHighlightedTaskId } = useTaskStore();
 
   return (
     <div className="min-h-[200px] relative w-full py-6">
