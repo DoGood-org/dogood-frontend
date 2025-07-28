@@ -2,7 +2,7 @@
 
 import { useDeviceType } from '@/hooks/useDeviceType';
 import { useEffect, useMemo, useState } from 'react';
-import { ChatCardsList, EmptyState } from '@/components';
+import { ChatCardsList } from '@/components';
 import { ChatMessageList } from '@/components';
 import { ChatSearchInput } from '@/components';
 import { Section } from '@/components/ui/Section';
@@ -315,46 +315,6 @@ export const mockMessages = [
     roomId: '4',
     isCurrentUser: true,
   },
-  {
-    id: 'm21',
-    senderId: 4,
-    name: 'Maria',
-    avatar: '/avatars/maria.png',
-    content: 'Якщо щось буде потрібно, дай знати.',
-    createdAt: '2025-07-14T16:15:00Z',
-    roomId: '4',
-    isCurrentUser: false,
-  },
-  {
-    id: 'm22',
-    senderId: 1,
-    name: 'Ivan',
-    avatar: '/avatars/ivan.png',
-    content: 'Добре, перевірю сьогодні.',
-    createdAt: '2025-07-14T16:20:00Z',
-    roomId: '4',
-    isCurrentUser: true,
-  },
-  {
-    id: 'm23',
-    senderId: 4,
-    name: 'Maria',
-    avatar: '/avatars/maria.png',
-    content: 'Чекаю на фідбек.',
-    createdAt: '2025-07-14T16:25:00Z',
-    roomId: '4',
-    isCurrentUser: false,
-  },
-  {
-    id: 'm24',
-    senderId: 1,
-    name: 'Ivan',
-    avatar: '/avatars/ivan.png',
-    content: 'Дякую, дам відповідь завтра.',
-    createdAt: '2025-07-14T16:30:00Z',
-    roomId: '4',
-    isCurrentUser: true,
-  },
 ];
 
 export const Chat: React.FC = () => {
@@ -362,6 +322,21 @@ export const Chat: React.FC = () => {
   const initialMessages: MessageType[] = mockMessages;
   const [messages, setMessages] = useState<MessageType[]>(initialMessages);
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const lastChatId = localStorage.getItem('lastChatId');
+    if (lastChatId && chats.some((chat) => chat.id === lastChatId)) {
+      setSelectedChatId(lastChatId);
+    } else if (chats.length > 0) {
+      setSelectedChatId(chats[0].id);
+    }
+  }, [chats]);
+
+  useEffect(() => {
+    if (selectedChatId) {
+      localStorage.setItem('lastChatId', selectedChatId);
+    }
+  }, [selectedChatId]);
 
   const handleChatDeleted = (chatId: string): void => {
     setChats((prevChats) => {
@@ -480,11 +455,7 @@ export const Chat: React.FC = () => {
               <div className="border border-foreground mt-5 mb-12"></div>
 
               <div className="flex-1 overflow-y-auto custom-scrollbar-hide mt-2 min-h-0">
-                {selectedChatId ? (
-                  <ChatMessageList messages={preparedMessages} />
-                ) : (
-                  <EmptyState />
-                )}
+                <ChatMessageList messages={preparedMessages} />
               </div>
 
               <div className="mt-6">
