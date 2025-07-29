@@ -2,13 +2,12 @@ import type { JSX } from 'react/jsx-runtime';
 import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-
 interface Props {
-  params: { slug: string; locale: Tlocale };
+  params: Promise<{ slug: string; locale: Tlocale }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug, locale } = params;
+  const { slug, locale } = await params;
   const t = await getTranslations({ locale, namespace: 'tasks' });
 
   if (!slug) {
@@ -26,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function IdTaskItemPage({
   params,
 }: Props): Promise<JSX.Element> {
-  const { slug } = params;
+  const { slug } = await params;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
