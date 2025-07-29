@@ -224,7 +224,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
         const isTablet = window.innerWidth >= 768 && window.innerWidth < 1440;
         const offsetY = isMobile ? 180 : isTablet ? 300 : 150;
 
-        const onMoveEnd = () => {
+        const onMoveEnd = (): void => {
           map.panBy([0, offsetY]);
           map.off('moveend', onMoveEnd); // cleanup
         };

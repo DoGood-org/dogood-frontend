@@ -30,7 +30,7 @@ export default async function IdTaskItemPage({
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <p>slug, but it's TaskPage: {slug}</p>
+      <p>slug, but its TaskPage: {slug}</p>
     </div>
   );
 }
