@@ -123,6 +123,7 @@ export * from './main/news/NewsSlideTablet';
 export * from './main/news/SwiperList';
 export * from './main/news/SwiperNavButton';
 export * from './main/news/SwiperPagination';
+export * from './main/reviews/ReviewCard';
 export * from './main/reviews/ReviewsSection';
 export * from './ui/Accordion';
 export * from './ui/AnimatedDrawler';

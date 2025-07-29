@@ -5,6 +5,7 @@ export * from './errorType';
 export * from './heroTypes';
 export * from './howItWorksItem';
 export * from './locale';
+export * from './mainReviews';
 export * from './mapType';
 export * from './navigation';
 export * from './navigationType';
