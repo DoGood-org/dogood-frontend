@@ -8,5 +8,9 @@
     "delete": "Löschen",
     "pin the chat": "Chat anheften",
     "mark as spam": "Als Spam markieren"
-  }
+  },
+    "emptyState": {
+    "emptyChatMessage1": "Du hast noch keine Chats.",
+    "emptyChatMessage2": "Wähle aus, mit wem du schreiben möchtest"
+    }
 }

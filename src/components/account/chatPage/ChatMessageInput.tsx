@@ -41,12 +41,11 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         className="
         w-full
         h-[48px]
-        py-3 px-2 
-        placeholder:text-[#010101]     
-        md:placeholder:text-white 
-        placeholder:text-base        
-        bg-white
-        md:bg-text-gray
+        py-3 px-2    
+        dark:placeholder:text-[#0C0C0C] 
+        placeholder:text-white        
+        dark:bg-white
+        bg-text-gray
         rounded-sm
         border border-transparent
         focus:border-border

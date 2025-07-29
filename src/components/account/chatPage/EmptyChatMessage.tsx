@@ -1,9 +1,14 @@
+import { useTranslations } from 'next-intl';
 import React from 'react';
 
 export const EmptyChatMessage: React.FC = () => {
+  const t = useTranslations('chat');
+
   return (
-    <div className="text-center text-gray-500 mt-4 w-full">
-      <h3>У цьому чаті поки немає повідомлень</h3>
-    </div>
+    <section>
+      <h3 className="text-foreground text-base">
+        {t('emptyState.emptyChatMessage2')}
+      </h3>
+    </section>
   );
 };

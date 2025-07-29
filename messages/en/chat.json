@@ -8,5 +8,9 @@
     "delete": "Delete",
     "pin the chat": "Pin the chat",
     "mark as spam": "Mark as spam"
+  },
+    "emptyState": {
+    "emptyChatMessage1": "You don't have any chats yet.",
+    "emptyChatMessage2": "Select who you would like to write to"
   }
 }
