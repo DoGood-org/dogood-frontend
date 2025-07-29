@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 // It can be used to determine if the viewport is mobile, tablet, or desktop.
 
 type TWindowSize = {
-  width: number | null;
   height: number | null;
   isMobile: boolean;
   isTablet: boolean;
@@ -18,8 +17,9 @@ export function useWindowSize(): TWindowSize {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const updateWidth = (): void => setWidth(window.innerWidth);
-    const updateHeight = (): void => setHeight(window.innerHeight);
+    const updateWidth = (_event?: UIEvent): void => setWidth(window.innerWidth);
+    const updateHeight = (_event?: UIEvent): void =>
+      setHeight(window.innerHeight);
     updateWidth();
     updateHeight();
     window.addEventListener('resize', updateWidth);
@@ -31,7 +31,6 @@ export function useWindowSize(): TWindowSize {
   }, []);
 
   return {
-    width,
     height,
     isMobile: width !== null && width < 768,
     isTablet: width !== null && width >= 768 && width < 1440,

@@ -216,26 +216,26 @@ export const useMapStore = create<TMapState & TMapActions>()(
           showGeolocationPopup: false,
           clickedCoords: null,
         }),
-      flyToCoords: (coords, zoom = 15): void => {
+      flyToCoords: (coords, zoom = 17): void => {
         const map = get().mapInstances.main;
         if (!map) return;
+
+        const isMobile = window.innerWidth < 768;
+        const isTablet = window.innerWidth >= 768 && window.innerWidth < 1440;
+        const offsetY = isMobile ? 180 : isTablet ? 300 : 150;
+
+        const onMoveEnd = () => {
+          map.panBy([0, offsetY]);
+          map.off('moveend', onMoveEnd); // cleanup
+        };
+
+        map.once('moveend', onMoveEnd);
 
         map.flyTo(coords, zoom, {
           animate: true,
           duration: 1.5,
           easeLinearity: 0.5,
         });
-
-        const isMobile = window.innerWidth < 768;
-        const isTablet = window.innerWidth >= 768 && window.innerWidth < 1440;
-
-        const offsetY = isMobile ? 180 : isTablet ? 300 : 150;
-
-        console.log('Flying to coords:', coords, 'with offset:', offsetY);
-
-        setTimeout(() => {
-          map.panBy([0, offsetY]);
-        }, 1600);
       },
 
       setLocationError: (error) => set({ locationError: error }),

@@ -7,6 +7,8 @@ import { useTaskStore } from '@/zustand/stores/taskStore';
 import { IExtendedITaskProps } from '@/types/tasks.type';
 import { GpsIcon } from '@/components/icons/GPSicon';
 import { ButtonMap } from '@/components/main/map/ButtonMap';
+import { useMapStore } from '@/zustand/stores/mapStore';
+import { useRouter } from 'next/navigation';
 
 export const TaskItem = ({
   id,
@@ -18,9 +20,16 @@ export const TaskItem = ({
 }: IExtendedITaskProps): JSX.Element => {
   const t = useTranslations('map');
   const { joinTask, setHighlightedTaskId } = useTaskStore();
-
+  const { setActivePanel } = useMapStore();
+  const router = useRouter();
   return (
-    <div className="min-h-[200px] relative w-full py-6">
+    <div
+      className="min-h-[200px] relative w-full py-6"
+      onClick={() => {
+        router.push(`/tasks/${id}`);
+        setActivePanel(null);
+      }}
+    >
       <h3 className="text-base underline lg:text-xl font-normal mb-3">
         {title}
       </h3>
@@ -53,6 +62,7 @@ export const TaskItem = ({
         aria-label={t('showOnMap')}
         onClickHandler={() => {
           setHighlightedTaskId(id);
+          setActivePanel(null);
         }}
       >
         <GpsIcon className=" w-6 h-6" />

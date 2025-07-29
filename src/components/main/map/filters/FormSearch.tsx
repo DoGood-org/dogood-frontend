@@ -57,11 +57,9 @@ export const FormSearch = ({
   };
 
   return (
-    <div className="bg-card w-full relative" itemRef="search">
-      <form onSubmit={(e) => e.preventDefault()} className="w-full">
-        <div
-          className={` overflow-hidden flex items-center justify-center ${className}`}
-        >
+    <div className="bg-card w-full flex flex-col relative" itemRef="search">
+      <form onSubmit={(e) => e.preventDefault()} className=" flex flex-col">
+        <div className={` flex items-center justify-center ${className}`}>
           <button
             id="searchButton"
             className={`absolute inline-flex items-center justify-center p-2  z-25 cursor-pointer text-foreground ${leftSVGClassName}`}

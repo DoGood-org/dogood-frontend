@@ -13,6 +13,7 @@ type AnimatedDrawlerProps = {
   direction?: 'vertical' | 'horizontal';
   exeptionForClickOutside?: boolean;
   exeptionSelector?: string;
+  height?: number;
 };
 
 export const AnimatedDrawler = ({

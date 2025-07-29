@@ -13,7 +13,9 @@ export const ButtonOpenTasks = ({ className = '' }: Props): JSX.Element => {
   const { activePanel, togglePanel } = useMapStore();
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.stopPropagation();
-    togglePanel('tasks');
+    requestIdleCallback(() => {
+      togglePanel('tasks');
+    });
   };
 
   return (
@@ -21,7 +23,7 @@ export const ButtonOpenTasks = ({ className = '' }: Props): JSX.Element => {
       id="tasksButton"
       type="button"
       onClick={clickHandler}
-      className={`transition py-2  inline-flex items-center justify-center border-0 rounded-none ${className}`}
+      className={`transition py-2  inline-flex items-center justify-center border-0 rounded-none cursor-pointer  ${className}`}
     >
       <div className=" h-full">
         <div className="w-full h-full flex items-center justify-center">

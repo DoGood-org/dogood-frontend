@@ -41,13 +41,12 @@ export const ProfileMap = (): JSX.Element => {
     fullscreenMap,
     defaultLocation,
     flyToCoords,
-
-    // selectedTask,
     setCustomMarkers,
     closeOptionsMenu,
     checkLocationPermission,
     clickedCoords,
     showOptionsMenu,
+    activePanel,
   } = useMapStore();
 
   useEffect(() => {
@@ -76,15 +75,11 @@ export const ProfileMap = (): JSX.Element => {
       console.warn('Marker not found for ID:', highlightedTaskId);
       return;
     }
-    console.log(marker);
-    flyToCoords(marker.getLatLng(), 15);
+    const coords = marker.getLatLng();
+    console.log('Flying to coords:', coords);
+    flyToCoords(coords, 15);
 
     marker.openPopup();
-    marker.isPopupOpen();
-
-    // Open popup
-    marker.openPopup();
-    marker.getPopup()?.setLatLng(marker.getLatLng());
   }, [highlightedTaskId]);
 
   if (
@@ -164,7 +159,9 @@ export const ProfileMap = (): JSX.Element => {
   };
 
   return (
-    <div className="profile-map-wrapper w-full h-full relative">
+    <div
+      className={`profile-map-wrapper w-full h-full relative ${activePanel ? 'pb-40' : ' pb-20'}`}
+    >
       <AnimatePresence mode="wait">
         <ResponsiveMapWrpr key={fullscreenMap ? 'fullscreen' : 'default'}>
           <div className="w-full h-full">
@@ -342,6 +339,9 @@ export const ProfileMap = (): JSX.Element => {
       </AnimatePresence>
 
       <TasksOnMap
+        mapHeight={400}
+        tasks={noPaginatedTasks}
+        mapOnMain={false}
         className={' absolute z-[1000] w-full lg:w-[487px] lg:top-16 lg:left-5'}
       />
     </div>

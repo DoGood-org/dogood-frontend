@@ -10,14 +10,17 @@ import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelec
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { JSX } from 'react';
+import { IExtendedITaskProps } from '@/types/tasks.type';
 
 type Props = {
   className?: string;
+  tasks: IExtendedITaskProps[];
+  mapHeight: number;
+  mapOnMain?: boolean;
 };
 export const TasksOnMap = (props: Props): JSX.Element => {
   const ref = React.useRef<HTMLDivElement | null>(null);
   const { activePanel, setActivePanel, fullscreenMap } = useMapStore();
-
   const { noPaginatedTasks } = useFilteredTasksSelector();
 
   useClickOutside({
@@ -32,15 +35,11 @@ export const TasksOnMap = (props: Props): JSX.Element => {
       ignoreSelectors: ['.leaflet-popup-task', '.leaflet-popup'],
     },
   });
-  const { isMobile, isTablet, isDesktop, height } = useWindowSize();
-  const dragTop = isMobile ? -100 : isTablet ? -120 : undefined;
+  const { isMobile, isTablet, isDesktop } = useWindowSize();
+  const dragTop = isMobile || isTablet ? -(props.mapHeight - 270) : undefined;
 
-  const computedHeight =
-    activePanel && isMobile
-      ? `${(height ?? 0) - 354 - 100 - 80}px`
-      : activePanel && isTablet
-        ? `${(height ?? 0) - 518 - 120 - 120}px`
-        : '680px';
+  const maxHeight =
+    (activePanel && isMobile) || isTablet ? props.mapHeight - 150 : 745;
 
   return (
     <>
@@ -48,7 +47,9 @@ export const TasksOnMap = (props: Props): JSX.Element => {
         <motion.div
           onClick={(e) => {
             e.stopPropagation();
-            console.log('TasksOnMap clicked');
+          }}
+          onTouchStart={(e) => {
+            e.stopPropagation();
           }}
           onMouseDown={(e) => e.stopPropagation()}
           className={`${props.className} touch-none cursor-grab bg-card`}
@@ -78,7 +79,7 @@ export const TasksOnMap = (props: Props): JSX.Element => {
               setActivePanel('tasks');
             }
           }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          transition={{ type: 'spring', stiffness: 150, damping: 35 }}
         >
           <div className="flex flex-col bg-card w-full rounded-sm lg:w-[485px]">
             <FormSearch
@@ -103,7 +104,7 @@ export const TasksOnMap = (props: Props): JSX.Element => {
           >
             <div
               className={'transition-all duration-300 ease-in-out'}
-              style={{ height: computedHeight }}
+              style={{ height: maxHeight }}
             >
               <AnimatePresence mode="wait">
                 {activePanel === 'filters' && (
