@@ -353,16 +353,16 @@ Light theme variables
 --card: #e6e6e6;
 --toggle: #303030;
 
---border: #17814b;
---btn: #17814b;
+--border: #2c8c8c;
+--btn: #2c8c8c;
 --btn-primary: #ffffff;
 --btn-secondary: #f1f1f1;
 --btn-text: #f1f1f1;
---btn-hover: #4caf50;
---btn-active: #0a6f3c;
---btn-outline: #17814b;
---btn-outline-hover: #4caf50;
---btn-outline-active: #0a6f3c;
+--btn-hover: #00c1ac;
+--btn-active: #01425c;
+--btn-outline: #2c8c8c;
+--btn-outline-hover: #00c1ac;
+--btn-outline-active: #01425c;
 --map-btn-bg: #999999;
 --map-btn-icon: #171b19;
 --news-item-hover: #1ad3aa;
@@ -434,16 +434,16 @@ Dark theme variables
 | post_gray            | #f1f1f1     | #696969    |                                                              |
 | card                 | #cfcfcf     | #303030    | background for cards (task, organization, review in account) |
 | toggle               | #303030     |            | for toggles (theme, special)                                 |
-| border               | #17814b     |            | for borders                                                  |
-| btn                  | #17814b     |            | button-background                                            |
+| border               | #2c8c8c     |            | for borders                                                  |
+| btn                  | #2c8c8c     |            | button-background                                            |
 | btn-primary          | #ffffff     |            | text for primary-buttons (with background)                   |
 | btn-secondary        | #f1f1f1     | #010101    | text for secondary-buttons (outline)                         |
 | btn-text             | #f1f1f1     |            | for buttons that doesn't change in dark theme                |
-| btn-hover            | #4caf50     |            | background-color for button-hover                            |
-| btn-active           | #0a6f3c     |            | background-color for active button                           |
-| btn-outline          | #17814b     |            | color for border (secondary-button)                          |
-| btn-outline-hover    | #4caf50     |            | hover for border (secondary-button)                          |
-| btn-outline-active   | #0a6f3c     |            | color for border (active secondary-button)                   |
+| btn-hover            | #00c1ac     |            | background-color for button-hover                            |
+| btn-active           | #01425c     |            | background-color for active button                           |
+| btn-outline          | #2c8c8c     |            | color for border (secondary-button)                          |
+| btn-outline-hover    | #00c1ac     |            | hover for border (secondary-button)                          |
+| btn-outline-active   | #01425c     |            | color for border (active secondary-button)                   |
 | map-btn-bg           | #999999     | #303030    |                                                              |
 | map-btn-icon         | #171b19     | #f1f1f1    |                                                              |
 | news-item-hover      | #1ad3aa     |            |                                                              |

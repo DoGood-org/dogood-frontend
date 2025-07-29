@@ -53,7 +53,7 @@ export const PageNavigation: React.FC<NavigationPageProps> = ({
               <Icon
                 className={`
                   w-6 h-6 transition-colors duration-300
-                  ${isActive ? 'text-btn-outline-active' : 'text-foreground'}
+                  ${isActive ? 'text-btn-outline' : 'text-foreground'}
                   lg:text-bg-icon
                   group-hover:lg:text-btn-outline-active
                   ${iconClassName}
