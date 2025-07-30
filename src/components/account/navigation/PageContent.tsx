@@ -3,7 +3,7 @@
 import { Account } from '@/components';
 import { navigationStore } from '@/zustand/stores/navigationStore';
 import React from 'react';
-import { Chat } from '@/components/account/chatPage/Chat';
+import { Chat } from '@/components';
 import { ProfileMap } from '@/components/main/map/profileMap/ProfileMap';
 
 const pages = {

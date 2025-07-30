@@ -4,6 +4,8 @@ import Back from '@/components/icons/Back';
 import ChatSearch from '@/components/icons/ChatSearch';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 
 interface ChatSearchInputProps {
   selectedName: string;
@@ -69,7 +71,7 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
               {selectedName}
             </p>
           )}
-          <input
+          <Input
             type="text"
             placeholder={placeholderText}
             value={searchQuery}
@@ -84,31 +86,35 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
             placeholder:text-foreground
             hover:placeholder:text-btn-hover
             focus:placeholder:text-btn-active
+
             border-none
-            border-0
-            focus:border-none
-            focus:border-transparent
             outline-none
-            focus:outline-none
             ring-0
+
+            focus:border-none
+            focus:outline-none
             focus:ring-0
             focus:ring-transparent
+            focus-visible:ring-0
+            focus-visible:outline-none
+            focus-visible:border-none
+
             appearance-none
             shadow-none
-            transition-all 
-            duration-300 
-            ease-in-out"
+            transition-none"
           />
         </div>
       </div>
-      <button
+      <Button
+        variant="ghost"
+        size="icon"
         className="text-current cursor-pointer"
         aria-label="search"
         type="button"
         onClick={handleSearch}
       >
         <ChatSearch className="w-5 h-5 text-bg-icon hover:text-btn-hover active:text-btn-active" />
-      </button>
+      </Button>
     </div>
   );
 };

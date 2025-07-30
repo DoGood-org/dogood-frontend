@@ -1,9 +1,9 @@
 'use client';
 
 import { MessagesListProps } from '@/types/chatType';
-import { ChatMessageItem } from './ChatMessageItem';
+import { ChatMessageItem } from '@/components';
 import { useEffect, useState } from 'react';
-import { EmptyChatMessage } from '../EmptyChatMessage';
+import { EmptyChatMessage } from '@/components';
 
 export const ChatMessageList: React.FC<MessagesListProps> = ({ messages }) => {
   const [mounted, setMounted] = useState(false);

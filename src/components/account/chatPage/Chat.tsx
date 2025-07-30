@@ -1,21 +1,27 @@
 'use client';
 
-import { useDeviceType } from '@/hooks/useDeviceType';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useEffect, useMemo, useState } from 'react';
-import { ChatCardsList, EmptyState } from '@/components';
-import { ChatMessageList } from '@/components';
-import { ChatSearchInput } from '@/components';
+import { EmptyState } from '@/components';
 import { Section } from '@/components/ui/Section';
-import { ChatMessageInput } from '@/components';
 import { navigationStore } from '@/zustand/stores/navigationStore';
 import { ChatType, MessageType } from '@/types/chatType';
 import mocks from './mocks.json';
+
+import { ChatMobileLayout } from './ChatMobileLayout';
+import { ChatDesktopLayout } from './ChatDesktopLayout';
 
 export const Chat: React.FC = () => {
   const { chats: initialChats, messages: initialMessages } = mocks;
   const [chats, setChats] = useState<ChatType[]>(initialChats);
   const [messages, setMessages] = useState<MessageType[]>(initialMessages);
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
+
+  const isMobileOrTablet = useMediaQuery('(max-width: 1439px)');
+
+  const setIsChatMessageOpen = navigationStore(
+    (state) => state.setIsChatMessageOpen
+  );
 
   useEffect(() => {
     const lastChatId = localStorage.getItem('lastChatId');
@@ -33,31 +39,16 @@ export const Chat: React.FC = () => {
   }, [selectedChatId]);
 
   const handleChatDeleted = (chatId: string): void => {
-    setChats((prevChats) => {
-      const updatedChats = prevChats.filter((chat) => chat.id !== chatId);
-      return updatedChats;
-    });
-
-    setMessages((prevMessages) => {
-      const updatedMessages = prevMessages.filter(
-        (msg) => msg.roomId !== chatId
-      );
-      return updatedMessages;
-    });
-
+    setChats((prevChats) => prevChats.filter((chat) => chat.id !== chatId));
+    setMessages((prevMessages) =>
+      prevMessages.filter((msg) => msg.roomId !== chatId)
+    );
     if (selectedChatId === chatId) {
       setSelectedChatId(null);
     }
   };
 
-  const device = useDeviceType();
-
-  const setIsChatMessageOpen = navigationStore(
-    (state) => state.setIsChatMessageOpen
-  );
-
   const selectedChat = chats.find((chat) => chat.id === selectedChatId);
-
   const userId = 1;
 
   const preparedMessages = useMemo(() => {
@@ -68,25 +59,33 @@ export const Chat: React.FC = () => {
         ...msg,
         isCurrentUser: msg.senderId === userId,
       }));
-  }, [selectedChatId, messages, userId]);
-
-  const isMobileOrTablet = device === 'sm' || device === 'md';
+  }, [selectedChatId, messages]);
 
   useEffect(() => {
     setIsChatMessageOpen(!!selectedChatId);
   }, [selectedChatId, setIsChatMessageOpen]);
 
+  const userName = 'Name';
+  const userAvatar = '/default-avatar.png';
+
+  // ...
+
   const handleSend = async (message: string): Promise<void> => {
     if (!selectedChatId || !message.trim()) return;
-  };
 
-  useEffect(() => {
-    if (selectedChatId) {
-      setIsChatMessageOpen(true);
-    } else {
-      setIsChatMessageOpen(false);
-    }
-  }, [selectedChatId, setIsChatMessageOpen]);
+    const newMessage: MessageType = {
+      id: (messages.length + 1).toString(),
+      name: userName,
+      avatar: userAvatar,
+      content: message.trim(),
+      createdAt: new Date().toISOString(),
+      roomId: selectedChatId,
+      senderId: userId,
+      isCurrentUser: true,
+    };
+
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
 
   return (
     <Section withContainer={false}>
@@ -95,71 +94,25 @@ export const Chat: React.FC = () => {
           {chats.length === 0 ? (
             <EmptyState />
           ) : isMobileOrTablet ? (
-            selectedChatId ? (
-              <div className="flex flex-col justify-center bg-text-gray h-full md:bg-[#CFCFCF] dark:bg-[#5D5A5A] py-6 px-2 min-h-0">
-                <ChatSearchInput
-                  selectedName={selectedChat ? selectedChat.name : ''}
-                  lastMessageTime={selectedChat ? selectedChat.createdAt : ''}
-                  lastOnline={selectedChat ? selectedChat.createdAt : ''}
-                  showBackButton={isMobileOrTablet}
-                  onBack={() => setSelectedChatId(null)}
-                  onSearch={(query) => {
-                    console.log('Шукати:', query);
-                  }}
-                />
-                <div className="border border-foreground mt-5 lg:border-none lg:mt-0 mb-12"></div>
-                <div className="flex-1 overflow-y-auto custom-scrollbar-hide min-h-0 mt-2">
-                  <ChatMessageList messages={preparedMessages} />
-                </div>
-                <div className="mt-6">
-                  <ChatMessageInput onSend={handleSend} />
-                </div>
-              </div>
-            ) : (
-              <div className="w-full h-full flex flex-1 flex-col overflow-y-auto custom-scrollbar-hide min-h-0">
-                <ChatCardsList
-                  chats={chats}
-                  selectedChatId={selectedChatId}
-                  onSelectChat={setSelectedChatId}
-                  onChatDeleted={handleChatDeleted}
-                />
-              </div>
-            )
+            <ChatMobileLayout
+              chats={chats}
+              selectedChatId={selectedChatId}
+              setSelectedChatId={setSelectedChatId}
+              messages={preparedMessages}
+              onSend={handleSend}
+              onChatDeleted={handleChatDeleted}
+              selectedChat={selectedChat || null}
+            />
           ) : (
-            // Desktop
-            <div className="flex h-full gap-9">
-              <div className="w-[320px] flex flex-col bg-background text-foreground overflow-y-auto custom-scrollbar-hide">
-                <ChatCardsList
-                  chats={chats}
-                  selectedChatId={selectedChatId}
-                  onSelectChat={setSelectedChatId}
-                  onChatDeleted={handleChatDeleted}
-                />
-              </div>
-
-              <div className="w-[704px] flex-1 flex flex-col text-foreground rounded-sm p-2 lg:bg-[#CFCFCF] dark:bg-[#5D5A5A] lg:p-6">
-                {selectedChatId ? (
-                  <ChatSearchInput
-                    selectedName={selectedChat?.name || ''}
-                    lastMessageTime={selectedChat?.createdAt || ''}
-                    lastOnline={selectedChat?.createdAt || ''}
-                    showBackButton={false}
-                    onBack={() => setSelectedChatId(null)}
-                    onSearch={(query) => console.log('Шукати:', query)}
-                  />
-                ) : null}
-
-                <div className="border border-foreground mt-5 mb-12"></div>
-
-                <div className="flex-1 overflow-y-auto custom-scrollbar-hide mt-2 min-h-0">
-                  <ChatMessageList messages={preparedMessages} />
-                </div>
-
-                <div className="mt-6">
-                  {selectedChatId && <ChatMessageInput onSend={handleSend} />}
-                </div>
-              </div>
-            </div>
+            <ChatDesktopLayout
+              chats={chats}
+              selectedChatId={selectedChatId}
+              setSelectedChatId={setSelectedChatId}
+              messages={preparedMessages}
+              onSend={handleSend}
+              onChatDeleted={handleChatDeleted}
+              selectedChat={selectedChat || null}
+            />
           )}
         </div>
       </div>

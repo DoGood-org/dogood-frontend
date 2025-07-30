@@ -1,14 +1,14 @@
-import { useDeviceType } from '@/hooks/useDeviceType';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useTranslations } from 'next-intl';
 
 export const EmptyState: React.FC = () => {
-  const device = useDeviceType();
+  const isMobileOrTablet = useMediaQuery('(max-width: 1439px)');
 
   const t = useTranslations('chat');
 
   const dummyCards = Array.from({ length: 6 });
 
-  if (device === 'sm' || device === 'md') {
+  if (isMobileOrTablet) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center dark:bg-[#5D5A5A] bg-[#CFCFCF] p-4 gap-4">
         <h3 className="text-foreground text-base text-center">
