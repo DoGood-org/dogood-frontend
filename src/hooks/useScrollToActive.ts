@@ -7,12 +7,10 @@ export const useScrollToActive = ({
   activeView,
   isTabletOrLarger,
   setRect,
-  // isEnabled = true,
 }: TabScrollProps): void => {
   useLayoutEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-    // if (!isEnabled) return;
 
     const activeBtn = container.querySelector(
       `[data-view="${activeView}"]`
@@ -24,19 +22,17 @@ export const useScrollToActive = ({
     const containerRect = container.getBoundingClientRect();
     const width = btnRect.width;
 
-    let left: number;
-
-    if (isTabletOrLarger) {
-      left = btnRect.left - containerRect.left;
-    } else {
+    if (!isTabletOrLarger && container.scrollWidth > container.clientWidth) {
       activeBtn.scrollIntoView({
         behavior: 'smooth',
         inline: 'center',
         block: 'nearest',
       });
-
-      left = btnRect.left - containerRect.left + container.scrollLeft;
     }
+
+    const left = isTabletOrLarger
+      ? btnRect.left - containerRect.left
+      : btnRect.left - containerRect.left + container.scrollLeft;
 
     setRect({ left, width });
   }, [activeView, isTabletOrLarger, containerRef, setRect]);

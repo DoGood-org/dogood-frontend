@@ -137,16 +137,16 @@
   --card: #cfcfcf;
   --toggle: #303030;
 
-  --border: #17814b;
-  --btn: #17814b;
+  --border: #2c8c8c;
+  --btn: #2c8c8c;
   --btn-primary: #ffffff;
   --btn-secondary: #f1f1f1;
   --btn-text: #f1f1f1;
-  --btn-hover: #4caf50;
-  --btn-active: #0a6f3c;
-  --btn-outline: #17814b;
-  --btn-outline-hover: #4caf50;
-  --btn-outline-active: #0a6f3c;
+  --btn-hover: #00c1ac;
+  --btn-active: #01425c;
+  --btn-outline: #2c8c8c;
+  --btn-outline-hover: #00c1ac;
+  --btn-outline-active: #01425c;
   --map-btn-bg: #999999;
   --map-btn-icon: #171b19;
   --news-item-hover: #1ad3aa;
@@ -196,7 +196,7 @@
       rgba(26, 211, 170, 0.15) 129.53%
     ),
     radial-gradient(circle, rgba(26, 211, 170, 0.1) 2px, transparent 2px),
-    linear-gradient(0deg, #0a6f3c, #0a6f3c);
+    linear-gradient(0deg, #2c8c8c, #2c8c8c);
   --font-size: 16px;
 }
 
@@ -223,6 +223,13 @@ html {
   --post: #171b19;
   --text_tag: #f1f1f1;
   --post_gray: #696969;
+  --bg-icon: #f1f1f1;
+  --icon-color: #000000;
+  --image-bg: #e9e9e9;
+  --map-btn-bg: #303030;
+  --map-btn-icon: #f1f1f1;
+  --review-bg: #171b19;
+  --review-reverse: #696969;
   --gradient:
     linear-gradient(
       238.09deg,
@@ -231,14 +238,8 @@ html {
       rgba(0, 0, 0, 0.15) 83.94%,
       rgba(26, 211, 170, 0.15) 129.53%
     ),
-    radial-gradient(circle, rgba(26, 211, 170, 0.1) 2px, transparent 2px);
-  --bg-icon: #f1f1f1;
-  --icon-color: #000000;
-  --image-bg: #e9e9e9;
-  --map-btn-bg: #303030;
-  --map-btn-icon: #f1f1f1;
-  --review-bg: #171b19;
-  --review-reverse: #696969;
+    radial-gradient(circle, rgba(26, 211, 170, 0.1) 2px, transparent 2px),
+    linear-gradient(0deg, #01425c, #01425c);
 }
 
 .bg-dots {
