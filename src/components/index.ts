@@ -130,6 +130,7 @@ export * from './main/reviews/ReviewsSection';
 export * from './ui/Accordion';
 export * from './ui/AnimatedDrawler';
 export * from './ui/AnimationTabs';
+export * from './ui/Avatar';
 export * from './ui/Button';
 export * from './ui/Container';
 export * from './ui/ContentLoader';

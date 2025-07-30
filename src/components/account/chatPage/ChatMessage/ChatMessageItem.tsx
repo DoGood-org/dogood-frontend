@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { MessageItemProps } from '@/types/chatType';
-import Image from 'next/image';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/Avatar';
 
 export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
   const formatDate = (dateString: string): string => {
@@ -28,13 +28,12 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
             : 'order-1 flex-shrink-0'
         )}
       >
-        <Image
-          src={message.avatar}
-          alt={message.name}
-          width={42}
-          height={42}
-          className="w-[42px] h-[42px] rounded-full object-cover bg-white shrink-0"
-        />
+        <Avatar className="w-[42px] h-[42px] rounded-full bg-white shrink-0">
+          <AvatarImage src={message.avatar} alt={message.name} />
+          <AvatarFallback>
+            {message.name?.charAt(0).toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
       </div>
       <div
         className={cn(

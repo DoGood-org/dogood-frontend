@@ -2,8 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { ChatCardProps } from '@/types/chatType';
-
-import Image from 'next/image';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/Avatar';
 import { ChatEllipsisMenu } from '@/components';
 
 export const ChatCardItem: React.FC<ChatCardProps> = ({
@@ -35,13 +34,10 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
       <div className="absolute top-1 right-0 mb-2">
         <ChatEllipsisMenu chat={chat} onChatDeleted={handleDelete} />
       </div>
-      <Image
-        src={chat.avatar}
-        alt={chat.name}
-        width={64}
-        height={64}
-        className="w-[64px] h-[64px] rounded-full object-cover bg-white"
-      />
+      <Avatar className="w-[64px] h-[64px] rounded-full bg-white shrink-0">
+        <AvatarImage src={chat.avatar} alt={chat.name} />
+        <AvatarFallback>{chat.name?.charAt(0).toUpperCase()}</AvatarFallback>
+      </Avatar>
       <div className="flex flex-col flex-grow min-w-0">
         <div className="flex justify-between items-center mb-2">
           <p className="text-white font-semibold text-base truncate">
