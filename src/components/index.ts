@@ -130,7 +130,6 @@ export * from './ui/ContentLoader';
 export * from './ui/Input';
 export * from './ui/Label';
 export * from './ui/LinkWithArrow';
-export * from './ui/Popover';
 export * from './ui/Rating';
 export * from './ui/Section';
 export * from './ui/Select';

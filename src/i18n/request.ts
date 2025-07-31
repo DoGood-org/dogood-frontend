@@ -18,7 +18,6 @@ export async function loadMessages(locale: string): Promise<Messages> {
     'howItWorks',
     'navigation',
     'account',
-    'reviews',
     'settings',
   ];
 
