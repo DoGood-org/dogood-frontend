@@ -13,11 +13,10 @@ export const ButtonOpenTasks = ({
   className = '',
   onClick,
 }: Props): JSX.Element => {
-  const { activePanel, togglePanel } = useMapStore();
+  const { activePanel } = useMapStore();
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-    togglePanel('tasks');
     onClick?.();
   };
 

@@ -7,12 +7,7 @@ import { useWindowSize } from '@/hooks/useWindowSize';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
 import { useMapStore } from '@/zustand/stores/mapStore';
-import {
-  AnimatePresence,
-  motion,
-  useAnimation,
-  useDragControls,
-} from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { JSX, useState } from 'react';
 import { IExtendedITaskProps } from '@/types/tasks.type';
 
@@ -24,15 +19,14 @@ type Props = {
 };
 export const TasksOnMap = (props: Props): JSX.Element => {
   const ref = React.useRef<HTMLDivElement | null>(null);
-  const { activePanel, setActivePanel, fullscreenMap } = useMapStore();
+  const { activePanel, setActivePanel, fullscreenMap, togglePanel } =
+    useMapStore();
   const { noPaginatedTasks } = useFilteredTasksSelector();
   const [dragHeight, setDragHeight] = useState<number>(0);
   useClickOutside({
     ref: ref,
     callback: (): void => {
-      if (activePanel)
-        // setDragHeight(0);
-        setActivePanel(null);
+      if (activePanel) setActivePanel(null);
     },
     options: {
       enabled: !!activePanel,
@@ -40,19 +34,14 @@ export const TasksOnMap = (props: Props): JSX.Element => {
       ignoreSelectors: ['.leaflet-popup-task', '.leaflet-popup'],
     },
   });
-  const { isMobile, isTablet, isDesktop } = useWindowSize();
-
+  const { isDesktop } = useWindowSize();
   const dragLimit = 500 * -1;
   return (
     <>
       {!fullscreenMap && (
         <motion.div
           animate={{
-            y:
-              (activePanel === 'tasks' && !isDesktop) ||
-              (activePanel === 'filters' && !isDesktop)
-                ? dragLimit
-                : 0,
+            y: !isDesktop && activePanel ? dragLimit : 0,
           }}
           onDrag={(e, info) => {
             const offsetY = info.offset.y;
@@ -84,8 +73,9 @@ export const TasksOnMap = (props: Props): JSX.Element => {
             }
           }}
           onDragEnd={(e, info) => {
+            if (isDesktop) return;
             const velocityY = info.velocity.y;
-            const SNAP_THRESHOLD = 340;
+            const SNAP_THRESHOLD = 200;
 
             if (info.delta.y < -SNAP_THRESHOLD || velocityY < -300) {
               setActivePanel(activePanel === 'tasks' ? 'filters' : 'tasks');
@@ -98,21 +88,25 @@ export const TasksOnMap = (props: Props): JSX.Element => {
           }}
         >
           <div className="flex flex-col bg-card w-full rounded-sm lg:w-[487px]">
-            <ButtonOpenTasks className="mx-auto bg-card h-10 lg:hidden" />
+            <ButtonOpenTasks className="dragToggle mx-auto bg-card h-10 lg:hidden" />
             <FormSearch
               className="p-0 bg-card border-t border-t-foreground lg:border-t-0  lg:border-b lg:border-b-foreground lg:rounded-t-none"
               inputClassName="h-10 overflow-hidden"
               leftSVGClassName="left-0"
               rightSVGClassName="right-0"
             />
-            <ButtonOpenTasks className="hidden md:hidden lg:inline-flex lg:bg-card lg:h-10 lg:mb-0 lg:z-500 lg:w-full" />
+            <ButtonOpenTasks
+              className="hidden md:hidden lg:inline-flex lg:bg-card lg:h-10 lg:mb-0 lg:z-500 lg:w-full"
+              onClick={() => togglePanel('tasks')}
+            />
           </div>
 
           <motion.div
-            className="transition-all ease-in-out"
             animate={{
               height:
-                isMobile || isTablet ? dragHeight : isDesktop ? '0px' : 'auto',
+                isDesktop && activePanel
+                  ? 745 // or whatever your fixed height is
+                  : dragHeight,
             }}
             transition={{ duration: 0.3 }}
           >
