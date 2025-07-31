@@ -36,7 +36,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
       </div>
       <Avatar className="w-[64px] h-[64px] rounded-full bg-white shrink-0">
         <AvatarImage src={chat.avatar} alt={chat.name} />
-        <AvatarFallback>{chat.name?.charAt(0).toUpperCase()}</AvatarFallback>
+        <AvatarFallback name={chat.name} />
       </Avatar>
       <div className="flex flex-col flex-grow min-w-0">
         <div className="flex justify-between items-center mb-2">

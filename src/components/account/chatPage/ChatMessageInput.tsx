@@ -4,6 +4,7 @@ import MessageSend from '@/components/icons/MessageSend';
 import { Input } from '@/components/ui/Input';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { Button } from '@/components/ui/Button';
 
 interface MessageInputProps {
   onSend: (message: string) => void;
@@ -32,7 +33,7 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative pt-6">
       <Input
         value={message}
         onChange={handleChange}
@@ -58,13 +59,16 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         shadow-none
         cursor-pointer"
       />
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        aria-label="Send a message"
+        size="icon"
         onClick={sendMessage}
-        className="absolute right-4 top-3 text-[#1B9757] focus:outline-none cursor-pointer"
+        className="absolute right-4 top-7 text-[#1B9757] focus:outline-none cursor-pointer"
       >
         <MessageSend className="w-5 h-5" />
-      </button>
+      </Button>
     </div>
   );
 };

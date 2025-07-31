@@ -25,7 +25,7 @@ export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
   selectedChat,
 }) => {
   return selectedChatId ? (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex flex-col w-full h-full bg-[#CFCFCF] dark:bg-[#5D5A5A] pt-[20px] pb-[24px] pl-[8px] pr-[8px]">
       <ChatSearchInput
         selectedName={selectedChat?.name || ''}
         lastMessageTime={selectedChat?.createdAt || ''}
@@ -34,15 +34,20 @@ export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
         onBack={() => setSelectedChatId(null)}
         onSearch={(query) => console.log('Пошук:', query)}
       />
-      <ChatMessageList messages={messages} />
+      <div className="border border-foreground mt-5 mb-12" />
+      <div className="flex-1 overflow-y-auto custom-scrollbar-hide min-h-0">
+        <ChatMessageList messages={messages} />
+      </div>
       <ChatMessageInput onSend={onSend} />
     </div>
   ) : (
-    <ChatCardsList
-      chats={chats}
-      selectedChatId={selectedChatId}
-      onSelectChat={setSelectedChatId}
-      onChatDeleted={onChatDeleted}
-    />
+    <div className="flex-1 h-full overflow-y-auto custom-scrollbar-hide min-h-0">
+      <ChatCardsList
+        chats={chats}
+        selectedChatId={selectedChatId}
+        onSelectChat={setSelectedChatId}
+        onChatDeleted={onChatDeleted}
+      />
+    </div>
   );
 };

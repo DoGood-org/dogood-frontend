@@ -30,9 +30,7 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
       >
         <Avatar className="w-[42px] h-[42px] rounded-full bg-white shrink-0">
           <AvatarImage src={message.avatar} alt={message.name} />
-          <AvatarFallback>
-            {message.name?.charAt(0).toUpperCase()}
-          </AvatarFallback>
+          <AvatarFallback name={message.name} />
         </Avatar>
       </div>
       <div

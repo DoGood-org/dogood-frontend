@@ -5,6 +5,9 @@ import { useMenuToggle } from '@/hooks/useMenuToggle';
 import { ChatModal } from '@/components/account/chatPage/ChatModal/ChatModal';
 import { ChatType } from '@/types/chatType';
 import { useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
+
+import * as Tooltip from '@radix-ui/react-tooltip';
 
 type Props = {
   chat: ChatType;
@@ -14,6 +17,8 @@ type Props = {
 export const ChatEllipsisMenu: React.FC<Props> = ({ chat, onChatDeleted }) => {
   const { isOpen, toggleMenu, closeMenu } = useMenuToggle();
   const buttonRef = useRef<HTMLDivElement>(null);
+
+  const t = useTranslations('chat');
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent): void => {
@@ -33,20 +38,36 @@ export const ChatEllipsisMenu: React.FC<Props> = ({ chat, onChatDeleted }) => {
   };
 
   return (
-    <div ref={buttonRef}>
-      <EllipsisIcon
-        className="absolute top-0 right-2 w-5 h-5 text-white cursor-pointer 
-        hover:text-btn-hover active:text-btn-active"
-        onClick={handleToggleMenu}
-      />
-      {isOpen && (
-        <ChatModal
-          chat={chat}
-          onClose={toggleMenu}
-          menuRef={buttonRef}
-          onChatDeleted={onChatDeleted}
-        />
-      )}
-    </div>
+    <Tooltip.Provider>
+      <div ref={buttonRef}>
+        <Tooltip.Root>
+          <Tooltip.Trigger asChild>
+            <EllipsisIcon
+              className="absolute top-0 right-2 w-5 h-5 text-white cursor-pointer 
+              hover:text-btn-hover active:text-btn-active"
+              onClick={handleToggleMenu}
+            />
+          </Tooltip.Trigger>
+          <Tooltip.Portal>
+            <Tooltip.Content
+              sideOffset={5}
+              className="dark:bg-gray-900 text-white rounded px-2 py-1 text-xs select-none shadow-lg
+                        bg-[#5D5A5A] dark:text-[#f1f1f1]"
+            >
+              {t('menu.tooltip')}
+              <Tooltip.Arrow className="dark:fill-gray-900 fill-[#5D5A5A]" />
+            </Tooltip.Content>
+          </Tooltip.Portal>
+        </Tooltip.Root>
+        {isOpen && (
+          <ChatModal
+            chat={chat}
+            onClose={toggleMenu}
+            menuRef={buttonRef}
+            onChatDeleted={onChatDeleted}
+          />
+        )}
+      </div>
+    </Tooltip.Provider>
   );
 };
