@@ -1,25 +1,28 @@
 import type { SVGProps } from 'react';
-
 const NotePencil = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="100%"
-    height="100%"
-    viewBox="0 0 100 100"
+    width="1em"
+    height="1em"
     fill="none"
-    preserveAspectRatio="xMidYMid meet"
+    viewBox="0 0 49 48"
     {...props}
   >
     <g
       stroke="#F1F1F1"
-      strokeWidth={3}
       strokeLinecap="round"
       strokeLinejoin="round"
+      strokeWidth={3}
+      clipPath="url(#prefix__a)"
     >
-      <path d="M50.333 62.5h-12.5V50l37.5-37.5 12.5 12.5zM65.958 21.875l12.5 12.5" />
-      <path d="M84.708 50v31.25a3.125 3.125 0 0 1-3.125 3.125h-62.5a3.125 3.125 0 0 1-3.125-3.125v-62.5a3.125 3.125 0 0 1 3.125-3.125h31.25" />
+      <path d="M24.5 30h-6v-6l18-18 6 6zM32 10.5l6 6" />
+      <path d="M41 24v15a1.5 1.5 0 0 1-1.5 1.5h-30A1.5 1.5 0 0 1 8 39V9a1.5 1.5 0 0 1 1.5-1.5h15" />
     </g>
+    <defs>
+      <clipPath id="prefix__a">
+        <path fill="#fff" d="M.5 0h48v48H.5z" />
+      </clipPath>
+    </defs>
   </svg>
 );
-
 export default NotePencil;

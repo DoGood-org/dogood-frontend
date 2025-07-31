@@ -4,9 +4,7 @@ import MedicineSvg from '@/components/icons/Medicine';
 import NatureSvg from '@/components/icons/Nature';
 import AnimalSvg from '@/components/icons/Animal';
 import FoodSvg from '@/components/icons/Food';
-import NotePencil from '@/components/icons/NotePencil';
-import Binoculars from '@/components/icons/Binoculars';
-import HandHeart from '@/components/icons/HandHeart';
+import { MakeBetter, Discover, SignUp } from '@/components/icons';
 
 import { TranslationFunction } from '@/types/mapType';
 import { IHowItWorksItem } from '@/types/howItWorksItem';
@@ -34,7 +32,7 @@ export const getDistancesList = (t: TranslationFunction): IDistanceItem[] => [
 ];
 
 export const getHowItWorks = (t: TranslationFunction): IHowItWorksItem[] => [
-  { icon: NotePencil, title: t('block1') },
-  { icon: Binoculars, title: t('block2') },
-  { icon: HandHeart, title: t('block3') },
+  { icon: SignUp, title: t('block1') },
+  { icon: Discover, title: t('block2') },
+  { icon: MakeBetter, title: t('block3') },
 ];

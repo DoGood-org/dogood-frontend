@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   experimental: {
     esmExternals: 'loose', // This helps with some module resolution issues
   },
+  images: {
+    remotePatterns: [{ hostname: 'res.cloudinary.com' }],
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();

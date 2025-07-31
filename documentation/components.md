@@ -3,6 +3,17 @@
 Each component has its own API. You can find it in the component's folder. This
 is a list of more common components and their API.
 
+## Menu
+
+- [Section](#section)
+- [Container](#container)
+- [Button](#button)
+- [LinkWithArrow](#linkwitharrow)
+- [Accordion](#accordion)
+- [Rating](#rating)
+- [StarItem](#staritem)
+- [Animation Tabs](#animationtabs)
+
 ## Section
 
 This component renders a section element with default top and bottom paddings.
@@ -44,6 +55,8 @@ width. You can extend or override styles via the `className` prop.
 ```
 
   </details>
+
+[Back to Menu](#menu)
 
 ## Container
 
@@ -111,6 +124,8 @@ variables:
   classes via className.
 
 </details>
+
+[Back to Menu](#menu)
 
 ## Button
 
@@ -181,6 +196,8 @@ behaviors while preserving proper routing.
 
 </details>
 
+[Back to Menu](#menu)
+
 ## LinkWithArrow
 
 This React component renders a styled link with accompanying right-pointing
@@ -244,6 +261,8 @@ class names.
 ```
 
 </details>
+
+[Back to Menu](#menu)
 
 ## Accordion
 
@@ -355,6 +374,8 @@ transitions and wraps children with inner padding.
 
 </details>
 
+[Back to Menu](#menu)
+
 ## Rating
 
 This React component renders a 5-star rating UI. It supports both a read-only
@@ -414,6 +435,8 @@ const [rate, setRate] = useState(3);
 ```
 
 </details>
+
+[Back to Menu](#menu)
 
 ## StarItem
 
@@ -475,6 +498,8 @@ This component renders a single star within the `Rating` component.
 
 </details>
 
+[Back to Menu](#menu)
+
 ## AnimationTabs
 
 This React component renders an animated tab selector, designed for use in
@@ -484,16 +509,15 @@ animated underline for active tab, and optional horizontal scrolling.
 
 **Props:**
 
-| Name                             | Type                   | Default | Description                                                              |
-| -------------------------------- | ---------------------- | ------- | ------------------------------------------------------------------------ |
-| `views`\*                        | { view: string }[]     | —       | Required. Array of tab view objects. Each must have a view string label. |
-| `activeView`\*                   | string                 | —       | Required. The currently selected tab value.                              |
-| `onChange`\*                     | (view: string) => void | —       | Required. Callback when a                                                |
-| different tab is clicked/swiped. |
-| `isScroll`                       | boolean                | `false` | Optional. Enables horizontal scroll for mobile if true.                  |
-| `buttonClass`                    | string                 | ""      | Optional. Additional Tailwind classes for tab buttons.                   |
-| `refClass`                       | string                 | ""      | Optional. Additional Tailwind classes for the container of tab buttons.  |
-| `headClass`                      | string                 | ""      | Optional. Classes for the outermost wrapper of the component.            |
+| Name           | Type                   | Default | Description                                                              |
+| -------------- | ---------------------- | ------- | ------------------------------------------------------------------------ |
+| `views`\*      | { view: string }[]     | —       | Required. Array of tab view objects. Each must have a view string label. |
+| `activeView`\* | string                 | —       | Required. The currently selected tab value.                              |
+| `onChange`\*   | (view: string) => void | —       | Required. Callback when a different tab is clicked/swiped.               |
+| `isScroll`     | boolean                | `false` | Optional. Enables horizontal scroll for mobile if true.                  |
+| `buttonClass`  | string                 | ""      | Optional. Additional Tailwind classes for tab buttons.                   |
+| `refClass`     | string                 | ""      | Optional. Additional Tailwind classes for the container of tab buttons.  |
+| `headClass`    | string                 | ""      | Optional. Classes for the outermost wrapper of the component.            |
 
 <details> <summary><b>Details</b></summary>
 
@@ -543,3 +567,5 @@ animated underline for active tab, and optional horizontal scrolling.
 ```
 
 </details>
+
+[Back to Menu](#menu)

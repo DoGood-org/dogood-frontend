@@ -16,6 +16,11 @@
     "mail": "E-mail",
     "phone": "Phone number"
   },
-  "payment": "Payment",
-  "about": "About me"
+  "payment": {
+    "title": "Payment",
+    "add": "Add payment method"
+  },
+  "about": "About me",
+  "submitBtn": "Submit",
+  "resetBtn": "Reset"
 }

@@ -1,21 +1,23 @@
 {
   "basic": {
-    "title": "Basic Information",
+    "title": "Grundlegende Informationen",
     "name": "Name",
-    "birth": "Date of Birth",
-    "gender": "Gender"
+    "birth": "Geburtsdatum",
+    "gender": "Geschlecht"
   },
   "location": {
-    "title": "Location",
-    "country": "Counrty",
+    "title": "Standort",
+    "country": "Land",
     "region": "Region",
-    "city": "City"
+    "city": "Stadt"
   },
   "contact": {
-    "title": "Contact information",
-    "mail": "E-mail",
-    "phone": "Phone number"
+    "title": "Kontaktinformationen",
+    "mail": "E-Mail",
+    "phone": "Telefonnummer"
   },
-  "payment": "Payment",
-  "about": "About me"
+  "payment": "Zahlung",
+  "about": "Über mich",
+  "submitBtn": "Einreichen",
+  "resetBtn": "Zurücksetzen"
 }

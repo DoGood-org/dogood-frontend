@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import csc, { ICountry, IState, ICity } from 'country-state-city';
+import { SelectField } from '@/components';
+import { useTranslations } from 'next-intl';
 
 interface LocationSelectProps {
   onCountryChange: (value: string) => void;
@@ -10,6 +12,9 @@ interface LocationSelectProps {
   selectedCountry?: string;
   selectedState?: string;
   selectedCity?: string;
+  className?: string;
+  countryError?: string;
+  stateError?: string;
 }
 
 export const LocationSelect = ({
@@ -19,10 +24,14 @@ export const LocationSelect = ({
   selectedCountry,
   selectedState,
   selectedCity,
+  className = '',
+  countryError,
+  stateError,
 }: LocationSelectProps): React.JSX.Element => {
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [states, setStates] = useState<IState[]>([]);
   const [cities, setCities] = useState<ICity[]>([]);
+  const t = useTranslations('settings');
 
   // Load countries on component mount
   useEffect(() => {
@@ -40,7 +49,6 @@ export const LocationSelect = ({
     setStates(countryStates);
     onStateChange(''); // Reset state when country changes
     onCityChange(''); // Reset city when country changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCountry]);
 
   // Update cities when state changes
@@ -52,51 +60,56 @@ export const LocationSelect = ({
     const stateCities = csc.getCitiesOfState(selectedCountry, selectedState);
     setCities(stateCities);
     onCityChange(''); // Reset city when state changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedState, selectedCountry]);
 
   return (
-    <div className="space-y-4">
-      <select
-        value={selectedCountry}
-        onChange={(e) => onCountryChange(e.target.value)}
-        className="w-full p-2 border rounded-md bg-background"
-      >
-        <option value="">Select country</option>
-        {countries.map((country) => (
-          <option key={country.isoCode} value={country.isoCode}>
-            {country.name}
-          </option>
-        ))}
-      </select>
+    <div className={`space-y-4 ${className}`}>
+      <div className="space-y-2">
+        <SelectField
+          value={selectedCountry}
+          onValueChange={onCountryChange}
+          options={countries.map((country) => ({
+            value: country.isoCode,
+            label: country.name,
+          }))}
+          label={t('location.country')}
+          placeholder="Select country"
+        />
+        {countryError && (
+          <p className="text-sm font-medium text-error">{countryError}</p>
+        )}
+      </div>
 
-      <select
-        value={selectedState}
-        onChange={(e) => onStateChange(e.target.value)}
-        disabled={!selectedCountry}
-        className="w-full p-2 border rounded-md bg-background disabled:opacity-50"
-      >
-        <option value="">Select state/province</option>
-        {states.map((state) => (
-          <option key={state.isoCode} value={state.isoCode}>
-            {state.name}
-          </option>
-        ))}
-      </select>
+      <div className="space-y-2">
+        <SelectField
+          value={selectedState}
+          onValueChange={onStateChange}
+          options={states.map((state) => ({
+            value: state.isoCode,
+            label: state.name,
+          }))}
+          label={t('location.region')}
+          placeholder="Select region"
+          disabled={!selectedCountry}
+        />
+        {stateError && (
+          <p className="text-sm font-medium text-error">{stateError}</p>
+        )}
+      </div>
 
-      <select
-        value={selectedCity}
-        onChange={(e) => onCityChange(e.target.value)}
-        disabled={!selectedState}
-        className="w-full p-2 border rounded-md bg-background disabled:opacity-50"
-      >
-        <option value="">Select city</option>
-        {cities.map((city) => (
-          <option key={city.name} value={city.name}>
-            {city.name}
-          </option>
-        ))}
-      </select>
+      <div className="space-y-2">
+        <SelectField
+          value={selectedCity}
+          onValueChange={onCityChange}
+          options={cities.map((city) => ({
+            value: city.name,
+            label: city.name,
+          }))}
+          label={t('location.city')}
+          placeholder="Select city"
+          disabled={!selectedState}
+        />
+      </div>
     </div>
   );
 };

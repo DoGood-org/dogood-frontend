@@ -337,28 +337,51 @@ Light theme variables
 
 ```css
 --background: #f1f1f1;
+--background-secondary: #696969;
 --foreground: #1b1b1b;
 --header-bg: #171b19;
 --footer-bg: #111215;
 --layout-background: #111215;
 --text-help: #696969;
 --text-gray: #999999;
---text-white: #f1f1f1;
+--white: #f1f1f1;
+--text_tag: #010101;
 --tag: #696969;
+--post: #696969;
+--post_gray: #f1f1f1;
 
 --card: #e6e6e6;
 --toggle: #303030;
 
---border: #17814b;
---btn: #17814b;
---btn-text: #ffffff;
+--border: #2c8c8c;
+--btn: #2c8c8c;
 --btn-primary: #ffffff;
 --btn-secondary: #f1f1f1;
---btn-hover: #4caf50;
---btn-active: #0a6f3c;
---btn-outline: #17814b;
---btn-outline-hover: #4caf50;
---btn-outline-active: #0a6f3c;
+--btn-text: #f1f1f1;
+--btn-hover: #00c1ac;
+--btn-active: #01425c;
+--btn-outline: #2c8c8c;
+--btn-outline-hover: #00c1ac;
+--btn-outline-active: #01425c;
+--map-btn-bg: #999999;
+--map-btn-icon: #171b19;
+--news-item-hover: #1ad3aa;
+
+--bg-icon: #171b19;
+--icon-color: #f1f1f1;
+--image-bg: #999999;
+
+--review-bg: #696969;
+--review-reverse: #f1f1f1;
+
+--error: #ee0606;
+--success: #17814b;
+
+--star: #ffee00;
+--medicine: #1f5eff;
+--animal: #ff7d57;
+--nature: #4caf50;
+--food: #e4a23c;
 ```
 
 Dark theme variables
@@ -366,41 +389,77 @@ Dark theme variables
 ```css
 .dark {
   --background: #171b19;
+  --background-secondary: #303030;
   --foreground: #f1f1f1;
   --card: #303030;
   --btn-secondary: #010101;
+  --post: #171b19;
+  --text_tag: #f1f1f1;
+  --post_gray: #696969;
+  --gradient:
+    linear-gradient(
+      238.09deg,
+      rgba(26, 211, 170, 0.15) 30.81%,
+      rgba(0, 0, 0, 0.15) 82.23%,
+      rgba(0, 0, 0, 0.15) 83.94%,
+      rgba(26, 211, 170, 0.15) 129.53%
+    ),
+    radial-gradient(circle, rgba(26, 211, 170, 0.1) 2px, transparent 2px);
+  --bg-icon: #f1f1f1;
+  --icon-color: #000000;
+  --image-bg: #e9e9e9;
+  --map-btn-bg: #303030;
+  --map-btn-icon: #f1f1f1;
+  --review-bg: #171b19;
+  --review-reverse: #696969;
 }
 ```
 
 </details>
 
-| Variable             | Light theme | Dark theme | Description                                       |
-| -------------------- | ----------- | ---------- | ------------------------------------------------- |
-| background           | #f1f1f1     | #171b19    | for primary background-color                      |
-| background-secondary | #303030     | #696969    | for registration, form-cards                      |
-| foreground           | #1B1B1B     | #f1f1f1    | for primary text-color                            |
-| header-bg            | #171B19     |            | header-background                                 |
-| footer-bg            | #111215     |            | footer-background                                 |
-| text-help            | #696969     |            | form-placeholders, filter-background              |
-| text-gray            | #999999     |            | gray-text, lable-color                            |
-| white                | #f1f1f1     |            | for text and bg that doesn't change in dark theme |
-| tag                  | #696969     |            | for tags (filter-buttons)                         |
-| card                 | #e6e6e6     | #303030    | background for cards (task, form-input)           |
-| toggle               | #303030     |            | for toggles (theme, special)                      |
-| border               | #17814b     |            | for borders                                       |
-| btn                  | #17814b     |            | button-background                                 |
-| btn-primary          | #ffffff     |            | text for primary-buttons (with background)        |
-| btn-secondary        | #f1f1f1     | #010101    | text for secondary-buttons (outline)              |
-| btn-text             | #f1f1f1     |            | for buttons that doesn't change in dark theme     |
-| btn-hover            | #4caf50     |            | background-color for button-hover                 |
-| btn-active           | #0a6f3c     |            | background-color for active button                |
-| btn-outline          | #17814b     |            | color for border (secondary-button)               |
-| btn-outline-hover    | #4caf50     |            | hover for border (secondary-button)               |
-| btn-outline-active   | #0a6f3c     |            | color for border (active secondary-button)        |
-| error                | #EE0606     |            | for                                               |
-| star                 | #FFEE00     |            | for rating-stars (profile)                        |
-| bg-icon              | #171B19     | #f1f1f1    | background for icons (tasks)                      |
-| icon-color           | #f1f1f1     | #000000    | color for icon (tasks)                            |
+| Variable             | Light theme | Dark theme | Description                                                  |
+| -------------------- | ----------- | ---------- | ------------------------------------------------------------ |
+| background           | #f1f1f1     | #171b19    | for primary background-color                                 |
+| background-secondary | #696969     | #303030    | for registration, form-cards                                 |
+| foreground           | #1B1B1B     | #f1f1f1    | for primary text-color                                       |
+| header-bg            | #171B19     |            | header-background                                            |
+| footer-bg            | #111215     |            | footer-background                                            |
+| layout-background    | #111215     |            | layout-background                                            |
+| text-help            | #696969     |            | form-placeholders, filter-background                         |
+| text-gray            | #999999     |            | gray-text, lable-color                                       |
+| white                | #f1f1f1     |            | for text and bg that doesn't change in dark theme            |
+| text_tag             | #010101     | #f1f1f1    |                                                              |
+| tag                  | #696969     |            | for tags (filter-buttons)                                    |
+| post                 | #696969     | #171b19    |                                                              |
+| post_gray            | #f1f1f1     | #696969    |                                                              |
+| card                 | #cfcfcf     | #303030    | background for cards (task, organization, review in account) |
+| toggle               | #303030     |            | for toggles (theme, special)                                 |
+| border               | #2c8c8c     |            | for borders                                                  |
+| btn                  | #2c8c8c     |            | button-background                                            |
+| btn-primary          | #ffffff     |            | text for primary-buttons (with background)                   |
+| btn-secondary        | #f1f1f1     | #010101    | text for secondary-buttons (outline)                         |
+| btn-text             | #f1f1f1     |            | for buttons that doesn't change in dark theme                |
+| btn-hover            | #00c1ac     |            | background-color for button-hover                            |
+| btn-active           | #01425c     |            | background-color for active button                           |
+| btn-outline          | #2c8c8c     |            | color for border (secondary-button)                          |
+| btn-outline-hover    | #00c1ac     |            | hover for border (secondary-button)                          |
+| btn-outline-active   | #01425c     |            | color for border (active secondary-button)                   |
+| map-btn-bg           | #999999     | #303030    |                                                              |
+| map-btn-icon         | #171b19     | #f1f1f1    |                                                              |
+| news-item-hover      | #1ad3aa     |            |                                                              |
+| bg-icon              | #171B19     | #f1f1f1    | background for icons (tasks)                                 |
+| icon-color           | #f1f1f1     | #000000    | color for icon (tasks)                                       |
+| image-bg             | #999999     | #e9e9e9    | image-background (for example about-section)                 |
+| review-bg            | #696969     | #171b19    | background for review-section (tablet-version)               |
+| review-reverse       | #f1f1f1     | #696969    | background for review-section (tablet-version)               |
+| error                | #EE0606     |            | for errors                                                   |
+| star                 | #FFEE00     |            | for rating-stars (profile)                                   |
+| medicine             | #1f5eff     |            | medicine-icon                                                |
+| animal               | #ff7d57     |            | animal-icon                                                  |
+| nature               | #4caf50     |            | nature-icon                                                  |
+| food                 | #e4a23c     |            | food-icon                                                    |
+
+|
 
 **How to use**
 
