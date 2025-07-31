@@ -26,8 +26,8 @@ export const ImageUploadWithPreview = ({
           src={image?.secure_url || defaultImage || ''}
           alt="Upload preview"
           className="object-cover mx-auto"
-          width={160}
-          height={217}
+          fill
+          sizes="w-[160px] h-[185px]"
         />
       ) : (
         <div className="w-full h-full bg-card" />
