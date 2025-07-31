@@ -34,7 +34,6 @@ export { default as NameIcon } from './NameIcon';
 export { default as Nature } from './Nature';
 export { default as NotePencil } from './NotePencil';
 export { default as Pill } from './Pill';
-export { default as Plus } from './Plus';
 export { default as RiInstagramLine } from './RiInstagramLine';
 export { default as RiTwitterXLine } from './RiTwitterXLine';
 export { default as Search } from './Search';

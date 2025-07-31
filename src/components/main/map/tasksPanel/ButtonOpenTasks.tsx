@@ -9,13 +9,16 @@ type Props = {
   onClick?: () => void;
 };
 
-export const ButtonOpenTasks = ({ className = '' }: Props): JSX.Element => {
+export const ButtonOpenTasks = ({
+  className = '',
+  onClick,
+}: Props): JSX.Element => {
   const { activePanel, togglePanel } = useMapStore();
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.stopPropagation();
-    requestIdleCallback(() => {
-      togglePanel('tasks');
-    });
+    e.nativeEvent.stopImmediatePropagation();
+    togglePanel('tasks');
+    onClick?.();
   };
 
   return (
@@ -23,7 +26,7 @@ export const ButtonOpenTasks = ({ className = '' }: Props): JSX.Element => {
       id="tasksButton"
       type="button"
       onClick={clickHandler}
-      className={`transition py-2  inline-flex items-center justify-center border-0 rounded-none cursor-pointer  ${className}`}
+      className={`transition items-center justify-center border-0 rounded-none cursor-pointer  ${className}`}
     >
       <div className=" h-full">
         <div className="w-full h-full flex items-center justify-center">

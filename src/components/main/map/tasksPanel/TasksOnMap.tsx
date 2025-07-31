@@ -3,13 +3,17 @@ import { Filters } from '@/components/main/map/filters/Filters';
 import { FormSearch } from '@/components/main/map/filters/FormSearch';
 import { ButtonOpenTasks } from '@/components/main/map/tasksPanel/ButtonOpenTasks';
 import { TasksList } from '@/components/main/map/tasksPanel/TasksList';
-import { AnimatedDrawler } from '@/components/ui/AnimatedDrawler';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
 import { useMapStore } from '@/zustand/stores/mapStore';
-import { AnimatePresence, motion } from 'framer-motion';
-import React, { JSX } from 'react';
+import {
+  AnimatePresence,
+  motion,
+  useAnimation,
+  useDragControls,
+} from 'framer-motion';
+import React, { JSX, useState } from 'react';
 import { IExtendedITaskProps } from '@/types/tasks.type';
 
 type Props = {
@@ -22,12 +26,13 @@ export const TasksOnMap = (props: Props): JSX.Element => {
   const ref = React.useRef<HTMLDivElement | null>(null);
   const { activePanel, setActivePanel, fullscreenMap } = useMapStore();
   const { noPaginatedTasks } = useFilteredTasksSelector();
-
+  const [dragHeight, setDragHeight] = useState<number>(0);
   useClickOutside({
     ref: ref,
     callback: (): void => {
-      if (activePanel) setActivePanel(null);
-      console.log('Closing panel', activePanel);
+      if (activePanel)
+        // setDragHeight(0);
+        setActivePanel(null);
     },
     options: {
       enabled: !!activePanel,
@@ -36,111 +41,115 @@ export const TasksOnMap = (props: Props): JSX.Element => {
     },
   });
   const { isMobile, isTablet, isDesktop } = useWindowSize();
-  const dragTop = isMobile || isTablet ? -(props.mapHeight - 270) : undefined;
 
-  const maxHeight =
-    (activePanel && isMobile) || isTablet ? props.mapHeight - 150 : 745;
-
+  const dragLimit = 500 * -1;
   return (
     <>
       {!fullscreenMap && (
         <motion.div
-          onClick={(e) => {
-            e.stopPropagation();
+          animate={{
+            y:
+              (activePanel === 'tasks' && !isDesktop) ||
+              (activePanel === 'filters' && !isDesktop)
+                ? dragLimit
+                : 0,
           }}
-          onTouchStart={(e) => {
-            e.stopPropagation();
+          onDrag={(e, info) => {
+            const offsetY = info.offset.y;
+            let newHeight = dragHeight;
+
+            if (offsetY < 0) {
+              newHeight = Math.min(500, dragHeight + Math.abs(offsetY));
+            } else if (offsetY > 0) {
+              newHeight = Math.max(dragHeight, dragHeight - offsetY);
+            }
+
+            setDragHeight(newHeight);
           }}
+          initial={{ y: 0 }}
+          onClick={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
           onMouseDown={(e) => e.stopPropagation()}
           className={`${props.className} touch-none cursor-grab bg-card`}
           ref={ref}
           drag={isDesktop ? false : 'y'}
           dragConstraints={
-            isDesktop || dragTop === undefined ? undefined : { top: dragTop }
+            isDesktop ? undefined : { top: dragLimit, bottom: 0 }
           }
           dragElastic={0.2}
           dragMomentum={false}
-          initial={{ y: isDesktop ? 0 : (dragTop ?? 0) }}
-          animate={activePanel && !isDesktop ? {} : { y: 0 }}
           onDragStart={() => {
             if (!isDesktop && activePanel === null) {
               setActivePanel('tasks');
             }
           }}
           onDragEnd={(e, info) => {
-            if (isDesktop) return;
-
-            const dragY = info.offset.y;
             const velocityY = info.velocity.y;
+            const SNAP_THRESHOLD = 340;
 
-            if (dragY > 80 || velocityY > 800) {
+            if (info.delta.y < -SNAP_THRESHOLD || velocityY < -300) {
+              setActivePanel(activePanel === 'tasks' ? 'filters' : 'tasks');
+            }
+
+            if (info.delta.y > SNAP_THRESHOLD || velocityY > 300) {
               setActivePanel(null);
-            } else if (dragY < -80 || velocityY < -800) {
-              setActivePanel('tasks');
+              setDragHeight(0);
             }
           }}
-          transition={{ type: 'spring', stiffness: 150, damping: 35 }}
         >
-          <div className="flex flex-col bg-card w-full rounded-sm lg:w-[485px]">
+          <div className="flex flex-col bg-card w-full rounded-sm lg:w-[487px]">
+            <ButtonOpenTasks className="mx-auto bg-card h-10 lg:hidden" />
             <FormSearch
-              className="p-0 bg-card border-b border-b-foreground"
+              className="p-0 bg-card border-t border-t-foreground lg:border-t-0  lg:border-b lg:border-b-foreground lg:rounded-t-none"
               inputClassName="h-10 overflow-hidden"
               leftSVGClassName="left-0"
               rightSVGClassName="right-0"
             />
-            <ButtonOpenTasks className="mx-auto bg-card h-10 lg:mb-0 lg:z-500  lg:h-10  lg:border-t lg:border-t-foreground  lg:w-full  lg:hover:border-t-foreground" />
+            <ButtonOpenTasks className="hidden md:hidden lg:inline-flex lg:bg-card lg:h-10 lg:mb-0 lg:z-500 lg:w-full" />
           </div>
-          <AnimatedDrawler
-            isVisible={!!activePanel}
-            onClose={() => {
-              setActivePanel(null);
-            }}
-            direction="vertical"
-            className={`
-      bg-card flex flex-col w-full overflow-hidden
-      lg:mt-0
-      lg:w-[487px]
-   `}
-          >
-            <div
-              className={'transition-all duration-300 ease-in-out'}
-              style={{ height: maxHeight }}
-            >
-              <AnimatePresence mode="wait">
-                {activePanel === 'filters' && (
-                  <motion.div
-                    className="w-full h-full relative bg-card "
-                    key="filters"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Filters
-                      tasks={noPaginatedTasks}
-                      className="w-full bg-card"
-                    />
-                  </motion.div>
-                )}
 
-                {activePanel === 'tasks' && (
-                  <motion.div
-                    key="tasks"
-                    className="w-full h-full relative bg-card"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <TasksList
-                      tasks={noPaginatedTasks}
-                      className="w-full bg-card"
-                    />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </AnimatedDrawler>
+          <motion.div
+            className="transition-all ease-in-out"
+            animate={{
+              height:
+                isMobile || isTablet ? dragHeight : isDesktop ? '0px' : 'auto',
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            <AnimatePresence mode="wait">
+              {activePanel === 'filters' && (
+                <motion.div
+                  className="w-full h-full relative bg-card "
+                  key="filters"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Filters
+                    tasks={noPaginatedTasks}
+                    className="w-full bg-card"
+                  />
+                </motion.div>
+              )}
+
+              {activePanel === 'tasks' && (
+                <motion.div
+                  key="tasks"
+                  className="w-full h-full relative bg-card"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <TasksList
+                    tasks={noPaginatedTasks}
+                    className="w-full bg-card"
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         </motion.div>
       )}
     </>

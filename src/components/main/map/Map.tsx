@@ -121,7 +121,8 @@ export const Map: React.FC = (): JSX.Element => {
 
   return (
     <Container
-      className={`w-full h-full relative ${activePanel ? 'pb-35' : 'pb-20'}`}
+      className={`w-full h-full relative transition-transform-y overflow-hidden 
+       ${activePanel ? 'pb-45 md:pb-60 lg:pb-20 ' : 'pb-20'}`}
     >
       <div className="flex flex-col rounded-[12px] overflow-hidden bg-card h-[547px] lg:h-[919px]">
         <div
