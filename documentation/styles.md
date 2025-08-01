@@ -371,8 +371,7 @@ Light theme variables
 --icon-color: #f1f1f1;
 --image-bg: #999999;
 
---review-bg: #696969;
---review-reverse: #f1f1f1;
+--review-bg: #999999;
 
 --error: #ee0606;
 --success: #17814b;
@@ -410,8 +409,7 @@ Dark theme variables
   --image-bg: #e9e9e9;
   --map-btn-bg: #303030;
   --map-btn-icon: #f1f1f1;
-  --review-bg: #171b19;
-  --review-reverse: #696969;
+  --review-bg: #696969;
 }
 ```
 
@@ -450,8 +448,7 @@ Dark theme variables
 | bg-icon              | #171B19     | #f1f1f1    | background for icons (tasks)                                 |
 | icon-color           | #f1f1f1     | #000000    | color for icon (tasks)                                       |
 | image-bg             | #999999     | #e9e9e9    | image-background (for example about-section)                 |
-| review-bg            | #696969     | #171b19    | background for review-section (tablet-version)               |
-| review-reverse       | #f1f1f1     | #696969    | background for review-section (tablet-version)               |
+| review-bg            | #999999     | #696969    | background for review-section                                |
 | error                | #EE0606     |            | for errors                                                   |
 | star                 | #FFEE00     |            | for rating-stars (profile)                                   |
 | medicine             | #1f5eff     |            | medicine-icon                                                |
