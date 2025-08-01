@@ -59,7 +59,7 @@ export const CardPreview = ({
             className="border p-4 rounded-md bg-gray-50 text-sm mt-4"
           >
             <div className="flex gap-3">
-              <Icon className="w-9 h-[26px] border border-gray-300 rounded-sm" />
+              <Icon className="w-9 h-[26px] rounded-sm" />
               <div>
                 <div className="flex gap-1">
                   <p className="capitalize">{card.brand}</p>

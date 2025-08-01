@@ -1,30 +1,19 @@
 'use client';
 
-import { JSX, useState } from 'react';
 import { CardNumberElement } from '@stripe/react-stripe-js';
-// import creditCardType from 'credit-card-type';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  // faCreditCard,
-  faCcVisa,
-  faCcMastercard,
-  faCcAmex,
-  faCcDiscover,
-  faCcDinersClub,
-  faCcJcb,
-} from '@fortawesome/free-brands-svg-icons';
+import { JSX, useState } from 'react';
+import { cardIcons } from './CardIcons';
+import { CardInputWrapper } from './CardInputWrapper';
+import { options } from '@/lib/stripeElementOptions';
 
-const brandIconMap: Record<string, any> = {
-  visa: faCcVisa,
-  mastercard: faCcMastercard,
-  'american-express': faCcAmex,
-  discover: faCcDiscover,
-  'diners-club': faCcDinersClub,
-  jcb: faCcJcb,
-};
-
-export const CardNumberInput = (): JSX.Element => {
-  const [cardBrand, setCardBrand] = useState<string | null>(null);
+export const CardNumberInput = ({
+  focusedElement,
+  setFocusedElement,
+}: {
+  focusedElement: string | null;
+  setFocusedElement: (el: string | null) => void;
+}): JSX.Element => {
+  const [cardBrand, setCardBrand] = useState<string>('default');
 
   const handleCardChange = (event: any): void => {
     if (event.brand) {
@@ -32,36 +21,25 @@ export const CardNumberInput = (): JSX.Element => {
     }
   };
 
-  const icon = brandIconMap[cardBrand ?? ''] ?? faCcJcb;
+  const Icon = cardIcons[cardBrand] ?? cardIcons.default;
 
   return (
-    <div className="relative w-full bg-white">
-      <div className="relative flex items-center w-full">
+    <CardInputWrapper
+      className={`${focusedElement === 'number' ? 'ring-1 ring-border focus-within:ring-border' : 'ring-transparent'}`}
+    >
+      <div className="w-full focus-within:border-border">
         <CardNumberElement
           onChange={handleCardChange}
-          options={{
-            showIcon: false,
-            style: {
-              base: {
-                // backgroundColor: 'white',
-                fontSize: '16px',
-                color: '#111827',
-                '::placeholder': {
-                  color: '#6B7280',
-                },
-              },
-              invalid: {
-                color: '#EF4444',
-              },
-            },
-          }}
-          className="w-full p-3 pr-12 rounded-md border border-gray-300 bg-white text-gray-900  placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-        />
-        <FontAwesomeIcon
-          icon={icon}
-          className="absolute right-3 text-gray-400 dark:text-gray-300 text-xl pointer-events-none"
+          onFocus={() => setFocusedElement('number')}
+          onBlur={() => setFocusedElement(null)}
+          options={options}
+          className="focus-within:border-border"
         />
       </div>
-    </div>
+
+      <div className="absolute right-3 top-1/2 -translate-y-1/2 w-7 h-5 flex items-center justify-center pointer-events-none rounded-sm overflow-hidden">
+        <Icon className="size-6 w-7 h-5 " preserveAspectRatio="xMidYMid meet" />
+      </div>
+    </CardInputWrapper>
   );
 };

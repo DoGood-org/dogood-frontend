@@ -1,56 +1,90 @@
 'use client';
+
 import {
   useStripe,
   useElements,
-  CardNumberElement,
   CardExpiryElement,
   CardCvcElement,
 } from '@stripe/react-stripe-js';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
-import { JSX } from 'react';
-import { CardNumberInput } from './CardNumberInput';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
-
-type FormData = {
-  fullName: string;
-  city: string;
-  country: string;
-  card: string;
-};
+import { Button, CardInputWrapper, CardNumberInput, Input } from '@/components';
+import { useState, JSX, useEffect } from 'react';
+import { CardData, CardFormProps } from '@/types';
+import { createCardPaymentMethod } from '@/lib/operations/createPaymentMethod';
+import { useCardInputs } from '@/hooks/useCardInputs';
+import { options } from '@/lib/stripeElementOptions';
 
 export const CardForm = ({
   onSuccess,
-}: {
-  onSuccess: () => void;
-}): JSX.Element => {
+  initialValues = {}, // Дефолтне значення
+  setIsSubmitting,
+}: CardFormProps): JSX.Element => {
   const stripe = useStripe();
   const elements = useElements();
   const t = useTranslations('card');
-  const { control, register, handleSubmit, formState } = useForm<FormData>();
+  const { inputData } = useCardInputs();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setValue,
+  } = useForm<CardData>({
+    defaultValues: initialValues,
+  });
 
-  const onSubmit = async (data: FormData): Promise<void> => {
-    const card = elements?.getElement(CardNumberElement);
-    if (!stripe || !card) return;
+  const [cardError, setCardError] = useState<string | null>(null);
+  const [focusedElement, setFocusedElement] = useState<string | null>(null);
 
-    const { setupIntent, error } = await stripe.confirmCardSetup(
-      '{{CLIENT_SECRET}}',
-      {
-        payment_method: {
-          card,
-          billing_details: {
-            name: data.fullName,
-            address: { city: data.city, country: data.country },
+  // Якщо initialValues зміняться динамічно (не обов’язково)
+  useEffect(() => {
+    if (initialValues) {
+      setValue('fullName', initialValues.fullName || '');
+      setValue('city', initialValues.city || '');
+      setValue('country', initialValues.country || '');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onSubmit = async (data: CardData): Promise<void> => {
+    if (isSubmitting) return; // 🛑 Захист від дублювання
+
+    setIsSubmitting(true);
+    setCardError(null);
+
+    try {
+      if (!stripe || !elements) throw new Error('Stripe not loaded');
+
+      const method = await createCardPaymentMethod({
+        stripe,
+        elements,
+        billingDetails: {
+          name: data.fullName,
+          address: {
+            city: data.city,
+            country: data.country,
           },
         },
-      }
-    );
-    if (error) {
-      alert(error.message);
-    } else {
-      onSuccess();
-      console.log(setupIntent);
+      });
+
+      if (!method?.card) throw new Error('Card creation failed');
+
+      const card: CardData = {
+        paymentMethodId: method.id,
+        brand: method.card.brand ?? '',
+        last4: method.card.last4 ?? '',
+        exp_month: method.card.exp_month ?? 0,
+        exp_year: method.card.exp_year ?? 0,
+        fullName: data.fullName,
+        city: data.city,
+        country: data.country,
+      };
+
+      onSuccess(card);
+    } catch (err: any) {
+      setCardError(err.message ?? 'Unknown error');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -60,130 +94,56 @@ export const CardForm = ({
       className="space-y-4"
       autoComplete="off"
     >
-      <Input
-        {...register('fullName')}
-        type="text"
-        placeholder={t('fullName')}
-        className="placeholder:text-text-gray"
-      />
-      <Input
-        {...register('country')}
-        type="text"
-        placeholder={t('country')}
-        className="placeholder:text-text-gray"
-      />
-      <Input
-        type="text"
-        {...register('city')}
-        placeholder={t('city')}
-        className="placeholder:text-text-gray"
-      />
+      {inputData.map(({ name, placeholder, validation }) => (
+        <div key={name}>
+          <Input
+            {...register(name, validation)}
+            placeholder={placeholder}
+            className="placeholder:text-text-gray text-[#0D0D0D] h-12 bg-white rounded-lg relative flex items-center p-3 border border-transparent focus-within:ring-1 focus-visible:ring-1 focus-within:ring-border"
+          />
+          {errors[name] && (
+            <p className="text-red-500 text-sm mt-1">{errors[name]?.message}</p>
+          )}
+        </div>
+      ))}
 
-      {/* Stripe Fields */}
-      <Controller
-        control={control}
-        name="card"
-        render={() => (
-          <>
-            <CardNumberInput />
-            <CardExpiryElement className="..." />
-            <CardCvcElement className="..." />
-          </>
-        )}
-      />
-      <Button type="submit" disabled={!stripe} className="btn-primary">
+      <div>
+        <CardNumberInput
+          focusedElement={focusedElement}
+          setFocusedElement={setFocusedElement}
+        />
+        <div className="flex gap-4 mt-4">
+          <CardInputWrapper
+            className={`w-[175px] ${focusedElement === 'expiry' ? 'ring-1 ring-border focus-within:ring-border' : 'ring-transparent'}`}
+          >
+            <CardExpiryElement
+              className="w-full block focus-within:border-border"
+              options={options}
+              onFocus={() => setFocusedElement('expiry')}
+              onBlur={() => setFocusedElement(null)}
+            />
+          </CardInputWrapper>
+          <CardInputWrapper
+            className={`w-[133px] ${focusedElement === 'cvc' ? 'ring-1 ring-border focus-within:ring-border' : 'ring-transparent'}`}
+          >
+            <CardCvcElement
+              className="w-full block focus-within:border-border"
+              options={options}
+              onFocus={() => setFocusedElement('cvc')}
+              onBlur={() => setFocusedElement(null)}
+            />
+          </CardInputWrapper>
+        </div>
+        {cardError && <p className="text-error text-sm mt-1">{cardError}</p>}
+      </div>
+
+      <Button
+        type="submit"
+        disabled={!stripe || !elements || isSubmitting}
+        className="btn-primary w-full rounded-lg"
+      >
         {t('add')}
       </Button>
     </form>
   );
 };
-
-// 'use client';
-
-// import { useForm } from 'react-hook-form';
-// import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-// import { useTranslations } from 'next-intl';
-// import { JSX } from 'react';
-// import { CardNumberInput } from './CardNumberInput';
-
-// export const CardForm = ({
-//   onSuccess,
-// }: {
-//   onSuccess: () => void;
-// }): JSX.Element => {
-//   const stripe = useStripe();
-//   const elements = useElements();
-//   const t = useTranslations('card');
-
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm();
-
-//   const onSubmit = async (data: any): Promise<void> => {
-//     if (!stripe || !elements) return;
-
-//     const cardElement = elements.getElement(CardElement);
-//     if (!cardElement) return;
-
-//     const { token, error } = await stripe.createToken(cardElement, {
-//       name: data.fullName,
-//       address_city: data.city,
-//       address_country: data.country,
-//     });
-
-//     if (error) {
-//       console.error(error.message);
-//     } else {
-//       console.log('Token:', token);
-//       onSuccess(); // Закрити модалку
-//     }
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
-//       <h2 className="form__title">{t('title')}</h2>
-
-//       <input
-//         {...register('fullName', { required: true })}
-//         placeholder={t('fullName')}
-//         className="form__input"
-//       />
-//       <input
-//         {...register('country', { required: true })}
-//         placeholder={t('country')}
-//         className="form__input"
-//       />
-//       <input
-//         {...register('city', { required: true })}
-//         placeholder={t('city')}
-//         className="form__input"
-//       />
-
-//       <div className="form__stripe">
-//         <CardNumberInput />
-//         {/* <CardElement
-//           options={{
-//             style: {
-//               base: {
-//                 fontSize: '16px',
-//                 color: 'var(--text)',
-//                 '::placeholder': {
-//                   color: 'var(--placeholder)',
-//                 },
-//               },
-//               invalid: {
-//                 color: 'var(--danger)',
-//               },
-//             },
-//           }}
-//         /> */}
-//       </div>
-
-//       <button type="submit" className="form__button">
-//         {t('add')}
-//       </button>
-//     </form>
-//   );
-// };
