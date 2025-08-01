@@ -13,5 +13,6 @@
   },
   "cardPeriod": "Card validity period",
   "edit": "Edit",
-  "delete": "Delete"
+  "delete": "Delete",
+  "confirmDelete": "Are you sure you want to delete the card?"
 }

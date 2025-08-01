@@ -25,6 +25,6 @@ export const cardIcons: Record<
   elo: Elo,
   hiper: Hipercard,
   maestro: Maestro,
-  uniopay: Unionpay,
+  unionpay: Unionpay,
   default: CardGeneric,
 };
