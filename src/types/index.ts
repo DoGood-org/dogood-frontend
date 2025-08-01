@@ -1,6 +1,7 @@
 export * from './aboutType';
 export * from './accountType';
 export * from './authType';
+export * from './card';
 export * from './errorType';
 export * from './heroTypes';
 export * from './howItWorksItem';
