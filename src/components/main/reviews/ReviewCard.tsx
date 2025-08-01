@@ -13,7 +13,7 @@ export const ReviewCard = ({
         'rounded-lg p-[32px] shadow-[0px_4px_4px_0px_#00000040] ',
         index % 2
           ? 'bg-review-bg text-white'
-          : 'bg-background text-foreground border border-border-hover',
+          : 'bg-background text-foreground border border-btn-hover',
         className
       )}
     >
