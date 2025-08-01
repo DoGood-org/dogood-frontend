@@ -1,0 +1,17 @@
+{
+  "title": "Zahlung",
+  "fullName": "Vollständiger Name",
+  "country": "Land",
+  "city": "Stadt",
+  "add": "Karte hinzufügen",
+  "validation": {
+    "required": "Dieses Feld ist erforderlich",
+    "nameTooShort": "Der Name ist zu kurz",
+    "countryTooShort": "Der Ländername ist zu kurz",
+    "cityTooShort": "Der Stadtname ist zu kurz",
+    "cardRequired": "Bitte geben Sie Ihre Kartendaten ein"
+  },
+  "cardPeriod": "Karten­gültigkeits­dauer",
+  "edit": "Bearbeiten",
+  "delete": "Löschen"
+}

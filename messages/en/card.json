@@ -1,0 +1,17 @@
+{
+  "title": "Payment",
+  "fullName": "Full Name",
+  "country": "Country",
+  "city": "City",
+  "add": "Add card",
+  "validation": {
+    "required": "This field is required",
+    "nameTooShort": "Name is too short",
+    "countryTooShort": "Country name is too short",
+    "cityTooShort": "City name is too short",
+    "cardRequired": "Please enter your card details"
+  },
+  "cardPeriod": "Card validity period",
+  "edit": "Edit",
+  "delete": "Delete"
+}
