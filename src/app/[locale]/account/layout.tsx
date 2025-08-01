@@ -1,3 +1,5 @@
+'use client';
+
 import {
   AccountContent,
   BottomNavigation,
@@ -5,10 +7,12 @@ import {
   PageContent,
   SidebarNavigation,
 } from '@/components';
+import { navigationStore } from '@/zustand/stores/navigationStore';
 
 import React from 'react';
 
 export default function AuthLayout(): React.ReactNode {
+  const { currentPage, isChatMessageOpen } = navigationStore();
   return (
     <>
       <Container
@@ -25,7 +29,7 @@ export default function AuthLayout(): React.ReactNode {
           </div>
         </div>
         <AccountContent />
-        <BottomNavigation />
+        {(currentPage !== 'Chat' || !isChatMessageOpen) && <BottomNavigation />}
       </Container>
     </>
   );
