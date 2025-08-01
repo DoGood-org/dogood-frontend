@@ -25,7 +25,7 @@ export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
   selectedChat,
 }) => {
   return selectedChatId ? (
-    <div className="flex flex-col w-full h-full bg-[#CFCFCF] dark:bg-[#5D5A5A] pt-[20px] pb-[24px] pl-[8px] pr-[8px]">
+    <div className="flex flex-col h-[1216px] md:h-[856px] max-h-screen md:min-h-[856px] bg-[#CFCFCF] dark:bg-[#5D5A5A] pt-[20px] pb-[24px] pl-[8px] pr-[8px]">
       <ChatSearchInput
         selectedName={selectedChat?.name || ''}
         lastMessageTime={selectedChat?.createdAt || ''}

@@ -4,7 +4,7 @@ import EllipsisIcon from '@/components/icons/EllipsisIcon';
 import { useMenuToggle } from '@/hooks/useMenuToggle';
 import { ChatModal } from '@/components/account/chatPage/ChatModal/ChatModal';
 import { ChatType } from '@/types/chatType';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 
 import * as Tooltip from '@radix-ui/react-tooltip';
@@ -20,19 +20,23 @@ export const ChatEllipsisMenu: React.FC<Props> = ({ chat, onChatDeleted }) => {
 
   const t = useTranslations('chat');
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent): void => {
+  const handleClickOutside = useCallback(
+    (e: MouseEvent): void => {
       if (buttonRef.current && !buttonRef.current.contains(e.target as Node)) {
         closeMenu();
       }
-    };
+    },
+    [closeMenu]
+  );
 
+  useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
-    return (): void =>
+    return (): void => {
       document.removeEventListener('mousedown', handleClickOutside);
-  }, [closeMenu]);
+    };
+  }, [handleClickOutside]);
 
-  const handleToggleMenu = (e: React.MouseEvent): void => {
+  const handleToggleMenu = (e: React.MouseEvent<SVGSVGElement>): void => {
     e.stopPropagation();
     toggleMenu();
   };

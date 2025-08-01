@@ -27,7 +27,11 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
   const t = useTranslations('chat');
 
   const handleSearch = (): void => {
-    onSearch(searchQuery.trim());
+    const trimmed = searchQuery.trim();
+    if (trimmed) {
+      onSearch(trimmed);
+      setSearchQuery('');
+    }
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {

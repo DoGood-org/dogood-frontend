@@ -24,7 +24,7 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
   selectedChat,
 }) => {
   return (
-    <div className="flex h-full gap-9">
+    <div className="flex h-[856px] max-h-screen min-h-[600px] gap-9">
       <div className="w-[320px] flex flex-col bg-background text-foreground overflow-y-auto custom-scrollbar-hide">
         <ChatCardsList
           chats={chats}
@@ -34,7 +34,7 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
         />
       </div>
 
-      <div className="w-[704px] flex-1 flex flex-col text-foreground rounded-sm p-2 lg:bg-[#CFCFCF] dark:bg-[#5D5A5A] lg:p-6">
+      <div className="w-[704px] h-full flex-1 flex flex-col text-foreground rounded-sm p-2 lg:bg-[#CFCFCF] dark:bg-[#5D5A5A] lg:p-6">
         {selectedChatId && (
           <>
             <ChatSearchInput

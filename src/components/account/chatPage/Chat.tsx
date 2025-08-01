@@ -7,7 +7,6 @@ import { Section } from '@/components/ui/Section';
 import { navigationStore } from '@/zustand/stores/navigationStore';
 import { ChatType, MessageType } from '@/types/chatType';
 import mocks from './mocks.json';
-// import socket from '@/lib/socket';
 
 import { ChatMobileLayout } from './ChatMobileLayout';
 import { ChatDesktopLayout } from './ChatDesktopLayout';
@@ -19,14 +18,6 @@ export const Chat: React.FC = () => {
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
 
   const isMobileOrTablet = useMediaQuery('(max-width: 1439px)');
-
-  useEffect(() => {
-    console.log('NEXT_PUBLIC_WS_PORT:', process.env.NEXT_PUBLIC_WS_PORT);
-    console.log(
-      'NEXT_PUBLIC_WS_SECURE_PORT:',
-      process.env.NEXT_PUBLIC_WS_SECURE_PORT
-    );
-  }, []);
 
   const setIsChatMessageOpen = navigationStore(
     (state) => state.setIsChatMessageOpen
@@ -97,7 +88,7 @@ export const Chat: React.FC = () => {
   return (
     <Section withContainer={false}>
       <div className="lg:-mx-20 lg:justify-start">
-        <div className="bg-background h-[80vh] text-foreground lg:flex lg:px-20 lg:min-h-0">
+        <div className="bg-background text-foreground lg:flex lg:px-20 lg:min-h-0">
           {chats.length === 0 ? (
             <EmptyState />
           ) : isMobileOrTablet ? (

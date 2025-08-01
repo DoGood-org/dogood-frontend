@@ -6,7 +6,8 @@ export const EmptyState: React.FC = () => {
 
   const t = useTranslations('chat');
 
-  const dummyCards = Array.from({ length: 6 });
+  const CARD_COUNT = 6;
+  const dummyCards = Array.from({ length: CARD_COUNT });
 
   if (isMobileOrTablet) {
     return (
