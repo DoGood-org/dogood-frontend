@@ -372,6 +372,7 @@ Light theme variables
 --image-bg: #999999;
 
 --review-bg: #999999;
+--accent-bg: #2c8c8c;
 
 --error: #ee0606;
 --success: #17814b;
@@ -410,6 +411,7 @@ Dark theme variables
   --map-btn-bg: #303030;
   --map-btn-icon: #f1f1f1;
   --review-bg: #696969;
+  --accent-bg: #01425c;
 }
 ```
 
@@ -448,7 +450,8 @@ Dark theme variables
 | bg-icon              | #171B19     | #f1f1f1    | background for icons (tasks)                                 |
 | icon-color           | #f1f1f1     | #000000    | color for icon (tasks)                                       |
 | image-bg             | #999999     | #e9e9e9    | image-background (for example about-section)                 |
-| review-bg            | #999999     | #696969    | background for review-section                                |
+| review-bg            | #999999     | #696969    | background for review-cards (main page)                      |
+| accent-bg            | #2c8c8c     | #01425c    | background for review-section                                |
 | error                | #EE0606     |            | for errors                                                   |
 | star                 | #FFEE00     |            | for rating-stars (profile)                                   |
 | medicine             | #1f5eff     |            | medicine-icon                                                |
