@@ -5,6 +5,8 @@
 
 @custom-variant dark (&:is(.dark *));
 @custom-variant hover (&:hover);
+@custom-variant focus (&:focus);
+@custom-variant focus-within (&:focus-within);
 
 @theme {
   --breakpoint-*: initial;
