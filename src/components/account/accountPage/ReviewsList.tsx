@@ -1,11 +1,11 @@
 import { JSX } from 'react';
-import userData from './user.json';
 import { ReviewProps } from '@/types';
 import { ReviewItem, Slider } from '@/components';
 import { useTranslations } from 'next-intl';
+import { mockUser } from '@/data/mockUser';
 
 export const ReviewsList = (): JSX.Element => {
-  const reviews = userData.reviewsReceived as ReviewProps[];
+  const reviews = mockUser.reviewsReceived as ReviewProps[];
   const t = useTranslations('account');
 
   return (

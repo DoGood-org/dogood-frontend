@@ -1,10 +1,10 @@
 import { TaskProps } from '@/types';
 import { JSX } from 'react';
-import userData from './user.json';
 import { Slider, NoTask, AccountTaskItem } from '@/components';
+import { mockUser } from '@/data/mockUser';
 
 export const AccountTaskList = (): JSX.Element => {
-  const tasks = userData.joinedTasks as TaskProps[];
+  const tasks = mockUser.joinedTasks as TaskProps[];
 
   return (
     <>
