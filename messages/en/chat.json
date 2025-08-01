@@ -1,0 +1,17 @@
+{
+  "back": "Back",
+  "input": {
+    "yourMessage": "Your message",
+    "wasOnNetworkAt": "was on the network at {time}"
+  },
+    "menu": {
+    "delete": "Delete",
+    "pin the chat": "Pin the chat",
+    "mark as spam": "Mark as spam",
+    "tooltip": "Edit"
+  },
+    "emptyState": {
+    "emptyChatMessage1": "You don't have any chats yet.",
+    "emptyChatMessage2": "Select who you would like to write to"
+  }
+}
