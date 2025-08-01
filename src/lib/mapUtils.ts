@@ -5,12 +5,8 @@ import MedicineMarker from '@/assets/images/map/medicine-marker.png';
 import MyPin from '@/assets/images/map/my-pin.png';
 import MyPositionMarker from '@/assets/images/map/my-position.png';
 import NatureMarker from '@/assets/images/map/nature-marker.png';
-import {
-  IExtendedCategoryFilter,
-  LeafletType,
-  MapIcons,
-  MarkerCategoryEnum,
-} from '@/types/mapType';
+import { IExtendedCategoryFilter } from '@/types/filter.type';
+import { LeafletType, MapIcons, MarkerCategoryEnum } from '@/types/mapType';
 import type { Map as LeafletMap } from 'leaflet';
 import { Icon } from 'leaflet';
 
@@ -170,3 +166,11 @@ export function calculateDistanceInMeters(
 
   return R * c;
 }
+
+/**
+ * Pans the map to a specific latitude and longitude with an offset
+ * @param map Leaflet map instance
+ * @param lat Latitude to pan to
+ * @param lng Longitude to pan to
+ * @param offsetY Vertical offset in pixels
+ */

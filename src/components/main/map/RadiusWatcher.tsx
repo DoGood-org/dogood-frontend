@@ -20,7 +20,6 @@ export const RadiusWatcher = (): JSX.Element | null => {
     const zoom = map.getZoom();
     const newRadius = zoomToRadiusMap[zoom] || 0;
     setRadius(newRadius);
-    console.log(`Zoom level: ${zoom}, Radius set to: ${newRadius}`);
   });
 
   return null;

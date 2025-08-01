@@ -31,5 +31,6 @@
   "category-nature": "Nature",
   "category-animal": "Animal",
   "category-food": "Food",
-  "category-all": "All"
+  "category-all": "All",
+  "showOnMap": "Show on map"
 }

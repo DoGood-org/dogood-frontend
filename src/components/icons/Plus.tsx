@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { SVGProps } from 'react';
-const SvgPlus = (props: SVGProps<SVGSVGElement>) => (
+export const SvgPlus = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
@@ -10,7 +10,7 @@ const SvgPlus = (props: SVGProps<SVGSVGElement>) => (
     {...props}
   >
     <path
-      stroke="#17814B"
+      stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
@@ -18,4 +18,3 @@ const SvgPlus = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-export default SvgPlus;

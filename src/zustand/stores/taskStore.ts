@@ -6,6 +6,7 @@ interface TTaskState {
   tasks: IExtendedITaskProps[];
   joinedTasks: IExtendedITaskProps[];
   tasksByKey: Record<string, IExtendedITaskProps[]>;
+  highlightedTaskId: string | null;
 }
 
 interface TTaskActions {
@@ -13,6 +14,7 @@ interface TTaskActions {
   setJoinedTasks: (tasks: IExtendedITaskProps[]) => void;
   joinTask: (taskId: string) => void;
   setTasksByKey: (key: string, tasks: IExtendedITaskProps[]) => void;
+  setHighlightedTaskId: (taskId: string | null) => void;
 }
 
 type TTaskStore = TTaskState & TTaskActions;
@@ -23,6 +25,7 @@ export const useTaskStore = create<TTaskStore>()(
       tasks: [],
       joinedTasks: [],
       tasksByKey: {},
+      highlightedTaskId: null,
 
       setTasks: (tasks): void => set({ tasks }),
       setJoinedTasks: (tasks): void => set({ joinedTasks: tasks }),
@@ -42,6 +45,8 @@ export const useTaskStore = create<TTaskStore>()(
         const allTasks = Object.values(updated).flat();
         set({ tasks: allTasks });
       },
+      setHighlightedTaskId: (taskId): void =>
+        set({ highlightedTaskId: taskId }),
     }),
     {
       name: 'task-storage',
