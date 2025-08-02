@@ -5,12 +5,7 @@ export const formSchema = yup.object({
   email: yup.string().email('Invalid email').required('Email is required'),
   phone: yup
     .string()
-    .matches(/^[0-9+\-()\s]+$/, 'Invalid phone number')
-    .notRequired()
-    .nullable(),
-  interest: yup
-    .string()
-    .max(200, 'Maximum 200 characters')
-    .notRequired()
-    .nullable(),
+    .required()
+    .matches(/^[0-9+\-()\s]+$/, 'Invalid phone number'),
+  interest: yup.string().required().max(200, 'Maximum 200 characters'),
 });

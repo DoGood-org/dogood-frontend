@@ -16,6 +16,7 @@ export const ContactForm = ({
   buttonTxt: string;
   title: string;
 }): React.ReactElement => {
+  const [status, setStatus] = useState<'success' | 'error' | null>(null);
   const t = useTranslations('faq');
   const contact = (t.raw('contact') as any[])[0];
   const downText = (t.raw('downtext') as any[])[0];
@@ -30,8 +31,6 @@ export const ContactForm = ({
     reset,
     formState: { isSubmitting },
   } = methods;
-
-  const [status, setStatus] = useState<'success' | 'error' | null>(null);
 
   const onSubmit = async (data: FormData): Promise<void> => {
     console.log('📤 Дані форми:', data);
@@ -65,35 +64,36 @@ export const ContactForm = ({
       <FormProvider {...methods}>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full space-y-[24px] py-[24px] md:space-y-[36px] md:pt-[40px] xl:py[0] md:w-[427px] lg:w-[655px] z-10"
+          className="w-full space-y-[24px] py-[24px] md:space-y-[36px] md:pt-[40px] xl:py[0]  z-10"
         >
-          <FormField
-            name="name"
-            label="Name"
-            type="text"
-            placeholder={contact.nameText}
-            required
-          />
-          <FormField
-            name="email"
-            label="E-mail"
-            type="email"
-            placeholder={contact.emailText}
-            required
-          />
-          <FormField
-            name="phone"
-            label="Phone number (optional)"
-            type="tel"
-            placeholder={contact.phoneText}
-          />
-          <FormField
-            name="interest"
-            label="Add a message"
-            type="textarea"
-            placeholder={contact.messageText}
-          />
-
+          <div className="md:w-[427px] lg:w-[655px] mx-auto">
+            <FormField
+              name="name"
+              label="Name"
+              type="text"
+              placeholder={contact.nameText}
+              required
+            />
+            <FormField
+              name="email"
+              label="E-mail"
+              type="email"
+              placeholder={contact.emailText}
+              required
+            />
+            <FormField
+              name="phone"
+              label="Phone number (optional)"
+              type="tel"
+              placeholder={contact.phoneText}
+            />
+            <FormField
+              name="interest"
+              label="Add a message"
+              type="textarea"
+              placeholder={contact.messageText}
+            />
+          </div>
           <div className="pt-[20px] flex flex-col items-center md:flex-row justify-between gap-[20px] md:justify-center md:gap-[110px]">
             <p className="text-[#999999] text-p4-m md:text-p2-d max-w-[365px]">
               {downText.text}
