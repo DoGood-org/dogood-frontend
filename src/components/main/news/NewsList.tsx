@@ -5,8 +5,8 @@ import React, { JSX } from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { SwiperList } from '@/components/main/news/SwiperList';
-import { mockNews } from '@/components/main/news/mockNews';
+import { mockNews, SwiperList } from '@/components';
+// import { mockNews } from '@/components/main/news/mockNews';
 import { useTranslations } from 'next-intl';
 
 import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
@@ -20,8 +20,8 @@ export const NewsList = (): JSX.Element => {
       className=" mx-auto w-full bg-background text-foreground py-[40px]"
     >
       <h2
-        className="text-foreground text-[32px] font-normal leading-12 mb-4
-        lg:text-[48px]
+        className="text-foreground text-h2 font-normal
+        lg:text-h2-d
         "
       >
         {t('newsListMain.title')}
@@ -29,7 +29,7 @@ export const NewsList = (): JSX.Element => {
 
       <SwiperList
         newsItems={mockNews}
-        swiperContainerClass="h-[425px] my-8"
+        swiperContainerClass="h-[425px] my-10"
         prevClass="prevNews"
         nextClass="nextNews"
         paginationClass="news-pagination"

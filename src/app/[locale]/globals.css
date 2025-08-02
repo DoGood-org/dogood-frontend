@@ -263,36 +263,6 @@ html {
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
 
-/* Стиль для ховер (глянути як використати можна в ContactForm */
-.btn-expand-hover {
-  position: relative;
-  overflow: hidden;
-  z-index: 0;
-  transition: color 0.3s ease;
-}
-
-.btn-expand-hover::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 0;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    var(--btn-hover) 50%,
-    transparent 100%
-  );
-  transform: translateX(-50%);
-  transition: width 0.4s ease;
-  z-index: -1;
-}
-
-.btn-expand-hover:hover::before {
-  width: 200%;
-}
-
 .faq-section {
   background-image: url('/src/assets/images/faq/linesBlack.png');
   background-repeat: no-repeat;
@@ -687,7 +657,6 @@ html {
     background-clip: padding-box;
   }
 }
-
 
 /* Firefox specific styles */
 @supports (scrollbar-width: thin) {

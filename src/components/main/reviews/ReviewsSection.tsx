@@ -23,7 +23,7 @@ export const ReviewsSection: React.FC = () => {
               className="flex flex-col md:flex-row gap-6 mt-[73px] md:mt-[93px] lg:mt-10 md:pb-10 lg:pb-[54px]
             "
             >
-              <div className="flex flex-col gap-6 justify-center md:w-[312px] lg:w-[347px] h-full order-first md:order-last">
+              <div className="flex flex-col mx-auto gap-6 justify-center w-[312px] lg:w-[347px] h-full order-first md:order-last">
                 {commentList.slice(0, 3).map((comment, idx) => (
                   <ReviewCard
                     key={`${idx}-${comment.author}`}
@@ -33,7 +33,7 @@ export const ReviewsSection: React.FC = () => {
                 ))}
               </div>
 
-              <div className="flex gap-6 md:w-[312px] justify-center lg:w-[347px] order-last md:order-first flex-col-reverse md:flex-col lg:flex-col-reverse">
+              <div className="flex gap-6 mx-auto w-[312px] justify-center lg:w-[347px] order-last md:order-first flex-col-reverse md:flex-col lg:flex-col-reverse">
                 {commentList.slice(3).map((comment, idx) => (
                   <ReviewCard
                     key={`${idx}-${comment.author}`}
