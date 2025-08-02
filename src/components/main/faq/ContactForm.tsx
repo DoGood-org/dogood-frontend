@@ -102,7 +102,7 @@ export const ContactForm = ({
               size="lg"
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-[48px] lg:max-w-[186px] md:max-w-[180px] btn-expand-hover"
+              className="w-full h-[48px] lg:max-w-[186px] md:max-w-[180px]"
             >
               {/* {downText.btn} */}
               {buttonTxt}

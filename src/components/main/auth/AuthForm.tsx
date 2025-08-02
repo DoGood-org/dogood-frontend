@@ -1,7 +1,6 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import { Controller, useForm, FieldErrors } from 'react-hook-form';
-import { Eye, EyeOff } from 'lucide-react';
 import { AuthInput } from './AuthInput';
 import { Button } from '@/components/ui/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,6 +17,8 @@ import {
   FormRegisterCompany,
   FormRegisterPerson,
 } from '@/types/authType';
+import { Eye } from '@/components/icons/Eye';
+import { EyeOff } from '@/components/icons/EyeOff';
 
 type Props = {
   type: 'registerCompany' | 'registerPerson' | 'login';
@@ -207,13 +208,7 @@ export const AuthForm: React.FC<Props> = (props) => {
                     }
                   }, 0);
                 }}
-                icon={
-                  showPassword ? (
-                    <EyeOff size={24} stroke="#696969" />
-                  ) : (
-                    <Eye size={24} stroke="#696969" />
-                  )
-                }
+                icon={showPassword ? <EyeOff /> : <Eye />}
                 iconRight
                 onIconClick={() => {
                   setShowPassword((prev) => !prev);
@@ -257,13 +252,7 @@ export const AuthForm: React.FC<Props> = (props) => {
                       if (showRepeatPassword) setShowRepeatPassword(false);
                     }, 0);
                   }}
-                  icon={
-                    showRepeatPassword ? (
-                      <EyeOff size={24} stroke="#696969" />
-                    ) : (
-                      <Eye size={24} stroke="#696969" />
-                    )
-                  }
+                  icon={showRepeatPassword ? <EyeOff /> : <Eye />}
                   iconRight
                   onIconClick={() => {
                     setShowRepeatPassword((prev) => !prev);

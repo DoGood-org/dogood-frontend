@@ -27,8 +27,8 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
       onClick={navigateToNewsItem}
       key={props.item.id}
       className="
-      mx-auto my-1 w-[300px] p-5 flex flex-col rounded-lg shadow-md cursor-pointer 
-      border border-[var(--text-gray)] hover:border-[var(--btn-hover)]
+      mx-auto w-[300px] h-[425px] p-5 flex flex-col justify-between rounded-lg shadow-md cursor-pointer 
+      border border-text-gray hover:border-btn-hover
       transition-colors duration-200
     "
     >
@@ -42,12 +42,12 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
           />
         )}
       </div>
-      <h3 className=" mb-[53px] text-[18px] font-normal leading-6 line-clamp-2">
+      <h3 className=" mb-[53px] text-md font-normal line-clamp-2">
         {props.item.title}
       </h3>
-      <p className="text-left mb-3 text-[16px]">{props.item.category}</p>
-      <div className="flex text-[14px] items-center mb-3">
-        <span>
+      <p className="text-left mb-1 text-base  mt-auto">{props.item.category}</p>
+      <div className="flex text-sm items-center gap-3">
+        <span className="text-nowrap">
           {props.item.date
             ? new Date(props.item.date).toLocaleDateString('en-US', {
                 month: 'short',
@@ -57,9 +57,11 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
               })
             : ''}
         </span>
-        <span className="w-[4px] h-[4px] bg-white rounded-full line-clamp-1 mx-1" />
+        <span className="w-1 h-1 bg-white rounded-full line-clamp-1" />
         {props.item.tags && props.item.tags.length > 0 && (
-          <span className="line-clamp-1"> #{props.item.tags.join(' #')}</span>
+          <span className="capitalize line-clamp-1">
+            #{props.item.tags.join(' #')}
+          </span>
         )}
       </div>
     </div>

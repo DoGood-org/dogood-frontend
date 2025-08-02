@@ -1,16 +1,13 @@
 'use client';
 import {
-  ButtonOpenTasks,
   Container,
   CustomControlContent,
-  Filters,
   generateTasks,
   MultiControlPanel,
-  TasksList,
+  TasksOnMap,
   UserLocation,
 } from '@/components';
 import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
-import { FormSearch } from '@/components/main/map/filters/FormSearch';
 import { MapClickHandler } from '@/components/main/map/MapClicks';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
@@ -21,16 +18,15 @@ import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelec
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
-import { AnimatePresence, motion } from 'framer-motion';
 import React, { JSX, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
-// import { Radius } from '@/components/main/map/Radius';
 import { AutoZoomOnDistanceFilter } from '@/components/main/map/filters/AutoZoomOnDistanceFilter';
 import { RadiusWatcher } from '@/components/main/map/RadiusWatcher';
-import { AnimatedDrawler } from '@/components/ui/AnimatedDrawler';
+import { useRouter } from 'next/navigation';
 
 export const Map: React.FC = (): JSX.Element => {
+  const router = useRouter();
   const { ref: mapContainerRef, inView: isInView } = useInView({
     threshold: 0.6,
     triggerOnce: true,
@@ -46,26 +42,23 @@ export const Map: React.FC = (): JSX.Element => {
     userLocation,
     setUserLocation,
     defaultLocation,
+    activePanel,
 
     declineLocationSharing,
     showGeolocationPopup,
     checkLocationPermission,
     radius,
-    taskListIsOpen,
-    toggleTaskList,
-    activePanel,
-    setActivePanel,
+
     clickedCoords,
     showOptionsMenu,
     setClickedCoords,
     setShowOptionsMenu,
     closeOptionsMenu,
-    searchIsActive,
-    highlightedTaskId,
   } = useMapStore();
   const { choosenCategories, categories } = useFilterStore();
-  const { tasksByKey, setTasksByKey } = useTaskStore();
+  const { tasksByKey, setTasksByKey, highlightedTaskId } = useTaskStore();
   const { setCategories } = useFilterStore();
+
   useEffect(() => {
     initMap('main');
   }, []);
@@ -127,11 +120,14 @@ export const Map: React.FC = (): JSX.Element => {
   const { MapContainer, TileLayer, Marker, Popup } = leafletComponents;
 
   return (
-    <Container className="flex flex-col">
-      <div className="relative flex flex-col rounded-[12px] overflow-hidden bg-card ">
+    <Container
+      className={`w-full h-full relative transition-transform-y overflow-hidden 
+       ${activePanel ? 'pb-45 md:pb-60 lg:pb-20 ' : 'pb-20'}`}
+    >
+      <div className="flex flex-col rounded-[12px] overflow-hidden bg-card h-[547px] lg:h-[919px]">
         <div
           ref={mapContainerRef}
-          className="block overflow-hidden border-background text-foreground rounded-t-[10px] h-[547px] lg:h-[919px]"
+          className="block overflow-hidden border-background text-foreground rounded-t-[10px] w-full h-full "
         >
           <Portal>
             <AnimatedModalWrapper
@@ -214,6 +210,15 @@ export const Map: React.FC = (): JSX.Element => {
                       <h4 className="font-bold mb-1">{task.title}</h4>
                       <p className="text-xs">{task.subtitle}</p>
                       <p className="text-xs text-muted mt-1">{task.distance}</p>
+                      <button
+                        className="mt-2 text-violet-500 hover:underline cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          router.push(`/tasks/${task.id}`);
+                        }}
+                      >
+                        GO TO TASK
+                      </button>
                     </div>
                   </Popup>
                 </Marker>
@@ -291,67 +296,13 @@ export const Map: React.FC = (): JSX.Element => {
             />
           </MapContainer>
         </div>
-        <div className="lg:absolute lg:flex lg:items-start lg:top-12 lg:left-32 lg:gap-10 lg:z-[500]">
-          <div className="flex flex-col justify-center relative w-full bg-card lg:w-[485px]">
-            <ButtonOpenTasks
-              onClick={() => toggleTaskList()}
-              isOpen={taskListIsOpen}
-              className="mx-auto mb-2 bg-card lg:mb-0 lg:absolute lg:z-50  lg:h-10 lg:top-12 lg:border-t lg:border-t-foreground  lg:w-full  lg:hover:border-t-foreground"
-            />
-            <FormSearch
-              className="p-3 lg:p-0"
-              inputClassName="h-12 px-12"
-              leftSVGClassName="left-5 "
-              rightSVGClassName="right-6"
-            />
-          </div>
-        </div>
-
-        <AnimatedDrawler
-          isVisible={!!activePanel}
-          onClose={() => {
-            if (!searchIsActive) setActivePanel(null);
-          }}
-          exeptionForClickOutside={searchIsActive}
-          exeptionSelector="search"
-          direction="vertical"
-          className={`
-            relative flex flex-col bg-card z-[1000]
-            w-full h-[675px] lg:mt-0
-            lg:absolute lg:top-32 lg:left-32 lg:w-[485px] lg:h-[722px] lg:rounded-md  overflow-y-hidden
-          `}
-        >
-          <AnimatePresence mode="wait">
-            {activePanel === 'filters' && (
-              <motion.div
-                key="filters"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Filters
-                  tasks={noPaginatedTasks}
-                  className="
-                absolute z-[1000] bg-card h-full lg:top-0 lg:left-0 lg:w-[487px]  lg:px-[46px] lg:py-8 rounded-sm"
-                />
-              </motion.div>
-            )}
-
-            {activePanel === 'tasks' && (
-              <motion.div
-                key="tasks"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-              >
-                <TasksList />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </AnimatedDrawler>
       </div>
+      <TasksOnMap
+        mapHeight={547}
+        mapOnMain={true}
+        tasks={noPaginatedTasks}
+        className="absolute z-[1000] w-[calc(100%-40px)] md:w-[calc(100%-120px)] lg:w-[487px] lg:top-16 lg:left-24"
+      />
     </Container>
   );
 };

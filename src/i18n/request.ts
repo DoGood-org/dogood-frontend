@@ -19,6 +19,8 @@ export async function loadMessages(locale: string): Promise<Messages> {
     'navigation',
     'account',
     'settings',
+    'tasks',
+    'chat',
   ];
 
   const messages = Object.fromEntries(

@@ -9,6 +9,7 @@ export const UserLocation: React.FC = () => {
 
   useEffect(() => {
     if (!map || !userLocation) return;
+
     map.flyTo(userLocation, map.getZoom(), {
       animate: true,
       duration: 1.5,

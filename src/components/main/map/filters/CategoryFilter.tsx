@@ -12,7 +12,7 @@ export const CategoryFilter = ({ categories }: Props): JSX.Element | null => {
   const t = useTranslations('map');
   const { toggleCategory, choosenCategories } = useFilterStore();
   return (
-    <div className="mb-6">
+    <div className="mb-6 flex flex-col w-full">
       <h4 className="text-base">{t('category')}</h4>
       <LineDivider className={'flex w-full mb-4 bg-text-gray h-[1px]'} />
       <ul className="flex gap-4 flex-wrap w-full mb-6">

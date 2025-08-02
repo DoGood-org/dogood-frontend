@@ -10,6 +10,8 @@ interface TFilterState {
   choosenCategories: IExtendedCategoryFilter[];
   distanceFilter: IDistanceFilter | null;
   searchQuery: string;
+  searchIsActive: boolean;
+
   sortBy: 'distance' | 'title';
 }
 
@@ -17,12 +19,13 @@ interface TFilterActions {
   setCategories: (categories: IExtendedCategoryFilter[]) => void;
   toggleCategory: (category: IExtendedCategoryFilter) => void;
   setDistanceFilter: (distance: IDistanceFilter | null) => void;
-  setSearchQuery: (query: string) => void;
+  setSearchQuery: (searchQuery: string) => void;
   setCurrentPage: (page: number) => void;
   setItemsPerPage: (items: number) => void;
   setSortBy: (sortBy: 'distance' | 'title') => void;
   removeDistanceFilter: () => void;
   resetFilters: () => void;
+  setSearchActive: (active: boolean) => void;
 }
 type TFilterStore = TFilterState & TFilterActions;
 
@@ -34,6 +37,7 @@ const initialState: TFilterState = {
   sortBy: 'distance',
   currentPage: 1,
   itemsPerPage: 13,
+  searchIsActive: false,
 };
 export const useFilterStore = create<TFilterStore>()(
   persist(
@@ -71,7 +75,11 @@ export const useFilterStore = create<TFilterStore>()(
           searchQuery: query,
         });
       }, 300),
-
+      setSearchActive: (active): void =>
+        set({
+          searchIsActive: active,
+          currentPage: 1,
+        }),
       setSortBy: (sortBy): void => set({ sortBy }),
       setCurrentPage: (page): void => set({ currentPage: page }),
       setItemsPerPage: (items): void => set({ itemsPerPage: items }),

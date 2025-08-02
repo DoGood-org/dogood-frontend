@@ -1,36 +1,41 @@
 'use client';
-import { Button } from '@/components/ui/Button';
 import { ChevronDown } from 'lucide-react';
 import { JSX } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useMapStore } from '@/zustand/stores/mapStore';
 
 type Props = {
   className?: string;
   onClick?: () => void;
-  isOpen?: boolean;
 };
 
 export const ButtonOpenTasks = ({
   className = '',
   onClick,
-  isOpen = false,
 }: Props): JSX.Element => {
+  const { activePanel } = useMapStore();
+  const clickHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    onClick?.();
+  };
+
   return (
-    <Button
+    <button
+      id="tasksButton"
       type="button"
-      variant={'secondary'}
-      onClick={onClick}
-      className={`transition py-1 p-0 w-full inline-flex items-center justify-center border-0 rounded-none ${className}`}
+      onClick={clickHandler}
+      className={`transition items-center justify-center border-0 rounded-none cursor-pointer  ${className}`}
     >
-      <div className="w-[76px] h-full">
+      <div className=" h-full">
         <div className="w-full h-full flex items-center justify-center">
           <motion.div
             className="flex items-center gap-2"
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            animate={{ rotate: activePanel === 'tasks' ? 180 : 0 }}
+            transition={{ duration: 0.4, ease: 'easeInOut' }}
           >
             <AnimatePresence mode="wait">
-              {!isOpen && (
+              {activePanel !== 'tasks' && (
                 <motion.p
                   key="tasks-label"
                   className="block font-normal text-center"
@@ -48,6 +53,6 @@ export const ButtonOpenTasks = ({
           </motion.div>
         </div>
       </div>
-    </Button>
+    </button>
   );
 };

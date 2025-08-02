@@ -22,7 +22,7 @@ export const mockNews: INewsItem[] = [
     title: 'When Helping Isn’t a Trend — It’s a Daily Choice',
     img: '/news/news3.png',
     date: '2023-10-03T12:00:00Z',
-    tags: ['helping', 'choice'],
+    tags: ['helping'],
     category: 'Lifestyle',
   },
   {
@@ -35,11 +35,11 @@ export const mockNews: INewsItem[] = [
   },
   {
     id: 'news_5',
-    title: 'The Hidden Side of Healthcare: The Role of Giving Part 2',
+    title: 'Every Sip Is Someone’s Hope',
     img: '/news/news2.png',
     date: '2023-10-02T12:00:00Z',
-    tags: ['healthcare', 'giving'],
-    category: 'Healthcare',
+    tags: ['healthcare', 'giving', 'community', 'choice'],
+    category: 'Blog',
   },
   {
     id: 'news_6',

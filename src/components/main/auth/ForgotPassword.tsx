@@ -1,11 +1,12 @@
 'use client';
+import { EyeOff } from '@/components/icons/EyeOff';
+import { Eye } from '@/components/icons/Eye';
 import { AuthInput } from '@/components/main/auth/AuthInput';
 import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
 import { Button } from '@/components/ui/Button';
 import { forgotPasswordSchema } from '@/lib/validation/authSchemas';
 import { TForgotPassword } from '@/types/authType';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Eye, EyeOff } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { JSX, useRef, useState } from 'react';
 import { Controller, FieldErrors, useForm } from 'react-hook-form';
@@ -67,13 +68,7 @@ export const ForgotPassword = ({ onSubmit }: Props): JSX.Element => {
                       }
                     }, 0);
                   }}
-                  icon={
-                    showPassword ? (
-                      <EyeOff size={24} stroke="#696969" />
-                    ) : (
-                      <Eye size={24} stroke="#696969" />
-                    )
-                  }
+                  icon={showPassword ? <EyeOff /> : <Eye />}
                   iconRight
                   onIconClick={() => {
                     setShowPassword((prev) => !prev);
@@ -112,13 +107,7 @@ export const ForgotPassword = ({ onSubmit }: Props): JSX.Element => {
                       }
                     }, 0);
                   }}
-                  icon={
-                    showRepeatPassword ? (
-                      <EyeOff size={24} stroke="#696969" />
-                    ) : (
-                      <Eye size={24} stroke="#696969" />
-                    )
-                  }
+                  icon={showRepeatPassword ? <EyeOff /> : <Eye />}
                   iconRight
                   onIconClick={() => {
                     setShowRepeatPassword((prev) => !prev);
