@@ -1,7 +1,8 @@
 'use client';
 
+import { SvgPlus } from '@/components/icons/Plus';
+import { SvgMinus } from '@/components/icons/SvgMinus';
 import { ButtonMap } from '@/components/main/map/ButtonMap';
-import { Minus, Plus } from 'lucide-react';
 import { JSX } from 'react';
 import { useMap } from 'react-leaflet';
 
@@ -27,10 +28,10 @@ export const CustomControlZoom = (): JSX.Element => {
       }}
     >
       <ButtonMap onClickHandler={handleZoomIn}>
-        <Plus />
+        <SvgPlus className="w-6 h-6 text-[var(--map-btn-icon)]" />
       </ButtonMap>
       <ButtonMap onClickHandler={handleZoomOut}>
-        <Minus />
+        <SvgMinus className="w-6 h-6 text-[var(--map-btn-icon)]" />
       </ButtonMap>
     </div>
   );

@@ -1,8 +1,6 @@
 'use client';
-import { motion } from 'framer-motion';
 import { AcceptShareLocationPopUp } from '@/components/main/map/AcceptShareLocationPopUp';
 import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
-import { FormSearch } from '@/components/main/map/filters/FormSearch';
 import { MapClickHandler } from '@/components/main/map/MapClicks';
 import { MapAutoResize } from '@/components/main/map/profileMap/MapAutoResize';
 import { ProfileCustomControlContent } from '@/components/main/map/profileMap/ProfileCustomControlContent';
@@ -11,9 +9,8 @@ import { ResponsiveMapWrpr } from '@/components/main/map/profileMap/ResponsiveMa
 import { RadiusWatcher } from '@/components/main/map/RadiusWatcher';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
 import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
-import { ButtonOpenTasks } from '@/components/main/map/tasksPanel/ButtonOpenTasks';
+
 import { UserLocation } from '@/components/main/map/UserLocation';
-import { AnimatedDrawler } from '@/components/ui/AnimatedDrawler';
 import { AnimatedModalWrapper } from '@/components/ui/portal/AnimatedModalWrapper';
 import Portal from '@/components/ui/portal/Portal';
 import { getMarkerIcon, resolveTaskCategory } from '@/lib/mapUtils';
@@ -23,8 +20,9 @@ import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AnimatePresence } from 'framer-motion';
 import { JSX, useEffect, useRef } from 'react';
-import { Filters } from '@/components/main/map/filters/Filters';
-import { TasksList } from '@/components/main/map/tasksPanel/TasksList';
+
+import { TasksOnMap } from '@/components/main/map/tasksPanel/TasksOnMap';
+import { useTaskStore } from '@/zustand/stores/taskStore';
 
 export const ProfileMap = (): JSX.Element => {
   const {
@@ -42,38 +40,48 @@ export const ProfileMap = (): JSX.Element => {
     userLocation,
     fullscreenMap,
     defaultLocation,
-    taskListIsOpen,
-    toggleTaskList,
-    activePanel,
-    setActivePanel,
-    searchIsActive,
-    highlightedTaskId,
-
-    // selectedTask,
+    flyToCoords,
     setCustomMarkers,
     closeOptionsMenu,
     checkLocationPermission,
     clickedCoords,
     showOptionsMenu,
+    activePanel,
   } = useMapStore();
-
-  const { choosenCategories, categories } = useFilterStore();
 
   useEffect(() => {
     initMap('user');
     const run = async (): Promise<void> => {
       checkLocationPermission();
+      console.log('ProfileMap initialized');
     };
     run();
   }, []);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
-  const highLightedRef = useRef<L.Marker | null>(null);
+  const { choosenCategories, categories } = useFilterStore();
+  const { highlightedTaskId } = useTaskStore();
+
+  const markerRefs = useRef(new Map<string, L.Marker>());
+
   useEffect(() => {
-    if (highlightedTaskId && highLightedRef.current) {
-      highLightedRef.current.openPopup();
+    if (!highlightedTaskId) {
+      console.warn('No highlighted task ID set');
+      return;
     }
+
+    const marker = markerRefs.current.get(highlightedTaskId);
+    if (!marker) {
+      console.warn('Marker not found for ID:', highlightedTaskId);
+      return;
+    }
+    const coords = marker.getLatLng();
+    console.log('Flying to coords:', coords);
+    flyToCoords(coords, 15);
+
+    marker.openPopup();
   }, [highlightedTaskId]);
+
   if (
     !leafletComponents ||
     !mapIcons ||
@@ -89,6 +97,9 @@ export const ProfileMap = (): JSX.Element => {
       return (
         <Marker
           key={`custom-marker-${index}`}
+          ref={(ref) => {
+            if (ref) markerRefs.current.set(marker.id, ref);
+          }}
           draggable={true}
           zIndexOffset={10000}
           title="Drag me to change location"
@@ -100,7 +111,6 @@ export const ProfileMap = (): JSX.Element => {
             },
             dragend: (e) => {
               const newPosition = e.target.getLatLng();
-              console.log('Custom marker dragged to:', newPosition);
               setCustomMarkers(
                 customMarkers.map((m) =>
                   m.id === marker.id
@@ -149,10 +159,12 @@ export const ProfileMap = (): JSX.Element => {
   };
 
   return (
-    <div className="w-full h-full ">
+    <div
+      className={`profile-map-wrapper w-full h-full relative ${activePanel ? 'pb-40' : ' pb-20'}`}
+    >
       <AnimatePresence mode="wait">
         <ResponsiveMapWrpr key={fullscreenMap ? 'fullscreen' : 'default'}>
-          <div className="w-full h-full relative">
+          <div className="w-full h-full">
             <Portal>
               <AnimatedModalWrapper
                 isVisible={showGeolocationPopup}
@@ -162,11 +174,15 @@ export const ProfileMap = (): JSX.Element => {
               </AnimatedModalWrapper>
             </Portal>
             <MapContainer
-              zoom={13}
+              zoom={15}
               minZoom={10}
               maxZoom={17}
               style={{ height: '100%', width: '100%' }}
-              center={userLocation || defaultLocation}
+              center={
+                highlightedTaskId
+                  ? userLocation || defaultLocation
+                  : defaultLocation
+              }
               zoomControl={false}
               attributionControl={false}
               doubleClickZoom={false}
@@ -204,27 +220,31 @@ export const ProfileMap = (): JSX.Element => {
                   mapIcons.default;
                 return (
                   <Marker
-                    ref={highlightedTaskId === task.id ? highLightedRef : null}
+                    ref={(ref) => {
+                      if (ref) markerRefs.current.set(task.id, ref);
+                    }}
                     key={`task-marker-${task.id}`}
                     position={{ lat: task.lat, lng: task.lng }}
                     icon={icon ?? undefined}
                     title={task.title}
                     zIndexOffset={highlightedTaskId === task.id ? 1000 : 0}
+                    riseOffset={1000}
                     autoPanOnFocus={true}
+                    autoPan={true}
+                    autoPanPadding={[50, 180]}
                     riseOnHover={true}
-                    riseOffset={100}
                     eventHandlers={{
                       click: () =>
                         console.log('Marker clicked:', task.id, task.title),
                     }}
                   >
                     <Popup
+                      className="leaflet-popup-task"
                       key={`popup-${task.id}`}
                       position={{ lat: task.lat, lng: task.lng }}
                       autoClose={false}
+                      closeOnClick={false}
                       closeButton={true}
-                      autoPanPadding={[10, 10]}
-                      autoPan
                     >
                       <div className="text-sm max-w-[200px]">
                         <h4 className="font-bold mb-1">{task.title}</h4>
@@ -248,10 +268,6 @@ export const ProfileMap = (): JSX.Element => {
                     dragend: (e) => {
                       const newPosition = e.target.getLatLng();
                       setUserLocation(newPosition);
-                      console.log(
-                        'User location marker dragged to:',
-                        newPosition
-                      );
                     },
                   }}
                 >
@@ -321,68 +337,13 @@ export const ProfileMap = (): JSX.Element => {
           </div>
         </ResponsiveMapWrpr>
       </AnimatePresence>
-      <div className="flex flex-col w-full lg:absolute  lg:items-start lg:top-16 lg:left-76 lg:z-[500]">
-        {' '}
-        <div className="flex flex-col w-full lg:w-[487px]">
-          <div className="flex flex-col justify-center relative bg-card w-full rounded-sm">
-            <FormSearch
-              className="p-0 bg-card border-b border-b-foreground"
-              inputClassName="h-10 pl-7 pr-14 overflow-hidden"
-              leftSVGClassName="left-0"
-              rightSVGClassName="right-0"
-            />
-            <ButtonOpenTasks
-              onClick={() => toggleTaskList()}
-              isOpen={taskListIsOpen}
-              className="mx-auto bg-card h-10 lg:mb-0 lg:z-50  lg:h-10  lg:border-t lg:border-t-foreground  lg:w-full  lg:hover:border-t-foreground"
-            />
-          </div>
-          <AnimatedDrawler
-            isVisible={!!activePanel}
-            onClose={() => {
-              if (!searchIsActive) setActivePanel(null);
-            }}
-            exeptionForClickOutside={searchIsActive}
-            exeptionSelector="search"
-            direction="vertical"
-            className={`
-             flex flex-col bg-card w-full h-full
-          
-          
-           `}
-          >
-            <AnimatePresence mode="wait">
-              {activePanel === 'filters' && (
-                <motion.div
-                  className="w-full h-full relative bg-card z-[1000]"
-                  key="filters"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Filters
-                    tasks={noPaginatedTasks}
-                    className="w-full bg-card"
-                  />
-                </motion.div>
-              )}
 
-              {activePanel === 'tasks' && (
-                <motion.div
-                  key="tasks"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <TasksList />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </AnimatedDrawler>{' '}
-        </div>
-      </div>
+      <TasksOnMap
+        mapHeight={400}
+        tasks={noPaginatedTasks}
+        mapOnMain={false}
+        className={' absolute z-[1000] w-full lg:w-[487px] lg:top-16 lg:left-5'}
+      />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMemo } from 'react';
-import { IExtendedITaskProps } from '@/types/mapType';
+import { IExtendedITaskProps } from '@/types/tasks.type';
 
 export const useFilteredTasksSelector = (): {
   paginatedTasks: IExtendedITaskProps[];

@@ -1,6 +1,7 @@
+import { Check } from '@/components/icons/Check';
+import { CircleAlertIcon } from '@/components/icons/CircleAlertIcon';
 import { AuthErrorBox } from '@/components/main/auth/AuthErrorBox';
 import { Input } from '@/components/ui/Input';
-import { Check, CircleAlertIcon } from 'lucide-react';
 import React, { forwardRef } from 'react';
 
 type Props = {
@@ -70,13 +71,16 @@ export const AuthInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
           )}
 
           {showError && (
-            <span className="absolute right-3 top-1/2 -translate-y-1/2">
-              <CircleAlertIcon size={24} color="var(--color-error)" />
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-var(--color-error)">
+              <CircleAlertIcon fill="var(--color-error)" />
             </span>
           )}
           {showValid && (
-            <span className="absolute right-3 top-1/2 -translate-y-1/2">
-              <Check size={24} color="var(--color-success)" />
+            <span
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-
+            var(--color-success)"
+            >
+              <Check fill="var(--color-success)" />
             </span>
           )}
         </div>

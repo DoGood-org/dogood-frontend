@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "prepare": "husky install",
+    "prepare": "husky",
     "svgr": "node scripts/svgr-conditional.mjs",
     "svgr:watch": "chokidar \"src/assets/svg/*.svg\" -c \"npm run svgr\"",
     "dev:all": "concurrently \"npm run dev\" \"npm run svgr:watch\""
@@ -16,8 +16,11 @@
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
     "@radix-ui/react-accordion": "^1.2.11",
+    "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-slot": "^1.2.2",
+    "@radix-ui/react-tooltip": "^1.2.7",
     "@types/leaflet": "^1.9.18",
+    "axios": "^1.11.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.12.1",
@@ -32,6 +35,7 @@
     "react-hook-form": "^7.56.4",
     "react-intersection-observer": "^9.16.0",
     "react-leaflet": "^5.0.0",
+    "socket.io-client": "^4.8.1",
     "swiper": "^11.2.8",
     "tailwind-merge": "^3.3.0",
     "tailwind-scrollbar": "^4.0.2",
