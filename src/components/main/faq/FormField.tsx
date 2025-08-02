@@ -46,21 +46,21 @@ export const FormField = ({
       <Controller
         name={name}
         control={control}
-        rules={{
-          required: required ? 'This field is required' : false,
-          pattern:
-            type === 'email'
-              ? {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: 'Invalid email address',
-                }
-              : type === 'tel'
-                ? {
-                    value: /^[0-9+\-()\s]+$/,
-                    message: 'Invalid phone number',
-                  }
-                : undefined,
-        }}
+        // rules={{
+        //   required: required ? 'This field is required' : false,
+        //   pattern:
+        //     type === 'email'
+        //       ? {
+        //           value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        //           message: 'Invalid email address',
+        //         }
+        //       : type === 'tel'
+        //         ? {
+        //             value: /^[0-9+\-()\s]+$/,
+        //             message: 'Invalid phone number',
+        //           }
+        //         : undefined,
+        // }}
         render={({ field }) =>
           type === 'textarea' ? (
             <div className="relative">

@@ -4,13 +4,10 @@ import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { FormField } from './FormField';
-
-type FormData = {
-  name: string;
-  email: string;
-  phone: string;
-  interest: string;
-};
+import { yupResolver } from '@hookform/resolvers/yup';
+import { InferType } from 'yup';
+import { formSchema } from './formSchema';
+export type FormData = InferType<typeof formSchema>;
 
 export const ContactForm = ({
   title,
@@ -23,7 +20,11 @@ export const ContactForm = ({
   const contact = (t.raw('contact') as any[])[0];
   const downText = (t.raw('downtext') as any[])[0];
 
-  const methods = useForm<FormData>({ mode: 'onChange' });
+  const methods = useForm<FormData>({
+    mode: 'onChange',
+    resolver: yupResolver(formSchema),
+  });
+
   const {
     handleSubmit,
     reset,
