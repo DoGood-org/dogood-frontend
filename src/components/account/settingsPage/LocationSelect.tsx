@@ -49,7 +49,7 @@ export const LocationSelect = ({
     setStates(countryStates);
     onStateChange(''); // Reset state when country changes
     onCityChange(''); // Reset city when country changes
-  }, [selectedCountry]);
+  }, [onCityChange, onStateChange, selectedCountry]);
 
   // Update cities when state changes
   useEffect(() => {
@@ -60,7 +60,7 @@ export const LocationSelect = ({
     const stateCities = csc.getCitiesOfState(selectedCountry, selectedState);
     setCities(stateCities);
     onCityChange(''); // Reset city when state changes
-  }, [selectedState, selectedCountry]);
+  }, [selectedState, selectedCountry, onCityChange]);
 
   return (
     <div className={`space-y-4 ${className}`}>
@@ -72,8 +72,8 @@ export const LocationSelect = ({
             value: country.isoCode,
             label: country.name,
           }))}
-          label={t('location.country')}
-          placeholder="Select country"
+          label={t('location.country.title')}
+          placeholder={t('location.country.placeholder')}
         />
         {countryError && (
           <p className="text-sm font-medium text-error">{countryError}</p>
@@ -88,8 +88,8 @@ export const LocationSelect = ({
             value: state.isoCode,
             label: state.name,
           }))}
-          label={t('location.region')}
-          placeholder="Select region"
+          label={t('location.region.title')}
+          placeholder={t('location.region.placeholder')}
           disabled={!selectedCountry}
         />
         {stateError && (
@@ -105,8 +105,8 @@ export const LocationSelect = ({
             value: city.name,
             label: city.name,
           }))}
-          label={t('location.city')}
-          placeholder="Select city"
+          label={t('location.city.title')}
+          placeholder={t('location.city.placeholder')}
           disabled={!selectedState}
         />
       </div>

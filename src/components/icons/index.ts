@@ -2,6 +2,7 @@ export { default as Animal } from './Animal';
 export { default as ArrowRight } from './ArrowRight';
 export { default as Binoculars } from './Binoculars';
 export { default as Burger } from './Burger';
+export { default as CalendarDots } from './CalendarDots';
 export { default as CaretDoubleRight } from './CaretDoubleRight';
 export { default as CaretDown } from './CaretDown';
 export { default as ChevronDown } from './ChevronDown';

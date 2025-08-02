@@ -15,7 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import csc from 'country-state-city';
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   SettingsFormValues,
   settingsSchema,
@@ -62,6 +62,27 @@ export const Settings = (): React.JSX.Element => {
   const countryValue = watch('country');
   const stateValue = watch('state');
   const cityValue = watch('city');
+
+  const handleCountryChange = useCallback(
+    (value: string) => {
+      setValue('country', value);
+    },
+    [setValue]
+  );
+
+  const handleStateChange = useCallback(
+    (value: string) => {
+      setValue('state', value);
+    },
+    [setValue]
+  );
+
+  const handleCityChange = useCallback(
+    (value: string) => {
+      setValue('city', value);
+    },
+    [setValue]
+  );
 
   const onSubmit = (data: yup.InferType<typeof settingsSchema>): void => {
     const selectedCountryObj = csc
@@ -114,11 +135,11 @@ export const Settings = (): React.JSX.Element => {
 
               {/* Full Name Field */}
               <InputField
-                label={t('basic.name')}
+                label={t('basic.name.title')}
                 name="fullName"
                 register={register}
                 errors={errors.fullName}
-                placeholder="Enter your full name"
+                placeholder={t('basic.name.placeholder')}
               />
 
               {/* Date of Birth Field */}
@@ -126,7 +147,7 @@ export const Settings = (): React.JSX.Element => {
                 htmlFor="dateOfBirth"
                 className="text-white text-base mb-2"
               >
-                {t('basic.birth')}
+                {t('basic.birth.title')}
               </Label>
               <Controller
                 name="dateOfBirth"
@@ -135,7 +156,7 @@ export const Settings = (): React.JSX.Element => {
                   <DatePicker
                     value={field.value}
                     onChange={field.onChange}
-                    placeholder="Select birth date"
+                    placeholder={t('basic.birth.placeholder')}
                   />
                 )}
               />
@@ -154,8 +175,8 @@ export const Settings = (): React.JSX.Element => {
                     value={field.value}
                     onValueChange={field.onChange}
                     options={genderOptions}
-                    placeholder="Select gender"
-                    label={t('basic.gender')}
+                    placeholder={t('basic.gender.placeholder')}
+                    label={t('basic.gender.title')}
                   />
                 )}
               />
@@ -193,9 +214,9 @@ export const Settings = (): React.JSX.Element => {
           <input type="hidden" {...register('city')} />
 
           <LocationSelect
-            onCountryChange={(value) => setValue('country', value)}
-            onStateChange={(value) => setValue('state', value)}
-            onCityChange={(value) => setValue('city', value)}
+            onCountryChange={handleCountryChange}
+            onStateChange={handleStateChange}
+            onCityChange={handleCityChange}
             selectedCountry={countryValue}
             selectedState={stateValue}
             selectedCity={cityValue}
@@ -209,21 +230,21 @@ export const Settings = (): React.JSX.Element => {
 
           {/* Email Field */}
           <InputField
-            label={t('contact.mail')}
+            label={t('contact.mail.title')}
             name="email"
             register={register}
             errors={errors.email}
-            placeholder="Enter your email"
+            placeholder={t('contact.mail.placeholder')}
             type="email"
           />
 
           {/* Phone Field */}
           <InputField
-            label={t('contact.phone')}
+            label={t('contact.phone.title')}
             name="phone"
             register={register}
             errors={errors.phone}
-            placeholder="Enter your phone number"
+            placeholder={t('contact.phone.placeholder')}
             type="tel"
           />
         </div>
@@ -244,10 +265,10 @@ export const Settings = (): React.JSX.Element => {
 
         {/* About me field */}
         <div className="space-y-12 bg-text-help p-8 rounded-xl">
-          <h3 className="text-h3 text-white">{t('about')}</h3>
+          <h3 className="text-h3 text-white">{t('about.title')}</h3>
           <Textarea
             {...register('about')}
-            placeholder="Type your message here..."
+            placeholder={t('about.placeholder')}
             className="w-full bg-white border-none h-[120px] text-form-field text-base"
           />
           {errors.about && (

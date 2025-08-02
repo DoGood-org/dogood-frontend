@@ -7,9 +7,9 @@ import {
   PopoverTrigger,
 } from '@/components/ui/Popover';
 import { Input } from '@/components';
-import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { CalendarDots } from '@/components/icons';
 
 interface DatePickerProps {
   value?: Date;
@@ -41,7 +41,7 @@ export const DatePicker = ({
               disabled && 'opacity-50 cursor-not-allowed'
             )}
           />
-          <CalendarIcon className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-form-field" />
+          <CalendarDots className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-form-field" />
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0 bg-text-gray" align="end">

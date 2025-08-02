@@ -1,23 +1,54 @@
 {
   "basic": {
     "title": "Grundlegende Informationen",
-    "name": "Name",
-    "birth": "Geburtsdatum",
-    "gender": "Geschlecht"
+    "name": {
+      "title": "Name",
+      "placeholder": "Geben Sie Ihren vollständigen Namen ein"
+    },
+    "birth": {
+      "title": "Geburtsdatum",
+      "placeholder": "Geburtsdatum auswählen"
+    },
+    "gender": {
+      "title": "Geschlecht",
+      "placeholder": "Geschlecht auswählen"
+    }
   },
   "location": {
     "title": "Standort",
-    "country": "Land",
-    "region": "Region",
-    "city": "Stadt"
+    "country": {
+      "title": "Land",
+      "placeholder": "Land auswählen"
+    },
+    "region": {
+      "title": "Region",
+      "placeholder": "Region auswählen"
+    },
+    "city": {
+      "title": "Stadt",
+      "placeholder": "Stadt auswählen"
+    }
   },
   "contact": {
     "title": "Kontaktinformationen",
-    "mail": "E-Mail",
-    "phone": "Telefonnummer"
+    "mail": {
+      "title": "E-Mail",
+      "placeholder": "Geben Sie Ihre E-Mail-Adresse ein"
+    },
+    "phone": {
+      "title": "Telefonnummer",
+      "placeholder": "Geben Sie Ihre Telefonnummer ein"
+    }
   },
-  "payment": "Zahlung",
-  "about": "Über mich",
+  "payment": {
+    "title": "Zahlung",
+    "add": "Zahlungsmethode hinzufügen"
+  },
+  "about": {
+    "title": "Über mich",
+    "placeholder": "Geben Sie hier Ihre Nachricht ein..."
+  },
+
   "submitBtn": "Einreichen",
   "resetBtn": "Zurücksetzen"
 }
