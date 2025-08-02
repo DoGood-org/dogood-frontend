@@ -21,7 +21,7 @@ import {
   settingsSchema,
 } from '@/lib/validation/settingsSchema';
 import { useTranslations } from 'next-intl';
-import { Close, Plus } from '@/components/icons';
+import { Close, SetPlus } from '@/components/icons';
 import { InputField } from '@/components';
 
 const genderOptions = [
@@ -257,7 +257,7 @@ export const Settings = (): React.JSX.Element => {
             onClick={onClickButton}
           >
             <span className="text-[#1FAC63] flex gap-2 justify-center align-middle">
-              <Plus />
+              <SetPlus />
               {t('payment.add')}
             </span>
           </button>

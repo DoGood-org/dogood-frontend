@@ -41,6 +41,7 @@ export { default as Pill } from './Pill';
 export { default as RiInstagramLine } from './RiInstagramLine';
 export { default as RiTwitterXLine } from './RiTwitterXLine';
 export { default as Search } from './Search';
+export { default as SetPlus } from './SetPlus';
 export { default as Settings } from './Settings';
 export { default as SignUp } from './SignUp';
 export { default as Star } from './Star';
