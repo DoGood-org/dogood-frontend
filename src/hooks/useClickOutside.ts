@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 
 type UseClickOutsideOptions = {
   enabled?: boolean;
@@ -21,35 +21,55 @@ export const useClickOutside = ({
 }: Props): void => {
   const {
     enabled = true,
-    eventTypes = ['mousedown'],
+    eventTypes = [
+      'mousedown',
+      'touchstart',
+      'click',
+      'pointerdown',
+      'pointerup',
+    ],
     detectEscapeKey = true,
     once = false,
     ignoreSelectors = [],
     delay = 50,
   } = options;
   const [delayGuard, setDelayGuard] = useState(false);
+  const startedInsideRef = useRef(false);
+
   useEffect(() => {
-    if (!enabled) return;
+    if (!enabled || !delayGuard) return;
 
     const timeout = setTimeout((): void => setDelayGuard(true), delay);
     return (): void => clearTimeout(timeout);
   }, [enabled, delay]);
 
   useEffect(() => {
+    if (!enabled) return;
+    const timeout = setTimeout(() => setDelayGuard(true), delay);
+    return () => clearTimeout(timeout);
+  }, [enabled, delay]);
+
+  useEffect(() => {
     if (!enabled || !delayGuard) return;
 
-    const handleEvent = (e: Event): void => {
-      requestAnimationFrame(() => {
-        const target = e.target as Node;
-        const isInsideIgnored =
-          target instanceof HTMLElement &&
-          ignoreSelectors?.some((selector) => target.closest(selector));
+    const handlePointerDown = (e: Event): void => {
+      const target = e.target as HTMLElement;
+      startedInsideRef.current =
+        !!ref.current?.contains(target) ||
+        ignoreSelectors?.some((sel) => target.closest(sel));
+    };
 
-        if (ref.current && !ref.current.contains(target) && !isInsideIgnored) {
-          callback();
-          if (once) cleanup();
-        }
-      });
+    const handlePointerUp = (e: Event): void => {
+      const target = e.target as HTMLElement;
+      const isInsideIgnored = ignoreSelectors?.some((sel) =>
+        target.closest(sel)
+      );
+      const isInsidePanel = ref.current?.contains(target);
+
+      if (!isInsidePanel && !isInsideIgnored && !startedInsideRef.current) {
+        callback();
+        if (once) cleanup();
+      }
     };
 
     const handleEscape = (e: KeyboardEvent): void => {
@@ -60,17 +80,19 @@ export const useClickOutside = ({
     };
 
     const cleanup = (): void => {
-      eventTypes.forEach((event) =>
-        document.removeEventListener(event, handleEvent)
-      );
+      document.removeEventListener('pointerdown', handlePointerDown);
+      document.removeEventListener('pointerup', handlePointerUp);
       if (detectEscapeKey) {
         document.removeEventListener('keydown', handleEscape);
       }
     };
 
-    eventTypes.forEach((event) =>
-      document.addEventListener(event, handleEvent, { passive: true })
-    );
+    document.addEventListener('pointerdown', handlePointerDown, {
+      passive: true,
+    });
+    document.addEventListener('pointerup', handlePointerUp, {
+      passive: true,
+    });
 
     if (detectEscapeKey) {
       document.addEventListener('keydown', handleEscape);
@@ -81,9 +103,9 @@ export const useClickOutside = ({
     ref,
     callback,
     enabled,
-    eventTypes,
     detectEscapeKey,
     once,
     ignoreSelectors,
+    delayGuard,
   ]);
 };

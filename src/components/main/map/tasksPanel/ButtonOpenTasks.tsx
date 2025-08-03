@@ -7,24 +7,26 @@ import { useMapStore } from '@/zustand/stores/mapStore';
 type Props = {
   className?: string;
   onClick?: () => void;
+  dragListener?: boolean;
 };
 
 export const ButtonOpenTasks = ({
   className = '',
   onClick,
+  dragListener = true,
 }: Props): JSX.Element => {
   const { activePanel } = useMapStore();
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
     onClick?.();
   };
 
   return (
-    <button
+    <motion.button
       id="tasksButton"
       type="button"
       onClick={clickHandler}
+      dragListener={dragListener}
       className={`transition items-center justify-center border-0 rounded-none cursor-pointer  ${className}`}
     >
       <div className=" h-full">
@@ -53,6 +55,6 @@ export const ButtonOpenTasks = ({
           </motion.div>
         </div>
       </div>
-    </button>
+    </motion.button>
   );
 };

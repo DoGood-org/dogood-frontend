@@ -12,43 +12,38 @@ type Props = {
   inputClassName?: string;
   leftSVGClassName?: string;
   rightSVGClassName?: string;
+  onFilterButtonClick?: () => void;
 };
 export const FormSearch = ({
   className,
   inputClassName,
   leftSVGClassName,
   rightSVGClassName,
+  onFilterButtonClick,
 }: Props): JSX.Element => {
   const { togglePanel } = useMapStore();
   const { setSearchQuery, setSearchActive, searchIsActive } = useFilterStore();
 
   const { register, watch, reset } = useForm<FormData>();
   const searchValue = watch('search');
-  useEffect(() => {
-    const handler = setTimeout((): void => {
-      setSearchQuery(searchValue || '');
-    }, 500);
-
-    return (): void => clearTimeout(handler);
-  }, [searchValue, setSearchQuery]);
 
   useEffect(() => {
     setSearchActive(!!searchValue);
-  }, [searchValue, setSearchActive]);
+    searchValue ? setSearchQuery(searchValue) : setSearchQuery('');
+  }, [searchValue, setSearchActive, setSearchQuery]);
 
   const onSearchButtonClick = (
     e: React.MouseEvent<HTMLButtonElement>
   ): void => {
     e.stopPropagation();
     setSearchQuery(searchValue || '');
-    e.nativeEvent.stopImmediatePropagation();
   };
-  const onFilterButtonClick = (
+  const handleFilterButtonClick = (
     e: React.MouseEvent<HTMLButtonElement>
   ): void => {
     e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
     togglePanel('filters');
+    onFilterButtonClick?.();
   };
 
   const handleClear = (): void => {
@@ -60,13 +55,13 @@ export const FormSearch = ({
     <div className="bg-card w-full flex flex-col relative" itemRef="search">
       <form onSubmit={(e) => e.preventDefault()} className=" flex flex-col">
         <div className={` flex items-center justify-center ${className}`}>
-          <button
+          <Button
             id="searchButton"
             className={`absolute inline-flex items-center justify-center p-2  z-25 cursor-pointer text-foreground ${leftSVGClassName}`}
             onClick={onSearchButtonClick}
           >
             <Search className={'text-foreground stroke-foreground w-6 h-6'} />
-          </button>
+          </Button>
           <input
             {...register('search')}
             name="search"
@@ -105,13 +100,15 @@ export const FormSearch = ({
           )}
         </div>
       </form>
-      <button
+      <Button
+        variant="ghost"
+        size="icon"
         id="filtersButton"
         className={`inline-flex items-center justify-center p-2 absolute top-0 z-25 cursor-pointer text-foreground ${rightSVGClassName}`}
-        onClick={onFilterButtonClick}
+        onClick={handleFilterButtonClick}
       >
         <SlidersVertical className="w-6 h-6 stroke-foreground text-foreground" />
-      </button>
+      </Button>
     </div>
   );
 };

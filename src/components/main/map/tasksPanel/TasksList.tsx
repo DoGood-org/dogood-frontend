@@ -14,14 +14,14 @@ export const TasksList: React.FC<Props> = ({
 }): JSX.Element => {
   const t = useTranslations('map');
   return (
-    <div className={`flex flex-col h-full pl-2 pr-2 lg:px-8 ${className}`}>
+    <div className={`flex-1 h-full pl-2 pr-2 lg:px-8 ${className}`}>
       <div
         className={
-          'h-full lg:h-[722px] flex-1 w-full overflow-y-scroll custom-scrollbar-tasks'
+          'h-[713px] lg:h-[722px]  overflow-y-scroll custom-scrollbar-tasks'
         }
       >
+        <h2 className="text-h3 mb-6">{t('tasksTitle')}</h2>{' '}
         <div className="flex flex-col w-full bg-card pl-3 pr-2 lg:px-6 pb-8 pt-4 lg:rounded-xl">
-          <h2 className="text-h3 mb-6">{t('tasksTitle')}</h2>
           <ul className="list-none w-full">
             {tasks.map((task) => (
               <li key={task.id}>
