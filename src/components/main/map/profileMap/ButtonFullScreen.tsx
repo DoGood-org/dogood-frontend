@@ -1,7 +1,7 @@
 import { ButtonMap } from '@/components';
+import FullScreenIcon from '@/components/icons/FullscreenIcon';
 import { useMapStore } from '@/zustand/stores/mapStore';
 
-import { FullscreenIcon } from 'lucide-react';
 import { JSX } from 'react';
 
 export const ButtonFullScreen = (): JSX.Element => {
@@ -13,7 +13,7 @@ export const ButtonFullScreen = (): JSX.Element => {
 
   return (
     <ButtonMap onClickHandler={handleClick}>
-      <FullscreenIcon width={24} height={24} />
+      <FullScreenIcon className="w-6 h-6 stroke-foreground text-foreground" />
     </ButtonMap>
   );
 };

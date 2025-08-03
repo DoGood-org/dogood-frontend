@@ -307,7 +307,7 @@ export const Map: React.FC = (): JSX.Element => {
           mapHeight={547}
           mapOnMain={true}
           tasks={noPaginatedTasks}
-          className="flex flex-col max-h-[500px] w-full rounded-t-sm bg-card overflow-hidden touch-none   z-[1000] lg:w-[487px] lg:top-16 lg:left-24"
+          className="flex flex-col max-h-[500px] w-full rounded-t-sm bg-card overflow-hidden touch-none   z-[1005] lg:absolute lg:w-[487px] lg:top-16 lg:left-24"
         />
       </div>
     </Container>

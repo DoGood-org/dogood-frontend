@@ -1,10 +1,12 @@
 'use client';
 import { useForm } from 'react-hook-form';
-import { Search, SlidersVertical, X } from 'lucide-react';
 import { JSX, useEffect } from 'react';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { Button } from '@/components/ui/Button';
+import { Search } from '@/components/icons';
+import X from '@/components/icons/X';
+import SlidersVertical from '@/components/icons/SlidersVertical';
 
 type FormData = { search: string };
 type Props = {
@@ -13,6 +15,7 @@ type Props = {
   leftSVGClassName?: string;
   rightSVGClassName?: string;
   onFilterButtonClick?: () => void;
+  dragListener?: boolean;
 };
 export const FormSearch = ({
   className,
@@ -20,6 +23,7 @@ export const FormSearch = ({
   leftSVGClassName,
   rightSVGClassName,
   onFilterButtonClick,
+  dragListener = false,
 }: Props): JSX.Element => {
   const { togglePanel } = useMapStore();
   const { setSearchQuery, setSearchActive, searchIsActive } = useFilterStore();
@@ -56,9 +60,13 @@ export const FormSearch = ({
       <form onSubmit={(e) => e.preventDefault()} className=" flex flex-col">
         <div className={` flex items-center justify-center ${className}`}>
           <Button
+            variant="ghost"
+            size="icon"
             id="searchButton"
-            className={`absolute inline-flex items-center justify-center p-2  z-25 cursor-pointer text-foreground ${leftSVGClassName}`}
+            className={`absolute inline-flex items-center justify-center p-0  z-25 cursor-pointer text-foreground ${leftSVGClassName}`}
             onClick={onSearchButtonClick}
+            onMouseDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
           >
             <Search className={'text-foreground stroke-foreground w-6 h-6'} />
           </Button>
@@ -69,7 +77,8 @@ export const FormSearch = ({
             autoComplete="off"
             type="text"
             placeholder="Search.."
-            className={`${searchIsActive ? 'cursor-default' : 'cursor-grab'}
+            className={`
+              cursor-text
             px-10
             w-full text-base italic bg-card text-foreground rounded-sm
         placeholder:font-normal placeholder:text-muted-foreground
@@ -83,6 +92,8 @@ export const FormSearch = ({
               }
             }}
             onFocus={() => setSearchActive(true)}
+            onMouseDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
           />
           {searchValue && (
             <Button
@@ -91,11 +102,10 @@ export const FormSearch = ({
               size="icon"
               className="absolute w-6 right-9 top-1/2 -translate-y-1/2 p-0 m-0 cursor-pointer text-foreground"
               onClick={handleClear}
+              onMouseDown={(e) => e.stopPropagation()}
+              onTouchStart={(e) => e.stopPropagation()}
             >
-              <X
-                className="w-4 h-4 cursor-pointer text-foreground"
-                onClick={handleClear}
-              />
+              <X className="w-4 h-4 cursor-pointer text-foreground" />
             </Button>
           )}
         </div>

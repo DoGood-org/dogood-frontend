@@ -1,8 +1,8 @@
 'use client';
-import { ChevronDown } from 'lucide-react';
 import { JSX } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useMapStore } from '@/zustand/stores/mapStore';
+import { ChevronDown } from '@/components/icons';
 
 type Props = {
   className?: string;
