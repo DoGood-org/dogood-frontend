@@ -29,7 +29,7 @@ export const FormSearch = ({
 
   useEffect(() => {
     setSearchActive(!!searchValue);
-    searchValue ? setSearchQuery(searchValue) : setSearchQuery('');
+    setSearchQuery(searchValue || '');
   }, [searchValue, setSearchActive, setSearchQuery]);
 
   const onSearchButtonClick = (

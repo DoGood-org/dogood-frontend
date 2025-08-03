@@ -55,7 +55,7 @@ export const TasksOnMap = (props: Props): JSX.Element => {
   });
 
   // When you click “open”
-  const open = (panel: 'tasks' | 'filters') => {
+  const open = (panel: 'tasks' | 'filters'): void => {
     setActivePanel(panel);
     setDragHeight(PANEL_HEIGHT);
     setSnapped(true);
@@ -71,14 +71,14 @@ export const TasksOnMap = (props: Props): JSX.Element => {
   };
 
   // When you click “close”
-  const close = () => {
+  const close = (): void => {
     setActivePanel(null);
     setSnapped(false);
     setDragHeight(0);
     controls.start({ y: CLOSED_HEIGHT });
   };
 
-  const stretch = () => {
+  const stretch = (): void => {
     if (snapped) {
       controls.start({
         y: DRAG_Y,
@@ -133,7 +133,8 @@ export const TasksOnMap = (props: Props): JSX.Element => {
               className="dragToggle mx-auto bg-card h-10 lg:hidden"
               dragListener={false}
               onClick={() => {
-                activePanel === 'tasks' ? close() : open('tasks');
+                if (activePanel === 'tasks') close();
+                else open('tasks');
               }}
             />
             <FormSearch

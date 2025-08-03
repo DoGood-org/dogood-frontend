@@ -6,7 +6,7 @@ type UseClickOutsideOptions = {
   detectEscapeKey?: boolean;
   once?: boolean;
   delay?: number;
-  ignoreSelectors?: string[]; // ✅ new
+  ignoreSelectors?: string[];
 };
 type Props = {
   ref: RefObject<HTMLElement | null>;
@@ -21,13 +21,6 @@ export const useClickOutside = ({
 }: Props): void => {
   const {
     enabled = true,
-    eventTypes = [
-      'mousedown',
-      'touchstart',
-      'click',
-      'pointerdown',
-      'pointerup',
-    ],
     detectEscapeKey = true,
     once = false,
     ignoreSelectors = [],
@@ -37,16 +30,9 @@ export const useClickOutside = ({
   const startedInsideRef = useRef(false);
 
   useEffect(() => {
-    if (!enabled || !delayGuard) return;
-
-    const timeout = setTimeout((): void => setDelayGuard(true), delay);
-    return (): void => clearTimeout(timeout);
-  }, [enabled, delay]);
-
-  useEffect(() => {
     if (!enabled) return;
     const timeout = setTimeout(() => setDelayGuard(true), delay);
-    return () => clearTimeout(timeout);
+    return (): void => clearTimeout(timeout);
   }, [enabled, delay]);
 
   useEffect(() => {
@@ -61,15 +47,15 @@ export const useClickOutside = ({
 
     const handlePointerUp = (e: Event): void => {
       const target = e.target as HTMLElement;
-      const isInsideIgnored = ignoreSelectors?.some((sel) =>
-        target.closest(sel)
-      );
       const isInsidePanel = ref.current?.contains(target);
+      const isIgnored = ignoreSelectors.some((sel) => target.closest(sel));
 
-      if (!isInsidePanel && !isInsideIgnored && !startedInsideRef.current) {
+      if (!isInsidePanel && !isIgnored && !startedInsideRef.current) {
         callback();
         if (once) cleanup();
       }
+
+      startedInsideRef.current = false;
     };
 
     const handleEscape = (e: KeyboardEvent): void => {
