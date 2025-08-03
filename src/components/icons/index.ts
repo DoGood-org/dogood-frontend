@@ -12,7 +12,7 @@ export { default as ChevronRight } from './ChevronRight';
 export { default as Close } from './Close';
 export { default as CloseMenu } from './CloseMenu';
 export { default as Diners } from './Diners';
-export { default as Discover } from './Discover';
+export { default as DiscoverCard } from './DiscoverCard';
 export { default as Dollar } from './Dollar';
 export { default as Drop } from './Drop';
 export { default as Elo } from './Elo';

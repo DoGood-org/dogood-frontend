@@ -1,7 +1,7 @@
 import {
   AmericanExpress,
   Diners,
-  Discover,
+  DiscoverCard,
   Elo,
   Hipercard,
   Jcb,
@@ -19,7 +19,7 @@ export const cardIcons: Record<
   visa: Visa,
   mastercard: Mastercard,
   amex: AmericanExpress,
-  discover: Discover,
+  discover: DiscoverCard,
   diners: Diners,
   jcb: Jcb,
   elo: Elo,

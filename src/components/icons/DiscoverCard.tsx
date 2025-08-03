@@ -1,5 +1,5 @@
 import type { SVGProps } from 'react';
-const Discover = (props: SVGProps<SVGSVGElement>) => (
+const DiscoverCard = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
@@ -54,4 +54,4 @@ const Discover = (props: SVGProps<SVGSVGElement>) => (
     </defs>
   </svg>
 );
-export default Discover;
+export default DiscoverCard;
