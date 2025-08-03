@@ -76,6 +76,7 @@ export * from './main/donate/DonateCard';
 export * from './main/faq/ContactForm';
 export * from './main/faq/Faq';
 export * from './main/faq/FormField';
+export * from './main/faq/formSchema';
 export * from './main/hero/HeroContentLayer';
 export * from './main/hero/HeroPlanetLayer';
 export * from './main/hero/HeroSection';
