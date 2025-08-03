@@ -39,6 +39,7 @@
   --color-bg-icon: var(--bg-icon);
   --color-icon-color: var(--icon-color);
   --color-image-bg: var(--image-bg);
+  --color-form-field: var(--form-field);
 
   /* buttons */
   --color-border: var(--border);
@@ -133,6 +134,7 @@
   --tag: #696969;
   --post: #696969;
   --post_gray: #f1f1f1;
+  --form-field: #0D0D0D;
 
   --card: #cfcfcf;
   --toggle: #303030;
