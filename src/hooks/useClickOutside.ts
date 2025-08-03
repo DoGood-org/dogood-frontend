@@ -1,14 +1,13 @@
-import { RefObject, useEffect } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 
 type UseClickOutsideOptions = {
   enabled?: boolean;
   eventTypes?: ('mousedown' | 'click' | 'touchstart')[];
   detectEscapeKey?: boolean;
   once?: boolean;
-  isExceptionActive?: boolean;
-  exeptionSelector?: string;
+  delay?: number;
+  ignoreSelectors?: string[]; // ✅ new
 };
-
 type Props = {
   ref: RefObject<HTMLElement | null>;
   callback: () => void;
@@ -25,21 +24,28 @@ export const useClickOutside = ({
     eventTypes = ['mousedown'],
     detectEscapeKey = true,
     once = false,
-    isExceptionActive = false,
-    exeptionSelector = '',
+    ignoreSelectors = [],
+    delay = 50,
   } = options;
-
+  const [delayGuard, setDelayGuard] = useState(false);
   useEffect(() => {
     if (!enabled) return;
 
+    const timeout = setTimeout((): void => setDelayGuard(true), delay);
+    return (): void => clearTimeout(timeout);
+  }, [enabled, delay]);
+
+  useEffect(() => {
+    if (!enabled || !delayGuard) return;
+
     const handleEvent = (e: Event): void => {
       requestAnimationFrame(() => {
-        // if drawler is open and exception is active, do not trigger callback
-        if (
-          ref.current &&
-          !ref.current.contains(e.target as Node) &&
-          document.activeElement?.id !== exeptionSelector
-        ) {
+        const target = e.target as Node;
+        const isInsideIgnored =
+          target instanceof HTMLElement &&
+          ignoreSelectors?.some((selector) => target.closest(selector));
+
+        if (ref.current && !ref.current.contains(target) && !isInsideIgnored) {
           callback();
           if (once) cleanup();
         }
@@ -78,7 +84,6 @@ export const useClickOutside = ({
     eventTypes,
     detectEscapeKey,
     once,
-    isExceptionActive,
-    exeptionSelector,
+    ignoreSelectors,
   ]);
 };

@@ -11,13 +11,16 @@ export const ResponsiveMapWrpr = (props: Props): JSX.Element => {
   const { fullscreenMap } = useMapStore();
 
   useEffect(() => {
-    const el = document.querySelector('.account-layout-container');
-    if (!el) return;
+    const pageContainer = document.querySelector('.account-layout-container');
+    const profileMapWrapper = document.querySelector('.profile-map-wrapper');
+    if (!pageContainer || !profileMapWrapper) return;
 
     if (fullscreenMap) {
-      el.classList.add('p-0');
+      pageContainer.classList.add('p-0', 'relative');
+      profileMapWrapper.classList.remove('relative');
     } else {
-      el.classList.remove('p-0');
+      pageContainer.classList.remove('p-0', 'relative');
+      profileMapWrapper.classList.add('relative');
     }
   }, [fullscreenMap]);
 
@@ -36,7 +39,7 @@ export const ResponsiveMapWrpr = (props: Props): JSX.Element => {
       style={{ transformOrigin: 'center center' }}
       className={`transition-all duration-300 rounded-[10px] overflow-hidden ${
         fullscreenMap
-          ? 'absolute w-full h-full justify-center items-center mx-auto z-[100]'
+          ? 'absolute w-full h-full left-0 top-0 justify-center items-center mx-auto z-[1000]'
           : 'w-[354px] h-[320px] mt-[60px] md:w-[648px] md:h-[586px] lg:w-[1064px] lg:h-[904px]'
       }`}
     >

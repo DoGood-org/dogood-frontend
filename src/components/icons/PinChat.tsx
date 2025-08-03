@@ -1,0 +1,36 @@
+import type { SVGProps } from 'react';
+
+const PinChat = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    width={24}
+    height={24}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <g clipPath="url(#clip0)">
+      <path
+        d="M21.5307 9.2195C21.6712 9.07886 21.7502 8.88817 21.7502 8.68934C21.7502 8.49051 21.6712 8.29982 21.5307 8.15918L15.8438 2.4695C15.7032 2.32895 15.5125 2.25 15.3137 2.25C15.1148 2.25 14.9241 2.32895 14.7835 2.4695L9.41163 7.85637C9.41163 7.85637 6.81007 6.55606 4.03132 8.79856C3.94892 8.86452 3.88137 8.94712 3.83308 9.04098C3.7848 9.13483 3.75687 9.23782 3.75111 9.34321C3.74536 9.4486 3.76192 9.55402 3.7997 9.65257C3.83749 9.75112 3.89565 9.84059 3.97038 9.91512L14.086 20.0298C14.1618 20.105 14.2527 20.1632 14.3528 20.2004C14.4528 20.2377 14.5596 20.2531 14.6661 20.2457C14.7726 20.2384 14.8763 20.2084 14.9703 20.1577C15.0643 20.1071 15.1463 20.0369 15.211 19.952C15.9976 18.9057 17.2332 16.7561 16.1588 14.6082L21.5307 9.2195Z"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.02719 14.9727L4.5 19.4998"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0">
+        <rect width={24} height={24} fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export default PinChat;

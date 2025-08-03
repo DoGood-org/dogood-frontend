@@ -1,0 +1,54 @@
+{
+  "basic": {
+    "title": "Basic Information",
+    "name": {
+      "title": "Name",
+      "placeholder": "Enter your full name"
+    },
+    "birth": {
+      "title": "Date of Birth",
+      "placeholder": "Select birth date"
+    },
+    "gender": {
+      "title": "Gender",
+      "placeholder": "Select gender"
+    }
+  },
+  "location": {
+    "title": "Location",
+    "country": {
+      "title": "Country",
+      "placeholder": "Select country"
+    },
+    "region": {
+      "title": "Region",
+      "placeholder": "Select region"
+    },
+    "city": {
+      "title": "City",
+      "placeholder": "Select city"
+    }
+  },
+  "contact": {
+    "title": "Contact information",
+    "mail": {
+      "title": "E-mail",
+      "placeholder": "Enter your email"
+    },
+    "phone": {
+      "title": "Phone number",
+      "placeholder": "Enter your phone number"
+    }
+  },
+  "payment": {
+    "title": "Payment",
+    "add": "Add payment method"
+  },
+  "about": {
+    "title": "About me",
+    "placeholder": "Type your message here..."
+  },
+
+  "submitBtn": "Submit",
+  "resetBtn": "Reset"
+}
