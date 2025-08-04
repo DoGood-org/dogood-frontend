@@ -1,18 +1,20 @@
 'use client';
 
-import {
-  AccountContent,
-  BottomNavigation,
-  Container,
-  PageContent,
-  SidebarNavigation,
-} from '@/components';
+import { BottomNavigation, Container, SidebarNavigation } from '@/components';
 import { navigationStore } from '@/zustand/stores/navigationStore';
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-export default function AuthLayout(): React.ReactNode {
+interface AuthLayoutProps {
+  children: ReactNode;
+}
+
+export default function AuthLayout({
+  children,
+}: AuthLayoutProps): React.ReactNode {
   const { currentPage, isChatMessageOpen } = navigationStore();
+  const showBottomNavigation = currentPage !== 'Chat' || !isChatMessageOpen;
+
   return (
     <>
       <Container
@@ -23,12 +25,9 @@ export default function AuthLayout(): React.ReactNode {
       >
         <div className="flex w-full lg:gap-20 justify-center">
           <SidebarNavigation />
-          <div className="flex flex-col flex-grow">
-            <PageContent />
-          </div>
+          <div className="flex flex-col flex-grow">{children}</div>
         </div>
-        <AccountContent />
-        {(currentPage !== 'Chat' || !isChatMessageOpen) && <BottomNavigation />}
+        {showBottomNavigation && <BottomNavigation />}
       </Container>
     </>
   );

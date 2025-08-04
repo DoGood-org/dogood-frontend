@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { NavigationPageProps, Page } from '@/types/navigationType';
-import { navigationStore } from '@/zustand/stores/navigationStore';
+import { NavigationPageProps } from '@/types/navigationType';
+import { Link, usePathname } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 
 import SidebarUserIcon from '@/components/icons/SidebarUserIcon';
@@ -11,18 +11,38 @@ import MapIcon from '@/components/icons/MapIcon';
 import GoalsIcon from '@/components/icons/GoalsIcon';
 import SettingsIcon from '@/components/icons/SettingsIcon';
 
-const navigationPages: {
-  label: Page;
-  translationKey: string;
-  Icon: React.FC<React.SVGProps<SVGSVGElement>>;
-}[] = [
-  { label: 'Account', translationKey: 'account', Icon: SidebarUserIcon },
-  { label: 'Chat', translationKey: 'chat', Icon: ChatIcon },
-  { label: 'Map', translationKey: 'map', Icon: MapIcon },
-  { label: 'Goals', translationKey: 'goals', Icon: GoalsIcon },
-  { label: 'Settings', translationKey: 'settings', Icon: SettingsIcon },
+const navigationPages = [
+  {
+    label: 'Account',
+    translationKey: 'account',
+    Icon: SidebarUserIcon,
+    path: '/account',
+  },
+  {
+    label: 'Chat',
+    translationKey: 'chat',
+    Icon: ChatIcon,
+    path: '/account/chat',
+  },
+  {
+    label: 'Map',
+    translationKey: 'map',
+    Icon: MapIcon,
+    path: '/account/map',
+  },
+  {
+    label: 'Goals',
+    translationKey: 'goals',
+    Icon: GoalsIcon,
+    path: '/goals',
+  },
+  {
+    label: 'Settings',
+    translationKey: 'settings',
+    Icon: SettingsIcon,
+    path: '/settings',
+  },
 ];
-
 export const PageNavigation: React.FC<NavigationPageProps> = ({
   showLabels = true,
   linkClassName = '',
@@ -31,17 +51,18 @@ export const PageNavigation: React.FC<NavigationPageProps> = ({
   navLabels = '',
 }) => {
   const t = useTranslations('navigation');
-  const { currentPage, setCurrentPage } = navigationStore();
+  const pathname = usePathname();
 
   return (
     <ul className={className}>
-      {navigationPages.map(({ label, translationKey, Icon }) => {
-        const isActive = currentPage === label;
+      {navigationPages.map(({ label, translationKey, Icon, path }) => {
+        const isActive = pathname === path;
 
         return (
           <li key={label}>
-            <button
-              onClick={() => setCurrentPage(label)}
+            <Link
+              href={path}
+              passHref
               className={`
               flex items-center gap-3 lg:p-3 rounded-xl border-[1px] border-transparent transition duration-300 text-bg-icon
               lg:border cursor-pointer ${isActive ? 'lg:border-border' : 'lg:border-transparent hover:lg:border-border'}
@@ -62,7 +83,7 @@ export const PageNavigation: React.FC<NavigationPageProps> = ({
               {showLabels && (
                 <span className={navLabels}>{t(translationKey)}</span>
               )}
-            </button>
+            </Link>
           </li>
         );
       })}
