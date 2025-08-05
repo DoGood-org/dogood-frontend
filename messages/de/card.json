@@ -3,7 +3,7 @@
   "fullName": "Vollständiger Name",
   "country": "Land",
   "city": "Stadt",
-  "add": "Karte hinzufügen",
+  "add": "Hinzufügen",
   "validation": {
     "required": "Dieses Feld ist erforderlich",
     "nameTooShort": "Der Name ist zu kurz",

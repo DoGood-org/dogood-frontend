@@ -31,6 +31,7 @@
   --color-text-help: var(--text-help);
   --color-text-gray: var(--text-gray);
   --color-white: var(--white);
+  --color-black: var(--black);
   --color-text_tag: var(--text_tag);
   --color-header-bg: var(--header-bg);
   --color-footer-bg: var(--footer-bg);
@@ -132,11 +133,12 @@
   --text-help: #696969;
   --text-gray: #999999;
   --white: #f1f1f1;
+  --black: #010101;
   --text_tag: #010101;
   --tag: #696969;
   --post: #696969;
   --post_gray: #f1f1f1;
-  --form-field: #0D0D0D;
+  --form-field: #0d0d0d;
 
   --card: #cfcfcf;
   --toggle: #303030;
@@ -429,6 +431,18 @@ html {
     background-clip: padding-box;
   }
 
+  /* .payment-scrollbar {
+    @apply custom-scrollbar;
+  } */
+
+  .payment-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--background);
+  }
+
+  .payment-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--black);
+  }
+
   /*----------------- Font-size utilites -------------------------------*/
   .text-sm {
     font-size: var(--text-sm);
@@ -672,6 +686,15 @@ html {
   .custom-scrollbar-tasks {
     scrollbar-width: 12px;
     scrollbar-color: var(--map-btn) transparent;
+  }
+
+  .payment-scrollbar {
+    scrollbar-width: 12px;
+    scrollbar-color: var(--background) transparent;
+  }
+
+  .dark .payment-scrollbar {
+    scrollbar-color: var(--background-secondary) transparent;
   }
 }
 

@@ -3,7 +3,7 @@
   "fullName": "Full Name",
   "country": "Country",
   "city": "City",
-  "add": "Add card",
+  "add": "Add",
   "validation": {
     "required": "This field is required",
     "nameTooShort": "Name is too short",

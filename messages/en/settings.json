@@ -42,7 +42,8 @@
   },
   "payment": {
     "title": "Payment",
-    "add": "Add payment method"
+    "add": "Add payment method",
+    "back": "Back"
   },
   "about": {
     "title": "About me",
