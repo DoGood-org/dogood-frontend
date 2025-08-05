@@ -5,7 +5,7 @@ import { PageNavigation } from '@/components';
 
 export const SidebarNavigation: React.FC = () => {
   return (
-    <aside className="lg:block lg:min-w-[136px] bg-background pt-20">
+    <div className="lg:block lg:min-w-[136px] bg-background pt-20">
       <nav className="hidden lg:flex flex-col gap-6">
         <PageNavigation
           showLabels={true}
@@ -15,6 +15,6 @@ export const SidebarNavigation: React.FC = () => {
           iconClassName="w-6 h-6"
         />
       </nav>
-    </aside>
+    </div>
   );
 };

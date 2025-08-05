@@ -20,13 +20,11 @@ export default function AuthLayout({
   const showBottomNavigation = !isChatMessageOpen;
 
   return (
-    <>
-      <Container>
-        <div className="flex w-full lg:gap-20 justify-center">
-          <div className="flex flex-col flex-grow">{children}</div>
-        </div>
-        {showBottomNavigation && <BottomNavigation />}
-      </Container>
-    </>
+    <Container className="account-layout-container md:px-0 lg:px-[60px]">
+      <div className="flex w-full lg:gap-20 justify-center">
+        <div className="flex flex-col flex-grow">{children}</div>
+      </div>
+      {showBottomNavigation && <BottomNavigation />}
+    </Container>
   );
 }

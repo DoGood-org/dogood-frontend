@@ -86,8 +86,8 @@ export const Chat: React.FC = () => {
   };
 
   return (
-    <Section withContainer={false}>
-      <div className="bg-background text-foreground lg:flex lg:px-20 lg:min-h-0">
+    <Section withContainer={false} className="lg:pt-20 md:pt-20 sm:pt-20">
+      <div className="bg-background text-foreground lg:flex lg:min-h-0">
         {chats.length === 0 ? (
           <EmptyState />
         ) : isMobileOrTablet ? (
