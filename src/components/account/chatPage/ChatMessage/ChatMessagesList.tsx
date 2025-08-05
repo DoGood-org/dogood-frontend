@@ -4,13 +4,23 @@ import { MessagesListProps } from '@/types/chatType';
 import { ChatMessageItem } from '@/components';
 import { useEffect, useState } from 'react';
 import { EmptyChatMessage } from '@/components';
+import { navigationStore } from '@/zustand/stores/navigationStore';
 
 export const ChatMessageList: React.FC<MessagesListProps> = ({ messages }) => {
   const [mounted, setMounted] = useState(false);
+  const setIsChatMessageOpen = navigationStore(
+    (state) => state.setIsChatMessageOpen
+  );
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+
+    setIsChatMessageOpen(true);
+
+    return (): void => {
+      setIsChatMessageOpen(false);
+    };
+  }, [setIsChatMessageOpen]);
 
   if (!mounted) return null;
 

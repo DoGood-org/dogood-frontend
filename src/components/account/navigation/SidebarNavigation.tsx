@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { PageNavigation } from './PageNavigation';
+import { PageNavigation } from '@/components';
 
 export const SidebarNavigation: React.FC = () => {
   return (
