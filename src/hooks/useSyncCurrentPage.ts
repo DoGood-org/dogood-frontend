@@ -4,7 +4,7 @@ import { useEffect, useMemo } from 'react';
 import { navigationStore } from '@/zustand/stores/navigationStore';
 import { usePathname } from '@/i18n/navigation';
 import { Page } from '@/types/navigationType';
-import { navigationPages } from '@/components/account/navigation/navigationPages';
+import { navigationPages } from '@/constants/navigationPages';
 
 export function useSyncCurrentPage(): void {
   const pathname = usePathname();

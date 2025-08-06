@@ -4,7 +4,7 @@ import React from 'react';
 import { NavigationPageProps } from '@/types/navigationType';
 import { Link, usePathname } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
-import { navigationPages } from './navigationPages';
+import { navigationPages } from '@/constants/navigationPages';
 
 export const PageNavigation: React.FC<NavigationPageProps> = ({
   showLabels = true,
