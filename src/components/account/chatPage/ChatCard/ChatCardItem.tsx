@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { ChatCardProps } from '@/types/chatType';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/Avatar';
 import { ChatEllipsisMenu } from '@/components';
+import { formatChatDate } from '@/utils/chatDateUtils';
 
 export const ChatCardItem: React.FC<ChatCardProps> = ({
   chat,
@@ -13,14 +14,6 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
 }) => {
   const handleDelete = (): void => {
     onChatDeleted(chat.id);
-  };
-
-  const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}.${month}.${year}`;
   };
 
   return (
@@ -34,7 +27,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
       <div className="absolute top-1 right-0 mb-2">
         <ChatEllipsisMenu chat={chat} onChatDeleted={handleDelete} />
       </div>
-      <Avatar className="w-[64px] h-[64px] rounded-full bg-white shrink-0">
+      <Avatar className="w-[64px] h-[64px] rounded-full shrink-0">
         <AvatarImage src={chat.avatar} alt={chat.name} />
         <AvatarFallback name={chat.name} />
       </Avatar>
@@ -44,7 +37,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
             {chat.name}
           </p>
           <span className="text-white text-sm whitespace-nowrap">
-            {formatDate(chat.createdAt)}
+            {formatChatDate(chat.createdAt)}
           </span>
         </div>
         <p className="text-white text-base truncate">{chat.content}</p>

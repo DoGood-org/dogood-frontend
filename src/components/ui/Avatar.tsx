@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 const backgroundColors = [
   '#cfcfcf',
   '#ff7d57',
-  '#2c8c8c',
+  '#01425c',
   '#5673c2',
   '#e4a23c',
   '#01425c',
