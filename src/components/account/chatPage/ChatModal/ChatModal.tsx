@@ -3,8 +3,10 @@
 import MarkChat from '@/components/icons/MarkChat';
 import PinChat from '@/components/icons/PinChat';
 import TrashBinChat from '@/components/icons/TrashBinChat';
+import UnpinChat from '@/components/icons/UnpinChat';
 import { ChatType } from '@/types/chatType';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 
 type ChatModalProps = {
   chat: ChatType;
@@ -19,14 +21,16 @@ export const ChatModal: React.FC<ChatModalProps> = ({
   menuRef,
 }) => {
   const t = useTranslations('chat');
+  const [pinned, setPinned] = useState(false);
 
   const handleDelete = async (): Promise<void> => {
     console.log('Delete', chat.id);
     onClose();
   };
 
-  const handlePin = (): void => {
-    console.log('Pinned', chat.id);
+  const handlePinToggle = (): void => {
+    setPinned((prev) => !prev);
+    console.log(pinned ? 'Unpinned' : 'Pinned', chat.id);
     onClose();
   };
 
@@ -53,12 +57,18 @@ export const ChatModal: React.FC<ChatModalProps> = ({
         </li>
         <li>
           <button
-            onClick={handlePin}
+            onClick={handlePinToggle}
             className="group flex items-center justify-between w-full 
                         hover:text-btn-hover active:text-btn-active cursor-pointer"
           >
-            <span className="whitespace-nowrap">{t('menu.pin the chat')}</span>
-            <PinChat className="w-6 h-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
+            <span className="whitespace-nowrap">
+              {pinned ? t('menu.unpin') : t('menu.pin the chat')}
+            </span>
+            {pinned ? (
+              <UnpinChat className="w-6 h-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
+            ) : (
+              <PinChat className="w-6 h-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
+            )}
           </button>
         </li>
         <li>

@@ -24,13 +24,17 @@ export const Chat: React.FC = () => {
   );
 
   useEffect(() => {
-    const lastChatId = localStorage.getItem('lastChatId');
-    if (lastChatId && chats.some((chat) => chat.id === lastChatId)) {
-      setSelectedChatId(lastChatId);
-    } else if (chats.length > 0) {
-      setSelectedChatId(chats[0].id);
+    if (isMobileOrTablet) {
+      setSelectedChatId(null);
+    } else {
+      const lastChatId = localStorage.getItem('lastChatId');
+      if (lastChatId && chats.some((chat) => chat.id === lastChatId)) {
+        setSelectedChatId(lastChatId);
+      } else if (chats.length > 0) {
+        setSelectedChatId(chats[0].id);
+      }
     }
-  }, [chats]);
+  }, [isMobileOrTablet, chats]);
 
   useEffect(() => {
     if (selectedChatId) {
