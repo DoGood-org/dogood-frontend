@@ -65,9 +65,9 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         aria-label="Send a message"
         size="icon"
         onClick={sendMessage}
-        className="absolute right-4 top-7 text-[#1B9757] focus:outline-none cursor-pointer"
+        className="absolute right-0 top-7 text-[#2C8C8C] focus:outline-none cursor-pointer"
       >
-        <MessageSend className="w-5 h-5" />
+        <MessageSend className="w-6 h-6" />
       </Button>
     </div>
   );

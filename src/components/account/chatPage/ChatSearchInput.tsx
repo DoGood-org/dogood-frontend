@@ -50,12 +50,12 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
   return (
     <div className="flex items-center justify-between">
       {showBackButton && (
-        <div className="pl-4">
+        <div className="pl-2 md:pl-4">
           <Button
             variant="ghost"
             size="icon"
             onClick={onBack}
-            className="text-current flex items-center cursor-pointer group"
+            className="text-current flex items-center gap-0 md:gap-2 cursor-pointer group"
             aria-label="Back"
             type="button"
           >
@@ -79,10 +79,13 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={onKeyDown}
-            className="    
+            className="
             w-[240px]
             h-[24px]
-            p-0
+            py-0
+            pl-2
+            pr-0
+            md:pl-0
             bg-transparent
             text-current
             placeholder:text-foreground
@@ -110,7 +113,7 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
       <Button
         variant="ghost"
         size="icon"
-        className="text-current cursor-pointer"
+        className="text-current cursor-pointer w-6 h-6"
         aria-label="search"
         type="button"
         onClick={handleSearch}

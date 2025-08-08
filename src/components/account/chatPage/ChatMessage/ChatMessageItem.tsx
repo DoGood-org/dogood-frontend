@@ -11,7 +11,7 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
       className={cn(
         'flex items-start gap-3 py-3 px-6 w-[318px] relative rounded-sm md:w-[608px]',
         message.isCurrentUser
-          ? 'ml-auto bg-[#2c8c8c] text-[#010101] dark:text-white'
+          ? 'ml-auto bg-[#2c8c8c] text-white'
           : 'mr-auto bg-tag text-white dark:bg-[#DCDCDC] dark:text-[#010101]'
       )}
     >
