@@ -11,6 +11,7 @@ interface ChatMobileLayoutProps {
   setSelectedChatId: (id: string | null) => void;
   messages: MessageType[];
   onSend: (message: string) => void;
+  onPinToggle: (chatId: string, pinned: boolean) => void;
   onChatDeleted: (chatId: string) => void;
   selectedChat: ChatType | null;
 }
@@ -23,6 +24,7 @@ export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
   onSend,
   onChatDeleted,
   selectedChat,
+  onPinToggle,
 }) => {
   return selectedChatId ? (
     <div className="flex flex-col h-[1216px] md:h-[856px] max-h-screen md:min-h-[856px] bg-[#CFCFCF] dark:bg-[#5D5A5A] pt-[20px] pb-[24px] pl-[8px] pr-[8px]">
@@ -47,6 +49,7 @@ export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
         selectedChatId={selectedChatId}
         onSelectChat={setSelectedChatId}
         onChatDeleted={onChatDeleted}
+        onPinToggle={onPinToggle}
       />
     </div>
   );

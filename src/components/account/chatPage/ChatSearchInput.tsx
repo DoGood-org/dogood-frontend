@@ -111,14 +111,14 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
         </div>
       </div>
       <Button
+        type="button"
         variant="ghost"
         size="icon"
         className="text-current cursor-pointer w-6 h-6"
-        aria-label="search"
-        type="button"
+        aria-label="Search"
         onClick={handleSearch}
       >
-        <ChatSearch className="w-6 h-6 text-bg-icon hover:text-btn-hover active:text-btn-active" />
+        <ChatSearch className="size-6 text-bg-icon hover:text-btn-hover active:text-btn-active" />
       </Button>
     </div>
   );

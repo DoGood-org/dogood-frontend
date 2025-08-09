@@ -4,34 +4,48 @@ import MarkChat from '@/components/icons/MarkChat';
 import PinChat from '@/components/icons/PinChat';
 import TrashBinChat from '@/components/icons/TrashBinChat';
 import UnpinChat from '@/components/icons/UnpinChat';
+import { Button } from '@/components/ui/Button';
 import { ChatType } from '@/types/chatType';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type ChatModalProps = {
   chat: ChatType;
   onClose: () => void;
   menuRef: React.RefObject<HTMLDivElement | null>;
   onChatDeleted: (chatId: string) => void;
+  onPinToggle: (chatId: string, pinned: boolean) => void;
 };
 
 export const ChatModal: React.FC<ChatModalProps> = ({
   chat,
   onClose,
   menuRef,
+  onPinToggle,
 }) => {
   const t = useTranslations('chat');
-  const [pinned, setPinned] = useState(false);
 
   const handleDelete = async (): Promise<void> => {
     console.log('Delete', chat.id);
     onClose();
   };
 
-  const handlePinToggle = (): void => {
-    setPinned((prev) => !prev);
-    console.log(pinned ? 'Unpinned' : 'Pinned', chat.id);
-    onClose();
+  const [pinned, setPinned] = useState(() => {
+    return localStorage.getItem(`chatPinned-${chat.id}`) === 'true';
+  });
+
+  useEffect(() => {
+    setPinned(
+      chat.pinned ?? localStorage.getItem(`chatPinned-${chat.id}`) === 'true'
+    );
+  }, [chat.pinned, chat.id]);
+
+  const handlePinToggle = (e: React.MouseEvent): void => {
+    e.stopPropagation();
+    const newPinned = !pinned;
+    setPinned(newPinned);
+    localStorage.setItem(`chatPinned-${chat.id}`, newPinned.toString());
+    onPinToggle(chat.id, newPinned);
   };
 
   const handleMarkAsSpam = (): void => {
@@ -39,48 +53,68 @@ export const ChatModal: React.FC<ChatModalProps> = ({
     onClose();
   };
 
+  const buttons = pinned
+    ? [
+        {
+          key: 'unpin',
+          label: t('menu.unpin'),
+          onClick: handlePinToggle,
+          Icon: UnpinChat,
+        },
+        {
+          key: 'delete',
+          label: t('menu.delete'),
+          onClick: handleDelete,
+          Icon: TrashBinChat,
+        },
+        {
+          key: 'spam',
+          label: t('menu.mark as spam'),
+          onClick: handleMarkAsSpam,
+          Icon: MarkChat,
+        },
+      ]
+    : [
+        {
+          key: 'delete',
+          label: t('menu.delete'),
+          onClick: handleDelete,
+          Icon: TrashBinChat,
+        },
+        {
+          key: 'pin',
+          label: t('menu.pin the chat'),
+          onClick: handlePinToggle,
+          Icon: PinChat,
+        },
+        {
+          key: 'spam',
+          label: t('menu.mark as spam'),
+          onClick: handleMarkAsSpam,
+          Icon: MarkChat,
+        },
+      ];
+
   return (
     <div
       ref={menuRef}
       className="absolute top-4 right-0 bg-background py-6 px-5 rounded-lg shadow-lg z-50 min-w-[178px]"
     >
       <ul className="flex flex-col gap-4">
-        <li>
-          <button
-            onClick={handleDelete}
-            className="group flex items-center justify-between w-full 
-                        hover:text-btn-hover active:text-btn-active cursor-pointer"
-          >
-            <span className="whitespace-nowrap">{t('menu.delete')}</span>
-            <TrashBinChat className="w-6 h-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={handlePinToggle}
-            className="group flex items-center justify-between w-full 
-                        hover:text-btn-hover active:text-btn-active cursor-pointer"
-          >
-            <span className="whitespace-nowrap">
-              {pinned ? t('menu.unpin') : t('menu.pin the chat')}
-            </span>
-            {pinned ? (
-              <UnpinChat className="w-6 h-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
-            ) : (
-              <PinChat className="w-6 h-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
-            )}
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={handleMarkAsSpam}
-            className="group flex items-center justify-between w-full 
-                        hover:text-btn-hover active:text-btn-active cursor-pointer"
-          >
-            <span className="whitespace-nowrap">{t('menu.mark as spam')}</span>
-            <MarkChat className="w-6 h-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
-          </button>
-        </li>
+        {buttons.map(({ key, label, onClick, Icon }) => (
+          <li key={key}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onClick}
+              className="group flex items-center justify-between w-full 
+                hover:text-btn-hover active:text-btn-active cursor-pointer"
+            >
+              <span className="whitespace-nowrap">{label}</span>
+              <Icon className="size-6 icon-color group-hover:text-btn-hover group-active:text-btn-active" />
+            </Button>
+          </li>
+        ))}
       </ul>
     </div>
   );

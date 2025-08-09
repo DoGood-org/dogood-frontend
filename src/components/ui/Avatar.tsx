@@ -5,7 +5,7 @@ import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { cn } from '@/lib/utils';
 
 const backgroundColors = [
-  '#cfcfcf',
+  '#999999',
   '#ff7d57',
   '#01425c',
   '#5673c2',

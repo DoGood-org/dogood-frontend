@@ -12,9 +12,14 @@ import * as Tooltip from '@radix-ui/react-tooltip';
 type Props = {
   chat: ChatType;
   onChatDeleted: (chatId: string) => void;
+  onPinToggle: (chatId: string, pinned: boolean) => void;
 };
 
-export const ChatEllipsisMenu: React.FC<Props> = ({ chat, onChatDeleted }) => {
+export const ChatEllipsisMenu: React.FC<Props> = ({
+  chat,
+  onChatDeleted,
+  onPinToggle,
+}) => {
   const { isOpen, toggleMenu, closeMenu } = useMenuToggle();
   const buttonRef = useRef<HTMLDivElement>(null);
 
@@ -69,6 +74,7 @@ export const ChatEllipsisMenu: React.FC<Props> = ({ chat, onChatDeleted }) => {
             onClose={toggleMenu}
             menuRef={buttonRef}
             onChatDeleted={onChatDeleted}
+            onPinToggle={onPinToggle}
           />
         )}
       </div>

@@ -11,6 +11,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
   isSelected,
   onSelect,
   onChatDeleted,
+  onPinToggle,
 }) => {
   const handleDelete = (): void => {
     onChatDeleted(chat.id);
@@ -25,7 +26,11 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
       )}
     >
       <div className="absolute top-1 right-0 mb-2">
-        <ChatEllipsisMenu chat={chat} onChatDeleted={handleDelete} />
+        <ChatEllipsisMenu
+          chat={chat}
+          onChatDeleted={handleDelete}
+          onPinToggle={onPinToggle}
+        />
       </div>
       <Avatar className="w-[64px] h-[64px] rounded-full shrink-0">
         <AvatarImage src={chat.avatar} alt={chat.name} />

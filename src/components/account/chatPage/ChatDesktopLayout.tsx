@@ -10,6 +10,7 @@ interface ChatDesktopLayoutProps {
   setSelectedChatId: (id: string | null) => void;
   messages: MessageType[];
   onSend: (message: string) => void;
+  onPinToggle: (chatId: string, pinned: boolean) => void;
   onChatDeleted: (chatId: string) => void;
   selectedChat: ChatType | null;
 }
@@ -22,6 +23,7 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
   onSend,
   onChatDeleted,
   selectedChat,
+  onPinToggle,
 }) => {
   return (
     <div className="flex h-[856px] max-h-screen min-h-[600px] gap-9">
@@ -31,6 +33,7 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
           selectedChatId={selectedChatId}
           onSelectChat={setSelectedChatId}
           onChatDeleted={onChatDeleted}
+          onPinToggle={onPinToggle}
         />
       </div>
 
