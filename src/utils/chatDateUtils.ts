@@ -1,3 +1,5 @@
+import { MessageType } from '@/types/chatType';
+
 export const formatChatDate = (dateString: string): string => {
   const date = new Date(dateString);
   const day = String(date.getDate()).padStart(2, '0');
@@ -12,3 +14,17 @@ export const formatChatTime = (dateString: string): string => {
   const minutes = String(date.getMinutes()).padStart(2, '0');
   return `${hours}:${minutes}`;
 };
+
+export function getLastMessageTime(
+  messages: MessageType[],
+  roomId: string
+): string | null {
+  const filteredMessages = messages
+    .filter((msg) => msg.roomId === roomId)
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+  return filteredMessages.length > 0 ? filteredMessages[0].createdAt : null;
+}

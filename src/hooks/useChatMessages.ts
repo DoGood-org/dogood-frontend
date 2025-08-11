@@ -8,7 +8,7 @@ interface UseMessagesReturn {
   addMessage: (message: MessageType) => void;
 }
 
-export const useMessages = (
+export const useChatMessages = (
   initialMessages: MessageType[],
   selectedChatId: string | null,
   userId: number

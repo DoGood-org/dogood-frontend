@@ -42,7 +42,9 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         className="
         w-full
         h-[48px]
-        py-3 px-2    
+        py-3 px-2 
+        text-white
+        dark:text-[#0C0C0C]   
         dark:placeholder:text-[#0C0C0C] 
         placeholder:text-white        
         dark:bg-white
@@ -56,8 +58,7 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         focus:ring-0
         focus:ring-transparent
         appearance-none
-        shadow-none
-        cursor-pointer"
+        shadow-none"
       />
       <Button
         type="button"

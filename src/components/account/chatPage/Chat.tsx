@@ -11,7 +11,7 @@ import mocks from './mocks.json';
 import { ChatMobileLayout } from './ChatMobileLayout';
 import { ChatDesktopLayout } from './ChatDesktopLayout';
 import { useChats } from '@/hooks/useChats';
-import { useMessages } from '@/hooks/useMessages';
+import { useChatMessages } from '@/hooks/useChatMessages';
 
 export const Chat: React.FC = () => {
   const { chats: initialChats, messages: initialMessages } = mocks;
@@ -32,7 +32,7 @@ export const Chat: React.FC = () => {
     handlePinToggle,
   } = useChats(initialChats, isMobileOrTablet);
 
-  const { preparedMessages, addMessage } = useMessages(
+  const { preparedMessages, addMessage } = useChatMessages(
     initialMessages,
     selectedChatId,
     userId
