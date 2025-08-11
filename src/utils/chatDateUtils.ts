@@ -15,10 +15,10 @@ export const formatChatTime = (dateString: string): string => {
   return `${hours}:${minutes}`;
 };
 
-export function getLastMessageTime(
+export const getLastMessageTime = (
   messages: MessageType[],
   roomId: string
-): string | null {
+): string | null => {
   const filteredMessages = messages
     .filter((msg) => msg.roomId === roomId)
     .sort(
@@ -27,4 +27,4 @@ export function getLastMessageTime(
     );
 
   return filteredMessages.length > 0 ? filteredMessages[0].createdAt : null;
-}
+};
