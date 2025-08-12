@@ -1,5 +1,6 @@
 import { CardData } from '@/types';
 import { cardPreviewStore } from '../stores/cardPreviewStore';
+import { detachPaymentMethod, updatePaymentMethod } from '@/lib/api/stripeApi';
 
 export const CardPreviewService = {
   /**
@@ -18,10 +19,29 @@ export const CardPreviewService = {
     updateCard(id, updated);
   },
 
+  async edit(
+    id: string,
+    updatedData: Partial<CardData>,
+    isStripeCard: boolean
+  ): Promise<void> {
+    if (isStripeCard) {
+      await updatePaymentMethod(id, {
+        name: updatedData.fullName,
+        address: { city: updatedData.city, country: updatedData.country },
+      });
+    }
+
+    const { updateCard } = cardPreviewStore.getState();
+    updateCard(id, updatedData);
+  },
+
   /**
    * Видаляє картку за paymentMethodId
    */
-  delete(id: string): void {
+  async delete(id: string, isStripeCard: boolean): Promise<void> {
+    if (isStripeCard) {
+      await detachPaymentMethod(id);
+    }
     const { deleteCard } = cardPreviewStore.getState();
     deleteCard(id);
   },
@@ -32,5 +52,21 @@ export const CardPreviewService = {
   clearAll(): void {
     const { clearAll } = cardPreviewStore.getState();
     clearAll();
+  },
+
+  async cleanupUnattachedCard(): Promise<void> {
+    const { tempPaymentMethodId, clearTempPaymentMethodId } =
+      cardPreviewStore.getState();
+    if (tempPaymentMethodId) {
+      try {
+        await detachPaymentMethod(tempPaymentMethodId);
+        console.log(
+          `🧹 Detached unused payment method: ${tempPaymentMethodId}`
+        );
+      } catch (err) {
+        console.error('Cleanup failed:', err);
+      }
+      clearTempPaymentMethodId();
+    }
   },
 };
