@@ -4,7 +4,7 @@ import {
   createSetupIntent,
   getOrCreateCustomer,
   getPaymentMethod,
-} from '../api';
+} from '../api/stripeApi';
 
 export async function createCardPaymentMethod({
   stripe,
