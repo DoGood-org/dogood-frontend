@@ -18,7 +18,7 @@ const appearance = {
     link: 'never',
   },
   variables: {
-    colorBackground: 'var(--white)',
+    colorBackground: '#ffffff',
     colorText: '#0D0D0D',
     // colorPrimary: 'var(--primary)',
     spacingUnit: '6px',

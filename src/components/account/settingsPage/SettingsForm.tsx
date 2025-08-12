@@ -16,15 +16,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import csc from 'country-state-city';
 import { format } from 'date-fns';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   SettingsFormValues,
   settingsSchema,
 } from '@/lib/validation/settingsSchema';
 import { useTranslations } from 'next-intl';
-// import { Close, SetPlus } from '@/components/icons';
 import { InputField } from '@/components';
 import { PaymentList } from './PaymentList';
+import { CardPreviewService } from '@/zustand/services/cardPreviewService';
 
 const genderOptions = [
   { value: 'male', label: 'Male' },
@@ -35,10 +35,6 @@ const genderOptions = [
 export const Settings = (): React.JSX.Element => {
   const [image, setImage] = useState<any>(null);
   const t = useTranslations('settings');
-  // const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-  // const onClickButton = (): void => {
-  //   setIsPaymentOpen(!isPaymentOpen);
-  // };
   const {
     register,
     handleSubmit,
@@ -120,7 +116,15 @@ export const Settings = (): React.JSX.Element => {
     setValue('about', '');
     setValue('img', '');
     setImage(null);
+    CardPreviewService.cleanupUnattachedCard();
+    CardPreviewService.clearAll();
   };
+
+  useEffect(() => {
+    return (): void => {
+      CardPreviewService.cleanupUnattachedCard();
+    };
+  }, []);
 
   return (
     <StripeProvider>

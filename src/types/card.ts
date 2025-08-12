@@ -17,8 +17,11 @@ export type CardFormProps = {
 
 export type CardPreviewStore = {
   tempCards: CardData[];
+  tempPaymentMethodId: string | null;
   addCard: (card: CardData) => void;
   updateCard: (paymentMethodId: string, updated: Partial<CardData>) => void;
   deleteCard: (paymentMethodId: string) => void;
+  setTempPaymentMethodId: (id: string) => void;
+  clearTempPaymentMethodId: () => void;
   clearAll: () => void;
 };
