@@ -1,33 +1,56 @@
 'use client';
 
 import { JSX, useEffect, useState } from 'react';
-import { CardForm, CardPreview, StripeProvider } from '@/components';
+import { CardForm, Modal } from '@/components';
 import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
 import { CardData } from '@/types';
+import { useTranslations } from 'next-intl';
 
-export const AddCardModal = (): JSX.Element => {
-  const [open, setOpen] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
+export type CardModalProps = {
+  open: boolean;
+  setOpen: (arg0: boolean) => void;
+  editingId: string | null;
+  setEditingId: (arg0: string | null) => void;
+};
+export const AddCardModal = ({
+  open,
+  setOpen,
+  editingId,
+  setEditingId,
+}: CardModalProps): JSX.Element => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { tempCards, addCard, updateCard } = cardPreviewStore();
+  const t = useTranslations('settings');
 
-  const { tempCards, addCard, updateCard, clearAll } = cardPreviewStore();
-
-  const handleSave = async (): Promise<void> => {
-    // await api.saveCards(tempCards)
-    // console.log('Saving cards:', tempCards);
-    clearAll();
-    setEditingId(null);
-  };
-
-  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>): void => {
-    if (e.target === e.currentTarget && !isSubmitting) {
-      setOpen(false);
-    }
-  };
+  // const handleSave = async (): Promise<void> => {
+  //   // await api.saveCards(tempCards)
+  //   // console.log('Saving cards:', tempCards);
+  //   clearAll();
+  //   setEditingId(null);
+  // };
 
   const editingCard = editingId
     ? tempCards.find((c) => c.paymentMethodId === editingId)
     : undefined;
+
+  const initialValues = editingCard
+    ? {
+        fullName: editingCard.fullName,
+        country: editingCard.country,
+        city: editingCard.city,
+      }
+    : undefined;
+
+  const handleSuccess = (card: CardData): void => {
+    if (editingId) {
+      updateCard(editingId, card);
+    } else {
+      addCard(card);
+    }
+    setEditingId(null);
+    setOpen(false);
+    setIsSubmitting(false);
+  };
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent): false | void => {
@@ -35,66 +58,28 @@ export const AddCardModal = (): JSX.Element => {
     };
     document.addEventListener('keydown', handleEsc);
     return (): void => document.removeEventListener('keydown', handleEsc);
-  }, [isSubmitting]);
+  }, [isSubmitting, setOpen]);
 
   return (
-    <section>
-      <StripeProvider>
-        <button
-          onClick={() => {
-            setOpen(true);
-            setEditingId(null);
-          }}
-          className="btn-primary"
+    <>
+      {open && (
+        <Modal
+          isOpen={open}
+          onClose={() => !isSubmitting && setOpen(false)}
+          wrapperClassName="w-full max-w-[353px] md:max-w-[648px] lg:max-w-[976px] lg:translate-x-16 bg-card"
+          buttonClassName=""
         >
-          Add Card
-        </button>
+          <h3 className="text-center mx-auto text-base mb-3">
+            {t('payment.title')}
+          </h3>
 
-        {open && (
-          <div
-            id="modal-overlay"
-            onClick={handleOverlayClick}
-            className="fixed inset-0 bg-black/40 flex items-center justify-center z-999"
-          >
-            <div className="bg-[#CFCFCF] p-6 rounded-lg max-w-md w-full relative">
-              <button
-                onClick={() => !isSubmitting && setOpen(false)}
-                className="absolute top-2 right-2"
-              >
-                ×
-              </button>
-
-              <CardForm
-                initialValues={
-                  editingCard
-                    ? {
-                        fullName: editingCard.fullName,
-                        country: editingCard.country,
-                        city: editingCard.city,
-                      }
-                    : undefined
-                }
-                onSuccess={(card: CardData): void => {
-                  if (editingId) {
-                    updateCard(editingId, card);
-                  } else {
-                    addCard(card);
-                  }
-                  setEditingId(null);
-                  setOpen(false);
-                  setIsSubmitting(false);
-                }}
-                setIsSubmitting={setIsSubmitting}
-              />
-            </div>
-          </div>
-        )}
-        <CardPreview setEditingId={setEditingId} setOpen={setOpen} />
-
-        <button onClick={handleSave} className="btn-secondary mt-4">
-          Save All
-        </button>
-      </StripeProvider>
-    </section>
+          <CardForm
+            initialValues={initialValues}
+            onSuccess={handleSuccess}
+            setIsSubmitting={setIsSubmitting}
+          />
+        </Modal>
+      )}
+    </>
   );
 };

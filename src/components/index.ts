@@ -155,6 +155,7 @@ export * from './ui/DraggableDrawler';
 export * from './ui/Input';
 export * from './ui/Label';
 export * from './ui/LinkWithArrow';
+export * from './ui/Modal';
 export * from './ui/Popover';
 export * from './ui/Rating';
 export * from './ui/Section';

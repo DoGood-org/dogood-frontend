@@ -47,7 +47,7 @@ export const CardForm = ({
   }, []);
 
   const onSubmit = async (data: CardData): Promise<void> => {
-    if (isSubmitting) return; // 🛑 Захист від дублювання
+    if (isSubmitting) return; // Захист від дублювання
 
     setIsSubmitting(true);
     setCardError(null);
@@ -91,7 +91,7 @@ export const CardForm = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4"
+      className="space-y-4 md:max-w-[500px] mx-auto"
       autoComplete="off"
     >
       {inputData.map(({ name, placeholder, validation }) => (
@@ -99,7 +99,7 @@ export const CardForm = ({
           <Input
             {...register(name, validation)}
             placeholder={placeholder}
-            className="placeholder:text-text-gray text-[#0D0D0D] h-12 bg-white rounded-lg relative flex items-center p-3 border border-transparent focus-within:ring-1 focus-visible:ring-1 focus-within:ring-border"
+            className="placeholder:text-[#0D0D0D99] text-base text-[#0D0D0D] h-12 bg-[#ffffff] rounded-[4px] relative flex items-center p-3 border border-transparent focus-within:ring-1 focus-visible:ring-1 focus-within:ring-border"
           />
           {errors[name] && (
             <p className="text-red-500 text-sm mt-1">{errors[name]?.message}</p>
@@ -138,11 +138,16 @@ export const CardForm = ({
       </div>
 
       <Button
+        variant="primary"
         type="submit"
         disabled={!stripe || !elements || isSubmitting}
-        className="btn-primary w-full rounded-lg"
+        className="w-full rounded-[4px] text-white"
       >
-        {t('add')}
+        {!Object.keys(initialValues).length ? (
+          <>{t('add')}</>
+        ) : (
+          <>{t('edit')}</>
+        )}
       </Button>
     </form>
   );
