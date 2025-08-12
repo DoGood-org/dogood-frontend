@@ -7,7 +7,7 @@ export async function POST(): Promise<NextResponse> {
     return NextResponse.json({ client_secret: setupIntent.client_secret });
   } catch (_error) {
     return NextResponse.json(
-      { error: 'Не вдалося створити SetupIntent' },
+      { error: 'Failed to create SetupIntent' },
       { status: 500 }
     );
   }
