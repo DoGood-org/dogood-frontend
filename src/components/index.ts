@@ -30,7 +30,6 @@ export * from './account/chatPage/ChatMessage/ChatMessagesList';
 export * from './account/chatPage/ChatModal/ChatEllipsisMenu';
 export * from './account/chatPage/ChatModal/ChatModal';
 export * from './account/navigation/BottomNavigation';
-export * from './account/navigation/PageContent';
 export * from './account/navigation/PageNavigation';
 export * from './account/navigation/SidebarNavigation';
 export * from './account/settingsPage/DatePicker';
