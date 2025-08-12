@@ -62,35 +62,33 @@ export const Chat: React.FC = () => {
   };
 
   return (
-    <Section withContainer={false}>
-      <div className="lg:-mx-20 lg:justify-start">
-        <div className="bg-background text-foreground lg:flex lg:px-20 lg:min-h-0">
-          {chats.length === 0 ? (
-            <EmptyState />
-          ) : isMobileOrTablet ? (
-            <ChatMobileLayout
-              chats={chats}
-              selectedChatId={selectedChatId}
-              setSelectedChatId={setSelectedChatId}
-              messages={preparedMessages}
-              onSend={handleSend}
-              onPinToggle={handlePinToggle}
-              onChatDeleted={handleChatDeleted}
-              selectedChat={selectedChat || null}
-            />
-          ) : (
-            <ChatDesktopLayout
-              chats={chats}
-              selectedChatId={selectedChatId}
-              setSelectedChatId={setSelectedChatId}
-              messages={preparedMessages}
-              onSend={handleSend}
-              onPinToggle={handlePinToggle}
-              onChatDeleted={handleChatDeleted}
-              selectedChat={selectedChat || null}
-            />
-          )}
-        </div>
+    <Section withContainer={false} className="lg:pt-20 md:pt-20 sm:pt-20">
+      <div className="bg-background text-foreground lg:flex lg:min-h-0">
+        {chats.length === 0 ? (
+          <EmptyState />
+        ) : isMobileOrTablet ? (
+          <ChatMobileLayout
+            chats={chats}
+            selectedChatId={selectedChatId}
+            setSelectedChatId={setSelectedChatId}
+            messages={preparedMessages}
+            onSend={handleSend}
+            onChatDeleted={handleChatDeleted}
+            selectedChat={selectedChat || null}
+            onPinToggle={handlePinToggle}
+          />
+        ) : (
+          <ChatDesktopLayout
+            chats={chats}
+            selectedChatId={selectedChatId}
+            setSelectedChatId={setSelectedChatId}
+            messages={preparedMessages}
+            onSend={handleSend}
+            onChatDeleted={handleChatDeleted}
+            selectedChat={selectedChat || null}
+            onPinToggle={handlePinToggle}
+          />
+        )}
       </div>
     </Section>
   );
