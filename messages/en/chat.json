@@ -7,6 +7,7 @@
     "menu": {
     "delete": "Delete",
     "pin the chat": "Pin the chat",
+    "unpin": "Unpin",
     "mark as spam": "Mark as spam",
     "tooltip": "Edit"
   },
