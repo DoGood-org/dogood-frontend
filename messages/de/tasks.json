@@ -1,0 +1,8 @@
+{
+  "taskItemPage": {
+    "notFoundTitle": "Aufgabe nicht gefunden",
+    "notFoundDescription": "Die gesuchte Aufgabe existiert nicht.",
+    "title": "Aufgabe",
+    "description": "Details zur Aufgabe"
+  }
+}
