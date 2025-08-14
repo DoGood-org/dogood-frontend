@@ -1,20 +1,19 @@
 import axios from 'axios';
 
-const fetcher = axios.create({
+export const fetcher = axios.create({
   baseURL: '',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true, // якщо треба відправляти cookie
+  headers: { 'Content-Type': 'application/json' },
+  withCredentials: false,
 });
 
-// Інтерцептор для обробки помилок
 fetcher.interceptors.response.use(
-  (response) => response,
+  (res) => res,
   (error) => {
-    const message = error?.response?.data?.message || 'Unknown error';
-    return Promise.reject(new Error(message));
+    const msg =
+      error?.response?.data?.error ||
+      error?.response?.data?.message ||
+      error?.message ||
+      'Unknown error';
+    return Promise.reject(new Error(msg));
   }
 );
-
-export default fetcher;

@@ -1,11 +1,10 @@
 'use client';
 
-import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
 import { Dispatch, JSX, SetStateAction } from 'react';
 import { Button, cardIcons } from '@/components';
 import { useTranslations } from 'next-intl';
-import { CardPreviewService } from '@/zustand/services/cardPreviewService';
 import { CardData } from '@/types';
+import { cardPreviewService } from '@/services/cardPreviewService';
 
 type CardPreviewProps = {
   setEditingId: (paymentMethodId: string) => void;
@@ -22,20 +21,22 @@ export const CardPreview = ({
   cardsFromDB,
   setCardsFromDB,
 }: CardPreviewProps): JSX.Element => {
-  const { deleteCard } = cardPreviewStore();
   const t = useTranslations('card');
 
-  const handleDelete = (cardId: string, isStripeCard: boolean): void => {
-    if (confirm(`${t('confirmDelete')}`)) {
-      CardPreviewService.delete(cardId, isStripeCard)
-        .then(() => {
-          console.log('Card deleted');
-          setCardsFromDB((prev) =>
-            prev.filter((card) => card.paymentMethodId !== cardId)
-          );
-          deleteCard(cardId);
-        })
-        .catch((err) => console.error(err));
+  const handleDelete = async (
+    cardId: string,
+    isStripeCard: boolean
+  ): Promise<void> => {
+    if (!confirm(t('confirmDelete'))) return;
+    try {
+      await cardPreviewService.deleteRemote(cardId, isStripeCard);
+      setCardsFromDB((prev) =>
+        prev.filter((card) => card.paymentMethodId !== cardId)
+      );
+      console.log('Card deleted');
+    } catch (err: any) {
+      console.error(err?.message || err);
+      alert(err?.message || 'Delete failed');
     }
   };
 

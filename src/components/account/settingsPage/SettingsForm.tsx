@@ -24,7 +24,7 @@ import {
 import { useTranslations } from 'next-intl';
 import { InputField } from '@/components';
 import { PaymentList } from './PaymentList';
-import { CardPreviewService } from '@/zustand/services/cardPreviewService';
+import { cardPreviewService } from '@/services/cardPreviewService';
 
 const genderOptions = [
   { value: 'male', label: 'Male' },
@@ -116,13 +116,13 @@ export const Settings = (): React.JSX.Element => {
     setValue('about', '');
     setValue('img', '');
     setImage(null);
-    CardPreviewService.cleanupUnattachedCard();
-    CardPreviewService.clearAll();
+    cardPreviewService.cleanupUnattachedCard();
+    cardPreviewService.clearAll();
   };
 
   useEffect(() => {
     return (): void => {
-      CardPreviewService.cleanupUnattachedCard();
+      cardPreviewService.cleanupUnattachedCard();
     };
   }, []);
 

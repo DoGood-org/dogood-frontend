@@ -11,9 +11,9 @@ import { useTranslations } from 'next-intl';
 import { Button, CardInputWrapper, CardNumberInput, Input } from '@/components';
 import { useState, JSX, useEffect } from 'react';
 import { CardData, CardFormProps } from '@/types';
-import { createCardPaymentMethod } from '@/lib/operations/createPaymentMethod';
+import { createCardPaymentMethod } from '@/services/createPaymentMethod';
 import { useCardInputs } from '@/hooks/useCardInputs';
-import { options } from '@/lib/stripeElementOptions';
+import { options } from '@/config/stripeElement';
 
 export const CardForm = ({
   onSuccess,
@@ -141,13 +141,16 @@ export const CardForm = ({
         variant="primary"
         type="submit"
         disabled={!stripe || !elements || isSubmitting}
-        className="w-full rounded-[4px] text-white"
+        className="w-full rounded-[4px] text-white relative"
       >
-        {!Object.keys(initialValues).length ? (
-          <>{t('add')}</>
-        ) : (
-          <>{t('edit')}</>
-        )}
+        {isSubmitting && <span className="loading-button"></span>}
+        <span className="relative z-1">
+          {!Object.keys(initialValues).length ? (
+            <>{t('add')}</>
+          ) : (
+            <>{t('edit')}</>
+          )}
+        </span>
       </Button>
     </form>
   );

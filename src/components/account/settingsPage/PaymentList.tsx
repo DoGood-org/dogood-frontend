@@ -5,7 +5,7 @@ import { AddCardModal, CardPreview } from '@/components';
 import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
 import { SetPlus } from '@/components/icons';
 import { useTranslations } from 'next-intl';
-import { fetchUserCards } from '@/lib/api/stripeApi';
+import { stripeService } from '@/services/stripeService';
 
 export const PaymentList = (): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -22,7 +22,7 @@ export const PaymentList = (): JSX.Element => {
   useEffect(() => {
     async function load(): Promise<void> {
       try {
-        const data = await fetchUserCards();
+        const data = await stripeService.fetchUserCards();
         setCardsFromDB(data);
       } catch (err) {
         console.error('Failed to fetch cards from DB', err);

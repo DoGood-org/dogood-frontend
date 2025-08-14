@@ -751,3 +751,32 @@ html {
     transform: rotate(360deg);
   }
 }
+
+.loading-button {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300%;
+  height: 100%;
+  bottom: auto;
+  margin: auto;
+  background: linear-gradient(
+    90deg,
+    var(--btn) 0%,
+    var(--btn-active) 40%,
+    var(--btn-active) 60%,
+    var(--btn) 100%
+  );
+
+  animation: loading 1s ease infinite;
+}
+
+@keyframes loading {
+  from {
+    transform: translateX(-10%);
+  }
+  to {
+    transform: translateX(110%);
+  }
+}
