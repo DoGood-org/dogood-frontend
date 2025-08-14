@@ -4,7 +4,7 @@ import { CardNumberElement } from '@stripe/react-stripe-js';
 import { JSX, useState } from 'react';
 import { cardIcons } from './CardIcons';
 import { CardInputWrapper } from './CardInputWrapper';
-import { options } from '@/lib/stripeElementOptions';
+import { options } from '@/config/stripeElement';
 
 export const CardNumberInput = ({
   focusedElement,
