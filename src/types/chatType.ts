@@ -4,6 +4,7 @@ export interface ChatType {
   avatar: string;
   content: string;
   createdAt: string;
+  pinned?: boolean;
 }
 
 export interface ChatCardProps {
@@ -11,6 +12,7 @@ export interface ChatCardProps {
   isSelected: boolean;
   onSelect: (id: string) => void;
   onChatDeleted: (chatId: string) => void;
+  onPinToggle: (chatId: string, pinned: boolean) => void;
 }
 
 export interface ChatCardsListProps {
@@ -18,6 +20,7 @@ export interface ChatCardsListProps {
   selectedChatId: string | null;
   onSelectChat: (id: string) => void;
   onChatDeleted: (chatId: string) => void;
+  onPinToggle: (chatId: string, pinned: boolean) => void;
 }
 
 export interface MessageType {

@@ -42,7 +42,9 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         className="
         w-full
         h-[48px]
-        py-3 px-2    
+        py-3 px-2 
+        text-white
+        dark:text-[#0C0C0C]   
         dark:placeholder:text-[#0C0C0C] 
         placeholder:text-white        
         dark:bg-white
@@ -56,8 +58,7 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         focus:ring-0
         focus:ring-transparent
         appearance-none
-        shadow-none
-        cursor-pointer"
+        shadow-none"
       />
       <Button
         type="button"
@@ -65,9 +66,9 @@ export const ChatMessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
         aria-label="Send a message"
         size="icon"
         onClick={sendMessage}
-        className="absolute right-4 top-7 text-[#1B9757] focus:outline-none cursor-pointer"
+        className="absolute right-0 top-7 text-[#1B9757] focus:outline-none cursor-pointer"
       >
-        <MessageSend className="w-5 h-5" />
+        <MessageSend className="size-6" />
       </Button>
     </div>
   );

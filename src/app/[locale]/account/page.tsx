@@ -1,13 +1,8 @@
-import { Account, AccountContent } from '@/components';
+import { Account } from '@/components';
 import React from 'react';
 
 const AccountPage: React.FC = () => {
-  return (
-    <div className="h-full">
-      <Account />
-      <AccountContent />
-    </div>
-  );
+  return <Account />;
 };
 
 export default AccountPage;

@@ -3,6 +3,7 @@ import { ChatSearchInput } from '@/components';
 import { ChatMessageList } from '@/components';
 import { ChatMessageInput } from '@/components';
 import { ChatType, MessageType } from '@/types/chatType';
+import { getLastMessageTime } from '@/utils/chatDateUtils';
 
 interface ChatDesktopLayoutProps {
   chats: ChatType[];
@@ -10,6 +11,7 @@ interface ChatDesktopLayoutProps {
   setSelectedChatId: (id: string | null) => void;
   messages: MessageType[];
   onSend: (message: string) => void;
+  onPinToggle: (chatId: string, pinned: boolean) => void;
   onChatDeleted: (chatId: string) => void;
   selectedChat: ChatType | null;
 }
@@ -22,7 +24,12 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
   onSend,
   onChatDeleted,
   selectedChat,
+  onPinToggle,
 }) => {
+  const lastMessageTime = selectedChatId
+    ? getLastMessageTime(messages, selectedChatId)
+    : null;
+
   return (
     <div className="flex h-[856px] max-h-screen min-h-[600px] gap-9">
       <div className="w-[320px] flex flex-col bg-background text-foreground overflow-y-auto custom-scrollbar-hide">
@@ -31,6 +38,7 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
           selectedChatId={selectedChatId}
           onSelectChat={setSelectedChatId}
           onChatDeleted={onChatDeleted}
+          onPinToggle={onPinToggle}
         />
       </div>
 
@@ -39,7 +47,7 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
           <>
             <ChatSearchInput
               selectedName={selectedChat?.name || ''}
-              lastMessageTime={selectedChat?.createdAt || ''}
+              lastMessageTime={lastMessageTime}
               lastOnline={selectedChat?.createdAt || ''}
               showBackButton={false}
               onBack={() => setSelectedChatId(null)}

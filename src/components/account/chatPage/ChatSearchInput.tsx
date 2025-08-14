@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { formatChatTime } from '@/utils/chatDateUtils';
 
 interface ChatSearchInputProps {
   selectedName: string;
@@ -40,33 +41,30 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
     }
   };
 
-  function formatTime(dateString: string): string {
-    const d = new Date(dateString);
-    const h = d.getHours().toString().padStart(2, '0');
-    const m = d.getMinutes().toString().padStart(2, '0');
-    return `${h}:${m}`;
-  }
-
-  const formattedTime = lastMessageTime ? formatTime(lastMessageTime) : '';
+  const formattedTime = lastMessageTime ? formatChatTime(lastMessageTime) : '';
 
   const placeholderText = formattedTime
     ? t('input.wasOnNetworkAt', { time: formattedTime })
-    : t('input.searchPlaceholder');
+    : '';
 
   return (
     <div className="flex items-center justify-between">
       {showBackButton && (
-        <button
-          onClick={onBack}
-          className="text-current flex items-center pr-2 cursor-pointer group"
-          aria-label="Back"
-          type="button"
-        >
-          <Back className="w-5 h-5 text-bg-icon mr-2 group-hover:text-btn-hover group-active:text-btn-active" />
-          <span className="text-base text-foreground group-hover:text-btn-hover group-active:text-btn-active">
-            {t('back')}
-          </span>
-        </button>
+        <div className="pl-2 md:pl-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onBack}
+            className="text-current flex items-center gap-0 md:gap-2 cursor-pointer group"
+            aria-label="Back"
+            type="button"
+          >
+            <Back className="w-5 h-5 text-bg-icon group-hover:text-btn-hover group-active:text-btn-active" />
+            <span className="text-base text-foreground group-hover:text-btn-hover group-active:text-btn-active">
+              {t('back')}
+            </span>
+          </Button>
+        </div>
       )}
       <div className="flex items-center">
         <div className="flex flex-col">
@@ -81,10 +79,13 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={onKeyDown}
-            className="    
+            className="
             w-[240px]
             h-[24px]
-            p-0
+            py-0
+            pl-2
+            pr-0
+            md:pl-0
             bg-transparent
             text-current
             placeholder:text-foreground
@@ -110,14 +111,14 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
         </div>
       </div>
       <Button
+        type="button"
         variant="ghost"
         size="icon"
-        className="text-current cursor-pointer"
-        aria-label="search"
-        type="button"
+        className="text-current cursor-pointer w-6 h-6"
+        aria-label="Search"
         onClick={handleSearch}
       >
-        <ChatSearch className="w-5 h-5 text-bg-icon hover:text-btn-hover active:text-btn-active" />
+        <ChatSearch className="size-6 text-bg-icon hover:text-btn-hover active:text-btn-active" />
       </Button>
     </div>
   );
