@@ -42,7 +42,8 @@
   },
   "payment": {
     "title": "Zahlung",
-    "add": "Zahlungsmethode hinzufügen"
+    "add": "Zahlungsmethode hinzufügen",
+    "back": "Zurück"
   },
   "about": {
     "title": "Über mich",

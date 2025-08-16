@@ -2,7 +2,13 @@
   "id": 1,
   "name": "Esther Howard",
   "avatar": "/account/user.png",
-  "email": "",
+  "customerId": "",
+  "paymentOptions": [
+    { "id": 1, "name": "" },
+    { "id": 2, "name": "" },
+    { "id": 3, "name": "" }
+  ],
+  "email": "test@mail.com",
   "siteRole": "ADMIN",
   "bio": "Volunteer | Helping Where It's Needed Most \n  Actively involved in humanitarian aid, community support, and social initiatives. \n 💙 Supporting people in crisis \n📦 Delivering essentials \n 🛠 Organizing local initiatives \n 🤝 Connecting those who want to help with those in need \n \n  Driven by compassion, powered by teamwork. \n Let’s make a difference — together. \n 📞 +380 (XX) XXX-XX-XX",
   "gender": "",

@@ -1,10 +1,10 @@
 import { JSX } from 'react';
 import { OrganizationItem, Slider } from '@/components';
-import userData from './user.json';
 import { OrganizationProps } from '@/types';
+import { mockUser } from '@/data/mockUser';
 
 export const OrganizationList = (): JSX.Element => {
-  const organizations = userData.organizations as OrganizationProps[];
+  const organizations = mockUser.organizations as OrganizationProps[];
 
   return (
     <Slider

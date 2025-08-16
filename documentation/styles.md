@@ -314,23 +314,52 @@
 ```css
 /* colors */
 --color-background: var(--background);
+--color-background-secondary: var(--background-secondary);
+--color-post: var(--post);
+--color-post_gray: var(--post_gray);
 --color-foreground: var(--foreground);
 --color-text-help: var(--text-help);
 --color-text-gray: var(--text-gray);
+--color-white: var(--white);
+--color-black: var(--black);
+--color-text_tag: var(--text_tag);
+--color-header-bg: var(--header-bg);
+--color-footer-bg: var(--footer-bg);
 --color-layout-background: var(--layout-background);
 --color-card: var(--card);
 --color-toggle: var(--toggle);
+--color-gradient: var(--gradient);
+--color-bg-icon: var(--bg-icon);
+--color-icon-color: var(--icon-color);
+--color-image-bg: var(--image-bg);
+--color-form-field: var(--form-field);
 
-/_ buttons _/ --color-border: var(--border); --color-btn: var(--btn);
---color-btn-text: var(--btn-text); --color-btn-hover: var(--btn-hover);
---color-btn-active: var(--btn-active); --color-btn-outline: var(--btn-outline);
---color-btn-outline-hover: var(--btn-outline-hover); --color-btn-outline-active:
-var(--btn-outline-active); --color-tag: var(--tag);
+/* buttons */
+--color-border: var(--border);
+--color-btn: var(--btn);
+--color-btn-text: var(--btn-text);
+--color-btn-hover: var(--btn-hover);
+--color-btn-active: var(--btn-active);
+--color-btn-outline: var(--btn-outline);
+--color-btn-outline-hover: var(--btn-outline-hover);
+--color-btn-outline-active: var(--btn-outline-active);
+--color-tag: var(--tag);
 
---color-error: var(--error); --color-attention: var(--attention);
+--color-error: var(--error);
+--color-success: var(--success);
+--color-attention: var(--attention);
 
 --color-star: var(--star);
+--color-medicine: var(--medicine);
+--color-animal: var(--animal);
+--color-nature: var(--nature);
+--color-food: var(--food);
+--color-map-btn: var(--map-btn-bg);
+--color-map-btn-icon: var(--map-btn-icon);
+--color-news-item-hover: var(--btn-hover);
 
+--color-review-bg: var(--review-bg);
+--color-review-reverse: var(--review-reverse);
 ```
 
 Light theme variables
@@ -345,6 +374,7 @@ Light theme variables
 --text-help: #696969;
 --text-gray: #999999;
 --white: #f1f1f1;
+--black: #010101;
 --text_tag: #010101;
 --tag: #696969;
 --post: #696969;
@@ -428,6 +458,7 @@ Dark theme variables
 | text-help            | #696969     |            | form-placeholders, filter-background                         |
 | text-gray            | #999999     |            | gray-text, lable-color                                       |
 | white                | #f1f1f1     |            | for text and bg that doesn't change in dark theme            |
+| black                | #010101     |            | for text that doesn't change in dark theme                   |
 | text_tag             | #010101     | #f1f1f1    |                                                              |
 | tag                  | #696969     |            | for tags (filter-buttons)                                    |
 | post                 | #696969     | #171b19    |                                                              |

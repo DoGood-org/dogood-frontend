@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import { JSX } from 'react';
-import userData from './user.json';
 import { useTranslations } from 'next-intl';
 import { UserLocate } from '@/components/icons';
 import { UserAavatar } from './UserAvatar';
 import { UserNoDescription } from './UserNoDescription';
+import { mockUser } from '@/data/mockUser';
 
 export const UserDescription = (): JSX.Element => {
-  const { avatar, name, siteRole, bio, location } = userData;
+  const { avatar, name, siteRole, bio, location } = mockUser;
   const t = useTranslations('account');
   return (
     <div className="flex flex-col md:flex-row gap-11 lg:gap-20">
