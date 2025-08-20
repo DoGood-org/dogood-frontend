@@ -1,0 +1,6 @@
+Contact: mailto:security@dogood.ink
+Contact: https://dogood.ink/security
+Encryption: https://dogood.ink/pgp-key.txt
+Preferred-Languages: en, uk, ua
+Policy: https://dogood.ink/security-policy
+Hiring: https://yourdomain.com/careers
