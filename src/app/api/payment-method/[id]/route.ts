@@ -3,10 +3,10 @@ import { stripe } from '@/lib/stripe';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
-  request: NextRequest,
-  context: { params: Record<string, string> }
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
-  const id = context.params.id;
+  const { id } = await params;
 
   try {
     const response = await axios.get(
@@ -33,9 +33,9 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  context: { params: Record<string, string> }
+  { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
-  const id = context.params.id;
+  const { id } = await params;
 
   try {
     const body = await request.json();
@@ -51,10 +51,10 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  request: NextRequest,
-  context: { params: Record<string, string> }
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
-  const id = context.params.id;
+  const { id } = await params;
 
   try {
     await stripe.paymentMethods.detach(id);
