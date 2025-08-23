@@ -7,6 +7,7 @@ import { FormField } from './FormField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
 import { formSchema } from './formSchema';
+import { sendContact } from '@/services/contactsService';
 export type FormData = InferType<typeof formSchema>;
 
 export const ContactForm = ({
@@ -33,26 +34,28 @@ export const ContactForm = ({
   } = methods;
 
   const onSubmit = async (data: FormData): Promise<void> => {
-    console.log('📤 Дані форми:', data);
     try {
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          const success = Math.random() > 0.3;
-          if (success) {
-            resolve('OK');
-          } else {
-            reject('ERROR');
-          }
-        }, 1000);
+      await sendContact({
+        name: data.name,
+        email: data.email,
+        phone: data.phone || '',
+        message: data.interest || '',
       });
+
+      // console.log('✅ Відповідь від бекенду:', response);
 
       setStatus('success');
       reset();
-    } catch {
-      setStatus('error');
-    }
 
-    setTimeout(() => setStatus(null), 3000);
+      setTimeout(() => {
+        setStatus(null);
+      }, 3000);
+    } catch (_error: unknown) {
+      setStatus('error');
+      setTimeout(() => {
+        setStatus(null);
+      }, 3000);
+    }
   };
 
   return (
@@ -114,7 +117,7 @@ export const ContactForm = ({
 
       {status && (
         <div
-          className={`fixed top-4 right-4 px-6 py-4 rounded-md shadow-md z-9999 text-white transition-all duration-300 ${
+          className={`fixed top-4 right-4 px-6 py-4 rounded-md shadow-md z-[9999] text-white transition-all duration-300 ${
             status === 'success' ? 'bg-green-600' : 'bg-red-600'
           }`}
         >
