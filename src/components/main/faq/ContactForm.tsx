@@ -2,7 +2,7 @@
 import { useForm, FormProvider } from 'react-hook-form';
 import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormField } from './FormField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
@@ -22,6 +22,12 @@ export const ContactForm = ({
   const contact = (t.raw('contact') as any[])[0];
   const downText = (t.raw('downtext') as any[])[0];
 
+  useEffect(() => {
+    if (!status) return;
+    const timer = setTimeout(() => setStatus(null), 3000);
+    return (): void => clearTimeout(timer);
+  }, [status]);
+
   const methods = useForm<FormData>({
     mode: 'onChange',
     resolver: yupResolver(formSchema),
@@ -38,23 +44,13 @@ export const ContactForm = ({
       await sendContact({
         name: data.name,
         email: data.email,
-        phone: data.phone || '',
-        message: data.interest || '',
+        phone: data.phone,
+        message: data.interest,
       });
-
-      // console.log('✅ Відповідь від бекенду:', response);
-
       setStatus('success');
       reset();
-
-      setTimeout(() => {
-        setStatus(null);
-      }, 3000);
     } catch (_error: unknown) {
       setStatus('error');
-      setTimeout(() => {
-        setStatus(null);
-      }, 3000);
     }
   };
 
