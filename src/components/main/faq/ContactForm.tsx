@@ -34,16 +34,22 @@ export const ContactForm = ({
 
   const onSubmit = async (data: FormData): Promise<void> => {
     try {
-      await sendContact({
+      const response = await sendContact({
         name: data.name,
         email: data.email,
         phone: data.phone,
         message: data.interest,
       });
-      toast.success(downText.success);
-      reset();
+
+      if (response?.status === 'success') {
+        toast.success(downText.success);
+        reset();
+      } else {
+        toast.error(response?.message || downText.error);
+      }
     } catch (_error: unknown) {
       toast.error(downText.error);
+      console.error('Contact form submit error:', _error);
     }
   };
 
