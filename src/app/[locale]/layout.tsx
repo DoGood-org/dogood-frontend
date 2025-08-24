@@ -7,6 +7,7 @@ import { ThemeInitializer } from '@/components/layout/theme/ThemeInitializer';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import ToastProvider from '@/components/ToastProvider';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -47,6 +48,7 @@ export default async function LocaleLayout({
           <main className="pt-[80px] lg:pt-[72px]">{children}</main>
           <Footer />
         </NextIntlClientProvider>
+        <ToastProvider />
       </body>
     </html>
   );

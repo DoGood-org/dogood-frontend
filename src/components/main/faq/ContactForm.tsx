@@ -2,11 +2,12 @@
 import { useForm, FormProvider } from 'react-hook-form';
 import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
 import { FormField } from './FormField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
 import { formSchema } from './formSchema';
+import { sendContact } from '@/services/contactsService';
+import { toast } from 'react-toastify';
 export type FormData = InferType<typeof formSchema>;
 
 export const ContactForm = ({
@@ -16,7 +17,6 @@ export const ContactForm = ({
   buttonTxt: string;
   title: string;
 }): React.ReactElement => {
-  const [status, setStatus] = useState<'success' | 'error' | null>(null);
   const t = useTranslations('faq');
   const contact = (t.raw('contact') as any[])[0];
   const downText = (t.raw('downtext') as any[])[0];
@@ -33,26 +33,24 @@ export const ContactForm = ({
   } = methods;
 
   const onSubmit = async (data: FormData): Promise<void> => {
-    console.log('📤 Дані форми:', data);
     try {
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          const success = Math.random() > 0.3;
-          if (success) {
-            resolve('OK');
-          } else {
-            reject('ERROR');
-          }
-        }, 1000);
+      const response = await sendContact({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        message: data.interest,
       });
 
-      setStatus('success');
-      reset();
-    } catch {
-      setStatus('error');
+      if (response?.status === 'success') {
+        toast.success(downText.success);
+        reset();
+      } else {
+        toast.error(response?.message || downText.error);
+      }
+    } catch (_error: unknown) {
+      toast.error(downText.error);
+      console.error('Contact form submit error:', _error);
     }
-
-    setTimeout(() => setStatus(null), 3000);
   };
 
   return (
@@ -111,16 +109,6 @@ export const ContactForm = ({
           </div>
         </form>
       </FormProvider>
-
-      {status && (
-        <div
-          className={`fixed top-4 right-4 px-6 py-4 rounded-md shadow-md z-9999 text-white transition-all duration-300 ${
-            status === 'success' ? 'bg-green-600' : 'bg-red-600'
-          }`}
-        >
-          {status === 'success' ? downText.success : downText.error}
-        </div>
-      )}
     </div>
   );
 };
