@@ -14,7 +14,11 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
   const router = useRouter();
 
   if (!props.item || !props.item.id || !props.item.title) {
-    return <div className="text-center text-gray-500">{t('noNewsItem')}</div>;
+    return (
+      <div className="text-center text-gray-500">
+        {t('newsItem.notFoundTitle')}
+      </div>
+    );
   }
 
   const navigateToNewsItem = (): void => {
@@ -33,9 +37,9 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
     "
     >
       <div className="mx-auto mb-[25px] relative rounded-lg w-[260px] h-[198px] overflow-hidden">
-        {props.item.img && (
+        {props.item.image && (
           <Image
-            src={props.item.img}
+            src={props.item.image}
             alt={props.item.title}
             width={260}
             height={198}
@@ -48,8 +52,8 @@ export const NewsItem: React.FC<NewsItemProps> = (props: NewsItemProps) => {
       <p className="text-left mb-1 text-base  mt-auto">{props.item.category}</p>
       <div className="flex text-sm items-center gap-3">
         <span className="text-nowrap">
-          {props.item.date
-            ? new Date(props.item.date).toLocaleDateString('en-US', {
+          {props.item.createdAt
+            ? new Date(props.item.createdAt).toLocaleDateString('en-US', {
                 month: 'short',
                 day: 'numeric',
                 year: 'numeric',
