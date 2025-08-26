@@ -7,10 +7,17 @@ export interface INewsItem {
   tags?: string[];
 }
 
-export interface INewsApiResponse {
+export interface INewsListApiResponse {
   status: string;
   count: number;
   data: {
     posts: INewsItem[];
+  };
+}
+
+export interface INewsItemApiResponse {
+  status: string;
+  data: {
+    post: INewsItem;
   };
 }

@@ -16,7 +16,6 @@ import { getTranslations } from 'next-intl/server';
 import { INewsItem } from '@/types';
 
 export const NewsList = async (): Promise<JSX.Element> => {
-  // Завантажуємо переклади на сервері
   const t = await getTranslations('news');
 
   let news: INewsItem[] = [];
