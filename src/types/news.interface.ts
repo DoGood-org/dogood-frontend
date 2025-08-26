@@ -3,8 +3,9 @@ export interface INewsItem {
   title: string;
   image: string;
   createdAt: string;
-  category?: string;
-  tags?: string[];
+  category: string;
+  tags: string[];
+  content: string;
 }
 
 export interface INewsListApiResponse {

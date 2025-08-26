@@ -6,19 +6,18 @@ import Image from 'next/image';
 import { getNewsById } from '@/services/newsService';
 import { notFound } from 'next/navigation';
 import { INewsItem } from '@/types';
+import { cache } from 'react';
+import { newsFormatDate } from '@/utils/newsFormatDate';
 
 interface Props {
   params: Promise<{ slug: string; locale: Tlocale }>;
 }
 
-const fetchNewsItem = async (slug: string): Promise<INewsItem | null> => {
-  try {
-    const newsItem = await getNewsById(slug);
-    return newsItem;
-  } catch (_error) {
-    return null;
-  }
-};
+const fetchNewsItem = cache(async (slug: string): Promise<INewsItem | null> => {
+  const newsItem = await getNewsById(slug);
+  if (!newsItem) notFound();
+  return newsItem;
+});
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, locale } = await params;
@@ -71,8 +70,9 @@ justify-center
       <h2 className="text-foreground">
         {t('newsItemPage.title', { title: newsItem.title })}
       </h2>
-      <p className="text-foreground">{newsItem.createdAt}</p>
+      <p className="text-foreground">{newsFormatDate(newsItem.createdAt)}</p>
       <p className="text-foreground">{newsItem.title}</p>
+      <p className="mb-6">{newsItem.content}</p>
       <Image
         src={newsItem.image}
         alt={newsItem.title}

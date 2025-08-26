@@ -1,5 +1,6 @@
 'use client';
 import { INewsItem } from '@/types/news.interface';
+import { newsFormatDate } from '@/utils/newsFormatDate';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -41,8 +42,8 @@ export const NewsItem: React.FC<NewsItemProps> = ({ item }: NewsItemProps) => {
           <Image
             src={item.image}
             alt={item.title}
-            layout="fill"
-            objectFit="cover"
+            fill
+            className="object-cover"
           />
         )}
       </div>
@@ -51,16 +52,7 @@ export const NewsItem: React.FC<NewsItemProps> = ({ item }: NewsItemProps) => {
       </h3>
       <p className="text-left mb-1 text-base  mt-auto">{item.category}</p>
       <div className="flex text-sm items-center gap-3">
-        <span className="text-nowrap">
-          {item.createdAt
-            ? new Date(item.createdAt).toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric',
-                timeZone: 'UTC',
-              })
-            : ''}
-        </span>
+        <span className="text-nowrap">{newsFormatDate(item.createdAt)}</span>
         <span className="w-1 h-1 bg-white rounded-full line-clamp-1" />
         {item.tags && item.tags.length > 0 && (
           <span className="capitalize line-clamp-1">
