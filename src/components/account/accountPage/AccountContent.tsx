@@ -6,7 +6,8 @@ import { JSX } from 'react';
 
 export const AccountContent = (): JSX.Element => {
   const pathname = usePathname();
-  const isAccountPage = pathname === '/account';
+  const segments = pathname.split('/').filter(Boolean);
+  const isAccountPage = segments[segments.length - 1] === 'account';
 
   return <>{isAccountPage && <AccountContentPanel />}</>;
 };
