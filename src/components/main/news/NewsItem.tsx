@@ -43,9 +43,7 @@ export const NewsItem: React.FC<NewsItemProps> = ({ item }) => {
           <Image src={image} alt={title} fill className="object-cover" />
         )}
       </div>
-      <h3 className=" mb-[53px] text-md font-normal line-clamp-2">
-        {item.title}
-      </h3>
+      <h3 className=" mb-[53px] text-md font-normal line-clamp-2">{title}</h3>
       <p className="text-left mb-1 text-base  mt-auto">{category}</p>
       <div className="flex text-sm items-center gap-3">
         <span className="text-nowrap">{newsFormatDate(createdAt)}</span>

@@ -13,17 +13,19 @@ interface Props {
   params: { slug: string; locale: Tlocale };
 }
 
-const fetchNewsItem = cache(async (slug: string): Promise<INewsItem | null> => {
-  const newsItem = await getNewsById(slug);
-  if (!newsItem) notFound();
-  return newsItem;
-});
+const fetchNewsItem = cache(
+  async (slug: string, locale: string): Promise<INewsItem | null> => {
+    const newsItem = await getNewsById(slug, locale);
+    if (!newsItem) notFound();
+    return newsItem;
+  }
+);
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, locale } = params;
   const t = await getTranslations({ locale, namespace: 'news' });
 
-  const newsItem = await fetchNewsItem(slug);
+  const newsItem = await fetchNewsItem(slug, locale);
 
   if (!newsItem) {
     return {
@@ -44,7 +46,7 @@ export default async function IdNewsItemPage({
   const { slug, locale } = params;
   const t = await getTranslations({ locale, namespace: 'news' });
 
-  const newsItem = await fetchNewsItem(slug);
+  const newsItem = await fetchNewsItem(slug, locale);
 
   if (!newsItem) {
     notFound();

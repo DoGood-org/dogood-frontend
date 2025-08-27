@@ -1,7 +1,14 @@
 import { fetchNews, NewsItem } from '@/components';
 
-const NewsPage = async (): Promise<React.ReactElement> => {
-  const news = await fetchNews();
+interface NewsPageProps {
+  params: {
+    locale: string;
+  };
+}
+const NewsPage = async ({
+  params,
+}: NewsPageProps): Promise<React.ReactElement> => {
+  const news = await fetchNews(params.locale);
   return (
     <div
       className=" 
