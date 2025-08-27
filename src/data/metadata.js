@@ -16,7 +16,7 @@ const data = {
 
 const { title, description, keywords, locale, images } = data;
 
-const { BASE_URL } = process.env;
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 
 export const meta = {
   title: title,
