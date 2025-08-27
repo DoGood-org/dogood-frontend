@@ -13,13 +13,8 @@ import { INewsItem } from '@/types';
 
 export const fetchNews = async (): Promise<INewsItem[]> => {
   try {
-    const fetchedNews = await getNews();
-    if (Array.isArray(fetchedNews)) {
-      return fetchedNews;
-    } else if (fetchedNews) {
-      return [fetchedNews];
-    }
-    return [];
+    const news = await getNews();
+    return Array.isArray(news) ? news : news ? [news] : [];
   } catch (error) {
     console.error('Failed to fetch news:', error);
     return [];

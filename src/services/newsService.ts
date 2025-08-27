@@ -18,8 +18,7 @@ export const getNews = async (): Promise<INewsItem[]> => {
 export const getNewsById = async (id: string | number): Promise<INewsItem> => {
   try {
     const response = await api.get<INewsItemApiResponse>(`/posts/${id}`);
-    console.log('API response data:', response.data);
-    const post = response.data.data.post;
+    const { post } = response.data.data;
 
     if (!post) throw new Error('News item not found in API response.');
 

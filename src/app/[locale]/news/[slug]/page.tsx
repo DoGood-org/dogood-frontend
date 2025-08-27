@@ -10,7 +10,7 @@ import { cache } from 'react';
 import { newsFormatDate } from '@/utils/newsFormatDate';
 
 interface Props {
-  params: Promise<{ slug: string; locale: Tlocale }>;
+  params: { slug: string; locale: Tlocale };
 }
 
 const fetchNewsItem = cache(async (slug: string): Promise<INewsItem | null> => {
@@ -20,7 +20,7 @@ const fetchNewsItem = cache(async (slug: string): Promise<INewsItem | null> => {
 });
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug, locale } = await params;
+  const { slug, locale } = params;
   const t = await getTranslations({ locale, namespace: 'news' });
 
   const newsItem = await fetchNewsItem(slug);
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function IdNewsItemPage({
   params,
 }: Props): Promise<JSX.Element> {
-  const { slug, locale } = await params;
+  const { slug, locale } = params;
   const t = await getTranslations({ locale, namespace: 'news' });
 
   const newsItem = await fetchNewsItem(slug);
@@ -49,6 +49,8 @@ export default async function IdNewsItemPage({
   if (!newsItem) {
     notFound();
   }
+
+  const { title, content, image, createdAt } = newsItem;
 
   return (
     <div
@@ -67,15 +69,13 @@ items-center
 justify-center
 "
     >
-      <h2 className="text-foreground">
-        {t('newsItemPage.title', { title: newsItem.title })}
-      </h2>
-      <p className="text-foreground">{newsFormatDate(newsItem.createdAt)}</p>
-      <p className="text-foreground">{newsItem.title}</p>
-      <p className="mb-6">{newsItem.content}</p>
+      <h2 className="text-foreground">{t('newsItemPage.title', { title })}</h2>
+      <p className="text-foreground">{newsFormatDate(createdAt)}</p>
+      <p className="text-foreground">{title}</p>
+      <p className="mb-6">{content}</p>
       <Image
-        src={newsItem.image}
-        alt={newsItem.title}
+        src={image}
+        alt={title}
         className="w-full h-auto max-w-[600px] mb-4"
         width={600}
         height={400}

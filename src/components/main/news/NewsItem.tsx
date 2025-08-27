@@ -10,11 +10,12 @@ interface NewsItemProps {
   item: INewsItem;
 }
 
-export const NewsItem: React.FC<NewsItemProps> = ({ item }: NewsItemProps) => {
+export const NewsItem: React.FC<NewsItemProps> = ({ item }) => {
   const t = useTranslations('news');
   const router = useRouter();
+  const { id, title, image, category, createdAt, tags = [] } = item;
 
-  if (!item || !item.id || !item.title) {
+  if (!id || !title) {
     return (
       <div className="text-center text-gray-500">
         {t('newsItem.notFoundTitle')}
@@ -23,7 +24,7 @@ export const NewsItem: React.FC<NewsItemProps> = ({ item }: NewsItemProps) => {
   }
 
   const navigateToNewsItem = (): void => {
-    router.push(`/news/${item.id}`);
+    router.push(`/news/${id}`);
   };
 
   return (
@@ -38,26 +39,19 @@ export const NewsItem: React.FC<NewsItemProps> = ({ item }: NewsItemProps) => {
     "
     >
       <div className="mx-auto mb-[25px] relative rounded-lg w-[260px] h-[198px] overflow-hidden">
-        {item.image && (
-          <Image
-            src={item.image}
-            alt={item.title}
-            fill
-            className="object-cover"
-          />
+        {image && (
+          <Image src={image} alt={title} fill className="object-cover" />
         )}
       </div>
       <h3 className=" mb-[53px] text-md font-normal line-clamp-2">
         {item.title}
       </h3>
-      <p className="text-left mb-1 text-base  mt-auto">{item.category}</p>
+      <p className="text-left mb-1 text-base  mt-auto">{category}</p>
       <div className="flex text-sm items-center gap-3">
-        <span className="text-nowrap">{newsFormatDate(item.createdAt)}</span>
+        <span className="text-nowrap">{newsFormatDate(createdAt)}</span>
         <span className="w-1 h-1 bg-white rounded-full line-clamp-1" />
-        {item.tags && item.tags.length > 0 && (
-          <span className="capitalize line-clamp-1">
-            #{item.tags.join(' #')}
-          </span>
+        {tags.length > 0 && (
+          <span className="capitalize line-clamp-1">#{tags.join(' #')}</span>
         )}
       </div>
     </div>

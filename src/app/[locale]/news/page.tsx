@@ -1,6 +1,6 @@
 import { fetchNews, NewsItem } from '@/components';
 
-const NewsPage: React.FC = async () => {
+const NewsPage = async (): Promise<React.ReactElement> => {
   const news = await fetchNews();
   return (
     <div
@@ -15,7 +15,6 @@ const NewsPage: React.FC = async () => {
       text-foreground  
   "
     >
-      {' '}
       <div
         className="
           grid 
