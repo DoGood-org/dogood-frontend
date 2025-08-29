@@ -29,7 +29,7 @@ export const fetchFromApi = async <T>(
   endpoint: string,
   options: {
     method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-    data?: any;
+    data?: Record<string, any>;
     params?: Record<string, any>;
     headers?: Record<string, string>;
     auth?: boolean;
