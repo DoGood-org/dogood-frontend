@@ -29,15 +29,24 @@ export const fetchFromApi = async <T>(
   endpoint: string,
   options: {
     method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-    data?: any;
+    data?: Record<string, any>;
     params?: Record<string, any>;
     headers?: Record<string, string>;
+    auth?: boolean;
   } = {}
 ): Promise<T> => {
-  const { method = 'GET', data = null, params = {}, headers = {} } = options;
+  const {
+    method = 'GET',
+    data,
+    params = {},
+    headers = {},
+    auth = false,
+  } = options;
 
   try {
-    const response = await api(endpoint, {
+    const instance = auth ? api.auth : api.guest;
+
+    const response = await instance(endpoint, {
       method,
       data: method !== 'GET' ? data : undefined,
       params: method === 'GET' ? params : undefined,
