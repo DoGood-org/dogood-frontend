@@ -37,7 +37,7 @@ export const fetchFromApi = async <T>(
 ): Promise<T> => {
   const {
     method = 'GET',
-    data = null,
+    data,
     params = {},
     headers = {},
     auth = false,
