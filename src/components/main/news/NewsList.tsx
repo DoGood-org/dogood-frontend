@@ -7,19 +7,8 @@ import { SwiperList } from '@/components';
 
 import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { Section } from '@/components/ui/Section';
-import { getNews } from '@/services/newsService';
 import { getLocale, getTranslations } from 'next-intl/server';
-import { INewsItem } from '@/types';
-
-export const fetchNews = async (locale: string): Promise<INewsItem[]> => {
-  try {
-    const news = await getNews(locale);
-    return Array.isArray(news) ? news : news ? [news] : [];
-  } catch (error) {
-    console.error('Failed to fetch news:', error);
-    return [];
-  }
-};
+import { fetchNews } from '@/services/newsFacade';
 
 export const NewsList = async (): Promise<JSX.Element> => {
   const locale = await getLocale();

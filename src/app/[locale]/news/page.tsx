@@ -1,14 +1,17 @@
-import { fetchNews, NewsItem } from '@/components';
+import { NewsItem } from '@/components';
+import { fetchNews } from '@/services/newsFacade';
+import { Tlocale } from '@/types';
 
 interface NewsPageProps {
   params: {
-    locale: string;
+    locale: Tlocale;
   };
 }
 const NewsPage = async ({
   params,
 }: NewsPageProps): Promise<React.ReactElement> => {
-  const news = await fetchNews(params.locale);
+  const awaitedParams = await params;
+  const news = await fetchNews(awaitedParams.locale);
   return (
     <div
       className=" 
