@@ -9,9 +9,10 @@ import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { Section } from '@/components/ui/Section';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { fetchNews } from '@/services/newsFacade';
+import { Tlocale } from '@/types';
 
 export const NewsList = async (): Promise<JSX.Element> => {
-  const locale = await getLocale();
+  const locale = (await getLocale()) as Tlocale;
   const t = await getTranslations('news');
   const news = await fetchNews(locale);
 
