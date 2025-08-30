@@ -1,8 +1,10 @@
-import { fetchNews, NewsItem } from '@/components';
+import { NewsItem } from '@/components';
+import { fetchNews } from '@/services/newsFacade';
+import { Tlocale } from '@/types';
 
 interface NewsPageProps {
   params: {
-    locale: string;
+    locale: Tlocale;
   };
 }
 const NewsPage = async ({

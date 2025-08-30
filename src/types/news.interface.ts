@@ -1,5 +1,5 @@
 export interface INewsItem {
-  id: string;
+  id: number;
   title: string;
   image: string;
   createdAt: string;
