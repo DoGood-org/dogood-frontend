@@ -10,7 +10,8 @@ interface NewsPageProps {
 const NewsPage = async ({
   params,
 }: NewsPageProps): Promise<React.ReactElement> => {
-  const news = await fetchNews(params.locale);
+  const awaitedParams = await params;
+  const news = await fetchNews(awaitedParams.locale);
   return (
     <div
       className=" 
