@@ -1,7 +1,7 @@
-import { INewsItem } from '@/types';
+import { INewsItem, Tlocale } from '@/types';
 import { getNews } from './newsService';
 
-export const fetchNews = async (locale: string): Promise<INewsItem[]> => {
+export const fetchNews = async (locale: Tlocale): Promise<INewsItem[]> => {
   try {
     const news = await getNews(locale);
     return Array.isArray(news) ? news : news ? [news] : [];

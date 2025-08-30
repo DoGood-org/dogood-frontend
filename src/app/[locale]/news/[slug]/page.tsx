@@ -10,7 +10,7 @@ import { cache } from 'react';
 import { newsFormatDate } from '@/utils/newsFormatDate';
 
 interface Props {
-  params: { slug: string; locale: Tlocale };
+  params: Promise<{ slug: string; locale: Tlocale }>;
 }
 
 const fetchNewsItem = cache(

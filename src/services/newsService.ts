@@ -1,7 +1,12 @@
 import api from '@/lib/api';
-import { INewsItem, INewsItemApiResponse, INewsListApiResponse } from '@/types';
+import {
+  INewsItem,
+  INewsItemApiResponse,
+  INewsListApiResponse,
+  Tlocale,
+} from '@/types';
 
-export const getNews = async (locale: string): Promise<INewsItem[]> => {
+export const getNews = async (locale: Tlocale): Promise<INewsItem[]> => {
   const response = await api.guest.get<INewsListApiResponse>('/posts', {
     params: {
       lang: locale,
