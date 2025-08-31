@@ -2,6 +2,7 @@
 import { AuthForm } from '@/components';
 import { ForgotEnterEmail } from '@/components/main/auth/ForgotEnterEmail';
 import { ForgotPassword } from '@/components/main/auth/ForgotPassword';
+import { fetchFromApi } from '@/lib/apiFetcher';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -17,10 +18,19 @@ export const LoginPageContent: React.FC = () => {
         <AuthForm
           type="login"
           onForgotPassword={() => setStep('forgotEmail')}
-          onFormSubmit={(type, data) => {
-            console.log('Login person:', type, data);
-            setStep('success');
-            router.push('/');
+          onFormSubmit={async (type, data) => {
+            // setStep('success');
+            // router.push('/');
+            const userData = {
+              email: data.email,
+              password: data.password,
+            };
+
+            const response = await fetchFromApi('auth/login', {
+              method: 'POST',
+              data: userData,
+            });
+            console.log('Login response:', response);
           }}
         />
       )}

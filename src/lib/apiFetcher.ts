@@ -1,5 +1,6 @@
 import api from '@/lib/api';
 import { AxiosError } from 'axios';
+import { HTTP_METHOD } from 'next/dist/server/web/http';
 
 export interface ApiResponse<T> {
   data: T;
@@ -25,15 +26,20 @@ export class ApiError extends Error {
   }
 }
 
+export interface FetchFromApiOptions<
+  D = unknown,
+  P extends Record<string, unknown> = Record<string, unknown>,
+> {
+  method?: HTTP_METHOD;
+  data?: D;
+  params?: P;
+  headers?: Record<string, string>;
+  auth?: boolean;
+}
+
 export const fetchFromApi = async <T>(
   endpoint: string,
-  options: {
-    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-    data?: Record<string, any>;
-    params?: Record<string, any>;
-    headers?: Record<string, string>;
-    auth?: boolean;
-  } = {}
+  options: FetchFromApiOptions = {}
 ): Promise<T> => {
   const {
     method = 'GET',
@@ -48,12 +54,15 @@ export const fetchFromApi = async <T>(
 
     const response = await instance(endpoint, {
       method,
-      data: method !== 'GET' ? data : undefined,
-      params: method === 'GET' ? params : undefined,
+      data,
+      params,
       headers: {
-        'Content-Type': 'application/json',
+        ...(data instanceof FormData
+          ? {}
+          : { 'Content-Type': 'application/json' }),
         ...headers,
       },
+      withCredentials: auth,
     });
 
     return response.data;
