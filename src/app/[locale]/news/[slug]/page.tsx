@@ -10,11 +10,11 @@ import { cache } from 'react';
 import { newsFormatDate } from '@/utils/newsFormatDate';
 
 interface Props {
-  params: { slug: string; locale: Tlocale };
+  params: Promise<{ slug: string; locale: Tlocale }>;
 }
 
 const fetchNewsItem = cache(
-  async (slug: string, locale: string): Promise<INewsItem | null> => {
+  async (slug: string, locale: Tlocale): Promise<INewsItem | null> => {
     const newsItem = await getNewsById(slug, locale);
     if (!newsItem) notFound();
     return newsItem;
@@ -22,7 +22,7 @@ const fetchNewsItem = cache(
 );
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug, locale } = params;
+  const { slug, locale } = await params;
   const t = await getTranslations({ locale, namespace: 'news' });
 
   const newsItem = await fetchNewsItem(slug, locale);
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function IdNewsItemPage({
   params,
 }: Props): Promise<JSX.Element> {
-  const { slug, locale } = params;
+  const { slug, locale } = await params;
   const t = await getTranslations({ locale, namespace: 'news' });
 
   const newsItem = await fetchNewsItem(slug, locale);
@@ -75,13 +75,15 @@ justify-center
       <p className="text-foreground">{newsFormatDate(createdAt)}</p>
       <p className="text-foreground">{title}</p>
       <p className="mb-6">{content}</p>
-      <Image
-        src={image}
-        alt={title}
-        className="w-full h-auto max-w-[600px] mb-4"
-        width={600}
-        height={400}
-      />
+      {image && (
+        <Image
+          src={image}
+          alt={title}
+          className="w-full h-auto max-w-[600px] mb-4"
+          width={600}
+          height={400}
+        />
+      )}
     </div>
   );
 }

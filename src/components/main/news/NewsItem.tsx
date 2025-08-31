@@ -13,7 +13,7 @@ interface NewsItemProps {
 export const NewsItem: React.FC<NewsItemProps> = ({ item }) => {
   const t = useTranslations('news');
   const router = useRouter();
-  const { id, title, image, category, createdAt, tags = [] } = item;
+  const { id, title, image, category, createdAt, tags } = item;
 
   if (!id || !title) {
     return (
@@ -40,7 +40,13 @@ export const NewsItem: React.FC<NewsItemProps> = ({ item }) => {
     >
       <div className="mx-auto mb-[25px] relative rounded-lg w-[260px] h-[198px] overflow-hidden">
         {image && (
-          <Image src={image} alt={title} fill className="object-cover" />
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-cover"
+            sizes="260px"
+          />
         )}
       </div>
       <h3 className=" mb-[53px] text-md font-normal line-clamp-2">{title}</h3>
