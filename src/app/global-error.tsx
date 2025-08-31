@@ -77,6 +77,7 @@ export default function GlobalError({
               nameBtn2={messages?.common?.backHomeBtn}
               stuckText={messages?.common?.stuckText}
               handleResetBtn={handleResetBtn}
+              email={messages?.common?.email}
             />
           </Section>
           <Footer />

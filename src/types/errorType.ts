@@ -20,6 +20,7 @@ export interface NotFoundProps extends ButtonPanelProps {
   description: string;
   text: string;
   stuckText?: string;
+  email?: string;
 }
 
 export type AppLocale = (typeof routing.locales)[number];

@@ -18,6 +18,7 @@ export const NotFoundComponent: React.FC<NotFoundProps> = ({
   nameBtn1,
   nameBtn2,
   stuckText,
+  email,
 }) => {
   return (
     <div className="flex flex-col items-center mx-auto mb-4 md:mb-10 lg:flex-row lg:items-center">
@@ -46,7 +47,7 @@ export const NotFoundComponent: React.FC<NotFoundProps> = ({
           hrefBtn2={hrefBtn2}
         />
         <Link
-          href="mailto:startup.dogood@gmail.com"
+          href={`mailto:${email}`}
           className="text-xs md:text-base text-start mt-4 md:mt-10"
           passHref
         >

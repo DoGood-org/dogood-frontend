@@ -7,7 +7,13 @@ const nextConfig: NextConfig = {
     esmExternals: 'loose', // This helps with some module resolution issues
   },
   images: {
-    remotePatterns: [{ hostname: 'res.cloudinary.com' }],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
+    ],
   },
 };
 

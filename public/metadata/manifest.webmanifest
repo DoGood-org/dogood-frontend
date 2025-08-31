@@ -1,0 +1,20 @@
+{
+  "name": "DoGood — Be the Spark. Make Kindness Visible.",
+  "short_name": "DoGood",
+  "description": "DoGood is a global social impact platform connecting people, nonprofits, and companies to create a culture of kindness. Join to volunteer, donate, and make the world better together.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}

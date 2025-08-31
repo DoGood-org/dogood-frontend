@@ -1,19 +1,21 @@
-'use client';
-
 import React, { JSX } from 'react';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { mockNews, SwiperList } from '@/components';
-// import { mockNews } from '@/components/main/news/mockNews';
-import { useTranslations } from 'next-intl';
+import { SwiperList } from '@/components';
 
 import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { Section } from '@/components/ui/Section';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { fetchNews } from '@/services/newsFacade';
+import { Tlocale } from '@/types';
 
-export const NewsList = (): JSX.Element => {
-  const t = useTranslations('news');
+export const NewsList = async (): Promise<JSX.Element> => {
+  const locale = (await getLocale()) as Tlocale;
+  const t = await getTranslations('news');
+  const news = await fetchNews(locale);
+
   return (
     <Section
       withContainer={true}
@@ -28,7 +30,7 @@ export const NewsList = (): JSX.Element => {
       </h2>
 
       <SwiperList
-        newsItems={mockNews}
+        newsItems={news}
         swiperContainerClass="h-[425px] my-10"
         prevClass="prevNews"
         nextClass="nextNews"
