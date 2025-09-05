@@ -19,13 +19,15 @@ export const AccountTaskItem = ({ task }: TaskItemProps): JSX.Element => {
   return (
     <div className="bg-card p-8 rounded-lg flex flex-col lg:flex-row md:gap-8 justify-between">
       <div className="flex flex-col md:flex-row">
-        <Image
-          src={avatar}
-          alt={`${title} logo`}
-          width={241}
-          height={241}
-          className="w-[241px] h-[241px] rounded-lg self-center md:self-start"
-        />
+        {avatar && (
+          <Image
+            src={avatar}
+            alt={`${title} logo`}
+            width={241}
+            height={241}
+            className="w-[241px] h-[241px] rounded-lg self-center md:self-start"
+          />
+        )}
         <div className="mt-8 md:mt-0 flex flex-col">
           <h3 className="text-h3">{title}</h3>
           <p className="whitespace-pre-line mt-6 text-base">{description}</p>

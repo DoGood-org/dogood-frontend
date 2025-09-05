@@ -11,6 +11,7 @@ import { useMediaQuery } from '@/hooks';
 import { ContentProps } from '@/types';
 import { useLocale, useTranslations } from 'next-intl';
 import { JSX, useState } from 'react';
+import { mockUser } from '@/data/mockUser';
 
 export const AccountContentPanel = (): JSX.Element => {
   const t = useTranslations('account');
@@ -23,7 +24,7 @@ export const AccountContentPanel = (): JSX.Element => {
   const activeData = views.find(({ view }) => view === activeView);
 
   const viewComponents: Record<string, React.ReactNode> = {
-    task: <AccountTaskList />,
+    task: <AccountTaskList tasks={mockUser.joinedTasks} />,
     organization: <OrganizationList />,
     reviews: <ReviewsList />,
   };
