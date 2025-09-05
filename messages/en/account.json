@@ -2,6 +2,8 @@
   "description": "Description",
   "noDescription": "Tell us a bit about yourself — it helps others get to know you better. Who are you, what do you care about, what inspires you?",
   "noDescriptionButton": "Add bio",
+  "noDescriptionPublic": "There is no description yet.",
+  "noDescriptionPublicButton": "Send a message",
   "accountButton": "Learn more",
   "task": {
     "title": "Find your first task on the map",
@@ -9,6 +11,9 @@
     "button": "Go to map"
   },
   "noReview": "No one has left a review for this user yet.",
+  "noReviewPublic": "No reviews yet",
+  "noOrganizationionPublic": "The person is not a member of the organization",
+  "noTaskPublic": "There are no tasks",
   "contentViews": [
     {
       "id": "task",

@@ -2,6 +2,8 @@
   "description": "Beschreibung",
   "noDescription": "Erzähl uns ein wenig über dich – das hilft anderen, dich besser kennenzulernen. Wer bist du, was liegt dir am Herzen, was inspiriert dich?",
   "noDescriptionButton": "Bio hinzufügen",
+  "noDescriptionPublic": "Es gibt noch keine Beschreibung.",
+  "noDescriptionPublicButton": "Nachricht senden",
   "accountButton": "Mehr erfahren",
   "task": {
     "title": "Finde deine erste Aufgabe auf der Karte",
@@ -9,6 +11,9 @@
     "button": "Zur Karte"
   },
   "noReview": "Noch hat niemand eine Bewertung für diesen Nutzer hinterlassen.",
+  "noReviewPublic": "Noch keine Bewertungen",
+  "noOrganizationionPublic": "Die Person ist kein Mitglied der Organisation",
+  "noTaskPublic": "Es gibt keine Aufgaben",
   "contentViews": [
     {
       "id": "task",
