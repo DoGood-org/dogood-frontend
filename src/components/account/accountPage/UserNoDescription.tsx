@@ -26,7 +26,7 @@ export const UserNoDescription = (): JSX.Element => {
 
       {isPublicProfilePage && (
         <>
-          <h3 className="mt-6 text-base">{t('description')}</h3>
+          <h3 className="mt-6 text-base">{t('description')}:</h3>
           <p className="mt-6 text-base font-semibold">
             {t('noDescriptionPublic')}
           </p>

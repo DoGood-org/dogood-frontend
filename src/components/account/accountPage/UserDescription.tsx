@@ -2,13 +2,17 @@ import Image from 'next/image';
 import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
 import { UserLocate } from '@/components/icons';
-import { UserAavatar } from './UserAvatar';
-import { UserNoDescription } from './UserNoDescription';
-import { mockUser } from '@/data/mockUser';
+import { UserAavatar, UserNoDescription } from '@/components';
+import { UserDetailedProps } from '@/types';
 
-export const UserDescription = (): JSX.Element => {
-  const { avatar, name, siteRole, bio, location } = mockUser;
+export const UserDescription = ({
+  user,
+}: {
+  user: UserDetailedProps;
+}): JSX.Element => {
   const t = useTranslations('account');
+  const { avatar, name, siteRole, bio, location } = user;
+
   return (
     <div className="flex flex-col md:flex-row gap-11 lg:gap-20">
       {avatar ? (
@@ -28,13 +32,15 @@ export const UserDescription = (): JSX.Element => {
         <p className="text-base lg:text-h3 mt-3 font-semibold lg:font-normal capitalize">
           {siteRole.toLowerCase()}
         </p>
-        <p className="flex gap-2 text-text-help mt-6">
-          <UserLocate />
-          {location.city}
-        </p>
+        {location && (
+          <p className="flex gap-2 text-text-help mt-6">
+            <UserLocate />
+            {location?.city}
+          </p>
+        )}
         {bio ? (
           <>
-            <p className="mt-6">{t('description')}</p>
+            <h3 className="mt-6">{t('description')}</h3>
             <p className="whitespace-pre-line mt-6 text-base">{bio}</p>
           </>
         ) : (

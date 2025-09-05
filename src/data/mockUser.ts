@@ -1,4 +1,6 @@
-export const mockUser = {
+import { UserDetailedProps } from '@/types';
+
+export const mockUser: UserDetailedProps = {
   id: 1,
   name: 'Esther Howard',
   avatar: '/account/user.png',
@@ -13,7 +15,7 @@ export const mockUser = {
   gender: '',
   birthDate: '',
   phoneNumber: '',
-  userSittings: {
+  userSettings: {
     theme: 'dark',
     language: 'en',
   },
@@ -156,7 +158,11 @@ export const mockUser = {
       name: 'Peace Volunteers',
       description:
         'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',
-      members: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+      members: [
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+      ],
       logo: '/account/org1.png',
     },
     {
@@ -164,7 +170,17 @@ export const mockUser = {
       name: 'Peace Volunteers',
       description:
         'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',
-      members: [{}, {}, {}, {}],
+      members: [
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+      ],
       logo: '/account/org2.png',
     },
     {
@@ -172,7 +188,14 @@ export const mockUser = {
       name: 'Peace Volunteers',
       description:
         'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',
-      members: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+      members: [
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+      ],
       logo: '/account/amazon.png',
     },
   ],

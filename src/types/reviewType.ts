@@ -34,7 +34,7 @@ export interface ReviewProps {
   rating: number;
   comment: string;
   createdAt: string;
-  owner: UserProps;
+  owner?: UserProps;
 }
 
 export interface ReviewItemProps {
