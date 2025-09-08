@@ -26,7 +26,7 @@ export const StarItem = forwardRef(
           'p-2 block',
           isFilled
             ? 'fill-star stroke-star text-star'
-            : 'fill-none stroke-black text-black',
+            : 'fill-none stroke-star-empty text-star-empty',
           isEditable && 'cursor-pointer',
           error && 'stroke-error'
         )}

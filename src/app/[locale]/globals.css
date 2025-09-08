@@ -60,6 +60,7 @@
   --color-attention: var(--attention);
 
   --color-star: var(--star);
+  --color-star-empty: var(--star-empty);
   --color-medicine: var(--medicine);
   --color-animal: var(--animal);
   --color-nature: var(--nature);
@@ -168,6 +169,7 @@
   --success: #17814b;
 
   --star: #ffee00;
+  --star-empty: #747474;
   --medicine: #1f5eff;
   --animal: #ff7d57;
   --nature: #4caf50;
@@ -236,6 +238,7 @@ html {
   --map-btn-icon: #f1f1f1;
   --review-bg: #696969;
   --accent-bg: #01425c;
+  --star-empty: #959595;
   --gradient:
     linear-gradient(
       238.09deg,
