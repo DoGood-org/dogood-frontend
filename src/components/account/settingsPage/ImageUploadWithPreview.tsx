@@ -35,9 +35,8 @@ export const ImageUploadWithPreview = ({
 
       <CldUploadWidget
         uploadPreset="dogood"
-        onSuccess={(result, { widget }) => {
+        onSuccess={(result) => {
           setImage(result.info);
-          widget.close();
         }}
       >
         {({ open }) => (
