@@ -1,0 +1,12 @@
+import { useTranslations } from 'next-intl';
+import { JSX } from 'react';
+
+export const NoOrganizations = (): JSX.Element => {
+  const t = useTranslations('account');
+
+  return (
+    <div className="bg-card m-auto p-6 text-center rounded-lg">
+      <p>{t('noOrganizationionPublic')}</p>
+    </div>
+  );
+};

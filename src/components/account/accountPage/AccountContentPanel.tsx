@@ -25,7 +25,7 @@ export const AccountContentPanel = (): JSX.Element => {
 
   const viewComponents: Record<string, React.ReactNode> = {
     task: <AccountTaskList tasks={mockUser.joinedTasks} />,
-    organization: <OrganizationList />,
+    organization: <OrganizationList organizations={mockUser.organizations} />,
     reviews: <ReviewsList />,
   };
 

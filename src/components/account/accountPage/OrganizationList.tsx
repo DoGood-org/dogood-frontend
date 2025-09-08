@@ -1,21 +1,26 @@
 import { JSX } from 'react';
-import { OrganizationItem, Slider } from '@/components';
-import { OrganizationProps } from '@/types';
-import { mockUser } from '@/data/mockUser';
+import { NoOrganizations, OrganizationItem, Slider } from '@/components';
+import { OrganizationListProps } from '@/types';
 
-export const OrganizationList = (): JSX.Element => {
-  const organizations = mockUser.organizations as OrganizationProps[];
-
+export const OrganizationList = ({
+  organizations = [],
+}: OrganizationListProps): JSX.Element => {
   return (
-    <Slider
-      items={organizations}
-      itemsPerSlide={2}
-      renderItem={(organization, idx) => (
-        <OrganizationItem
-          key={`${idx}-${organization.name}`}
-          organization={organization}
+    <>
+      {organizations.length ? (
+        <Slider
+          items={organizations}
+          itemsPerSlide={2}
+          renderItem={(organization, idx) => (
+            <OrganizationItem
+              key={`${idx}-${organization.name}`}
+              organization={organization}
+            />
+          )}
         />
+      ) : (
+        <NoOrganizations />
       )}
-    />
+    </>
   );
 };
