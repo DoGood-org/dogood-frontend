@@ -40,3 +40,7 @@ export interface ReviewProps {
 export interface ReviewItemProps {
   review: ReviewProps;
 }
+
+export interface ReviewListProps {
+  reviews?: ReviewProps[];
+}

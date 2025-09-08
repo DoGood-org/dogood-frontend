@@ -1,37 +1,29 @@
 'use client';
 
-import {
-  AnimationTabs,
-  OrganizationList,
-  ReviewsList,
-  Section,
-  AccountTaskList,
-} from '@/components';
+import { AnimationTabs, Section } from '@/components';
 import { useMediaQuery } from '@/hooks';
-import { ContentProps } from '@/types';
+import { useRouteMatch } from '@/hooks/useRouteMatch';
+import { ContentPanelProps } from '@/types';
 import { useLocale, useTranslations } from 'next-intl';
 import { JSX, useState } from 'react';
-import { mockUser } from '@/data/mockUser';
 
-export const AccountContentPanel = (): JSX.Element => {
+export const AccountContentPanel = ({
+  views,
+  viewComponents,
+}: ContentPanelProps): JSX.Element => {
   const t = useTranslations('account');
   const locale = useLocale();
-  const views = t.raw('contentViews') as ContentProps[];
   const isMobile = useMediaQuery('(max-width: 767px)');
+  const isPublicProfilePage = useRouteMatch('/profile');
 
   const [activeView, setActiveView] = useState(views[0].view);
-
   const activeData = views.find(({ view }) => view === activeView);
 
-  const viewComponents: Record<string, React.ReactNode> = {
-    task: <AccountTaskList tasks={mockUser.joinedTasks} />,
-    organization: <OrganizationList organizations={mockUser.organizations} />,
-    reviews: <ReviewsList />,
-  };
-
   return (
-    <Section withContainer={false}>
-      <h2 className="text-h2">{activeView}</h2>
+    <Section withContainer={isPublicProfilePage}>
+      <h2 className="text-h2">
+        {isPublicProfilePage ? `${t('taskSectionTitle')}` : `${activeView}`}
+      </h2>
       {activeData && (
         <div className="mt-11 flex flex-col gap-5 transition-opacity duration-500 ease-in-out opacity-100">
           <div>

@@ -28,5 +28,27 @@
       "id": "reviews",
       "view": "Bewertungen"
     }
+  ],
+  "contentView": {
+    "task": "Aufgabe",
+    "organization": "Organisation",
+    "reviews": "Bewertungen"
+  },
+  "organizationSectionTitle": "Organisation",
+  "reviewSectionTitle": "Bewertungen",
+  "taskSectionTitle": "Aufgaben",
+  "tasksSection": [
+    {
+      "id": "tasksCreated",
+      "view": "Erstellt"
+    },
+    {
+      "id": "tasksCompleted",
+      "view": "Abgeschlossen"
+    },
+    {
+      "id": "tasksInProgress",
+      "view": "In Bearbeitung"
+    }
   ]
 }

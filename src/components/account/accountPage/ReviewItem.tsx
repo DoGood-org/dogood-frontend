@@ -15,7 +15,7 @@ export const ReviewItem = ({ review }: ReviewItemProps): JSX.Element => {
 
   return (
     <div className="bg-card p-8 rounded-lg flex flex-col md:flex-row md:gap-8">
-      {owner.avatar && (
+      {owner?.avatar && (
         <Image
           src={owner.avatar}
           alt={`${owner.name} ${owner.avatar}`}
@@ -27,7 +27,7 @@ export const ReviewItem = ({ review }: ReviewItemProps): JSX.Element => {
       <div className="w-full">
         <div className="flex items-start mt-8 md:mt-0 justify-between">
           <div className="flex flex-col md:flex-row gap-[10px] items-start md:items-center justify-start">
-            <h3 className="text-h3">{owner.name}</h3>
+            <h3 className="text-h3">{owner?.name}</h3>
             <Rating rating={rating} />
           </div>
           <button className="cursor-pointer text-foreground">

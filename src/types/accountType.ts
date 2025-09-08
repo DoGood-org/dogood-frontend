@@ -9,6 +9,11 @@ export interface ContentProps {
   id: string;
 }
 
+export interface ContentPanelProps {
+  views: ContentProps[];
+  viewComponents: Record<string, React.ReactNode>;
+}
+
 export interface UserDetailedProps {
   id: number;
   name: string;

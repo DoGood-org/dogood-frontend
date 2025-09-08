@@ -28,5 +28,27 @@
       "id": "reviews",
       "view": "Reviews"
     }
+  ],
+  "contentView": {
+    "task": "My Task",
+    "organization": "Organization",
+    "reviews": "Reviews"
+  },
+  "organizationSectionTitle": "Organization",
+  "reviewSectionTitle": "Reviews",
+  "taskSectionTitle": "Tasks",
+  "tasksSection": [
+    {
+      "id": "tasksCreated",
+      "view": "Created"
+    },
+    {
+      "id": "tasksCompleted",
+      "view": "Completed"
+    },
+    {
+      "id": "tasksInProgress",
+      "view": "In progress"
+    }
   ]
 }
