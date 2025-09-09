@@ -9,32 +9,33 @@ const minBirthDate = new Date(
 );
 
 export const settingsSchema = yup.object().shape({
-  name: yup.string().required('Name is required'),
-  bio: yup.string().required('Bio is required'),
-  avatar: yup.string().url('Invalid image URL').required('Avatar is required'),
+  name: yup.string().optional(),
+  bio: yup.string().optional(),
+  avatar: yup.string().url('Invalid image URL').optional(),
   location: yup
     .object()
     .shape({
-      country: yup.string().required('Country is required'),
-      region: yup.string().required('Region is required'),
-      city: yup.string().required('City is required'),
+      country: yup.string().optional(),
+      region: yup.string().optional(),
+      city: yup.string().optional(),
     })
-    .required(),
+    .optional(),
   gender: yup
     .string()
     .oneOf(['MALE', 'FEMALE', 'OTHER'], 'Invalid gender')
-    .required('Gender is required'),
+    .optional(),
   birthDate: yup
     .date()
-    .required('Birth date is required')
+    .optional()
     .max(minBirthDate, `You must be at least ${MIN_AGE} years old`),
   phoneNumber: yup
     .string()
     .matches(/^\+?[0-9\s\-\(\)]{7,}$/, 'Invalid phone number')
-    .required('Phone number is required'),
+    .optional(),
   paymentOptionIds: yup
     .array()
     .of(yup.number().integer().positive('Invalid payment option'))
-    .required('Payment option is required'),
+    .optional(),
 });
+
 export type SettingsFormValues = yup.InferType<typeof settingsSchema>;

@@ -11,7 +11,7 @@ import {
   StripeProvider,
 } from '@/components';
 import { Button } from '@/components';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import csc from 'country-state-city';
@@ -51,20 +51,20 @@ export const Settings = (): React.JSX.Element => {
     reset,
     formState: { errors },
   } = useForm<SettingsFormValues>({
-    resolver: yupResolver(settingsSchema),
+    resolver: yupResolver(settingsSchema) as Resolver<SettingsFormValues>,
     defaultValues: {
-      name: '',
-      bio: '',
-      avatar: '',
+      name: undefined,
+      bio: undefined,
+      avatar: undefined,
       location: {
-        country: '',
-        region: '',
-        city: '',
+        country: undefined,
+        region: undefined,
+        city: undefined,
       },
-      gender: 'MALE',
-      birthDate: undefined as unknown as Date,
-      phoneNumber: '',
-      paymentOptionIds: [],
+      gender: undefined,
+      birthDate: undefined,
+      phoneNumber: undefined,
+      paymentOptionIds: undefined,
     },
   });
 
@@ -109,10 +109,10 @@ export const Settings = (): React.JSX.Element => {
     );
     const selectedCountryObj = csc
       .getAllCountries()
-      .find((c) => c.isoCode === data.location.country);
+      .find((c) => c.isoCode === data.location?.country);
     const selectedStateObj = csc
-      .getStatesOfCountry(data.location.country)
-      .find((s) => s.isoCode === data.location.region);
+      .getStatesOfCountry(data.location?.country || '')
+      .find((s) => s.isoCode === data.location?.region);
 
     const oldAvatar = oldAvatarRef.current;
     const newAvatar = data.avatar;
@@ -122,15 +122,20 @@ export const Settings = (): React.JSX.Element => {
         name: data.name,
         bio: data.bio,
         avatar: data.avatar,
-        location: {
-          country: selectedCountryObj?.name || data.location.country,
-          region: selectedStateObj?.name || data.location.region,
-          city: data.location.city,
-        },
+        location: data.location
+          ? {
+              country: selectedCountryObj?.name || data.location.country,
+              region: selectedStateObj?.name || data.location.region,
+              city: data.location.city,
+            }
+          : undefined,
         gender: data.gender,
-        birthDate: format(data.birthDate, 'yyyy-MM-dd'),
+        birthDate: data.birthDate
+          ? format(data.birthDate, 'yyyy-MM-dd')
+          : undefined,
         phoneNumber: data.phoneNumber,
-        paymentOptionIds: paymentOptionIds,
+        paymentOptionIds:
+          paymentOptionIds.length > 0 ? paymentOptionIds : undefined,
       });
 
       if (response?.status === 'success') {
@@ -153,7 +158,7 @@ export const Settings = (): React.JSX.Element => {
           }
         }
 
-        oldAvatarRef.current = data.avatar;
+        oldAvatarRef.current = data.avatar || '';
         toast.success(downText.success);
         reset();
       } else {
@@ -168,27 +173,31 @@ export const Settings = (): React.JSX.Element => {
       fullName: data.name,
       bio: data.bio,
       avatar: image?.secure_url || data.avatar,
-      location: {
-        country: selectedCountryObj?.name || data.location.country,
-        region: selectedStateObj?.name || data.location.region,
-        city: data.location.city,
-      },
+      location: data.location
+        ? {
+            country: selectedCountryObj?.name || data.location.country,
+            region: selectedStateObj?.name || data.location.region,
+            city: data.location.city,
+          }
+        : undefined,
       gender: data.gender,
-      birthDate: format(data.birthDate, 'yyyy-MM-dd'),
+      birthDate: data.birthDate
+        ? format(data.birthDate, 'yyyy-MM-dd')
+        : undefined,
       phoneNumber: data.phoneNumber,
     });
   };
 
   const onReset = (): void => {
-    setValue('name', '');
-    setValue('bio', '');
-    setValue('avatar', '');
-    setValue('location.country', '');
-    setValue('location.region', '');
-    setValue('location.city', '');
-    setValue('gender', 'MALE');
-    setValue('birthDate', undefined as unknown as Date);
-    setValue('phoneNumber', '');
+    setValue('name', undefined);
+    setValue('bio', undefined);
+    setValue('avatar', undefined);
+    setValue('location.country', undefined);
+    setValue('location.region', undefined);
+    setValue('location.city', undefined);
+    setValue('gender', undefined);
+    setValue('birthDate', undefined);
+    setValue('phoneNumber', undefined);
 
     oldAvatarRef.current = '';
     cardPreviewService.cleanupUnattachedCard();
