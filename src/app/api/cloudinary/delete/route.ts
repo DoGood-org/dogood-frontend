@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
 
+interface CloudinarySuccessResponse {
+  result: string;
+  [key: string]: any;
+}
+
 export async function POST(request: NextRequest): Promise<NextResponse> {
   if (
     !process.env.CLOUDINARY_CLOUD_NAME ||
@@ -37,12 +42,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const result = await Promise.race([
+    const result = (await Promise.race([
       cloudinary.uploader.destroy(publicId),
       new Promise((_, reject) =>
         setTimeout(() => reject(new Error('Cloudinary timeout')), 15000)
       ),
-    ]);
+    ])) as CloudinarySuccessResponse;
 
     return NextResponse.json(result, { status: 200 });
   } catch (error: any) {
@@ -62,8 +67,21 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
+    if (error?.http_code) {
+      return NextResponse.json(
+        {
+          error: error.message || 'Cloudinary error',
+          details: error,
+        },
+        { status: error.http_code >= 400 && error.http_code < 500 ? 400 : 500 }
+      );
+    }
+
     return NextResponse.json(
-      { error: error?.message || 'Internal server error' },
+      {
+        error: error?.message || 'Internal server error',
+        details: process.env.NODE_ENV === 'development' ? error : undefined,
+      },
       { status: 500 }
     );
   }
@@ -72,7 +90,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 const getPublicIdFromUrl = (url: string): string | null => {
   try {
     const match = url.match(/\/upload\/(?:v\d+\/)?(.+?)(?:\.[a-zA-Z0-9]+)?$/);
-    return match && match[1] ? match[1] : null;
+    return match && match[1] ? decodeURIComponent(match[1]) : null;
   } catch (error) {
     console.error('Error parsing URL:', error, url);
     return null;
