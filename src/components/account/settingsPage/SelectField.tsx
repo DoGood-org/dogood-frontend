@@ -33,7 +33,11 @@ export const SelectField = ({
         </SelectTrigger>
         <SelectContent className="bg-white border-none text-form-field text-base py-3 pl-2">
           {options.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
+            <SelectItem
+              key={option.value}
+              value={option.value}
+              className="hover:bg-text-gray"
+            >
               {option.label}
             </SelectItem>
           ))}

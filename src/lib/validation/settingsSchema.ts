@@ -1,22 +1,41 @@
 import * as yup from 'yup';
 
+const MIN_AGE = 13;
+const today = new Date();
+const minBirthDate = new Date(
+  today.getFullYear() - MIN_AGE,
+  today.getMonth(),
+  today.getDate()
+);
+
 export const settingsSchema = yup.object().shape({
-  fullName: yup.string().required('Full name is required'),
-  gender: yup.string().required('Gender is required'),
-  dateOfBirth: yup.date().required('Date of birth is required'),
-  country: yup.string().required('Country is required'),
-  state: yup.string().required('State is required'),
-  city: yup.string().required('City is required'),
-  email: yup
+  name: yup.string().optional(),
+  bio: yup.string().optional(),
+  avatar: yup.string().url('Invalid image URL').optional(),
+  location: yup
+    .object()
+    .shape({
+      country: yup.string().optional(),
+      region: yup.string().optional(),
+      city: yup.string().optional(),
+    })
+    .optional(),
+  gender: yup
     .string()
-    .required('Email is required')
-    .email('Please enter a valid email address'),
-  phone: yup
+    .oneOf(['MALE', 'FEMALE', 'OTHER'], 'Invalid gender')
+    .optional(),
+  birthDate: yup
+    .date()
+    .optional()
+    .max(minBirthDate, `You must be at least ${MIN_AGE} years old`),
+  phoneNumber: yup
     .string()
-    .required('Phone is required')
-    .matches(/^\+?[0-9\s\-\(\)]{7,}$/, 'Please enter a valid phone number'),
-  about: yup.string().max(250, 'About must has 250 characters').default(''),
-  img: yup.string().default(''),
+    .matches(/^\+?[0-9\s\-\(\)]{7,}$/, 'Invalid phone number')
+    .optional(),
+  paymentOptionIds: yup
+    .array()
+    .of(yup.number().integer().positive('Invalid payment option'))
+    .optional(),
 });
 
 export type SettingsFormValues = yup.InferType<typeof settingsSchema>;

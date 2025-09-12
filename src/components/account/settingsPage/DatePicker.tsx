@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Calendar } from '@/components/ui/Calendar';
 import {
   Popover,
@@ -7,7 +8,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/Popover';
 import { Input } from '@/components';
-import { format } from 'date-fns';
+import { format, isAfter, subYears } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { CalendarDots } from '@/components/icons';
 
@@ -26,10 +27,17 @@ export const DatePicker = ({
   placeholder = 'Select date',
   disabled = false,
 }: DatePickerProps): React.JSX.Element => {
+  const [open, setOpen] = useState(false);
+
+  const handleSelect = (date?: Date): void => {
+    onChange(date);
+    if (date) setOpen(false);
+  };
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <div className="relative">
+        <div className="relative" onClick={() => !disabled && setOpen(true)}>
           <Input
             readOnly
             disabled={disabled}
@@ -47,9 +55,11 @@ export const DatePicker = ({
       <PopoverContent className="w-auto p-0 bg-text-gray" align="end">
         <Calendar
           mode="single"
-          selected={value}
-          onSelect={onChange}
-          disabled={disabled}
+          selected={value || undefined}
+          onSelect={handleSelect}
+          disabled={(date) =>
+            disabled || isAfter(date, subYears(new Date(), 13))
+          }
           captionLayout="dropdown"
           className="w-full h-[320px] text-form-field border-none"
         />
