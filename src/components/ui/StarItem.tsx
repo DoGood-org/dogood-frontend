@@ -42,7 +42,7 @@ export const StarItem = forwardRef(
         aria-valuemin={1}
         aria-valuemax={5}
       >
-        <Star className="size-7" />
+        <Star className="size-5" />
       </span>
     );
   }
