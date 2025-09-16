@@ -14,6 +14,7 @@ interface InputFieldProps {
   className?: string;
   type?: string;
   width?: 'full' | 'default';
+  disabled?: boolean;
 }
 
 export const InputField = ({
@@ -25,6 +26,7 @@ export const InputField = ({
   className = '',
   type = 'text',
   width = 'default',
+  disabled = true,
 }: InputFieldProps): JSX.Element => {
   const inputWidth = width === 'full' ? 'w-full' : 'w-full md:w-[477px]';
 
@@ -39,6 +41,7 @@ export const InputField = ({
         {...register(name)}
         placeholder={placeholder}
         className={`${inputWidth} bg-white border-none text-form-field ${className}`}
+        disabled={disabled}
       />
       {errors && (
         <p className="text-sm font-medium text-error mt-1">{errors.message}</p>
