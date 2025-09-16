@@ -699,6 +699,11 @@ html {
   .dark .payment-scrollbar {
     scrollbar-color: var(--background-secondary) transparent;
   }
+
+  .review-scrollbar {
+    scrollbar-width: 12px;
+    scrollbar-color: var(--background) transparent;
+  }
 }
 
 /* Edge Legacy fix */

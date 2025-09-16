@@ -93,7 +93,7 @@ export const mockUser: UserDetailedProps = {
       comment:
         'How to become a volunteer: step-by-step instructions for beginners.',
       createdAt: '2025-05-13T10:05:00.000Z',
-      owner: { id: 2, name: 'Shane', avatar: '/account/rev2.png' },
+      owner: { id: 2, name: 'Shane', avatar: '' },
     },
     {
       id: 3,
@@ -109,7 +109,7 @@ export const mockUser: UserDetailedProps = {
       comment:
         'How to become a volunteer: step-by-step instructions for beginners.',
       createdAt: '2025-05-01T14:05:00.000Z',
-      owner: { id: 1, name: 'Wade', avatar: '/account/rev1.png' },
+      owner: { id: 1, name: 'Wade', avatar: '/account/user.png' },
     },
     {
       id: 5,

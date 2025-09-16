@@ -6,7 +6,7 @@ export const NoOrganizations = (): JSX.Element => {
 
   return (
     <div className="bg-card m-auto p-6 text-center rounded-lg">
-      <p>{t('noOrganizationionPublic')}</p>
+      <p className="text-h3">{t('noOrganizationionPublic')}</p>
     </div>
   );
 };

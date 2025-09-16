@@ -6,7 +6,7 @@ export const NoReviews = (): JSX.Element => {
 
   return (
     <div className="bg-card m-auto p-6 text-center rounded-lg">
-      <p>{t('noReviewPublic')}</p>
+      <p className="text-h3">{t('noReviewPublic')}</p>
     </div>
   );
 };

@@ -78,7 +78,7 @@ export type TaskListProps = {
 
 export interface IUserApiResponse {
   status: string;
-  data: {
-    user: UserDetailedProps;
-  };
+  // data: {
+  user: UserDetailedProps;
+  // };
 }
