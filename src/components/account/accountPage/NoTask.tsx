@@ -10,8 +10,8 @@ export const NoTask = (): JSX.Element => {
 
   return (
     <>
-      <div className="bg-card m-auto p-6 text-center rounded-lg w-full">
-        <p className="text-h3">{t('noTaskPublic')}</p>
+      <div className="bg-card m-auto p-8 text-center rounded-lg w-full">
+        <p className="text-base lg:text-h3">{t('noTaskPublic')}</p>
       </div>
       {isAccountPage && (
         <div className="m-auto">
