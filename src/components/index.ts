@@ -79,6 +79,7 @@ export * from './main/auth/LoginPageContent';
 export * from './main/auth/RegisterLoginSocial';
 export * from './main/auth/RegisterPageContent';
 export * from './main/auth/Verification';
+export * from './main/cookies/cookies';
 export * from './main/donate/Donate';
 export * from './main/donate/DonateCard';
 export * from './main/faq/ContactForm';
