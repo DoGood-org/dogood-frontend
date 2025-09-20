@@ -7,9 +7,8 @@ export const config = {
   matcher: ['/account/:path*'],
 };
 
-export function middleware(req: NextRequest) {
+export function middleware(req: NextRequest): NextResponse {
   const access = req.cookies.get('accessToken')?.value;
-  
 
   if (!access) {
     const url = req.nextUrl.clone();

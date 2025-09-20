@@ -2,7 +2,6 @@
 import { AuthForm } from '@/components';
 import { ForgotEnterEmail } from '@/components/main/auth/ForgotEnterEmail';
 import { ForgotPassword } from '@/components/main/auth/ForgotPassword';
-import { fetchFromApi } from '@/lib/apiFetcher';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { authStore, useAuthFlow } from '@/zustand/stores/authStore';

@@ -52,7 +52,7 @@ type Step =
 export const useAuthFlow = create<{ step: Step; setStep: (s: Step) => void }>(
   (set) => ({
     step: null,
-    setStep: (s) => set({ step: s }),
+    setStep: (s): void => set({ step: s }),
   })
 );
 
@@ -69,7 +69,7 @@ export const authStore = create<AuthState>()(
       status: 'idle',
       error: null,
 
-      login: async (email, password) => {
+      login: async (email, password): Promise<void> => {
         set({ status: 'loading', error: null });
         try {
           const { accessToken, refreshToken, user } = await service.login(
@@ -88,7 +88,7 @@ export const authStore = create<AuthState>()(
         }
       },
 
-      logout: async () => {
+      logout: async (): Promise<void> => {
         try {
           await service.logout();
         } catch (e) {
@@ -108,9 +108,9 @@ export const authStore = create<AuthState>()(
         }
       },
 
-      register: async (email, password, name) => {
+      register: async (email, password, name): Promise<void> => {
         set({ status: 'loading', error: null });
-        const { accessToken, refreshToken, user } = await service.register(
+        const { accessToken, refreshToken } = await service.register(
           email,
           password,
           name
@@ -121,21 +121,25 @@ export const authStore = create<AuthState>()(
         }
       },
 
-      registerCompany: async (name, email, password, organizationName) => {
+      registerCompany: async (
+        name,
+        email,
+        password,
+        organizationName
+      ): Promise<void> => {
         set({ status: 'loading', error: null });
-        const { accessToken, refreshToken, user } =
-          await service.registerCompany(
-            name,
-            email,
-            password,
-            organizationName
-          );
+        const { accessToken, refreshToken } = await service.registerCompany(
+          name,
+          email,
+          password,
+          organizationName
+        );
         if (typeof window !== 'undefined') {
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
         }
       },
-      verify: async (token) => {
+      verify: async (token): Promise<void> => {
         set({ status: 'loading', error: null });
         try {
           await service.verify(token);
@@ -147,7 +151,7 @@ export const authStore = create<AuthState>()(
         }
       },
 
-      currentUser: async () => {
+      currentUser: async (): Promise<void> => {
         set({ status: 'loading', error: null });
         const user = await service.currentUser();
         set({ user, status: 'authenticated', error: null });
@@ -155,7 +159,7 @@ export const authStore = create<AuthState>()(
 
       // NOTE: your AuthService.refreshTokens() currently returns void.
       // Prefer returning new tokens so we can store them. Until then we just call it and re-fetch user.
-      refresh: async () => {
+      refresh: async (): Promise<void> => {
         try {
           await service.refreshTokens();
           // if your API also returns tokens here, set them like in login()
@@ -176,9 +180,9 @@ export const authStore = create<AuthState>()(
         typeof window !== 'undefined'
           ? localStorage
           : {
-              getItem: () => null,
-              setItem: () => {},
-              removeItem: () => {},
+              getItem: (): string | null => null,
+              setItem: (): void => {},
+              removeItem: (): void => {},
             }
       ),
       // don't double-persist status/error

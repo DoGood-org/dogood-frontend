@@ -12,7 +12,7 @@ export const RegisterPageContent = (): React.ReactElement => {
   const router = useRouter();
   const { step, setStep } = useAuthFlow();
 
-  const { register, status, error, registerCompany } = authStore();
+  const { register, registerCompany } = authStore();
 
   const [choice, setChoice] = useState<'human' | 'company' | null>(null);
 
