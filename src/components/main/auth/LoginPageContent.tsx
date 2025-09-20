@@ -4,13 +4,20 @@ import { ForgotEnterEmail } from '@/components/main/auth/ForgotEnterEmail';
 import { ForgotPassword } from '@/components/main/auth/ForgotPassword';
 import { fetchFromApi } from '@/lib/apiFetcher';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React from 'react';
+import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
 
 export const LoginPageContent: React.FC = () => {
   const router = useRouter();
-  const [step, setStep] = useState<
-    null | 'success' | 'forgotPassword' | 'forgotEmail'
-  >(null);
+  const { step, setStep } = useAuthFlow();
+
+  const { login, status, error } = authStore();
+
+  React.useEffect(() => {
+    if (step === 'success') {
+      router.push('/');
+    }
+  }, [step, router]);
 
   return (
     <div className=" login text-foreground flex flex-col items-center justify-center w-full">
@@ -19,27 +26,19 @@ export const LoginPageContent: React.FC = () => {
           type="login"
           onForgotPassword={() => setStep('forgotEmail')}
           onFormSubmit={async (type, data) => {
-            // setStep('success');
-            // router.push('/');
-            const userData = {
-              email: data.email,
-              password: data.password,
-            };
+            try {
+              await login(data.email, data.password);
+            } catch (error) {
+              console.error('Login failed:', error);
 
-            const response = await fetchFromApi('auth/login', {
-              method: 'POST',
-              data: userData,
-            });
-            console.log('Login response:', response);
+              return;
+            }
+            setStep('success');
           }}
         />
       )}
-      {step === 'success' && (
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Login Successful</h2>
-          <p>Welcome back!</p>
-        </div>
-      )}
+      {status === 'loading' && <p>Loading...</p>}
+      {status === 'error' && error && <p className="text-red-500">{error}</p>}
 
       {step === 'forgotEmail' && (
         <div className="mt-4">

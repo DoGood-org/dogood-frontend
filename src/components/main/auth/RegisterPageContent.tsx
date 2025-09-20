@@ -5,14 +5,17 @@ import { AuthForm } from './AuthForm';
 import { Verification } from './Verification';
 import { FormRegisterCompany, FormRegisterPerson } from '@/types/authType';
 import { useRouter } from 'next/navigation';
+import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
+import { VerifyViaEmail } from '@/components/main/auth/VerififyViaEmail';
 
 export const RegisterPageContent = (): React.ReactElement => {
   const router = useRouter();
+  const { step, setStep } = useAuthFlow();
+
+  const { register, status, error, registerCompany } = authStore();
 
   const [choice, setChoice] = useState<'human' | 'company' | null>(null);
-  const [step, setStep] = useState<
-    null | 'verification' | 'success' | 'mistake' | 'resend'
-  >(null);
+
   const [formPersonData, setPersonFormData] = useState<FormRegisterPerson>({
     name: '',
     email: '',
@@ -35,13 +38,18 @@ export const RegisterPageContent = (): React.ReactElement => {
           type="registerPerson"
           onFormSubmit={(type, data) => {
             setStep('verification');
-            console.log('Register person, verification-->', type, data);
             setPersonFormData({
               name: (data as FormRegisterPerson).name,
               email: (data as FormRegisterPerson).email,
               password: '',
               repeatPassword: '',
             });
+            register(
+              (data as FormRegisterPerson).email,
+              (data as FormRegisterPerson).password,
+              (data as FormRegisterPerson).name
+            );
+            console.log('Register person, verification-->', type, data);
           }}
         />
       )}
@@ -50,7 +58,7 @@ export const RegisterPageContent = (): React.ReactElement => {
           type="registerCompany"
           onFormSubmit={(type, data) => {
             console.log('Register company, verification-->', type, data);
-            setStep('verification');
+
             setCompanyFormData({
               name: (data as FormRegisterCompany).name,
               email: (data as FormRegisterCompany).email,
@@ -58,11 +66,18 @@ export const RegisterPageContent = (): React.ReactElement => {
               repeatPassword: '',
               companyName: (data as FormRegisterCompany).companyName,
             });
+            registerCompany(
+              (data as FormRegisterCompany).name,
+              (data as FormRegisterCompany).email,
+              (data as FormRegisterCompany).password,
+              (data as FormRegisterCompany).companyName
+            );
+            setStep('verification');
           }}
         />
       )}
       {step === 'verification' && choice && (
-        <Verification
+        <VerifyViaEmail
           onResend={() => setStep('resend')}
           onWrongEmail={() => setStep('mistake')}
           onConfirm={(code) => {
@@ -70,6 +85,9 @@ export const RegisterPageContent = (): React.ReactElement => {
             setStep('success');
             router.push('/login');
           }}
+          email={
+            choice === 'human' ? formPersonData.email : formCompanyData.email
+          }
         />
       )}
       {step === 'mistake' && choice === 'human' && (

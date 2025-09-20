@@ -18,6 +18,7 @@ export class AuthService {
 
       auth: true,
     });
+    console.log('AuthService login response:', response);
 
     return response;
   };
@@ -40,7 +41,7 @@ export class AuthService {
     password: string,
     name: string
   ): Promise<IAuthResponse> => {
-    const response = await fetchFromApi<IAuthResponse>('auth/register', {
+    const response = await fetchFromApi<IAuthResponse>('auth/signup', {
       method: 'POST',
       data: { email, password, name },
       auth: true,
@@ -55,7 +56,7 @@ export class AuthService {
     organizationName: string
   ): Promise<IAuthResponse> => {
     const response = await fetchFromApi<IAuthResponse>(
-      'auth/register-company',
+      '/auth/signup/organization',
       {
         method: 'POST',
         data: { name, email, password, organizationName },
@@ -70,5 +71,12 @@ export class AuthService {
       method: 'POST',
       auth: true,
     });
+  };
+  public verify = async (token: string): Promise<void> => {
+    const response = await fetchFromApi(`auth/verify-email/${token}`, {
+      method: 'GET',
+      auth: false,
+    });
+    console.log('AuthService verify response:', response);
   };
 }
