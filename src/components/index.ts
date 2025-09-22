@@ -142,6 +142,8 @@ export * from './main/news/SwiperNavButton';
 export * from './main/news/SwiperPagination';
 export * from './main/reviews/ReviewCard';
 export * from './main/reviews/ReviewsSection';
+export * from './reviews/ReviewsForm';
+export * from './reviews/UsersLisr';
 export * from './ui/Accordion';
 export * from './ui/AnimatedDrawler';
 export * from './ui/AnimationTabs';

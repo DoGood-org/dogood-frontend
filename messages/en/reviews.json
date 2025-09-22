@@ -1,0 +1,9 @@
+{
+  "title": "Leave a review for",
+  "imageAlt": "User avatar",
+  "subtitle": "How would you rate your experience with",
+  "feedback": "Leave feedback",
+  "placeholder": "Share feedback about your experience...",
+  "cancelBtn": "Cancel",
+  "sendBtn": "Send review"
+}
