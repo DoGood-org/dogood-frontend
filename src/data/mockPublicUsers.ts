@@ -15,7 +15,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
     bio: 'Volunteer | Helping Where It\’s Needed Most \n  Actively involved in humanitarian aid, community support, and social initiatives. \n 💙 Supporting people in crisis \n📦 Delivering essentials \n 🛠 Organizing local initiatives \n 🤝 Connecting those who want to help with those in need \n \n  Driven by compassion, powered by teamwork. \n Let\’s make a difference — together. \n 📞 +380 (XX) XXX-XX-XX',
     gender: '',
     birthDate: '',
-    phoneNumber: '',
+    phoneNumber: '+380 (XX) XXX-XX-XX',
     userSettings: {
       theme: 'dark',
       language: 'en',

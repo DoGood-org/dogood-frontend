@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
-import { UserLocate } from '@/components/icons';
+import { Email, Phone, UserLocate } from '@/components/icons';
 import { UserAavatar, UserNoDescription } from '@/components';
 import { UserDetailedProps } from '@/types';
 
@@ -11,7 +11,7 @@ export const UserDescription = ({
   user: UserDetailedProps;
 }): JSX.Element => {
   const t = useTranslations('account');
-  const { avatar, name, siteRole, bio, location } = user;
+  const { avatar, name, email, siteRole, bio, location, phoneNumber } = user;
 
   return (
     <div className="flex flex-col md:flex-row gap-11 lg:gap-20">
@@ -36,6 +36,18 @@ export const UserDescription = ({
           <p className="flex gap-2 text-text-help mt-6">
             <UserLocate />
             {location?.city}
+          </p>
+        )}
+        {phoneNumber && (
+          <p className="flex gap-2 text-text-help mt-6">
+            <Phone />
+            {phoneNumber}
+          </p>
+        )}
+        {email && (
+          <p className="flex gap-2 text-text-help mt-6">
+            <Email />
+            {email}
           </p>
         )}
         {bio ? (
