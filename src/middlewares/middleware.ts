@@ -6,7 +6,6 @@ export const config = {
   matcher: ['/account/:path*', '/:locale/account/:path*'],
 };
 function redirectToLogin(req: NextRequest): NextResponse {
-  console.log('Redirecting to login from middleware');
   const url = req.nextUrl.clone();
   url.pathname = '/login';
   url.searchParams.set('next', req.nextUrl.pathname + req.nextUrl.search);

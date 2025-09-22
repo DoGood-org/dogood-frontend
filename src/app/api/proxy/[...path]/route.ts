@@ -6,7 +6,6 @@ if (!API) throw new Error('BACKEND_URL / NEXT_PUBLIC_API_URL is not set');
 
 const backend = API;
 async function forward(req: Request, segs: string[]): Promise<NextResponse> {
-  console.log('Proxying request to backend:', backend, 'Path segments:', segs);
   const url = new URL(req.url);
   const target = `${backend}/${segs.join('/')}${url.search}`;
 

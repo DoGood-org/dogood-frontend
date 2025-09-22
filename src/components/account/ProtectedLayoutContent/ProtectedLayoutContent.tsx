@@ -27,9 +27,7 @@ export const ProtectedLayoutContent = ({
     }
   }, [user]);
   if (!user) {
-    console.log('No user in ProtectedLayoutContent');
     return <div>Access Denied</div>;
   }
-  console.log('User in ProtectedLayoutContent:', user);
   return <>{children}</>;
 };

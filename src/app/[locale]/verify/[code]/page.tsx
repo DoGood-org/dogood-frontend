@@ -3,10 +3,10 @@ import { Metadata } from 'next';
 import { JSX } from 'react';
 
 interface Props {
-  params: { code: string; locale: Tlocale };
+  params: Promise<{ code: string; locale: Tlocale }>;
 }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { code } = params;
+  const { code } = await params;
 
   if (!code) {
     return {
@@ -15,8 +15,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  console.log('Verification code:', code);
-
   return {
     title: 'Verify Email',
     description: 'Verifying your email address.',
@@ -24,10 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Verify({ params }: Props): Promise<JSX.Element> {
-  const { code } = params;
-  console.log('Verification code:', params);
-
-  // Perform verification when the component is rendered
+  const { code } = await params;
 
   return (
     <div className="flex flex-col items-center justify-center text-foreground w-full">

@@ -49,14 +49,6 @@ export const RegisterPageContent = (): React.ReactElement => {
               (data as FormRegisterPerson).password,
               (data as FormRegisterPerson).name
             );
-
-            console.log(
-              'Register person, verification-->',
-              type,
-              data,
-              status,
-              step
-            );
           }}
         />
       )}
@@ -76,14 +68,6 @@ export const RegisterPageContent = (): React.ReactElement => {
               (data as FormRegisterCompany).email,
               (data as FormRegisterCompany).password,
               (data as FormRegisterCompany).companyName
-            );
-
-            console.log(
-              'Register company, verification-->',
-              type,
-              data,
-              status,
-              step
             );
           }}
         />

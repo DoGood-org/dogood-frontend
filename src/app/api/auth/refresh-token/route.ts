@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 const API = process.env.NEXT_PUBLIC_API_URL; // BACKEND
 
 export async function POST(): Promise<NextResponse> {
-  console.log('refresh-token/route.ts');
   const cookieStore = await cookies();
   const refresh = cookieStore.get('refreshToken')?.value;
   if (!refresh)

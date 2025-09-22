@@ -27,8 +27,7 @@ export const MainLayoutContent = ({
     }
   }, [user]);
   if (!user) {
-    console.log('No user in MainLayoutContent');
+    console.log('Not a user in MainLayoutContent');
   }
-  console.log('User in MainLayoutContent:', user);
   return <>{children}</>;
 };

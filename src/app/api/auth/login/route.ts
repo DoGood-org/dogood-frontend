@@ -3,8 +3,6 @@ const API = process.env.NEXT_PUBLIC_API_URL; // BACKEND
 
 export async function POST(req: Request): Promise<NextResponse> {
   try {
-    console.log('Login route called');
-
     const body = await req.json();
 
     const r = await fetch(`${API}/auth/login`, {

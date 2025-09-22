@@ -63,7 +63,6 @@ export const fetchFromApi = async <T>(
         ...headers,
       },
     });
-    console.log('API response:', instance.defaults.baseURL, endpoint, response);
     return response.data;
   } catch (error: unknown) {
     if (error instanceof AxiosError) {

@@ -11,7 +11,6 @@ export const LoginPageContent: React.FC = () => {
   const router = useRouter();
   const params = useSearchParams();
   const next = useMemo(() => safeNext(params.get('next')), [params]);
-  console.log('LoginPageContent rendered, next:', next);
   const { step, setStep } = useAuthFlow();
 
   const { login, status, error, currentUser } = authStore();
@@ -30,8 +29,7 @@ export const LoginPageContent: React.FC = () => {
           onFormSubmit={async (type, data) => {
             const res: IAuthResponse = await login(data.email, data.password);
             if (res.status === 'success') {
-              const fullUserData = await currentUser({ silent: true });
-              console.log('Login successful, user data:', fullUserData);
+              await currentUser({ silent: true });
               router.replace(next);
             }
           }}
@@ -51,8 +49,9 @@ export const LoginPageContent: React.FC = () => {
         <div className="mt-4">
           <ForgotPassword
             onSubmit={(data) => {
-              console.log('Forgot password submitted:', data);
-              router.push('/login');
+              console.log('Reset password submitted:', data);
+              setStep(null);
+              router.replace('/login');
             }}
           />
         </div>

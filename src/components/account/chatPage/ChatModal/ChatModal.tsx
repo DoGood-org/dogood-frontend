@@ -26,7 +26,6 @@ export const ChatModal: React.FC<ChatModalProps> = ({
   const t = useTranslations('chat');
 
   const handleDelete = async (): Promise<void> => {
-    console.log('Delete', chat.id);
     onClose();
   };
 
