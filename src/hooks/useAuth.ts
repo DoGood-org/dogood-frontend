@@ -2,8 +2,7 @@ import { UseAuth } from '@/types/authType';
 import { authStore } from '@/zustand/stores/authStore';
 
 export const useAuth = (): UseAuth => {
-  const isLoggedIn = authStore((state) => state.isLoggedIn);
-  const user = authStore((state) => state.user);
+  const { user, isLoggedIn, isEmailVerified } = authStore();
 
-  return { isLoggedIn, user };
+  return { isLoggedIn, user, isEmailVerified };
 };

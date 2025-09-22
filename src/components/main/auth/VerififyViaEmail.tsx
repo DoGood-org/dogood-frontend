@@ -7,7 +7,6 @@ import React from 'react';
 type Props = {
   onResend: () => void;
   onWrongEmail: () => void;
-  onConfirm: (code: string) => void;
   email?: string;
 };
 export const VerifyViaEmail: React.FC<Props> = ({
@@ -19,20 +18,21 @@ export const VerifyViaEmail: React.FC<Props> = ({
 
   return (
     <div
-      className="bg-background-secondary flex flex-col gap-[16px] p-4 
-    
+      className="bg-background-secondary flex flex-col gap-[16px] p-10
+    w-full
     md:p-8  md:w-[446px] justify-center items-center text-white rounded-[10px]  shadow-md"
     >
       <div
-        className="flex flex-col  w-full justify-center items-center mb-4
+        className="flex flex-col w-full justify-start items-center mb-4
       md:mb-6
       "
       >
         <AuthTitleSubtitle title={t('verificationRequired')} />
 
         <div className="flex flex-col gap-6 mb-2 justify-center items-start w-full md:w-auto">
-          <p className="text-base font-normal">{t('verificationGoToEmail')}</p>{' '}
+          {' '}
           <span>{email}</span>
+          <p className="text-base">{t('verificationGoToEmail')}</p>{' '}
         </div>
       </div>
 

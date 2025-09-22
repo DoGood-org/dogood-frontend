@@ -2,21 +2,18 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-// Pick what you want to protect:
 export const config = {
-  matcher: ['/account/:path*'],
+  matcher: ['/account/:path*', '/:locale/account/:path*'],
 };
-
-export function middleware(req: NextRequest): NextResponse {
-  const access = req.cookies.get('accessToken')?.value;
-
-  if (!access) {
-    const url = req.nextUrl.clone();
-    url.pathname = '/login';
-    // keep original target so we can bounce back after login
-    url.searchParams.set('next', req.nextUrl.pathname + req.nextUrl.search);
-    return NextResponse.redirect(url);
+function redirectToLogin(req: NextRequest): NextResponse {
+  console.log('Redirecting to login from middleware');
+  const url = req.nextUrl.clone();
+  url.pathname = '/login';
+  url.searchParams.set('next', req.nextUrl.pathname + req.nextUrl.search);
+  return NextResponse.redirect(url);
+}
+export function middleware(req: NextRequest): NextResponse | void {
+  if (!req.cookies.get('accessToken')?.value) {
+    return redirectToLogin(req);
   }
-
-  return NextResponse.next();
 }

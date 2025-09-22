@@ -1,44 +1,42 @@
 'use client';
-import { AuthForm } from '@/components';
+import { AuthForm, safeNext } from '@/components';
 import { ForgotEnterEmail } from '@/components/main/auth/ForgotEnterEmail';
 import { ForgotPassword } from '@/components/main/auth/ForgotPassword';
-import { useRouter } from 'next/navigation';
-import React from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useMemo } from 'react';
 import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
+import { IAuthResponse } from '@/zustand/services/authService';
 
 export const LoginPageContent: React.FC = () => {
   const router = useRouter();
+  const params = useSearchParams();
+  const next = useMemo(() => safeNext(params.get('next')), [params]);
+  console.log('LoginPageContent rendered, next:', next);
   const { step, setStep } = useAuthFlow();
 
-  const { login, status, error } = authStore();
-
-  React.useEffect(() => {
-    if (step === 'success') {
-      router.push('/');
-    }
-  }, [step, router]);
+  const { login, status, error, currentUser } = authStore();
 
   return (
     <div className=" login text-foreground flex flex-col items-center justify-center w-full">
+      {' '}
+      {status === 'apiError' && error && (
+        <p className="text-red-500">{error}</p>
+      )}{' '}
+      {status === 'loading' && <p>Loading...</p>}
       {!step && (
         <AuthForm
           type="login"
           onForgotPassword={() => setStep('forgotEmail')}
           onFormSubmit={async (type, data) => {
-            try {
-              await login(data.email, data.password);
-            } catch (error) {
-              console.error('Login failed:', error);
-
-              return;
+            const res: IAuthResponse = await login(data.email, data.password);
+            if (res.status === 'success') {
+              const fullUserData = await currentUser({ silent: true });
+              console.log('Login successful, user data:', fullUserData);
+              router.replace(next);
             }
-            setStep('success');
           }}
         />
       )}
-      {status === 'loading' && <p>Loading...</p>}
-      {status === 'error' && error && <p className="text-red-500">{error}</p>}
-
       {step === 'forgotEmail' && (
         <div className="mt-4">
           <ForgotEnterEmail
@@ -54,7 +52,6 @@ export const LoginPageContent: React.FC = () => {
           <ForgotPassword
             onSubmit={(data) => {
               console.log('Forgot password submitted:', data);
-              setStep('success');
               router.push('/login');
             }}
           />
