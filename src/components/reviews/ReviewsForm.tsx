@@ -13,6 +13,7 @@ import * as yup from 'yup';
 import { Rating } from '../ui/Rating';
 import { Textarea } from '../ui/Textarea';
 import { Button } from '../ui/Button';
+import { InputField } from '../account/settingsPage/InputField';
 
 export const ReviewsForm = (): React.JSX.Element => {
   const t = useTranslations('reviews');
@@ -31,7 +32,7 @@ export const ReviewsForm = (): React.JSX.Element => {
     defaultValues: {
       authorId: undefined,
       targetId: undefined,
-      rating: null,
+      rating: undefined,
       comment: undefined,
     },
   });
@@ -68,7 +69,7 @@ export const ReviewsForm = (): React.JSX.Element => {
   const onReset = (): void => {
     setValue('authorId', 0);
     setValue('targetId', 0);
-    setValue('rating', undefined);
+    setValue('rating', 0);
     setValue('comment', '');
   };
   return (
@@ -84,7 +85,22 @@ export const ReviewsForm = (): React.JSX.Element => {
           <h2 className="text-2xl font-semibold mb-4">{t('title')}</h2>
         </div>
         <h3 className="text-h3 text-white">{t('subtitle')}</h3>
-
+        <InputField
+          label="AuthorId"
+          name="authorId"
+          register={register}
+          errors={errors.authorId}
+          placeholder="placeholder"
+          disabled={false}
+        />
+        <InputField
+          label="TargetId"
+          name="targetId"
+          register={register}
+          errors={errors.targetId}
+          placeholder="placeholder"
+          disabled={false}
+        />
         <Controller
           name="rating"
           control={control}

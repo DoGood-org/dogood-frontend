@@ -7,7 +7,6 @@ export const sendReview = async (
   const response = await fetchFromApi<ReviewsResponse>('/reviews', {
     method: 'POST',
     data: formData,
-    auth: true,
   });
   return response;
 };
