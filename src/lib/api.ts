@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const isBrowser = typeof window !== 'undefined';
-const FRONT_END_ORIGIN = (): string => {
+const PROXY = (): string => {
   const appLocal = process.env.API_URL_INTERNAL;
   const appPublic = process.env.BASE_URL;
 
@@ -14,13 +13,10 @@ const FRONT_END_ORIGIN = (): string => {
 
   return app;
 };
-
-const BACKEND = isBrowser
-  ? process.env.NEXT_PUBLIC_API_URL
-  : FRONT_END_ORIGIN();
+const BACKEND = process.env.NEXT_PUBLIC_API_URL;
 
 const guestBase = BACKEND ? `${BACKEND}/` : '/api'; // public routes (login/logout/refresh/signup)
-const authBase = BACKEND ? `${BACKEND}/api/proxy` : '/api/proxy'; // protected routes via server proxy
+const authBase = PROXY() ? `${PROXY()}/api/proxy` : '/api/proxy'; // protected routes via server proxy
 
 const apiAuth = axios.create({
   baseURL: authBase,
