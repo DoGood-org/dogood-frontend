@@ -1,3 +1,5 @@
+import { TaskContent } from '@/components/tasks/TaskContent';
+
 const TaskPage: React.FC = () => {
   return (
     <div
@@ -16,7 +18,7 @@ text-foreground
   justify-center
   "
     >
-      task Page
+      <TaskContent />
     </div>
   );
 };

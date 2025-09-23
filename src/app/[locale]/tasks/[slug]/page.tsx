@@ -2,6 +2,7 @@ import type { JSX } from 'react/jsx-runtime';
 import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
+
 interface Props {
   params: Promise<{ slug: string; locale: Tlocale }>;
 }
