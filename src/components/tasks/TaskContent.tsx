@@ -2,6 +2,10 @@
 
 import { Task } from './Task';
 
-export const TaskContent: React.FC = () => {
+interface TaskContentProps {
+  slug: string;
+}
+
+export const TaskContent: React.FC<TaskContentProps> = () => {
   return <Task />;
 };
