@@ -142,6 +142,7 @@ export * from './main/news/SwiperNavButton';
 export * from './main/news/SwiperPagination';
 export * from './main/reviews/ReviewCard';
 export * from './main/reviews/ReviewsSection';
+export * from './tasks/DonationProgressBar';
 export * from './tasks/ImagePlaceholder';
 export * from './tasks/Task';
 export * from './tasks/TaskCard';
