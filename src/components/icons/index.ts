@@ -63,3 +63,9 @@ export { default as UserLocate } from './UserLocate';
 export { default as UsersThree } from './UsersThree';
 export { default as Vector } from './Vector';
 export { default as Visa } from './Visa';
+export { default as Clock } from './Clock';
+export { default as DateIcon } from './DateIcon';
+export { default as Location } from './Location';
+export { default as Favorite } from './Favorite';
+export { default as Edit } from './Edit';
+

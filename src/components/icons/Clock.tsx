@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react';
 
-const Time = (props: SVGProps<SVGSVGElement>) => (
+const Clock = (props: SVGProps<SVGSVGElement>) => (
     <svg
     width="24"
     height="24"
@@ -26,4 +26,4 @@ const Time = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export default Time;
+export default Clock;

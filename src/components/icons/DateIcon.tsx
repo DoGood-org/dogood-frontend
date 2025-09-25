@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react';
 
-const Date = (props: SVGProps<SVGSVGElement>) => (
+const DateIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="24"
     height="24"
@@ -34,4 +34,4 @@ const Date = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export default Date;
+export default DateIcon;

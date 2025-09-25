@@ -1,6 +1,6 @@
 import { calculateDistanceInMeters } from '@/lib/mapUtils';
 import { MarkerCategoryEnum } from '@/types/mapType';
-import { ITask } from '@/types/tasks.type';
+import { ITask, ITaskDetails, TaskStatus } from '@/types/tasks.type';
 
 const TITLES = [
   ['Mountain health checkpoint', 'Help set up first aid at trails'],
@@ -57,6 +57,23 @@ const CATEGORIES = [
   [MarkerCategoryEnum.Food, MarkerCategoryEnum.Medicine],
 ];
 
+const MOCK_LOCATIONS = [
+  'Willow Creek, Oregon',
+  'Mount Hood National Forest',
+  'Columbia River Gorge',
+  'Silver Falls State Park',
+  'Crater Lake National Park',
+  'Wallowa-Whitman National Forest',
+  'Ecola State Park',
+  'Mount Tabor Park',
+  'Forest Park, Portland',
+  'Cascade Locks, Oregon',
+  'Trillium Lake',
+  'Multnomah Falls',
+  'Sisters, Oregon',
+  'Cannon Beach',
+];
+
 export function generateTasks(
   userLat: number,
   userLng: number,
@@ -89,4 +106,34 @@ export function generateTasks(
       isSelected: false,
     };
   });
+}
+
+export function extendTaskToDetails(
+  task: ITask,
+  overrides?: Partial<ITaskDetails>
+): ITaskDetails {
+  return {
+    ...task,
+    picture:
+      overrides?.picture ?? `https://picsum.photos/seed/${task.id}/400/200`,
+    status: overrides?.status ?? ('PENDING' as TaskStatus),
+    locationName: overrides?.locationName ?? 'Unknown location',
+    isOrganization: overrides?.isOrganization ?? false,
+    organizationId: overrides?.organizationId ?? `org-${task.id}`,
+    startDate: overrides?.startDate ?? new Date().toISOString().slice(0, 10),
+    startTime: overrides?.startTime ?? '09:00 AM',
+    endDate: overrides?.endDate ?? new Date().toISOString().slice(0, 10),
+    ...overrides,
+  };
+}
+
+export function generateMockTasks(tasks: ITask[]): ITaskDetails[] {
+  return tasks.map((task, i) =>
+    extendTaskToDetails(task, {
+      status: 'IN_PROGRESS',
+      locationName: MOCK_LOCATIONS[i] || `${i + 1}`,
+      isOrganization: i % 2 === 0,
+      organizationId: `org-${i}`,
+    })
+  );
 }
