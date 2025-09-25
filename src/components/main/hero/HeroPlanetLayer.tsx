@@ -17,7 +17,7 @@ export const HeroPlanetLayer: React.FC<HeroPlanetLayerProps> = ({
   const heroImage = isMobile ? PlanetMob : isTablet ? PlanetTabl : PlanetDesk;
 
   return (
-    <div className="absolute bottom-[-500px] w-full pointer-events-none z-25">
+    <div className="absolute md:bottom-[-450px] lg:bottom-[-500px] w-full pointer-events-none z-25">
       <div className="sticky top-0 h-screen flex items-end justify-center ">
         <motion.div
           style={{ y: yPlanet, opacity, position: 'relative' }}
@@ -29,8 +29,8 @@ export const HeroPlanetLayer: React.FC<HeroPlanetLayerProps> = ({
           <Image
             src={heroImage}
             alt="Planet"
-            width={isMobile ? 300 : isTablet ? 600 : 990}
-            height={isMobile ? 300 : isTablet ? 600 : 990}
+            width={990}
+            height={990}
             className="drop-shadow-2xl"
             priority
           />
