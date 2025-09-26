@@ -50,5 +50,18 @@
       "id": "tasksInProgress",
       "view": "In Bearbeitung"
     }
-  ]
+  ],
+  "chatButton": "Nachricht senden",
+  "reportButton": "Melden",
+  "photoReport": "Foto 18+",
+  "nameReport": "Nickname ist nicht korrekt",
+  "descReport": "Beschreibung enthält Obszönitäten",
+  "violenceReport": "Gewalt",
+  "hateSpeechReport": "Hassrede",
+  "harassmentReport": "Belästigung",
+  "childExploitationReport": "Kinder­ausbeutung",
+  "spamReport": "Spam",
+  "copyReport": "Urheberrechtsverletzung",
+  "selfHarmReport": "Selbstverletzung",
+  "misinfoReport": "Fehlinformationen"
 }

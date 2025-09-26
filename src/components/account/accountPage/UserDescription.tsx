@@ -1,9 +1,12 @@
 import Image from 'next/image';
 import { JSX } from 'react';
-import { useTranslations } from 'next-intl';
-import { Email, Phone, UserLocate } from '@/components/icons';
-import { UserNoAvatar, UserNoDescription } from '@/components';
+import { useLocale, useTranslations } from 'next-intl';
+import { ChatCircle, Email, Phone, UserLocate } from '@/components/icons';
+import { Button, UserNoAvatar, UserNoDescription } from '@/components';
 import { UserDetailedProps } from '@/types';
+import { useRouteMatch } from '@/hooks/useRouteMatch';
+import Link from 'next/link';
+import { ReportUser } from '@/components/publicAccount/ReportUser';
 
 export const UserDescription = ({
   user,
@@ -12,6 +15,8 @@ export const UserDescription = ({
 }): JSX.Element => {
   const t = useTranslations('account');
   const { avatar, name, email, siteRole, bio, location, phoneNumber } = user;
+  const isPublicProfilePage = useRouteMatch('/profile');
+  const locale = useLocale();
 
   return (
     <div className="flex flex-col md:flex-row gap-11 lg:gap-20">
@@ -28,7 +33,10 @@ export const UserDescription = ({
       )}
 
       <div>
-        <h2 className="text-h2-m md:text-h2 lg:text-h2-d">{name}</h2>
+        <div className="flex justify-between">
+          <h2 className="text-h2-m md:text-h2 lg:text-h2-d">{name}</h2>
+          {isPublicProfilePage && <ReportUser />}
+        </div>
         <p className="text-base lg:text-h3 mt-3 font-semibold lg:font-normal capitalize">
           {siteRole.toLowerCase()}
         </p>
@@ -57,6 +65,14 @@ export const UserDescription = ({
           </>
         ) : (
           <UserNoDescription />
+        )}
+        {isPublicProfilePage && (
+          <Button asChild variant="secondary" className="mt-6">
+            <Link href={`/${locale}/account/chat`}>
+              <ChatCircle className="size-[18px]" />
+              {t('chatButton')}
+            </Link>
+          </Button>
         )}
       </div>
     </div>
