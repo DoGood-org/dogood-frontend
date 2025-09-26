@@ -115,7 +115,8 @@ export function extendTaskToDetails(
   return {
     ...task,
     picture:
-      overrides?.picture ?? `https://picsum.photos/seed/${task.id}/400/200`,
+      overrides?.picture ??
+      'https://res.cloudinary.com/demo/image/upload/w_400,h_200,c_fill/sample.jpg',
     status: overrides?.status ?? ('PENDING' as TaskStatus),
     locationName: overrides?.locationName ?? 'Unknown location',
     isOrganization: overrides?.isOrganization ?? false,

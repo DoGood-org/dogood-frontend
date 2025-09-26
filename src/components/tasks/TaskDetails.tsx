@@ -1,6 +1,8 @@
 'use client';
 
 import { ITaskDetails } from '@/types/tasks.type';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
@@ -9,9 +11,49 @@ interface TaskDetailsProps {
 export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
   return (
     <section>
-      <h2>{task.title}</h2>
-      <h3>Details:</h3>
-      <div></div>
+      <h2 className="text-lg">{task.title}</h2>
+      <h3 className="text-[20px] leading-[20px] mb-5">Details:</h3>
+
+      <div className="flex gap-3 mb-5">
+        <div className="w-[80px] h-[80px] bg-[#00c1ac]"></div>
+        <div>
+          <h3 className="mb-3 text-base">
+            <span className="font-semibold">Location: </span>
+            {task.locationName}
+          </h3>
+          <div className="flex gap-3">
+            <Image
+              src={task.picture || '/task/no-image.png'}
+              alt="Task image"
+              width={48}
+              height={48}
+              className="w-[48px] h-[48px] rounded-full object-cover"
+            />
+            <Link
+              href={`/profile/${task.organizationId}`}
+              className="flex items-center gap-1"
+            >
+              <span className="cursor-pointer underline text-base hover:text-btn-hover">
+                Organized by{''} Felix
+              </span>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <div className="relative pt-5 pb-10">
+        <span className="absolute top-0 left-0 h-px w-full bg-text-gray"></span>
+        <h3 className="text-[20px] leading-[20px] mb-5">Discription</h3>
+        <p className="text-base">{task.description}</p>
+        <span className="absolute bottom-0 left-0 h-px w-full bg-text-gray"></span>
+      </div>
+
+      <div className="relative py-5 px-3">
+        <h3>How You Can Help: </h3>
+        <h4>Donation needs: </h4>
+        <span>10000</span>
+        <h4>Requitments </h4>
+      </div>
     </section>
   );
 };
