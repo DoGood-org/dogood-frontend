@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
 import { Email, Phone, UserLocate } from '@/components/icons';
-import { UserAavatar, UserNoDescription } from '@/components';
+import { UserNoAvatar, UserNoDescription } from '@/components';
 import { UserDetailedProps } from '@/types';
 
 export const UserDescription = ({
@@ -24,7 +24,7 @@ export const UserDescription = ({
           className="w-[353px] h-[352px] object-cover md:w-[270px] md:h-[323px] lg:w-[511px] lg:h-[611px] rounded-[10px]"
         />
       ) : (
-        <UserAavatar />
+        <UserNoAvatar />
       )}
 
       <div>

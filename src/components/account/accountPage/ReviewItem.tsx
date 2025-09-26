@@ -1,4 +1,4 @@
-import { Rating, UserAavatar } from '@/components';
+import { Rating, UserNoAvatar } from '@/components';
 import { More } from '@/components/icons';
 import { useRouteMatch } from '@/hooks/useRouteMatch';
 import { formatDate } from '@/lib/formateDate';
@@ -26,7 +26,7 @@ export const ReviewItem = ({ review }: ReviewItemProps): JSX.Element => {
             className="w-[263px] h-[263px] md:w-[160px] md:h-[160px] object-cover rounded-lg self-center md:self-start"
           />
         ) : (
-          <UserAavatar className="w-[263px] h-[263px] md:w-[160px] md:h-[160px] lg:w-[160px] lg:h-[160px]" />
+          <UserNoAvatar className="w-[263px] h-[263px] md:w-[160px] md:h-[160px] lg:w-[160px] lg:h-[160px]" />
         )}
       </div>
       <div className="grow-1">

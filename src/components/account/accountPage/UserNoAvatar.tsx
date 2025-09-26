@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { JSX } from 'react';
 
-export const UserAavatar = ({
+export const UserNoAvatar = ({
   className = '',
 }: {
   className?: string;
