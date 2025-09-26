@@ -36,8 +36,8 @@ export const mockPublicUsers: UserDetailedProps[] = [
     joinedTasks: [
       {
         id: 1,
-        title: 'Peace Volunteers',
-        status: '',
+        title: 'Peace Volunteers 1',
+        status: 'CREATED',
         description:
           '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
         avatar: '/account/Razer.png',
@@ -45,8 +45,8 @@ export const mockPublicUsers: UserDetailedProps[] = [
       },
       {
         id: 2,
-        title: 'Peace Volunteers',
-        status: '',
+        title: 'Peace Volunteers 2',
+        status: 'IN_PROGRESS',
         description:
           '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
         avatar: '/account/amazon.png',
@@ -54,17 +54,17 @@ export const mockPublicUsers: UserDetailedProps[] = [
       },
       {
         id: 3,
-        title: 'Peace Volunteers',
-        status: '',
+        title: 'Peace Volunteers 3',
+        status: 'COMPLETED',
         description:
           '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
-        avatar: '/account/Razer.png',
+        // avatar: '/account/Razer.png',
         category: 'food',
       },
       {
         id: 4,
-        title: 'Peace Volunteers',
-        status: '',
+        title: 'Peace Volunteers 4',
+        status: 'CREATED',
         description:
           '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
         avatar: '/account/amazon.png',
@@ -102,7 +102,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-07-01T12:05:00.000Z',
-        owner: { id: 3, name: 'Mitchell', avatar: '/account/rev3.png' },
+        owner: { id: 3, name: 'Mitchell', avatar: '' },
       },
       {
         id: 4,
@@ -110,7 +110,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-01T14:05:00.000Z',
-        owner: { id: 1, name: 'Wade', avatar: '/account/rev1.png' },
+        owner: { id: 1, name: 'Wade', avatar: '/account/rev3.png' },
       },
       {
         id: 5,
@@ -182,7 +182,8 @@ export const mockPublicUsers: UserDetailedProps[] = [
           { id: '', name: '', email: '' },
           { id: '', name: '', email: '' },
         ],
-        logo: '/account/org2.png',
+        // logo: '/account/org2.png',
+        logo: '',
       },
       {
         id: 3,
