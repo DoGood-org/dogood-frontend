@@ -49,10 +49,11 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
       </div>
 
       <div className="relative py-5 px-3">
-        <h3>How You Can Help: </h3>
-        <h4>Donation needs: </h4>
-        <span>10000</span>
-        <h4>Requitments </h4>
+        <h3 className="text-[20px] leading-[20px] mb-2">How You Can Help: </h3>
+        <h4 className="text-base font-medium mb-2">Donation needs: </h4>
+        <span className="block text-base mb-6">10000 USD</span>
+        <h4 className="text-base font-medium mb-2">Requitments </h4>
+        <p>{task.requirements}</p>
       </div>
     </section>
   );

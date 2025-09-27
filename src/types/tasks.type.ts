@@ -35,4 +35,5 @@ export interface ITaskDetails extends ITask {
   startDate?: string;
   startTime?: string;
   endDate?: string;
+  requirements?: string;
 }

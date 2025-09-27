@@ -124,6 +124,15 @@ export function extendTaskToDetails(
     startDate: overrides?.startDate ?? new Date().toISOString().slice(0, 10),
     startTime: overrides?.startTime ?? '09:00 AM',
     endDate: overrides?.endDate ?? new Date().toISOString().slice(0, 10),
+    requirements:
+      overrides?.requirements ??
+      [
+        'Stray, abandoned, and injured animals currently living in our shelter.',
+        'Requirements:',
+        'Love and compassion for animals',
+        'Reliability and responsibility',
+        'Ability to dedicate at least 2–3 hours per week.',
+      ].join('\n'),
     ...overrides,
   };
 }
