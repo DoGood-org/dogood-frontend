@@ -3,6 +3,7 @@ import { MarkerCategoryEnum } from '@/types/mapType';
 import { ITask, ITaskDetails, TaskStatus } from '@/types/tasks.type';
 
 const TITLES = [
+  ['Help Animals in Need'],
   ['Mountain health checkpoint', 'Help set up first aid at trails'],
   ['Clean up alpine lakes', 'Preserve biodiversity at altitude'],
   ['Rescue center animal support', 'Help care for rescued wildlife'],
@@ -20,6 +21,20 @@ const TITLES = [
 ];
 
 const DESCRIPTIONS = [
+  `Join our volunteer team to care for rescued animals — feeding, cleaning, walking, and giving 
+  them love and attention. You’ll also help with basic shelter maintenance and socializing animals 
+  to prepare them for adoption.
+Donation Needs:
+In addition to your time, we urgently need donations for:
+- Animal food (dry & wet)
+- Veterinary care & medicine
+- Bedding, blankets, toys
+- Cleaning supplies
+🤝 How to Help:
+- Volunteer your time at the shelter
+- Donate items or funds to support our work
+- Share our cause on social media to reach more people
+❤ Every small act makes a big difference in an animal’s life.`,
   'Set up temporary medical aid near common hiking paths.',
   'Join efforts to clean lakes and remove plastic waste.',
   'Volunteer for basic animal care and feeding.',
@@ -55,6 +70,7 @@ const CATEGORIES = [
   [MarkerCategoryEnum.Medicine, MarkerCategoryEnum.Food],
   [MarkerCategoryEnum.Nature, MarkerCategoryEnum.Animal],
   [MarkerCategoryEnum.Food, MarkerCategoryEnum.Medicine],
+  [MarkerCategoryEnum.Nature],
 ];
 
 const MOCK_LOCATIONS = [
@@ -132,7 +148,7 @@ export function extendTaskToDetails(
         'Love and compassion for animals',
         'Reliability and responsibility',
         'Ability to dedicate at least 2–3 hours per week.',
-      ].join('\n'),
+      ].join(' '),
     ...overrides,
   };
 }

@@ -3,6 +3,7 @@
 import { ITaskDetails } from '@/types/tasks.type';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Location } from '@/components/icons';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
@@ -11,7 +12,7 @@ interface TaskDetailsProps {
 export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
   return (
     <section>
-      <h2 className="text-lg">{task.title}</h2>
+      <h2 className="text-lg mb-5">{task.title}</h2>
       <h3 className="text-[20px] leading-[20px] mb-5">Details:</h3>
 
       <div className="flex gap-3 mb-5">
@@ -21,6 +22,19 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
             <span className="font-semibold">Location: </span>
             {task.locationName}
           </h3>
+          <div className="flex gap-2 mb-2">
+            <Link
+              href="https://www.google.com/maps/search/?api=1&query=Willow+Creek,+Oregon2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 group"
+            >
+              <Location className="stroke-[#00c1ac] transition-colors duration-300 group-hover:stroke-[#999999]" />
+              <span className="cursor-pointer underline text-base text-[#00c1ac] transition-colors duration-300 group-hover:text-[#999999]">
+                Show on map
+              </span>
+            </Link>
+          </div>
           <div className="flex gap-3">
             <Image
               src={task.picture || '/task/no-image.png'}
@@ -43,7 +57,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
 
       <div className="relative pt-5 pb-10">
         <span className="absolute top-0 left-0 h-px w-full bg-text-gray"></span>
-        <h3 className="text-[20px] leading-[20px] mb-5">Discription</h3>
+        <h3 className="text-[20px] leading-[20px] mb-5">Description</h3>
         <p className="text-base">{task.description}</p>
         <span className="absolute bottom-0 left-0 h-px w-full bg-text-gray"></span>
       </div>

@@ -32,7 +32,9 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
             </li>
             <li className="flex items-center gap-2">
               <Clock />
-              <p className="text_tag text-base">Time: {task.startTime}</p>
+              <p className="text_tag text-base">
+                Time: {task.startTime} (local time)
+              </p>
             </li>
             <li className="flex items-center gap-2">
               <Location />
