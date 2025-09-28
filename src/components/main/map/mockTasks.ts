@@ -1,6 +1,12 @@
 import { calculateDistanceInMeters } from '@/lib/mapUtils';
 import { MarkerCategoryEnum } from '@/types/mapType';
-import { ITask, ITaskDetails, TaskStatus } from '@/types/tasks.type';
+import {
+  ITask,
+  ITaskDetails,
+  TaskActionType,
+  TaskStatus,
+  UserParticipationStatus,
+} from '@/types/tasks.type';
 
 const TITLES = [
   ['Help Animals in Need'],
@@ -149,6 +155,9 @@ export function extendTaskToDetails(
         'Reliability and responsibility',
         'Ability to dedicate at least 2–3 hours per week.',
       ].join(' '),
+    actionType: overrides?.actionType ?? TaskActionType.VOLUNTEERING,
+    userParticipationStatus:
+      overrides?.userParticipationStatus ?? UserParticipationStatus.NONE,
     ...overrides,
   };
 }

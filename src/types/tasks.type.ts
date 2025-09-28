@@ -47,7 +47,6 @@ export interface ITaskDetails extends ITask {
   startTime?: string;
   endDate?: string;
   requirements?: string;
-
   actionType: TaskActionType;
   userParticipationStatus: UserParticipationStatus;
   donationGoal?: number;
