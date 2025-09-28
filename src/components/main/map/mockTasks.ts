@@ -111,7 +111,7 @@ export function generateTasks(
     const distanceStr = `${(realDistance / 1000).toFixed(2)} km`;
 
     return {
-      id: `${Math.random().toString(36).substring(2, 15)}-${i}`,
+      id: `task-${i}`,
       title,
       subtitle,
       category: CATEGORIES[i],

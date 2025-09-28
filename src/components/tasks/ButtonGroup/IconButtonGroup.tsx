@@ -1,0 +1,29 @@
+'use client';
+
+import { TaskCategoryIconsList } from '@/components/main/map/tasksPanel/TaskCategoryIconList';
+import { FavoriteToggleButton } from '@/components/tasks/ButtonGroup/FavoriteToggleButton';
+import { MapDotButton } from '@/components/tasks/ButtonGroup/MapDotButton';
+import { MarkerCategoryEnum } from '@/types';
+
+interface IconButtonGroupProps {
+  categories: MarkerCategoryEnum[];
+  distance: string;
+}
+
+export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
+  categories,
+  distance,
+}) => {
+  return (
+    <div className="flex items-center justify-between">
+      <TaskCategoryIconsList categories={categories} />
+      <div className="flex flex-col gap-1.5">
+        <div className="flex gap-2">
+          <FavoriteToggleButton />
+          <MapDotButton />
+        </div>
+        <span className="text-sm text-gray-600">{distance}</span>
+      </div>
+    </div>
+  );
+};

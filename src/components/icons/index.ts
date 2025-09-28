@@ -21,6 +21,7 @@ export { default as Elo } from './Elo';
 export { default as Faders } from './Faders';
 export { default as Food } from './Food';
 export { default as Gear } from './Gear';
+export { default as GoToTask } from './GoToTask';
 export { default as HandHeart } from './HandHeart';
 export { default as Heart } from './Heart';
 export { default as Hipercard } from './Hipercard';
