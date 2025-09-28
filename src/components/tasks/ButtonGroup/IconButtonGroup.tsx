@@ -4,6 +4,7 @@ import { TaskCategoryIconsList } from '@/components/main/map/tasksPanel/TaskCate
 import { FavoriteToggleButton } from '@/components/tasks/ButtonGroup/FavoriteToggleButton';
 import { MapDotButton } from '@/components/tasks/ButtonGroup/MapDotButton';
 import { MarkerCategoryEnum } from '@/types';
+import { useEffect, useState } from 'react';
 
 interface IconButtonGroupProps {
   categories: MarkerCategoryEnum[];
@@ -14,6 +15,11 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
   categories,
   distance,
 }) => {
+  const [clientDistance, setClientDistance] = useState<string | null>(null);
+
+  useEffect(() => {
+    setClientDistance(distance);
+  }, [distance]);
   return (
     <div className="flex items-center justify-between">
       <TaskCategoryIconsList categories={categories} />
@@ -22,7 +28,9 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
           <FavoriteToggleButton />
           <MapDotButton />
         </div>
-        <span className="text-sm text-gray-600">{distance}</span>
+        <span className="text-sm text-gray-600">
+          {clientDistance ?? '-- km'}
+        </span>
       </div>
     </div>
   );

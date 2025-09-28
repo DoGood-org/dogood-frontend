@@ -13,6 +13,17 @@ export interface ITask {
   id: string;
 }
 
+export enum TaskActionType {
+  FUNDRAISING = 'FUNDRAISING',
+  VOLUNTEERING = 'VOLUNTEERING',
+}
+
+export enum UserParticipationStatus {
+  NONE = 'NONE',
+  JOINED = 'JOINED',
+  DONATED = 'DONATED',
+}
+
 export interface IExtendedITaskProps extends ITask {
   isSelected?: boolean;
   onToggleDescription?: () => void;
@@ -36,4 +47,16 @@ export interface ITaskDetails extends ITask {
   startTime?: string;
   endDate?: string;
   requirements?: string;
+
+  actionType: TaskActionType;
+  userParticipationStatus: UserParticipationStatus;
+  donationGoal?: number;
+  currentDonation?: number;
+}
+
+export interface IExtendedITaskProps extends ITask {
+  isSelected?: boolean;
+  onToggleDescription?: () => void;
+  actionType: TaskActionType;
+  userParticipationStatus: UserParticipationStatus;
 }

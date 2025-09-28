@@ -145,6 +145,7 @@ export * from './main/reviews/ReviewsSection';
 export * from './tasks/DonationProgressBar';
 export * from './tasks/ImagePlaceholder';
 export * from './tasks/Task';
+export * from './tasks/TaskActionButtons';
 export * from './tasks/TaskCard';
 export * from './tasks/TaskContent';
 export * from './tasks/TaskDetails';
