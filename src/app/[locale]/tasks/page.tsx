@@ -1,24 +1,4 @@
-import {
-  generateMockTasks,
-  generateTasks,
-  OtherTasksSection,
-} from '@/components';
-import {
-  ITaskDetails,
-  TaskActionType,
-  UserParticipationStatus,
-} from '@/types/tasks.type';
-
 const TaskPage: React.FC = () => {
-  const tasks = generateTasks(49.8429, 24.0316);
-  const otherTasksList: ITaskDetails[] = generateMockTasks(tasks).map(
-    (task) => ({
-      ...task,
-      // Призначаємо обов'язкові поля для компонента TaskActionButtons
-      actionType: TaskActionType.VOLUNTEERING,
-      userParticipationStatus: UserParticipationStatus.NONE,
-    })
-  );
   return (
     <div
       className=" 
@@ -36,7 +16,7 @@ text-foreground
   justify-center
   "
     >
-      <OtherTasksSection tasks={otherTasksList} />
+      task Page
     </div>
   );
 };
