@@ -30,7 +30,7 @@ export const ReviewItem = ({ review }: ReviewItemProps): JSX.Element => {
         )}
       </div>
       <div className="grow-1">
-        <div className="flex items-start h-8 mt-8 md:mt-0 justify-between">
+        <div className="flex items-start h-[70px] md:h-8 mt-8 md:mt-0 justify-between">
           <div className="flex flex-col  md:flex-row gap-[10px] items-start md:items-center justify-start">
             <h3 className="text-h3">{owner?.name}</h3>
             <Rating rating={rating} />

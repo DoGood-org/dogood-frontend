@@ -43,6 +43,7 @@
   --color-icon-color: var(--icon-color);
   --color-image-bg: var(--image-bg);
   --color-form-field: var(--form-field);
+  --color-modal: var(--modal);
 
   /* buttons */
   --color-border: var(--border);
@@ -140,6 +141,7 @@
   --post: #696969;
   --post_gray: #f1f1f1;
   --form-field: #0d0d0d;
+  --modal: #fffcfc;
 
   --card: #cfcfcf;
   --toggle: #303030;
@@ -227,6 +229,7 @@ html {
   --background-secondary: #303030;
   --foreground: #f1f1f1;
   --card: #303030;
+  --modal: #303030;
   --btn-secondary: #010101;
   --post: #171b19;
   --text_tag: #f1f1f1;

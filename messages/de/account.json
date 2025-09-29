@@ -63,5 +63,7 @@
   "spamReport": "Spam",
   "copyReport": "Urheberrechtsverletzung",
   "selfHarmReport": "Selbstverletzung",
-  "misinfoReport": "Fehlinformationen"
+  "misinfoReport": "Fehlinformationen",
+  "reportError": "Bitte wählen Sie einen Grund.",
+  "reportSendButton": "Senden"
 }

@@ -450,7 +450,7 @@ Dark theme variables
 </details>
 
 | Variable             | Light theme | Dark theme | Description                                                  |
-| -------------------- | ----------- | ---------- | ------------------------------------------------------------ | --- | ------ | ------- | --- | ----------- | --- |
+| -------------------- | ----------- | ---------- | ------------------------------------------------------------ |
 | background           | #f1f1f1     | #171b19    | for primary background-color                                 |
 | background-secondary | #696969     | #303030    | for registration, form-cards                                 |
 | foreground           | #1B1B1B     | #f1f1f1    | for primary text-color                                       |
@@ -483,15 +483,16 @@ Dark theme variables
 | bg-icon              | #171B19     | #f1f1f1    | background for icons (tasks)                                 |
 | icon-color           | #f1f1f1     | #000000    | color for icon (tasks)                                       |
 | image-bg             | #999999     | #e9e9e9    | image-background (for example about-section)                 |
+| modal                | #fffcfc     | #303030    | modal-background                                             |
 | review-bg            | #999999     | #696969    | background for review-cards (main page)                      |
 | accent-bg            | #2c8c8c     | #01425c    | background for review-section                                |
 | error                | #EE0606     |            | for errors                                                   |
 | star                 | #FFEE00     |            | for rating-stars (profile)                                   |
 | star-empty           | #747474     | #959595    | for empty rating-stars                                       |
-| medicine             | #1f5eff     |            | medicine-icon                                                |     | animal | #ff7d57 |     | animal-icon |     |
-| nature               | #4caf50     |            | nature-icon                                                  |     | food   | #e4a23c |     | food-icon   |
-
-|
+| medicine             | #1f5eff     |            | medicine-icon                                                |
+| animal               | #ff7d57     |            | animal-icon                                                  |
+| nature               | #4caf50     |            | nature-icon                                                  |
+| food                 | #e4a23c     |            | food-icon                                                    |
 
 **How to use**
 
