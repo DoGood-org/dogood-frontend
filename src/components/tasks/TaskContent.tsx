@@ -2,14 +2,14 @@
 
 import { generateMockTasks, generateTasks } from '../main/map/mockTasks';
 import { Container } from '../ui/Container';
-import { Task } from './Task';
+import { Task } from '@/components/tasks/Task';
 import {
   ITaskDetails,
   TaskActionType,
   UserParticipationStatus,
 } from '@/types/tasks.type';
 import { IconButtonGroup } from '@/components/tasks/ButtonGroup/IconButtonGroup';
-import { TaskActionButtons } from '@/components';
+import { OtherTasksSection, TaskActionButtons } from '@/components';
 
 interface TaskContentProps {
   slug: string;
@@ -35,6 +35,8 @@ export const TaskContent: React.FC<TaskContentProps> = ({ slug }) => {
 
   if (!task) return <div>Task not found</div>;
 
+  const otherTasksList: ITaskDetails[] = detailedTasks;
+
   const {
     category,
     distance,
@@ -54,6 +56,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({ slug }) => {
           userParticipationStatus={userParticipationStatus}
         />
       </div>
+      <OtherTasksSection tasks={otherTasksList} />
     </Container>
   );
 };

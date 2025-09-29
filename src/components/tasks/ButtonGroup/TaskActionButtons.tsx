@@ -30,7 +30,7 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
     <Button
       variant="secondary"
       size="lg"
-      className="bg-card text-[14px] w-[156px] px-3"
+      className="bg-card text-[14px] w-[152px] px-3"
     >
       {/* {t('seeMoreBtn')} */}
       See More
@@ -41,11 +41,20 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
   if (hasJoinedOrDonated) {
     return (
       <>
-        <Button variant="secondary" size="lg" className="text-[14px] w-[156px]">
+        <Button
+          variant="secondary"
+          size="lg"
+          className="leading-[32px] w-[152px]"
+        >
           {/* {t('editBtn')} */}
           Edit
         </Button>
-        <Button variant="primary" size="lg" className="text-[14px] w-[156px]">
+        <Button
+          variant="primary"
+          size="lg"
+          className="
+          leading-[32px] w-[152px]"
+        >
           {/* {t('confirmBtn')} */}
           Confirm
         </Button>
@@ -60,7 +69,7 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
         <Button
           variant="primary"
           size="lg"
-          className="text-[14px] w-[156px]"
+          className="w-[152px] text-white leading-[32px]"
           onClick={() => router.push('/donate')}
         >
           {/* {t('donateBtn')} */}
@@ -78,7 +87,7 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
         variant="primary"
         size="lg"
         onClick={() => joinTask(taskId)}
-        className="text-[14px] w-[156px]"
+        className="w-[152px] text-white leading-[32px]"
       >
         {/* {t('joinBtn')} */}
         Join

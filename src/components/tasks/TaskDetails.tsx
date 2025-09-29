@@ -29,7 +29,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
               rel="noopener noreferrer"
               className="flex items-center gap-1 group"
             >
-              <Location className="stroke-[#00c1ac] transition-colors duration-300 group-hover:stroke-[#999999]" />
+              <Location className="text-[#00c1ac] transition-colors duration-300 group-hover:stroke-[#999999]" />
               <span className="cursor-pointer underline text-base text-[#00c1ac] transition-colors duration-300 group-hover:text-[#999999]">
                 Show on map
               </span>
