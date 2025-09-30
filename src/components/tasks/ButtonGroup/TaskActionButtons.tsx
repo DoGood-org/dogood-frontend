@@ -10,11 +10,13 @@ interface TaskActionButtonsProps {
   taskId: string;
   actionType: TaskActionType;
   userParticipationStatus: UserParticipationStatus;
+  className?: string;
 }
 
 export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
   taskId,
   actionType,
+  // className = '',
   userParticipationStatus,
 }) => {
   // const t = useTranslations('task');
@@ -30,7 +32,7 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
     <Button
       variant="secondary"
       size="lg"
-      className="bg-card text-[14px] w-[152px] px-3"
+      className="bg-card text-[14px] w-[152px]"
     >
       {/* {t('seeMoreBtn')} */}
       See More
