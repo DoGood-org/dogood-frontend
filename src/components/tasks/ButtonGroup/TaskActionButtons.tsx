@@ -11,12 +11,13 @@ interface TaskActionButtonsProps {
   actionType: TaskActionType;
   userParticipationStatus: UserParticipationStatus;
   className?: string;
+  colorClass?: string;
 }
 
 export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
   taskId,
   actionType,
-  // className = '',
+  className = '',
   userParticipationStatus,
 }) => {
   // const t = useTranslations('task');
@@ -28,11 +29,13 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
     userParticipationStatus !== UserParticipationStatus.NONE;
   const isFundraising = actionType === TaskActionType.FUNDRAISING;
 
+  const baseButtonClass = `leading-[32px] ${className}`;
+
   const SeeMoreButton = (
     <Button
       variant="secondary"
       size="lg"
-      className="bg-card text-[14px] w-[152px]"
+      className={`${baseButtonClass} bg-card`}
     >
       {/* {t('seeMoreBtn')} */}
       See More
@@ -43,19 +46,14 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
   if (hasJoinedOrDonated) {
     return (
       <>
-        <Button
-          variant="secondary"
-          size="lg"
-          className="leading-[32px] w-[152px]"
-        >
+        <Button variant="secondary" size="lg" className={baseButtonClass}>
           {/* {t('editBtn')} */}
           Edit
         </Button>
         <Button
           variant="primary"
           size="lg"
-          className="
-          leading-[32px] w-[152px]"
+          className={`${baseButtonClass} text-white`}
         >
           {/* {t('confirmBtn')} */}
           Confirm
@@ -71,7 +69,7 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
         <Button
           variant="primary"
           size="lg"
-          className="w-[152px] text-white leading-[32px]"
+          className={`${baseButtonClass} text-white`}
           onClick={() => router.push('/donate')}
         >
           {/* {t('donateBtn')} */}
@@ -89,7 +87,7 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
         variant="primary"
         size="lg"
         onClick={() => joinTask(taskId)}
-        className="w-[152px] text-white leading-[32px]"
+        className={`${baseButtonClass} text-white`}
       >
         {/* {t('joinBtn')} */}
         Join

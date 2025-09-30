@@ -12,9 +12,9 @@ interface TaskCardProps {
 export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const goalAmount = 10000;
   return (
-    <section className="mb-5">
-      <ImagePlaceholder />
-      <div className="rounded-lg py-8 px-6 w-[353px] h-[418px] bg-[#D2D5D5] dark:bg-[#2A2D2D]">
+    <section className="mb-5 md:flex">
+      <ImagePlaceholder className="md:w-[324px]" />
+      <div className="rounded-lg py-8 px-6 w-[354px] h-[418px] bg-[#D2D5D5] dark:bg-[#2A2D2D]">
         <div className="py-6 px-5">
           <ul className=" flex flex-col gap-5 text_tag mb-5">
             <li>

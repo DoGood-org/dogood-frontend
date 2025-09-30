@@ -54,6 +54,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({ slug }) => {
           taskId={taskId}
           actionType={actionType}
           userParticipationStatus={userParticipationStatus}
+          className="w-[152px]"
         />
       </div>
       <OtherTasksSection tasks={otherTasksList} />
