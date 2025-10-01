@@ -11,7 +11,6 @@ interface TaskActionButtonsProps {
   actionType: TaskActionType;
   userParticipationStatus: UserParticipationStatus;
   className?: string;
-  colorClass?: string;
 }
 
 export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
@@ -31,68 +30,74 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
 
   const baseButtonClass = `leading-[32px] ${className}`;
 
-  const SeeMoreButton = (
-    <Button
-      variant="secondary"
-      size="lg"
-      className={`${baseButtonClass} bg-card`}
-    >
-      {/* {t('seeMoreBtn')} */}
-      See More
-    </Button>
-  );
+  const buttons = [];
 
-  // Якщо користувач уже приєднався або зробив донат
   if (hasJoinedOrDonated) {
-    return (
-      <>
-        <Button variant="secondary" size="lg" className={baseButtonClass}>
-          {/* {t('editBtn')} */}
-          Edit
-        </Button>
-        <Button
-          variant="primary"
-          size="lg"
-          className={`${baseButtonClass} text-white`}
-        >
-          {/* {t('confirmBtn')} */}
-          Confirm
-        </Button>
-      </>
+    buttons.push(
+      {
+        label: 'Edit',
+        /* {label: t('editBtn')} */
+        variant: 'secondary',
+        onClick: () => {},
+        className: baseButtonClass,
+      },
+      {
+        label: 'Confirm',
+        /* {label: t('confirmBtn')} */
+        variant: 'primary',
+        onClick: () => {},
+        className: `${baseButtonClass} text-white`,
+      }
+    );
+  } else if (isFundraising) {
+    buttons.push(
+      {
+        label: 'Donate',
+        // {label: t('donateBtn'),
+        variant: 'primary',
+        onClick: () => router.push('/donate'),
+        className: `${baseButtonClass} text-white`,
+      },
+      {
+        label: 'See More',
+        /* {label: t('seeMoreBtn')} */
+        variant: 'secondary',
+        onClick: () => {},
+        className: `${baseButtonClass} bg-card`,
+      }
+    );
+  } else {
+    buttons.push(
+      {
+        label: 'Join',
+        /* {label: t('joinBtn')} */
+        variant: 'primary',
+        onClick: () => joinTask(taskId),
+        className: `${baseButtonClass} text-white`,
+      },
+      {
+        label: 'See More',
+        /* {label: t('seeMoreBtn')} */
+        variant: 'secondary',
+        onClick: () => {},
+        className: `${baseButtonClass} bg-card`,
+      }
     );
   }
 
-  // Якщо це fundraising і користувач ще не донатив
-  if (isFundraising) {
-    return (
-      <>
-        <Button
-          variant="primary"
-          size="lg"
-          className={`${baseButtonClass} text-white`}
-          onClick={() => router.push('/donate')}
-        >
-          {/* {t('donateBtn')} */}
-          Donate
-        </Button>
-        {SeeMoreButton}
-      </>
-    );
-  }
-
-  // Якщо це волонтерство і користувач ще не приєднався
   return (
     <>
-      <Button
-        variant="primary"
-        size="lg"
-        onClick={() => joinTask(taskId)}
-        className={`${baseButtonClass} text-white`}
-      >
-        {/* {t('joinBtn')} */}
-        Join
-      </Button>
-      {SeeMoreButton}
+      {buttons.map((btn, index) => (
+        <Button
+          key={index}
+          variant={btn.variant as any}
+          size="lg"
+          className={btn.className}
+          onClick={btn.onClick}
+        >
+          {btn.label}
+        </Button>
+      ))}
     </>
   );
 };

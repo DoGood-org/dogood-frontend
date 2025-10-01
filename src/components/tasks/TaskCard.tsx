@@ -11,38 +11,30 @@ interface TaskCardProps {
 
 export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const goalAmount = 10000;
+
+  const taskInfo = [
+    { icon: <DateIcon />, label: `Start: ${task.startDate}` },
+    { icon: <DateIcon />, label: `Finish: ${task.endDate}` },
+    { icon: <Clock />, label: `Time: ${task.startTime} (local time)` },
+    { icon: <Location />, label: `Location: ${task.locationName}` },
+  ];
   return (
     <section className="mb-5 md:flex">
       <ImagePlaceholder className="md:w-[324px]" />
       <div className="rounded-lg py-8 px-6 w-[354px] h-[418px] bg-[#D2D5D5] dark:bg-[#2A2D2D]">
         <div className="py-6 px-5">
-          <ul className=" flex flex-col gap-5 text_tag mb-5">
+          <ul className="flex flex-col gap-5 text_tag mb-5">
             <li>
               <h2 className="text-[20px] font-bold leading-[20px] tracking-[0]">
                 {task.title}
               </h2>
             </li>
-            <li className="flex items-center gap-2">
-              <DateIcon />
-              <p className="text_tag text-base">Start: {task.startDate}</p>
-            </li>
-            <li className="flex items-center gap-2">
-              <DateIcon />
-              <p className="text_tag text-base">Finish: {task.endDate}</p>
-            </li>
-            <li className="flex items-center gap-2">
-              <Clock />
-              <p className="text_tag text-base">
-                Time: {task.startTime} (local time)
-              </p>
-            </li>
-            <li className="flex items-center gap-2">
-              <Location />
-              <p className="text_tag text-base">
-                Location:
-                {task.locationName}
-              </p>
-            </li>
+            {taskInfo.map((item, index) => (
+              <li key={index} className="flex items-center gap-2">
+                {item.icon}
+                <p className="text_tag text-base">{item.label}</p>
+              </li>
+            ))}
           </ul>
           <h3 className="mb-4 text-base text-[#00c1ac] font-semibold">
             Donation needs {goalAmount}$
