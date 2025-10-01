@@ -25,7 +25,7 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
       <span className="absolute top-0 left-0 h-px w-full bg-text-gray"></span>
       <TaskCategoryIconsList categories={categories} />
       <div className="flex flex-col gap-1.5">
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           <FavoriteToggleButton />
           <MapDotButton />
         </div>

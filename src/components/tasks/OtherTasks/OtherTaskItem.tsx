@@ -28,7 +28,6 @@ export const OtherTskItem: React.FC<IExtendedITaskProps> = ({
         {distance && <span className="text-base">{distance}</span>}
       </div>
 
-      {/* Кнопки - використовуємо TaskActionButtons */}
       <div className="flex justify-between space-x-2">
         <TaskActionButtons
           taskId={id}

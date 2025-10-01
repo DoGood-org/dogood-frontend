@@ -10,7 +10,7 @@ interface TaskProps {
 
 export const Task: React.FC<TaskProps> = ({ task }) => {
   return (
-    <section>
+    <section className="lg:flex gap-20">
       <TaskCard task={task} />
       <TaskDetails task={task} />
     </section>

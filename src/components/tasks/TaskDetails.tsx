@@ -16,7 +16,9 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
       <h3 className="text-[20px] leading-[20px] mb-5">Details:</h3>
 
       <div className="flex gap-3 mb-5">
+        {/* map !!!!*/}
         <div className="w-[80px] h-[80px] bg-[#00c1ac]"></div>
+
         <div>
           <div className="flex flex-col md:flex-row md:gap-6">
             <h3 className="mb-3 text-base">
@@ -91,7 +93,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
         <span className="absolute bottom-0 left-0 h-px w-full bg-text-gray"></span>
       </div>
 
-      <div className="relative py-5 px-3">
+      <div className="relative py-5 px-3 mb-5">
         <h3 className="text-[20px] leading-[20px] mb-2">How You Can Help: </h3>
         <h4 className="text-base font-medium mb-2">Donation needs: </h4>
         <span className="block text-base mb-6">10000 USD</span>

@@ -18,12 +18,13 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
     { icon: <Clock />, label: `Time: ${task.startTime} (local time)` },
     { icon: <Location />, label: `Location: ${task.locationName}` },
   ];
+
   return (
-    <section className="mb-5 md:flex">
-      <ImagePlaceholder className="md:w-[324px]" />
-      <div className="rounded-lg py-8 px-6 w-[354px] h-[418px] bg-[#D2D5D5] dark:bg-[#2A2D2D]">
+    <section className="mb-5 md:flex lg:flex lg:flex-col">
+      <ImagePlaceholder className="md:w-[324px] lg:w-[400px] lg:h-[500px] mb-2" />
+      <div className="rounded-lg py-8 px-6 w-[354px] lg:w-[400px] bg-[#D2D5D5] dark:bg-[#2A2D2D]">
         <div className="py-6 px-5">
-          <ul className="flex flex-col gap-5 text_tag mb-5">
+          <ul className="flex flex-col gap-5 text_tag text-base mb-5">
             <li>
               <h2 className="text-[20px] font-bold leading-[20px] tracking-[0]">
                 {task.title}

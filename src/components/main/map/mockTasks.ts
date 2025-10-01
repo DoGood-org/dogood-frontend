@@ -9,7 +9,7 @@ import {
 } from '@/types/tasks.type';
 
 const TITLES = [
-  ['Help Animals in Need'],
+  ['Help Animals in Need', 'Preserve biodiversity at altitude'],
   ['Mountain health checkpoint', 'Help set up first aid at trails'],
   ['Clean up alpine lakes', 'Preserve biodiversity at altitude'],
   ['Rescue center animal support', 'Help care for rescued wildlife'],

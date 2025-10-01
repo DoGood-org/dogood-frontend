@@ -18,6 +18,7 @@ const buttonVariants = cva(
           'text-btn-secondary border-1 border-btn-outline hover:border-btn-outline-hover focus::border-btn-outline-hover',
         filters: 'bg-card',
         tag: 'bg-tag gap-2',
+        iconOnly: 'bg-transparent border-none p-0 [&_svg]:size-6',
       },
       size: {
         default: 'h-12 px-8 py-3',
