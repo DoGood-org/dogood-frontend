@@ -3,6 +3,7 @@ import { Favorite } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 export const FavoriteToggleButton: React.FC = () => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -15,15 +16,16 @@ export const FavoriteToggleButton: React.FC = () => {
     <Button variant="iconOnly" size="icon" onClick={handleFavoriteClick}>
       <motion.div
         initial={false}
-        animate={{ scale: isFavorite ? 1.2 : 1 }}
+        animate={{ scale: isFavorite ? 1.1 : 1 }}
         transition={{ type: 'spring', stiffness: 400, damping: 15 }}
       >
         <Favorite
-          className={`size-6 transition-all duration-300 ${
+          className={cn(
+            'size-6 transition-all duration-300',
             isFavorite
-              ? 'text-red-500 fill-red-500 stroke-red-500' // isFavorite: Червона заливка і, для надійності, червоний контур
-              : 'text-gray-400 fill-transparent stroke-gray-400' // !isFavorite: Прозора заливка, сірий контур
-          }`}
+              ? 'text-[#ee0606] fill-[#ee0606] stroke-[#ee0606]'
+              : 'text-tag_text fill-transparent stroke-tag_tex'
+          )}
         />
       </motion.div>
     </Button>

@@ -48,7 +48,13 @@ export const TaskContent: React.FC<TaskContentProps> = ({ slug }) => {
   return (
     <Container className="py-10">
       <Task task={task} />
-      <IconButtonGroup categories={category} distance={distance} />
+      <IconButtonGroup
+        categories={category}
+        distance={distance}
+        lat={task.lat}
+        lng={task.lng}
+        taskId={taskId}
+      />
       <div className="flex justify-between mb-6 mt-6">
         <TaskActionButtons
           taskId={taskId}

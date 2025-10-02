@@ -9,11 +9,17 @@ import { useEffect, useState } from 'react';
 interface IconButtonGroupProps {
   categories: MarkerCategoryEnum[];
   distance: string;
+  lat?: number;
+  lng?: number;
+  taskId?: string;
 }
 
 export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
   categories,
   distance,
+  lat,
+  lng,
+  taskId,
 }) => {
   const [clientDistance, setClientDistance] = useState<string | null>(null);
 
@@ -27,7 +33,9 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center gap-2">
           <FavoriteToggleButton />
-          <MapDotButton />
+          {lat && lng && taskId && (
+            <MapDotButton lat={lat} lng={lng} taskId={taskId} />
+          )}
         </div>
         <span>{clientDistance ?? '-- km'}</span>
       </div>
