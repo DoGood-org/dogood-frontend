@@ -22,7 +22,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
     },
     location: {
       id: 1,
-      country: '',
+      country: 'Serbia',
       region: '',
       city: 'Belgrade',
     },
