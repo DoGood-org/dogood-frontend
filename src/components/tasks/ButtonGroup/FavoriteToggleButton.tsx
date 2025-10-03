@@ -16,8 +16,24 @@ export const FavoriteToggleButton: React.FC = () => {
     <Button variant="iconOnly" size="icon" onClick={handleFavoriteClick}>
       <motion.div
         initial={false}
-        animate={{ scale: isFavorite ? 1.1 : 1 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+        animate={
+          isFavorite
+            ? {
+                scale: [1, 1.2, 1],
+                filter: [
+                  'drop-shadow(0 4px 8px rgba(238,6,6,0.8))',
+                  'drop-shadow(0 4px 8px rgba(238,6,6,0))',
+                ],
+              }
+            : {
+                scale: 1,
+                filter: 'none',
+              }
+        }
+        transition={{
+          duration: 0.4,
+          ease: 'easeOut',
+        }}
       >
         <Favorite
           className={cn(
