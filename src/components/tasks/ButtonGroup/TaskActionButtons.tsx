@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/Button';
 // import { useTranslations } from 'next-intl';
 import { TaskActionType, UserParticipationStatus } from '@/types/tasks.type';
 import { useTaskStore } from '@/zustand/stores/taskStore';
-import { useRouter } from 'next/navigation';
 
 interface TaskActionButtonsProps {
   taskId: string;
@@ -21,8 +20,6 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
 }) => {
   // const t = useTranslations('task');
   const { joinTask } = useTaskStore();
-
-  const router = useRouter();
 
   const hasJoinedOrDonated =
     userParticipationStatus !== UserParticipationStatus.NONE;
@@ -55,7 +52,7 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
         label: 'Donate',
         // {label: t('donateBtn'),
         variant: 'primary',
-        onClick: () => router.push('/donate'),
+        onClick: () => {},
         className: `${baseButtonClass} text-white`,
       },
       {

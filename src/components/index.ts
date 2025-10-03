@@ -47,6 +47,8 @@ export * from './account/settingsPage/PaymentModal/CardIcons';
 export * from './account/settingsPage/PaymentModal/CardInputWrapper';
 export * from './account/settingsPage/PaymentModal/CardNumberInput';
 export * from './account/settingsPage/PaymentModal/StripeProvider';
+export * from './donation/DonationModal/DonationForm';
+export * from './donation/DonationModal/DonationModal';
 export * from './layout/footer/Footer';
 export * from './layout/footer/SocialLinks';
 export * from './layout/header/AccountLinks';
