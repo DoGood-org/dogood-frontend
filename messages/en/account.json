@@ -2,6 +2,8 @@
   "description": "Description",
   "noDescription": "Tell us a bit about yourself — it helps others get to know you better. Who are you, what do you care about, what inspires you?",
   "noDescriptionButton": "Add bio",
+  "noDescriptionPublic": "There is no description yet.",
+  "noDescriptionPublicButton": "Send a message",
   "accountButton": "Learn more",
   "task": {
     "title": "Find your first task on the map",
@@ -9,6 +11,9 @@
     "button": "Go to map"
   },
   "noReview": "No one has left a review for this user yet.",
+  "noReviewPublic": "No reviews yet",
+  "noOrganizationionPublic": "The person is not a member of the organization",
+  "noTaskPublic": "There are no tasks",
   "contentViews": [
     {
       "id": "task",
@@ -23,5 +28,42 @@
       "id": "reviews",
       "view": "Reviews"
     }
-  ]
+  ],
+  "contentView": {
+    "task": "My Task",
+    "organization": "Organization",
+    "reviews": "Reviews"
+  },
+  "organizationSectionTitle": "Organization",
+  "reviewSectionTitle": "Reviews",
+  "taskSectionTitle": "Tasks",
+  "tasksSection": [
+    {
+      "id": "tasksCreated",
+      "view": "Created"
+    },
+    {
+      "id": "tasksCompleted",
+      "view": "Completed"
+    },
+    {
+      "id": "tasksInProgress",
+      "view": "In progress"
+    }
+  ],
+  "chatButton": "Send a message",
+  "reportButton": "Report",
+  "photoReport": "Photo 18+",
+  "nameReport": "Nickname is not correct",
+  "descReport": "Description contains profanity",
+  "violenceReport": "Violence",
+  "hateSpeechReport": "Hate speech",
+  "harassmentReport": "Harassment",
+  "childExploitationReport": "Child exploitation",
+  "spamReport": "Spam",
+  "copyReport": "Copyright infringement",
+  "selfHarmReport": "Self-harm",
+  "misinfoReport": "Misinformation",
+  "reportError": "Please select a reason.",
+  "reportSendButton": "Send"
 }

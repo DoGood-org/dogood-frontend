@@ -26,7 +26,7 @@ export const StarItem = forwardRef(
           'p-2 block',
           isFilled
             ? 'fill-star stroke-star text-star'
-            : 'fill-none stroke-black text-black',
+            : 'fill-none stroke-star-empty text-star-empty',
           isEditable && 'cursor-pointer',
           error && 'stroke-error'
         )}
@@ -42,7 +42,7 @@ export const StarItem = forwardRef(
         aria-valuemin={1}
         aria-valuemax={5}
       >
-        <Star className="size-7" />
+        <Star className="size-5" />
       </span>
     );
   }
