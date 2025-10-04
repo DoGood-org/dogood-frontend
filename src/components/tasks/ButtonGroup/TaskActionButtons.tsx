@@ -1,6 +1,8 @@
 'use client';
 
+import { DonationModal } from '@/components/donation/DonationModal/DonationModal';
 import { Button } from '@/components/ui/Button';
+import { useMenuToggle } from '@/hooks/useMenuToggle';
 // import { useTranslations } from 'next-intl';
 import { TaskActionType, UserParticipationStatus } from '@/types/tasks.type';
 import { useTaskStore } from '@/zustand/stores/taskStore';
@@ -20,6 +22,12 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
 }) => {
   // const t = useTranslations('task');
   const { joinTask } = useTaskStore();
+
+  const {
+    isOpen: isModalOpen,
+    openMenu: openModal,
+    closeMenu: closeModal,
+  } = useMenuToggle();
 
   const hasJoinedOrDonated =
     userParticipationStatus !== UserParticipationStatus.NONE;
@@ -52,7 +60,7 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
         label: 'Donate',
         // {label: t('donateBtn'),
         variant: 'primary',
-        onClick: () => {},
+        onClick: openModal,
         className: `${baseButtonClass} text-white`,
       },
       {
@@ -95,6 +103,9 @@ export const TaskActionButtons: React.FC<TaskActionButtonsProps> = ({
           {btn.label}
         </Button>
       ))}
+      <DonationModal isOpen={isModalOpen} onClose={closeModal}>
+        <p>Hello</p>
+      </DonationModal>
     </>
   );
 };
