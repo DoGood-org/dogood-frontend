@@ -133,7 +133,60 @@
         {
           "title": "Third-Party Cookies and Tools:",
           "description": "In implementing the above categories, DoGood works with a number of trusted third-party service providers who may set cookies on our behalf. Here is a non-exhaustive list of third-party tools we use (or may use) and what they do:",
-          "examples": []
+          "examples": [
+            {
+              "type": "Google Analytics(Google LCC)",
+              "description": "Analytics tool to collect usage data and generate site statistics. Cookies: _ga, _gid, etc. (persistent cookies lasting up to 2 years). These cookies help us count visitors and understand usage patterns. Data is sent to Google’s servers (which may be outside your country, e.g. the U.S.) in anonymized form. [Opt-out: You can opt out of Google Analytics cookies via our Cookie Settings or by installing the Google Analytics Opt-out Browser Add-on on your browser.]"
+            },
+            {
+              "type": "Google Ads & Conversion Tracking (Google LLC)",
+              "description": "Advertising tool to measure the success of our Google ad campaigns and to retarget interested users. Cookies: e.g. _gcl_au (persistent, 90 days) and others from Google’s DoubleClick domain. These cookies track if you reached our site via a Google ad and help us optimize ad spend. They may also enable personalized DoGood ads on sites within Google’s network, if you have consented. [Opt-out: Disable “Advertising Cookies” in our preferences or adjust Google ad settings in your Google account.]"
+            },
+            {
+              "type": "Meta Pixel (Meta/Facebook Inc.)",
+              "description": "Advertising and social media retargeting tool for Facebook/Instagram. Cookies: e.g. fbp (Facebook Pixel ID cookie) and other Facebook domain cookies. Allows us to see when Facebook/Instagram users take actions on our site after viewing our ads. Helps in creating custom audiences and measuring ad conversions. [Opt-out: Disable “Advertising Cookies” or use Facebook’s ad preferences settings to control ads.]"
+            },
+            {
+              "type": "Hotjar (Hotjar Ltd.)",
+              "description": "User experience analytics tool that records anonymized user interactions (clicks, scrolls) and feedback. Cookies: _hjSession_*, _hjUser_*, etc. (short duration or persistent up to 1 year). These help Hotjar identify a user’s session across pages and whether it’s a first-time or returning visitor. Hotjar helps us improve site design by seeing aggregate behavior. [Opt-out: Disable “Analytics Cookies” in preferences. Hotjar also honors the Do Not Track header if enabled in your browser.]"
+            },
+            {
+              "type": "Microsoft Clarity (Microsoft Corp.)",
+              "description": "An alternative to Hotjar we may use for session replay and heatmaps. Cookies: _clck, _clsk, CLID, etc. Clarity cookies gather information such as pages viewed, session duration, and interactions (including an anonymized session replay). Personal data is automatically masked. Used purely for our internal analysis and UX improvements. [Opt-out: Disable “Analytics Cookies”.]"
+            },
+            {
+              "type": "HubSpot (HubSpot Inc.)",
+              "description": "CRM and marketing automation platform. Cookies: hubspotutk (tracks form submissions), hblid, __hstc and others. These cookies allow HubSpot to recognize returning visitors who have interacted with us (e.g. filled a form or chatted) and to track their site usage. They enable features like pre-filled forms and connecting you with the same support agent. HubSpot cookies are set only after you interact with certain parts of the site (like submitting a form) and if you consented to analytics/functional cookies. [Opt-out: If you disable “Functional/Analytics Cookies,” HubSpot tracking will be limited on our site. You can also clear your browser cookies to remove HubSpot identifiers.]"
+            },
+            {
+              "type": "Segment (Twilio Inc.)",
+              "description": " Customer Data Platform that helps route our analytics data. Cookies: ajs_anonymous_id, ajs_user_id (persistent up to 1 year). Segment cookies assign an anonymous ID to you so that all events (page views, clicks, sign-ups) can be correlated together and sent to our various analytics and marketing tools. This ensures consistency across analytics systems. Segment itself doesn’t use this data for any purpose other than to deliver it to our authorized destinations. [Opt-out: Disable “Analytics Cookies” to prevent Segment from tracking. Segment also supports respecting our Cookie Consent Management, so if you opt out, the Segment script will not run.]"
+            },
+            {
+              "type": "Other Social Media and Content Widgets",
+              "description": "If our site integrates with other platforms (for example, a Twitter “Tweet” button, a LinkedIn share widget, or embedded YouTube videos for showcasing projects), those services may set cookies. For instance, clicking “Share on Twitter” might allow Twitter to drop a cookie to remember that action or to see if you are logged into Twitter. An embedded YouTube video on a project page may set YouTube’s cookies which can track video views and user preferences. We endeavor to load such third-party content in a privacy-friendly mode (YouTube, for example, may be used in “privacy-enhanced mode” which limits tracking). Nonetheless, if you have Advertising Cookies disabled in our preferences, we will either block or ask for additional consent before loading any non-essential third-party content that sets cookies."
+            }
+          ],
+          "moreInfo": "We will update the above list as our use of cookies and third-party tools changes over time. We aim to provide full transparency about any cookies and trackers in use."
+        },
+        {
+          "title": "Your Cookie Choices and How to Manage Cookies:",
+          "content": " You have the right to choose whether or not to accept non-essential cookies. When you first visit DoGood, we will present a cookie consent banner that allows you to accept all cookies, or refuse non-essential cookies, or to customize your preference by category. We will not set Analytics, Functional, or Advertising cookies unless you opt in to those categories. Your selection will be remembered by a consent cookie so that on your next visit you won’t be prompted again (unless you clear your cookies or the law requires us to re-confirm consent periodically).",
+          "content2": "If you change your mind later, you can modify your cookie preferences at any time by visiting our [Cookie Settings] (link available in the website footer and here). The Cookie Settings dashboard will show you the categories of cookies and your current consent status, and you can toggle your preferences (e.g., withdraw consent from Analytics cookies if you had previously allowed them, or vice versa). Any changes you make are applied immediately (for example, if you turn off Advertising cookies, we will stop using those cookies and the third parties will be instructed to not process or to delete any identifiable cookie data they have collected from our site).",
+          "content3": "In addition to our cookie preference center, you can manage cookies through your web browser settings. Most browsers allow you to block or delete cookies (all cookies or by type or from specific websites). For example, you can typically find options under the “Privacy” or “Security” settings of your browser to clear browsing data (which deletes cookies) or to set rules for cookie acceptance. You can set your browser to notify you when a cookie is being set and choose to accept or refuse it. Please note, however, that if you disable all cookies through your browser (especially if you block even necessary cookies), our website may not function properly for you – you might not be able to log in, or some pages might not load correctly. For the best experience, we recommend using our built-in Cookie Settings to selectively control types of cookies, or using browser controls to delete cookies periodically if you wish, rather than a blanket block.",
+          "content4": "If you are interested in broader opt-outs, here are some useful resources: - Do Not Sell (CCPA Opt-Out): As mentioned, if you wish to opt out of the “sale”/sharing of your data for targeted advertising, simply disable Advertising cookies in our Cookie Settings. Alternatively, you can use the “Do Not Sell My Personal Information” link in our site footer (if you’re a California resident) which will achieve the same result by turning off all third-party marketing tags on our site. - Industry opt-outs: The Network Advertising Initiative (NAI) and Digital Advertising Alliance (DAA) offer web pages where you can globally opt out of interest-based advertising cookies from participating companies. NAI Opt-out | DAA Opt-out. Keep in mind this will not eliminate ads, but it can reduce targeted ads. - Browser Do Not Track: Our site honors “Do Not Track” signals for analytics and advertising cookies. If your browser is set to Send a Do Not Track request, our cookies (aside from strictly necessary) will default to disabled. (However, not all browsers or third parties consistently support DNT, so using our explicit opt-outs as described above is more reliable.)"
+        },
+        {
+          "title": "International Data Transfers:",
+          "content": " DoGood is based [in _] and we work with users and partners around the world. Some of the third-party service providers we use (mentioned above) are located in other countries. This means that, if you consent to certain cookies, some data collected by those cookies may be transferred internationally. For example, information from our site that is shared with Google or Meta will typically be processed on servers in the United States or other locations outside your home country. We are aware that different regions have different data protection laws – for instance, EU users’ data is protected under GDPR even when transferred abroad. Whenever we transfer cookie data (or any personal data) out of your country, we take steps to ensure appropriate safeguards are in place to protect your information. These may include using Standard Contractual Clauses or other legally approved transfer mechanisms, as detailed in our Privacy Policy. By consenting to Analytics or Advertising cookies, you acknowledge that your data may be sent to our service providers in jurisdictions such as the U.S. which may have different privacy rules than your country. If you have concerns about international transfers, you may choose to decline those cookies – you will still be able to use the DoGood Platform for its core functions."
+        },
+        {
+          "title": "Changes to This Policy:",
+          "content": " We may update this Cookie Policy from time to time to reflect changes in the cookies we use or for other operational, legal, or regulatory reasons. If we make material changes, we will notify you by updating the “Last Updated” date at the top of the policy and, if appropriate, by additional means such as a notice on our website or in the cookie banner. We encourage you to review this Cookie Policy periodically to stay informed about our cookie practices. Your continued use of the DoGood Platform after any update constitutes your acceptance of the revised policy, to the extent permitted by law."
+        },
+        {
+          "title": "Contact Us:",
+          "content": "If you have any questions or concerns about our use of cookies, or about our privacy practices in general, please contact us at [privacy@dogood.org] or through the contact information provided in our Privacy Policy. We value your privacy and will do our best to address any inquiry.\nBy using the DoGood Platform, you trust us with your data – we take that responsibility seriously. Cookies help us provide a secure, efficient, and personalized experience while also enabling us to grow our impact. We strive to use these tools thoughtfully and transparently. Thank you for reading our Cookie Policy."
         }
       ]
     }
