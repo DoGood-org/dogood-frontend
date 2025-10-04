@@ -13,6 +13,7 @@ is a list of more common components and their API.
 - [Rating](#rating)
 - [StarItem](#staritem)
 - [Animation Tabs](#animationtabs)
+- [Slider](#slider)
 
 ## Section
 
@@ -564,6 +565,74 @@ animated underline for active tab, and optional horizontal scrolling.
   refClass="gap-2"
   headClass="mb-4"
 />
+```
+
+</details>
+
+[Back to Menu](#menu)
+
+## Slider
+
+This React component renders a customizable, swipeable slider/carousel. It
+groups items into slides and allows navigation via swipe gestures (mobile),
+arrow buttons, or pagination dots.
+
+**Props:**
+
+| Name            | Type                                      | Default | Description                                                                  |
+| --------------- | ----------------------------------------- | ------- | ---------------------------------------------------------------------------- |
+| `items`\*       | `T[]`                                     | -       | **Required.** Array of data items to render in the slider.                   |
+| `renderItem`\*  | `(item: T, index: number) => JSX.Element` | -       | **Required.** Function that renders each item within a slide.                |
+| `itemsPerSlide` | `number`                                  | `2`     | Optional. Number of items shown per slide.                                   |
+| `listClassName` | `string`                                  | `""`    | Optional. Tailwind classes applied to each `<ul>` container of a slide.      |
+| `itemClassName` | `string`                                  | `""`    | Optional. Tailwind classes applied to each `<li>` (individual item wrapper). |
+
+<details> <summary><b>Details</b></summary>
+
+**Features:**
+
+- `Swipe Support`: Uses a useSwipe hook for touch-based navigation (onSwipeLeft
+  / onSwipeRight).
+
+- `Pagination`: Renders clickable dots to jump to a specific slide.
+
+- `Navigation Buttons`: Left/right chevron buttons for manual navigation.
+
+- `Transition`: Smooth horizontal slide animation with transition-transform
+  duration-500.
+
+**Styling:**
+
+- `overflow-hidden`: Ensures only one slide group is visible at a time.
+
+- `flex transition-transform`: Provides sliding animation effect.
+
+- Buttons and dots update state and reflect current position.
+
+- Disabled buttons use reduced opacity and no hover effects.
+
+**Accessibility:**
+
+- Buttons have disabled state for first/last slides.
+
+- Pagination dots are keyboard clickable.
+
+**Class Merging:**
+
+Uses a utility function cn to conditionally and safely combine base and custom
+class names.
+
+**Example Usage:**
+
+```typeScript
+<Slider
+      items={reviews}
+      itemsPerSlide={3}
+      renderItem={(review, idx) => (
+        <ReviewItem key={`${idx}-${review.id}`} review={review} />
+      )}
+      listClassName="flex-row"
+    />
 ```
 
 </details>

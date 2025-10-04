@@ -1,13 +1,14 @@
 import { LinkWithArrow } from '@/components';
 import { Animal, Food, Medicine, Nature } from '@/components/icons';
 import { TaskItemProps } from '@/types';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { JSX } from 'react';
 
 export const AccountTaskItem = ({ task }: TaskItemProps): JSX.Element => {
-  const { title, description, avatar, category } = task;
+  const { id, title, description, avatar, category } = task;
   const t = useTranslations('account');
+  const locale = useLocale();
 
   const categoryList = {
     medicine: <Medicine className="size-6" />,
@@ -18,15 +19,15 @@ export const AccountTaskItem = ({ task }: TaskItemProps): JSX.Element => {
 
   return (
     <div className="bg-card p-8 rounded-lg flex flex-col lg:flex-row md:gap-8 justify-between">
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row gap-8">
         <Image
-          src={avatar}
+          src={avatar ? avatar : '/account/NoTask.png'}
           alt={`${title} logo`}
           width={241}
           height={241}
-          className="w-[241px] h-[241px] rounded-lg self-center md:self-start"
+          className="shrink-0 w-[241px] h-[241px] md:w-[264px] md:h-[264px] object-cover rounded-lg self-center md:self-start"
         />
-        <div className="mt-8 md:mt-0 flex flex-col">
+        <div className="flex flex-col">
           <h3 className="text-h3">{title}</h3>
           <p className="whitespace-pre-line mt-6 text-base">{description}</p>
         </div>
@@ -38,7 +39,7 @@ export const AccountTaskItem = ({ task }: TaskItemProps): JSX.Element => {
           {categoryList[category]}
         </div>
         <LinkWithArrow
-          href=""
+          href={`/${locale}/tasks/${id}`}
           text={t('accountButton')}
           className="self-end mt-7"
         />

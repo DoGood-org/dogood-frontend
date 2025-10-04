@@ -43,6 +43,7 @@
   --color-icon-color: var(--icon-color);
   --color-image-bg: var(--image-bg);
   --color-form-field: var(--form-field);
+  --color-modal: var(--modal);
 
   /* buttons */
   --color-border: var(--border);
@@ -60,6 +61,7 @@
   --color-attention: var(--attention);
 
   --color-star: var(--star);
+  --color-star-empty: var(--star-empty);
   --color-medicine: var(--medicine);
   --color-animal: var(--animal);
   --color-nature: var(--nature);
@@ -139,6 +141,7 @@
   --post: #696969;
   --post_gray: #f1f1f1;
   --form-field: #0d0d0d;
+  --modal: #fffcfc;
 
   --card: #cfcfcf;
   --toggle: #303030;
@@ -168,6 +171,7 @@
   --success: #17814b;
 
   --star: #ffee00;
+  --star-empty: #747474;
   --medicine: #1f5eff;
   --animal: #ff7d57;
   --nature: #4caf50;
@@ -225,6 +229,7 @@ html {
   --background-secondary: #303030;
   --foreground: #f1f1f1;
   --card: #303030;
+  --modal: #303030;
   --btn-secondary: #010101;
   --post: #171b19;
   --text_tag: #f1f1f1;
@@ -236,6 +241,7 @@ html {
   --map-btn-icon: #f1f1f1;
   --review-bg: #696969;
   --accent-bg: #01425c;
+  --star-empty: #959595;
   --gradient:
     linear-gradient(
       238.09deg,
@@ -695,6 +701,11 @@ html {
 
   .dark .payment-scrollbar {
     scrollbar-color: var(--background-secondary) transparent;
+  }
+
+  .review-scrollbar {
+    scrollbar-width: 12px;
+    scrollbar-color: var(--background) transparent;
   }
 }
 

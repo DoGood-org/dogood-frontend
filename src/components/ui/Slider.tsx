@@ -2,18 +2,23 @@
 
 import { ChevronLeft, ChevronRight } from '@/components/icons';
 import { useSwipe } from '@/hooks';
+import { cn } from '@/lib/utils';
 import { useState, JSX, useRef } from 'react';
 
 type SliderProps<T> = {
   items: T[];
   itemsPerSlide?: number;
   renderItem: (item: T, index: number) => JSX.Element;
+  listClassName?: string;
+  itemClassName?: string;
 };
 
 export const Slider = <T,>({
   items,
   itemsPerSlide = 2,
   renderItem,
+  listClassName = '',
+  itemClassName = '',
 }: SliderProps<T>): JSX.Element => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalPages = Math.ceil(items.length / itemsPerSlide);
@@ -56,9 +61,12 @@ export const Slider = <T,>({
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
         >
           {grouped.map((group, slideIdx) => (
-            <ul key={slideIdx} className="min-w-full flex flex-col">
+            <ul
+              key={slideIdx}
+              className={cn('min-w-full flex flex-col', listClassName)}
+            >
               {group.map((item, itemIdx) => (
-                <li key={itemIdx} className="p-2">
+                <li key={itemIdx} className={cn('p-2', itemClassName)}>
                   {renderItem(item, itemIdx)}
                 </li>
               ))}

@@ -1,6 +1,6 @@
 'use client';
 
-import { SvgPlus } from '@/components/icons/Plus';
+import SvgPlus from '@/components/icons/Plus';
 import { SvgMinus } from '@/components/icons/SvgMinus';
 import { ButtonMap } from '@/components/main/map/ButtonMap';
 import { JSX } from 'react';
