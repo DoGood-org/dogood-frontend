@@ -70,7 +70,7 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
             <motion.div
               ref={modalRef}
               className={cn(
-                'relative w-full rounded-xl bg-white shadow-2xl',
+                'relative w-full rounded-xl bg-[#fffcfc] dark:bg-[#303030] shadow-2xl',
                 wrapperClassName
               )}
               variants={modalVariants}

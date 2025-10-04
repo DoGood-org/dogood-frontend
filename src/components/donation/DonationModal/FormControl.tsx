@@ -1,46 +1,57 @@
 'use client';
 
 import { Input } from '@/components';
-import { Label } from '@/components';
 import { JSX } from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
 interface FormControlProps {
-  label: string;
   name: string;
   register: UseFormRegister<any>;
   errors?: FieldError;
   placeholder?: string;
   className?: string;
   type?: string;
-  width?: 'full' | 'default';
 }
 
 export const FormControl = ({
-  label,
   name,
   register,
   errors,
   placeholder,
-  className = '',
   type = 'text',
-  width = 'default',
+  className = '',
 }: FormControlProps): JSX.Element => {
-  const inputWidth = width === 'full' ? 'w-full' : 'w-full';
-
   return (
     <div className="space-y-2">
-      <Label htmlFor={name} className="text-base">
-        {label}
-      </Label>
       <Input
         id={name}
         type={type}
         {...register(name)}
         placeholder={placeholder}
-        className={`${inputWidth} ${className}`}
+        className={`
+          w-full
+          py-3
+          px-4
+          bg-white 
+          border-modal
+          text-base
+          placeholder:text-[#111113] 
+          rounded-sm 
+          outline-none
+          focus:outline-none
+          focus:ring-2
+          focus: text-[#00c1ac]
+          focus:border-transparent
+          appearance-none
+          shadow-none
+          ${className}
+        `}
       />
-      {errors && <p className="text-base">{errors.message}</p>}
+      {errors && (
+        <p className="text-base font-medium text-error mt-1">
+          {errors.message}
+        </p>
+      )}
     </div>
   );
 };
