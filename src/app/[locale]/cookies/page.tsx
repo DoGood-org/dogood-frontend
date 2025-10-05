@@ -27,22 +27,22 @@ const Cookies: React.FC = () => {
 
   const categories = t.raw('categories') as Category[];
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden">
+    <div className="relative w-full overflow-x-hidden">
       <Line6
-        className="pointer-events-none select-none fixed top-0 left-0 w-full h-full z-0"
+        className="pointer-events-none select-none fixed top-0 left-0 w-full h-full z-[-1]"
         style={{ objectFit: 'cover' }}
         aria-hidden="true"
       />
       <Container>
-        <div className="relative z-10 space-y-4 py-[20px] px-[24px]">
-          <h3 className="text-3xl font-light pb-[24px] lg:pb-[32px] lg:text-5xl">
+        <div className="relative z-10 space-y-4">
+          <h3 className="text-[32px] leading-[48px] font-light m-0 pb-[24px] md:text-[40px] md:leading-[50px] lg:text-[48px] lg:leading-[64px] lg:pb-[80px]">
             {t('title')}
           </h3>
 
           <Accordion type="single" collapsible>
             {categories.map((cat, index) => (
               <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-xl font-light">
+                <AccordionTrigger className="text-[20px] leading-[24px] font-400 md:text-[24px] md:leading-[32px]">
                   {cat.title}
                 </AccordionTrigger>
                 <AccordionContent>
@@ -122,7 +122,7 @@ const Cookies: React.FC = () => {
                           {block.examples &&
                             Array.isArray(block.examples) &&
                             block.examples.length > 0 && (
-                              <ul className="list-disc pl-5 space-y-1">
+                              <ul className="pl-5 space-y-1">
                                 {block.examples.map((ex: any, i: number) => (
                                   <li key={i}>
                                     {ex.type && <strong>{ex.type}: </strong>}

@@ -11,7 +11,9 @@ function Accordion({
 }: React.ComponentProps<typeof AccordionPrimitive.Root>): React.JSX.Element {
   return (
     <AccordionPrimitive.Root asChild {...props}>
-      <li data-slot="accordion">{children}</li>
+      <li className="list-none" data-slot="accordion">
+        {children}
+      </li>
     </AccordionPrimitive.Root>
   );
 }
@@ -39,7 +41,7 @@ function AccordionTrigger({
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          'group hover:cursor-pointer focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-4 transition-all duration-700 outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 ',
+          'group hover:cursor-pointer focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-[8px] transition-all duration-700 outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 ',
           className
         )}
         {...props}
