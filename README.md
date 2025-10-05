@@ -42,7 +42,7 @@ First of all create `.env` file as shown in `.env.compose.example`, then use set
 
 ```bash
 ./setup.sh            # For Linux and MacOS
-chmod 111 setup.sh    # UNIX always wants rights for execution. You need to do it by yourself
+chmod 777 setup.sh    # UNIX always wants rights for execution. You need to do it by yourself
 ```
 
 In case of container sutdown simply re-execute `setup.sh` or `setup.ps1`. 
