@@ -1,13 +1,14 @@
 'use client';
 
-import { DonationModal } from '@/components/donation/DonationModal/DonationModal';
-import { DonationModalContent } from '@/components/donation/DonationModal/DonationModalContent';
+import { DonationModal } from '@/components/ui/DonationModal/DonationModal';
 import { Button } from '@/components/ui/Button';
 import { useMenuToggle } from '@/hooks/useMenuToggle';
 // import { useTranslations } from 'next-intl';
 import { TaskActionType, UserParticipationStatus } from '@/types/tasks.type';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { JSX } from 'react';
+import { DonationForm } from '@/components/ui/DonationModal/DonationForm';
+import { StripeProvider } from '@/components/account/settingsPage/PaymentModal/StripeProvider';
 
 interface TaskActionButtonsProps {
   taskId: string;
@@ -106,7 +107,9 @@ export const TaskActionButtons = ({
         </Button>
       ))}
       <DonationModal isOpen={isModalOpen} onClose={closeModal}>
-        <DonationModalContent />
+        <StripeProvider>
+          <DonationForm onSuccess={closeModal} setIsSubmitting={() => {}} />
+        </StripeProvider>
       </DonationModal>
     </>
   );

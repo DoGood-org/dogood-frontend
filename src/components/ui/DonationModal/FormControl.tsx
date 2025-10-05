@@ -39,10 +39,10 @@ export const FormControl = ({
           placeholder-text-help
           rounded-sm 
           outline-none
-          focus:outline-none
           focus:ring-2
-          focus: text-[#00c1ac]
-          focus:border-transparent
+          focus:ring-[#00c1ac]
+          focus:border-[#00c1ac]
+          focus:text-[#010101]
           appearance-none
           shadow-none
           ${className}
