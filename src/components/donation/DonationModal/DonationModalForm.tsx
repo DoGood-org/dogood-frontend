@@ -39,7 +39,6 @@ export const DonationModalForm = (): JSX.Element => {
           placeholder={'City'}
         />
       </div>
-
       <div>
         <FormControl
           name="number"
@@ -48,10 +47,11 @@ export const DonationModalForm = (): JSX.Element => {
           placeholder="1000"
         />
       </div>
-
-      <Button type="submit" className="text-white w-full">
-        Donate
-      </Button>
+      <div className="flex justify-center">
+        <Button type="submit" className="text-white w-full lg:max-w-[500px]">
+          Donate
+        </Button>
+      </div>
     </form>
   );
 };

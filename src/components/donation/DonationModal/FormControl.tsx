@@ -22,7 +22,7 @@ export const FormControl = ({
   className = '',
 }: FormControlProps): JSX.Element => {
   return (
-    <div className="space-y-2">
+    <div className="flex justify-center">
       <Input
         id={name}
         type={type}
@@ -30,12 +30,13 @@ export const FormControl = ({
         placeholder={placeholder}
         className={`
           w-full
+          lg:max-w-[500px]
           py-3
           px-4
           bg-white 
           border-modal
           text-base
-          placeholder:text-[#111113] 
+          placeholder-text-help
           rounded-sm 
           outline-none
           focus:outline-none
