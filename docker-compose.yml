@@ -1,0 +1,56 @@
+services:
+  redis:
+    image: redis:latest
+    container_name: redis-dev
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - dev-network
+  postgres:
+    image: postgres:latest
+    container_name: postgress-dev
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5444:5432"
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - dev-network
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    container_name: dogood
+    command: bash -c "cd /backend && npx prisma migrate dev"
+    ports:
+      - "3000:3000"
+      - "5000:5000"
+      - "5555:5555"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+    restart: unless-stopped
+    networks:
+      - dev-network
+    volumes:
+      - ./:/frontend
+      - /frontend/node_modules
+
+networks:
+  dev-network:
+    driver: bridge
+    name: dev-network
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
+    external: false
