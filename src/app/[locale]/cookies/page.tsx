@@ -22,6 +22,152 @@ type Category = {
   moreInfo?: string;
 };
 
+function renderBlock(block: any, key?: React.Key): React.ReactNode {
+  if (typeof block === 'string') {
+    return (
+      <p key={key} className="whitespace-pre-line break-words">
+        {block}
+      </p>
+    );
+  }
+  if (Array.isArray(block)) {
+    return (
+      <div key={key} className="mb-2 space-y-2">
+        {block.map((item, idx) =>
+          renderBlock(item, key ? `${key}-${idx}` : idx)
+        )}
+      </div>
+    );
+  }
+  return (
+    <li key={key} className="mb-2 list-disc">
+      {block.title && (
+        <h4 className="text-xl font-semibold mt-4 mb-2">{block.title}</h4>
+      )}
+      {block.heading && (
+        <p className="text-[16px] font-bold leading-[24px] mt-3 mb-2">
+          {block.heading}
+        </p>
+      )}
+      {block.paragraph && (
+        <p className="mb-2 whitespace-pre-line break-words">
+          {block.paragraph}
+        </p>
+      )}
+      {block.type && <strong>{block.type}</strong>}
+      {block.content && <span> {block.content}</span>}
+      {block.content2 && (
+        <p className="mb-2 whitespace-pre-line break-words">{block.content2}</p>
+      )}
+      {block.content3 && (
+        <p className="mb-2 whitespace-pre-line break-words">{block.content3}</p>
+      )}
+      {block.content4 && (
+        <p className="mb-2 whitespace-pre-line break-words">{block.content4}</p>
+      )}
+      {block.description && typeof block.description === 'string' && (
+        <p className="mb-2 whitespace-pre-line break-words">
+          {block.description}
+        </p>
+      )}
+      {block.description && Array.isArray(block.description) && (
+        <div className="mb-2 space-y-2">
+          {block.description.map((desc: any, idx: number) =>
+            renderBlock(desc, key ? `${key}-desc-${idx}` : `desc-${idx}`)
+          )}
+        </div>
+      )}
+      {block.examples &&
+        Array.isArray(block.examples) &&
+        block.examples.length > 0 && (
+          <ul className="pl-5 space-y-1">
+            {block.examples.map((ex: any, i: number) => (
+              <li key={ex.type ? `${ex.type}-${i}` : i}>
+                {ex.type && <strong>{ex.type}: </strong>}
+                {ex.description}
+              </li>
+            ))}
+          </ul>
+        )}
+      {block.items && Array.isArray(block.items) && (
+        <ul className="ml-4 pl-4 mt-2">
+          {block.items.map((item: any, idx: number) =>
+            renderBlock(item, key ? `${key}-item-${idx}` : `item-${idx}`)
+          )}
+        </ul>
+      )}
+      {block.moreInfo && <p className="mt-2 italic">{block.moreInfo}</p>}
+    </li>
+  );
+}
+
+type CategoryItemProps = {
+  cat: Category;
+  index: number;
+};
+
+const CategoryItem: React.FC<CategoryItemProps> = React.memo(
+  function CategoryItem({ cat, index }) {
+    const [mounted, setMounted] = React.useState(false);
+    const [_isPending, startTransition] = React.useTransition();
+
+    const renderedDescription = React.useMemo(() => {
+      if (!mounted) return null;
+      return renderBlock(cat.description, `cat-desc-${index}`);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mounted, cat.description]);
+
+    return (
+      <AccordionItem key={cat.title || index} value={`item-${index}`}>
+        <AccordionTrigger
+          className="text-[20px] leading-[24px] font-400 md:text-[24px] md:leading-[32px]"
+          onClick={() => {
+            if (!mounted) {
+              startTransition(() => setMounted(true));
+            }
+          }}
+        >
+          {cat.title}
+        </AccordionTrigger>
+        <AccordionContent>
+          <p className="text-[16px] leading-[24px] pt-[8px] font-400 mb-[16px]">
+            {renderedDescription}
+          </p>
+
+          {cat.examples &&
+            Array.isArray(cat.examples) &&
+            cat.examples.length > 0 && (
+              <ul className="list-disc pl-5 space-y-6">
+                {cat.examples.map((ex: any, i: number) => (
+                  <li
+                    className="text-[16px] leading-[24px] font-400"
+                    key={ex.type ? `${ex.type}-${i}` : i}
+                  >
+                    <strong>{ex.type}:</strong> {ex.description}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+          {cat.moreInfo && (
+            <p className="mt-6 text-[16px] leading-[24px] font-400">
+              {cat.moreInfo}
+            </p>
+          )}
+        </AccordionContent>
+      </AccordionItem>
+    );
+  },
+  (prev, next) => {
+    return (
+      prev.cat.title === next.cat.title &&
+      prev.cat.description === next.cat.description &&
+      prev.cat.examples === next.cat.examples &&
+      prev.cat.moreInfo === next.cat.moreInfo
+    );
+  }
+);
+
 const Cookies: React.FC = () => {
   const t = useTranslations('cookies');
 
@@ -41,130 +187,7 @@ const Cookies: React.FC = () => {
 
           <Accordion type="single" collapsible>
             {categories.map((cat, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-[20px] leading-[24px] font-400 md:text-[24px] md:leading-[32px]">
-                  {cat.title}
-                </AccordionTrigger>
-                <AccordionContent>
-                  {/* Universal recursive block renderer */}
-                  {((): React.ReactNode => {
-                    function renderBlock(
-                      block: any,
-                      key?: React.Key
-                    ): React.ReactNode {
-                      if (typeof block === 'string') {
-                        return (
-                          <p
-                            key={key}
-                            className="mb-2 whitespace-pre-line break-words"
-                          >
-                            {block}
-                          </p>
-                        );
-                      }
-                      if (Array.isArray(block)) {
-                        return (
-                          <div key={key} className="mb-2 space-y-2">
-                            {block.map((item, idx) => renderBlock(item, idx))}
-                          </div>
-                        );
-                      }
-                      // Object case
-                      return (
-                        <div key={key} className="mb-2">
-                          {block.title && (
-                            <h4 className="text-xl font-semibold mt-4 mb-2">
-                              {block.title}
-                            </h4>
-                          )}
-                          {block.heading && (
-                            <h5 className="text-lg font-semibold mt-3 mb-2">
-                              {block.heading}
-                            </h5>
-                          )}
-                          {block.paragraph && (
-                            <p className="mb-2 whitespace-pre-line break-words">
-                              {block.paragraph}
-                            </p>
-                          )}
-                          {block.type && <strong>{block.type}</strong>}
-                          {block.content && <span> {block.content}</span>}
-                          {block.content2 && (
-                            <p className="mb-2 whitespace-pre-line break-words">
-                              {block.content2}
-                            </p>
-                          )}
-                          {block.content3 && (
-                            <p className="mb-2 whitespace-pre-line break-words">
-                              {block.content3}
-                            </p>
-                          )}
-                          {block.content4 && (
-                            <p className="mb-2 whitespace-pre-line break-words">
-                              {block.content4}
-                            </p>
-                          )}
-                          {block.description &&
-                            typeof block.description === 'string' && (
-                              <p className="mb-2 whitespace-pre-line break-words">
-                                {block.description}
-                              </p>
-                            )}
-                          {block.description &&
-                            Array.isArray(block.description) && (
-                              <div className="mb-2 space-y-2">
-                                {block.description.map(
-                                  (desc: any, idx: number) =>
-                                    renderBlock(desc, idx)
-                                )}
-                              </div>
-                            )}
-                          {block.examples &&
-                            Array.isArray(block.examples) &&
-                            block.examples.length > 0 && (
-                              <ul className="pl-5 space-y-1">
-                                {block.examples.map((ex: any, i: number) => (
-                                  <li key={i}>
-                                    {ex.type && <strong>{ex.type}: </strong>}
-                                    {ex.description}
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-                          {block.items && Array.isArray(block.items) && (
-                            <div className="ml-4 border-l pl-4 mt-2">
-                              {block.items.map((item: any, idx: number) =>
-                                renderBlock(item, idx)
-                              )}
-                            </div>
-                          )}
-                          {block.moreInfo && (
-                            <p className="mt-2 italic">{block.moreInfo}</p>
-                          )}
-                        </div>
-                      );
-                    }
-                    // Рендеримо description, а також якщо description масив — всі вкладені блоки
-                    return renderBlock(cat.description);
-                  })()}
-
-                  {cat.examples &&
-                    Array.isArray(cat.examples) &&
-                    cat.examples.length > 0 && (
-                      <ul className="list-disc pl-5 space-y-1">
-                        {cat.examples.map((ex: any, i: number) => (
-                          <li key={i}>
-                            <strong>{ex.type}:</strong> {ex.description}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-
-                  {cat.moreInfo && (
-                    <p className="mt-2 italic">{cat.moreInfo}</p>
-                  )}
-                </AccordionContent>
-              </AccordionItem>
+              <CategoryItem cat={cat} index={index} key={cat.title || index} />
             ))}
           </Accordion>
         </div>
