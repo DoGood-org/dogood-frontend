@@ -96,7 +96,7 @@ function renderBlock(block: any, key?: React.Key): React.ReactNode {
           )}
         </ul>
       )}
-      {block.moreInfo && <p className="mt-2 italic">{block.moreInfo}</p>}
+      {block.moreInfo && <p className="mt-2">{block.moreInfo}</p>}
     </li>
   );
 }
