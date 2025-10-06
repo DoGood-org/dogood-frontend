@@ -184,5 +184,6 @@ export * from './ui/DonationModal/DonationForm';
 export * from './ui/DonationModal/DonationInputWrapper';
 export * from './ui/DonationModal/DonationModal';
 export * from './ui/DonationModal/FormControl';
+export * from './ui/DonationModal/PaymentCardList';
 export * from './ui/portal/AnimatedModalWrapper';
 export * from './ui/portal/Portal';

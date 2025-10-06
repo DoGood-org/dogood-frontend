@@ -33,12 +33,12 @@ export const CurrencySelect = ({
 
       <Select onValueChange={onValueChange} {...props}>
         <SelectTrigger
-          className={`w-32 bg-white border-modal text-form-fiel
+          className={`w-[118px] bg-[#ffffff] rounded-sm relative flex items-center px-3 pt-[22.6px] pb-[24px] border-modal focus-within:ring-1 focus-within:ring-[#00c1ac]
         ${className}`}
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent className="bg-white border-none text-form-field text-base py-3">
+        <SelectContent className="bg-white border-none text-form-field text-base roundrer-sm p-3">
           {options.map((option) => (
             <SelectItem
               key={option.value}

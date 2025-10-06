@@ -9,10 +9,12 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 // import { useTranslations } from 'next-intl';
 import {
+  Button,
   CardInputWrapper,
   CurrencySelect,
   DonationCardNumber,
   Input,
+  PaymentCardList,
 } from '@/components';
 import { useState, JSX, useEffect } from 'react';
 import { CardData, CardFormProps } from '@/types';
@@ -157,25 +159,32 @@ export const DonationForm = ({
         </div>
         {cardError && <p className="text-error text-sm mt-1">{cardError}</p>}
       </div>
-      <Controller
-        name="currency"
-        control={control}
-        render={({ field }) => (
-          <CurrencySelect
-            {...field}
-            options={currencies}
-            placeholder="Виберіть валюту"
-            onValueChange={field.onChange} // синхронізація з react-hook-form
-            className="w-full"
-          />
-        )}
-      />
-      <Input
-        name="amount"
-        placeholder="10000"
-        // Скидання стилів FormControl для інтеграції
-        className="w-full flex-grow border-r border-[#111113]/50 focus:border-transparent focus:ring-0"
-      />
+      <Button variant="primary" type="button" className="w-full text-white">
+        Add
+      </Button>
+
+      <div className="flex gap-2">
+        <Controller
+          name="currency"
+          control={control}
+          render={({ field }) => (
+            <CurrencySelect
+              {...field}
+              options={currencies}
+              placeholder="Виберіть валюту"
+              onValueChange={field.onChange}
+            />
+          )}
+        />
+        <Input
+          name="amount"
+          placeholder="10000"
+          className="h-12 w-[118px] bg-[#ffffff] rounded-sm relative flex items-center p-3 focus-within:ring-1 focus-within:ring-[#00c1ac]"
+        />
+      </div>
+      <div>
+        <PaymentCardList />
+      </div>
     </form>
   );
 };
