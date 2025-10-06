@@ -25,15 +25,14 @@ export const DonationCardNumber = ({
 
   return (
     <DonationInputWrapper
-      className={`${focusedElement === 'number' ? 'ring-1 ring-border focus-within:ring-border' : 'ring-transparent'}`}
+      className={`${focusedElement === 'number' ? 'ring-1 ring-[#00c1ac] border-transparent' : 'border border-[#111113]'}`}
     >
-      <div className="w-full focus-within:border-border">
+      <div className="w-full">
         <CardNumberElement
           onChange={handleCardChange}
           onFocus={() => setFocusedElement('number')}
           onBlur={() => setFocusedElement(null)}
           options={options}
-          className="focus-within:border-border"
         />
       </div>
 

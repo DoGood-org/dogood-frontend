@@ -6,18 +6,33 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from '@stripe/react-stripe-js';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 // import { useTranslations } from 'next-intl';
-import { CardInputWrapper, CardNumberInput, Input } from '@/components';
+import {
+  CardInputWrapper,
+  CurrencySelect,
+  DonationCardNumber,
+  Input,
+} from '@/components';
 import { useState, JSX, useEffect } from 'react';
 import { CardData, CardFormProps } from '@/types';
 import { createCardPaymentMethod } from '@/services/createPaymentMethod';
 import { useCardInputs } from '@/hooks/useCardInputs';
 import { options } from '@/config/stripeElement';
 
+const currencies = [
+  { value: 'USD', label: 'USD' },
+  { value: 'EUR', label: 'EUR' },
+];
+
+type FormData = {
+  currency: string;
+  amount: number;
+};
+
 export const DonationForm = ({
   onSuccess,
-  initialValues = {}, // Дефолтне значення
+  initialValues = {},
   setIsSubmitting,
 }: CardFormProps): JSX.Element => {
   const stripe = useStripe();
@@ -46,8 +61,14 @@ export const DonationForm = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { control } = useForm<FormData>({
+    defaultValues: {
+      currency: 'USD',
+    },
+  });
+
   const onSubmit = async (data: CardData): Promise<void> => {
-    if (isSubmitting) return; // Захист від дублювання
+    if (isSubmitting) return;
 
     setIsSubmitting(true);
     setCardError(null);
@@ -99,7 +120,7 @@ export const DonationForm = ({
           <Input
             {...register(name, validation)}
             placeholder={placeholder}
-            className="placeholder:text-[#0D0D0D99] text-base text-[#0D0D0D] h-12 bg-[#ffffff] rounded-[4px] relative flex items-center p-3 border border-transparent focus-within:ring-1 focus-visible:ring-1 focus-within:ring-border"
+            className="placeholder:text-[#0D0D0D99] text-base text-[#0D0D0D] h-12 bg-[#ffffff] rounded-[4px] relative flex items-center p-3 border border-[#111113] focus-within:ring-1 focus-visible:ring-1 focus-within:ring-[#00c1ac] focus-within:border-transparent focus-visible:border-transparent"
           />
           {errors[name] && (
             <p className="text-red-500 text-sm mt-1">{errors[name]?.message}</p>
@@ -108,13 +129,13 @@ export const DonationForm = ({
       ))}
 
       <div>
-        <CardNumberInput
+        <DonationCardNumber
           focusedElement={focusedElement}
           setFocusedElement={setFocusedElement}
         />
         <div className="flex gap-4 mt-4">
           <CardInputWrapper
-            className={`w-[175px] ${focusedElement === 'expiry' ? 'ring-1 ring-border focus-within:ring-border' : 'ring-transparent'}`}
+            className={`w-[175px] ${focusedElement === 'expiry' ? 'ring-1 ring-[#00c1ac] border-transparent' : 'border border-[#111113]'}`}
           >
             <CardExpiryElement
               className="w-full block focus-within:border-border"
@@ -124,7 +145,7 @@ export const DonationForm = ({
             />
           </CardInputWrapper>
           <CardInputWrapper
-            className={`w-[133px] ${focusedElement === 'cvc' ? 'ring-1 ring-border focus-within:ring-border' : 'ring-transparent'}`}
+            className={`w-[133px] ${focusedElement === 'cvc' ? 'ring-1 ring-[#00c1ac] border-transparent' : 'border border-[#111113]'}`}
           >
             <CardCvcElement
               className="w-full block focus-within:border-border"
@@ -136,6 +157,25 @@ export const DonationForm = ({
         </div>
         {cardError && <p className="text-error text-sm mt-1">{cardError}</p>}
       </div>
+      <Controller
+        name="currency"
+        control={control}
+        render={({ field }) => (
+          <CurrencySelect
+            {...field}
+            options={currencies}
+            placeholder="Виберіть валюту"
+            onValueChange={field.onChange} // синхронізація з react-hook-form
+            className="w-full"
+          />
+        )}
+      />
+      <Input
+        name="amount"
+        placeholder="10000"
+        // Скидання стилів FormControl для інтеграції
+        className="w-full flex-grow border-r border-[#111113]/50 focus:border-transparent focus:ring-0"
+      />
     </form>
   );
 };

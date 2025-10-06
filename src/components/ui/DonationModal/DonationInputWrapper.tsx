@@ -11,7 +11,7 @@ export const DonationInputWrapper = ({
   return (
     <div
       className={cn(
-        'h-12 bg-[#ffffff] rounded-[4px] relative flex items-center p-3 border border-transparent focus-within:ring-1 focus-within:ring-border',
+        'h-12 bg-[#ffffff] rounded-sm relative flex items-center p-3 focus-within:ring-1 focus-within:ring-[#00c1ac]',
         className
       )}
     >
