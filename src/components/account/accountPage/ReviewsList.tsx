@@ -1,26 +1,19 @@
 import { JSX } from 'react';
-import { ReviewProps } from '@/types';
-import { ReviewItem, Slider } from '@/components';
-import { useTranslations } from 'next-intl';
-import { mockUser } from '@/data/mockUser';
+import { ReviewListProps } from '@/types';
+import { NoReviews, ReviewItem, Slider } from '@/components';
 
-export const ReviewsList = (): JSX.Element => {
-  const reviews = mockUser.reviewsReceived as ReviewProps[];
-  const t = useTranslations('account');
+export const ReviewsList = ({ reviews }: ReviewListProps): JSX.Element => {
+  if (!reviews || reviews.length === 0) {
+    return <NoReviews />;
+  }
 
   return (
-    <>
-      {reviews.length > 0 ? (
-        <Slider
-          items={reviews}
-          itemsPerSlide={3}
-          renderItem={(review, idx) => (
-            <ReviewItem key={`${idx}-${review.id}`} review={review} />
-          )}
-        />
-      ) : (
-        <p className="m-auto">{t('noReview')}</p>
+    <Slider
+      items={reviews}
+      itemsPerSlide={3}
+      renderItem={(review, idx) => (
+        <ReviewItem key={`${idx}-${review.id}`} review={review} />
       )}
-    </>
+    />
   );
 };

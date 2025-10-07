@@ -17,14 +17,14 @@ export const HeroPlanetLayer: React.FC<HeroPlanetLayerProps> = ({
   const heroImage = isMobile ? PlanetMob : isTablet ? PlanetTabl : PlanetDesk;
 
   return (
-    <div className="absolute bottom-[-500px] w-full pointer-events-none z-25">
+    <div className="absolute md:bottom-[-450px] lg:bottom-[-500px] w-full pointer-events-none z-25">
       <div className="sticky top-0 h-screen flex items-end justify-center ">
         <motion.div
-          style={{ y: yPlanet, opacity }}
-          initial={{ opacity: 0, y: 100 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          style={{ y: yPlanet, opacity, position: 'relative' }}
+          initial={false}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 2, ease: 'easeOut' }}
+          transition={{ duration: 1.5, ease: 'easeOut' }}
         >
           <Image
             src={heroImage}
