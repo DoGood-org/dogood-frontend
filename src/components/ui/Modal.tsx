@@ -47,7 +47,7 @@ export const Modal = ({
     <Portal>
       <AnimatePresence>
         <motion.div
-          className="modal-backdrop bg-text-gray/70 fixed inset-0 z-[9999] flex items-center justify-center"
+          className="modal-backdrop bg-text-gray/70 fixed inset-0 z-[9999] flex items-center justify-center overflow-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -56,7 +56,7 @@ export const Modal = ({
           <div
             ref={modalRef}
             className={cn(
-              'bg-map-btn p-6 max-w-[500px] rounded-lg w-full relative',
+              'bg-map-btn p-6 w-[353px] md:w-[500px] max-w-[500px] rounded-lg w-full relative',
               wrapperClassName
             )}
           >

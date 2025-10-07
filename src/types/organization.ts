@@ -11,3 +11,7 @@ export interface OrganizationProps {
 export interface OrganizationItemProps {
   organization: OrganizationProps;
 }
+
+export interface OrganizationListProps {
+  organizations?: OrganizationProps[];
+}
