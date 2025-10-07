@@ -71,6 +71,23 @@ cd /backend  # for opening backend
 ```
 For starting either `backend` or `frontend` simply enter `npm run dev` in one of those directories and everything is set up.
 
+
+## Removing cluster after work is finished
+
+For removing cluster after work, before cleaning cache you should delete all containers, images and volumes (same order), after that execute this command:
+
+```bash
+docker system prune -f # cleaning cache
+```
+
+
+## Misc: connecting to NPX Prisma
+
+```bash
+npx prisma studio
+```
+
+
 ### Pushing changes to remote repo
 
 All changes made inside Docker are applied to your local repo. Simply push from local as usual, but make changes inside docker. 
