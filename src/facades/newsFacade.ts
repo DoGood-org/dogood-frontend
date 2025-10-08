@@ -1,5 +1,5 @@
 import { INewsItem, Tlocale } from '@/types';
-import { getNews } from './newsService';
+import { getNews } from '@/services/newsService';
 
 export const fetchNews = async (locale: Tlocale): Promise<INewsItem[]> => {
   try {
