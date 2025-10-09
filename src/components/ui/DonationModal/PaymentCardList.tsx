@@ -1,17 +1,12 @@
 'use client';
 
 import { JSX, useEffect, useState } from 'react';
-import {
-  CardPreview,
-  DonationForm,
-  DonationModal,
-  StripeProvider,
-} from '@/components';
+import { CardPreview } from '@/components';
 import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
 import { SetPlus } from '@/components/icons';
 import { useTranslations } from 'next-intl';
 import { stripeService } from '@/services/stripeService';
-import { useMenuToggle } from '@/hooks/useMenuToggle';
+import { PaymentMethodModal } from './PaymentMethodModal';
 
 const AddPaymentMethodButton = ({
   onClick,
@@ -35,8 +30,6 @@ export const PaymentCardList = (): JSX.Element => {
   const t = useTranslations('settings');
   const [cardsFromDB, setCardsFromDB] = useState<any[]>([]);
   const { tempCards } = cardPreviewStore();
-
-  const { isOpen: isModalOpen, closeMenu: closeModal } = useMenuToggle();
 
   const handleAddCard = (): void => {
     setOpen(true);
@@ -88,11 +81,7 @@ export const PaymentCardList = (): JSX.Element => {
       </ul>
 
       {open && (
-        <DonationModal isOpen={isModalOpen} onClose={closeModal}>
-          <StripeProvider>
-            <DonationForm onSuccess={closeModal} setIsSubmitting={() => {}} />
-          </StripeProvider>
-        </DonationModal>
+        <PaymentMethodModal isOpen={open} onClose={() => setOpen(false)} />
       )}
     </div>
   );

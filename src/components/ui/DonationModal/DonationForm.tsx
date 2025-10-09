@@ -3,16 +3,15 @@
 import {
   useStripe,
   useElements,
-  CardExpiryElement,
-  CardCvcElement,
+  // CardExpiryElement,
+  // CardCvcElement,
 } from '@stripe/react-stripe-js';
 import { Controller, useForm } from 'react-hook-form';
 // import { useTranslations } from 'next-intl';
 import {
-  Button,
-  CardInputWrapper,
+  // CardInputWrapper,
   CurrencySelect,
-  DonationCardNumber,
+  // DonationCardNumber,
   Input,
   PaymentCardList,
 } from '@/components';
@@ -20,7 +19,6 @@ import { useState, JSX, useEffect } from 'react';
 import { CardData, CardFormProps } from '@/types';
 import { createCardPaymentMethod } from '@/services/createPaymentMethod';
 import { useCardInputs } from '@/hooks/useCardInputs';
-import { options } from '@/config/stripeElement';
 
 const currencies = [
   { value: 'USD', label: 'USD' },
@@ -50,8 +48,8 @@ export const DonationForm = ({
     defaultValues: initialValues,
   });
 
-  const [cardError, setCardError] = useState<string | null>(null);
-  const [focusedElement, setFocusedElement] = useState<string | null>(null);
+  const [_cardError, setCardError] = useState<string | null>(null);
+  // const [focusedElement, setFocusedElement] = useState<string | null>(null);
 
   // Якщо initialValues зміняться динамічно (не обов’язково)
   useEffect(() => {
@@ -130,7 +128,7 @@ export const DonationForm = ({
         </div>
       ))}
 
-      <div>
+      {/* <div>
         <DonationCardNumber
           focusedElement={focusedElement}
           setFocusedElement={setFocusedElement}
@@ -158,10 +156,7 @@ export const DonationForm = ({
           </CardInputWrapper>
         </div>
         {cardError && <p className="text-error text-sm mt-1">{cardError}</p>}
-      </div>
-      <Button variant="primary" type="button" className="w-full text-white">
-        Add
-      </Button>
+      </div> */}
 
       <div className="flex gap-2">
         <Controller

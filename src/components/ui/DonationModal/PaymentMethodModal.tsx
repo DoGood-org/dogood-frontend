@@ -1,30 +1,35 @@
 'use client';
 
-import { JSX } from 'react';
+import { JSX, useState } from 'react';
 import { motion } from 'framer-motion';
+import { CardForm, ModalWrapper } from '@/components';
 import { CloseIcon } from '@/components/icons';
-import { ModalWrapper } from '@/components/ui/ModalWrapper';
 import { cn } from '@/lib/utils';
-import { StripeProvider } from '@/components/account/settingsPage/PaymentModal/StripeProvider';
-import { DonationForm } from './DonationForm';
 
-interface DonationModalProps {
+interface PaymentMethodModalProps {
   isOpen: boolean;
   onClose: () => void;
   wrapperClassName?: string;
 }
 
-export const DonationModal = ({
+export const PaymentMethodModal = ({
   isOpen,
   onClose,
   wrapperClassName = '',
-}: DonationModalProps): JSX.Element => {
+}: PaymentMethodModalProps): JSX.Element => {
+  const [_isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSuccess = (): void => {
+    onClose();
+    setIsSubmitting(false);
+  };
+
   return (
     <ModalWrapper
       isOpen={isOpen}
       onClose={onClose}
       wrapperClassName={cn(
-        'max-w-[354px] md:max-w-[574px] lg:max-w-[994px] p-5 md:p-9',
+        'relative max-w-[354px] md:max-w-[574px] lg:max-w-[994px] p-5 md:p-9',
         wrapperClassName
       )}
     >
@@ -38,9 +43,8 @@ export const DonationModal = ({
       >
         <CloseIcon className="w-6 h-6" />
       </motion.button>
-      <StripeProvider>
-        <DonationForm onSuccess={onClose} setIsSubmitting={() => {}} />
-      </StripeProvider>
+
+      <CardForm onSuccess={handleSuccess} setIsSubmitting={setIsSubmitting} />
     </ModalWrapper>
   );
 };
