@@ -6,23 +6,7 @@ import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
 import { SetPlus } from '@/components/icons';
 import { useTranslations } from 'next-intl';
 import { stripeService } from '@/services/stripeService';
-import { PaymentMethodModal } from './PaymentMethodModal';
-
-const AddPaymentMethodButton = ({
-  onClick,
-  translationText,
-}: {
-  onClick: () => void;
-  translationText: string;
-}): JSX.Element => (
-  <button
-    className="text-teal-600 hover:text-teal-700 flex gap-1 justify-start items-center cursor-pointer font-medium mt-2" // Використовую колір схожий на кнопку "Donate" (teal/бірюзовий)
-    onClick={onClick}
-  >
-    <SetPlus className="w-5 h-5" />
-    {translationText}
-  </button>
-);
+import { PaymentMethodModal } from './PaymentMethodModal/PaymentMethodModal';
 
 export const PaymentCardList = (): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -72,11 +56,14 @@ export const PaymentCardList = (): JSX.Element => {
           />
         ))}
 
-        <li>
-          <AddPaymentMethodButton
+        <li className="">
+          <button
+            className="text-btn hover:text-btn-hover flex gap-2 justify-center align-middle cursor-pointer"
             onClick={handleAddCard}
-            translationText={t('payment.addPaymentMethod')}
-          />
+          >
+            <SetPlus />
+            {t('payment.add')}
+          </button>
         </li>
       </ul>
 

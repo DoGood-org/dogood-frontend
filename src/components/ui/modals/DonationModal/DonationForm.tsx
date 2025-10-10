@@ -128,36 +128,6 @@ export const DonationForm = ({
         </div>
       ))}
 
-      {/* <div>
-        <DonationCardNumber
-          focusedElement={focusedElement}
-          setFocusedElement={setFocusedElement}
-        />
-        <div className="flex gap-4 mt-4">
-          <CardInputWrapper
-            className={`w-[175px] ${focusedElement === 'expiry' ? 'ring-1 ring-[#00c1ac] border-transparent' : 'border border-[#111113]'}`}
-          >
-            <CardExpiryElement
-              className="w-full block focus-within:border-border"
-              options={options}
-              onFocus={() => setFocusedElement('expiry')}
-              onBlur={() => setFocusedElement(null)}
-            />
-          </CardInputWrapper>
-          <CardInputWrapper
-            className={`w-[133px] ${focusedElement === 'cvc' ? 'ring-1 ring-[#00c1ac] border-transparent' : 'border border-[#111113]'}`}
-          >
-            <CardCvcElement
-              className="w-full block focus-within:border-border"
-              options={options}
-              onFocus={() => setFocusedElement('cvc')}
-              onBlur={() => setFocusedElement(null)}
-            />
-          </CardInputWrapper>
-        </div>
-        {cardError && <p className="text-error text-sm mt-1">{cardError}</p>}
-      </div> */}
-
       <div className="flex gap-2">
         <Controller
           name="currency"

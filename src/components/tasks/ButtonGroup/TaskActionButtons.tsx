@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
-import { DonationModal } from '@/components/ui/DonationModal/DonationModal';
+import { DonationModal } from '@/components/ui/modals/DonationModal/DonationModal';
 import { useMenuToggle } from '@/hooks/useMenuToggle';
 // import { useTranslations } from 'next-intl';
 import { TaskActionType, UserParticipationStatus } from '@/types/tasks.type';

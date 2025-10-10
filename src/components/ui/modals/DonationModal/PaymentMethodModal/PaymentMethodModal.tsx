@@ -2,9 +2,10 @@
 
 import { JSX, useState } from 'react';
 import { motion } from 'framer-motion';
-import { CardForm, ModalWrapper } from '@/components';
+import { ModalWrapper } from '@/components';
 import { CloseIcon } from '@/components/icons';
 import { cn } from '@/lib/utils';
+import { StyledCardForm } from '@/components';
 
 interface PaymentMethodModalProps {
   isOpen: boolean;
@@ -44,7 +45,10 @@ export const PaymentMethodModal = ({
         <CloseIcon className="w-6 h-6" />
       </motion.button>
 
-      <CardForm onSuccess={handleSuccess} setIsSubmitting={setIsSubmitting} />
+      <StyledCardForm
+        onSuccess={handleSuccess}
+        setIsSubmitting={setIsSubmitting}
+      />
     </ModalWrapper>
   );
 };
