@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components';
+import { cn } from '@/lib/utils';
 import { SelectProps } from '@radix-ui/react-select';
 import { JSX } from 'react';
 
@@ -33,8 +34,17 @@ export const CurrencySelect = ({
 
       <Select onValueChange={onValueChange} {...props}>
         <SelectTrigger
-          className={`w-[118px] bg-[#ffffff] rounded-sm relative flex items-center px-3 pt-[22.6px] pb-[24px] border-modal focus-within:ring-1 focus-within:ring-[#00c1ac]
-        ${className}`}
+          className={cn(
+            'w-[118px] h-12 bg-[#ffffff] rounded-[4px] relative flex items-center px-3 border border-[#111113] shadow-none outline-none',
+            '[&[data-size=default]]:h-12',
+            'border border-[#111113] shadow-none outline-none',
+            'data-[state=open]:border-[#00c1ac]',
+            'focus-visible:ring-1 focus-visible:ring-[#00c1ac] focus-visible:border-[#00c1ac]',
+            'focus-visible:ring-offset-0',
+            'focus-within:ring-offset-0',
+
+            className
+          )}
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>

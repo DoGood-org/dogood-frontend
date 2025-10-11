@@ -19,6 +19,7 @@ import { useState, JSX, useEffect } from 'react';
 import { CardData, CardFormProps } from '@/types';
 import { createCardPaymentMethod } from '@/services/createPaymentMethod';
 import { useCardInputs } from '@/hooks/useCardInputs';
+import { DonationData } from '@/types/donationType';
 
 const currencies = [
   { value: 'USD', label: 'USD' },
@@ -44,22 +45,18 @@ export const DonationForm = ({
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
-  } = useForm<CardData>({
+  } = useForm<DonationData>({
     defaultValues: initialValues,
   });
 
   const [_cardError, setCardError] = useState<string | null>(null);
-  // const [focusedElement, setFocusedElement] = useState<string | null>(null);
-
-  // Якщо initialValues зміняться динамічно (не обов’язково)
   useEffect(() => {
     if (initialValues) {
       setValue('fullName', initialValues.fullName || '');
       setValue('city', initialValues.city || '');
       setValue('country', initialValues.country || '');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [initialValues, setValue]);
 
   const { control } = useForm<FormData>({
     defaultValues: {
@@ -136,16 +133,39 @@ export const DonationForm = ({
             <CurrencySelect
               {...field}
               options={currencies}
-              placeholder="Виберіть валюту"
+              placeholder="Select currency"
               onValueChange={field.onChange}
             />
           )}
         />
         <Input
-          name="amount"
+          type="number"
+          {...register('amount', {
+            required: 'Enter the donation amount',
+            min: { value: 1, message: 'The amount must be no less than 1' },
+          })}
           placeholder="10000"
-          className="h-12 w-[118px] bg-[#ffffff] rounded-sm relative flex items-center p-3 focus-within:ring-1 focus-within:ring-[#00c1ac]"
+          min={1}
+          onKeyDown={(e) => {
+            if (e.key === '-' || e.key === 'e' || e.key === 'E')
+              e.preventDefault();
+          }}
+          className="
+            h-12 w-[118px] bg-[#ffffff] rounded-sm flex items-center p-3
+            border border-[#111113]
+            focus:border-[#00c1ac]
+            focus:ring-0 focus:ring-offset-0
+            focus-visible:ring-0 focus-visible:ring-offset-0
+            focus-within:ring-0
+            outline-none
+            [appearance:textfield] 
+            [&::-webkit-outer-spin-button]:appearance-none 
+            [&::-webkit-inner-spin-button]:appearance-none
+          "
         />
+        {errors.amount && (
+          <p className="text-red-500 text-sm mt-1">{errors.amount.message}</p>
+        )}
       </div>
       <div>
         <PaymentCardList />
