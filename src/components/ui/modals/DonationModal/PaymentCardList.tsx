@@ -2,7 +2,7 @@
 
 import { JSX, useEffect, useState } from 'react';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
-import { CardPreview } from '@/components';
+import { DonationCardPreview } from '@/components';
 import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
 import { useTranslations } from 'next-intl';
 import { stripeService } from '@/services/stripeService';
@@ -49,7 +49,7 @@ export const PaymentCardList = (): JSX.Element => {
         <ScrollArea.Viewport className="h-full w-full pr-2">
           <ul className="flex flex-col gap-3">
             {mergedCards.map((card) => (
-              <CardPreview
+              <DonationCardPreview
                 key={card.paymentMethodId}
                 setEditingId={setEditingId}
                 setOpen={setOpen}

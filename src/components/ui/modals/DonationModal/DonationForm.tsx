@@ -1,23 +1,17 @@
 'use client';
 
-import {
-  useStripe,
-  useElements,
-  // CardExpiryElement,
-  // CardCvcElement,
-} from '@stripe/react-stripe-js';
-import { Controller, useForm } from 'react-hook-form';
+// import { useStripe, useElements } from '@stripe/react-stripe-js';
+import { useForm } from 'react-hook-form';
 // import { useTranslations } from 'next-intl';
 import {
-  // CardInputWrapper,
-  CurrencySelect,
-  // DonationCardNumber,
+  Button,
+  CurrencyAndAmountInput,
   Input,
   PaymentCardList,
 } from '@/components';
 import { useState, JSX, useEffect } from 'react';
 import { CardData, CardFormProps } from '@/types';
-import { createCardPaymentMethod } from '@/services/createPaymentMethod';
+// import { createCardPaymentMethod } from '@/services/createPaymentMethod';
 import { useCardInputs } from '@/hooks/useCardInputs';
 import { DonationData } from '@/types/donationType';
 
@@ -26,7 +20,7 @@ const currencies = [
   { value: 'EUR', label: 'EUR' },
 ];
 
-type FormData = {
+type DonationFormData = DonationData & {
   currency: string;
   amount: number;
 };
@@ -36,17 +30,20 @@ export const DonationForm = ({
   initialValues = {},
   setIsSubmitting,
 }: CardFormProps): JSX.Element => {
-  const stripe = useStripe();
-  const elements = useElements();
+  // const stripe = useStripe();
+  // const elements = useElements();
   // const t = useTranslations('card');
   const { inputData } = useCardInputs();
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
-  } = useForm<DonationData>({
-    defaultValues: initialValues,
+  } = useForm<DonationFormData>({
+    defaultValues: {
+      ...initialValues,
+    },
   });
 
   const [_cardError, setCardError] = useState<string | null>(null);
@@ -58,12 +55,47 @@ export const DonationForm = ({
     }
   }, [initialValues, setValue]);
 
-  const { control } = useForm<FormData>({
-    defaultValues: {
-      currency: 'USD',
-    },
-  });
+  // const onSubmit = async (data: CardData): Promise<void> => {
+  //   if (isSubmitting) return;
 
+  //   setIsSubmitting(true);
+  //   setCardError(null);
+
+  //   try {
+  //     if (!stripe || !elements) throw new Error('Stripe not loaded');
+
+  //     const method = await createCardPaymentMethod({
+  //       stripe,
+  //       elements,
+  //       billingDetails: {
+  //         name: data.fullName,
+  //         address: {
+  //           city: data.city,
+  //           country: data.country,
+  //         },
+  //       },
+  //     });
+
+  //     if (!method?.card) throw new Error('Card creation failed');
+
+  //     const card: CardData = {
+  //       paymentMethodId: method.id,
+  //       brand: method.card.brand ?? '',
+  //       last4: method.card.last4 ?? '',
+  //       exp_month: method.card.exp_month ?? 0,
+  //       exp_year: method.card.exp_year ?? 0,
+  //       fullName: data.fullName,
+  //       city: data.city,
+  //       country: data.country,
+  //     };
+
+  //     onSuccess(card);
+  //   } catch (err: any) {
+  //     setCardError(err.message ?? 'Unknown error');
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
   const onSubmit = async (data: CardData): Promise<void> => {
     if (isSubmitting) return;
 
@@ -71,34 +103,9 @@ export const DonationForm = ({
     setCardError(null);
 
     try {
-      if (!stripe || !elements) throw new Error('Stripe not loaded');
-
-      const method = await createCardPaymentMethod({
-        stripe,
-        elements,
-        billingDetails: {
-          name: data.fullName,
-          address: {
-            city: data.city,
-            country: data.country,
-          },
-        },
-      });
-
-      if (!method?.card) throw new Error('Card creation failed');
-
-      const card: CardData = {
-        paymentMethodId: method.id,
-        brand: method.card.brand ?? '',
-        last4: method.card.last4 ?? '',
-        exp_month: method.card.exp_month ?? 0,
-        exp_year: method.card.exp_year ?? 0,
-        fullName: data.fullName,
-        city: data.city,
-        country: data.country,
-      };
-
-      onSuccess(card);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      onSuccess(data);
+      return;
     } catch (err: any) {
       setCardError(err.message ?? 'Unknown error');
     } finally {
@@ -125,51 +132,24 @@ export const DonationForm = ({
         </div>
       ))}
 
-      <div className="flex gap-2">
-        <Controller
-          name="currency"
-          control={control}
-          render={({ field }) => (
-            <CurrencySelect
-              {...field}
-              options={currencies}
-              placeholder="Select currency"
-              onValueChange={field.onChange}
-            />
-          )}
-        />
-        <Input
-          type="number"
-          {...register('amount', {
-            required: 'Enter the donation amount',
-            min: { value: 1, message: 'The amount must be no less than 1' },
-          })}
-          placeholder="10000"
-          min={1}
-          onKeyDown={(e) => {
-            if (e.key === '-' || e.key === 'e' || e.key === 'E')
-              e.preventDefault();
-          }}
-          className="
-            h-12 w-[118px] bg-[#ffffff] rounded-sm flex items-center p-3
-            border border-[#111113]
-            focus:border-[#00c1ac]
-            focus:ring-0 focus:ring-offset-0
-            focus-visible:ring-0 focus-visible:ring-offset-0
-            focus-within:ring-0
-            outline-none
-            [appearance:textfield] 
-            [&::-webkit-outer-spin-button]:appearance-none 
-            [&::-webkit-inner-spin-button]:appearance-none
-          "
-        />
-        {errors.amount && (
-          <p className="text-red-500 text-sm mt-1">{errors.amount.message}</p>
-        )}
-      </div>
+      <CurrencyAndAmountInput
+        control={control}
+        register={register}
+        errors={errors}
+        currencies={currencies}
+      />
       <div>
         <PaymentCardList />
       </div>
+      <Button
+        type="submit"
+        variant="primary"
+        className="w-full
+        text-[#ffffff]"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? 'Processing...' : 'Donate'}
+      </Button>
     </form>
   );
 };
