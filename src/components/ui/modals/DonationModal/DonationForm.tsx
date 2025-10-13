@@ -9,57 +9,47 @@ import {
   Input,
   PaymentCardList,
 } from '@/components';
-import { useState, JSX, useEffect } from 'react';
-import { CardFormProps } from '@/types';
+import { JSX } from 'react';
 // import { createCardPaymentMethod } from '@/services/createPaymentMethod';
 import { useCardInputs } from '@/hooks/useCardInputs';
-import { DonationData } from '@/types/donationType';
+import { DonationFormProps } from '@/types/donationType';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { toast } from 'react-toastify';
+import {
+  DonationFormValues,
+  donationSchema,
+} from '@/lib/validation/donationSchema';
+import { createCheckoutSession } from '@/services/donationService';
+import { useStripe } from '@stripe/react-stripe-js';
 
 const currencies = [
   { value: 'USD', label: 'USD' },
   { value: 'EUR', label: 'EUR' },
 ];
 
-type DonationFormData = DonationData & {
-  currency: string;
-  amount: number;
-};
-
 export const DonationForm = ({
-  onSuccess,
   initialValues = {},
-  setIsSubmitting,
-}: CardFormProps): JSX.Element => {
-  // const stripe = useStripe();
-  // const elements = useElements();
+}: DonationFormProps): JSX.Element => {
   // const t = useTranslations('card');
+  const stripe = useStripe();
   useCardInputs();
   const {
     register,
     control,
     handleSubmit,
     formState: { errors, touchedFields, submitCount, isSubmitting },
-    setValue,
-  } = useForm<DonationFormData>({
+  } = useForm<DonationFormValues>({
+    resolver: yupResolver(donationSchema),
     defaultValues: {
-      ...initialValues,
+      fullName: initialValues.fullName || '',
+      city: initialValues.city || '',
+      country: initialValues.country || '',
+      currency: initialValues.currency || 'USD',
+      amount: initialValues.amount || 0,
     },
   });
 
-  const [_cardError, setCardError] = useState<string | null>(null);
-  useEffect(() => {
-    if (initialValues) {
-      setValue('fullName', initialValues.fullName || '');
-      setValue('city', initialValues.city || '');
-      setValue('country', initialValues.country || '');
-    }
-  }, []);
-
-  const cardInputs: {
-    name: keyof DonationFormData;
-    placeholder: string;
-    validation: Record<string, any>;
-  }[] = [
+  const cardInputs = [
     {
       name: 'fullName',
       placeholder: 'Full Name',
@@ -71,94 +61,36 @@ export const DonationForm = ({
       validation: { required: 'Required' },
     },
     { name: 'city', placeholder: 'City', validation: { required: 'Required' } },
-  ];
+  ] as const;
 
-  // const onSubmit = async (data: CardData): Promise<void> => {
-  //   if (isSubmitting) return;
-
-  //   setIsSubmitting(true);
-  //   setCardError(null);
-
-  //   try {
-  //     if (!stripe || !elements) throw new Error('Stripe not loaded');
-
-  //     const method = await createCardPaymentMethod({
-  //       stripe,
-  //       elements,
-  //       billingDetails: {
-  //         name: data.fullName,
-  //         address: {
-  //           city: data.city,
-  //           country: data.country,
-  //         },
-  //       },
-  //     });
-
-  //     if (!method?.card) throw new Error('Card creation failed');
-
-  //     const card: CardData = {
-  //       paymentMethodId: method.id,
-  //       brand: method.card.brand ?? '',
-  //       last4: method.card.last4 ?? '',
-  //       exp_month: method.card.exp_month ?? 0,
-  //       exp_year: method.card.exp_year ?? 0,
-  //       fullName: data.fullName,
-  //       city: data.city,
-  //       country: data.country,
-  //     };
-
-  //     onSuccess(card);
-  //   } catch (err: any) {
-  //     setCardError(err.message ?? 'Unknown error');
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
-  // const onSubmit = async (data: CardData): Promise<void> => {
-  //   if (isSubmitting) return;
-
-  //   setIsSubmitting(true);
-  //   setCardError(null);
-
-  //   try {
-  //     await new Promise((resolve) => setTimeout(resolve, 500));
-  //     onSuccess(data);
-  //     return;
-  //   } catch (err: any) {
-  //     setCardError(err.message ?? 'Unknown error');
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
-
-  const onSubmit = async (data: DonationFormData): Promise<void> => {
+  const onSubmit = async (data: {
+    fullName: string;
+    country: string;
+    city: string;
+    amount: number;
+    currency: NonNullable<'USD' | 'EUR' | undefined>;
+  }): Promise<void> => {
     if (isSubmitting) return;
 
-    setIsSubmitting(true);
-    setCardError(null);
-
     try {
-      // Імітуємо асинхронну відправку
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      // Виводимо дані форми в консоль
-      console.log('Test submit data:', data);
-
-      // Можна імітувати успішний результат, щоб працював onSuccess
-      onSuccess?.({
-        paymentMethodId: 'test-id',
-        brand: 'Visa',
-        last4: '4242',
-        exp_month: 12,
-        exp_year: 2030,
+      const payload = {
         fullName: data.fullName,
-        city: data.city,
         country: data.country,
-      });
+        city: data.city,
+        amount: data.amount,
+        currency: data.currency,
+      };
+
+      const response = await createCheckoutSession(payload);
+      if (!response.sessionId)
+        throw new Error('Failed to create checkout session');
+
+      if (!stripe) throw new Error('Stripe not loaded');
+
+      await stripe.redirectToCheckout({ sessionId: response.sessionId });
     } catch (err: any) {
-      setCardError(err.message ?? 'Unknown error');
-    } finally {
-      setIsSubmitting(false);
+      toast.error(err.message || 'Unknown error');
+      console.error(err);
     }
   };
 
