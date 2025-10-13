@@ -8,9 +8,12 @@ interface CurrencyAndAmountProps {
   control: any;
   register: any;
   errors: any;
+  touchedFields?: any;
+  submitCount?: number;
   currencies: { value: string; label: string }[];
   currencyFieldName?: string;
   amountFieldName?: string;
+  isRequired?: boolean;
 }
 
 export const CurrencyAndAmountInput = ({
@@ -24,8 +27,12 @@ export const CurrencyAndAmountInput = ({
 
   return (
     <div className="flex flex-col gap-1">
+      <label htmlFor={amountName} className="text-base">
+        How much needs to be raised?*
+      </label>
       <div className="flex gap-2">
         <Input
+          id={amountName}
           type="number"
           {...register(amountName, {
             required: 'Enter the donation amount',
@@ -45,6 +52,7 @@ export const CurrencyAndAmountInput = ({
             focus-visible:ring-0 focus-visible:ring-offset-0
             focus-within:ring-0
             outline-none
+            placeholder-[#010101]
             [appearance:textfield] 
             [&::-webkit-outer-spin-button]:appearance-none 
             [&::-webkit-inner-spin-button]:appearance-none

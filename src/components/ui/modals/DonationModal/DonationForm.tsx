@@ -10,7 +10,7 @@ import {
   PaymentCardList,
 } from '@/components';
 import { useState, JSX, useEffect } from 'react';
-import { CardData, CardFormProps } from '@/types';
+import { CardFormProps } from '@/types';
 // import { createCardPaymentMethod } from '@/services/createPaymentMethod';
 import { useCardInputs } from '@/hooks/useCardInputs';
 import { DonationData } from '@/types/donationType';
@@ -33,12 +33,12 @@ export const DonationForm = ({
   // const stripe = useStripe();
   // const elements = useElements();
   // const t = useTranslations('card');
-  const { inputData } = useCardInputs();
+  useCardInputs();
   const {
     register,
     control,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, touchedFields, submitCount, isSubmitting },
     setValue,
   } = useForm<DonationFormData>({
     defaultValues: {
@@ -53,7 +53,25 @@ export const DonationForm = ({
       setValue('city', initialValues.city || '');
       setValue('country', initialValues.country || '');
     }
-  }, [initialValues, setValue]);
+  }, []);
+
+  const cardInputs: {
+    name: keyof DonationFormData;
+    placeholder: string;
+    validation: Record<string, any>;
+  }[] = [
+    {
+      name: 'fullName',
+      placeholder: 'Full Name',
+      validation: { required: 'Required' },
+    },
+    {
+      name: 'country',
+      placeholder: 'Country',
+      validation: { required: 'Required' },
+    },
+    { name: 'city', placeholder: 'City', validation: { required: 'Required' } },
+  ];
 
   // const onSubmit = async (data: CardData): Promise<void> => {
   //   if (isSubmitting) return;
@@ -96,16 +114,47 @@ export const DonationForm = ({
   //     setIsSubmitting(false);
   //   }
   // };
-  const onSubmit = async (data: CardData): Promise<void> => {
+  // const onSubmit = async (data: CardData): Promise<void> => {
+  //   if (isSubmitting) return;
+
+  //   setIsSubmitting(true);
+  //   setCardError(null);
+
+  //   try {
+  //     await new Promise((resolve) => setTimeout(resolve, 500));
+  //     onSuccess(data);
+  //     return;
+  //   } catch (err: any) {
+  //     setCardError(err.message ?? 'Unknown error');
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+  const onSubmit = async (data: DonationFormData): Promise<void> => {
     if (isSubmitting) return;
 
     setIsSubmitting(true);
     setCardError(null);
 
     try {
+      // Імітуємо асинхронну відправку
       await new Promise((resolve) => setTimeout(resolve, 500));
-      onSuccess(data);
-      return;
+
+      // Виводимо дані форми в консоль
+      console.log('Test submit data:', data);
+
+      // Можна імітувати успішний результат, щоб працював onSuccess
+      onSuccess?.({
+        paymentMethodId: 'test-id',
+        brand: 'Visa',
+        last4: '4242',
+        exp_month: 12,
+        exp_year: 2030,
+        fullName: data.fullName,
+        city: data.city,
+        country: data.country,
+      });
     } catch (err: any) {
       setCardError(err.message ?? 'Unknown error');
     } finally {
@@ -119,7 +168,7 @@ export const DonationForm = ({
       className="space-y-4 md:max-w-[500px] mx-auto"
       autoComplete="off"
     >
-      {inputData.map(({ name, placeholder, validation }) => (
+      {cardInputs.map(({ name, placeholder, validation }) => (
         <div key={name}>
           <Input
             {...register(name, validation)}
@@ -136,6 +185,8 @@ export const DonationForm = ({
         control={control}
         register={register}
         errors={errors}
+        touchedFields={touchedFields}
+        submitCount={submitCount}
         currencies={currencies}
       />
       <div>

@@ -35,6 +35,7 @@ export const CurrencySelect = ({
       <Select onValueChange={onValueChange} {...props}>
         <SelectTrigger
           className={cn(
+            'text-[#111113] placeholder-[#010101]',
             'w-[118px] h-12 bg-[#ffffff] rounded-[4px] relative flex items-center px-3 border border-[#111113] shadow-none outline-none',
             '[&[data-size=default]]:h-12',
             'border border-[#111113] shadow-none outline-none',

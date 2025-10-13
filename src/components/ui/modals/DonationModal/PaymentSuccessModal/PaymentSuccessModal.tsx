@@ -30,12 +30,12 @@ export const PaymentSuccessModal = ({
       isOpen={isOpen}
       onClose={onClose}
       wrapperClassName={cn(
-        'relative max-w-[354px] md:max-w-[574px] lg:max-w-[994px] p-5 md:p-9',
+        'relative max-w-[354px] md:max-w-[544px] lg:max-w-[994px] p-5 md:p-9',
         wrapperClassName
       )}
     >
       <motion.button
-        className="absolute top-4 right-4 cursor-pointer text_tag hover:text-[#696969] z-10"
+        className="absolute top-5 right-5 md:top-10 md:right-10 cursor-pointer text_tag hover:text-[#696969] z-10"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={onClose}
