@@ -1,7 +1,7 @@
 'use client';
 
 // import { useStripe, useElements } from '@stripe/react-stripe-js';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 // import { useTranslations } from 'next-intl';
 import {
   Button,
@@ -12,13 +12,14 @@ import {
 import { JSX } from 'react';
 // import { createCardPaymentMethod } from '@/services/createPaymentMethod';
 import { useCardInputs } from '@/hooks/useCardInputs';
-import { DonationFormProps } from '@/types/donationType';
+import {
+  DonationFormProps,
+  DonationFormValues,
+  DonationType,
+} from '@/types/donationType';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
-import {
-  DonationFormValues,
-  donationSchema,
-} from '@/lib/validation/donationSchema';
+import { donationSchema } from '@/lib/validation/donationSchema';
 import { createCheckoutSession } from '@/services/donationService';
 import { useStripe } from '@stripe/react-stripe-js';
 
@@ -46,6 +47,7 @@ export const DonationForm = ({
       country: initialValues.country || '',
       currency: initialValues.currency || 'USD',
       amount: initialValues.amount || 0,
+      donationType: initialValues.donationType || 'ORGANIZATION',
     },
   });
 
@@ -63,14 +65,16 @@ export const DonationForm = ({
     { name: 'city', placeholder: 'City', validation: { required: 'Required' } },
   ] as const;
 
-  const onSubmit = async (data: {
+  const onSubmit: SubmitHandler<DonationFormValues> = async (data: {
     fullName: string;
     country: string;
     city: string;
     amount: number;
     currency: NonNullable<'USD' | 'EUR' | undefined>;
+    donationType: DonationType;
   }): Promise<void> => {
     if (isSubmitting) return;
+    console.log('Submitting form with data:', data);
 
     try {
       const payload = {
@@ -79,6 +83,7 @@ export const DonationForm = ({
         city: data.city,
         amount: data.amount,
         currency: data.currency,
+        donationType: data.donationType,
       };
 
       const response = await createCheckoutSession(payload);

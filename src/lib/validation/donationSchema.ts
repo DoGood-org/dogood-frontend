@@ -27,6 +27,12 @@ export const donationSchema = yup.object().shape({
     .max(10_000, 'Amount too large'),
 
   currency: yup.string().oneOf(['USD', 'EUR']).required(),
+
+  donationType: yup
+    .string()
+    .oneOf(['USER', 'ORGANIZATION'])
+    .default('USER')
+    .required('Donation type is required'),
 });
 
 export type DonationFormValues = yup.InferType<typeof donationSchema>;
