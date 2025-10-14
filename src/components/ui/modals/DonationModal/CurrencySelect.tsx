@@ -49,7 +49,7 @@ export const CurrencySelect = ({
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent className="bg-white border-none text-form-field text-base roundrer-sm p-3">
+        <SelectContent className="bg-white border-none text-form-field text-base roundred-sm p-3">
           {options.map((option) => (
             <SelectItem
               key={option.value}

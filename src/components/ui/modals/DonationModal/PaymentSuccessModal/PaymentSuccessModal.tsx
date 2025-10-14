@@ -5,7 +5,7 @@ import { JSX } from 'react';
 import { motion } from 'framer-motion';
 import { ModalWrapper } from '@/components/ui/ModalWrapper';
 import { cn } from '@/lib/utils';
-import { PaymentSuccessContent } from './PaymentSuccessContent';
+import { PaymentSuccessContent } from '@/components';
 
 interface PaymentSuccessModalProps {
   isOpen: boolean;
@@ -18,13 +18,6 @@ export const PaymentSuccessModal = ({
   onClose,
   wrapperClassName,
 }: PaymentSuccessModalProps): JSX.Element => {
-  // const [_isSubmitting, setIsSubmitting] = useState(false);
-
-  // const handleSuccess = (): void => {
-  //   onClose();
-  //   setIsSubmitting(false);
-  // };
-
   return (
     <ModalWrapper
       isOpen={isOpen}

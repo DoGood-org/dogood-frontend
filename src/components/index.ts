@@ -159,6 +159,8 @@ export * from './tasks/ButtonGroup/FavoriteToggleButton';
 export * from './tasks/ButtonGroup/IconButtonGroup';
 export * from './tasks/ButtonGroup/MapDotButton';
 export * from './tasks/ButtonGroup/TaskActionButtons';
+export * from './tasks/LastNews/LastNews';
+export * from './tasks/LastNews/NewsListItems';
 export * from './tasks/OtherTasks/OtherTaskItem';
 export * from './tasks/OtherTasks/OtherTaskList';
 export * from './tasks/OtherTasks/OtherTasksSection';

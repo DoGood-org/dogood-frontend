@@ -2,13 +2,14 @@
 
 import { Button } from '@/components/ui/Button';
 import { useRouter } from '@/i18n/navigation';
+import { toast } from 'react-toastify';
 import { JSX } from 'react';
 
 export const ActionButtons = (): JSX.Element => {
   const router = useRouter();
 
   const handleDownloadReceipt = (): void => {
-    console.log('Ініціалізація завантаження квитанції...');
+    toast.success('Receipt download initialized!');
   };
 
   const handleGoHome = (): void => {

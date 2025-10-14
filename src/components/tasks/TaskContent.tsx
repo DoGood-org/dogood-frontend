@@ -10,10 +10,68 @@ import {
 } from '@/types/tasks.type';
 import { IconButtonGroup } from '@/components/tasks/ButtonGroup/IconButtonGroup';
 import { OtherTasksSection, TaskActionButtons } from '@/components';
+import { LastNews } from './LastNews/LastNews';
 
 interface TaskContentProps {
   slug: string;
 }
+
+const mockNews = [
+  {
+    id: 1,
+    title: 'Перша новина',
+    createdAt: new Date().toISOString(),
+    image: '/images/news1.jpg',
+    category: 'Events',
+    tags: ['volunteering', 'community'],
+    content: 'Короткий опис новини або статті...',
+  },
+  {
+    id: 2,
+    title: 'Друга новина',
+    createdAt: new Date().toISOString(),
+    image: '/images/news2.jpg',
+    category: 'Fundraising',
+    tags: ['donation'],
+    content: 'Ще одна тестова новина...',
+  },
+  {
+    id: 3,
+    title: 'Перша новина',
+    createdAt: new Date().toISOString(),
+    image: '/images/news1.jpg',
+    category: 'Events',
+    tags: ['volunteering', 'community'],
+    content: 'Короткий опис новини або статті...',
+  },
+  {
+    id: 4,
+    title: 'Друга новина',
+    createdAt: new Date().toISOString(),
+    image: '/images/news2.jpg',
+    category: 'Fundraising',
+    tags: ['donation'],
+    content: 'Ще одна тестова новина...',
+  },
+  {
+    id: 5,
+    title: 'Перша новина',
+    createdAt: new Date().toISOString(),
+    image: '/images/news1.jpg',
+    category: 'Events',
+    tags: ['volunteering', 'community'],
+    content: 'Короткий опис новини або статті...',
+  },
+  {
+    id: 6,
+    title: 'Друга новина',
+    createdAt: new Date().toISOString(),
+    image: '/images/news2.jpg',
+    category: 'Fundraising',
+    tags: ['donation'],
+    content: 'Ще одна тестова новина...',
+  },
+];
 
 export const TaskContent: React.FC<TaskContentProps> = ({ slug }) => {
   const tasks = generateTasks(49.8429, 24.0316);
@@ -64,6 +122,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({ slug }) => {
         />
       </div>
       <OtherTasksSection tasks={otherTasksList} />
+      <LastNews newsItems={mockNews} />
     </Container>
   );
 };

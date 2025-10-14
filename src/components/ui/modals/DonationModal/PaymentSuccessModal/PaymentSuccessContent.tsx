@@ -3,13 +3,13 @@
 import Image from 'next/image';
 import { JSX } from 'react';
 import Abstract from '@/assets/images/donation/abstract.png';
-import { ActionButtons } from './ActionButtons';
+import { ActionButtons } from '@/components';
 
 export const PaymentSuccessContent = (): JSX.Element => {
   return (
     <section className="flex flex-col items-center justify-center">
       <div
-        className="relative w-74 h-74 mx-auto mb-16 mt-15
+        className="relative w-[296px] h-[296px] mx-auto mb-16 mt-15
           rounded-full overflow-hidden  
           flex items-center justify-center"
       >

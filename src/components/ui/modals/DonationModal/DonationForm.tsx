@@ -1,6 +1,5 @@
 'use client';
 
-// import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { SubmitHandler, useForm } from 'react-hook-form';
 // import { useTranslations } from 'next-intl';
 import {
@@ -10,7 +9,6 @@ import {
   PaymentCardList,
 } from '@/components';
 import { JSX } from 'react';
-// import { createCardPaymentMethod } from '@/services/createPaymentMethod';
 import { useCardInputs } from '@/hooks/useCardInputs';
 import {
   DonationFormProps,

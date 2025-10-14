@@ -20,7 +20,7 @@ export const DonationModal = ({
   onClose,
   wrapperClassName = '',
 }: DonationModalProps): JSX.Element => {
-  const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(true);
+  const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
   const [_isSubmitting, setIsSubmitting] = useState(false);
 
   const handleDonationSuccess = useCallback((): void => {
