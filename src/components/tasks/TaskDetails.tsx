@@ -56,7 +56,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
                 className="flex items-center gap-1"
               >
                 <span className="cursor-pointer underline text-base hover:text-btn-hover">
-                  Organized by{}
+                  Organized by{task.organizationId}
                 </span>
               </Link>
             </li>

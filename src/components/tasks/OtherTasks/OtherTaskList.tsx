@@ -10,7 +10,7 @@ interface OtherListProps {
 export const OtherTaskList: React.FC<OtherListProps> = ({ tasks }) => {
   if (!tasks || tasks.length === 0) {
     return (
-      <p className="text-center p-6 text-gray-500">
+      <p className="text-center p-6 text-gray-500 h-[235px]">
         There are no tasks in this section yet.
       </p>
     );

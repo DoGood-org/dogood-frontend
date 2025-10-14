@@ -23,11 +23,13 @@ export const LastNews = ({
   const slicedNews = sortedNews.slice(0, maxItems);
 
   return (
-    <section>
-      <h2 className="text-h2 font-normal">Latest News</h2>
+    <section className="py-10">
+      <h2 className="text-h2 lg:text-h3-d mb-10">
+        Last news, stories and blog posts
+      </h2>
       <NewsListItems newsItems={slicedNews} />
-      <div className="mt-4 flex justify-end">
-        <LinkWithArrow href="/news" text="Last news, stories and blog posts" />
+      <div className="mt-4 flex justify-start lg:justify-end">
+        <LinkWithArrow href="/news" text="See all articles" />
       </div>
     </section>
   );
