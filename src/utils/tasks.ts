@@ -1,12 +1,5 @@
 import { ITaskDetails } from '@/types/tasks.type';
 
-// export const getMapUrl = (task: ITaskDetails): string | null => {
-//   if (task.lat && task.lng) return `/map?lat=${task.lat}&lng=${task.lng}`;
-//   if (task.locationName)
-//     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(task.locationName)}`;
-//   return null;
-// };
-
 export const getOrganizerInfo = (
   task: ITaskDetails
 ): { name: string; link: string } => ({

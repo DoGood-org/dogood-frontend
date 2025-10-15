@@ -2,6 +2,7 @@
 
 import { INewsItem } from '@/types';
 import { JSX } from 'react';
+import { useTranslations } from 'next-intl';
 import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { NewsListItems } from './NewsListItems';
 
@@ -20,16 +21,16 @@ export const LastNews = ({
     return dateB - dateA;
   });
 
+  const t = useTranslations('news');
+
   const slicedNews = sortedNews.slice(0, maxItems);
 
   return (
     <section className="py-10">
-      <h2 className="text-h2 lg:text-h3-d mb-10">
-        Last news, stories and blog posts
-      </h2>
+      <h2 className="text-h2 lg:text-h3-d mb-10">{t('newsListMain.title')}</h2>
       <NewsListItems newsItems={slicedNews} />
       <div className="mt-4 flex justify-start lg:justify-end">
-        <LinkWithArrow href="/news" text="See all articles" />
+        <LinkWithArrow href="/news" text={t('newsListMain.seeAll')} />
       </div>
     </section>
   );

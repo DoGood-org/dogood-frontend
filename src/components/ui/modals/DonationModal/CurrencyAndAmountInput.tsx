@@ -2,6 +2,7 @@
 
 import React, { JSX } from 'react';
 import { Controller } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 import { CurrencySelect, Input } from '@/components';
 
 interface CurrencyAndAmountProps {
@@ -25,10 +26,12 @@ export const CurrencyAndAmountInput = ({
   const currencyName = 'currency';
   const amountName = 'amount';
 
+  const t = useTranslations('card');
+
   return (
     <div className="flex flex-col gap-1">
       <label htmlFor={amountName} className="text-base">
-        How much needs to be raised?*
+        {t('amountQuestion')}*
       </label>
       <div className="flex gap-2">
         <Input

@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/Button';
 import { DonationModal } from '@/components/ui/modals/DonationModal/DonationModal';
 import { useMenuToggle } from '@/hooks/useMenuToggle';
-// import { useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { TaskActionType, UserParticipationStatus } from '@/types/tasks.type';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { JSX } from 'react';
@@ -21,7 +21,7 @@ export const TaskActionButtons = ({
   className = '',
   userParticipationStatus,
 }: TaskActionButtonsProps): JSX.Element => {
-  // const t = useTranslations('task');
+  const t = useTranslations('map');
   const { joinTask } = useTaskStore();
 
   const {
@@ -41,15 +41,13 @@ export const TaskActionButtons = ({
   if (hasJoinedOrDonated) {
     buttons.push(
       {
-        label: 'Edit',
-        /* {label: t('editBtn')} */
+        label: t('editBtn'),
         variant: 'secondary',
         onClick: () => {},
         className: baseButtonClass,
       },
       {
-        label: 'Confirm',
-        /* {label: t('confirmBtn')} */
+        label: t('confirmBtn'),
         variant: 'primary',
         onClick: () => {},
         className: `${baseButtonClass} text-white`,
@@ -58,15 +56,13 @@ export const TaskActionButtons = ({
   } else if (isFundraising) {
     buttons.push(
       {
-        label: 'Donate',
-        // {label: t('donateBtn'),
+        label: t('donateBtn'),
         variant: 'primary',
         onClick: openModal,
         className: `${baseButtonClass} text-white`,
       },
       {
-        label: 'See More',
-        /* {label: t('seeMoreBtn')} */
+        label: t('seeMoreBtn'),
         variant: 'secondary',
         onClick: () => {},
         className: `${baseButtonClass} bg-card`,
@@ -75,15 +71,13 @@ export const TaskActionButtons = ({
   } else {
     buttons.push(
       {
-        label: 'Join',
-        /* {label: t('joinBtn')} */
+        label: t('join'),
         variant: 'primary',
         onClick: () => joinTask(taskId),
         className: `${baseButtonClass} text-white`,
       },
       {
-        label: 'See More',
-        /* {label: t('seeMoreBtn')} */
+        label: t('seeMoreBtn'),
         variant: 'secondary',
         onClick: () => {},
         className: `${baseButtonClass} bg-card`,

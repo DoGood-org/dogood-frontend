@@ -4,5 +4,27 @@
     "notFoundDescription": "The task you are looking for does not exist.",
     "title": "Task",
     "description": "Details about the task"
+  },
+    "taskDetails": {
+    "details": "Details",
+    "location": "Location",
+    "showOnMap": "Show on map",
+    "organizedBy": "Organized by",
+    "howYouCanHelp": "How You Can Help",
+    "donationNeeds": "Donation needs",
+    "requirements": "Requirements",
+    "description": "Description"
+  },
+    "taskCard": {
+    "start": "Start",
+    "finish": "Finish",
+    "time": "Time",
+    "location": "Location",
+    "donationNeeds": "Donation needs",
+     "localTime": "(local time)"
+  },
+    "otherTask": {
+    "otherTask": "Other Tasks",
+    "noTasks": "There are no tasks in this section yet."
   }
 }

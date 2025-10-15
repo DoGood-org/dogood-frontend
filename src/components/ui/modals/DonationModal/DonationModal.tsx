@@ -6,8 +6,9 @@ import { CloseIcon } from '@/components/icons';
 import { ModalWrapper } from '@/components/ui/ModalWrapper';
 import { cn } from '@/lib/utils';
 import { StripeProvider } from '@/components/account/settingsPage/PaymentModal/StripeProvider';
-import { DonationForm } from './DonationForm';
-import { PaymentSuccessModal } from './PaymentSuccessModal/PaymentSuccessModal';
+import { DonationForm } from '@/components';
+import { useTranslations } from 'next-intl';
+import { PaymentSuccessModal } from '@/components';
 
 interface DonationModalProps {
   isOpen: boolean;
@@ -22,6 +23,8 @@ export const DonationModal = ({
 }: DonationModalProps): JSX.Element => {
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
   const [_isSubmitting, setIsSubmitting] = useState(false);
+
+  const t = useTranslations('card');
 
   const handleDonationSuccess = useCallback((): void => {
     onClose();
@@ -52,7 +55,7 @@ export const DonationModal = ({
         >
           <CloseIcon className="w-6 h-6" />
         </motion.button>
-        <h2 className="text-base mb-3 text-center">Payment</h2>
+        <h2 className="text-base mb-3 text-center">{t('title')}</h2>
         <StripeProvider>
           <DonationForm
             onSuccess={handleDonationSuccess}

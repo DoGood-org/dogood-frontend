@@ -1,7 +1,7 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-// import { useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import {
   Button,
   CurrencyAndAmountInput,
@@ -29,7 +29,7 @@ const currencies = [
 export const DonationForm = ({
   initialValues = {},
 }: DonationFormProps): JSX.Element => {
-  // const t = useTranslations('card');
+  const t = useTranslations('card');
   const stripe = useStripe();
   useCardInputs();
   const {
@@ -52,15 +52,19 @@ export const DonationForm = ({
   const cardInputs = [
     {
       name: 'fullName',
-      placeholder: 'Full Name',
-      validation: { required: 'Required' },
+      placeholder: t('fullName'),
+      validation: { required: t('validation.required') },
     },
     {
       name: 'country',
-      placeholder: 'Country',
-      validation: { required: 'Required' },
+      placeholder: t('country'),
+      validation: { required: t('validation.required') },
     },
-    { name: 'city', placeholder: 'City', validation: { required: 'Required' } },
+    {
+      name: 'city',
+      placeholder: t('city'),
+      validation: { required: t('validation.required') },
+    },
   ] as const;
 
   const onSubmit: SubmitHandler<DonationFormValues> = async (data: {
@@ -72,7 +76,6 @@ export const DonationForm = ({
     donationType: DonationType;
   }): Promise<void> => {
     if (isSubmitting) return;
-    console.log('Submitting form with data:', data);
 
     try {
       const payload = {

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { ITaskDetails } from '@/types/tasks.type';
 import { ImagePlaceholder } from './ImagePlaceholder';
 import { Clock, DateIcon, Location } from '@/components/icons';
@@ -10,13 +11,24 @@ interface TaskCardProps {
 }
 
 export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
+  const t = useTranslations('tasks');
   const goalAmount = 10000;
 
   const taskInfo = [
-    { icon: <DateIcon />, label: `Start: ${task.startDate}` },
-    { icon: <DateIcon />, label: `Finish: ${task.endDate}` },
-    { icon: <Clock />, label: `Time: ${task.startTime} (local time)` },
-    { icon: <Location />, label: `Location: ${task.locationName}` },
+    {
+      icon: <DateIcon />,
+      label: `${t('taskCard.start')}: ${task.startDate}`,
+    },
+    { icon: <DateIcon />, label: `${t('taskCard.finish')}: ${task.endDate}` },
+    {
+      icon: <Clock />,
+      label: `${t('taskCard.time')}: 
+     ${task.startTime} ${t('taskCard.localTime')}`,
+    },
+    {
+      icon: <Location />,
+      label: `${t('taskCard.location')}: ${task.locationName}`,
+    },
   ];
 
   return (
@@ -41,7 +53,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
             ))}
           </ul>
           <h3 className="mb-4 text-base text-[#00c1ac] font-semibold">
-            Donation needs {goalAmount}$
+            {t('taskCard.donationNeeds')} {goalAmount}$
           </h3>
           <div className="flex flex-col items-center justify-center">
             <DonationProgressBar currentAmount={7500} goalAmount={10000} />

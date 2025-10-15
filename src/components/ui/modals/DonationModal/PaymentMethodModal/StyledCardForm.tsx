@@ -1,10 +1,14 @@
 import { CardForm } from '@/components';
 import { CardFormProps } from '@/types';
 import { JSX } from 'react';
+import { useTranslations } from 'next-intl';
 
-export const StyledCardForm = (props: CardFormProps): JSX.Element => (
-  <div
-    className="
+export const StyledCardForm = (props: CardFormProps): JSX.Element => {
+  const t = useTranslations('card');
+
+  return (
+    <div
+      className="
 [&&_input]:border 
 [&&_input]:border-[#111113]
 [&&_input]:bg-[#ffffff]
@@ -39,8 +43,9 @@ export const StyledCardForm = (props: CardFormProps): JSX.Element => (
  [&&_.w-\[175px\]]:bg-[#ffffff]
  [&&_.w-\[133px\]]:bg-[#ffffff]
 "
-  >
-    <h2 className="text-base text-center mb-3">Payment</h2>
-    <CardForm {...props} />
-  </div>
-);
+    >
+      <h2 className="text-base text-center mb-3">{t('title')}</h2>
+      <CardForm {...props} />
+    </div>
+  );
+};

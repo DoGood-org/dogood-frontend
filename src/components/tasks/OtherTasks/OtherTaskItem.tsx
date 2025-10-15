@@ -3,7 +3,6 @@
 import { IExtendedITaskProps } from '@/types/tasks.type';
 import { TaskActionButtons } from '../ButtonGroup/TaskActionButtons';
 import { TaskCategoryIconsList } from '@/components/main/map/tasksPanel/TaskCategoryIconList';
-// import { useTranslations } from 'next-intl';
 
 export const OtherTskItem: React.FC<IExtendedITaskProps> = ({
   id,
@@ -14,8 +13,6 @@ export const OtherTskItem: React.FC<IExtendedITaskProps> = ({
   actionType,
   userParticipationStatus,
 }) => {
-  // const t = useTranslations('map');
-
   return (
     <li className="flex-shrink-0 w-[350px] p-4 border rounded-lg bg-card">
       <h3 className="text-base text-[20px] leading-[20px] tracking-[0] mb-5">
@@ -33,7 +30,7 @@ export const OtherTskItem: React.FC<IExtendedITaskProps> = ({
           taskId={id}
           actionType={actionType}
           userParticipationStatus={userParticipationStatus}
-          className="w-[114px]"
+          className="min-w-[114px] max-w-[130px]"
         />
       </div>
     </li>
