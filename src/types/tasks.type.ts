@@ -49,8 +49,14 @@ export interface ITaskDetails extends ITask {
   requirements?: string;
   actionType: TaskActionType;
   userParticipationStatus: UserParticipationStatus;
-  donationGoal?: number;
-  currentDonation?: number;
+  host?: {
+    id: string;
+    name: string;
+    type: 'USER' | 'ORGANIZATION';
+    avatar?: string;
+  };
+  isFavorite?: boolean;
+  relatedTasks?: ITask[];
 }
 
 export interface IExtendedITaskProps extends ITask {
@@ -58,4 +64,5 @@ export interface IExtendedITaskProps extends ITask {
   onToggleDescription?: () => void;
   actionType: TaskActionType;
   userParticipationStatus: UserParticipationStatus;
+  organizationId?: string;
 }
