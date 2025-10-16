@@ -24,11 +24,6 @@ export enum UserParticipationStatus {
   DONATED = 'DONATED',
 }
 
-export interface IExtendedITaskProps extends ITask {
-  isSelected?: boolean;
-  onToggleDescription?: () => void;
-}
-
 export type TaskStatus =
   | 'PENDING'
   | 'CREATED'

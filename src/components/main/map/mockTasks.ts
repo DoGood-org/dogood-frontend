@@ -1,6 +1,7 @@
 import { calculateDistanceInMeters } from '@/lib/mapUtils';
 import { MarkerCategoryEnum } from '@/types/mapType';
 import {
+  IExtendedITaskProps,
   ITask,
   ITaskDetails,
   TaskActionType,
@@ -100,8 +101,8 @@ export function generateTasks(
   userLat: number,
   userLng: number,
   radiusInMeters: number = 3000
-): ITask[] {
-  return TITLES.map(([title, subtitle], i) => {
+): IExtendedITaskProps[] {
+  return TITLES.map(([title, subtitle], i): IExtendedITaskProps => {
     // Generate point within radius
     const angle = Math.random() * 2 * Math.PI;
     const distance = Math.random() * radiusInMeters;
@@ -126,6 +127,10 @@ export function generateTasks(
       lng,
       description: DESCRIPTIONS[i],
       isSelected: false,
+      actionType: TaskActionType.VOLUNTEERING,
+      userParticipationStatus: UserParticipationStatus.NONE,
+      organizationId: `org-${i}`,
+      onToggleDescription: (): void => {},
     };
   });
 }
