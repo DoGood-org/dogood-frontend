@@ -155,6 +155,7 @@ export * from './tasks/Task';
 export * from './tasks/TaskCard';
 export * from './tasks/TaskContent';
 export * from './tasks/TaskDetails';
+export * from './tasks/ButtonGroup/EditButton';
 export * from './tasks/ButtonGroup/FavoriteToggleButton';
 export * from './tasks/ButtonGroup/IconButtonGroup';
 export * from './tasks/ButtonGroup/MapDotButton';

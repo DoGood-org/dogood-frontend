@@ -13,6 +13,7 @@ import {
 import { Button } from '../ui/Button';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { LatLngLiteral } from 'leaflet';
+import EditButton from './ButtonGroup/EditButton';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
@@ -36,13 +37,19 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
   const parsedRequirements = parseRequirements(task.requirements);
   const parsedDescription = parseDescription(task.description);
 
+  const handleEdit = (): void => {
+    console.log('Editing task now!');
+  };
+
   return (
     <section>
-      <h2 className="text-lg mb-5">{task.title}</h2>
+      <div className="flex align-baseline space-x-3">
+        <h2 className="text-lg mb-5">{task.title}</h2>
+        <EditButton onClick={handleEdit} />
+      </div>
       <h3 className="text-[20px] leading-[20px] mb-5">
         {t('taskDetails.details')}:
       </h3>
-
       <div className="flex gap-3 mb-5">
         {/* !!!!add mini map !!!!*/}
         <div className="w-[80px] h-[80px] bg-[#00c1ac]"></div>

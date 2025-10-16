@@ -30,7 +30,7 @@ export const OtherTasksSection: React.FC<Props> = ({ tasks }) => {
     );
   }, [tasks]);
   return (
-    <section>
+    <section className="mb-10 mt-10">
       <h2 className="text-h3 mb-6">{t('otherTask.otherTask')}</h2>
       <OtherTaskList tasks={displayedTasks} />
     </section>
