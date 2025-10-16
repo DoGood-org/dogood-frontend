@@ -18,7 +18,7 @@ export const PaymentMethodModal = ({
   onClose,
   wrapperClassName = '',
 }: PaymentMethodModalProps): JSX.Element => {
-  const [_isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSuccess = (): void => {
     onClose();
@@ -42,7 +42,12 @@ export const PaymentMethodModal = ({
         aria-label="Close modal"
         type="button"
       >
-        <CloseIcon className="w-6 h-6" />
+        <CloseIcon
+          className={cn(
+            'w-6 h-6',
+            isSubmitting && 'text-gray-400 cursor-not-allowed'
+          )}
+        />
       </motion.button>
 
       <StyledCardForm

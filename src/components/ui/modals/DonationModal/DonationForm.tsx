@@ -44,7 +44,7 @@ export const DonationForm = ({
       city: initialValues.city || '',
       country: initialValues.country || '',
       currency: initialValues.currency || 'USD',
-      amount: initialValues.amount || 0,
+      amount: initialValues.amount || undefined,
       donationType: initialValues.donationType || 'ORGANIZATION',
     },
   });

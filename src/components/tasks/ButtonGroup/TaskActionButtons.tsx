@@ -90,7 +90,16 @@ export const TaskActionButtons = ({
       {buttons.map((btn, index) => (
         <Button
           key={index}
-          variant={btn.variant as any}
+          variant={
+            btn.variant as
+              | 'secondary'
+              | 'primary'
+              | 'default'
+              | 'ghost'
+              | 'filters'
+              | 'tag'
+              | 'iconOnly'
+          }
           size="lg"
           className={btn.className}
           onClick={btn.onClick}

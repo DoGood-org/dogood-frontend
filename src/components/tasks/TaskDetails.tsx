@@ -52,7 +52,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
             <h3 className="mb-3 text-base">
               <span className="font-semibold">
                 {t('taskDetails.location')}:
-              </span>
+              </span>{' '}
               {task.locationName}
             </h3>
             <div className="flex gap-2 mb-2 md:mb-6">
@@ -85,8 +85,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
             <li>
               <Link href={organizerLink} className="flex items-center gap-1">
                 <span className="cursor-pointer underline text-base hover:text-btn-hover">
-                  {t('taskDetails.organizedBy')}
-                  {organizerName}
+                  {t('taskDetails.organizedBy')} {organizerName}
                 </span>
               </Link>
             </li>

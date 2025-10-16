@@ -32,13 +32,7 @@ export const OtherTasksSection: React.FC<Props> = ({ tasks }) => {
   return (
     <section>
       <h2 className="text-h3 mb-6">{t('otherTask.otherTask')}</h2>
-      <div
-        className={
-          'flex flex-wrap items-center gap-5 overflow-x-auto custom-scrollbar-tasks space-x-4'
-        }
-      >
-        <OtherTaskList tasks={displayedTasks} />
-      </div>
+      <OtherTaskList tasks={displayedTasks} />
     </section>
   );
 };

@@ -14,7 +14,7 @@ export const OtherTskItem: React.FC<IExtendedITaskProps> = ({
   userParticipationStatus,
 }) => {
   return (
-    <li className="flex-shrink-0 w-[350px] p-4 border rounded-lg bg-card">
+    <div className="min-w-[350px] p-4 border rounded-lg bg-card">
       <h3 className="text-base text-[20px] leading-[20px] tracking-[0] mb-5">
         {title}
       </h3>
@@ -33,6 +33,6 @@ export const OtherTskItem: React.FC<IExtendedITaskProps> = ({
           className="min-w-[114px] max-w-[130px]"
         />
       </div>
-    </li>
+    </div>
   );
 };

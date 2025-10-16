@@ -1,7 +1,7 @@
 'use client';
 
 import { IExtendedITaskProps } from '@/types/tasks.type';
-import { OtherTskItem } from '@/components';
+import { OtherTskItem, Slider } from '@/components';
 import { useTranslations } from 'next-intl';
 
 interface OtherListProps {
@@ -18,10 +18,11 @@ export const OtherTaskList: React.FC<OtherListProps> = ({ tasks }) => {
     );
   }
   return (
-    <ul className="flex gap-4">
-      {tasks.map((task) => (
-        <OtherTskItem key={task.id} {...task} />
-      ))}
-    </ul>
+    <Slider
+      items={tasks}
+      itemsPerSlide={3}
+      renderItem={(task) => <OtherTskItem key={task.id} {...task} />}
+      listClassName="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+    />
   );
 };
