@@ -1,6 +1,6 @@
 {
   "directory": "src/components",
-  "exclude": ["icons"],
+  "exclude": ["icons", "providers"],
   "delete": true,
   "structure": "flat",
   "barrelName": "index.ts"
