@@ -1,13 +1,19 @@
 import axios from 'axios';
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+const getBaseURL = (): string => {
+  if (typeof window !== 'undefined') return '/api'; // client → Next rewrite
+  if (process.env.API_URL_INTERNAL) return process.env.API_URL_INTERNAL;
+  if (process.env.BASE_URL) return process.env.BASE_URL;
+  return 'http://localhost:3000/api';
+};
 
 const apiAuth = axios.create({
-  baseURL: apiUrl,
+  baseURL: getBaseURL(),
   withCredentials: true,
 });
 
 const apiGuest = axios.create({
-  baseURL: apiUrl,
+  baseURL: getBaseURL(),
   withCredentials: false,
 });
 
