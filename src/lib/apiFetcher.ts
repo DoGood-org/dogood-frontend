@@ -62,9 +62,7 @@ export const fetchFromApi = async <T>(
           : { 'Content-Type': 'application/json' }),
         ...headers,
       },
-      withCredentials: auth,
     });
-
     return response.data;
   } catch (error: unknown) {
     if (error instanceof AxiosError) {

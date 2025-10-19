@@ -12,9 +12,8 @@ export const AccountLinks: React.FC<AccountContentProps> = ({
 }) => {
   const { logged = [], noLogged = [] } = accountItem.content || {};
   const locale = useLocale();
-
+  const { logout } = authStore();
   const isLoggedIn = authStore((state) => state.isLoggedIn);
-  const logout = authStore((state) => state.logout);
   const icons = useIconComponents();
 
   const activeList = isLoggedIn ? logged : noLogged;

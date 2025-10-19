@@ -13,15 +13,14 @@ export default function AuthLayout({
         auth
         flex
         flex-col
-        items-center
-        justify-center
-        pt-[110px] 
+        pt-12
+    
+     
         
-        lg:pt-[126px]
-
-
+      
     w-full
-    min-h-dvh
+    min-h-dvh  
+    lg:pt-[126px]
     "
       >
         {children}
