@@ -4,5 +4,28 @@
     "notFoundDescription": "Die gesuchte Aufgabe existiert nicht.",
     "title": "Aufgabe",
     "description": "Details zur Aufgabe"
+  },
+    "taskDetails": {
+    "details": "Details",
+    "location": "Ort",
+    "showOnMap": "Auf der Karte anzeigen",
+    "organizedBy": "Organisiert von",
+    "howYouCanHelp": "Wie Sie helfen können",
+    "donationNeeds": "Spendenbedarf",
+    "requirements": "Anforderungen",
+    "description": "Beschreibung",
+    "edit": "Bearbeiten"
+  },
+    "taskCard": {
+    "start": "Start",
+    "finish": "Ende",
+    "time": "Zeit",
+    "location": "Ort",
+    "donationNeeds": "Spendenbedarf",
+    "localTime": "(lokale Zeit)"
+  },
+    "otherTask": {
+    "otherTask": "Weitere Aufgaben",
+    "noTasks": "In diesem Abschnitt gibt es noch keine Aufgaben."
   }
 }
