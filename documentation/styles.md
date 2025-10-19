@@ -434,7 +434,8 @@ Dark theme variables
       rgba(0, 0, 0, 0.15) 83.94%,
       rgba(26, 211, 170, 0.15) 129.53%
     ),
-    radial-gradient(circle, rgba(26, 211, 170, 0.1) 2px, transparent 2px);
+    radial-gradient(circle, rgba(26, 211, 170, 0.1) 2px, transparent 2px),
+    linear-gradient(0deg, #01425c, #01425c);
   --bg-icon: #f1f1f1;
   --icon-color: #000000;
   --image-bg: #e9e9e9;
@@ -442,6 +443,7 @@ Dark theme variables
   --map-btn-icon: #f1f1f1;
   --review-bg: #696969;
   --accent-bg: #01425c;
+  --star-empty: #959595;
 }
 ```
 
@@ -481,16 +483,16 @@ Dark theme variables
 | bg-icon              | #171B19     | #f1f1f1    | background for icons (tasks)                                 |
 | icon-color           | #f1f1f1     | #000000    | color for icon (tasks)                                       |
 | image-bg             | #999999     | #e9e9e9    | image-background (for example about-section)                 |
+| modal                | #fffcfc     | #303030    | modal-background                                             |
 | review-bg            | #999999     | #696969    | background for review-cards (main page)                      |
 | accent-bg            | #2c8c8c     | #01425c    | background for review-section                                |
 | error                | #EE0606     |            | for errors                                                   |
 | star                 | #FFEE00     |            | for rating-stars (profile)                                   |
+| star-empty           | #747474     | #959595    | for empty rating-stars                                       |
 | medicine             | #1f5eff     |            | medicine-icon                                                |
 | animal               | #ff7d57     |            | animal-icon                                                  |
 | nature               | #4caf50     |            | nature-icon                                                  |
 | food                 | #e4a23c     |            | food-icon                                                    |
-
-|
 
 **How to use**
 

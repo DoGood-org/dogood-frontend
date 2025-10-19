@@ -1,4 +1,6 @@
-export const mockUser = {
+import { UserDetailedProps } from '@/types';
+
+export const mockUser: UserDetailedProps = {
   id: 1,
   name: 'Esther Howard',
   avatar: '/account/user.png',
@@ -13,7 +15,7 @@ export const mockUser = {
   gender: '',
   birthDate: '',
   phoneNumber: '',
-  userSittings: {
+  userSettings: {
     theme: 'dark',
     language: 'en',
   },
@@ -91,7 +93,7 @@ export const mockUser = {
       comment:
         'How to become a volunteer: step-by-step instructions for beginners.',
       createdAt: '2025-05-13T10:05:00.000Z',
-      owner: { id: 2, name: 'Shane', avatar: '/account/rev2.png' },
+      owner: { id: 2, name: 'Shane', avatar: '' },
     },
     {
       id: 3,
@@ -107,7 +109,7 @@ export const mockUser = {
       comment:
         'How to become a volunteer: step-by-step instructions for beginners.',
       createdAt: '2025-05-01T14:05:00.000Z',
-      owner: { id: 1, name: 'Wade', avatar: '/account/rev1.png' },
+      owner: { id: 1, name: 'Wade', avatar: '/account/user.png' },
     },
     {
       id: 5,
@@ -156,7 +158,11 @@ export const mockUser = {
       name: 'Peace Volunteers',
       description:
         'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',
-      members: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+      members: [
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+      ],
       logo: '/account/org1.png',
     },
     {
@@ -164,7 +170,17 @@ export const mockUser = {
       name: 'Peace Volunteers',
       description:
         'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',
-      members: [{}, {}, {}, {}],
+      members: [
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+      ],
       logo: '/account/org2.png',
     },
     {
@@ -172,7 +188,14 @@ export const mockUser = {
       name: 'Peace Volunteers',
       description:
         'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',
-      members: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+      members: [
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+        { id: '', name: '', email: '' },
+      ],
       logo: '/account/amazon.png',
     },
   ],

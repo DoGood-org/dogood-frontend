@@ -1,4 +1,4 @@
-import api from '@/lib/api';
+import { fetchFromApi } from '@/lib/apiFetcher';
 import {
   INewsItem,
   INewsItemApiResponse,
@@ -7,24 +7,26 @@ import {
 } from '@/types';
 
 export const getNews = async (locale: Tlocale): Promise<INewsItem[]> => {
-  const response = await api.guest.get<INewsListApiResponse>('/posts', {
+  const response = await fetchFromApi<INewsListApiResponse>('/posts', {
+    method: 'GET',
     params: {
       lang: locale,
     },
   });
-  return response.data?.data?.posts ?? [];
+  return response.data?.posts ?? [];
 };
 
 export const getNewsById = async (
   id: string | number,
   locale: string
 ): Promise<INewsItem> => {
-  const response = await api.guest.get<INewsItemApiResponse>(`/posts/${id}`, {
+  const response = await fetchFromApi<INewsItemApiResponse>(`/posts/${id}`, {
+    method: 'GET',
     params: {
       lang: locale,
     },
   });
-  const { post } = response.data.data;
+  const { post } = response.data;
 
   if (!post) throw new Error('News item not found in API response.');
 

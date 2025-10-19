@@ -6,7 +6,7 @@ const data = {
   locale: 'en_US',
   images: [
     {
-      url: '/metadata/DoGood-og.png', //change image
+      url: '/metadata/DoGood_open_graph.jpg',
       width: 1200,
       height: 630,
       alt: 'DoGood',

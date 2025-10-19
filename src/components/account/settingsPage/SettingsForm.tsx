@@ -11,12 +11,12 @@ import {
   StripeProvider,
 } from '@/components';
 import { Button } from '@/components';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import csc from 'country-state-city';
 import { format } from 'date-fns';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   SettingsFormValues,
   settingsSchema,
@@ -25,97 +25,181 @@ import { useTranslations } from 'next-intl';
 import { InputField } from '@/components';
 import { PaymentList } from './PaymentList';
 import { cardPreviewService } from '@/services/cardPreviewService';
+import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
+import { sendProfile } from '@/services/settingService';
+import { toast } from 'react-toastify';
+import { deleteFromCloudinary, isCloudinaryUrl } from '@/lib/cloudinary';
 
 const genderOptions = [
-  { value: 'male', label: 'Male' },
-  { value: 'female', label: 'Female' },
-  { value: 'other', label: 'Other' },
+  { value: 'MALE', label: 'Male' },
+  { value: 'FEMALE', label: 'Female' },
+  { value: 'OTHER', label: 'Other' },
 ];
 
 export const Settings = (): React.JSX.Element => {
   const [image, setImage] = useState<any>(null);
   const t = useTranslations('settings');
+  const oldAvatarRef = useRef<string>('');
+  const f = useTranslations('faq');
+  const downText = (f.raw('downtext') as any[])[0];
   const {
     register,
     handleSubmit,
     setValue,
     watch,
     control,
+    reset,
     formState: { errors },
   } = useForm<SettingsFormValues>({
-    resolver: yupResolver(settingsSchema),
+    resolver: yupResolver(settingsSchema) as Resolver<SettingsFormValues>,
     defaultValues: {
-      fullName: '',
-      gender: '',
-      dateOfBirth: undefined as unknown as Date,
-      country: '',
-      state: '',
-      city: '',
-      email: '',
-      phone: '',
-      about: '',
-      img: '',
+      name: undefined,
+      bio: undefined,
+      avatar: undefined,
+      location: {
+        country: undefined,
+        region: undefined,
+        city: undefined,
+      },
+      gender: undefined,
+      birthDate: undefined,
+      phoneNumber: undefined,
+      paymentOptionIds: undefined,
     },
   });
-  const countryValue = watch('country');
-  const stateValue = watch('state');
-  const cityValue = watch('city');
+
+  const avatarValue = watch('avatar');
+  useEffect(() => {
+    if (!oldAvatarRef.current && avatarValue) {
+      oldAvatarRef.current = avatarValue;
+    }
+  }, [avatarValue]);
+
+  const countryValue = watch('location.country');
+  const stateValue = watch('location.region');
+  const cityValue = watch('location.city');
 
   const handleCountryChange = useCallback(
     (value: string) => {
-      setValue('country', value);
+      setValue('location.country', value);
     },
     [setValue]
   );
 
   const handleStateChange = useCallback(
     (value: string) => {
-      setValue('state', value);
+      setValue('location.region', value);
     },
     [setValue]
   );
 
   const handleCityChange = useCallback(
     (value: string) => {
-      setValue('city', value);
+      setValue('location.city', value);
     },
     [setValue]
   );
+  const { tempCards } = cardPreviewStore();
 
-  const onSubmit = (data: yup.InferType<typeof settingsSchema>): void => {
+  const onSubmit = async (
+    data: yup.InferType<typeof settingsSchema>
+  ): Promise<void> => {
+    const paymentOptionIds = tempCards.map((card) =>
+      Number(card.paymentMethodId)
+    );
     const selectedCountryObj = csc
       .getAllCountries()
-      .find((c) => c.isoCode === data.country);
+      .find((c) => c.isoCode === data.location?.country);
     const selectedStateObj = csc
-      .getStatesOfCountry(data.country)
-      .find((s) => s.isoCode === data.state);
+      .getStatesOfCountry(data.location?.country || '')
+      .find((s) => s.isoCode === data.location?.region);
+
+    const oldAvatar = oldAvatarRef.current;
+    const newAvatar = data.avatar;
+
+    try {
+      const response = await sendProfile({
+        name: data.name,
+        bio: data.bio,
+        avatar: data.avatar,
+        location: data.location
+          ? {
+              country: selectedCountryObj?.name || data.location.country,
+              region: selectedStateObj?.name || data.location.region,
+              city: data.location.city,
+            }
+          : undefined,
+        gender: data.gender,
+        birthDate: data.birthDate
+          ? format(data.birthDate, 'yyyy-MM-dd')
+          : undefined,
+        phoneNumber: data.phoneNumber,
+        paymentOptionIds:
+          paymentOptionIds.length > 0 ? paymentOptionIds : undefined,
+      });
+
+      if (response?.status === 'success') {
+        if (
+          oldAvatar &&
+          oldAvatar !== newAvatar &&
+          isCloudinaryUrl(oldAvatar)
+        ) {
+          try {
+            const deleteResult = await deleteFromCloudinary(oldAvatar);
+            console.log('Delete result:', deleteResult);
+
+            if (deleteResult.error) {
+              console.warn('Failed to delete old avatar:', deleteResult.error);
+            } else {
+              console.log('Old avatar successfully deleted from Cloudinary');
+            }
+          } catch (deleteError) {
+            console.warn('Error deleting old avatar:', deleteError);
+          }
+        }
+
+        oldAvatarRef.current = data.avatar || '';
+        toast.success(downText.success);
+        reset();
+      } else {
+        toast.error(response?.message || downText.error);
+      }
+    } catch (_error: unknown) {
+      toast.error(downText.error);
+      console.error('Contact form submit error:', _error);
+    }
 
     console.log('Form submitted:', {
-      fullName: data.fullName,
+      fullName: data.name,
+      bio: data.bio,
+      avatar: image?.secure_url || data.avatar,
+      location: data.location
+        ? {
+            country: selectedCountryObj?.name || data.location.country,
+            region: selectedStateObj?.name || data.location.region,
+            city: data.location.city,
+          }
+        : undefined,
       gender: data.gender,
-      dateOfBirth: format(data.dateOfBirth, 'yyyy-MM-dd'),
-      country: selectedCountryObj?.name || data.country,
-      state: selectedStateObj?.name || data.state,
-      city: data.city,
-      email: data.email,
-      phone: data.phone,
-      about: data.about,
-      img: image?.secure_url || data.img,
+      birthDate: data.birthDate
+        ? format(data.birthDate, 'yyyy-MM-dd')
+        : undefined,
+      phoneNumber: data.phoneNumber,
     });
   };
 
   const onReset = (): void => {
-    setValue('fullName', '');
-    setValue('gender', '');
-    setValue('dateOfBirth', undefined as unknown as Date);
-    setValue('country', '');
-    setValue('state', '');
-    setValue('city', '');
-    setValue('email', '');
-    setValue('phone', '');
-    setValue('about', '');
-    setValue('img', '');
-    setImage(null);
+    setValue('name', undefined);
+    setValue('bio', undefined);
+    setValue('avatar', undefined);
+    setValue('location.country', undefined);
+    setValue('location.region', undefined);
+    setValue('location.city', undefined);
+    setValue('gender', undefined);
+    setValue('birthDate', undefined);
+    setValue('phoneNumber', undefined);
+
+    oldAvatarRef.current = '';
     cardPreviewService.cleanupUnattachedCard();
     cardPreviewService.clearAll();
   };
@@ -123,6 +207,10 @@ export const Settings = (): React.JSX.Element => {
   useEffect(() => {
     return (): void => {
       cardPreviewService.cleanupUnattachedCard();
+
+      if (oldAvatarRef.current && isCloudinaryUrl(oldAvatarRef.current)) {
+        deleteFromCloudinary(oldAvatarRef.current).catch(console.warn);
+      }
     };
   }, []);
 
@@ -143,21 +231,22 @@ export const Settings = (): React.JSX.Element => {
                 {/* Full Name Field */}
                 <InputField
                   label={t('basic.name.title')}
-                  name="fullName"
+                  name="name"
                   register={register}
-                  errors={errors.fullName}
+                  errors={errors.name}
                   placeholder={t('basic.name.placeholder')}
+                  disabled={false}
                 />
 
                 {/* Date of Birth Field */}
                 <Label
-                  htmlFor="dateOfBirth"
+                  htmlFor="birthDate"
                   className="text-white text-base mb-2"
                 >
                   {t('basic.birth.title')}
                 </Label>
                 <Controller
-                  name="dateOfBirth"
+                  name="birthDate"
                   control={control}
                   render={({ field }) => (
                     <DatePicker
@@ -167,9 +256,9 @@ export const Settings = (): React.JSX.Element => {
                     />
                   )}
                 />
-                {errors.dateOfBirth && (
+                {errors.birthDate && (
                   <p className="text-sm font-medium text-error mt-1">
-                    {errors.dateOfBirth.message}
+                    {errors.birthDate.message}
                   </p>
                 )}
 
@@ -203,13 +292,13 @@ export const Settings = (): React.JSX.Element => {
                 image={image}
                 setImage={(img) => {
                   setImage(img);
-                  setValue('img', img?.secure_url || '');
+                  setValue('avatar', img?.secure_url || '');
                 }}
-                defaultImage={watch('img') || '/account/avatar.png'}
+                defaultImage={watch('avatar') || '/account/avatar.png'}
               />
-              {errors.img && (
+              {errors.avatar && (
                 <p className="text-sm font-medium text-error mt-1">
-                  {errors.img.message}
+                  {errors.avatar.message}
                 </p>
               )}
             </div>
@@ -218,9 +307,9 @@ export const Settings = (): React.JSX.Element => {
           <div className="space-y-4 bg-text-help p-8 rounded-xl">
             <h3 className="text-h3 text-white">{t('location.title')}</h3>
             {/* Location Fields - Hidden Inputs */}
-            <input type="hidden" {...register('country')} />
-            <input type="hidden" {...register('state')} />
-            <input type="hidden" {...register('city')} />
+            <input type="hidden" {...register('location.country')} />
+            <input type="hidden" {...register('location.region')} />
+            <input type="hidden" {...register('location.city')} />
 
             <LocationSelect
               onCountryChange={handleCountryChange}
@@ -229,8 +318,8 @@ export const Settings = (): React.JSX.Element => {
               selectedCountry={countryValue}
               selectedState={stateValue}
               selectedCity={cityValue}
-              countryError={errors.country?.message}
-              stateError={errors.state?.message}
+              countryError={errors.location?.country?.message}
+              stateError={errors.location?.region?.message}
             />
           </div>
 
@@ -242,7 +331,6 @@ export const Settings = (): React.JSX.Element => {
               label={t('contact.mail.title')}
               name="email"
               register={register}
-              errors={errors.email}
               placeholder={t('contact.mail.placeholder')}
               type="email"
             />
@@ -250,11 +338,12 @@ export const Settings = (): React.JSX.Element => {
             {/* Phone Field */}
             <InputField
               label={t('contact.phone.title')}
-              name="phone"
+              name="phoneNumber"
               register={register}
-              errors={errors.phone}
+              errors={errors.phoneNumber}
               placeholder={t('contact.phone.placeholder')}
               type="tel"
+              disabled={false}
             />
           </div>
 
@@ -265,13 +354,13 @@ export const Settings = (): React.JSX.Element => {
           <div className="space-y-12 bg-text-help p-8 rounded-xl">
             <h3 className="text-h3 text-white">{t('about.title')}</h3>
             <Textarea
-              {...register('about')}
+              {...register('bio')}
               placeholder={t('about.placeholder')}
               className="w-full bg-white border-none h-[120px] text-form-field text-base"
             />
-            {errors.about && (
+            {errors.bio && (
               <p className="text-sm font-medium text-error mt-1">
-                {errors.about.message}
+                {errors.bio.message}
               </p>
             )}
           </div>
@@ -282,7 +371,6 @@ export const Settings = (): React.JSX.Element => {
               size="xl"
               type="submit"
               className="w-[119px] text-[#ffffff]"
-              onClick={handleSubmit(onSubmit)}
             >
               {t('submitBtn')}
             </Button>

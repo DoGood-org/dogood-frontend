@@ -15,9 +15,10 @@ const buttonVariants = cva(
         primary:
           'text-btn-primary text-base bg-btn overflow-hidden hover:bg-btn-hover focus::bg-btn-hover active:bg-btn-active group transition-colors duration-500',
         secondary:
-          'text-btn-secondary border-1 border-btn-outline hover:border-btn-outline-hover focus::border-btn-outline-hover',
+          'text-btn-secondary border-1 border-btn-outline hover:border-2 hover:border-btn-outline-hover focus::border-btn-outline-hover',
         filters: 'bg-card',
         tag: 'bg-tag gap-2',
+        iconOnly: 'bg-transparent border-none p-0 [&_svg]:size-6',
       },
       size: {
         default: 'h-12 px-8 py-3',
