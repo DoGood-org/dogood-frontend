@@ -3,6 +3,7 @@
   "fullName": "Full name",
   "country": "Country",
   "city": "City",
+  "amountQuestion": "How much needs to be raised?",
   "add": "Add",
   "validation": {
     "required": "This field is required",
