@@ -19,6 +19,8 @@ export const MainLayoutContent = ({
       s.isLoggedIn = true;
       s.isEmailVerified = user.isEmailVerified;
       s.status = 'authorized';
+
+      console.log('User from server fetch in MainLayoutContent:', user);
     } else {
       s.user = null;
       s.isLoggedIn = false;

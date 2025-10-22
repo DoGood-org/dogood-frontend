@@ -1,19 +1,22 @@
 // lib/server/getServerCurrentUser.ts
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 export async function getServerCurrentUser(): Promise<any | null> {
+  const h = await headers();
+  const host = h.get('x-forwarded-host');
+  const protocol = h.get('x-forwarded-proto') || 'http';
   const jar = await cookies();
-  const origin = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000';
+  const access = jar.get('accessToken')?.value;
+  const refresh = jar.get('refreshToken')?.value;
 
-  const r = await fetch(`${origin}/api/proxy/auth/current-user`, {
+  if (!jar) return null;
+  if (!access && !refresh) return null;
+  const r = await fetch(`${protocol}://${host}/api/proxy/auth/current-user`, {
     cache: 'no-store',
     headers: {
-      // forward the user’s cookies to the proxy so it can read accessToken
       cookie: jar.toString(),
     },
   });
-
-  if (r.status === 401) return null;
-  if (!r.ok) throw new Error('Failed to load current user');
+  if (!r.ok) return null;
   return r.json();
 }

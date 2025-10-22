@@ -1,4 +1,3 @@
-// app/components/HydrateAuth.tsx
 'use client';
 
 import { useEffect } from 'react';

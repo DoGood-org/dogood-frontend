@@ -279,7 +279,6 @@ export const authStore = create<TAuthState>()(
               removeItem: (): void => {},
             }
       ),
-      // don't double-persist status/error
       partialize: (s) => ({
         user: s.user,
         isLoggedIn: s.isLoggedIn,
