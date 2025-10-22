@@ -1,6 +1,15 @@
 {
   "directory": "src/components",
-  "exclude": ["icons", "providers"],
+  "exclude": [
+    "icons",
+    "providers",
+    "main/map",
+    "(^|/)Map\\.tsx$",
+    "(^|/)ProfileMap\\.tsx$",
+    "(^|/)StripeProviderLazy\\.tsx$",
+    "(^|/)PaymentList\\.tsx$",
+    "(^|/)DonationModal\\.tsx$"
+  ],
   "delete": true,
   "structure": "flat",
   "barrelName": "index.ts"
