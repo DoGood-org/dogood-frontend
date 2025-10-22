@@ -1,16 +1,5 @@
 'use client';
-import {
-  Container,
-  CustomControlContent,
-  generateTasks,
-  MultiControlPanel,
-  TasksOnMap,
-  UserLocation,
-} from '@/components';
 import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
-import { MapClickHandler } from '@/components/main/map/MapClicks';
-import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
-import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
 import { AnimatedModalWrapper } from '@/components/ui/portal/AnimatedModalWrapper';
 import Portal from '@/components/ui/portal/Portal';
 import { resolveTaskCategory } from '@/lib/mapUtils';
@@ -20,10 +9,21 @@ import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import React, { JSX, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { AcceptShareLocationPopUp } from './AcceptShareLocationPopUp';
-import { AutoZoomOnDistanceFilter } from '@/components/main/map/filters/AutoZoomOnDistanceFilter';
-import { RadiusWatcher } from '@/components/main/map/RadiusWatcher';
 import { useRouter } from 'next/navigation';
+import {
+  AcceptShareLocationPopUp,
+  AutoZoomOnDistanceFilter,
+  MapClickHandler,
+  RadiusWatcher,
+  ScrollAfterDelay,
+  StoreMapInstance,
+} from './LazyImports';
+import { generateTasks } from './mockTasks';
+import { Container } from '@/components/ui/Container';
+import { UserLocation } from './UserLocation';
+import { MultiControlPanel } from './MultiControlPanel';
+import { CustomControlContent } from './CustomControlContent';
+import { TasksOnMap } from './tasksPanel/TasksOnMap';
 
 export const Map: React.FC = (): JSX.Element => {
   const router = useRouter();

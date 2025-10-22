@@ -1,8 +1,8 @@
 import { JSX } from 'react';
 import { Button, Modal } from '@/components';
-import { useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 import { reportReasons } from '@/constants/report';
+import { useForm } from 'react-hook-form';
 
 type ReportModalProps = {
   isOpen: boolean;
