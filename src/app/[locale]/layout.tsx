@@ -28,6 +28,7 @@ export default async function LocaleLayout({
 }>): Promise<React.JSX.Element> {
   const { locale } = await params;
   const me = await getServerCurrentUser();
+
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
