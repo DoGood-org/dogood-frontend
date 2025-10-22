@@ -6,7 +6,7 @@ import { sendReview } from '@/services/reviewsService';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, Resolver, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
@@ -14,18 +14,19 @@ import { Rating } from '../ui/Rating';
 import { Textarea } from '../ui/Textarea';
 import { Button } from '../ui/Button';
 import { InputField } from '../account/settingsPage/InputField';
+import { ThankYou } from './ThankYou';
 
 export const ReviewsForm = (): React.JSX.Element => {
   const t = useTranslations('reviews');
   const f = useTranslations('faq');
   const downText = (f.raw('downtext') as any[])[0];
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const {
     register,
     handleSubmit,
     setValue,
     control,
-    reset,
     formState: { errors },
   } = useForm<ReviewsFormValues>({
     resolver: yupResolver(reviewsSchema) as Resolver<ReviewsFormValues>,
@@ -50,7 +51,7 @@ export const ReviewsForm = (): React.JSX.Element => {
 
       if (response?.status === 'success') {
         toast.success(downText.success);
-        reset();
+        setIsSubmitted(true);
       } else {
         toast.error(response?.message || downText.error);
       }
@@ -71,7 +72,13 @@ export const ReviewsForm = (): React.JSX.Element => {
     setValue('targetId', 0);
     setValue('rating', 0);
     setValue('comment', '');
+    setIsSubmitted(false);
   };
+
+  if (isSubmitted) {
+    return <ThankYou />;
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="space-y-4 bg-text-help p-8 rounded-xl">

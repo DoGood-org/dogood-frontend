@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import mocks from './mock.json';
 import { Section } from '../ui/Section';
 import { Close, SetPlus } from '../icons';
-import { ThankYou } from './ThankYou';
+import { ReviewsForm } from './ReviewsForm';
 
 export const UsersList = (): React.JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +27,7 @@ export const UsersList = (): React.JSX.Element => {
       {isOpen && (
         <div className="fixed inset-0 w-screen h-screen z-[9991] flex items-center justify-center bg-text-help/90 overflow-y-auto py-40">
           <div className="my-container bg-background pt-10 pb-10 relative mx-auto rounded-xl">
-            <ThankYou />
+            <ReviewsForm />
             <button
               className="absolute top-6 right-1 md:top-11 md:right-4 p-1"
               onClick={() => setIsOpen(!isOpen)}
