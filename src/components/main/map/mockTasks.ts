@@ -1,8 +1,16 @@
 import { calculateDistanceInMeters } from '@/lib/mapUtils';
 import { MarkerCategoryEnum } from '@/types/mapType';
-import { ITask } from '@/types/tasks.type';
+import {
+  IExtendedITaskProps,
+  ITask,
+  ITaskDetails,
+  TaskActionType,
+  TaskStatus,
+  UserParticipationStatus,
+} from '@/types/tasks.type';
 
 const TITLES = [
+  ['Help Animals in Need', 'Preserve biodiversity at altitude'],
   ['Mountain health checkpoint', 'Help set up first aid at trails'],
   ['Clean up alpine lakes', 'Preserve biodiversity at altitude'],
   ['Rescue center animal support', 'Help care for rescued wildlife'],
@@ -20,6 +28,20 @@ const TITLES = [
 ];
 
 const DESCRIPTIONS = [
+  `Join our volunteer team to care for rescued animals — feeding, cleaning, walking, and giving 
+  them love and attention. You’ll also help with basic shelter maintenance and socializing animals 
+  to prepare them for adoption.
+Donation Needs:
+In addition to your time, we urgently need donations for:
+- Animal food (dry & wet)
+- Veterinary care & medicine
+- Bedding, blankets, toys
+- Cleaning supplies
+🤝 How to Help:
+- Volunteer your time at the shelter
+- Donate items or funds to support our work
+- Share our cause on social media to reach more people
+❤ Every small act makes a big difference in an animal’s life.`,
   'Set up temporary medical aid near common hiking paths.',
   'Join efforts to clean lakes and remove plastic waste.',
   'Volunteer for basic animal care and feeding.',
@@ -55,14 +77,32 @@ const CATEGORIES = [
   [MarkerCategoryEnum.Medicine, MarkerCategoryEnum.Food],
   [MarkerCategoryEnum.Nature, MarkerCategoryEnum.Animal],
   [MarkerCategoryEnum.Food, MarkerCategoryEnum.Medicine],
+  [MarkerCategoryEnum.Nature],
+];
+
+const MOCK_LOCATIONS = [
+  'Willow Creek, Oregon',
+  'Mount Hood National Forest',
+  'Columbia River Gorge',
+  'Silver Falls State Park',
+  'Crater Lake National Park',
+  'Wallowa-Whitman National Forest',
+  'Ecola State Park',
+  'Mount Tabor Park',
+  'Forest Park, Portland',
+  'Cascade Locks, Oregon',
+  'Trillium Lake',
+  'Multnomah Falls',
+  'Sisters, Oregon',
+  'Cannon Beach',
 ];
 
 export function generateTasks(
   userLat: number,
   userLng: number,
   radiusInMeters: number = 3000
-): ITask[] {
-  return TITLES.map(([title, subtitle], i) => {
+): IExtendedITaskProps[] {
+  return TITLES.map(([title, subtitle], i): IExtendedITaskProps => {
     // Generate point within radius
     const angle = Math.random() * 2 * Math.PI;
     const distance = Math.random() * radiusInMeters;
@@ -78,7 +118,7 @@ export function generateTasks(
     const distanceStr = `${(realDistance / 1000).toFixed(2)} km`;
 
     return {
-      id: `${Math.random().toString(36).substring(2, 15)}-${i}`,
+      id: `task-${i}`,
       title,
       subtitle,
       category: CATEGORIES[i],
@@ -87,6 +127,53 @@ export function generateTasks(
       lng,
       description: DESCRIPTIONS[i],
       isSelected: false,
+      actionType: TaskActionType.VOLUNTEERING,
+      userParticipationStatus: UserParticipationStatus.NONE,
+      organizationId: `org-${i}`,
+      onToggleDescription: (): void => {},
     };
   });
+}
+
+export function extendTaskToDetails(
+  task: ITask,
+  overrides?: Partial<ITaskDetails>
+): ITaskDetails {
+  return {
+    ...task,
+    picture:
+      overrides?.picture ??
+      'https://res.cloudinary.com/dinpgnkhh/image/upload/v1760461912/dog_gc3uel.png',
+    status: overrides?.status ?? ('PENDING' as TaskStatus),
+    locationName: overrides?.locationName ?? 'Unknown location',
+    isOrganization: overrides?.isOrganization ?? false,
+    organizationId: overrides?.organizationId ?? `org-${task.id}`,
+    startDate: overrides?.startDate ?? new Date().toISOString().slice(0, 10),
+    startTime: overrides?.startTime ?? '09:00 AM',
+    endDate: overrides?.endDate ?? new Date().toISOString().slice(0, 10),
+    requirements:
+      overrides?.requirements ??
+      [
+        'Stray, abandoned, and injured animals currently living in our shelter.',
+        'Requirements:',
+        'Love and compassion for animals',
+        'Reliability and responsibility',
+        'Ability to dedicate at least 2–3 hours per week.',
+      ].join(' '),
+    actionType: overrides?.actionType ?? TaskActionType.VOLUNTEERING,
+    userParticipationStatus:
+      overrides?.userParticipationStatus ?? UserParticipationStatus.NONE,
+    ...overrides,
+  };
+}
+
+export function generateMockTasks(tasks: ITask[]): ITaskDetails[] {
+  return tasks.map((task, i) =>
+    extendTaskToDetails(task, {
+      status: 'IN_PROGRESS',
+      locationName: MOCK_LOCATIONS[i] || `${i + 1}`,
+      isOrganization: i % 2 === 0,
+      organizationId: `org-${i}`,
+    })
+  );
 }

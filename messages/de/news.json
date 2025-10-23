@@ -31,5 +31,8 @@
   "newsItemPageMeta": {
     "title": "Nachrichtenartikel – DoGood",
     "description": "Lies die neuesten Nachrichten, Geschichten und Blogbeiträge von DoGood. Bleibe über unsere Gemeinschaftsinitiativen und Veranstaltungen informiert."
+  },
+    "news": {
+    "noNews": "Noch keine Nachrichten"
   }
 }

@@ -32,5 +32,8 @@
   "category-animal": "Animal",
   "category-food": "Food",
   "category-all": "All",
-  "showOnMap": "Show on map"
+  "showOnMap": "Show on map",
+  "seeMoreBtn": "See more",
+  "confirmBtn": "Confirm",
+  "editBtn": "Edit"
 }
