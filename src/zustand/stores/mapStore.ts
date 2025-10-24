@@ -294,7 +294,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
           }));
         }
       },
-      removeMarker: (loc): void =>
+      removeMarker: (loc): any =>
         set((state) => ({
           customMarkers: state.customMarkers.filter(
             (m) => !coordsMatch(m, loc)
@@ -381,7 +381,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
         }
       },
 
-      setActivePanel: (panel: 'tasks' | 'filters' | null): void =>
+      setActivePanel: (panel: 'tasks' | 'filters' | null): any =>
         set({ activePanel: panel }),
 
       togglePanel: (panel: 'tasks' | 'filters') =>
