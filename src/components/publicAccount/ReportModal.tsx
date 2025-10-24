@@ -1,3 +1,5 @@
+'use client';
+
 import { JSX } from 'react';
 import { Button, Modal } from '@/components';
 import { useTranslations } from 'next-intl';
