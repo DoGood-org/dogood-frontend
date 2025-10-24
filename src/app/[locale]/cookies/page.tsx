@@ -9,6 +9,7 @@ import {
 import { useTranslations } from 'next-intl';
 import { Container } from '@/components';
 import Line6 from '@/components/icons/Line6';
+import BackToTopButton from '@/components/ui/BackToTopButton';
 
 type Example = {
   type: string;
@@ -170,8 +171,20 @@ const CategoryItem: React.FC<CategoryItemProps> = React.memo(
 
 const Cookies: React.FC = () => {
   const t = useTranslations('cookies');
-
   const categories = t.raw('categories') as Category[];
+  const [accordionOpen, setAccordionOpen] = React.useState(false);
+
+  // Handler for Accordion value change
+  const handleAccordionChange = (
+    value: string | string[] | undefined
+  ): void => {
+    if (Array.isArray(value)) {
+      setAccordionOpen(value.length > 0);
+    } else {
+      setAccordionOpen(!!value);
+    }
+  };
+
   return (
     <div className="relative w-full overflow-x-hidden">
       <Line6
@@ -185,11 +198,16 @@ const Cookies: React.FC = () => {
             {t('title')}
           </h3>
 
-          <Accordion type="single" collapsible>
+          <Accordion
+            type="single"
+            collapsible
+            onValueChange={handleAccordionChange}
+          >
             {categories.map((cat, index) => (
               <CategoryItem cat={cat} index={index} key={cat.title || index} />
             ))}
           </Accordion>
+          <BackToTopButton show={accordionOpen} />
         </div>
       </Container>
     </div>
