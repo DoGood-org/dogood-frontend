@@ -15,7 +15,7 @@ export interface ContentPanelProps {
 }
 
 export interface UserDetailedProps {
-  id: number;
+  id: string;
   name: string;
   avatar?: string;
   customerId?: string;

@@ -1,7 +1,7 @@
 import { User } from './authType';
 
 export interface OrganizationProps {
-  id: number;
+  id: string;
   name: string;
   description: string;
   members: User[];
