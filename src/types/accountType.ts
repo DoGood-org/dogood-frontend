@@ -1,3 +1,4 @@
+import { IUserSettings } from './authType';
 import { Tlocale } from './locale';
 import { OrganizationProps } from './organization';
 import { ReviewProps } from './reviewType';
@@ -7,6 +8,15 @@ export interface ContentProps {
   view: string;
   people?: string;
   id: string;
+}
+
+export interface IUserAccount {
+  id: string;
+  name: string;
+  email: string;
+  avatarUrl?: string;
+  siteRole?: string;
+  settings?: IUserSettings;
 }
 
 export interface ContentPanelProps {

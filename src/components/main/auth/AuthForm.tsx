@@ -28,6 +28,8 @@ type Props = {
     type: 'registerCompany' | 'registerPerson' | 'login',
     data: FormRegisterCompany | FormRegisterPerson | FormLogin
   ) => void;
+  isLoading?: boolean;
+  errorMessage?: string;
 };
 
 export const AuthForm: React.FC<Props> = (props) => {
