@@ -1,18 +1,18 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AuthChoice } from './AuthChoice';
 import { AuthForm } from './AuthForm';
-import { Verification } from './Verification';
 import { FormRegisterCompany, FormRegisterPerson } from '@/types/authType';
-import { useRouter } from 'next/navigation';
+import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
+import { VerifyViaEmail } from '@/components/main/auth/VerififyViaEmail';
 
 export const RegisterPageContent = (): React.ReactElement => {
-  const router = useRouter();
+  const { step, setStep } = useAuthFlow();
+
+  const { register, registerCompany, status, isEmailVerified } = authStore();
 
   const [choice, setChoice] = useState<'human' | 'company' | null>(null);
-  const [step, setStep] = useState<
-    null | 'verification' | 'success' | 'mistake' | 'resend'
-  >(null);
+
   const [formPersonData, setPersonFormData] = useState<FormRegisterPerson>({
     name: '',
     email: '',
@@ -26,6 +26,10 @@ export const RegisterPageContent = (): React.ReactElement => {
     repeatPassword: '',
     companyName: '',
   });
+  useEffect(() => {
+    if (status === 'authenticated') setStep('verification');
+    if (status === 'apiError') setStep('mistakeApi');
+  }, [status, setStep]);
 
   return (
     <div className=" flex flex-col items-center justify-center  text-foreground w-full">
@@ -33,24 +37,25 @@ export const RegisterPageContent = (): React.ReactElement => {
       {choice === 'human' && !step && (
         <AuthForm
           type="registerPerson"
-          onFormSubmit={(type, data) => {
-            setStep('verification');
-            console.log('Register person, verification-->', type, data);
+          onFormSubmit={async (type, data) => {
             setPersonFormData({
               name: (data as FormRegisterPerson).name,
               email: (data as FormRegisterPerson).email,
               password: '',
               repeatPassword: '',
             });
+            await register(
+              (data as FormRegisterPerson).email,
+              (data as FormRegisterPerson).password,
+              (data as FormRegisterPerson).name
+            );
           }}
         />
       )}
       {choice === 'company' && !step && (
         <AuthForm
           type="registerCompany"
-          onFormSubmit={(type, data) => {
-            console.log('Register company, verification-->', type, data);
-            setStep('verification');
+          onFormSubmit={async (type, data) => {
             setCompanyFormData({
               name: (data as FormRegisterCompany).name,
               email: (data as FormRegisterCompany).email,
@@ -58,21 +63,25 @@ export const RegisterPageContent = (): React.ReactElement => {
               repeatPassword: '',
               companyName: (data as FormRegisterCompany).companyName,
             });
+            await registerCompany(
+              (data as FormRegisterCompany).name,
+              (data as FormRegisterCompany).email,
+              (data as FormRegisterCompany).password,
+              (data as FormRegisterCompany).companyName
+            );
           }}
         />
       )}
       {step === 'verification' && choice && (
-        <Verification
-          onResend={() => setStep('resend')}
-          onWrongEmail={() => setStep('mistake')}
-          onConfirm={(code) => {
-            console.log('Verification code submitted:', code);
-            setStep('success');
-            router.push('/login');
-          }}
+        <VerifyViaEmail
+          onResend={() => setStep('resendLink')}
+          onWrongEmail={() => setStep('mistakeInEmail')}
+          email={
+            choice === 'human' ? formPersonData.email : formCompanyData.email
+          }
         />
       )}
-      {step === 'mistake' && choice === 'human' && (
+      {step === 'mistakeInEmail' && choice === 'human' && (
         <AuthForm
           defaultValues={formPersonData}
           type="registerPerson"
@@ -82,7 +91,7 @@ export const RegisterPageContent = (): React.ReactElement => {
           }}
         />
       )}
-      {step === 'mistake' && choice === 'company' && (
+      {step === 'mistakeInEmail' && choice === 'company' && (
         <AuthForm
           defaultValues={formCompanyData}
           type="registerCompany"
@@ -92,22 +101,21 @@ export const RegisterPageContent = (): React.ReactElement => {
           }}
         />
       )}
-      {step === 'resend' && (
+      {step === 'resendLink' && (
         <>
           <p>We will send it in 13 sec. Maybe timer here? </p>
 
-          <Verification
-            onResend={() => setStep('resend')}
-            onWrongEmail={() => setStep('mistake')}
-            onConfirm={(code) => {
-              console.log('Verification code submitted:', code);
-              setStep('success');
-              router.push('/login');
-            }}
+          <VerifyViaEmail
+            onResend={() => setStep('resendLink')}
+            onWrongEmail={() => setStep('mistakeInEmail')}
+            email={
+              choice === 'human' ? formPersonData.email : formCompanyData.email
+            }
           />
         </>
       )}
-      {step === 'success' && (
+
+      {step === 'proceedToLogin' && isEmailVerified && (
         <div>
           <p>Registration successful!</p>
           <p>Redirecting to login...</p>

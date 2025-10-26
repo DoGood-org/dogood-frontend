@@ -2,13 +2,14 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
 import React from 'react';
-import { Header, Footer } from '@/components';
+import { Header, Footer, MainLayoutContent } from '@/components';
 import { ThemeInitializer } from '@/components/layout/theme/ThemeInitializer';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import ToastProvider from '@/components/ToastProvider';
 import { meta } from '@/data/metadata';
+import { getServerCurrentUser } from '@/lib/server/getCurrentUser';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -26,6 +27,8 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }>): Promise<React.JSX.Element> {
   const { locale } = await params;
+  const me = await getServerCurrentUser();
+
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
@@ -34,12 +37,14 @@ export default async function LocaleLayout({
       <body
         className={`${montserrat.variable} antialiased flex flex-col justify-between min-h-[100vh]`}
       >
-        <ThemeInitializer />
-        <NextIntlClientProvider locale={locale}>
-          <Header />
-          <main className="pt-[80px] lg:pt-[72px]">{children}</main>
-          <Footer />
-        </NextIntlClientProvider>
+        <MainLayoutContent user={me}>
+          <ThemeInitializer />
+          <NextIntlClientProvider locale={locale}>
+            <Header />
+            <main className="pt-[80px] lg:pt-[72px]">{children}</main>
+            <Footer />
+          </NextIntlClientProvider>
+        </MainLayoutContent>
         <ToastProvider />
       </body>
     </html>
