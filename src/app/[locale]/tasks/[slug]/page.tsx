@@ -2,6 +2,8 @@ import type { JSX } from 'react/jsx-runtime';
 import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
+import { TaskContent } from '@/components';
+
 interface Props {
   params: Promise<{ slug: string; locale: Tlocale }>;
 }
@@ -29,7 +31,7 @@ export default async function IdTaskItemPage({
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <p>slug, but its TaskPage: {slug}</p>
+      <TaskContent slug={slug} />
     </div>
   );
 }

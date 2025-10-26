@@ -3,6 +3,7 @@
   "fullName": "Vollständiger Name",
   "country": "Land",
   "city": "Stadt",
+  "amountQuestion": "Wie viel muss gesammelt werden?",
   "add": "Hinzufügen",
   "validation": {
     "required": "Dieses Feld ist erforderlich",

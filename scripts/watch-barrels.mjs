@@ -43,7 +43,10 @@ async function main() {
 
     const componentsPath = path.join(rootDir, 'src/components/**/*.{ts,tsx}');
     const watcher = chokidar.watch(componentsPath, {
-      ignored: /icons|index\.ts$/,
+      ignored: (path) =>
+        path.includes('icons') ||
+        path.includes('providers') ||
+        path.endsWith('index.ts'),
       ignoreInitial: true,
     });
 

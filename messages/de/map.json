@@ -23,5 +23,8 @@
   "cancelBtn": "Abbrechen",
   "task": "Aufgabe",
   "donate": "Spenden",
-  "join": "Mitmachen"
+  "join": "Mitmachen",
+  "seeMoreBtn": "Mehr anzeigen",
+  "confirmBtn": "Bestätigen",
+  "editBtn": "Bearbeiten"
 }

@@ -1,11 +1,13 @@
 'use client';
 
 import { JSX, useEffect, useState } from 'react';
-import { AddCardModal, CardPreview } from '@/components';
 import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
 import { SetPlus } from '@/components/icons';
 import { useTranslations } from 'next-intl';
 import { stripeService } from '@/services/stripeService';
+import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
+import { CardPreview } from './CardPreview';
+import { AddCardModal } from './AddCardModal';
 
 export const PaymentList = (): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -68,12 +70,14 @@ export const PaymentList = (): JSX.Element => {
       </ul>
 
       {open && (
-        <AddCardModal
-          open={open}
-          setOpen={setOpen}
-          editingId={editingId}
-          setEditingId={setEditingId}
-        />
+        <StripeProviderLazy>
+          <AddCardModal
+            open={open}
+            setOpen={setOpen}
+            editingId={editingId}
+            setEditingId={setEditingId}
+          />
+        </StripeProviderLazy>
       )}
     </div>
   );
