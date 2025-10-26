@@ -2,12 +2,13 @@
 import { Close } from '@/components/icons';
 import React, { FC, JSX } from 'react';
 import { useTranslations } from 'next-intl';
-import { DistanceFilter, CategoryFilter } from '@/components';
 import { Button } from '@/components/ui/Button';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { IExtendedITaskProps } from '@/types/tasks.type';
 import { IExtendedCategoryFilter } from '@/types/filter.type';
+import { CategoryFilter } from './CategoryFilter';
+import { DistanceFilter } from './DistanceFilter';
 
 type Props = {
   tasks: IExtendedITaskProps[];

@@ -288,7 +288,7 @@ html {
 
 .reviews-section {
   background-image:
-    url('/reviews/bg-reviews-m.png'),
+    url('/reviews/bg-reviews-m.webp'),
     linear-gradient(var(--accent-bg), var(--accent-bg));
   background-repeat: no-repeat;
   background-size:
@@ -302,7 +302,7 @@ html {
 @media screen and (min-width: 768px) {
   .reviews-section {
     background-image:
-      url('/reviews/bg-reviews-t.png'),
+      url('/reviews/bg-reviews-t.webp'),
       linear-gradient(var(--accent-bg), var(--accent-bg));
     background-size:
       768px 544px,
@@ -313,7 +313,7 @@ html {
 @media screen and (min-width: 1440px) {
   .reviews-section {
     background-image:
-      url('/reviews/bg-reviews-d.png'),
+      url('/reviews/bg-reviews-d.webp'),
       linear-gradient(var(--accent-bg), var(--accent-bg));
     background-size:
       1440px 1020px,

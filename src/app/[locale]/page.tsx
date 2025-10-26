@@ -4,10 +4,10 @@ import {
   Faq,
   HeroSection,
   HowItWorks,
-  MapSection,
-  NewsList,
+  // NewsList,
   ReviewsSection,
 } from '@/components';
+import { MapSection } from '@/components/main/map/MapSection';
 import React from 'react';
 
 export default function Home(): React.JSX.Element {
@@ -19,7 +19,7 @@ export default function Home(): React.JSX.Element {
       <MapSection />
       <Donate />
       <ReviewsSection />
-      <NewsList />
+      {/* <NewsList /> */}
       <Faq />
     </>
   );

@@ -7,9 +7,9 @@ import { HeroContentLayer } from './HeroContentLayer';
 import { HeroPlanetLayer } from './HeroPlanetLayer';
 import { HeroSocialLink } from '@/components';
 
-import HeroBgMobile from '@/assets/images/hero/mob-hero.png';
-import HeroBgTablet from '@/assets/images/hero/tablet-hero.png';
-import HeroBgDesktop from '@/assets/images/hero/bg-hero.png';
+import HeroBgMobile from '@/assets/images/hero/mob-hero.webp';
+import HeroBgTablet from '@/assets/images/hero/tablet-hero.webp';
+import HeroBgDesktop from '@/assets/images/hero/bg-hero.webp';
 
 export const HeroSection: React.FC = () => {
   const sectionRef = useRef(null);
@@ -48,7 +48,7 @@ export const HeroSection: React.FC = () => {
           alt="Hero background"
           fill
           priority
-          quality={100}
+          quality={90}
           className="object-cover object-center"
         />
       </div>

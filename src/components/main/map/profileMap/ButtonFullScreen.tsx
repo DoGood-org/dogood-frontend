@@ -1,8 +1,8 @@
-import { ButtonMap } from '@/components';
 import { useMapStore } from '@/zustand/stores/mapStore';
 
 import { FullscreenIcon } from 'lucide-react';
 import { JSX } from 'react';
+import { ButtonMap } from '../ButtonMap';
 
 export const ButtonFullScreen = (): JSX.Element => {
   const { fullscreenMap, toggleFullscreenMap } = useMapStore();
