@@ -43,9 +43,9 @@ export const useFilterStore = create<TFilterStore>()(
   persist(
     (set) => ({
       ...initialState,
-      setCategories: (categories): void => set({ categories: categories }),
+      setCategories: (categories): any => set({ categories: categories }),
 
-      toggleCategory: (category): void =>
+      toggleCategory: (category): any =>
         set((state) => {
           if (category === 'all') {
             return { choosenCategories: ['all'] as IExtendedCategoryFilter[] };
@@ -65,26 +65,26 @@ export const useFilterStore = create<TFilterStore>()(
           };
         }),
 
-      setDistanceFilter: (distance): void => set({ distanceFilter: distance }),
+      setDistanceFilter: (distance): any => set({ distanceFilter: distance }),
 
-      removeDistanceFilter: (): void =>
+      removeDistanceFilter: (): any =>
         set({ distanceFilter: null, currentPage: 1 }),
 
-      setSearchQuery: debounce((query): void => {
+      setSearchQuery: debounce((query): any => {
         set({
           searchQuery: query,
         });
       }, 300),
-      setSearchActive: (active): void =>
+      setSearchActive: (active): any =>
         set({
           searchIsActive: active,
           currentPage: 1,
         }),
-      setSortBy: (sortBy): void => set({ sortBy }),
-      setCurrentPage: (page): void => set({ currentPage: page }),
-      setItemsPerPage: (items): void => set({ itemsPerPage: items }),
+      setSortBy: (sortBy): any => set({ sortBy }),
+      setCurrentPage: (page): any => set({ currentPage: page }),
+      setItemsPerPage: (items): any => set({ itemsPerPage: items }),
 
-      resetFilters: (): void =>
+      resetFilters: (): any =>
         set({
           choosenCategories: [],
           distanceFilter: null,

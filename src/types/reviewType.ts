@@ -1,7 +1,7 @@
 import { DetailedHTMLProps, HTMLAttributes, KeyboardEvent } from 'react';
 import { FieldError } from 'react-hook-form';
 export interface UserProps {
-  id: number;
+  id: string;
   name: string;
   avatar?: string;
 }

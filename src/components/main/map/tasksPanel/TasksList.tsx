@@ -1,13 +1,14 @@
 'use client';
 import { useTranslations } from 'next-intl';
 import React, { JSX } from 'react';
-import { TaskItem } from '@/components';
-
 import { IExtendedITaskProps } from '@/types/tasks.type';
+import { TaskItem } from './TaskItem';
+
 type Props = {
   tasks: IExtendedITaskProps[];
   className?: string;
 };
+
 export const TasksList: React.FC<Props> = ({
   tasks,
   className,

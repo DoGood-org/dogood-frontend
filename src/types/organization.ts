@@ -1,10 +1,10 @@
-import { User } from './authType';
+import { IUserAccount } from './accountType';
 
 export interface OrganizationProps {
-  id: number;
+  id: string;
   name: string;
   description: string;
-  members: User[];
+  members: IUserAccount[];
   logo: string;
 }
 
