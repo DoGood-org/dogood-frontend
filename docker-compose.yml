@@ -33,7 +33,7 @@ services:
       dockerfile: Dockerfile
       target: dev
     container_name: dogood
-    command: bash -c "sleep infinity"
+    command: bash -c "chmod 777 entrypoint.sh && ./entrypoint.sh && sleep infinity"
     ports:
       - "3000:3000"
       - "5000:5000"
