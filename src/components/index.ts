@@ -81,8 +81,6 @@ export * from './main/auth/RegisterLoginSocial';
 export * from './main/auth/RegisterPageContent';
 export * from './main/auth/safeNextPath';
 export * from './main/auth/Verification';
-export * from './main/cookies/Cookies';
-export * from './main/auth/VerifyViaEmail';
 export * from './main/donate/Donate';
 export * from './main/donate/DonateCard';
 export * from './main/faq/ContactForm';
