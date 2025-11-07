@@ -169,7 +169,7 @@ const CategoryItem: React.FC<CategoryItemProps> = React.memo(
   }
 );
 
-const Cookies: React.FC = () => {
+export const Cookies: React.FC = () => {
   const t = useTranslations('cookies');
   const categories = t.raw('categories') as Category[];
   const [accordionOpen, setAccordionOpen] = React.useState(false);
@@ -213,5 +213,3 @@ const Cookies: React.FC = () => {
     </div>
   );
 };
-
-export default Cookies;
