@@ -1,15 +1,15 @@
 services:
   redis:
     image: redis:latest
-    container_name: redis-dev
+    container_name: redis-front
     ports:
       - "6379:6379"
     restart: unless-stopped
     networks:
       - dev-network
   postgres:
-    image: postgres:latest
-    container_name: postgress-dev
+    image: postgis/postgis:latest
+    container_name: postgress-front
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -21,14 +21,19 @@ services:
       - .env
     networks:
       - dev-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   server:
     build:
       context: .
       dockerfile: Dockerfile
       target: dev
-    container_name: dogood
-    command: bash -c "cd /backend && npx prisma migrate dev"
+    container_name: dogood-front
+    command: bash -c "chmod 777 entrypoint.sh && ./entrypoint.sh && sleep infinity"
     ports:
       - "3000:3000"
       - "5000:5000"
@@ -36,8 +41,10 @@ services:
     env_file:
       - .env
     depends_on:
-      - redis
-      - postgres
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
     restart: unless-stopped
     networks:
       - dev-network

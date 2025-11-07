@@ -1,3 +1,4 @@
+import { IUserSettings } from './authType';
 import { Tlocale } from './locale';
 import { OrganizationProps } from './organization';
 import { ReviewProps } from './reviewType';
@@ -9,13 +10,22 @@ export interface ContentProps {
   id: string;
 }
 
+export interface IUserAccount {
+  id: string;
+  name: string;
+  email: string;
+  avatarUrl?: string;
+  siteRole?: string;
+  settings?: IUserSettings;
+}
+
 export interface ContentPanelProps {
   views: ContentProps[];
   viewComponents: Record<string, React.ReactNode>;
 }
 
 export interface UserDetailedProps {
-  id: number;
+  id: string;
   name: string;
   avatar?: string;
   customerId?: string;

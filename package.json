@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"node scripts/watch-barrels.mjs\" \"next dev\" \"npm run svgr:watch\" --turbopack",
+    "dev": "concurrently \"node scripts/watch-barrels.mjs\" \"next dev --turbopack\" \"npm run svgr:watch\"",
     "build": "next build",
     "start": "next start",
     "lint": "eslint src",
@@ -37,7 +37,7 @@
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "lucide-react": "^0.511.0",
     "middleware": "^1.0.0",
-    "next": "^15.3.3",
+    "next": "15.3.3",
     "next-cloudinary": "^6.16.0",
     "next-intl": "^4.1.0",
     "react": "^19.1.0",
@@ -58,7 +58,6 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@svgr/cli": "^8.1.0",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-prettier": "^8.1.0",

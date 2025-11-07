@@ -34,47 +34,63 @@ const ensureDir = async (dir) => {
 };
 
 const processIcons = async () => {
-  const files = await fs.readdir(INPUT_DIR);
   await ensureDir(OUTPUT_DIR);
+
+  const svgFiles = await fs.readdir(INPUT_DIR).catch(() => []);
+
+  const svgMap = new Map(
+    svgFiles.filter((f) => f.endsWith('.svg')).map((f) => [toPascalCase(f), f])
+  );
 
   const exportedComponents = [];
 
-  for (const file of files) {
-    if (!file.endsWith('.svg')) continue;
-
-    const svgPath = path.join(INPUT_DIR, file);
-    const componentName = toPascalCase(file);
+  // 1️⃣ Генеруємо нові іконки з assets/svg
+  for (const [componentName, svgFile] of svgMap.entries()) {
+    const svgPath = path.join(INPUT_DIR, svgFile);
     const outPath = path.join(OUTPUT_DIR, `${componentName}.tsx`);
 
+    const svgContent = await fs.readFile(svgPath, 'utf8');
+    const existing = await fs.readFile(outPath, 'utf8').catch(() => null);
+
+    // якщо існує, але не має default export — пропускаємо
+    if (existing && !existing.includes('export default')) {
+      console.log(`⚙️ Пропущено іменний експорт: ${componentName}`);
+      continue;
+    }
+
+    // якщо існує з дефолтним експортом — не чіпаємо
+    if (existing) continue;
+
     try {
-      const [svgContent, existing] = await Promise.all([
-        fs.readFile(svgPath, 'utf8'),
-        fs.readFile(outPath, 'utf8').catch(() => null),
-      ]);
-
-      if (existing) {
-        // console.log(`🟡 Пропущено: ${componentName} (вже існує)`);
-      } else {
-        const jsxCode = await transform(svgContent, options, {
-          componentName,
-        });
-        await fs.writeFile(outPath, jsxCode, 'utf8');
-        console.log(`✅ Створено: ${componentName}`);
-      }
-
-      exportedComponents.push(
-        `export { default as ${componentName} } from './${componentName}';`
-      );
+      const jsxCode = await transform(svgContent, options, { componentName });
+      await fs.writeFile(outPath, jsxCode, 'utf8');
+      console.log(`✅ Створено: ${componentName}`);
     } catch (e) {
-      console.error(`❌ Помилка при обробці ${file}:`, e.message);
+      console.error(`❌ Помилка при створенні ${componentName}:`, e.message);
     }
   }
 
-  // Генеруємо index.ts з експортами
+  // 2️⃣ Генеруємо index.ts з усіх актуальних файлів у components/icons
+  const icons = await fs.readdir(OUTPUT_DIR);
+  for (const file of icons) {
+    if (!file.endsWith('.tsx')) continue;
+
+    const outPath = path.join(OUTPUT_DIR, file);
+    const content = await fs.readFile(outPath, 'utf8');
+
+    // пропускаємо іменні експорти
+    if (!content.includes('export default')) continue;
+
+    const componentName = path.basename(file, '.tsx');
+    exportedComponents.push(
+      `export { default as ${componentName} } from './${componentName}';`
+    );
+  }
+
   const indexContent = exportedComponents.join('\n') + '\n';
   await fs.writeFile(INDEX_FILE, indexContent, 'utf8');
   console.log(
-    `📦 Оновлено: index.ts (${exportedComponents.length} компонентів)`
+    `📦 Оновлено index.ts (${exportedComponents.length} компонентів)`
   );
 };
 

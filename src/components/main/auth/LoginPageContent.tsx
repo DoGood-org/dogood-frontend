@@ -1,36 +1,40 @@
 'use client';
-import { AuthForm } from '@/components';
+import { AuthForm, safeNext } from '@/components';
 import { ForgotEnterEmail } from '@/components/main/auth/ForgotEnterEmail';
 import { ForgotPassword } from '@/components/main/auth/ForgotPassword';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useMemo } from 'react';
+import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
+import { IAuthResponse } from '@/zustand/services/authService';
 
 export const LoginPageContent: React.FC = () => {
   const router = useRouter();
-  const [step, setStep] = useState<
-    null | 'success' | 'forgotPassword' | 'forgotEmail'
-  >(null);
+  const params = useSearchParams();
+  const next = useMemo(() => safeNext(params.get('next')), [params]);
+  const { step, setStep } = useAuthFlow();
+
+  const { login, status, error, currentUser } = authStore();
 
   return (
     <div className=" login text-foreground flex flex-col items-center justify-center w-full">
+      {' '}
+      {status === 'apiError' && error && (
+        <p className="text-red-500">{error}</p>
+      )}{' '}
+      {status === 'loading' && <p>Loading...</p>}
       {!step && (
         <AuthForm
           type="login"
           onForgotPassword={() => setStep('forgotEmail')}
-          onFormSubmit={(type, data) => {
-            console.log('Login person:', type, data);
-            setStep('success');
-            router.push('/');
+          onFormSubmit={async (type, data) => {
+            const res: IAuthResponse = await login(data.email, data.password);
+            if (res.status === 'success') {
+              await currentUser({ silent: true });
+              router.replace(next);
+            }
           }}
         />
       )}
-      {step === 'success' && (
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Login Successful</h2>
-          <p>Welcome back!</p>
-        </div>
-      )}
-
       {step === 'forgotEmail' && (
         <div className="mt-4">
           <ForgotEnterEmail
@@ -45,9 +49,9 @@ export const LoginPageContent: React.FC = () => {
         <div className="mt-4">
           <ForgotPassword
             onSubmit={(data) => {
-              console.log('Forgot password submitted:', data);
-              setStep('success');
-              router.push('/login');
+              console.log('Reset password submitted:', data);
+              setStep(null);
+              router.replace('/login');
             }}
           />
         </div>
