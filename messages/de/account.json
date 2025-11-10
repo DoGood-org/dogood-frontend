@@ -51,6 +51,18 @@
       "view": "In Bearbeitung"
     }
   ],
+  "tasks": {
+    "sortBy": "Sortieren",
+    "filter": {
+      "ALL": "Alle",
+      "CREATED": "Erstellt",
+      "IN_PROGRESS": "Läuft",
+      "COMPLETED": "Fertig",
+      "PENDING": "Offen",
+      "REJECTED": "Abgelehnt",
+      "CLOSED": "Geschlossen"
+    }
+  },
   "chatButton": "Nachricht senden",
   "reportButton": "Melden",
   "photoReport": "Foto 18+",

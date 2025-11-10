@@ -51,6 +51,18 @@
       "view": "In progress"
     }
   ],
+  "tasks": {
+    "sortBy": "Sort by",
+    "filter": {
+      "ALL": "All",
+      "CREATED": "Created tasks",
+      "IN_PROGRESS": "Tasks in progress",
+      "COMPLETED": "Completed tasks",
+      "PENDING": "Pending review",
+      "REJECTED": "Rejected tasks",
+      "CLOSED": "Closed tasks"
+    }
+  },
   "chatButton": "Send a message",
   "reportButton": "Report",
   "photoReport": "Photo 18+",

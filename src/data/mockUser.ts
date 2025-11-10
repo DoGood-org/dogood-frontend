@@ -36,7 +36,7 @@ export const mockUser: UserDetailedProps = {
     {
       id: 1,
       title: 'Peace Volunteers',
-      status: '',
+      status: 'CREATED',
       description:
         '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
       avatar: '/account/Razer.png',
@@ -45,7 +45,7 @@ export const mockUser: UserDetailedProps = {
     {
       id: 2,
       title: 'Peace Volunteers',
-      status: '',
+      status: 'COMPLETED',
       description:
         '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
       avatar: '/account/amazon.png',
@@ -54,7 +54,7 @@ export const mockUser: UserDetailedProps = {
     {
       id: 3,
       title: 'Peace Volunteers',
-      status: '',
+      status: 'IN_PROGRESS',
       description:
         '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
       avatar: '/account/Razer.png',
@@ -63,10 +63,19 @@ export const mockUser: UserDetailedProps = {
     {
       id: 4,
       title: 'Peace Volunteers',
-      status: '',
+      status: 'REJECTED',
       description:
         '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
       avatar: '/account/amazon.png',
+      category: 'medicine',
+    },
+    {
+      id: 5,
+      title: 'Peace Volunteers',
+      status: 'CREATED',
+      description:
+        '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
+      avatar: '/account/Razer.png',
       category: 'medicine',
     },
   ],

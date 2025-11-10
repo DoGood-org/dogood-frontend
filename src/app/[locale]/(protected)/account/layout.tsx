@@ -9,6 +9,7 @@ import {
 } from '@/components';
 import { useSyncCurrentPage } from '@/hooks/useSyncCurrentPage';
 import { navigationStore } from '@/zustand/stores/navigationStore';
+import { mockUser } from '@/data/mockUser';
 
 export default function AccountLayout({
   children,
@@ -28,7 +29,7 @@ export default function AccountLayout({
         </aside>
         {children}
       </div>
-      <AccountContent />
+      <AccountContent user={mockUser} />
       {showBottomNavigation && <BottomNavigation />}
     </Container>
   );
