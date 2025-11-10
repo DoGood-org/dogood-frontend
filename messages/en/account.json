@@ -8,7 +8,8 @@
   "task": {
     "title": "Find your first task on the map",
     "text": "Help is closer than you think — choose a project that speaks to you. Every small action matters. Start now — create real change.",
-    "button": "Go to map"
+    "button": "Go to map",
+    "add": "Add task"
   },
   "noReview": "No one has left a review for this user yet.",
   "noReviewPublic": "No reviews yet",
