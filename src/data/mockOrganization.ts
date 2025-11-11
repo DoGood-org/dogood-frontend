@@ -1,0 +1,115 @@
+import { OrganizationDetailedProps } from '@/types';
+
+export const mockOrganization: OrganizationDetailedProps[] = [
+  {
+    id: '1',
+    name: 'Peace Volunteers',
+    avatar: '/account/Razer.png',
+    description:
+      '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
+    email: 'peace@mail.com',
+    phoneNumber: '',
+    location: { id: 1, country: '', region: '', city: 'Belgrade' },
+    paymentOptions: [],
+    tasks: [],
+    reviews: [],
+    reviewsWrittenOrg: [],
+    members: [
+      {
+        id: '1',
+        userId: '5',
+        organizationId: '1',
+        role: 'ADMIN',
+        status: 'ACTIVE',
+      },
+      {
+        id: '2',
+        userId: '1',
+        organizationId: '1',
+        role: 'MODERATOR',
+        status: 'ACTIVE',
+      },
+      {
+        id: '3',
+        userId: '6',
+        organizationId: '1',
+        role: 'MEMBER',
+        status: 'ACTIVE',
+      },
+    ],
+  },
+  {
+    id: '2',
+    name: 'Organization 2',
+    avatar: '/account/Amazon.png',
+    description:
+      '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
+    email: '',
+    phoneNumber: '',
+    location: { id: 1, country: '', region: '', city: 'Belgrade' },
+    paymentOptions: [],
+    tasks: [],
+    reviews: [],
+    reviewsWrittenOrg: [],
+    members: [
+      {
+        id: '1',
+        userId: '5',
+        organizationId: '1',
+        role: 'ADMIN',
+        status: 'ACTIVE',
+      },
+      {
+        id: '2',
+        userId: '1',
+        organizationId: '1',
+        role: 'MODERATOR',
+        status: 'ACTIVE',
+      },
+      {
+        id: '3',
+        userId: '6',
+        organizationId: '1',
+        role: 'MEMBER',
+        status: 'ACTIVE',
+      },
+    ],
+  },
+  {
+    id: '3',
+    name: 'Organization 3',
+    avatar: '',
+    description:
+      '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
+    email: '',
+    phoneNumber: '',
+    location: { id: 1, country: '', region: '', city: 'Belgrade' },
+    paymentOptions: [],
+    tasks: [],
+    reviews: [],
+    reviewsWrittenOrg: [],
+    members: [
+      {
+        id: '1',
+        userId: '5',
+        organizationId: '1',
+        role: 'ADMIN',
+        status: 'ACTIVE',
+      },
+      {
+        id: '2',
+        userId: '1',
+        organizationId: '1',
+        role: 'MODERATOR',
+        status: 'ACTIVE',
+      },
+      {
+        id: '3',
+        userId: '6',
+        organizationId: '1',
+        role: 'MEMBER',
+        status: 'ACTIVE',
+      },
+    ],
+  },
+];
