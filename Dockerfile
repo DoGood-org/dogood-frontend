@@ -1,5 +1,5 @@
 # use docker build 
-FROM node:slim AS dev
+FROM node:22-slim AS dev
 
 
 WORKDIR /frontend
