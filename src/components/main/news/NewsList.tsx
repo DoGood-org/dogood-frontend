@@ -3,7 +3,7 @@ import React, { JSX } from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { SwiperList } from '@/components';
+import { SwiperList } from '@/components/main/news/SwiperList';
 
 import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { Section } from '@/components/ui/Section';
