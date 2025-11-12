@@ -3,6 +3,7 @@ import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { TaskContent } from '@/components';
+import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
 
 interface Props {
   params: Promise<{ slug: string; locale: Tlocale }>;
@@ -30,8 +31,10 @@ export default async function IdTaskItemPage({
   const { slug } = await params;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <TaskContent slug={slug} />
-    </div>
+    <StripeProviderLazy>
+      <div className="flex flex-col items-center justify-center min-h-screen p-4">
+        <TaskContent slug={slug} />
+      </div>
+    </StripeProviderLazy>
   );
 }
