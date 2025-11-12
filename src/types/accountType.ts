@@ -22,6 +22,7 @@ export interface IUserAccount {
 export interface ContentPanelProps {
   views: ContentProps[];
   viewComponents: Record<string, React.ReactNode>;
+  onFilterChange: (status: string) => void;
 }
 
 export interface UserDetailedProps {
