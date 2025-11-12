@@ -7,17 +7,13 @@ import {
 } from '@/types';
 
 export const getNews = async (locale: Tlocale): Promise<INewsItem[]> => {
-  try {
-    const response = await fetchFromApi<INewsListApiResponse>(
-      `/posts/${locale}`,
-      {
-        method: 'GET',
-      }
-    );
-    return response.data?.posts ?? [];
-  } catch (_error) {
-    return [];
-  }
+  const response = await fetchFromApi<INewsListApiResponse>(
+    `/posts/${locale}`,
+    {
+      method: 'GET',
+    }
+  );
+  return response.data?.posts ?? [];
 };
 
 export const getNewsById = async (
