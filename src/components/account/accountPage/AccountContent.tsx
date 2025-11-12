@@ -18,7 +18,7 @@ export const AccountContent = ({
 }): JSX.Element => {
   const pathname = usePathname();
   const segments = pathname.split('/').filter(Boolean);
-  const isAccountPage = segments[segments.length - 1] === 'accountOld';
+  const isAccountPage = segments[segments.length - 1] === 'account';
   const t = useTranslations('account');
   const views = t.raw('contentViews') as ContentProps[];
   const [filter, setFilter] = useState('ALL');
