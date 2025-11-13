@@ -43,8 +43,8 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
 
   return (
     <section>
-      <div className="flex align-baseline space-x-3">
-        <h2 className="text-lg mb-5 mr-5">{task.title}</h2>
+      <div className="flex items-baseline space-x-3">
+        <h2 className="text-lg mb-5 pr-5">{task.title}</h2>
         <EditButton onClick={handleEdit} />
       </div>
       <h3 className="text-[20px] leading-[20px] mb-5">

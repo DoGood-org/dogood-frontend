@@ -6,7 +6,7 @@
     "description": "Details zur Aufgabe"
   },
     "taskDetails": {
-    "details": "Details",
+    "details": "Einzelheiten",
     "location": "Ort",
     "showOnMap": "Auf der Karte anzeigen",
     "organizedBy": "Organisiert von",
@@ -27,5 +27,9 @@
     "otherTask": {
     "otherTask": "Weitere Aufgaben",
     "noTasks": "In diesem Abschnitt gibt es noch keine Aufgaben."
+  },
+  "paymentSuccess": {
+  "downloadReceipt": "Beleg herunterladen",
+  "homePage": "Startseite"
   }
 }

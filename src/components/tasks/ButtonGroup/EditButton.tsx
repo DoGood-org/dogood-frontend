@@ -27,9 +27,9 @@ const EditButton = ({ onClick }: EditButtonProps): JSX.Element => {
         variant="iconOnly"
         size="icon"
         onClick={handleClick}
-        className="flex items-center gap-2 cursor-pointer ml-5"
+        className="flex items-center gap-1 md:gap-3 cursor-pointe md:pl-10"
       >
-        <EditIcon />
+        <EditIcon className="size-6" />
         <span className="text-base">{t('taskDetails.edit')}</span>
       </Button>
       <PaymentSuccessModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
