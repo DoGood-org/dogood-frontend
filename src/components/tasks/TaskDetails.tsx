@@ -23,10 +23,10 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
   const t = useTranslations('tasks');
   const flyToCoords = useMapStore((s) => s.flyToCoords);
 
-  const hasCoords =
-    typeof task.lat === 'number' && typeof task.lng === 'number';
+  const hasCoords = task.lat != null && task.lng != null;
+
   const taskCoords: LatLngLiteral = hasCoords
-    ? { lat: task.lat!, lng: task.lng! }
+    ? { lat: task.lat as number, lng: task.lng as number }
     : { lat: 48.8566, lng: 2.3522 };
 
   const handleShowOnMap = (): void => {
