@@ -449,6 +449,35 @@ html {
     background: var(--black);
   }
 
+  /* custom scrollbar styles for reviews */
+  .reviews-scrollbar {
+    direction: rtl;
+    overflow-y: auto;
+  }
+
+  .reviews-scrollbar > * {
+    direction: ltr;
+  }
+
+  .reviews-scrollbar::-webkit-scrollbar {
+    width: 6px !important;
+  }
+
+  .reviews-scrollbar::-webkit-scrollbar-track {
+    background-color: var(--color-card);
+    border: 1px solid transparent;
+    background-clip: content-box;
+  }
+
+  .reviews-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-btn);
+    width: 6px;
+    border-radius: 3px;
+  }
+
+  .reviews-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #059669 !important;
+  }
   /*----------------- Font-size utilites -------------------------------*/
   .text-sm {
     font-size: var(--text-sm);

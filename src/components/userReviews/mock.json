@@ -1,42 +1,68 @@
 [
   {
     "id": "1",
-    "name": "Ivan"
+    "name": "Ivan",
+    "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+    "rating": 4
   },
   {
     "id": "2",
-    "name": "Oksana"
+    "name": "Oksana",
+    "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+    "rating": 5
   },
   {
     "id": "3",
-    "name": "Andriy"
+    "name": "Andriy",
+    "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
+    "rating": 4
   },
   {
     "id": "4",
-    "name": "Maria"
+    "name": "Maria",
+    "avatar": "https://randomuser.me/api/portraits/women/4.jpg",
+    "rating": 5
   },
   {
     "id": "5",
-    "name": "Petro"
+    "name": "Petro",
+    "avatar": "https://randomuser.me/api/portraits/men/5.jpg",
+    "rating": 3
   },
   {
     "id": "6",
-    "name": "Sofiia"
+    "name": "Sofiia",
+    "avatar": "https://randomuser.me/api/portraits/women/6.jpg",
+    "rating": 4
   },
   {
     "id": "7",
-    "name": "Maksym"
+    "name": "Maksym",
+    "avatar": "https://randomuser.me/api/portraits/men/7.jpg",
+    "rating": 2
   },
   {
     "id": "8",
-    "name": "Kateryna"
+    "name": "Kateryna",
+    "avatar": "https://randomuser.me/api/portraits/women/8.jpg",
+    "rating": 5
   },
   {
     "id": "9",
-    "name": "Dmytro"
+    "name": "Dmytro",
+    "avatar": "https://randomuser.me/api/portraits/men/9.jpg",
+    "rating": 4
   },
   {
     "id": "10",
-    "name": "Olena"
+    "name": "Olena",
+    "avatar": "https://randomuser.me/api/portraits/women/10.jpg",
+    "rating": 5
+  },
+   {
+    "id": "11",
+    "name": "Ivan",
+    "avatar": "https://randomuser.me/api/portraits/men/11.jpg",
+    "rating": 5
   }
 ]

@@ -1,9 +1,13 @@
 {
   "title": "Leave a review for",
   "imageAlt": "User avatar",
+  "imageHeroAlt": "Hero image",
   "subtitle": "How would you rate your experience with",
   "feedback": "Leave feedback",
   "placeholder": "Share feedback about your experience...",
   "cancelBtn": "Cancel",
-  "sendBtn": "Send review"
+  "sendBtn": "Send review",
+  "taskMembers": "Task members",
+  "seeProfile": "See Profile",
+  "sendReview": "Send Review"
 }

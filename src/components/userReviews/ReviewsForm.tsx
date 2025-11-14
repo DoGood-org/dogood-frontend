@@ -1,3 +1,5 @@
+'use client';
+
 import {
   ReviewsFormValues,
   reviewsSchema,
@@ -13,10 +15,18 @@ import * as yup from 'yup';
 import { Rating } from '../ui/Rating';
 import { Textarea } from '../ui/Textarea';
 import { Button } from '../ui/Button';
-import { InputField } from '../account/settingsPage/InputField';
-import { ThankYou } from './ThankYou';
+import { Close } from '../icons';
+import { PaymentSuccessContent } from '../ui/modals/DonationModal/PaymentSuccessModal/PaymentSuccessContent';
 
-export const ReviewsForm = (): React.JSX.Element => {
+interface ReviewsProps {
+  setIsOpen?: (isOpen: boolean) => void | undefined;
+  isOpen?: boolean;
+}
+
+export const ReviewsForm = ({
+  setIsOpen,
+  isOpen,
+}: ReviewsProps): React.JSX.Element => {
   const t = useTranslations('reviews');
   const f = useTranslations('faq');
   const downText = (f.raw('downtext') as any[])[0];
@@ -67,6 +77,7 @@ export const ReviewsForm = (): React.JSX.Element => {
       comment: data.comment,
     });
   };
+
   const onReset = (): void => {
     setValue('authorId', 0);
     setValue('targetId', 0);
@@ -75,24 +86,37 @@ export const ReviewsForm = (): React.JSX.Element => {
     setIsSubmitted(false);
   };
 
+  const handleClose = (): void => {
+    setIsOpen?.(!isOpen);
+  };
+
   if (isSubmitted) {
-    return <ThankYou />;
+    return <PaymentSuccessContent />;
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="space-y-4 bg-text-help p-8 rounded-xl">
-        <div className="flex gap-6">
+      <div className="w-full bg-card p-10 rounded-[10px]">
+        <button
+          className="absolute top-10 right-6 md:top-11 md:right-16 lg:top-12 lg:right-22 p-1"
+          onClick={handleClose}
+          type="button"
+        >
+          <Close className="stroke-foreground w-6 h-6" />
+        </button>
+
+        <div className="flex gap-6 mb-8">
           <Image
             src="/account/avatar.png"
             alt={t('imageAlt')}
             width={64}
             height={80}
+            className="w-[64px] h-[80px] object-cover"
           />
-          <h2 className="text-2xl font-semibold mb-4">{t('title')}</h2>
+          <h2 className="text-xl md:text-h2-m lg:text-h2 mb-4">{t('title')}</h2>
         </div>
-        <h3 className="text-h3 text-white">{t('subtitle')}</h3>
-        <InputField
+        <h3 className="text-base font-semibold mb-5">{t('subtitle')}</h3>
+        {/* <InputField
           label="AuthorId"
           name="authorId"
           register={register}
@@ -107,7 +131,7 @@ export const ReviewsForm = (): React.JSX.Element => {
           errors={errors.targetId}
           placeholder="placeholder"
           disabled={false}
-        />
+        /> */}
         <Controller
           name="rating"
           control={control}
@@ -130,36 +154,36 @@ export const ReviewsForm = (): React.JSX.Element => {
           </p>
         )}
 
-        <h3 className="text-h3 text-white">{t('feedback')}</h3>
+        <h3 className="text-base mt-6 mb-5">{t('feedback')}</h3>
         <Textarea
           {...register('comment')}
           placeholder={t('placeholder')}
-          className="w-full bg-white border-none h-[120px] text-form-field text-base"
+          className="w-full bg-white border-none h-[174px] text-form-field text-base mb-8"
         />
         {errors.comment && (
           <p className="text-sm font-medium text-error mt-1">
             {errors.comment.message}
           </p>
         )}
-      </div>
-      <div className="flex gap-5 justify-end">
-        <Button
-          variant="ghost"
-          size="xl"
-          className="w-[119px] text-[#ffffff]"
-          type="button"
-          onClick={onReset}
-        >
-          {t('cancelBtn')}
-        </Button>
-        <Button
-          variant="primary"
-          size="xl"
-          type="submit"
-          className="w-[119px] text-[#ffffff]"
-        >
-          {t('sendBtn')}
-        </Button>
+        <div className="flex gap-5 justify-between md:justify-end">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="text-foreground px-6"
+            type="button"
+            onClick={onReset}
+          >
+            {t('cancelBtn')}
+          </Button>
+          <Button
+            variant="primary"
+            size="lg"
+            type="submit"
+            className="text-white px-6"
+          >
+            {t('sendBtn')}
+          </Button>
+        </div>
       </div>
     </form>
   );

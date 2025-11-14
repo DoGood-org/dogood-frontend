@@ -1,9 +1,13 @@
 {
   "title": "Laat een beoordeling achter voor",
   "imageAlt": "Avatar van gebruiker",
+  "imageHeroAlt": "Hero-Bild",
   "subtitle": "Hoe zou u uw ervaring met",
   "feedback": "Feedback achterlaten",
   "placeholder": "Deel feedback over uw ervaring...",
   "cancelBtn": "Annuleren",
-  "sendBtn": "Beoordeling verzenden"
+  "sendBtn": "Bewertung senden",
+  "taskMembers": "Taakleden",
+  "seeProfile": "Profil ansehen",
+  "sendReview": "Bewertung senden"
 }
