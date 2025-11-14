@@ -145,6 +145,7 @@ export * from './ui/Select';
 export * from './ui/Slider';
 export * from './ui/Spinner';
 export * from './ui/StarItem';
+export * from './ui/TaskFilter';
 export * from './ui/Textarea';
 export * from './ui/UiSuccessMessage';
 export * from './ui/modals/DonationModal/CurrencyAndAmountInput';
