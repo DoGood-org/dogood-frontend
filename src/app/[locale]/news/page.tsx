@@ -1,5 +1,5 @@
 import { NewsItem } from '@/components';
-import { fetchNews } from '@/services/newsFacade';
+import { fetchNews } from '@/facades/newsFacade';
 import { Tlocale } from '@/types';
 
 type Props = {
