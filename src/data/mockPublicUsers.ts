@@ -2,7 +2,7 @@ import { UserDetailedProps } from '@/types';
 
 export const mockPublicUsers: UserDetailedProps[] = [
   {
-    id: 6,
+    id: '6',
     name: 'Esther Howard',
     avatar: '/account/user.png',
     customerId: process.env.STRIPE_CUSTOMER_ID!,
@@ -22,7 +22,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
     },
     location: {
       id: 1,
-      country: '',
+      country: 'Serbia',
       region: '',
       city: 'Belgrade',
     },
@@ -86,7 +86,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-01T14:05:00.000Z',
-        owner: { id: 1, name: 'Wade', avatar: '/account/rev1.png' },
+        owner: { id: '1', name: 'Wade', avatar: '/account/rev1.png' },
       },
       {
         id: 2,
@@ -94,7 +94,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-13T10:05:00.000Z',
-        owner: { id: 2, name: 'Shane', avatar: '/account/rev2.png' },
+        owner: { id: '2', name: 'Shane', avatar: '/account/rev2.png' },
       },
       {
         id: 3,
@@ -102,7 +102,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-07-01T12:05:00.000Z',
-        owner: { id: 3, name: 'Mitchell', avatar: '' },
+        owner: { id: '3', name: 'Mitchell', avatar: '' },
       },
       {
         id: 4,
@@ -110,7 +110,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-01T14:05:00.000Z',
-        owner: { id: 1, name: 'Wade', avatar: '/account/rev3.png' },
+        owner: { id: '1', name: 'Wade', avatar: '/account/rev3.png' },
       },
       {
         id: 5,
@@ -118,7 +118,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-13T10:05:00.000Z',
-        owner: { id: 2, name: 'Shane', avatar: '/account/rev2.png' },
+        owner: { id: '2', name: 'Shane', avatar: '/account/rev2.png' },
       },
       {
         id: 6,
@@ -126,7 +126,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-07-01T12:05:00.000Z',
-        owner: { id: 3, name: 'Mitchell', avatar: '/account/rev3.png' },
+        owner: { id: '3', name: 'Mitchell', avatar: '/account/rev3.png' },
       },
       {
         id: 7,
@@ -134,7 +134,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-01T14:05:00.000Z',
-        owner: { id: 1, name: 'Wade', avatar: '/account/rev1.png' },
+        owner: { id: '1', name: 'Wade', avatar: '/account/rev1.png' },
       },
       {
         id: 8,
@@ -142,7 +142,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-13T10:05:00.000Z',
-        owner: { id: 2, name: 'Shane', avatar: '/account/rev2.png' },
+        owner: { id: '2', name: 'Shane', avatar: '/account/rev2.png' },
       },
       {
         id: 9,
@@ -150,12 +150,12 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-07-01T12:05:00.000Z',
-        owner: { id: 3, name: 'Mitchell', avatar: '/account/rev3.png' },
+        owner: { id: '3', name: 'Mitchell', avatar: '/account/rev3.png' },
       },
     ],
     organizations: [
       {
-        id: 1,
+        id: '1',
         name: 'Peace Volunteers',
         description:
           'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',
@@ -167,7 +167,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         logo: '/account/org1.png',
       },
       {
-        id: 2,
+        id: '2',
         name: 'Peace Volunteers',
         description:
           'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',
@@ -186,7 +186,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         logo: '',
       },
       {
-        id: 3,
+        id: '3',
         name: 'Peace Volunteers',
         description:
           'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',
@@ -203,7 +203,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
     ],
   },
   {
-    id: 5,
+    id: '5',
     name: 'Ja Howard',
     avatar: '',
     customerId: process.env.STRIPE_CUSTOMER_ID!,
@@ -250,7 +250,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-01T14:05:00.000Z',
-        owner: { id: 1, name: 'Wade', avatar: '/account/rev1.png' },
+        owner: { id: '1', name: 'Wade', avatar: '/account/rev1.png' },
       },
       {
         id: 2,
@@ -258,7 +258,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-13T10:05:00.000Z',
-        owner: { id: 2, name: 'Shane', avatar: '/account/rev2.png' },
+        owner: { id: '2', name: 'Shane', avatar: '/account/rev2.png' },
       },
       {
         id: 3,
@@ -266,7 +266,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-07-01T12:05:00.000Z',
-        owner: { id: 3, name: 'Mitchell', avatar: '/account/rev3.png' },
+        owner: { id: '3', name: 'Mitchell', avatar: '/account/rev3.png' },
       },
       {
         id: 4,
@@ -274,7 +274,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners. \n How to become a volunteer: step-by-step instructions for beginners.How to become a volunteer: step-by-step instructions for beginners. \n How to become a volunteer: step-by-step instructions for beginners.  How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-01T14:05:00.000Z',
-        owner: { id: 1, name: 'Wade', avatar: '/account/rev1.png' },
+        owner: { id: '1', name: 'Wade', avatar: '/account/rev1.png' },
       },
       {
         id: 5,
@@ -282,7 +282,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-13T10:05:00.000Z',
-        owner: { id: 2, name: 'Shane', avatar: '/account/rev2.png' },
+        owner: { id: '2', name: 'Shane', avatar: '/account/rev2.png' },
       },
       {
         id: 6,
@@ -290,7 +290,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-07-01T12:05:00.000Z',
-        owner: { id: 3, name: 'Mitchell', avatar: '/account/rev3.png' },
+        owner: { id: '3', name: 'Mitchell', avatar: '/account/rev3.png' },
       },
       {
         id: 7,
@@ -298,7 +298,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-01T14:05:00.000Z',
-        owner: { id: 1, name: 'Wade', avatar: '/account/rev1.png' },
+        owner: { id: '1', name: 'Wade', avatar: '/account/rev1.png' },
       },
       {
         id: 8,
@@ -306,7 +306,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-13T10:05:00.000Z',
-        owner: { id: 2, name: 'Shane', avatar: '/account/rev2.png' },
+        owner: { id: '2', name: 'Shane', avatar: '/account/rev2.png' },
       },
       {
         id: 9,
@@ -314,7 +314,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-07-01T12:05:00.000Z',
-        owner: { id: 3, name: 'Mitchell', avatar: '/account/rev3.png' },
+        owner: { id: '3', name: 'Mitchell', avatar: '/account/rev3.png' },
       },
     ],
     // organizations: [
@@ -366,7 +366,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
     // ],
   },
   {
-    id: 1,
+    id: '1',
     name: 'Esther Howard',
     avatar: '/account/user.png',
     customerId: process.env.STRIPE_CUSTOMER_ID!,
@@ -450,7 +450,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-01T14:05:00.000Z',
-        owner: { id: 1, name: 'Wade', avatar: '/account/rev1.png' },
+        owner: { id: '1', name: 'Wade', avatar: '/account/rev1.png' },
       },
       {
         id: 2,
@@ -458,7 +458,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-13T10:05:00.000Z',
-        owner: { id: 2, name: 'Shane', avatar: '/account/rev2.png' },
+        owner: { id: '2', name: 'Shane', avatar: '/account/rev2.png' },
       },
       {
         id: 3,
@@ -466,7 +466,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-07-01T12:05:00.000Z',
-        owner: { id: 3, name: 'Mitchell', avatar: '/account/rev3.png' },
+        owner: { id: '3', name: 'Mitchell', avatar: '/account/rev3.png' },
       },
       {
         id: 4,
@@ -474,7 +474,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-01T14:05:00.000Z',
-        owner: { id: 1, name: 'Wade', avatar: '/account/rev1.png' },
+        owner: { id: '1', name: 'Wade', avatar: '/account/rev1.png' },
       },
       {
         id: 5,
@@ -482,7 +482,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-13T10:05:00.000Z',
-        owner: { id: 2, name: 'Shane', avatar: '/account/rev2.png' },
+        owner: { id: '2', name: 'Shane', avatar: '/account/rev2.png' },
       },
       {
         id: 6,
@@ -490,7 +490,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-07-01T12:05:00.000Z',
-        owner: { id: 3, name: 'Mitchell', avatar: '/account/rev3.png' },
+        owner: { id: '3', name: 'Mitchell', avatar: '/account/rev3.png' },
       },
       {
         id: 7,
@@ -498,7 +498,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-01T14:05:00.000Z',
-        owner: { id: 1, name: 'Wade', avatar: '/account/rev1.png' },
+        owner: { id: '1', name: 'Wade', avatar: '/account/rev1.png' },
       },
       {
         id: 8,
@@ -506,7 +506,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-05-13T10:05:00.000Z',
-        owner: { id: 2, name: 'Shane', avatar: '/account/rev2.png' },
+        owner: { id: '2', name: 'Shane', avatar: '/account/rev2.png' },
       },
       {
         id: 9,
@@ -514,12 +514,12 @@ export const mockPublicUsers: UserDetailedProps[] = [
         comment:
           'How to become a volunteer: step-by-step instructions for beginners.',
         createdAt: '2025-07-01T12:05:00.000Z',
-        owner: { id: 3, name: 'Mitchell', avatar: '/account/rev3.png' },
+        owner: { id: '3', name: 'Mitchell', avatar: '/account/rev3.png' },
       },
     ],
     organizations: [
       {
-        id: 1,
+        id: '1',
         name: 'Peace Volunteers',
         description:
           'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',
@@ -531,7 +531,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         logo: '/account/org1.png',
       },
       {
-        id: 2,
+        id: '2',
         name: 'Peace Volunteers',
         description:
           'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',
@@ -549,7 +549,7 @@ export const mockPublicUsers: UserDetailedProps[] = [
         logo: '/account/org2.png',
       },
       {
-        id: 3,
+        id: '3',
         name: 'Peace Volunteers',
         description:
           'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',

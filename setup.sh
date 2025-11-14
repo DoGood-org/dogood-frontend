@@ -14,6 +14,7 @@ elif [ $(echo $CONTAINERS | grep -c 'dogood\|postgres\|redis') -gt 0 ]; then
     echo "Some containers already exist. Stopping and recreating them..."
     docker-compose stop
     docker-compose rm -f
+    docker system prune -f
     docker-compose up -d
 
 else

@@ -9,6 +9,7 @@ import { UserDetailedProps } from '@/types';
 import { useRouteMatch } from '@/hooks/useRouteMatch';
 import Link from 'next/link';
 import { ReportUser } from '@/components/publicAccount/ReportUser';
+import { formatLocation } from '@/lib/formatLocation';
 
 export const UserDescription = ({
   user,
@@ -45,7 +46,7 @@ export const UserDescription = ({
         {location && (
           <p className="flex gap-2 text-text-help mt-6">
             <UserLocate />
-            {location?.city}
+            {formatLocation(location)}
           </p>
         )}
         {phoneNumber && (

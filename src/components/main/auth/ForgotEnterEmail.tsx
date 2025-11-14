@@ -24,7 +24,6 @@ export const ForgotEnterEmail = ({ onSubmit }: Props): JSX.Element => {
     if (onSubmit) {
       onSubmit(data);
     }
-    console.log('Forgot email submitted:', data);
     reset();
   };
 

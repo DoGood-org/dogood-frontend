@@ -1,7 +1,7 @@
 import { UserDetailedProps } from '@/types';
 
 export const mockUser: UserDetailedProps = {
-  id: 1,
+  id: '5',
   name: 'Esther Howard',
   avatar: '/account/user.png',
   customerId: process.env.STRIPE_CUSTOMER_ID!,
@@ -36,7 +36,7 @@ export const mockUser: UserDetailedProps = {
     {
       id: 1,
       title: 'Peace Volunteers',
-      status: '',
+      status: 'CREATED',
       description:
         '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
       avatar: '/account/Razer.png',
@@ -45,7 +45,7 @@ export const mockUser: UserDetailedProps = {
     {
       id: 2,
       title: 'Peace Volunteers',
-      status: '',
+      status: 'COMPLETED',
       description:
         '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
       avatar: '/account/amazon.png',
@@ -54,7 +54,7 @@ export const mockUser: UserDetailedProps = {
     {
       id: 3,
       title: 'Peace Volunteers',
-      status: '',
+      status: 'IN_PROGRESS',
       description:
         '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
       avatar: '/account/Razer.png',
@@ -63,10 +63,19 @@ export const mockUser: UserDetailedProps = {
     {
       id: 4,
       title: 'Peace Volunteers',
-      status: '',
+      status: 'REJECTED',
       description:
         '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
       avatar: '/account/amazon.png',
+      category: 'medicine',
+    },
+    {
+      id: 5,
+      title: 'Peace Volunteers',
+      status: 'CREATED',
+      description:
+        '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
+      avatar: '/account/Razer.png',
       category: 'medicine',
     },
   ],
@@ -85,7 +94,7 @@ export const mockUser: UserDetailedProps = {
       comment:
         'How to become a volunteer: step-by-step instructions for beginners.',
       createdAt: '2025-05-01T14:05:00.000Z',
-      owner: { id: 1, name: 'Wade', avatar: '/account/rev1.png' },
+      owner: { id: '1', name: 'Wade', avatar: '/account/rev1.png' },
     },
     {
       id: 2,
@@ -93,7 +102,7 @@ export const mockUser: UserDetailedProps = {
       comment:
         'How to become a volunteer: step-by-step instructions for beginners.',
       createdAt: '2025-05-13T10:05:00.000Z',
-      owner: { id: 2, name: 'Shane', avatar: '' },
+      owner: { id: '2', name: 'Shane', avatar: '' },
     },
     {
       id: 3,
@@ -101,7 +110,7 @@ export const mockUser: UserDetailedProps = {
       comment:
         'How to become a volunteer: step-by-step instructions for beginners.',
       createdAt: '2025-07-01T12:05:00.000Z',
-      owner: { id: 3, name: 'Mitchell', avatar: '/account/rev3.png' },
+      owner: { id: '3', name: 'Mitchell', avatar: '/account/rev3.png' },
     },
     {
       id: 4,
@@ -109,7 +118,7 @@ export const mockUser: UserDetailedProps = {
       comment:
         'How to become a volunteer: step-by-step instructions for beginners.',
       createdAt: '2025-05-01T14:05:00.000Z',
-      owner: { id: 1, name: 'Wade', avatar: '/account/user.png' },
+      owner: { id: '1', name: 'Wade', avatar: '/account/user.png' },
     },
     {
       id: 5,
@@ -117,7 +126,7 @@ export const mockUser: UserDetailedProps = {
       comment:
         'How to become a volunteer: step-by-step instructions for beginners.',
       createdAt: '2025-05-13T10:05:00.000Z',
-      owner: { id: 2, name: 'Shane', avatar: '/account/rev2.png' },
+      owner: { id: '2', name: 'Shane', avatar: '/account/rev2.png' },
     },
     {
       id: 6,
@@ -125,7 +134,7 @@ export const mockUser: UserDetailedProps = {
       comment:
         'How to become a volunteer: step-by-step instructions for beginners.',
       createdAt: '2025-07-01T12:05:00.000Z',
-      owner: { id: 3, name: 'Mitchell', avatar: '/account/rev3.png' },
+      owner: { id: '3', name: 'Mitchell', avatar: '/account/rev3.png' },
     },
     {
       id: 7,
@@ -133,7 +142,7 @@ export const mockUser: UserDetailedProps = {
       comment:
         'How to become a volunteer: step-by-step instructions for beginners.',
       createdAt: '2025-05-01T14:05:00.000Z',
-      owner: { id: 1, name: 'Wade', avatar: '/account/rev1.png' },
+      owner: { id: '1', name: 'Wade', avatar: '/account/rev1.png' },
     },
     {
       id: 8,
@@ -141,7 +150,7 @@ export const mockUser: UserDetailedProps = {
       comment:
         'How to become a volunteer: step-by-step instructions for beginners.',
       createdAt: '2025-05-13T10:05:00.000Z',
-      owner: { id: 2, name: 'Shane', avatar: '/account/rev2.png' },
+      owner: { id: '2', name: 'Shane', avatar: '/account/rev2.png' },
     },
     {
       id: 9,
@@ -149,12 +158,12 @@ export const mockUser: UserDetailedProps = {
       comment:
         'How to become a volunteer: step-by-step instructions for beginners.',
       createdAt: '2025-07-01T12:05:00.000Z',
-      owner: { id: 3, name: 'Mitchell', avatar: '/account/rev3.png' },
+      owner: { id: '3', name: 'Mitchell', avatar: '/account/rev3.png' },
     },
   ],
   organizations: [
     {
-      id: 1,
+      id: '1',
       name: 'Peace Volunteers',
       description:
         'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',
@@ -166,7 +175,7 @@ export const mockUser: UserDetailedProps = {
       logo: '/account/org1.png',
     },
     {
-      id: 2,
+      id: '2',
       name: 'Peace Volunteers',
       description:
         'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',
@@ -184,7 +193,7 @@ export const mockUser: UserDetailedProps = {
       logo: '/account/org2.png',
     },
     {
-      id: 3,
+      id: '3',
       name: 'Peace Volunteers',
       description:
         'Peace Volunteers is a volunteer organization making a real difference through compassion, solidarity, and peaceful action.',

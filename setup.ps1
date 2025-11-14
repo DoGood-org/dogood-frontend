@@ -8,6 +8,7 @@ if ($containers -contains "dogood" -and $containers -contains "postgres" -and $c
 elseif ($containers -contains "dogood" -or $containers -contains "postgres" -or $containers -contains "redis") {
     docker-compose stop
     docker-compose rm -f
+    docker system prune -f
     docker-compose up -d
 }
 else{

@@ -27,9 +27,9 @@ export const useTaskStore = create<TTaskStore>()(
       tasksByKey: {},
       highlightedTaskId: null,
 
-      setTasks: (tasks): void => set({ tasks }),
-      setJoinedTasks: (tasks): void => set({ joinedTasks: tasks }),
-      joinTask: (taskId): void => {
+      setTasks: (tasks): any => set({ tasks }),
+      setJoinedTasks: (tasks): any => set({ joinedTasks: tasks }),
+      joinTask: (taskId): any => {
         const updated = get().tasks.map((task) => ({
           ...task,
           isSelected: task.id === taskId ? !task.isSelected : task.isSelected,
@@ -45,8 +45,7 @@ export const useTaskStore = create<TTaskStore>()(
         const allTasks = Object.values(updated).flat();
         set({ tasks: allTasks });
       },
-      setHighlightedTaskId: (taskId): void =>
-        set({ highlightedTaskId: taskId }),
+      setHighlightedTaskId: (taskId): any => set({ highlightedTaskId: taskId }),
     }),
     {
       name: 'task-storage',
