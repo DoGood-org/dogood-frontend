@@ -15,5 +15,7 @@
   "cardPeriod": "Karten­gültigkeits­dauer",
   "edit": "Bearbeiten",
   "delete": "Löschen",
-  "confirmDelete": "Sind Sie sicher, dass Sie die Karte löschen möchten?"
+  "confirmDelete": "Sind Sie sicher, dass Sie die Karte löschen möchten?",
+  "processing": "Verarbeitung...",
+  "donate": "Spenden"
 }

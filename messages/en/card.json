@@ -15,5 +15,7 @@
   "cardPeriod": "Card validity period",
   "edit": "Edit",
   "delete": "Delete",
-  "confirmDelete": "Are you sure you want to delete the card?"
+  "confirmDelete": "Are you sure you want to delete the card?",
+  "processing": "Processing...",
+  "donate": "Donate"
 }

@@ -31,5 +31,8 @@
     "paymentSuccess": {
     "downloadReceipt": "Download a receipt",
     "homePage": "Home page"
+  },
+   "task": {
+    "notFound": "Task not found"
   }
 }
