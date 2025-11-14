@@ -137,7 +137,7 @@ export const DonationForm = ({
         text-[#ffffff]"
         disabled={isSubmitting}
       >
-        {isSubmitting ? 'Processing...' : 'Donate'}
+        {isSubmitting ? t('processing') : t('donate')}
       </Button>
     </form>
   );

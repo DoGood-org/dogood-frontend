@@ -1,9 +1,11 @@
 'use client';
 
 import { IExtendedITaskProps } from '@/types/tasks.type';
-import { OtherTskItem, Slider } from '@/components';
+import { OtherTaskItem } from '@/components';
 import { useTranslations } from 'next-intl';
-import { useMediaQuery } from '@/hooks';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface OtherListProps {
   tasks: IExtendedITaskProps[];
@@ -11,10 +13,6 @@ interface OtherListProps {
 
 export const OtherTaskList: React.FC<OtherListProps> = ({ tasks }) => {
   const t = useTranslations('tasks');
-
-  const isDesktop = useMediaQuery('(min-width: 1440px)');
-  const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1439px)');
-  const itemsPerSlide = isDesktop ? 3 : isTablet ? 2 : 1;
 
   if (!tasks || tasks.length === 0) {
     return (
@@ -24,31 +22,48 @@ export const OtherTaskList: React.FC<OtherListProps> = ({ tasks }) => {
     );
   }
 
-  const slides: IExtendedITaskProps[][] = Array.from(
-    { length: Math.ceil(tasks.length / itemsPerSlide) },
-    (_, i) => tasks.slice(i * itemsPerSlide, i * itemsPerSlide + itemsPerSlide)
-  );
   return (
-    <div className="overflow-hidden">
-      <Slider
-        items={slides}
-        itemsPerSlide={1}
-        renderItem={(slide: IExtendedITaskProps[]) => (
-          <div
-            className={`grid gap-4 ${
-              isDesktop
-                ? 'grid-cols-3'
-                : isTablet
-                  ? 'grid-cols-2'
-                  : 'grid-cols-1'
-            }`}
-          >
-            {slide.map((task) => (
-              <OtherTskItem key={task.id} {...task} />
-            ))}
-          </div>
-        )}
-      />
+    <div className="w-full flex flex-col items-center">
+      <Swiper
+        modules={[Navigation, Pagination]}
+        spaceBetween={16}
+        slidesPerView={1}
+        breakpoints={{
+          768: { slidesPerView: 2, spaceBetween: 20 },
+          1440: { slidesPerView: 3, spaceBetween: 24 },
+        }}
+        navigation={{
+          nextEl: '.slider-next-btn',
+          prevEl: '.slider-prev-btn',
+        }}
+        pagination={{
+          el: '.slider-dots',
+          clickable: true,
+        }}
+        onInit={(swiper) => {
+          swiper.navigation.init();
+          swiper.navigation.update();
+        }}
+        className="w-full max-w-[360px] sm:max-w-full"
+      >
+        {tasks.map((task) => (
+          <SwiperSlide key={task.id}>
+            <OtherTaskItem {...task} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      <div className="flex justify-center items-center mt-5">
+        <button className="slider-prev-btn">
+          <ChevronLeft className="w-6 h-6 text-white" />
+        </button>
+
+        <div className="slider-dots flex items-center gap-2 md:gap-3"></div>
+
+        <button className="slider-next-btn">
+          <ChevronRight className="w-6 h-6 text-white" />
+        </button>
+      </div>
     </div>
   );
 };

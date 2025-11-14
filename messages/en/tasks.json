@@ -27,5 +27,12 @@
     "otherTask": {
     "otherTask": "Other Tasks",
     "noTasks": "There are no tasks in this section yet."
+  },
+    "paymentSuccess": {
+    "downloadReceipt": "Download a receipt",
+    "homePage": "Home page"
+  },
+   "task": {
+    "notFound": "Task not found"
   }
 }
