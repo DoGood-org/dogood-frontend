@@ -23,8 +23,7 @@ export const ActionButtons = (): JSX.Element => {
         type="button"
         variant="secondary"
         onClick={handleDownloadReceipt}
-        className="w-[158px]
-        md:w-[205px]"
+        className="min-w-[158px] md:min-w-[205px] px-3 py-2 text-sm"
       >
         {t('paymentSuccess.downloadReceipt')}
       </Button>
@@ -32,7 +31,7 @@ export const ActionButtons = (): JSX.Element => {
         type="button"
         variant="primary"
         onClick={handleGoHome}
-        className="w-[152px]
+        className="w-[150px]
         text-[#ffffff]
         md:w-[256px]"
       >

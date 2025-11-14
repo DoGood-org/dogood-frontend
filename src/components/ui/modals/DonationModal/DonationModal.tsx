@@ -8,7 +8,6 @@ import { cn } from '@/lib/utils';
 import { DonationForm } from '@/components';
 import { useTranslations } from 'next-intl';
 import { PaymentSuccessModal } from '@/components';
-import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
 
 interface DonationModalProps {
   isOpen: boolean;
@@ -56,12 +55,10 @@ export const DonationModal = ({
           <CloseIcon className="w-6 h-6" />
         </motion.button>
         <h2 className="text-base mb-3 text-center">{t('title')}</h2>
-        <StripeProviderLazy>
-          <DonationForm
-            onSuccess={handleDonationSuccess}
-            setIsSubmitting={setIsSubmitting}
-          />
-        </StripeProviderLazy>
+        <DonationForm
+          onSuccess={handleDonationSuccess}
+          setIsSubmitting={setIsSubmitting}
+        />
       </ModalWrapper>
       <PaymentSuccessModal
         isOpen={isPaymentSuccessful}

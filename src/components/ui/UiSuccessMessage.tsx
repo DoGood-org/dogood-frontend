@@ -5,13 +5,17 @@ import { JSX } from 'react';
 import Abstract from '../../assets/images/donation/abstract.png';
 import { useTranslations } from 'next-intl';
 
-export const UiSuccessMessage = (): JSX.Element => {
+export const UiSuccessMessage = ({
+  className = '',
+}: {
+  className?: string;
+}): JSX.Element => {
   const t = useTranslations('common');
 
   return (
     <div
-      className="relative w-[296px] h-[296px] mx-auto mb-16 mt-15
-    rounded-full overflow-hidden flex items-center justify-center"
+      className={`relative w-[296px] h-[296px] mx-auto mb-16 mt-15
+    rounded-full overflow-hidden flex items-center justify-center ${className}`}
     >
       <Image
         className="absolute inset-0 w-full h-full object-cover opacity-80"
