@@ -1,0 +1,96 @@
+{
+  "contentViews": [
+    {
+      "id": "tasks",
+      "view": "Aufgaben",
+      "title": "Unsere Aufgaben",
+      "icon": "ListTodo"
+    },
+    {
+      "id": "members",
+      "view": "Mitglieder",
+      "title": "Unsere Mitglieder",
+      "icon": "Users"
+    },
+    {
+      "id": "requests",
+      "view": "Beitrittsanfragen",
+      "isAdmin": true,
+      "title": "Anfragen zum Beitritt",
+      "icon": "UserPlus"
+    },
+    {
+      "id": "reviews",
+      "view": "Bewertungen",
+      "title": "Unsere Bewertungen",
+      "icon": "Star"
+    },
+    {
+      "id": "more",
+      "view": "Über die Organisation",
+      "title": "Mehr über unsere Organisation",
+      "icon": "Info"
+    }
+  ],
+  "description": "Beschreibung",
+  "settings": "Einstellungen",
+  "chatButton": "Chat",
+  "joinButton": "Organisation beitreten",
+  "joinRequest": "Beitrittsanfrage erfolgreich gesendet!",
+  "undoRequest": "Anfrage zurückziehen",
+  "done": "Fertig",
+  "dotMenu": {
+    "report": "Melden",
+    "copyLink": "Link zur Organisation kopieren",
+    "leaveOrg": "Organisation verlassen"
+  },
+  "linkCopied": "Link wurde kopiert!",
+  "leaveModal": {
+    "sure": "Möchten Sie diese Organisation wirklich verlassen?",
+    "loseAccess": "Sie verlieren den Zugriff auf alle Aufgaben und Daten",
+    "cancelButton": "Abbrechen",
+    "leaveButton": "Verlassen"
+  },
+  "noLocation": "Kein Standort",
+  "noPhone": "Keine Telefonnummer",
+  "noDescription": "Keine Beschreibung vorhanden",
+  "noTasks": "Sie haben noch keine Aufgaben. Erstellen Sie eine, um zu beginnen",
+  "noModerator": "Sie haben noch keine Moderatoren. Fügen Sie den ersten hinzu, um Ihr Team aufzubauen",
+  "noMember": "Sie haben noch keine Mitglieder. Fügen Sie das erste hinzu, um Ihr Team aufzubauen",
+  "noRequest": "Keine Beitrittsanfragen vorhanden",
+  "noReview": "Noch keine Bewertungen",
+  "noInfo": "Noch keine Informationen. Fügen Sie Details hinzu, um Freiwilligen mehr über Ihre Organisation zu erzählen",
+  "tasks": {
+    "title": "Unsere Aufgaben",
+    "userTitle": "Aufgaben",
+    "add": "Aufgabe erstellen"
+  },
+  "members": {
+    "title": "Unsere Mitglieder",
+    "userTitle": "Mitglieder",
+    "owner": "Inhaber",
+    "moderator": "Moderator",
+    "members": "Mitglieder",
+    "addMemberButton": "Mitglied hinzufügen",
+    "addModeratorButton": "Moderator hinzufügen",
+    "dismiss": "Moderator entfernen",
+    "send": "Nachricht senden",
+    "remove": "Entfernen",
+    "approve": "Genehmigen",
+    "reject": "Ablehnen",
+    "select": "Wählen Sie ein Mitglied, um Moderator zu werden",
+    "search": "Nach Name suchen...",
+    "addMember": "Neues Mitglied hinzufügen"
+  },
+  "reviews": {
+    "title": "Unsere Bewertungen",
+    "userTitle": "Bewertungen"
+  },
+  "request": {
+    "title": "Anfragen zum Beitritt"
+  },
+  "more": {
+    "title": "Mehr über unsere Organisation",
+    "userTitle": "Über die Organisation"
+  }
+}

@@ -1,6 +1,13 @@
-import { IUserAccount, Location, PaymentProps } from './accountType';
-import { ReviewItemProps } from './reviewType';
-import { ITaskDetails } from './tasks.type';
+import {
+  ContentPanelProps,
+  ContentProps,
+  IUserAccount,
+  Location,
+  PaymentProps,
+  TaskProps,
+} from './accountType';
+import { ReviewProps } from './reviewType';
+// import { ITaskDetails } from './tasks.type';
 
 export interface OrganizationProps {
   id: string;
@@ -8,6 +15,10 @@ export interface OrganizationProps {
   description: string;
   members: IUserAccount[];
   logo: string;
+}
+
+export interface OrganizationContelPanelProps extends ContentPanelProps {
+  organization: OrganizationDetailedProps;
 }
 
 export interface OrganizationItemProps {
@@ -39,8 +50,15 @@ export interface OrganizationDetailedProps {
   phoneNumber?: string;
   location: Location;
   paymentOptions: PaymentProps[];
-  tasks: ITaskDetails[];
-  reviews: ReviewItemProps[];
-  reviewsWrittenOrg?: ReviewItemProps[];
+  tasks: TaskProps[] | [];
+  reviews?: ReviewProps[];
+  reviewsWrittenOrg?: ReviewProps[];
   members: UserOrganization[];
+  moreInfo?: string;
+}
+
+export interface OrgMobileNavProps {
+  views: ContentProps[];
+  activeView: string;
+  onChange: (view: string) => void;
 }

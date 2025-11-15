@@ -1,0 +1,96 @@
+{
+  "contentViews": [
+    {
+      "id": "tasks",
+      "view": "Tasks",
+      "title": "Our tasks",
+      "icon": "ListTodo"
+    },
+    {
+      "id": "members",
+      "view": "Members",
+      "title": "Our members",
+      "icon": "Users"
+    },
+    {
+      "id": "requests",
+      "view": "Join requests",
+      "isAdmin": true,
+      "title": "Requests for join",
+      "icon": "UserPlus"
+    },
+    {
+      "id": "reviews",
+      "view": "Reviews",
+      "title": "Our reviews",
+      "icon": "Star"
+    },
+    {
+      "id": "more",
+      "view": "More about organization",
+      "title": "More about our organization",
+      "icon": "Info"
+    }
+  ],
+  "description": "Description",
+  "settings": "Settings",
+  "chatButton": "Chat",
+  "joinButton": "Join organization",
+  "joinRequest": "Join request sent successfully!",
+  "undoRequest": "Undo request",
+  "done": "Done",
+  "dotMenu": {
+    "report": "Report",
+    "copyLink": "Copy link to the organization",
+    "leaveOrg": "Leave organization"
+  },
+  "linkCopied": "Link copied to clipboard!",
+  "leaveModal": {
+    "sure": "Are you sure you want to leave this organization?",
+    "loseAccess": "You’ll lose access to all tasks and data",
+    "cancelButton": "Cancel",
+    "leaveButton": "Leave"
+  },
+  "noLocation": "No location",
+  "noPhone": "No phone number",
+  "noDescription": "No description added",
+  "noTasks": "You don’t have any tasks yet. Create one to get started",
+  "noModerator": "You don’t have any moderators yet. Add your first one to start building your team",
+  "noMember": "You don’t have any members yet. Add your first one to start building your team",
+  "noRequest": "You don’t have any join requests yet",
+  "noReview": "No reviews yet",
+  "noInfo": "No information yet. Add more details to tell volunteers about your organization",
+  "tasks": {
+    "title": "Our tasks",
+    "userTitle": "Tasks",
+    "add": "Create task"
+  },
+  "members": {
+    "title": "Our members",
+    "userTitle": "Members",
+    "owner": "Owner",
+    "moderator": "Moderator",
+    "members": "Members",
+    "addMemberButton": "Add member",
+    "addModeratorButton": "Add moderator",
+    "dismiss": "Dismiss moderator",
+    "send": "Send a message",
+    "remove": "Remove",
+    "approve": "Approve",
+    "reject": "Reject",
+    "select": "Select a member to make a moderator",
+    "search": "Search by name...",
+    "addMember": "Add a new member"
+  },
+  "reviews": {
+    "title": "Our reviews",
+    "userTitle": "Reviews"
+  },
+  "request": {
+    "title": "Requests for join"
+  },
+  "more": {
+    "title": "More about our organization",
+    "userTitle": "More about organization"
+  }
+}
