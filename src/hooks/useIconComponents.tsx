@@ -3,9 +3,14 @@ import {
   Dollar,
   Gear,
   House,
+  Info,
+  ListChecks,
   LogIn,
   LogOut,
   Megaphone,
+  StarOrg,
+  UserPlus,
+  Users,
   UsersThree,
 } from '@/components/icons';
 import { UserAvatar } from '../components/layout/header/UserAvatar';
@@ -21,6 +26,11 @@ export const iconNames = [
   'UsersThree',
   'Gear',
   'Megaphone',
+  'ListChecks',
+  'Info',
+  'Users',
+  'StarOrg',
+  'UserPlus',
 ] as const;
 
 export type IconName = (typeof iconNames)[number];
@@ -45,6 +55,11 @@ export const useIconComponents = (): Record<IconName, React.ReactNode> => {
     UsersThree: <UsersThree className="size-6" />,
     Gear: <Gear className="size-6" />,
     Megaphone: <Megaphone className="size-6" />,
+    ListChecks: <ListChecks className="size-6 fill-current" />,
+    Info: <Info className="size-6" />,
+    Users: <Users className="size-6" />,
+    StarOrg: <StarOrg className="size-6 fill-background" />,
+    UserPlus: <UserPlus className="size-6" />,
   };
 
   return iconComponents;
