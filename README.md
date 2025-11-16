@@ -36,7 +36,7 @@ Requirements:
 First of all create `.env` file as shown in `.env.compose.example`, then use setup script. 
 
 ```bash
-# Allow setup for Windows 
+# Allow setup for Windows. Open Powershell as administrator
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 ./setup.ps1 # For Windows Users (Powershell)
 ```
@@ -72,7 +72,7 @@ cd /backend  # for opening backend
 ```
 For starting either `backend` or `frontend` simply enter `npm run dev` in one of those directories and everything is set up.
 
-In case backend needs to be restarted, use `update.sh` inside container.
+In case backend needs to be restarted, use `update.sh` inside container 
 If there is a need to forcefully stop backend - use this command:
 
 ```bash
