@@ -3,10 +3,13 @@
 import { TaskListProps } from '@/types';
 import { JSX, useEffect, useState } from 'react';
 import { Slider, NoTask, AccountTaskItem, TaskFilter } from '@/components';
+import { useRouteMatch } from '@/hooks/useRouteMatch';
 
 export const AccountTaskList = ({ tasks }: TaskListProps): JSX.Element => {
   const [filter, setFilter] = useState('ALL');
   const [filteredTasks, setFilteredTasks] = useState(tasks);
+
+  const isAccountPage = useRouteMatch('/account');
 
   useEffect(() => {
     if (filter === 'ALL') {
@@ -23,7 +26,9 @@ export const AccountTaskList = ({ tasks }: TaskListProps): JSX.Element => {
 
   return (
     <>
-      <TaskFilter onChange={(status) => setFilter(status)} role="ADMIN" />
+      {isAccountPage && (
+        <TaskFilter onChange={(status) => setFilter(status)} role="ADMIN" />
+      )}
       {filteredTasks?.length ? (
         <Slider
           items={filteredTasks}

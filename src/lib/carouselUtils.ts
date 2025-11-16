@@ -1,4 +1,7 @@
-export type CarouselItem = string;
+export type CarouselItem = {
+  view: string;
+  icon?: string;
+};
 
 export const getLoopedItem = (
   items: CarouselItem[],
