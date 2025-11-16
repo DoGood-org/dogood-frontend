@@ -2,16 +2,32 @@ import type { JSX } from 'react/jsx-runtime';
 import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
+import { OrganizationLayout } from '@/components';
+import { OrganizationDetailedProps } from '@/types';
+import { getOrganizationById } from '@/services/organizationService';
+import { cache } from 'react';
+import { notFound } from 'next/navigation';
 
 interface Props {
   params: Promise<{ id: string; locale: Tlocale }>;
 }
 
+const fetchOrganizationById = cache(
+  async (id: string): Promise<OrganizationDetailedProps | null> => {
+    const organization = await getOrganizationById(id);
+
+    if (!organization) notFound();
+    return organization;
+  }
+);
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id, locale } = await params;
   const t = await getTranslations({ locale, namespace: 'common' });
 
-  if (!id) {
+  const organization = await fetchOrganizationById(id);
+
+  if (!organization) {
     return {
       title: t('notFoundTitle'),
       description: t('notFountDescr'),
@@ -19,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: id,
+    title: organization.name,
   };
 }
 
@@ -28,9 +44,11 @@ export default async function OrganizationPage({
 }: Props): Promise<JSX.Element> {
   const { id } = await params;
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <p>organization page: {id}</p>
-    </div>
-  );
+  const organization = await fetchOrganizationById(id);
+
+  if (!organization) {
+    notFound();
+  }
+
+  return <OrganizationLayout organization={organization} />;
 }
