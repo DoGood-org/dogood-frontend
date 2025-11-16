@@ -24,4 +24,4 @@ fi
 
 
 echo "All containers are up and running. Entering the backend container..."
-docker exec -it dogood bash
+docker exec -it dogood-front bash
