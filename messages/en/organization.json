@@ -4,7 +4,7 @@
       "id": "tasks",
       "view": "Tasks",
       "title": "Our tasks",
-      "icon": "ListTodo"
+      "icon": "ListChecks"
     },
     {
       "id": "members",
@@ -23,7 +23,7 @@
       "id": "reviews",
       "view": "Reviews",
       "title": "Our reviews",
-      "icon": "Star"
+      "icon": "StarOrg"
     },
     {
       "id": "more",
