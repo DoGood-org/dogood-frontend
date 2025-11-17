@@ -15,23 +15,17 @@ import * as yup from 'yup';
 import { Rating } from '../ui/Rating';
 import { Textarea } from '../ui/Textarea';
 import { Button } from '../ui/Button';
-import { Close } from '../icons';
-import { PaymentSuccessContent } from '../ui/modals/DonationModal/PaymentSuccessModal/PaymentSuccessContent';
+import ReviewsSuccessContent from './ReviewsSuccessContent';
+import { IReviewsProps } from '@/types/userReviewsType';
 
-interface ReviewsProps {
-  setIsOpen?: (isOpen: boolean) => void | undefined;
-  isOpen?: boolean;
-}
-
-export const ReviewsForm = ({
+export const ReviewsForm: React.FC<IReviewsProps> = ({
+  user,
   setIsOpen,
-  isOpen,
-}: ReviewsProps): React.JSX.Element => {
+}): React.JSX.Element => {
   const t = useTranslations('reviews');
   const f = useTranslations('faq');
   const downText = (f.raw('downtext') as any[])[0];
   const [isSubmitted, setIsSubmitted] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -68,14 +62,9 @@ export const ReviewsForm = ({
     } catch (_error: unknown) {
       toast.error(downText.error);
       console.error('Contact form submit error:', _error);
+    } finally {
+      setIsSubmitted(false);
     }
-
-    console.log('Form submitted:', {
-      authorId: data.authorId,
-      targetId: data.targetId,
-      rating: data.rating,
-      comment: data.comment,
-    });
   };
 
   const onReset = (): void => {
@@ -86,52 +75,25 @@ export const ReviewsForm = ({
     setIsSubmitted(false);
   };
 
-  const handleClose = (): void => {
-    setIsOpen?.(!isOpen);
-  };
-
   if (isSubmitted) {
-    return <PaymentSuccessContent />;
+    return <ReviewsSuccessContent setIsOpen={setIsOpen} />;
   }
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="w-full bg-card p-10 rounded-[10px]">
-        <button
-          className="absolute top-10 right-6 md:top-11 md:right-16 lg:top-12 lg:right-22 p-1"
-          onClick={handleClose}
-          type="button"
-        >
-          <Close className="stroke-foreground w-6 h-6" />
-        </button>
-
         <div className="flex gap-6 mb-8">
           <Image
-            src="/account/avatar.png"
+            src={user.avatar || '/account/avatar.png'}
             alt={t('imageAlt')}
             width={64}
             height={80}
             className="w-[64px] h-[80px] object-cover"
           />
-          <h2 className="text-xl md:text-h2-m lg:text-h2 mb-4">{t('title')}</h2>
+          <h2 className="text-xl md:text-h2-m lg:text-h2 mb-4">
+            {t('title') + ' ' + user.name}
+          </h2>
         </div>
         <h3 className="text-base font-semibold mb-5">{t('subtitle')}</h3>
-        {/* <InputField
-          label="AuthorId"
-          name="authorId"
-          register={register}
-          errors={errors.authorId}
-          placeholder="placeholder"
-          disabled={false}
-        />
-        <InputField
-          label="TargetId"
-          name="targetId"
-          register={register}
-          errors={errors.targetId}
-          placeholder="placeholder"
-          disabled={false}
-        /> */}
         <Controller
           name="rating"
           control={control}

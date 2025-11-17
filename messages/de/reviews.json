@@ -9,5 +9,8 @@
   "sendBtn": "Bewertung senden",
   "taskMembers": "Taakleden",
   "seeProfile": "Profil ansehen",
-  "sendReview": "Bewertung senden"
+  "sendReview": "Bewertung senden",
+  "success": "Sie haben erfolgreich eine Bewertung abgegeben!",
+  "backBtn": "Geh nach Hause",
+  "reviewBtn": "Eine weitere Bewertung hinterlassen"
 }

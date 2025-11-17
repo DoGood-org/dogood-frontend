@@ -9,5 +9,8 @@
   "sendBtn": "Send review",
   "taskMembers": "Task members",
   "seeProfile": "See Profile",
-  "sendReview": "Send Review"
+  "sendReview": "Send Review",
+  "success": "You've successfully leave review!",
+  "backBtn": "Go home",
+  "reviewBtn": "Leave another review"
 }
