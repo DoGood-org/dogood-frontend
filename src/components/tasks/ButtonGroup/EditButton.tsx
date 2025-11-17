@@ -1,3 +1,4 @@
+'use client';
 import React, { JSX } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/Button';
@@ -10,16 +11,23 @@ interface EditButtonProps {
 const EditButton = ({ onClick }: EditButtonProps): JSX.Element => {
   const t = useTranslations('tasks');
 
+  const handleClick = (): void => {
+    onClick?.();
+  };
   return (
-    <Button
-      variant="iconOnly"
-      size="icon"
-      onClick={onClick}
-      className="flex items-center gap-2 cursor-pointer ml-5"
-    >
-      <EditIcon />
-      <span className="text-base">{t('taskDetails.edit')}</span>
-    </Button>
+    <>
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={handleClick}
+        className="group flex items-center gap-1 md:gap-3 cursor-pointe md:pl-10"
+      >
+        <EditIcon className="size-6 group-hover:text-[#00c1ac]" />
+        <span className="text-base group-hover:text-[#00c1ac]">
+          {t('taskDetails.edit')}
+        </span>
+      </Button>
+    </>
   );
 };
 
