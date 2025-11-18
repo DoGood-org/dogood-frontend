@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
 import { Email, Phone, UserLocate } from '@/components/icons';
-import { UserNoDescription } from '@/components';
+import { Report, UserNoDescription } from '@/components';
 import { OrganizationDetailedProps } from '@/types';
 import { formatLocation } from '@/lib/formatLocation';
 import { getUserRole } from '@/lib/getUserRole';
@@ -29,10 +29,10 @@ export const OrganizationDesc = ({
         height={353}
         className="w-[353px] h-[353px] object-cover md:w-[192px] md:h-[192px] lg:w-[336px] lg:h-[336px] rounded-[10px]"
       />
-      <div>
+      <div className="w-full">
         <div className="flex justify-between">
           <h2 className="text-h2-m md:text-h2 lg:text-h2-d">{name}</h2>
-          {/* {isPublicProfilePage && <ReportUser />} */}
+          <Report role={userRole} />
         </div>
         <p className="text-base lg:text-h3 mt-3 text-text-help lg:font-normal capitalize">
           {userRole.toLowerCase()}
