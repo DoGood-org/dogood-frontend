@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const reviewsSchema = yup.object().shape({
-  targetUserId: yup.number().required('Target ID is required'),
+  targetUserId: yup.string().required('Target ID is required'),
   rating: yup
     .number()
     .min(1, 'Rating must be at least 1 star')

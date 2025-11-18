@@ -1,5 +1,5 @@
 export interface ReviewsFormData {
-  targetUserId: number;
+  targetUserId: string;
   rating: null | number;
   comment?: string;
 }
@@ -8,7 +8,7 @@ export interface ReviewsResponse {
   status: string;
   message: string;
   data: {
-    targetUserId: number;
+    targetUserId: string;
     rating: null | number;
     comment?: string;
   };

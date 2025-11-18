@@ -1,66 +1,66 @@
 [
   {
-    "id": 1,
+    "id": "1",
     "name": "Moonbeam ",
     "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
     "rating": 4
   },
   {
-    "id": 2,
+    "id": "2",
     "name": "Penelope",
     "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
     "rating": 5
   },
   {
-    "id": 3,
+    "id": "3",
     "name": "Sigizmund",
     "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
     "rating": 4
   },
   {
-    "id": 4,
+    "id": "4",
     "name": "Tootsie",
     "avatar": "https://randomuser.me/api/portraits/women/4.jpg",
     "rating": 5
   },
   {
-    "id": 5,
+    "id": "5",
     "name": "Vaniamin",
     "avatar": "https://randomuser.me/api/portraits/men/5.jpg",
     "rating": 3
   },
   {
-    "id": 6,
+    "id": "6",
     "name": "Sofiia",
     "avatar": "https://randomuser.me/api/portraits/women/6.jpg",
     "rating": 4
   },
   {
-    "id": 7,
+    "id": "7",
     "name": "Maksymilian",
     "avatar": "https://randomuser.me/api/portraits/men/7.jpg",
     "rating": 2
   },
   {
-    "id": 8,
+    "id": "8",
     "name": "Kateryna",
     "avatar": "https://randomuser.me/api/portraits/women/8.jpg",
     "rating": 5
   },
   {
-    "id": 9,
+    "id": "9",
     "name": "Bartholomew",
     "avatar": "https://randomuser.me/api/portraits/men/9.jpg",
     "rating": 4
   },
   {
-    "id": 10,
+    "id": "10",
     "name": "Olena",
     "avatar": "https://randomuser.me/api/portraits/women/10.jpg",
     "rating": 5
   },
   {
-    "id": 11,
+    "id": "11",
     "name": "Ambassador",
     "avatar": "https://randomuser.me/api/portraits/men/11.jpg",
     "rating": 5
