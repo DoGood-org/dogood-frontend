@@ -9,7 +9,7 @@ import {
 import { ContentProps, UserDetailedProps } from '@/types';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
-import { JSX, useMemo, useState } from 'react';
+import { JSX } from 'react';
 
 export const AccountContent = ({
   user,
@@ -21,15 +21,9 @@ export const AccountContent = ({
   const isAccountPage = segments[segments.length - 1] === 'account';
   const t = useTranslations('account');
   const views = t.raw('contentViews') as ContentProps[];
-  const [filter, setFilter] = useState('ALL');
-
-  const filteredTasks = useMemo(() => {
-    if (filter === 'ALL') return user.joinedTasks;
-    return user?.joinedTasks?.filter((task) => task.status === filter);
-  }, [filter, user.joinedTasks]);
 
   const viewComponents: Record<string, React.ReactNode> = {
-    task: <AccountTaskList tasks={filteredTasks} />,
+    task: <AccountTaskList tasks={user.joinedTasks} />,
     organization: <OrganizationList organizations={user.organizations} />,
     reviews: <ReviewsList reviews={user.reviewsReceived} />,
   };
@@ -37,11 +31,7 @@ export const AccountContent = ({
   return (
     <>
       {isAccountPage && (
-        <AccountContentPanel
-          views={views}
-          viewComponents={viewComponents}
-          onFilterChange={setFilter}
-        />
+        <AccountContentPanel views={views} viewComponents={viewComponents} />
       )}
     </>
   );

@@ -1,6 +1,6 @@
 import { IUserSettings } from './authType';
 import { Tlocale } from './locale';
-import { OrganizationProps } from './organization';
+import { OrganizationProps, OrganizationRole } from './organization';
 import { ReviewProps } from './reviewType';
 import { Theme } from './theme';
 
@@ -8,6 +8,9 @@ export interface ContentProps {
   view: string;
   people?: string;
   id: string;
+  isAdmin?: boolean;
+  title?: string;
+  icon?: string;
 }
 
 export interface IUserAccount {
@@ -22,7 +25,7 @@ export interface IUserAccount {
 export interface ContentPanelProps {
   views: ContentProps[];
   viewComponents: Record<string, React.ReactNode>;
-  onFilterChange: (status: string) => void;
+  role?: OrganizationRole | 'USER';
 }
 
 export interface UserDetailedProps {

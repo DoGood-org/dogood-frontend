@@ -1,4 +1,5 @@
 import { images } from '@/assets/images/about/import';
+import { CarouselItem } from '@/lib/carouselUtils';
 import { RefObject } from 'react';
 
 export interface AboutSectionProps {
@@ -9,7 +10,7 @@ export interface AboutSectionProps {
 }
 
 export interface AboutTabsProps {
-  views: { view: string }[];
+  views: CarouselItem[];
   activeView: string;
   onChange: (view: string) => void;
   isScroll?: boolean;
