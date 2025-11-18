@@ -8,7 +8,7 @@ import { IReviewsFormModal } from '@/types/userReviewsType';
 const ReviewsFormModal: React.FC<IReviewsFormModal> = ({
   isOpen,
   setIsOpen,
-  user: { name, avatar, rating },
+  user: { id, name, avatar, rating },
 }): React.JSX.Element => {
   return (
     <ModalWrapper
@@ -26,7 +26,7 @@ const ReviewsFormModal: React.FC<IReviewsFormModal> = ({
       >
         <CloseIcon className="w-6 h-6" />
       </motion.button>
-      <ReviewsForm user={{ rating, name, avatar }} setIsOpen={setIsOpen} />
+      <ReviewsForm user={{ id, rating, name, avatar }} setIsOpen={setIsOpen} />
     </ModalWrapper>
   );
 };

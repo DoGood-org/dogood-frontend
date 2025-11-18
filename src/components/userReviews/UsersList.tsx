@@ -47,7 +47,7 @@ export const UsersList = (): React.JSX.Element => {
               className="rounded-xl object-fill mb-8"
             />
           </div>
-          <div className="lg:flex-1/2 lg:order-1 md:mb-4 h-dvh reviews-scrollbar">
+          <div className="lg:flex-1/2 lg:order-1 md:mb-4 h-dvh lg:h-[642px] reviews-scrollbar">
             <div className="pl-4 md:pl-5">
               <ul className="flex flex-col gap-6">
                 {mocks.map((user) => (

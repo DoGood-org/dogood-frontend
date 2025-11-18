@@ -35,8 +35,7 @@ export const ReviewsForm: React.FC<IReviewsProps> = ({
   } = useForm<ReviewsFormValues>({
     resolver: yupResolver(reviewsSchema) as Resolver<ReviewsFormValues>,
     defaultValues: {
-      authorId: undefined,
-      targetId: undefined,
+      targetUserId: user.id,
       rating: undefined,
       comment: undefined,
     },
@@ -47,8 +46,7 @@ export const ReviewsForm: React.FC<IReviewsProps> = ({
   ): Promise<void> => {
     try {
       const response = await sendReview({
-        authorId: data.authorId,
-        targetId: data.targetId,
+        targetUserId: user.id,
         rating: data.rating,
         comment: data.comment,
       });
@@ -68,8 +66,6 @@ export const ReviewsForm: React.FC<IReviewsProps> = ({
   };
 
   const onReset = (): void => {
-    setValue('authorId', 0);
-    setValue('targetId', 0);
     setValue('rating', 0);
     setValue('comment', '');
     setIsSubmitted(false);

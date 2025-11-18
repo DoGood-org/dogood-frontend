@@ -9,7 +9,7 @@ import ReviewsFormModal from './ReviewsFormModal';
 import { IUserItemProps } from '@/types/userReviewsType';
 
 export const UserItem: React.FC<IUserItemProps> = ({
-  user: { name, avatar, rating },
+  user: { id, name, avatar, rating },
 }): React.JSX.Element => {
   const t = useTranslations('reviews');
   const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +53,7 @@ export const UserItem: React.FC<IUserItemProps> = ({
         <ReviewsFormModal
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          user={{ rating, name, avatar }}
+          user={{ id, rating, name, avatar }}
         />
       )}
     </div>
