@@ -31,7 +31,8 @@ export const settingsSchema = yup.object().shape({
   phoneNumber: yup
     .string()
     .matches(/^\+?[0-9\s\-\(\)]{7,}$/, 'Invalid phone number')
-    .optional(),
+    .optional()
+    .nullable(),
   paymentOptionIds: yup
     .array()
     .of(yup.number().integer().positive('Invalid payment option'))

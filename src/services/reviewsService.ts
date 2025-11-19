@@ -1,0 +1,12 @@
+import { fetchFromApi } from '@/lib/apiFetcher';
+import { ReviewsFormData, ReviewsResponse } from '@/types/reviews';
+
+export const sendReview = async (
+  formData: ReviewsFormData
+): Promise<ReviewsResponse> => {
+  const response = await fetchFromApi<ReviewsResponse>('/reviews/users', {
+    method: 'POST',
+    data: formData,
+  });
+  return response;
+};
