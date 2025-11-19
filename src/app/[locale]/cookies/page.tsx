@@ -1,180 +1,17 @@
 'use client';
 import React from 'react';
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from '@/components/ui/Accordion';
+import { Accordion } from '@/components/ui/Accordion';
 import { useTranslations } from 'next-intl';
 import { Container } from '@/components';
 import Line6 from '@/components/icons/Line6';
 import BackToTopButton from '@/components/ui/BackToTopButton';
+import CategoryItem, { Category } from '@/components/ui/CategoryItem';
 
-type Example = {
-  type: string;
-  description: string;
-};
-
-type Category = {
-  title: string;
-  description: string | Example[];
-  examples?: Example[];
-  moreInfo?: string;
-};
-
-function renderBlock(block: any, key?: React.Key): React.ReactNode {
-  if (typeof block === 'string') {
-    return (
-      <p key={key} className="whitespace-pre-line break-words">
-        {block}
-      </p>
-    );
-  }
-  if (Array.isArray(block)) {
-    return (
-      <div key={key} className="mb-2 space-y-2">
-        {block.map((item, idx) =>
-          renderBlock(item, key ? `${key}-${idx}` : idx)
-        )}
-      </div>
-    );
-  }
-  return (
-    <li key={key} className="mb-2 list-disc">
-      {block.title && (
-        <h4 className="text-xl font-semibold mt-4 mb-2">{block.title}</h4>
-      )}
-      {block.heading && (
-        <p className="text-[16px] font-bold leading-[24px] mt-3 mb-2">
-          {block.heading}
-        </p>
-      )}
-      {block.paragraph && (
-        <p className="mb-2 whitespace-pre-line break-words">
-          {block.paragraph}
-        </p>
-      )}
-      {block.type && <strong>{block.type}</strong>}
-      {block.content && <span> {block.content}</span>}
-      {block.content2 && (
-        <p className="mb-2 whitespace-pre-line break-words">{block.content2}</p>
-      )}
-      {block.content3 && (
-        <p className="mb-2 whitespace-pre-line break-words">{block.content3}</p>
-      )}
-      {block.content4 && (
-        <p className="mb-2 whitespace-pre-line break-words">{block.content4}</p>
-      )}
-      {block.description && typeof block.description === 'string' && (
-        <p className="mb-2 whitespace-pre-line break-words">
-          {block.description}
-        </p>
-      )}
-      {block.description && Array.isArray(block.description) && (
-        <div className="mb-2 space-y-2">
-          {block.description.map((desc: any, idx: number) =>
-            renderBlock(desc, key ? `${key}-desc-${idx}` : `desc-${idx}`)
-          )}
-        </div>
-      )}
-      {block.examples &&
-        Array.isArray(block.examples) &&
-        block.examples.length > 0 && (
-          <ul className="pl-5 space-y-1">
-            {block.examples.map((ex: any, i: number) => (
-              <li key={ex.type ? `${ex.type}-${i}` : i}>
-                {ex.type && <strong>{ex.type}: </strong>}
-                {ex.description}
-              </li>
-            ))}
-          </ul>
-        )}
-      {block.items && Array.isArray(block.items) && (
-        <ul className="ml-4 pl-4 mt-2">
-          {block.items.map((item: any, idx: number) =>
-            renderBlock(item, key ? `${key}-item-${idx}` : `item-${idx}`)
-          )}
-        </ul>
-      )}
-      {block.moreInfo && <p className="mt-2">{block.moreInfo}</p>}
-    </li>
-  );
-}
-
-type CategoryItemProps = {
-  cat: Category;
-  index: number;
-};
-
-const CategoryItem: React.FC<CategoryItemProps> = React.memo(
-  function CategoryItem({ cat, index }) {
-    const [mounted, setMounted] = React.useState(false);
-    const [_isPending, startTransition] = React.useTransition();
-
-    const renderedDescription = React.useMemo(() => {
-      if (!mounted) return null;
-      return renderBlock(cat.description, `cat-desc-${index}`);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [mounted, cat.description]);
-
-    return (
-      <AccordionItem key={cat.title || index} value={`item-${index}`}>
-        <AccordionTrigger
-          className="text-[20px] leading-[24px] font-400 md:text-[24px] md:leading-[32px]"
-          onClick={() => {
-            if (!mounted) {
-              startTransition(() => setMounted(true));
-            }
-          }}
-        >
-          {cat.title}
-        </AccordionTrigger>
-        <AccordionContent>
-          <p className="text-[16px] leading-[24px] pt-[8px] font-400 mb-[16px]">
-            {renderedDescription}
-          </p>
-
-          {cat.examples &&
-            Array.isArray(cat.examples) &&
-            cat.examples.length > 0 && (
-              <ul className="list-disc pl-5 space-y-6">
-                {cat.examples.map((ex: any, i: number) => (
-                  <li
-                    className="text-[16px] leading-[24px] font-400"
-                    key={ex.type ? `${ex.type}-${i}` : i}
-                  >
-                    <strong>{ex.type}:</strong> {ex.description}
-                  </li>
-                ))}
-              </ul>
-            )}
-
-          {cat.moreInfo && (
-            <p className="mt-6 text-[16px] leading-[24px] font-400">
-              {cat.moreInfo}
-            </p>
-          )}
-        </AccordionContent>
-      </AccordionItem>
-    );
-  },
-  (prev, next) => {
-    return (
-      prev.cat.title === next.cat.title &&
-      prev.cat.description === next.cat.description &&
-      prev.cat.examples === next.cat.examples &&
-      prev.cat.moreInfo === next.cat.moreInfo
-    );
-  }
-);
-
-export const Cookies: React.FC = () => {
+const Cookies: React.FC = () => {
   const t = useTranslations('cookies');
   const categories = t.raw('categories') as Category[];
   const [accordionOpen, setAccordionOpen] = React.useState(false);
 
-  // Handler for Accordion value change
   const handleAccordionChange = (
     value: string | string[] | undefined
   ): void => {
@@ -213,3 +50,5 @@ export const Cookies: React.FC = () => {
     </div>
   );
 };
+
+export default Cookies;

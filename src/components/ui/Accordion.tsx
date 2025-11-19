@@ -46,24 +46,7 @@ function AccordionTrigger({
         )}
         {...props}
       >
-        <span className="flex-1 text-left w-fit pb-4 border-b-2 border-primary-200 border-foreground inline-block">
-          {children}
-        </span>
-        <svg
-          className="w-5 h-5 text-gray-400 transition-transform duration-300 group-data-[state=open]:rotate-180 group-data-[state=open]:transform group-data-[state=open]:transition-transform"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          data-state-open="rotate-180"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
+        {children}
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   );

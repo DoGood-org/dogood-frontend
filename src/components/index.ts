@@ -131,6 +131,7 @@ export * from './ui/Avatar';
 export * from './ui/BackToTopButton';
 export * from './ui/Button';
 export * from './ui/Calendar';
+export * from './ui/CategoryItem';
 export * from './ui/Container';
 export * from './ui/ContentLoader';
 export * from './ui/DraggableDrawler';
