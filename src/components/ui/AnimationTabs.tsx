@@ -3,10 +3,16 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { AboutTabsProps } from '@/types';
-import { useMediaQuery, useScrollToActive, useSwipe } from '@/hooks';
+import {
+  useIconComponents,
+  useMediaQuery,
+  useScrollToActive,
+  useSwipe,
+} from '@/hooks';
 import { CarouselItem, getVisibleItems } from '@/lib/carouselUtils';
 import { Button } from '@/components';
 import { CaretDoubleRight } from '@/components/icons';
+import { useRouteMatch } from '@/hooks/useRouteMatch';
 
 export const AnimationTabs = ({
   views,
@@ -18,8 +24,19 @@ export const AnimationTabs = ({
   headClass = '',
 }: AboutTabsProps): React.JSX.Element => {
   const isTabletOrLarger = useMediaQuery('(min-width: 768px)');
-  const carouselItems: CarouselItem[] = views.map((viewObj) => viewObj.view);
-  const activeIndex = carouselItems.findIndex((item) => item === activeView);
+  const isDesktop = useMediaQuery('(min-width: 1440px)');
+  const carouselItems: CarouselItem[] = views.map((viewObj) => ({
+    view: viewObj.view,
+    icon: viewObj.icon,
+  }));
+
+  const activeIndex = carouselItems.findIndex(
+    (item) => item.view === activeView
+  );
+
+  const isOrganizationPage = useRouteMatch('organization');
+
+  const icons = useIconComponents();
 
   const visibleItems =
     isScroll && !isTabletOrLarger
@@ -33,7 +50,7 @@ export const AnimationTabs = ({
 
   const handleNext = useCallback(() => {
     const nextIndex = (activeIndex + 1) % carouselItems.length;
-    onChange(carouselItems[nextIndex]);
+    onChange(carouselItems[nextIndex].view);
   }, [activeIndex, carouselItems, onChange]);
 
   // Only activate swipe tracking if scroll mode is enabled
@@ -73,18 +90,20 @@ export const AnimationTabs = ({
           />
         )}
 
-        {visibleItems.map((view, index) => (
+        {visibleItems.map(({ view, icon }, index) => (
           <Button
             variant="ghost"
             size="sm"
             key={`${index}-${view}`}
             data-view={view}
             onClick={() => onChange(view)}
-            className={`relative z-10 text-p2-d px-4 py-2 rounded-md transition-color duration-500 ${buttonClass} ${
-              activeView === view ? 'text-primary' : 'text-muted'
-            }`}
+            className={`relative z-10 text-p2-d px-4 py-2 rounded-md transition-color text-foreground duration-500 ${buttonClass} 
+            `}
+            // ${ activeView === view ? 'text-foregr' : 'text-muted'}
           >
-            {view}
+            {!isDesktop && isOrganizationPage
+              ? icons[icon as keyof typeof icons]
+              : view}
           </Button>
         ))}
       </div>

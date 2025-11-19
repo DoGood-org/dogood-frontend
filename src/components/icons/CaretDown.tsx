@@ -10,7 +10,7 @@ const CaretDown = (props: SVGProps<SVGSVGElement>) => (
   >
     <g clipPath="url(#prefix__a)">
       <path
-        stroke="#F1F1F1"
+        stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={1.5}

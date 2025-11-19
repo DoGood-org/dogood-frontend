@@ -1,4 +1,5 @@
-// hooks/useScrollToActive.ts
+'use client';
+
 import { TabScrollProps } from '@/types';
 import { useLayoutEffect } from 'react';
 
@@ -18,10 +19,12 @@ export const useScrollToActive = ({
 
     if (!activeBtn) return;
 
-    const btnRect = activeBtn.getBoundingClientRect();
-    const containerRect = container.getBoundingClientRect();
-    const width = btnRect.width;
+    // ВАЖЛИВО: вимірюємо всю кнопку, а не контент
+    const width = activeBtn.offsetWidth;
+    const left =
+      activeBtn.offsetLeft - (isTabletOrLarger ? 0 : container.scrollLeft);
 
+    // Скрол до елементу (мобільна версія)
     if (!isTabletOrLarger && container.scrollWidth > container.clientWidth) {
       activeBtn.scrollIntoView({
         behavior: 'smooth',
@@ -29,10 +32,6 @@ export const useScrollToActive = ({
         block: 'nearest',
       });
     }
-
-    const left = isTabletOrLarger
-      ? btnRect.left - containerRect.left
-      : btnRect.left - containerRect.left + container.scrollLeft;
 
     setRect({ left, width });
   }, [activeView, isTabletOrLarger, containerRef, setRect]);

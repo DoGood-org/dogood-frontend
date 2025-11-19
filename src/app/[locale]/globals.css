@@ -449,6 +449,35 @@ html {
     background: var(--black);
   }
 
+  /* custom scrollbar styles for reviews */
+  .reviews-scrollbar {
+    direction: rtl;
+    overflow-y: auto;
+  }
+
+  .reviews-scrollbar > * {
+    direction: ltr;
+  }
+
+  .reviews-scrollbar::-webkit-scrollbar {
+    width: 6px !important;
+  }
+
+  .reviews-scrollbar::-webkit-scrollbar-track {
+    background-color: var(--color-card);
+    border: 1px solid transparent;
+    background-clip: content-box;
+  }
+
+  .reviews-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-btn);
+    width: 6px;
+    border-radius: 3px;
+  }
+
+  .reviews-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #059669 !important;
+  }
   /*----------------- Font-size utilites -------------------------------*/
   .text-sm {
     font-size: var(--text-sm);
@@ -790,4 +819,41 @@ html {
   to {
     transform: translateX(110%);
   }
+}
+
+/* === SWIPER DOTS === */
+.slider-dots .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid #ffffff;
+  opacity: 1;
+  transition: 0.2s;
+}
+
+.slider-dots .swiper-pagination-bullet-active {
+  background: #ffffff;
+}
+
+/* === SWIPER NAV BUTTONS === */
+.slider-prev-btn,
+.slider-next-btn {
+  background: transparent;
+  outline: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.slider-prev-btn:hover,
+.slider-next-btn:hover {
+  transform: scale(1.1);
+}
+
+.slider-prev-btn:disabled,
+.slider-next-btn:disabled {
+  opacity: 0.3;
+  pointer-events: none;
 }

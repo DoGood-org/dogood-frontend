@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { useTranslations } from 'next-intl';
-import { INewsItem } from '@/types/news.interface';
+import { INewsItem } from '@/types';
 import { NewsItem } from '@/components';
 
 interface NewsListItemsProps {

@@ -3,6 +3,9 @@ import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { TaskContent } from '@/components';
+import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
+import { getNews } from '@/services/newsService';
+import { INewsItem } from '@/types';
 
 interface Props {
   params: Promise<{ slug: string; locale: Tlocale }>;
@@ -27,11 +30,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function IdTaskItemPage({
   params,
 }: Props): Promise<JSX.Element> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
+
+  const newsItems: INewsItem[] = await getNews(locale);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <TaskContent slug={slug} />
-    </div>
+    <StripeProviderLazy>
+      <div className="flex flex-col items-center justify-center min-h-screen p-4">
+        <TaskContent slug={slug} newsItems={newsItems} />
+      </div>
+    </StripeProviderLazy>
   );
 }

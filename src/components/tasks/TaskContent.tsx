@@ -11,12 +11,19 @@ import {
 import { IconButtonGroup } from '@/components/tasks/ButtonGroup/IconButtonGroup';
 import { OtherTasksSection, TaskActionButtons } from '@/components';
 import { LastNews } from './LastNews/LastNews';
+import { INewsItem } from '@/types';
+import { useTranslations } from 'next-intl';
 
 interface TaskContentProps {
   slug: string;
+  newsItems: INewsItem[];
 }
 
-export const TaskContent: React.FC<TaskContentProps> = ({ slug }) => {
+export const TaskContent: React.FC<TaskContentProps> = ({
+  slug,
+  newsItems,
+}) => {
+  const t = useTranslations('tasks');
   const tasks = generateTasks(49.8429, 24.0316);
   const detailedTasks: ITaskDetails[] = generateMockTasks(tasks).map(
     (task) => ({
@@ -34,7 +41,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({ slug }) => {
 
   const task = detailedTasks.find((t) => t.id === slug);
 
-  if (!task) return <div>Task not found</div>;
+  if (!task) return <div>{t('task.notFound')}</div>;
 
   const otherTasksList: ITaskDetails[] = detailedTasks;
 
@@ -65,7 +72,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({ slug }) => {
         />
       </div>
       <OtherTasksSection tasks={otherTasksList} />
-      <LastNews newsItems={[]} />
+      <LastNews newsItems={newsItems} />
     </Container>
   );
 };

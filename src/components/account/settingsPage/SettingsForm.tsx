@@ -137,7 +137,7 @@ export const Settings = (): React.JSX.Element => {
         birthDate: data.birthDate
           ? format(data.birthDate, 'yyyy-MM-dd')
           : undefined,
-        phoneNumber: data.phoneNumber,
+        phoneNumber: data.phoneNumber || undefined,
         paymentOptionIds:
           paymentOptionIds.length > 0 ? paymentOptionIds : undefined,
       });

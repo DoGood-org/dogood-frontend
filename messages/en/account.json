@@ -8,7 +8,8 @@
   "task": {
     "title": "Find your first task on the map",
     "text": "Help is closer than you think — choose a project that speaks to you. Every small action matters. Start now — create real change.",
-    "button": "Go to map"
+    "button": "Go to map",
+    "add": "Add task"
   },
   "noReview": "No one has left a review for this user yet.",
   "noReviewPublic": "No reviews yet",
@@ -51,6 +52,18 @@
       "view": "In progress"
     }
   ],
+  "tasks": {
+    "sortBy": "Sort by",
+    "filter": {
+      "ALL": "All",
+      "CREATED": "Created tasks",
+      "IN_PROGRESS": "Tasks in progress",
+      "COMPLETED": "Completed tasks",
+      "PENDING": "Pending review",
+      "REJECTED": "Rejected tasks",
+      "CLOSED": "Closed tasks"
+    }
+  },
   "chatButton": "Send a message",
   "reportButton": "Report",
   "photoReport": "Photo 18+",
