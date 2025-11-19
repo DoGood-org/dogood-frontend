@@ -2,22 +2,28 @@
 import React from 'react';
 import mocks from './mock.json';
 import { Section } from '../ui/Section';
-import HeroReviewsDesck from '@/assets/images/reviews/hero-reviews-desck.png';
-import HeroReviewsMob from '@/assets/images/reviews/hero-reviews-mob.png';
+import HeroReviewsDesck from '@/assets/images/reviews/hero-reviews-desck.webp';
+import HeroReviewsMob from '@/assets/images/reviews/hero-reviews-mob.webp';
+import HeroReviewsTabl from '@/assets/images/reviews/hero-reviews-tabl.webp';
+
 import { useMediaQuery } from '@/hooks';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { UserItem } from './UserItem';
-import bgMobile from '@/assets/images/reviews/bgMob.png';
-import bgTablet from '@/assets/images/reviews/bgTabl.png';
-import bgDesktop from '@/assets/images/reviews/bgDesck.png';
+import bgMobile from '@/assets/images/reviews/bgMob.webp';
+import bgTablet from '@/assets/images/reviews/bgTabl.webp';
+import bgDesktop from '@/assets/images/reviews/bgMob.webp';
 
 export const UsersList = (): React.JSX.Element => {
   const isMobile = useMediaQuery('(max-width: 767px)');
   const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1439px)');
   const t = useTranslations('reviews');
 
-  const heroImage = isMobile ? HeroReviewsMob : HeroReviewsDesck;
+  const heroImage = isMobile
+    ? HeroReviewsMob
+    : isTablet
+      ? HeroReviewsTabl
+      : HeroReviewsDesck;
 
   const backgroundImage = isMobile ? bgMobile : isTablet ? bgTablet : bgDesktop;
   return (
