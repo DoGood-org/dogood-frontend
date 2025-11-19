@@ -1,4 +1,3 @@
-// import { ReviewProps } from '@/types';
 import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
 import { EmptyContent } from '@/components';
@@ -13,7 +12,7 @@ export const OrgMoreSection = ({ info }: { info?: string }): JSX.Element => {
       {!info ? (
         <EmptyContent>{t('noInfo')}</EmptyContent>
       ) : (
-        // ---------change this code ------
+        // TODO ----------------
         <p className="whitespace-pre-line">{info}</p>
         // ----------------------
       )}

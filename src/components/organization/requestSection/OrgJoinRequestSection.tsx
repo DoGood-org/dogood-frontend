@@ -21,7 +21,7 @@ export const OrgJoinRequestSection = ({
       {!!pendingMembers.length ? (
         <EmptyContent>{t('noRequest')}</EmptyContent>
       ) : (
-        // ---------change this code ------
+        //TODO -------------------
         <p>Count of members - {pendingMembers.length}</p>
         // ----------------------
       )}
