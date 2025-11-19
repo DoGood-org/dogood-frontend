@@ -7,7 +7,7 @@ import { adminOptions, memberOptions } from '@/constants/taskFilterOptions';
 import { Check } from '../icons/Check';
 import { motion, AnimatePresence } from 'framer-motion';
 
-type Role = 'ADMIN' | 'MODERATOR' | 'MEMBER';
+type Role = 'ADMIN' | 'MODERATOR' | 'MEMBER' | 'USER';
 
 interface TaskFilterProps {
   role?: Role;
