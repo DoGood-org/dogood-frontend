@@ -50,7 +50,7 @@ export const Report = ({ role }: { role: Role }): JSX.Element => {
       <ul>
         <li className={itemStyles}>{t('dotMenu.report')}</li>
         <li className={itemStyles}>{t('dotMenu.copyLink')}</li>
-        <li className={itemStyles}>{t('leaveOrg')}</li>
+        <li className={itemStyles}>{t('dotMenu.leaveOrg')}</li>
       </ul>
     ),
     USER: (
