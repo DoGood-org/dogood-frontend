@@ -112,6 +112,7 @@ export * from './organization/memberSection/OrgMemberSection';
 export * from './organization/moreSection/OrgMoreSection';
 export * from './organization/requestSection/OrgJoinRequestSection';
 export * from './organization/reviewSection/OrgReviewSection';
+export * from './organization/tasksSection/OrgTaskItem';
 export * from './organization/tasksSection/OrgTasksSection';
 export * from './publicAccount/PublicAccount';
 export * from './publicAccount/ReportModal';

@@ -63,7 +63,9 @@
   "tasks": {
     "title": "Our tasks",
     "userTitle": "Tasks",
-    "add": "Create task"
+    "add": "Create task",
+    "donate": "Donate",
+    "edit": "Edit"
   },
   "members": {
     "title": "Our members",

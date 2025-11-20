@@ -63,7 +63,9 @@
   "tasks": {
     "title": "Unsere Aufgaben",
     "userTitle": "Aufgaben",
-    "add": "Aufgabe erstellen"
+    "add": "Aufgabe erstellen",
+    "donate": "Spenden",
+    "edit": "Bearbeiten"
   },
   "members": {
     "title": "Unsere Mitglieder",
