@@ -1,7 +1,7 @@
 import { ReviewProps } from '@/types';
 import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
-import { EmptyContent, ReviewItem } from '@/components';
+import { EmptyContent, ReviewItem, Slider } from '@/components';
 import { Role } from '@/lib/getUserRole';
 
 export const OrgReviewSection = ({
@@ -25,13 +25,15 @@ export const OrgReviewSection = ({
       {!reviews || !reviews.length ? (
         <EmptyContent>{t('noReview')}</EmptyContent>
       ) : (
-        // ---------change this code ------
-        <ul className="flex flex-col gap-4">
-          {reviews.map((review) => (
-            <ReviewItem key={review.id} review={review} />
-          ))}
-        </ul>
-        // ----------------------
+        <Slider
+          items={reviews}
+          itemsPerSlide={3}
+          listClassName="gap-5"
+          itemClassName="p-0"
+          renderItem={(review, idx) => (
+            <ReviewItem key={`${idx}-${review.id}`} review={review} />
+          )}
+        />
       )}
     </>
   );
