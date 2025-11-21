@@ -26,6 +26,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    volumes:
+      - pgdata_front:/var/lib/postgresql/data
 
   server:
     build:
@@ -61,3 +63,6 @@ networks:
         - subnet: 172.20.0.0/16
           gateway: 172.20.0.1
     external: false
+
+volumes:
+  pgdata_front:
