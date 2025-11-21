@@ -1,17 +1,14 @@
 'use client';
 
-import {
-  AccountTaskItem,
-  Button,
-  EmptyContent,
-  TaskFilter,
-} from '@/components';
+import { Button, EmptyContent, Slider, TaskFilter } from '@/components';
 import { Plus } from '@/components/icons';
 import { Role } from '@/lib/getUserRole';
 import { TaskProps } from '@/types';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { JSX, useEffect, useState } from 'react';
+import OrgTaskItem from './OrgTaskItem';
+import { useMediaQuery } from '@/hooks';
 
 export const OrgTasksSection = ({
   tasks,
@@ -23,6 +20,8 @@ export const OrgTasksSection = ({
   const t = useTranslations('organization');
   const [filter, setFilter] = useState('ALL');
   const [filteredTasks, setFilteredTasks] = useState(tasks);
+  const isMobile = useMediaQuery('(max-width: 767px)');
+  const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1439px)');
 
   const adminRole = role === 'ADMIN' || role === 'MODERATOR';
 
@@ -57,13 +56,21 @@ export const OrgTasksSection = ({
       {!filteredTasks || !filteredTasks.length ? (
         <EmptyContent>{t('noTasks')}</EmptyContent>
       ) : (
-        // ---------change this code ------
-        <ul className="flex flex-col gap-4">
-          {filteredTasks.map((task) => (
-            <AccountTaskItem key={task.id} task={task} />
-          ))}
-        </ul>
-        // ----------------------
+        <Slider
+          items={filteredTasks}
+          itemsPerSlide={6}
+          listClassName={
+            isMobile
+              ? 'flex flex-col gap-5'
+              : isTablet
+                ? 'grid grid-cols-2 gap-5'
+                : 'grid grid-cols-3 gap-5'
+          }
+          itemClassName="p-0"
+          renderItem={(task, idx) => (
+            <OrgTaskItem key={`${idx}-${task.title}`} task={task} />
+          )}
+        />
       )}
     </>
   );

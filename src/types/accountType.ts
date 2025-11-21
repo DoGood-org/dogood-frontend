@@ -80,6 +80,10 @@ export interface TaskProps {
   avatar?: string;
   category: MarkerCategoryType;
   status?: string;
+  startDate?: string;
+  endDate?: string;
+  startTime?: string;
+  locationName?: Location;
 }
 
 export interface TaskItemProps {

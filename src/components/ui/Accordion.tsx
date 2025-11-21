@@ -11,7 +11,9 @@ function Accordion({
 }: React.ComponentProps<typeof AccordionPrimitive.Root>): React.JSX.Element {
   return (
     <AccordionPrimitive.Root asChild {...props}>
-      <li data-slot="accordion">{children}</li>
+      <li className="list-none" data-slot="accordion">
+        {children}
+      </li>
     </AccordionPrimitive.Root>
   );
 }
@@ -35,11 +37,11 @@ function AccordionTrigger({
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Trigger>): React.JSX.Element {
   return (
-    <AccordionPrimitive.Header className="flex">
+    <AccordionPrimitive.Header className="flex w-full">
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          'hover:cursor-pointer focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-4 transition-all duration-700 outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50',
+          'group hover:cursor-pointer focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-[8px] transition-all duration-700 outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 ',
           className
         )}
         {...props}
@@ -58,10 +60,20 @@ function AccordionContent({
   return (
     <AccordionPrimitive.Content
       data-slot="accordion-content"
-      className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm"
+      className={cn(
+        'origin-top transition-[transform,opacity] duration-300 ease-in-out overflow-hidden text-sm',
+        'data-[state=open]:[transform:scaleY(1)] data-[state=open]:opacity-100',
+        'data-[state=closed]:[transform:scaleY(0)] data-[state=closed]:opacity-0',
+        className
+      )}
       {...props}
     >
-      <div className={cn('pt-0 pb-4', className)}>{children}</div>
+      <div
+        style={{ willChange: 'transform, opacity' }}
+        className={cn('pt-0 pb-4 break-words')}
+      >
+        {children}
+      </div>
     </AccordionPrimitive.Content>
   );
 }
