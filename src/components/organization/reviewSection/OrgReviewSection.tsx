@@ -3,6 +3,7 @@ import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
 import { EmptyContent, ReviewItem, Slider } from '@/components';
 import { Role } from '@/lib/getUserRole';
+import { useOrgSectionTitle } from '@/hooks/useOrgSectionTitle';
 
 export const OrgReviewSection = ({
   reviews,
@@ -13,10 +14,7 @@ export const OrgReviewSection = ({
 }): JSX.Element => {
   const t = useTranslations('organization');
 
-  const title =
-    role === 'ADMIN' || role === 'MODERATOR'
-      ? `${t('reviews.title')}`
-      : `${t('reviews.userTitle')}`;
+  const title = useOrgSectionTitle(role, 'reviews');
 
   return (
     <>

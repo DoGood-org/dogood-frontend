@@ -69,7 +69,7 @@ export const Report = ({ role }: { role: Role }): JSX.Element => {
         onClick={handleToggleMenu}
       />
       {isOpen && (
-        <div className="absolute top-[25px] right-2 rounded-lg bg-review-bg p-4">
+        <div className="absolute top-[25px] right-2 rounded-lg bg-card p-4">
           {reportVersions[role]}
         </div>
       )}
