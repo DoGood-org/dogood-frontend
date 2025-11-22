@@ -85,5 +85,6 @@ export const useClickOutside = ({
     detectEscapeKey,
     once,
     ignoreSelectors,
+    delayGuard,
   ]);
 };
