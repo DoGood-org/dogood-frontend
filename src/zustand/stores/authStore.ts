@@ -73,7 +73,6 @@ export const authStore = create<TAuthState>()(
       user: null,
       isLoggedIn: true,
       isEmailVerified: false,
-
       status: 'idle',
       error: null,
       beMessage: '',
@@ -99,7 +98,10 @@ export const authStore = create<TAuthState>()(
             user: null,
             isLoggedIn: false,
           });
-          return { status: 'error', message: 'Login failed' };
+          return {
+            ok: false,
+            data: { status: 'error', message: 'Login failed' },
+          };
         }
       },
 
@@ -204,6 +206,7 @@ export const authStore = create<TAuthState>()(
             isEmailVerified: user.isEmailVerified,
             beMessage: message,
           });
+          console.log('Fetched current user:', user);
           return { user, status, message };
         } catch (error) {
           console.error(
