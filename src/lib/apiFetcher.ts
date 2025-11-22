@@ -1,12 +1,14 @@
 import api from '@/lib/api';
 import { AxiosError } from 'axios';
 import { HTTP_METHOD } from 'next/dist/server/web/http';
+import * as Sentry from '@sentry/nextjs';
 
 export interface ApiResponse<T> {
   data: T;
   status: number;
   statusText: string;
 }
+
 interface ErrorResponse {
   message: string;
   code?: string;
@@ -37,10 +39,25 @@ export interface FetchFromApiOptions<
   auth?: boolean;
 }
 
+export type FetchSuccess<T> = {
+  ok: true;
+  data: T;
+};
+
+export type FetchFail = {
+  ok: false;
+  errorMessage: string;
+  status?: number;
+  code?: string;
+  details?: any;
+};
+
+export type FetchResult<T> = FetchSuccess<T> | FetchFail;
+
 export const fetchFromApi = async <T>(
   endpoint: string,
   options: FetchFromApiOptions = {}
-): Promise<T> => {
+): Promise<FetchResult<T>> => {
   const {
     method = 'GET',
     data,
@@ -63,26 +80,71 @@ export const fetchFromApi = async <T>(
         ...headers,
       },
     });
-    return response.data;
+
+    return {
+      ok: true,
+      data: response.data as T,
+    };
   } catch (error: unknown) {
+    let errorMessage = 'An unexpected error occurred';
+    let status: number | undefined;
+    let code: string | undefined;
+    let details: any;
+
     if (error instanceof AxiosError) {
       const axiosError = error as AxiosError<ErrorResponse>;
       const errorData = axiosError.response?.data;
 
-      throw new ApiError(
+      status = axiosError.response?.status;
+      code = errorData?.code;
+      details = errorData?.details;
+      errorMessage =
         errorData?.message ||
-          axiosError.message ||
-          'An unexpected error occurred',
-        axiosError.response?.status,
-        errorData?.code,
-        errorData?.details
-      );
+        axiosError.message ||
+        'An unexpected error occurred';
+
+      Sentry.captureException(axiosError, {
+        tags: {
+          scope: 'fetchFromApi',
+          endpoint,
+          method,
+          auth: String(auth),
+        },
+        extra: {
+          status,
+          code,
+          details,
+          params,
+          rawError: errorData,
+        },
+      });
     } else if (error instanceof Error) {
-      throw new ApiError(error.message);
+      errorMessage = error.message;
+
+      Sentry.captureException(error, {
+        tags: {
+          scope: 'fetchFromApi',
+          endpoint,
+          method,
+          auth: String(auth),
+        },
+        extra: { params },
+      });
     } else {
-      throw new ApiError(
-        'Network error. Please check your Internet connection.'
-      );
+      errorMessage = 'Network error. Please check your Internet connection.';
+
+      Sentry.captureMessage('Unknown error in fetchFromApi', {
+        level: 'error',
+        extra: { endpoint, method, auth, params, error },
+      });
     }
+
+    return {
+      ok: false,
+      errorMessage,
+      status,
+      code,
+      details,
+    };
   }
 };

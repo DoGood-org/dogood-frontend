@@ -14,7 +14,7 @@ export const MapAutoResize = (): JSX.Element | null => {
     resizeObserver.observe(container);
 
     return (): void => resizeObserver.disconnect();
-  }, []);
+  }, [map]);
 
   return null;
 };
