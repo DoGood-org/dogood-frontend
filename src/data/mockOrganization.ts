@@ -8,8 +8,8 @@ export const mockOrganization: OrganizationDetailedProps[] = [
     description:
       '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
     email: 'peace@mail.com',
-    phoneNumber: '',
-    // location: { id: 1, country: '', region: '', city: 'Belgrade' },
+    phoneNumber: '(603) 555-0123',
+    location: { id: 1, country: 'Ucraine', region: 'Kiev', city: 'Kyiv' },
     paymentOptions: [],
     tasks: [
       {

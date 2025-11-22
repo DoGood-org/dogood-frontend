@@ -49,7 +49,8 @@ export interface OrganizationDetailedProps {
   email?: string;
   phoneNumber?: string;
   location?: Location;
-  paymentOptions: PaymentProps[];
+  paymentOptions?: PaymentProps[];
+  paymentOptionIds?: number[];
   tasks: TaskProps[] | [];
   reviews?: ReviewProps[];
   reviewsWrittenOrg?: ReviewProps[];

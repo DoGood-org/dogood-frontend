@@ -5,6 +5,10 @@
       "title": "Name",
       "placeholder": "Geben Sie Ihren vollständigen Namen ein"
     },
+    "orgName": {
+      "title": "Name der Organisation",
+      "placeholder": "Name der Organisation eingeben"
+    },
     "birth": {
       "title": "Geburtsdatum",
       "placeholder": "Geburtsdatum auswählen"
@@ -48,6 +52,12 @@
   "about": {
     "title": "Über mich",
     "placeholder": "Geben Sie hier Ihre Nachricht ein..."
+  },
+  "aboutOrg": {
+    "title": "Über die Organisation",
+    "description": "Beschreibung",
+    "placeholder": "Geben Sie hier Ihre Nachricht ein...",
+    "moreInfo": "Mehr über die Organisation"
   },
 
   "submitBtn": "Einreichen",

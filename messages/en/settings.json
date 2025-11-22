@@ -5,6 +5,10 @@
       "title": "Name",
       "placeholder": "Enter your full name"
     },
+    "orgName": {
+      "title": "Name of organization",
+      "placeholder": "Enter name of organization"
+    },
     "birth": {
       "title": "Date of Birth",
       "placeholder": "Select birth date"
@@ -48,6 +52,12 @@
   "about": {
     "title": "About me",
     "placeholder": "Type your message here..."
+  },
+  "aboutOrg": {
+    "title": "About organization",
+    "description": "Description",
+    "placeholder": "Type your message here...",
+    "moreInfo": "More about organization"
   },
 
   "submitBtn": "Submit",
