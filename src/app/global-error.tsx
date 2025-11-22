@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import * as Sentry from '@sentry/nextjs';
 import {
   Footer,
   Header,
@@ -19,8 +20,10 @@ import { AppLocale } from '@/types/errorType';
 import { loadMessages } from '@/i18n/request';
 
 export default function GlobalError({
+  error,
   reset,
 }: {
+  error: Error & { digest?: string }; // digest додає Next.js для internal tracking
   reset: () => void;
 }): React.JSX.Element {
   const params = useParams();
@@ -41,6 +44,16 @@ export default function GlobalError({
   useEffect(() => {
     loadMessages(locale).then(setMessages).catch(console.error);
   }, [locale]);
+
+  useEffect(() => {
+    if (error) {
+      if (error instanceof Error) {
+        Sentry.captureException(error);
+      } else {
+        Sentry.captureException(new Error(JSON.stringify(error)));
+      }
+    }
+  }, [error]);
 
   if (!messages) {
     return <div>Loading...</div>;
