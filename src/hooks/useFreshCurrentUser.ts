@@ -14,5 +14,5 @@ export function useFreshCurrentUser(): void {
       window.removeEventListener('focus', refreshCurrentUser);
       document.removeEventListener('visibilitychange', refreshCurrentUser);
     };
-  }, []);
+  }, [refresh]);
 }

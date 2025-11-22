@@ -5,16 +5,15 @@ import { AccountContentPanel, AccountTaskList } from '@/components';
 import { ContentProps, TaskListProps } from '@/types';
 import { useTranslations } from 'next-intl';
 
+// масив статусів і відповідних ключів для views
+const statusMap = [
+  { key: 'tasksCreated', status: 'CREATED' },
+  { key: 'tasksInProgress', status: 'IN_PROGRESS' },
+  { key: 'tasksCompleted', status: 'COMPLETED' },
+];
 export const UserTaskSection = ({ tasks = [] }: TaskListProps): JSX.Element => {
   const t = useTranslations('account');
   const views = t.raw('tasksSection') as ContentProps[];
-
-  // масив статусів і відповідних ключів для views
-  const statusMap = [
-    { key: 'tasksCreated', status: 'CREATED' },
-    { key: 'tasksInProgress', status: 'IN_PROGRESS' },
-    { key: 'tasksCompleted', status: 'COMPLETED' },
-  ];
 
   // генеруємо viewComponents динамічно
   const viewComponents = useMemo(() => {
