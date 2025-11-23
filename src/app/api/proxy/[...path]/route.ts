@@ -8,7 +8,7 @@ export const runtime = 'nodejs';
 async function handler(
   req: NextRequest,
   { params }: { params: Promise<{ path?: string[] }> }
-) {
+): Promise<NextResponse> {
   const { path } = await params;
 
   const incomingUrl = new URL(req.url);
@@ -48,7 +48,7 @@ async function handler(
     init.body = req.body;
   }
 
-  const callBackend = () => fetch(target.toString(), init);
+  const callBackend: () => Promise<any> = () => fetch(target.toString(), init);
 
   // ---- 1st attempt ----
   let backendRes = await callBackend();
@@ -75,7 +75,7 @@ async function handler(
     statusText: backendRes.statusText,
   });
 
-  backendRes.headers.forEach((value, key) => {
+  backendRes.headers.forEach((value: string, key: string) => {
     if (key.toLowerCase() === 'content-length') return;
     res.headers.set(key, value);
   });

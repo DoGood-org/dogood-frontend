@@ -16,7 +16,10 @@ const data = {
 
 const { title, description, keywords, locale, images } = data;
 // тут може статись помилка в енв в кінці слеш /
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'||'https://192.168.1.19:3000';
+const BASE_URL =
+  process.env.BASE_URL ||
+  'http://localhost:3000' ||
+  'https://192.168.1.19:3000';
 
 export const meta = {
   title: title,
