@@ -40,39 +40,16 @@ export interface IAuthResponse {
 export interface ICurrentUserResponse {
   status?: 'success' | 'error';
   message?: string;
-  user: ICurrentUser;
+  user: ICurrentUser | null;
 }
 export class AuthService {
-  //public methods
+  //auth methods all where cookies magic
   public login = async (email: string, password: string): Promise<any> => {
     const response = await fetchFromApi(apiRoutes.auth.login, {
       method: 'POST',
       data: { email, password },
     });
-    console.log('Login response:', response);
     return response;
-  };
-  public register = async (
-    email: string,
-    password: string,
-    name: string
-  ): Promise<any> => {
-    return await fetchFromApi<IAuthResponse>(apiRoutes.auth.signup, {
-      method: 'POST',
-      data: { email, password, name },
-    });
-  };
-  public registerCompany = async (
-    name: string,
-    email: string,
-    password: string,
-    organizationName: string
-  ): Promise<any> => {
-    return await fetchFromApi<any>(apiRoutes.organizations.signup, {
-      method: 'POST',
-      data: { name, email, password, organizationName },
-      auth: true,
-    });
   };
   public refreshTokens = async (): Promise<any> => {
     return await fetchFromApi<any>(apiRoutes.auth.refreshToken, {
@@ -85,11 +62,21 @@ export class AuthService {
       method: 'GET',
     });
   };
-
-  //protected
   public logout = async (): Promise<any> => {
-    return await fetchFromApi(apiRoutes.user.logout, {
+    return await fetchFromApi(apiRoutes.auth.logout, {
       method: 'POST',
+    });
+  };
+
+  //proxy everything else
+  public register = async (
+    email: string,
+    password: string,
+    name: string
+  ): Promise<any> => {
+    return await fetchFromApi<IAuthResponse>(apiRoutes.user.signup, {
+      method: 'POST',
+      data: { email, password, name },
       auth: true,
     });
   };
@@ -98,7 +85,19 @@ export class AuthService {
       method: 'GET',
       auth: true,
     });
-    console.log('Current user response:', curr);
+    console.log('Current user response from service:', curr);
     return curr;
+  };
+  public registerCompany = async (
+    name: string,
+    email: string,
+    password: string,
+    organizationName: string
+  ): Promise<any> => {
+    return await fetchFromApi<any>(apiRoutes.organizations.signup, {
+      method: 'POST',
+      data: { name, email, password, organizationName },
+      auth: true,
+    });
   };
 }

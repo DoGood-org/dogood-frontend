@@ -13,8 +13,7 @@ export const LoginPageContent: React.FC = () => {
   const next = useMemo(() => safeNext(params.get('next')), [params]);
   console.log('Next parameter:', next);
   const { step, setStep } = useAuthFlow();
-
-  const { login, status, error } = authStore();
+  const { login, status, error, currentUser } = authStore();
 
   return (
     <div className=" login text-foreground flex flex-col items-center justify-center w-full">
@@ -31,10 +30,16 @@ export const LoginPageContent: React.FC = () => {
             const res: IAuthResponse = await login(data.email, data.password);
             if (res.data?.status === 'success') {
               console.log('Login successful:', res);
-              // await currentUser({ silent: true });
+              const user = await currentUser({ silent: true });
+              console.log('Fetched current user after login client:', user);
+
               router.replace(next);
+            } else {
+              console.log('Login failed:', res);
             }
           }}
+          isLoading={status === 'loading'}
+          errorMessage={status === 'apiError' ? error || undefined : undefined}
         />
       )}
       {step === 'forgotEmail' && (

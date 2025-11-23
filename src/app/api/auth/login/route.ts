@@ -32,6 +32,28 @@ export async function POST(req: Request): Promise<NextResponse> {
       if (singleCookie) response.headers.append('set-cookie', singleCookie);
     }
 
+    if (response.status === 200) {
+      console.log('Login successful from proxy');
+      const fullUser = await fetch(`${API}auth/current-user`, {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          cookie: response.headers.get('set-cookie') || '',
+        },
+        cache: 'no-store',
+        credentials: 'include',
+      });
+      if (fullUser.ok) {
+        const userData = await fullUser.json();
+        console.log('Fetched current user after login:', userData);
+      } else {
+        console.warn(
+          'Failed to fetch current user after login:',
+          fullUser.status
+        );
+      }
+    }
+
     return response;
   } catch (err) {
     return NextResponse.json(

@@ -15,6 +15,7 @@ async function handler(
   const subPath = (path ?? []).join('/'); // 'auth/current-user', 'task', etc.
 
   const target = new URL(subPath, BACKEND);
+  console.log(`Proxying request to: ${target.toString()}`);
   target.search = incomingUrl.search;
 
   const headers = new Headers(req.headers);
@@ -30,7 +31,7 @@ async function handler(
     console.log('Proxying with access token');
     headers.set('authorization', `Bearer ${access}`);
   } else {
-    console.log('No access token cookie found');
+    console.log('No access token');
   }
 
   if (refresh) {
@@ -43,6 +44,8 @@ async function handler(
     redirect: 'manual',
     credentials: 'include',
   };
+
+  console.log(`Proxy request method: ${init}`);
 
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     init.body = req.body;

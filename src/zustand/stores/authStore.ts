@@ -20,6 +20,7 @@ type Status =
   | 'idle'
   | 'loading'
   | 'authenticated'
+  | 'verifying'
   | 'apiError'
   | 'refreshing'
   | 'authorized'
@@ -71,7 +72,7 @@ export const authStore = create<TAuthState>()(
   persist(
     (set, get) => ({
       user: null,
-      isLoggedIn: true,
+      isLoggedIn: false,
       isEmailVerified: false,
       status: 'idle',
       error: null,
@@ -83,10 +84,11 @@ export const authStore = create<TAuthState>()(
           const { user, status } = res;
           if (status === 'success') {
             set({
-              user,
+              user: user as User,
               status: 'authorized',
               error: null,
               isLoggedIn: true,
+              beMessage: 'Login successful',
             });
           }
           return res;
@@ -129,7 +131,7 @@ export const authStore = create<TAuthState>()(
           );
           console.log('Register response:', status, message);
           if (status === 'success') {
-            set({ status: 'authenticated', error: null, beMessage: message });
+            set({ status: 'verifying', error: null, beMessage: message });
           }
         } catch (error) {
           const { message } = (error as any) || {};
@@ -158,7 +160,7 @@ export const authStore = create<TAuthState>()(
             organizationName
           );
           if (status === 'success') {
-            set({ status: 'authenticated', error: null, beMessage: message });
+            set({ status: 'verifying', error: null, beMessage: message });
           }
         } catch (error) {
           const { message } = (error as any) || {};
@@ -197,59 +199,22 @@ export const authStore = create<TAuthState>()(
       currentUser: async (): Promise<ICurrentUserResponse | null> => {
         set({ status: 'loading', error: null });
         try {
-          const { user, status, message } = await service.currentUser();
+          const { data, ok } = await service.currentUser();
+          if (!ok) {
+            throw new Error('Failed to fetch current user');
+          }
+
+          const { user, status, message } = data;
           set({
-            user,
+            user: user as ICurrentUser,
             status: 'authorized',
             error: null,
             isLoggedIn: true,
-            isEmailVerified: user.isEmailVerified,
             beMessage: message,
           });
-          console.log('Fetched current user:', user);
           return { user, status, message };
         } catch (error) {
-          console.error(
-            'Fetching current user failed try to refresh tokens:',
-            error
-          );
-          const status =
-            (error as any)?.status ?? (error as any)?.response?.status;
-          if (status === 401) {
-            const { status, message } = await service.refreshTokens();
-            if (status === 'success') {
-              // try again
-              const { user, message } = await service.currentUser();
-              if (user) {
-                set({
-                  user,
-                  status: 'authorized',
-                  error: null,
-                  isLoggedIn: true,
-                  isEmailVerified: user.isEmailVerified,
-                  beMessage: message,
-                });
-                return { user, status, message };
-              }
-              set({
-                status: 'apiError',
-                error: 'Fetching current user failed proceed to login',
-                user: null,
-                isLoggedIn: false,
-                isEmailVerified: false,
-              });
-              return null;
-            } else if (status === 'error') {
-              set({
-                status: 'forbidden',
-                error: message,
-                user: null,
-                isLoggedIn: false,
-                isEmailVerified: false,
-              });
-              return null;
-            }
-          }
+          console.error('Fetching current user failed:', error);
           set({
             status: 'forbidden',
             error: 'Fetching current user failed proceed to login',
@@ -265,8 +230,14 @@ export const authStore = create<TAuthState>()(
           set({ status: 'refreshing', error: null });
           await get().currentUser();
         } catch (e: any) {
-          set({ status: 'apiError', error: e?.message ?? 'Refresh failed' });
+          set({
+            status: 'apiError',
+            error: e?.message ?? 'Refresh failed',
+            user: null,
+            isLoggedIn: false,
+          });
           // fallback: force logout if refresh fails
+
           await get().logout();
         }
       },
@@ -285,7 +256,6 @@ export const authStore = create<TAuthState>()(
       partialize: (s) => ({
         user: s.user,
         isLoggedIn: s.isLoggedIn,
-        isEmailVerified: s.isEmailVerified,
       }),
     }
   )

@@ -13,17 +13,16 @@ export const MainLayoutContent = ({
   children: React.ReactNode;
 }): JSX.Element => {
   useEffect(() => {
+    console.log('Hydrating auth store with user:', user);
     const s = authStore.getState();
     if (user) {
       s.user = user;
       s.isLoggedIn = true;
-      s.isEmailVerified = user.isEmailVerified;
       s.status = 'authorized';
       console.log('User from server fetch in MainLayoutContent:', user);
     } else {
       s.user = null;
       s.isLoggedIn = false;
-      s.isEmailVerified = false;
       s.status = 'forbidden';
       console.log('User from server fetch in MainLayoutContent:', user);
     }

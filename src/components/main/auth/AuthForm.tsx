@@ -30,6 +30,7 @@ type Props = {
   ) => void;
   isLoading?: boolean;
   errorMessage?: string;
+  onSuccess?: () => void;
 };
 
 export const AuthForm: React.FC<Props> = (props) => {

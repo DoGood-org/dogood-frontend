@@ -45,9 +45,9 @@ export const RegisterPageContent = (): React.ReactElement => {
               repeatPassword: '',
             });
             await register(
+              (data as FormRegisterPerson).name,
               (data as FormRegisterPerson).email,
-              (data as FormRegisterPerson).password,
-              (data as FormRegisterPerson).name
+              (data as FormRegisterPerson).password
             );
           }}
         />
