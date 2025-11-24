@@ -24,7 +24,7 @@ import { useTranslations } from 'next-intl';
 import { InputField } from '@/components';
 import { cardPreviewService } from '@/services/cardPreviewService';
 import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
-import { sendProfile } from '@/services/settingService';
+import { sendProfile } from '@/services/profileUserService';
 import { toast } from 'react-toastify';
 import { deleteFromCloudinary, isCloudinaryUrl } from '@/lib/cloudinary';
 import { lazyImport } from '@/lib/lazyImport';

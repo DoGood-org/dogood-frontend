@@ -2,11 +2,11 @@ import {
   ContentPanelProps,
   ContentProps,
   IUserAccount,
-  Location,
   PaymentProps,
   TaskProps,
 } from './accountType';
 import { ReviewProps } from './reviewType';
+import { FormLocation } from './settings';
 // import { ITaskDetails } from './tasks.type';
 
 export interface OrganizationProps {
@@ -48,7 +48,7 @@ export interface OrganizationDetailedProps {
   description?: string;
   email?: string;
   phoneNumber?: string;
-  location?: Location;
+  location?: FormLocation;
   paymentOptions?: PaymentProps[];
   paymentOptionIds?: number[];
   tasks: TaskProps[] | [];

@@ -1,5 +1,6 @@
 {
   "basic": {
+    "titleSect": "Einstellungen",
     "title": "Grundlegende Informationen",
     "name": {
       "title": "Name",
@@ -57,9 +58,15 @@
     "title": "Über die Organisation",
     "description": "Beschreibung",
     "placeholder": "Geben Sie hier Ihre Nachricht ein...",
-    "moreInfo": "Mehr über die Organisation"
+    "moreInfo": "Mehr über die Organisation",
+    "deleteOrg": "Organisation löschen",
+    "deleteAlert": "Das Löschen Ihrer Organisation ist endgültig und kann nicht rückgängig gemacht werden. Alle Aufgaben, Mitglieder und Daten gehen dauerhaft verloren.",
+    "deleteBtn": "Löschen"
   },
-
+  "titleDelModal": "Sind Sie sicher, dass Sie diese Organisation löschen möchten?",
+  "descrDelModal": "Durch das Löschen dieser Organisation werden alle Mitglieder, Aufgaben und Daten dauerhaft entfernt.",
+  "cancelBtn": "Abbrechen",
+  "deleteBtn": "Organisation löschen",
   "submitBtn": "Einreichen",
   "resetBtn": "Zurücksetzen"
 }

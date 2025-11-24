@@ -4,7 +4,7 @@ import { OrganizationDetailedProps, Tlocale } from '@/types';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import React, { cache, JSX } from 'react';
-import OrganizationSettings from '@/components/organization/settingsPage/OrganizationSettings';
+import OrganizationSettings from '@/components/organization/profilePage/OrganizationProfile';
 
 interface Props {
   params: Promise<{ id: string; locale: Tlocale }>;

@@ -9,7 +9,11 @@ export const mockOrganization: OrganizationDetailedProps[] = [
       '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
     email: 'peace@mail.com',
     phoneNumber: '(603) 555-0123',
-    location: { id: 1, country: 'Ucraine', region: 'Kiev', city: 'Kyiv' },
+    location: {
+      country: 'United States',
+      region: 'Alabama',
+      city: 'Argo',
+    },
     paymentOptions: [],
     tasks: [
       {
@@ -23,7 +27,12 @@ export const mockOrganization: OrganizationDetailedProps[] = [
         startDate: '2025-05-01T14:05:00.000Z',
         endDate: '2025-05-01T14:05:00.000Z',
         startTime: '2025-11-19T14:30:00',
-        locationName: { id: 1, country: '', region: '', city: 'Belgrade' },
+        locationName: {
+          id: 1,
+          country: '',
+          region: '',
+          city: '',
+        },
       },
       {
         id: 2,
@@ -225,7 +234,7 @@ export const mockOrganization: OrganizationDetailedProps[] = [
       '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
     email: '',
     phoneNumber: '',
-    location: { id: 1, country: '', region: '', city: 'Belgrade' },
+    location: { country: '', region: '', city: 'Belgrade' },
     paymentOptions: [],
     tasks: [],
     reviews: [],
@@ -262,7 +271,7 @@ export const mockOrganization: OrganizationDetailedProps[] = [
       '📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation',
     email: '',
     phoneNumber: '',
-    location: { id: 1, country: '', region: '', city: 'Belgrade' },
+    location: { country: '', region: '', city: 'Belgrade' },
     paymentOptions: [],
     tasks: [],
     reviews: [],

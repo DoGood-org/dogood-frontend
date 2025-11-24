@@ -1,5 +1,6 @@
 {
   "basic": {
+    "titleSect": "Settings",
     "title": "Basic Information",
     "name": {
       "title": "Name",
@@ -57,9 +58,15 @@
     "title": "About organization",
     "description": "Description",
     "placeholder": "Type your message here...",
-    "moreInfo": "More about organization"
+    "moreInfo": "More about organization",
+    "deleteOrg": "Delete organization",
+    "deleteAlert": "Deleting your organization is permanent and cannot be undone. All tasks, members, and data will be permanently lost",
+    "deleteBtn": "Delete"
   },
-
+  "titleDelModal": "Are you sure you want to delete this organization?",
+  "descrDelModal": "Deleting this organization will permanently remove all members, tasks, and data",
+  "cancelBtn": "Cancel",
+  "deleteBtn": "Delete organization",
   "submitBtn": "Submit",
   "resetBtn": "Reset"
 }

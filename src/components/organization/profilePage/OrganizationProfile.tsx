@@ -11,7 +11,7 @@ import React, { JSX, useCallback, useEffect, useRef, useState } from 'react';
 import { Resolver, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import csc from 'country-state-city';
-import { sendOrgProfile } from '@/services/settingOrgService';
+import { sendOrgProfile } from '@/services/profileOrgService';
 import { deleteFromCloudinary, isCloudinaryUrl } from '@/lib/cloudinary';
 import { toast } from 'react-toastify';
 import { cardPreviewService } from '@/services/cardPreviewService';
@@ -22,23 +22,25 @@ import { LocationSelect } from '@/components/account/settingsPage/LocationSelect
 import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
 import { lazyImport } from '@/lib/lazyImport';
+import { getInitialLocation } from '@/lib/utils';
+import DeleteFormModal from './DeleteFormModal';
 
 const PaymentList = lazyImport(
   () => import('@/components/account/settingsPage/PaymentList'),
   'PaymentList'
 );
 
-const OrganizationSettings = ({
+const OrganizationProfile = ({
   organization,
 }: {
   organization: OrganizationDetailedProps;
 }): JSX.Element => {
   const [image, setImage] = useState<any>(null);
   const t = useTranslations('settings');
-  const oldAvatarRef = useRef<string>('');
   const f = useTranslations('faq');
+  const [isDelete, setIsDelete] = useState(false);
+  const oldAvatarRef = useRef<string>('');
   const downText = (f.raw('downtext') as any[])[0];
-
   const {
     register,
     handleSubmit,
@@ -51,11 +53,7 @@ const OrganizationSettings = ({
     defaultValues: {
       name: organization.name,
       avatar: organization.avatar,
-      location: {
-        country: organization.location?.country,
-        region: organization.location?.region,
-        city: organization.location?.city,
-      },
+      location: getInitialLocation(organization.location),
       phoneNumber: organization.phoneNumber,
       paymentOptionIds: organization.paymentOptionIds,
       description: organization.description,
@@ -111,22 +109,25 @@ const OrganizationSettings = ({
     const newAvatar = data.avatar;
 
     try {
-      const response = await sendOrgProfile({
-        name: data.name,
-        avatar: data.avatar,
-        location: data.location
-          ? {
-              country: selectedCountryObj?.name || data.location.country,
-              region: selectedStateObj?.name || data.location.region,
-              city: data.location.city,
-            }
-          : undefined,
-        phoneNumber: data.phoneNumber || undefined,
-        paymentOptionIds:
-          paymentOptionIds.length > 0 ? paymentOptionIds : undefined,
-        description: data.description || undefined,
-        moreInfo: data.moreInfo || undefined,
-      });
+      const response = await sendOrgProfile(
+        {
+          name: data.name,
+          avatar: data.avatar,
+          location: data.location
+            ? {
+                country: selectedCountryObj?.name || data.location.country,
+                region: selectedStateObj?.name || data.location.region,
+                city: data.location.city,
+              }
+            : undefined,
+          phoneNumber: data.phoneNumber || undefined,
+          paymentOptionIds:
+            paymentOptionIds.length > 0 ? paymentOptionIds : undefined,
+          description: data.description || undefined,
+          moreInfo: data.moreInfo || undefined,
+        },
+        organization.id
+      );
 
       if (response?.status === 'success') {
         if (
@@ -175,16 +176,14 @@ const OrganizationSettings = ({
     });
   };
   const onReset = (): void => {
-    setValue('name', undefined);
-    setValue('avatar', undefined);
-    setValue('location.country', undefined);
-    setValue('location.region', undefined);
-    setValue('location.city', undefined);
-    setValue('phoneNumber', undefined);
-    setValue('description', undefined);
-    setValue('moreInfo', undefined);
+    setValue('name', organization.name);
+    setValue('avatar', organization.avatar);
+    setValue('location', getInitialLocation(organization.location));
+    setValue('phoneNumber', organization.phoneNumber);
+    setValue('description', organization.description);
+    setValue('moreInfo', organization.moreInfo);
 
-    oldAvatarRef.current = '';
+    oldAvatarRef.current = organization.avatar || '';
     cardPreviewService.cleanupUnattachedCard();
     cardPreviewService.clearAll();
   };
@@ -203,6 +202,9 @@ const OrganizationSettings = ({
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col space-y-12 rounded-xl bg-card w-full p-8"
       >
+        <h1 className="text-h2-d text-foreground mb-10">
+          {t('basic.titleSect')}
+        </h1>
         <div className="flex flex-col lg:flex-row justify-between bg-text-help p-8 rounded-xl">
           <div className="order-2 md:w-[477px]">
             <div className="space-y-4">
@@ -290,7 +292,7 @@ const OrganizationSettings = ({
           <Textarea
             {...register('description')}
             placeholder={t('about.placeholder')}
-            className="w-full bg-white border-none h-[264px] text-form-field text-base"
+            className="w-full bg-white border-none text-form-field text-base"
           />
           {errors.description && (
             <p className="text-sm font-medium text-error mt-1">
@@ -302,13 +304,26 @@ const OrganizationSettings = ({
           <Textarea
             {...register('moreInfo')}
             placeholder={t('about.placeholder')}
-            className="w-full bg-white border-none h-[912px] text-form-field text-base"
+            className="w-full bg-white border-none text-form-field text-base"
           />
           {errors.moreInfo && (
             <p className="text-sm font-medium text-error mt-1">
               {errors.moreInfo.message}
             </p>
           )}
+        </div>
+        <div className="bg-text-help p-8 rounded-xl">
+          <h3 className="text-h3 text-white mb-2">{t('aboutOrg.deleteOrg')}</h3>
+          <p className="text-base text-white mb-8">
+            {t('aboutOrg.deleteAlert')}
+          </p>
+          <Button
+            variant="secondary"
+            className="text-white"
+            onClick={() => setIsDelete(!isDelete)}
+          >
+            {t('aboutOrg.deleteBtn')}
+          </Button>
         </div>
         <div className="flex gap-5 justify-end">
           <Button
@@ -330,8 +345,11 @@ const OrganizationSettings = ({
           </Button>
         </div>
       </form>
+      {isDelete && (
+        <DeleteFormModal isOpen={isDelete} setIsOpen={setIsDelete} />
+      )}
     </Section>
   );
 };
 
-export default OrganizationSettings;
+export default OrganizationProfile;
