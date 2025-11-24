@@ -13,7 +13,11 @@ export const getNews = async (locale: Tlocale): Promise<INewsItem[]> => {
       method: 'GET',
     }
   );
-  return response.data?.posts ?? [];
+  if (!response.ok) {
+    console.error('Помилка при завантаженні новин', (response as any).message);
+    return [];
+  }
+  return response.data.data?.posts;
 };
 
 export const getNewsById = async (
@@ -26,9 +30,11 @@ export const getNewsById = async (
       method: 'GET',
     }
   );
-  const { post } = response.data;
 
-  if (!post) throw new Error('News item not found in API response.');
+  if (!response.ok) {
+    console.error('Помилка при завантаженні новини', (response as any).message);
+    throw new Error('News item not found in API response.');
+  }
 
-  return post;
+  return response.data.data.post;
 };
