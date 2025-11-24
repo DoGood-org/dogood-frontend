@@ -24,13 +24,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const organization = await fetchOrganizationById(id);
 
-  if (!organization) {
-    return {
-      title: t('notFoundTitle'),
-      description: t('notFountDescr'),
-    };
-  }
-
   return {
     title: organization.name,
   };
