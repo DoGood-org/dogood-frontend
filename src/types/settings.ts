@@ -53,3 +53,7 @@ export interface ProfileOrgResponse {
     moreInfo?: string;
   };
 }
+export interface DeleteOrgResponse {
+  status: string;
+  message: string;
+}

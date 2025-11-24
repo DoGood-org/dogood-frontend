@@ -1,5 +1,9 @@
 import { fetchFromApi } from '@/lib/apiFetcher';
-import { ProfileOrgFormData, ProfileOrgResponse } from '@/types/settings';
+import {
+  DeleteOrgResponse,
+  ProfileOrgFormData,
+  ProfileOrgResponse,
+} from '@/types/settings';
 
 export const sendOrgProfile = async (
   formData: ProfileOrgFormData,
@@ -26,14 +30,12 @@ export const sendOrgProfile = async (
 };
 
 export const deleteOrgProfile = async (
-  formData: ProfileOrgFormData,
   orgId: string
-): Promise<ProfileOrgResponse> => {
-  const response = await fetchFromApi<ProfileOrgResponse>(
+): Promise<DeleteOrgResponse> => {
+  const response = await fetchFromApi<DeleteOrgResponse>(
     `/organizations/${orgId}`,
     {
-      method: 'PATCH',
-      data: formData,
+      method: 'DELETE',
       auth: true,
     }
   );
@@ -44,7 +46,6 @@ export const deleteOrgProfile = async (
     throw {
       status: 'error',
       message: response.errorMessage,
-      data: null,
     };
   }
 };

@@ -205,7 +205,7 @@ const OrganizationProfile = ({
         <h1 className="text-h2-d text-foreground mb-10">
           {t('basic.titleSect')}
         </h1>
-        <div className="flex flex-col lg:flex-row justify-between bg-text-help p-8 rounded-xl">
+        <div className="flex flex-col lg:flex-row lg:justify-start lg:gap-25 justify-between bg-text-help p-8 rounded-xl">
           <div className="order-2 md:w-[477px]">
             <div className="space-y-4">
               <h3 className="text-h3 text-white hidden lg:block">
@@ -238,7 +238,7 @@ const OrganizationProfile = ({
               />
             </div>
           </div>
-          <div className="flex flex-col gap-4 order-1 mb-4 lg:mb-0 lg:order-last justify-center">
+          <div className="flex flex-col gap-4 order-1 mb-4 lg:mb-0 lg:order-first justify-center">
             <h3 className="text-h3 text-white lg:hidden">{t('basic.title')}</h3>
             {/* Image Upload Field */}
             <ImageUploadWithPreview
@@ -257,30 +257,30 @@ const OrganizationProfile = ({
           </div>
         </div>
 
-        <div className="space-y-4 bg-text-help p-8 rounded-xl">
+        <div className="bg-text-help p-8 rounded-xl">
           <h3 className="text-h3 text-white">{t('contact.title')}</h3>
+          <div className="flex flex-col gap-4 lg:flex-row lg:gap-10">
+            {/* Email Field */}
+            <InputField
+              label={t('contact.mail.title')}
+              name="email"
+              register={register}
+              placeholder={t('contact.mail.placeholder')}
+              type="email"
+            />
 
-          {/* Email Field */}
-          <InputField
-            label={t('contact.mail.title')}
-            name="email"
-            register={register}
-            placeholder={t('contact.mail.placeholder')}
-            type="email"
-          />
-
-          {/* Phone Field */}
-          <InputField
-            label={t('contact.phone.title')}
-            name="phoneNumber"
-            register={register}
-            errors={errors.phoneNumber}
-            placeholder={t('contact.phone.placeholder')}
-            type="tel"
-            disabled={false}
-          />
+            {/* Phone Field */}
+            <InputField
+              label={t('contact.phone.title')}
+              name="phoneNumber"
+              register={register}
+              errors={errors.phoneNumber}
+              placeholder={t('contact.phone.placeholder')}
+              type="tel"
+              disabled={false}
+            />
+          </div>
         </div>
-
         {/* Payment field */}
         <PaymentList />
 
@@ -346,7 +346,11 @@ const OrganizationProfile = ({
         </div>
       </form>
       {isDelete && (
-        <DeleteFormModal isOpen={isDelete} setIsOpen={setIsDelete} />
+        <DeleteFormModal
+          orgId={organization.id}
+          isOpen={isDelete}
+          setIsOpen={setIsDelete}
+        />
       )}
     </Section>
   );

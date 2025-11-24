@@ -1,8 +1,9 @@
 import { ModalWrapper } from '@/components/ui/ModalWrapper';
-import { ModalControls } from '@/types/userReviewsType';
+import { DeleteModalControls } from '@/types/userReviewsType';
 import React from 'react';
 import DeleteForm from './DeleteForm';
-const DeleteFormModal: React.FC<ModalControls> = ({
+const DeleteFormModal: React.FC<DeleteModalControls> = ({
+  orgId,
   isOpen,
   setIsOpen,
 }): React.JSX.Element => {
@@ -12,7 +13,7 @@ const DeleteFormModal: React.FC<ModalControls> = ({
       onClose={() => setIsOpen(false)}
       wrapperClassName="w-full max-w-[353px] md:max-w-[648px] lg:max-w-[976px] lg:translate-x-16 bg-card"
     >
-      <DeleteForm isOpen={isOpen} setIsOpen={setIsOpen} />
+      <DeleteForm orgId={orgId} isOpen={isOpen} setIsOpen={setIsOpen} />
     </ModalWrapper>
   );
 };

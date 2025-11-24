@@ -23,3 +23,8 @@ export type IReviewsFormModal = ModalControls & {
 export type IReviewsProps = Pick<ModalControls, 'setIsOpen'> & {
   user: IUser;
 };
+export type DeleteModalControls = {
+  isOpen: boolean;
+  setIsOpen: (arg0: boolean) => void;
+  orgId: string;
+};
