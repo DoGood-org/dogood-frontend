@@ -2,12 +2,13 @@
 
 import Image from 'next/image';
 import { JSX } from 'react';
-import { useTranslations } from 'next-intl';
-import { Email, Phone, UserLocate } from '@/components/icons';
-import { Report, UserNoDescription } from '@/components';
+import { useLocale, useTranslations } from 'next-intl';
+import { ChatCircle, Email, Phone, UserLocate } from '@/components/icons';
+import { Button, Report, UserNoDescription } from '@/components';
 import { OrganizationDetailedProps } from '@/types';
 import { formatLocation } from '@/lib/formatLocation';
-import { getUserRole } from '@/lib/getUserRole';
+import { getUserRole, isAdminOrModerator } from '@/lib/getUserRole';
+import Link from 'next/link';
 
 export const OrganizationDesc = ({
   organization,
@@ -18,7 +19,9 @@ export const OrganizationDesc = ({
   const { avatar, name, email, location, phoneNumber, description, members } =
     organization;
 
+  const locale = useLocale();
   const userRole = getUserRole(members);
+  const adminRole = isAdminOrModerator(userRole);
 
   return (
     <div className="flex flex-col md:flex-row gap-11 lg:gap-20">
@@ -61,14 +64,19 @@ export const OrganizationDesc = ({
         ) : (
           <UserNoDescription />
         )}
-        {/* {isPublicProfilePage && (
-          <Button asChild variant="secondary" className="mt-6">
-            <Link href={`/${locale}/account/chat`}>
-              <ChatCircle className="size-[18px]" />
-              {t('chatButton')}
-            </Link>
-          </Button>
-        )} */}
+        <div className="flex gap-3 justify-end mt-10">
+          {!adminRole && (
+            <Button asChild variant="secondary" className="">
+              <Link href={`/${locale}/account/chat`}>
+                <ChatCircle className="size-[18px]" />
+                {t('chatButton')}
+              </Link>
+            </Button>
+          )}
+          {userRole === 'USER' && (
+            <Button className="text-white">{t('joinButton')}</Button>
+          )}
+        </div>
       </div>
     </div>
   );
