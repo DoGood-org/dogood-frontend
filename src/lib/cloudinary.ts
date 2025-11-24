@@ -20,7 +20,7 @@ export const deleteFromCloudinary = async (
   }
 
   try {
-    const data = await fetchFromApi<CloudinaryDeleteResponse>(
+    const result = await fetchFromApi<CloudinaryDeleteResponse>(
       '/api/cloudinary/delete',
       {
         method: 'POST',
@@ -28,6 +28,19 @@ export const deleteFromCloudinary = async (
         auth: true,
       }
     );
+
+    // Check if the request was successful
+    if (!result.ok) {
+      return {
+        error: result.errorMessage,
+        details: result.details,
+        statusCode: result.status,
+        url,
+      };
+    }
+
+    // Now we can safely access result.data since we know it's a success
+    const data = result.data;
 
     if (data.result !== 'ok' && data.result !== 'not found') {
       return {

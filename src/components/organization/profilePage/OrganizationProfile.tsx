@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/Button';
 import { lazyImport } from '@/lib/lazyImport';
 import { getInitialLocation } from '@/lib/utils';
 import DeleteFormModal from './DeleteFormModal';
+import { getUserRole } from '@/lib/getUserRole';
 
 const PaymentList = lazyImport(
   () => import('@/components/account/settingsPage/PaymentList'),
@@ -41,6 +42,8 @@ const OrganizationProfile = ({
   const [isDelete, setIsDelete] = useState(false);
   const oldAvatarRef = useRef<string>('');
   const downText = (f.raw('downtext') as any[])[0];
+  const userRole = getUserRole(organization.members);
+
   const {
     register,
     handleSubmit,
@@ -256,7 +259,6 @@ const OrganizationProfile = ({
             )}
           </div>
         </div>
-
         <div className="bg-text-help p-8 rounded-xl">
           <h3 className="text-h3 text-white">{t('contact.title')}</h3>
           <div className="flex flex-col gap-4 lg:flex-row lg:gap-10">
@@ -283,7 +285,6 @@ const OrganizationProfile = ({
         </div>
         {/* Payment field */}
         <PaymentList />
-
         {/* Description */}
         <div className="space-y-12 bg-text-help p-8 rounded-xl">
           <h3 className="text-h3 text-white">{t('aboutOrg.title')}</h3>
@@ -312,19 +313,23 @@ const OrganizationProfile = ({
             </p>
           )}
         </div>
-        <div className="bg-text-help p-8 rounded-xl">
-          <h3 className="text-h3 text-white mb-2">{t('aboutOrg.deleteOrg')}</h3>
-          <p className="text-base text-white mb-8">
-            {t('aboutOrg.deleteAlert')}
-          </p>
-          <Button
-            variant="secondary"
-            className="text-white"
-            onClick={() => setIsDelete(!isDelete)}
-          >
-            {t('aboutOrg.deleteBtn')}
-          </Button>
-        </div>
+        {userRole === 'ADMIN' && (
+          <div className="bg-text-help p-8 rounded-xl">
+            <h3 className="text-h3 text-white mb-2">
+              {t('aboutOrg.deleteOrg')}
+            </h3>
+            <p className="text-base text-white mb-8">
+              {t('aboutOrg.deleteAlert')}
+            </p>
+            <Button
+              variant="secondary"
+              className="text-white"
+              onClick={() => setIsDelete(!isDelete)}
+            >
+              {t('aboutOrg.deleteBtn')}
+            </Button>
+          </div>
+        )}
         <div className="flex gap-5 justify-end">
           <Button
             variant="primary"
