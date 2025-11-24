@@ -56,7 +56,7 @@ export const ProfileMap = (): JSX.Element => {
       console.log('ProfileMap initialized');
     };
     run();
-  }, []);
+  }, [initMap, checkLocationPermission]);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
   const { choosenCategories, categories } = useFilterStore();
@@ -80,7 +80,7 @@ export const ProfileMap = (): JSX.Element => {
     flyToCoords(coords, 15);
 
     marker.openPopup();
-  }, [highlightedTaskId]);
+  }, [highlightedTaskId, flyToCoords]);
 
   if (
     !leafletComponents ||
