@@ -1,4 +1,4 @@
-import { fetchFromApi } from '@/lib/apiFetcher';
+import { fetchFromApi, FetchSuccess } from '@/lib/apiFetcher';
 import {
   INewsItem,
   INewsItemApiResponse,
@@ -13,11 +13,9 @@ export const getNews = async (locale: Tlocale): Promise<INewsItem[]> => {
       method: 'GET',
     }
   );
-  if (!response.ok) {
-    console.error('Помилка при завантаженні новин', (response as any).message);
-    return [];
-  }
-  return response.data.data?.posts;
+  const res = response as FetchSuccess<INewsListApiResponse>;
+
+  return res.data.data.posts;
 };
 
 export const getNewsById = async (
@@ -31,10 +29,7 @@ export const getNewsById = async (
     }
   );
 
-  if (!response.ok) {
-    console.error('Помилка при завантаженні новини', (response as any).message);
-    throw new Error('News item not found in API response.');
-  }
+  const res = response as FetchSuccess<INewsItemApiResponse>;
 
-  return response.data.data.post;
+  return res.data?.data.post;
 };
