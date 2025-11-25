@@ -33,6 +33,7 @@
     "description": "Read the latest news, stories and blog posts from DoGood. Stay updated with our community initiatives and events."
   },
     "news": {
-    "noNews": "No news yet"
+    "noNews": "No news yet",
+    "loadError": "Failed to load data"
   }
 }

@@ -1,6 +1,7 @@
 import { NewsItem } from '@/components';
 import { fetchNews } from '@/facades/newsFacade';
-import { Tlocale } from '@/types';
+import { INewsItem, Tlocale } from '@/types';
+import { getTranslations } from 'next-intl/server';
 
 type Props = {
   params: Promise<{ locale: Tlocale }>;
@@ -8,7 +9,14 @@ type Props = {
 
 const NewsPage = async ({ params }: Props): Promise<React.ReactElement> => {
   const { locale } = await params;
-  const news = await fetchNews(locale);
+  const newsResult = await fetchNews(locale);
+  const t = await getTranslations('news');
+
+  if (!newsResult.ok) {
+    return <p>{t('news.loadError')}</p>;
+  }
+
+  const newsItems: INewsItem[] = newsResult.data.data.posts;
   return (
     <div
       className=" 
@@ -31,7 +39,7 @@ const NewsPage = async ({ params }: Props): Promise<React.ReactElement> => {
           gap-6 
         "
       >
-        {news.map((item) => (
+        {newsItems.map((item) => (
           <NewsItem key={item.id} item={item} />
         ))}
       </div>

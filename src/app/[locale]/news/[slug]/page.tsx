@@ -5,7 +5,7 @@ import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { getNewsById } from '@/services/newsService';
 import { notFound } from 'next/navigation';
-import { INewsItem } from '@/types';
+import { INewsItem, INewsItemApiResponse } from '@/types';
 import { cache } from 'react';
 import { newsFormatDate } from '@/utils/newsFormatDate';
 
@@ -15,9 +15,12 @@ interface Props {
 
 const fetchNewsItem = cache(
   async (slug: string, locale: Tlocale): Promise<INewsItem | null> => {
-    const newsItem = await getNewsById(slug, locale);
-    if (!newsItem) notFound();
-    return newsItem;
+    const result = await getNewsById(slug, locale);
+    if (!result.ok) {
+      return null;
+    }
+    const apiItem: INewsItemApiResponse = result.data;
+    return apiItem.data.post ?? null;
   }
 );
 

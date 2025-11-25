@@ -33,6 +33,7 @@
     "description": "Lies die neuesten Nachrichten, Geschichten und Blogbeiträge von DoGood. Bleibe über unsere Gemeinschaftsinitiativen und Veranstaltungen informiert."
   },
     "news": {
-    "noNews": "Noch keine Nachrichten"
+    "noNews": "Noch keine Nachrichten",
+    "loadError": "Daten konnten nicht geladen werden"
   }
 }

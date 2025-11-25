@@ -1,35 +1,19 @@
-import { fetchFromApi, FetchSuccess } from '@/lib/apiFetcher';
-import {
-  INewsItem,
-  INewsItemApiResponse,
-  INewsListApiResponse,
-  Tlocale,
-} from '@/types';
+import { fetchFromApi, FetchResult } from '@/lib/apiFetcher';
+import { INewsItemApiResponse, INewsListApiResponse, Tlocale } from '@/types';
 
-export const getNews = async (locale: Tlocale): Promise<INewsItem[]> => {
-  const response = await fetchFromApi<INewsListApiResponse>(
-    `/posts/${locale}`,
-    {
-      method: 'GET',
-    }
-  );
-  const res = response as FetchSuccess<INewsListApiResponse>;
-
-  return res.data.data.posts;
+export const getNews = async (
+  locale: Tlocale
+): Promise<FetchResult<INewsListApiResponse>> => {
+  return await fetchFromApi<INewsListApiResponse>(`/posts/${locale}`, {
+    method: 'GET',
+  });
 };
 
 export const getNewsById = async (
   id: string | number,
   locale: string
-): Promise<INewsItem> => {
-  const response = await fetchFromApi<INewsItemApiResponse>(
-    `/posts/${id}/${locale}`,
-    {
-      method: 'GET',
-    }
-  );
-
-  const res = response as FetchSuccess<INewsItemApiResponse>;
-
-  return res.data?.data.post;
+): Promise<FetchResult<INewsItemApiResponse>> => {
+  return fetchFromApi<INewsItemApiResponse>(`/posts/${id}/${locale}`, {
+    method: 'GET',
+  });
 };

@@ -416,6 +416,19 @@ html {
 
 /*------------------utilities for scrollbar---------------------------*/
 @layer utilities {
+
+  .scrollbar-hide {
+    scrollbar-width: none; 
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; 
+  }
+
+  .scroll-smooth {
+  scroll-behavior: smooth;
+}
+  
   .custom-scrollbar::-webkit-scrollbar {
     width: 15px;
   }
