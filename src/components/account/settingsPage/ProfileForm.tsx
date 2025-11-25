@@ -1,5 +1,4 @@
 'use client';
-
 import {
   LocationSelect,
   Section,
@@ -28,6 +27,7 @@ import { sendProfile } from '@/services/profileUserService';
 import { toast } from 'react-toastify';
 import { deleteFromCloudinary, isCloudinaryUrl } from '@/lib/cloudinary';
 import { lazyImport } from '@/lib/lazyImport';
+import * as Sentry from '@sentry/nextjs';
 
 const PaymentList = lazyImport(
   () => import('@/components/account/settingsPage/PaymentList'),
@@ -142,7 +142,7 @@ export const Settings = (): React.JSX.Element => {
           paymentOptionIds.length > 0 ? paymentOptionIds : undefined,
       });
 
-      if (response?.status === 'success') {
+      if (response?.ok) {
         if (
           oldAvatar &&
           oldAvatar !== newAvatar &&
@@ -150,15 +150,31 @@ export const Settings = (): React.JSX.Element => {
         ) {
           try {
             const deleteResult = await deleteFromCloudinary(oldAvatar);
-            console.log('Delete result:', deleteResult);
-
             if (deleteResult.error) {
-              console.warn('Failed to delete old avatar:', deleteResult.error);
-            } else {
-              console.log('Old avatar successfully deleted from Cloudinary');
+              Sentry.captureException(
+                new Error('Failed to delete old avatar from Cloudinary'),
+                {
+                  level: 'warning',
+                  extra: {
+                    oldAvatar,
+                    error: deleteResult.error,
+                  },
+                  tags: {
+                    scope: 'cloudinary-delete',
+                  },
+                }
+              );
             }
           } catch (deleteError) {
-            console.warn('Error deleting old avatar:', deleteError);
+            Sentry.captureException(deleteError, {
+              extra: {
+                oldAvatar,
+                operation: 'avatar-cleanup',
+              },
+              tags: {
+                scope: 'cloudinary-delete',
+              },
+            });
           }
         }
 
@@ -166,54 +182,102 @@ export const Settings = (): React.JSX.Element => {
         toast.success(downText.success);
         reset();
       } else {
-        toast.error(response?.message || downText.error);
+        Sentry.captureException(new Error('User profile update failed'), {
+          extra: {
+            response: response,
+            formData: {
+              name: data.name,
+              hasBio: !!data.bio,
+              hasAvatar: !!data.avatar,
+              location: data.location,
+              gender: data.gender,
+              birthDate: data.birthDate,
+              hasPhoneNumber: !!data.phoneNumber,
+              paymentOptionIdsCount: paymentOptionIds.length,
+            },
+          },
+          tags: {
+            scope: 'user-profile-update',
+          },
+        });
+        toast.error(response?.errorMessage || downText.error);
       }
-    } catch (_error: unknown) {
+    } catch (error: unknown) {
+      Sentry.captureException(error, {
+        extra: {
+          formData: {
+            name: data.name,
+            hasBio: !!data.bio,
+            hasAvatar: !!data.avatar,
+            location: data.location,
+            gender: data.gender,
+            birthDate: data.birthDate,
+            hasPhoneNumber: !!data.phoneNumber,
+            paymentOptionIdsCount: paymentOptionIds.length,
+          },
+        },
+        tags: {
+          scope: 'user-profile-submit',
+        },
+      });
       toast.error(downText.error);
-      console.error('Contact form submit error:', _error);
     }
-
-    console.log('Form submitted:', {
-      fullName: data.name,
-      bio: data.bio,
-      avatar: image?.secure_url || data.avatar,
-      location: data.location
-        ? {
-            country: selectedCountryObj?.name || data.location.country,
-            region: selectedStateObj?.name || data.location.region,
-            city: data.location.city,
-          }
-        : undefined,
-      gender: data.gender,
-      birthDate: data.birthDate
-        ? format(data.birthDate, 'yyyy-MM-dd')
-        : undefined,
-      phoneNumber: data.phoneNumber,
-    });
   };
 
   const onReset = (): void => {
-    setValue('name', undefined);
-    setValue('bio', undefined);
-    setValue('avatar', undefined);
-    setValue('location.country', undefined);
-    setValue('location.region', undefined);
-    setValue('location.city', undefined);
-    setValue('gender', undefined);
-    setValue('birthDate', undefined);
-    setValue('phoneNumber', undefined);
+    try {
+      setValue('name', undefined);
+      setValue('bio', undefined);
+      setValue('avatar', undefined);
+      setValue('location.country', undefined);
+      setValue('location.region', undefined);
+      setValue('location.city', undefined);
+      setValue('gender', undefined);
+      setValue('birthDate', undefined);
+      setValue('phoneNumber', undefined);
 
-    oldAvatarRef.current = '';
-    cardPreviewService.cleanupUnattachedCard();
-    cardPreviewService.clearAll();
+      oldAvatarRef.current = '';
+      cardPreviewService.cleanupUnattachedCard();
+      cardPreviewService.clearAll();
+    } catch (error) {
+      Sentry.captureException(error, {
+        extra: {
+          operation: 'form-reset',
+        },
+        tags: {
+          scope: 'form-reset',
+        },
+      });
+    }
   };
 
   useEffect(() => {
     return (): void => {
-      cardPreviewService.cleanupUnattachedCard();
+      try {
+        cardPreviewService.cleanupUnattachedCard();
 
-      if (oldAvatarRef.current && isCloudinaryUrl(oldAvatarRef.current)) {
-        deleteFromCloudinary(oldAvatarRef.current).catch(console.warn);
+        if (oldAvatarRef.current && isCloudinaryUrl(oldAvatarRef.current)) {
+          deleteFromCloudinary(oldAvatarRef.current).catch((error) => {
+            Sentry.captureException(error, {
+              extra: {
+                oldAvatar: oldAvatarRef.current,
+                operation: 'cleanup-unmount',
+              },
+              tags: {
+                scope: 'cloudinary-cleanup',
+              },
+            });
+          });
+        }
+      } catch (error) {
+        Sentry.captureException(error, {
+          extra: {
+            operation: 'component-unmount-cleanup',
+          },
+          tags: {
+            scope: 'cleanup',
+          },
+        });
       }
     };
   }, []);

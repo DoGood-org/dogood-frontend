@@ -25,6 +25,7 @@ import { lazyImport } from '@/lib/lazyImport';
 import { getInitialLocation } from '@/lib/utils';
 import DeleteFormModal from './DeleteFormModal';
 import { getUserRole } from '@/lib/getUserRole';
+import * as Sentry from '@sentry/nextjs';
 
 const PaymentList = lazyImport(
   () => import('@/components/account/settingsPage/PaymentList'),
@@ -63,6 +64,7 @@ const OrganizationProfile = ({
       moreInfo: organization.moreInfo,
     },
   });
+
   const avatarValue = watch('avatar');
   useEffect(() => {
     if (!oldAvatarRef.current && avatarValue) {
@@ -73,6 +75,7 @@ const OrganizationProfile = ({
   const countryValue = watch('location.country');
   const stateValue = watch('location.region');
   const cityValue = watch('location.city');
+
   const handleCountryChange = useCallback(
     (value: string) => {
       setValue('location.country', value);
@@ -93,6 +96,7 @@ const OrganizationProfile = ({
     },
     [setValue]
   );
+
   const { tempCards } = cardPreviewStore();
 
   const onSubmit = async (
@@ -132,7 +136,7 @@ const OrganizationProfile = ({
         organization.id
       );
 
-      if (response?.status === 'success') {
+      if (response?.ok) {
         if (
           oldAvatar &&
           oldAvatar !== newAvatar &&
@@ -140,15 +144,34 @@ const OrganizationProfile = ({
         ) {
           try {
             const deleteResult = await deleteFromCloudinary(oldAvatar);
-            console.log('Delete result:', deleteResult);
-
             if (deleteResult.error) {
-              console.warn('Failed to delete old avatar:', deleteResult.error);
-            } else {
-              console.log('Old avatar successfully deleted from Cloudinary');
+              Sentry.captureException(
+                new Error('Failed to delete old avatar from Cloudinary'),
+                {
+                  level: 'warning',
+                  extra: {
+                    oldAvatar,
+                    error: deleteResult.error,
+                    organizationId: organization.id,
+                  },
+                  tags: {
+                    scope: 'cloudinary-delete',
+                  },
+                }
+              );
             }
           } catch (deleteError) {
-            console.warn('Error deleting old avatar:', deleteError);
+            Sentry.captureException(deleteError, {
+              extra: {
+                oldAvatar,
+                organizationId: organization.id,
+                operation: 'avatar-cleanup',
+              },
+              tags: {
+                scope: 'cloudinary-delete',
+              },
+            });
+            toast.error('Error deleting old avatar');
           }
         }
 
@@ -156,49 +179,108 @@ const OrganizationProfile = ({
         toast.success(downText.success);
         reset();
       } else {
-        toast.error(response?.message || downText.error);
-      }
-    } catch (_error: unknown) {
-      toast.error(downText.error);
-      console.error('Contact form submit error:', _error);
-    }
-
-    console.log('Form submitted:', {
-      fullName: data.name,
-      avatar: image?.secure_url || data.avatar,
-      location: data.location
-        ? {
-            country: selectedCountryObj?.name || data.location.country,
-            region: selectedStateObj?.name || data.location.region,
-            city: data.location.city,
+        Sentry.captureException(
+          new Error('Organization profile update failed'),
+          {
+            extra: {
+              organizationId: organization.id,
+              response: response,
+              formData: {
+                name: data.name,
+                hasAvatar: !!data.avatar,
+                location: data.location,
+                hasPhoneNumber: !!data.phoneNumber,
+                paymentOptionIdsCount: paymentOptionIds.length,
+                hasDescription: !!data.description,
+                hasMoreInfo: !!data.moreInfo,
+              },
+            },
+            tags: {
+              scope: 'organization-profile-update',
+            },
           }
-        : undefined,
-      phoneNumber: data.phoneNumber,
-      description: data.description,
-      moreInfo: data.moreInfo,
-    });
+        );
+        toast.error(response?.errorMessage || downText.error);
+      }
+    } catch (error: unknown) {
+      Sentry.captureException(error, {
+        extra: {
+          organizationId: organization.id,
+          formData: {
+            name: data.name,
+            hasAvatar: !!data.avatar,
+            location: data.location,
+            hasPhoneNumber: !!data.phoneNumber,
+            paymentOptionIdsCount: paymentOptionIds.length,
+            hasDescription: !!data.description,
+            hasMoreInfo: !!data.moreInfo,
+          },
+        },
+        tags: {
+          scope: 'organization-profile-submit',
+        },
+      });
+      toast.error(downText.error);
+    }
   };
-  const onReset = (): void => {
-    setValue('name', organization.name);
-    setValue('avatar', organization.avatar);
-    setValue('location', getInitialLocation(organization.location));
-    setValue('phoneNumber', organization.phoneNumber);
-    setValue('description', organization.description);
-    setValue('moreInfo', organization.moreInfo);
 
-    oldAvatarRef.current = organization.avatar || '';
-    cardPreviewService.cleanupUnattachedCard();
-    cardPreviewService.clearAll();
+  const onReset = (): void => {
+    try {
+      setValue('name', organization.name);
+      setValue('avatar', organization.avatar);
+      setValue('location', getInitialLocation(organization.location));
+      setValue('phoneNumber', organization.phoneNumber);
+      setValue('description', organization.description);
+      setValue('moreInfo', organization.moreInfo);
+
+      oldAvatarRef.current = organization.avatar || '';
+      cardPreviewService.cleanupUnattachedCard();
+      cardPreviewService.clearAll();
+    } catch (error) {
+      Sentry.captureException(error, {
+        extra: {
+          organizationId: organization.id,
+          operation: 'form-reset',
+        },
+        tags: {
+          scope: 'form-reset',
+        },
+      });
+    }
   };
+
   useEffect(() => {
     return (): void => {
-      cardPreviewService.cleanupUnattachedCard();
+      try {
+        cardPreviewService.cleanupUnattachedCard();
 
-      if (oldAvatarRef.current && isCloudinaryUrl(oldAvatarRef.current)) {
-        deleteFromCloudinary(oldAvatarRef.current).catch(console.warn);
+        if (oldAvatarRef.current && isCloudinaryUrl(oldAvatarRef.current)) {
+          deleteFromCloudinary(oldAvatarRef.current).catch((error) => {
+            Sentry.captureException(error, {
+              extra: {
+                oldAvatar: oldAvatarRef.current,
+                operation: 'cleanup-unmount',
+              },
+              tags: {
+                scope: 'cloudinary-cleanup',
+              },
+            });
+          });
+        }
+      } catch (error) {
+        Sentry.captureException(error, {
+          extra: {
+            organizationId: organization.id,
+            operation: 'component-unmount-cleanup',
+          },
+          tags: {
+            scope: 'cleanup',
+          },
+        });
       }
     };
-  }, []);
+  }, [organization.id]);
+
   return (
     <Section withContainer={false} className="">
       <form

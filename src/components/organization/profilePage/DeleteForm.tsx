@@ -19,7 +19,7 @@ const DeleteForm: React.FC<DeleteModalControls> = ({
 
     try {
       const response = await deleteOrgProfile(orgId);
-      if (response.status === 'success') {
+      if (response.ok) {
         toast.success('Organization deleted successfully!');
       }
     } catch (err: any) {

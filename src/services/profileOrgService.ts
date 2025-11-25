@@ -1,51 +1,22 @@
-import { fetchFromApi } from '@/lib/apiFetcher';
-import {
-  DeleteOrgResponse,
-  ProfileOrgFormData,
-  ProfileOrgResponse,
-} from '@/types/settings';
+import { fetchFromApi, FetchResult } from '@/lib/apiFetcher';
+import { DeleteOrgResponse, ProfileOrgFormData } from '@/types/settings';
 
 export const sendOrgProfile = async (
   formData: ProfileOrgFormData,
   orgId: string
-): Promise<ProfileOrgResponse> => {
-  const response = await fetchFromApi<ProfileOrgResponse>(
-    `/organizations/${orgId}`,
-    {
-      method: 'PATCH',
-      data: formData,
-      auth: true,
-    }
-  );
-
-  if (response.ok) {
-    return response.data;
-  } else {
-    throw {
-      status: 'error',
-      message: response.errorMessage,
-      data: null,
-    };
-  }
+): Promise<FetchResult<ProfileOrgFormData>> => {
+  return fetchFromApi<ProfileOrgFormData>(`/organizations/${orgId}`, {
+    method: 'PATCH',
+    data: formData,
+    auth: true,
+  });
 };
 
 export const deleteOrgProfile = async (
   orgId: string
-): Promise<DeleteOrgResponse> => {
-  const response = await fetchFromApi<DeleteOrgResponse>(
-    `/organizations/${orgId}`,
-    {
-      method: 'DELETE',
-      auth: true,
-    }
-  );
-
-  if (response.ok) {
-    return response.data;
-  } else {
-    throw {
-      status: 'error',
-      message: response.errorMessage,
-    };
-  }
+): Promise<FetchResult<DeleteOrgResponse>> => {
+  return fetchFromApi<DeleteOrgResponse>(`/organizations/${orgId}`, {
+    method: 'DELETE',
+    auth: true,
+  });
 };
