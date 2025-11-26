@@ -15,7 +15,7 @@ export const sendOrgProfile = async (
 export const deleteOrgProfile = async (
   orgId: string
 ): Promise<FetchResult<DeleteOrgResponse>> => {
-  return fetchFromApi<DeleteOrgResponse>(`/organizations/${orgId}`, {
+  return fetchFromApi(`/organizations/${orgId}`, {
     method: 'DELETE',
     auth: true,
   });

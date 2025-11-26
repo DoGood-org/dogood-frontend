@@ -12,7 +12,7 @@ import { Resolver, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import csc from 'country-state-city';
 import { sendOrgProfile } from '@/services/profileOrgService';
-import { deleteFromCloudinary, isCloudinaryUrl } from '@/lib/cloudinary';
+import { deleteFromCloudinary } from '@/services/cloudinary';
 import { toast } from 'react-toastify';
 import { cardPreviewService } from '@/services/cardPreviewService';
 import { Section } from '@/components/ui/Section';
@@ -25,7 +25,6 @@ import { lazyImport } from '@/lib/lazyImport';
 import { getInitialLocation } from '@/lib/utils';
 import DeleteFormModal from './DeleteFormModal';
 import { getUserRole } from '@/lib/getUserRole';
-import * as Sentry from '@sentry/nextjs';
 
 const PaymentList = lazyImport(
   () => import('@/components/account/settingsPage/PaymentList'),
@@ -44,7 +43,6 @@ const OrganizationProfile = ({
   const oldAvatarRef = useRef<string>('');
   const downText = (f.raw('downtext') as any[])[0];
   const userRole = getUserRole(organization.members);
-
   const {
     register,
     handleSubmit,
@@ -114,172 +112,55 @@ const OrganizationProfile = ({
 
     const oldAvatar = oldAvatarRef.current;
     const newAvatar = data.avatar;
-
-    try {
-      const response = await sendOrgProfile(
-        {
-          name: data.name,
-          avatar: data.avatar,
-          location: data.location
-            ? {
-                country: selectedCountryObj?.name || data.location.country,
-                region: selectedStateObj?.name || data.location.region,
-                city: data.location.city,
-              }
-            : undefined,
-          phoneNumber: data.phoneNumber || undefined,
-          paymentOptionIds:
-            paymentOptionIds.length > 0 ? paymentOptionIds : undefined,
-          description: data.description || undefined,
-          moreInfo: data.moreInfo || undefined,
-        },
-        organization.id
-      );
-
-      if (response?.ok) {
-        if (
-          oldAvatar &&
-          oldAvatar !== newAvatar &&
-          isCloudinaryUrl(oldAvatar)
-        ) {
-          try {
-            const deleteResult = await deleteFromCloudinary(oldAvatar);
-            if (deleteResult.error) {
-              Sentry.captureException(
-                new Error('Failed to delete old avatar from Cloudinary'),
-                {
-                  level: 'warning',
-                  extra: {
-                    oldAvatar,
-                    error: deleteResult.error,
-                    organizationId: organization.id,
-                  },
-                  tags: {
-                    scope: 'cloudinary-delete',
-                  },
-                }
-              );
-            }
-          } catch (deleteError) {
-            Sentry.captureException(deleteError, {
-              extra: {
-                oldAvatar,
-                organizationId: organization.id,
-                operation: 'avatar-cleanup',
-              },
-              tags: {
-                scope: 'cloudinary-delete',
-              },
-            });
-            toast.error('Error deleting old avatar');
-          }
-        }
-
-        oldAvatarRef.current = data.avatar || '';
-        toast.success(downText.success);
-        reset();
-      } else {
-        Sentry.captureException(
-          new Error('Organization profile update failed'),
-          {
-            extra: {
-              organizationId: organization.id,
-              response: response,
-              formData: {
-                name: data.name,
-                hasAvatar: !!data.avatar,
-                location: data.location,
-                hasPhoneNumber: !!data.phoneNumber,
-                paymentOptionIdsCount: paymentOptionIds.length,
-                hasDescription: !!data.description,
-                hasMoreInfo: !!data.moreInfo,
-              },
-            },
-            tags: {
-              scope: 'organization-profile-update',
-            },
-          }
-        );
-        toast.error(response?.errorMessage || downText.error);
-      }
-    } catch (error: unknown) {
-      Sentry.captureException(error, {
-        extra: {
-          organizationId: organization.id,
-          formData: {
-            name: data.name,
-            hasAvatar: !!data.avatar,
-            location: data.location,
-            hasPhoneNumber: !!data.phoneNumber,
-            paymentOptionIdsCount: paymentOptionIds.length,
-            hasDescription: !!data.description,
-            hasMoreInfo: !!data.moreInfo,
-          },
-        },
-        tags: {
-          scope: 'organization-profile-submit',
-        },
-      });
-      toast.error(downText.error);
+    if (oldAvatar && oldAvatar !== newAvatar) {
+      await deleteFromCloudinary(oldAvatar);
     }
+    const response = await sendOrgProfile(
+      {
+        name: data.name,
+        avatar: data.avatar,
+        location: data.location
+          ? {
+              country: selectedCountryObj?.name || data.location.country,
+              region: selectedStateObj?.name || data.location.region,
+              city: data.location.city,
+            }
+          : undefined,
+        phoneNumber: data.phoneNumber || undefined,
+        paymentOptionIds:
+          paymentOptionIds.length > 0 ? paymentOptionIds : undefined,
+        description: data.description || undefined,
+        moreInfo: data.moreInfo || undefined,
+      },
+      organization.id
+    );
+    if (!response.ok) {
+      toast.error(downText.error);
+      return;
+    }
+    oldAvatarRef.current = data.avatar || '';
+    toast.success(downText.success);
+    reset();
   };
 
   const onReset = (): void => {
-    try {
-      setValue('name', organization.name);
-      setValue('avatar', organization.avatar);
-      setValue('location', getInitialLocation(organization.location));
-      setValue('phoneNumber', organization.phoneNumber);
-      setValue('description', organization.description);
-      setValue('moreInfo', organization.moreInfo);
+    setValue('name', organization.name);
+    setValue('avatar', organization.avatar);
+    setValue('location', getInitialLocation(organization.location));
+    setValue('phoneNumber', organization.phoneNumber);
+    setValue('description', organization.description);
+    setValue('moreInfo', organization.moreInfo);
 
-      oldAvatarRef.current = organization.avatar || '';
-      cardPreviewService.cleanupUnattachedCard();
-      cardPreviewService.clearAll();
-    } catch (error) {
-      Sentry.captureException(error, {
-        extra: {
-          organizationId: organization.id,
-          operation: 'form-reset',
-        },
-        tags: {
-          scope: 'form-reset',
-        },
-      });
-    }
+    oldAvatarRef.current = organization.avatar || '';
+    cardPreviewService.cleanupUnattachedCard();
+    cardPreviewService.clearAll();
   };
 
   useEffect(() => {
     return (): void => {
-      try {
-        cardPreviewService.cleanupUnattachedCard();
-
-        if (oldAvatarRef.current && isCloudinaryUrl(oldAvatarRef.current)) {
-          deleteFromCloudinary(oldAvatarRef.current).catch((error) => {
-            Sentry.captureException(error, {
-              extra: {
-                oldAvatar: oldAvatarRef.current,
-                operation: 'cleanup-unmount',
-              },
-              tags: {
-                scope: 'cloudinary-cleanup',
-              },
-            });
-          });
-        }
-      } catch (error) {
-        Sentry.captureException(error, {
-          extra: {
-            organizationId: organization.id,
-            operation: 'component-unmount-cleanup',
-          },
-          tags: {
-            scope: 'cleanup',
-          },
-        });
-      }
+      cardPreviewService.cleanupUnattachedCard();
     };
-  }, [organization.id]);
+  }, []);
 
   return (
     <Section withContainer={false} className="">

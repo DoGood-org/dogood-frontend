@@ -32,8 +32,11 @@ export default async function OrganizationPage({
   params,
 }: Props): Promise<JSX.Element> {
   const { id } = await params;
-
   const organization = await fetchOrganizationById(id);
+
+  if (!organization) {
+    notFound();
+  }
 
   return <OrganizationSettings organization={organization} />;
 }

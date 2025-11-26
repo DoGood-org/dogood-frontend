@@ -25,6 +25,6 @@ export interface ProfileOrgFormData {
 }
 
 export interface DeleteOrgResponse {
-  status: string;
+  code: string;
   message: string;
 }
