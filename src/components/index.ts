@@ -95,7 +95,6 @@ export * from './main/hero/HeroSocialLink';
 export * from './main/howItWorks/HowItWorks';
 export * from './main/news/NewsItem';
 export * from './main/news/NewsList';
-export * from './main/news/NewsScrollList';
 export * from './main/news/NewsSlideTablet';
 export * from './main/news/SwiperList';
 export * from './main/news/SwiperNavButton';
