@@ -15,9 +15,8 @@ export const NewsList = async (): Promise<JSX.Element> => {
   const locale = (await getLocale()) as Tlocale;
   const t = await getTranslations('news');
   const newsResult = await fetchNews(locale);
-  const error = !newsResult.ok;
 
-  const newsItems = !error ? newsResult.data.data.posts : [];
+  const newsItems = newsResult.ok ? (newsResult.data?.data?.posts ?? []) : [];
 
   return (
     <Section
@@ -32,7 +31,7 @@ export const NewsList = async (): Promise<JSX.Element> => {
         {t('newsListMain.title')}
       </h2>
 
-      {error ? (
+      {!newsResult.ok ? (
         <div className="flex items-center justify-center h-[300px]">
           <p className="text-sm">{t('news.loadError')}</p>
         </div>

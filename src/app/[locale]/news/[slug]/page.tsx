@@ -77,7 +77,7 @@ justify-center
     >
       <h2 className="text-foreground">{t('newsItemPage.title', { title })}</h2>
       <p className="text-foreground">{newsFormatDate(createdAt)}</p>
-      <p className="text-foreground">{title}</p>
+      <h3 className="text-foreground">{title}</h3>
       <p className="mb-6">{content}</p>
       {image && (
         <Image
