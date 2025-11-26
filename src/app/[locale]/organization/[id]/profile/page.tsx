@@ -34,9 +34,5 @@ export default async function OrganizationPage({
   const { id } = await params;
   const organization = await fetchOrganizationById(id);
 
-  if (!organization) {
-    notFound();
-  }
-
   return <OrganizationSettings organization={organization} />;
 }
