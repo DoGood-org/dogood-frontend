@@ -13,10 +13,14 @@ const NewsPage = async ({ params }: Props): Promise<React.ReactElement> => {
   const t = await getTranslations('news');
 
   if (!newsResult.ok) {
-    return <p>{t('news.loadError')}</p>;
+    return (
+      <p className="flex items-center justify-center h-[300px]">
+        {t('news.loadError')}
+      </p>
+    );
   }
 
-  const newsItems: INewsItem[] = newsResult.data.data.posts;
+  const newsItems: INewsItem[] = newsResult.data?.data?.posts ?? [];
   return (
     <div
       className=" 

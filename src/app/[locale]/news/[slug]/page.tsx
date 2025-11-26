@@ -16,6 +16,7 @@ interface Props {
 const fetchNewsItem = cache(
   async (slug: string, locale: Tlocale): Promise<INewsItem | null> => {
     const result = await getNewsById(slug, locale);
+
     if (!result.ok) {
       return null;
     }
@@ -55,7 +56,7 @@ export default async function IdNewsItemPage({
     notFound();
   }
 
-  const { title, content, image, createdAt } = newsItem;
+  const { title = '', content = '', image, createdAt } = newsItem;
 
   return (
     <div

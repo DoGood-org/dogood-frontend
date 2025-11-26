@@ -5,5 +5,5 @@ import { FetchResult } from '@/lib/apiFetcher';
 export const fetchNews = async (
   locale: Tlocale
 ): Promise<FetchResult<INewsListApiResponse>> => {
-  return await getNews(locale);
+  return getNews(locale);
 };

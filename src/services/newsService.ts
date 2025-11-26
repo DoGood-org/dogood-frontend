@@ -4,14 +4,14 @@ import { INewsItemApiResponse, INewsListApiResponse, Tlocale } from '@/types';
 export const getNews = async (
   locale: Tlocale
 ): Promise<FetchResult<INewsListApiResponse>> => {
-  return await fetchFromApi<INewsListApiResponse>(`/posts/${locale}`, {
+  return fetchFromApi<INewsListApiResponse>(`/posts/${locale}`, {
     method: 'GET',
   });
 };
 
 export const getNewsById = async (
   id: string | number,
-  locale: string
+  locale: Tlocale
 ): Promise<FetchResult<INewsItemApiResponse>> => {
   return fetchFromApi<INewsItemApiResponse>(`/posts/${id}/${locale}`, {
     method: 'GET',

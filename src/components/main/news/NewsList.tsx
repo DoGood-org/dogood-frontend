@@ -15,12 +15,9 @@ export const NewsList = async (): Promise<JSX.Element> => {
   const locale = (await getLocale()) as Tlocale;
   const t = await getTranslations('news');
   const newsResult = await fetchNews(locale);
+  const error = !newsResult.ok;
 
-  if (!newsResult.ok) {
-    return <p>{t('news.loadError')}</p>;
-  }
-
-  const newsItems = newsResult.data.data.posts;
+  const newsItems = !error ? newsResult.data.data.posts : [];
 
   return (
     <Section
@@ -35,16 +32,23 @@ export const NewsList = async (): Promise<JSX.Element> => {
         {t('newsListMain.title')}
       </h2>
 
-      <SwiperList
-        newsItems={newsItems}
-        swiperContainerClass="h-[425px] my-10"
-        prevClass="prevNews"
-        nextClass="nextNews"
-        paginationClass="news-pagination"
-        bulletClass="news-pagination-bullet"
-        bulletActiveClass="news-pagination-bullet-active"
-      />
-
+      {error ? (
+        <div className="flex items-center justify-center h-[300px]">
+          <p className="text-sm">{t('news.loadError')}</p>
+        </div>
+      ) : (
+        <>
+          <SwiperList
+            newsItems={newsItems}
+            swiperContainerClass="h-[425px] my-10"
+            prevClass="prevNews"
+            nextClass="nextNews"
+            paginationClass="news-pagination"
+            bulletClass="news-pagination-bullet"
+            bulletActiveClass="news-pagination-bullet-active"
+          />
+        </>
+      )}
       <div className="mt-4 flex justify-end">
         <LinkWithArrow href="/news" text={t('newsListMain.seeAll')} />
       </div>
