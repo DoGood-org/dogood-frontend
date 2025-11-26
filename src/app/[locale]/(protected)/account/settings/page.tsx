@@ -1,4 +1,4 @@
-import { Settings } from '@/components/account/settingsPage/SettingsForm';
+import { Settings } from '@/components/account/settingsPage/ProfileForm';
 import React from 'react';
 
 const SettingsPage: React.FC = () => {
