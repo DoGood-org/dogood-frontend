@@ -47,9 +47,7 @@ export const LocationSelect = ({
     }
     const countryStates = csc.getStatesOfCountry(selectedCountry);
     setStates(countryStates);
-    onStateChange(''); // Reset state when country changes
-    onCityChange(''); // Reset city when country changes
-  }, [onCityChange, onStateChange, selectedCountry]);
+  }, [selectedCountry]);
 
   // Update cities when state changes
   useEffect(() => {
@@ -59,8 +57,7 @@ export const LocationSelect = ({
     }
     const stateCities = csc.getCitiesOfState(selectedCountry, selectedState);
     setCities(stateCities);
-    onCityChange(''); // Reset city when state changes
-  }, [selectedState, selectedCountry, onCityChange]);
+  }, [selectedState, selectedCountry]);
 
   return (
     <div className={`space-y-4 ${className}`}>
