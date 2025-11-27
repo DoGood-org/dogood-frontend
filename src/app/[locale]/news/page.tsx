@@ -1,5 +1,5 @@
 import { NewsItem } from '@/components';
-import { fetchNews } from '@/facades/newsFacade';
+import { getNews } from '@/services/newsService';
 import { INewsItem, Tlocale } from '@/types';
 import { getTranslations } from 'next-intl/server';
 
@@ -9,7 +9,7 @@ type Props = {
 
 const NewsPage = async ({ params }: Props): Promise<React.ReactElement> => {
   const { locale } = await params;
-  const newsResult = await fetchNews(locale);
+  const newsResult = await getNews(locale);
   const t = await getTranslations('news');
 
   if (!newsResult.ok) {

@@ -8,13 +8,13 @@ import { SwiperList } from '@/components/main/news/SwiperList';
 import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { Section } from '@/components/ui/Section';
 import { getLocale, getTranslations } from 'next-intl/server';
-import { fetchNews } from '@/facades/newsFacade';
 import { Tlocale } from '@/types';
+import { getNews } from '@/services/newsService';
 
 export const NewsList = async (): Promise<JSX.Element> => {
   const locale = (await getLocale()) as Tlocale;
   const t = await getTranslations('news');
-  const newsResult = await fetchNews(locale);
+  const newsResult = await getNews(locale);
 
   const newsItems = newsResult.ok ? (newsResult.data?.data?.posts ?? []) : [];
 
@@ -36,17 +36,15 @@ export const NewsList = async (): Promise<JSX.Element> => {
           <p className="text-sm">{t('news.loadError')}</p>
         </div>
       ) : (
-        <>
-          <SwiperList
-            newsItems={newsItems}
-            swiperContainerClass="h-[425px] my-10"
-            prevClass="prevNews"
-            nextClass="nextNews"
-            paginationClass="news-pagination"
-            bulletClass="news-pagination-bullet"
-            bulletActiveClass="news-pagination-bullet-active"
-          />
-        </>
+        <SwiperList
+          newsItems={newsItems}
+          swiperContainerClass="h-[425px] my-10"
+          prevClass="prevNews"
+          nextClass="nextNews"
+          paginationClass="news-pagination"
+          bulletClass="news-pagination-bullet"
+          bulletActiveClass="news-pagination-bullet-active"
+        />
       )}
       <div className="mt-4 flex justify-end">
         <LinkWithArrow href="/news" text={t('newsListMain.seeAll')} />

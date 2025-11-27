@@ -3,27 +3,13 @@ import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
-import { getNewsById } from '@/services/newsService';
 import { notFound } from 'next/navigation';
-import { INewsItem, INewsItemApiResponse } from '@/types';
-import { cache } from 'react';
 import { newsFormatDate } from '@/utils/newsFormatDate';
+import { fetchNewsItem } from '@/facades/newsFacade';
 
 interface Props {
   params: Promise<{ slug: string; locale: Tlocale }>;
 }
-
-const fetchNewsItem = cache(
-  async (slug: string, locale: Tlocale): Promise<INewsItem | null> => {
-    const result = await getNewsById(slug, locale);
-
-    if (!result.ok) {
-      return null;
-    }
-    const apiItem: INewsItemApiResponse = result.data;
-    return apiItem.data.post ?? null;
-  }
-);
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, locale } = await params;
@@ -56,7 +42,7 @@ export default async function IdNewsItemPage({
     notFound();
   }
 
-  const { title = '', content = '', image, createdAt } = newsItem;
+  const { title, content, image, createdAt } = newsItem;
 
   return (
     <div
