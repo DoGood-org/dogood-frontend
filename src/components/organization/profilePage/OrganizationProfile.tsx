@@ -23,25 +23,23 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
 import { lazyImport } from '@/lib/lazyImport';
 import { getInitialLocation } from '@/lib/utils';
-import DeleteFormModal from './DeleteFormModal';
 import { getUserRole } from '@/lib/getUserRole';
+import { DeleteFormModal } from './DeleteFormModal';
 
 const PaymentList = lazyImport(
   () => import('@/components/account/settingsPage/PaymentList'),
   'PaymentList'
 );
 
-const OrganizationProfile = ({
+export const OrganizationProfile = ({
   organization,
 }: {
   organization: OrganizationDetailedProps;
 }): JSX.Element => {
   const [image, setImage] = useState<any>(null);
   const t = useTranslations('settings');
-  const f = useTranslations('faq');
   const [isDelete, setIsDelete] = useState(false);
   const oldAvatarRef = useRef<string>('');
-  const downText = (f.raw('downtext') as any[])[0];
   const userRole = getUserRole(organization.members);
   const {
     register,
@@ -134,12 +132,12 @@ const OrganizationProfile = ({
       },
       organization.id
     );
-    if (!response.ok) {
-      toast.error(downText.error);
-      return;
+    if (response.ok) {
+      toast.success(t('success'));
+    } else {
+      toast.error(t('error'));
     }
     oldAvatarRef.current = data.avatar || '';
-    toast.success(downText.success);
     reset();
   };
 
@@ -323,5 +321,3 @@ const OrganizationProfile = ({
     </Section>
   );
 };
-
-export default OrganizationProfile;

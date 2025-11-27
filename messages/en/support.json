@@ -1,0 +1,162 @@
+{
+  "menu": {
+    "general": "General",
+    "volunteer": "Volunteer",
+    "donor": "Donor",
+    "personInNeed": "A person in Need",
+    "charitableOrg": "Charitable Organization",
+    "business": "Business"
+  },
+  "questions": {
+    "general": {
+      "title": "General Questions",
+      "items": [
+        {
+          "id": "gen-1",
+          "question": "What is DoGood Impact Inc.?",
+          "answer": "It is a mission-driven tech company building the next-generation global mutual aid platform. We are building a digital bridge where kindness, amplified by Artificial Intelligence (AI), becomes visible, measurable, and contagious."
+        },
+        {
+          "id": "gen-2",
+          "question": "What problem does DoGood solve?",
+          "answer": "We solve the paradox that millions of people are ready to give, and millions are in urgent need, yet these two groups too often fail to find each other due to fragmentation, a lack of trust, and the complexity of finding ways to help."
+        },
+        {
+          "id": "gen-3",
+          "question": "Is DoGood just an app or a social network?",
+          "answer": "DoGood is more than just an intermediary or an app. It’s an integrated digital ecosystem where kindness becomes action, and action leads to real, tangible impact."
+        },
+        {
+          "id": "gen-4",
+          "question": "In which countries does the platform operate?",
+          "answer": "The platform has international scalability. Our strategy is a gradual global launch, starting with key regions (US and EU), with the aim of becoming the standard for global mutual aid."
+        }
+      ]
+    },
+    "volunteer": {
+      "title": "Volunteer Questions",
+      "items": [
+        {
+          "id": "vol-1",
+          "question": "How to find projects that need help?",
+          "answer": "You can use the GoodMap (interactive map of good deeds) to find local and global needs, or rely on the GoodBot AI, which will automatically match you with the most relevant opportunities based on your skills and time availability."
+        },
+        {
+          "id": "vol-2",
+          "question": "Is it possible to participate in several projects at the same time?",
+          "answer": "Yes, the platform is designed for flexibility. GoodBot helps manage your commitments and offers opportunities that align with your availability."
+        },
+        {
+          "id": "vol-3",
+          "question": "How to track your achievements and receive rewards?",
+          "answer": "GoodBot is responsible for measuring impact. It collects and processes data on every completed act of support, automatically generating clear, actionable impact reports. This tangible feedback loop ensures you receive verifiable proof that your kindness has truly made a difference."
+        },
+        {
+          "id": "vol-4",
+          "question": "How can I become a volunteer on the platform?",
+          "answer": "GoodBot enhances user engagement by making every act of kindness deeply personal. It studies a user's past contributions and preferences, offering them the most inspiring and relevant opportunities for their next contribution."
+        }
+      ]
+    },
+    "donor": {
+      "title": "Donor Questions",
+      "items": [
+        {
+          "id": "don-1",
+          "question": "What is DoGood Impact Inc.?",
+          "answer": "It is a mission-driven tech company building the next-generation global mutual aid platform. We are building a digital bridge where kindness, amplified by Artificial Intelligence (AI), becomes visible, measurable, and contagious."
+        },
+        {
+          "id": "don-2",
+          "question": "What problem does DoGood solve?",
+          "answer": "We solve the paradox that millions of people are ready to give, and millions are in urgent need, yet these two groups too often fail to find each other due to fragmentation, a lack of trust, and the complexity of finding ways to help."
+        },
+        {
+          "id": "don-3",
+          "question": "Is DoGood just an app or a social network?",
+          "answer": "DoGood is more than just an intermediary or an app. It’s an integrated digital ecosystem where kindness becomes action, and action leads to real, tangible impact."
+        },
+        {
+          "id": "don-4",
+          "question": "In which countries does the platform operate?",
+          "answer": "The platform has international scalability. Our strategy is a gradual global launch, starting with key regions (US and EU), with the aim of becoming the standard for global mutual aid."
+        }
+      ]
+    },
+    "personInNeed": {
+      "title": "Person In Need Questions",
+      "items": [
+        {
+          "id": "pin-1",
+          "question": "How to find projects that need help?",
+          "answer": "You can use the GoodMap (interactive map of good deeds) to find local and global needs, or rely on the GoodBot AI, which will automatically match you with the most relevant opportunities based on your skills and time availability."
+        },
+        {
+          "id": "pin-2",
+          "question": "Is it possible to participate in several projects at the same time?",
+          "answer": "Yes, the platform is designed for flexibility. GoodBot helps manage your commitments and offers opportunities that align with your availability."
+        },
+        {
+          "id": "pin-3",
+          "question": "How to track your achievements and receive rewards?",
+          "answer": "GoodBot is responsible for measuring impact. It collects and processes data on every completed act of support, automatically generating clear, actionable impact reports. This tangible feedback loop ensures you receive verifiable proof that your kindness has truly made a difference."
+        },
+        {
+          "id": "pin-4",
+          "question": "How can I become a volunteer on the platform?",
+          "answer": "GoodBot enhances user engagement by making every act of kindness deeply personal. It studies a user's past contributions and preferences, offering them the most inspiring and relevant opportunities for their next contribution."
+        }
+      ]
+    },
+    "charitableOrg": {
+      "title": "Charitable Organization Questions",
+      "items": [
+        {
+          "id": "char-1",
+          "question": "What is DoGood Impact Inc.?",
+          "answer": "It is a mission-driven tech company building the next-generation global mutual aid platform. We are building a digital bridge where kindness, amplified by Artificial Intelligence (AI), becomes visible, measurable, and contagious."
+        },
+        {
+          "id": "char-2",
+          "question": "What problem does DoGood solve?",
+          "answer": "We solve the paradox that millions of people are ready to give, and millions are in urgent need, yet these two groups too often fail to find each other due to fragmentation, a lack of trust, and the complexity of finding ways to help."
+        },
+        {
+          "id": "char-3",
+          "question": "Is DoGood just an app or a social network?",
+          "answer": "DoGood is more than just an intermediary or an app. It’s an integrated digital ecosystem where kindness becomes action, and action leads to real, tangible impact."
+        },
+        {
+          "id": "char-4",
+          "question": "In which countries does the platform operate?",
+          "answer": "The platform has international scalability. Our strategy is a gradual global launch, starting with key regions (US and EU), with the aim of becoming the standard for global mutual aid."
+        }
+      ]
+    },
+    "business": {
+      "title": "Business Questions",
+      "items": [
+        {
+          "id": "bus-1",
+          "question": "How to find projects that need help?",
+          "answer": "You can use the GoodMap (interactive map of good deeds) to find local and global needs, or rely on the GoodBot AI, which will automatically match you with the most relevant opportunities based on your skills and time availability."
+        },
+        {
+          "id": "bus-2",
+          "question": "Is it possible to participate in several projects at the same time?",
+          "answer": "Yes, the platform is designed for flexibility. GoodBot helps manage your commitments and offers opportunities that align with your availability."
+        },
+        {
+          "id": "bus-3",
+          "question": "How to track your achievements and receive rewards?",
+          "answer": "GoodBot is responsible for measuring impact. It collects and processes data on every completed act of support, automatically generating clear, actionable impact reports. This tangible feedback loop ensures you receive verifiable proof that your kindness has truly made a difference."
+        },
+        {
+          "id": "bus-4",
+          "question": "How can I become a volunteer on the platform?",
+          "answer": "GoodBot enhances user engagement by making every act of kindness deeply personal. It studies a user's past contributions and preferences, offering them the most inspiring and relevant opportunities for their next contribution."
+        }
+      ]
+    }
+  }
+}

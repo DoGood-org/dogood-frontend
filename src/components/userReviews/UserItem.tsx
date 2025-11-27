@@ -5,8 +5,8 @@ import { Rating } from '../ui/Rating';
 import { Button } from '../ui/Button';
 import { useTranslations } from 'next-intl';
 import { UserNoAvatar } from '../account/accountPage/UserNoAvatar';
-import ReviewsFormModal from './ReviewsFormModal';
 import { IUserItemProps } from '@/types/userReviewsType';
+import { ReviewsFormModal } from './ReviewsFormModal';
 
 export const UserItem: React.FC<IUserItemProps> = ({
   user: { id, name, avatar, rating },

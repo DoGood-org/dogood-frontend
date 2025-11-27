@@ -3,7 +3,7 @@ import { getOrganizationById } from '@/services/organizationService';
 import { OrganizationDetailedProps, Tlocale } from '@/types';
 import { Metadata } from 'next';
 import React, { cache, JSX } from 'react';
-import OrganizationSettings from '@/components/organization/profilePage/OrganizationProfile';
+import { OrganizationProfile } from '@/components';
 
 interface Props {
   params: Promise<{ id: string; locale: Tlocale }>;
@@ -33,6 +33,8 @@ export default async function OrganizationPage({
 }: Props): Promise<JSX.Element> {
   const { id } = await params;
   const organization = await fetchOrganizationById(id);
-
-  return <OrganizationSettings organization={organization} />;
+  if (!organization) {
+    notFound();
+  }
+  return <OrganizationProfile organization={organization} />;
 }

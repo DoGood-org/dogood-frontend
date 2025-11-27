@@ -61,12 +61,16 @@
     "moreInfo": "More about organization",
     "deleteOrg": "Delete organization",
     "deleteAlert": "Deleting your organization is permanent and cannot be undone. All tasks, members, and data will be permanently lost",
-    "deleteBtn": "Delete"
+    "deleteBtn": "Delete",
+    "successDel": "Organization deleted successfully",
+    "errorDel": "Error deleting organization. Please try again later"
   },
   "titleDelModal": "Are you sure you want to delete this organization?",
   "descrDelModal": "Deleting this organization will permanently remove all members, tasks, and data",
   "cancelBtn": "Cancel",
   "deleteBtn": "Delete organization",
   "submitBtn": "Submit",
-  "resetBtn": "Reset"
+  "resetBtn": "Reset",
+  "success": "Your changes have been saved successfully",
+  "error": "Error saving changes. Please try again later"
 }
