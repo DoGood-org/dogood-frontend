@@ -1,9 +1,9 @@
-import { fetchFromApi } from '@/lib/apiFetcher';
+import { fetchFromApi, FetchResult } from '@/lib/apiFetcher';
 import { DonationFormValues } from '@/types/donationType';
 
 export const createCheckoutSession = async (
   data: DonationFormValues
-): Promise<{ sessionId: string }> => {
+): Promise<FetchResult<{ sessionId: string }>> => {
   return fetchFromApi<{ sessionId: string }>(
     '/donate/create-checkout-session',
     {
