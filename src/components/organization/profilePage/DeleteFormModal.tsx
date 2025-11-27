@@ -1,8 +1,8 @@
 import { ModalWrapper } from '@/components/ui/ModalWrapper';
 import { DeleteModalControls } from '@/types/userReviewsType';
 import React from 'react';
-import DeleteForm from './DeleteForm';
-const DeleteFormModal: React.FC<DeleteModalControls> = ({
+import { DeleteForm } from './DeleteForm';
+export const DeleteFormModal: React.FC<DeleteModalControls> = ({
   orgId,
   isOpen,
   setIsOpen,
@@ -17,5 +17,3 @@ const DeleteFormModal: React.FC<DeleteModalControls> = ({
     </ModalWrapper>
   );
 };
-
-export default DeleteFormModal;

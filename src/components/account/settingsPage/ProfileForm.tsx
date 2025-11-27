@@ -43,8 +43,6 @@ export const Settings = (): React.JSX.Element => {
   const [image, setImage] = useState<any>(null);
   const t = useTranslations('settings');
   const oldAvatarRef = useRef<string>('');
-  const f = useTranslations('faq');
-  const downText = (f.raw('downtext') as any[])[0];
   const {
     register,
     handleSubmit,
@@ -143,12 +141,12 @@ export const Settings = (): React.JSX.Element => {
         paymentOptionIds.length > 0 ? paymentOptionIds : undefined,
     });
 
-    if (!response.ok) {
-      toast.error(downText.error);
-      return;
+    if (response.ok) {
+      toast.success(t('success'));
+    } else {
+      toast.error(t('error'));
     }
     oldAvatarRef.current = data.avatar || '';
-    toast.success(downText.success);
     reset();
   };
 

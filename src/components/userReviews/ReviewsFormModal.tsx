@@ -5,7 +5,7 @@ import { CloseIcon } from '../icons';
 import { ReviewsForm } from './ReviewsForm';
 import { IReviewsFormModal } from '@/types/userReviewsType';
 
-const ReviewsFormModal: React.FC<IReviewsFormModal> = ({
+export const ReviewsFormModal: React.FC<IReviewsFormModal> = ({
   isOpen,
   setIsOpen,
   user: { id, name, avatar, rating },
@@ -30,5 +30,3 @@ const ReviewsFormModal: React.FC<IReviewsFormModal> = ({
     </ModalWrapper>
   );
 };
-
-export default ReviewsFormModal;

@@ -1,0 +1,162 @@
+{
+  "menu": {
+    "general": "Allgemeines",
+    "volunteer": "Freiwilliger",
+    "donor": "Spender",
+    "personInNeed": "Bedürftige Person",
+    "charitableOrg": "Wohltätige Organisation",
+    "business": "Geschäft"
+  },
+  "questions": {
+    "general": {
+      "title": "Allgemeine Fragen",
+      "items": [
+        {
+          "id": "gen-1",
+          "question": "Was ist DoGood Impact Inc.?",
+          "answer": "Es handelt sich um ein missionsorientiertes Technologieunternehmen, das eine globale Plattform für gegenseitige Hilfe der nächsten Generation aufbaut. Wir schaffen eine digitale Brücke, auf der Freundlichkeit, verstärkt durch künstliche Intelligenz (KI), sichtbar, messbar und ansteckend wird."
+        },
+        {
+          "id": "gen-2",
+          "question": "Welches Problem löst DoGood?",
+          "answer": "Wir lösen das Paradoxon, dass Millionen von Menschen bereit sind zu geben und Millionen dringend Hilfe benötigen, diese beiden Gruppen jedoch aufgrund von Fragmentierung, mangelndem Vertrauen und der Komplexität der Hilfeleistung allzu oft nicht zueinander finden."
+        },
+        {
+          "id": "gen-3",
+          "question": "Ist DoGood nur eine App oder ein soziales Netzwerk?",
+          "answer": "DoGood ist mehr als nur ein Vermittler oder eine App. Es ist ein integriertes digitales Ökosystem, in dem Freundlichkeit zu Taten wird und Taten zu echten, greifbaren Ergebnissen führen."
+        },
+        {
+          "id": "gen-4",
+          "question": "In welchen Ländern ist die Plattform tätig?",
+          "answer": "Die Plattform ist international skalierbar. Unsere Strategie ist ein schrittweiser globaler Start, beginnend mit Schlüsselregionen (USA und EU), mit dem Ziel, der Standard für globale gegenseitige Hilfe zu werden."
+        }
+      ]
+    },
+    "volunteer": {
+      "title": "Freiwilligenfragen",
+      "items": [
+        {
+          "id": "vol-1",
+          "question": "Wie finde ich Projekte, die Hilfe benötigen?",
+          "answer": "Sie können die GoodMap (interaktive Karte guter Taten) verwenden, um lokale und globale Bedürfnisse zu finden, oder sich auf die GoodBot KI verlassen, die Sie automatisch mit den relevantesten Möglichkeiten basierend auf Ihren Fähigkeiten und Ihrer Verfügbarkeit abgleicht."
+        },
+        {
+          "id": "vol-2",
+          "question": "Ist es möglich, gleichzeitig an mehreren Projekten teilzunehmen?",
+          "answer": "Ja, die Plattform ist auf Flexibilität ausgelegt. GoodBot hilft Ihnen, Ihre Verpflichtungen zu verwalten und bietet Möglichkeiten, die mit Ihrer Verfügbarkeit übereinstimmen."
+        },
+        {
+          "id": "vol-3",
+          "question": "Wie kann ich meine Erfolge verfolgen und Belohnungen erhalten?",
+          "answer": "GoodBot ist verantwortlich für die Messung der Wirkung. Es sammelt und verarbeitet Daten zu jeder abgeschlossenen Unterstützungsaktion und erstellt automatisch klare, umsetzbare Wirkungsberichte. Diese greifbare Rückkopplungsschleife stellt sicher, dass Sie verifizierbare Beweise dafür erhalten, dass Ihre Freundlichkeit wirklich einen Unterschied gemacht hat."
+        },
+        {
+          "id": "vol-4",
+          "question": "Wie kann ich Freiwilliger auf der Plattform werden?",
+          "answer": "GoodBot verbessert die Nutzerbindung, indem jede gute Tat tief persönlich wird. Es analysiert die bisherigen Beiträge und Vorlieben eines Nutzers und bietet ihm die inspirierendsten und relevantesten Möglichkeiten für seinen nächsten Beitrag an."
+        }
+      ]
+    },
+    "donor": {
+      "title": "Spenderfragen",
+      "items": [
+        {
+          "id": "don-1",
+          "question": "Was ist DoGood Impact Inc.?",
+          "answer": "Es ist ein missionsorientiertes Technologieunternehmen, das die nächste Generation einer globalen Plattform für gegenseitige Hilfe aufbaut. Wir schaffen eine digitale Brücke, auf der Freundlichkeit, verstärkt durch Künstliche Intelligenz (KI), sichtbar, messbar und ansteckend wird."
+        },
+        {
+          "id": "don-2",
+          "question": "Welches Problem löst DoGood?",
+          "answer": "Wir lösen das Paradoxon, dass Millionen von Menschen bereit sind zu geben und Millionen dringend Hilfe benötigen, doch diese beiden Gruppen sich aufgrund von Fragmentierung, mangelndem Vertrauen und der Komplexität, Wege zu finden, um zu helfen, zu oft nicht finden."
+        },
+        {
+          "id": "don-3",
+          "question": "Ist DoGood nur eine App oder ein soziales Netzwerk?",
+          "answer": "DoGood ist mehr als nur ein Vermittler oder eine App. Es ist ein integriertes digitales Ökosystem, in dem Freundlichkeit zur Handlung wird und Handlung zu realen, greifbaren Auswirkungen führt."
+        },
+        {
+          "id": "don-4",
+          "question": "In welchen Ländern ist die Plattform tätig?",
+          "answer": "Die Plattform ist international skalierbar. Unsere Strategie ist ein schrittweiser globaler Start, beginnend mit Schlüsselregionen (USA und EU), mit dem Ziel, der Standard für globale gegenseitige Hilfe zu werden."
+        }
+      ]
+    },
+    "personInNeed": {
+      "title": "Fragen von Hilfesuchenden",
+      "items": [
+        {
+          "id": "pin-1",
+          "question": "Wie finde ich Projekte, die Hilfe benötigen?",
+          "answer": "Sie können die GoodMap (interaktive Karte der guten Taten) verwenden, um lokale und globale Bedürfnisse zu finden, oder sich auf den GoodBot KI verlassen, der Sie automatisch mit den relevantesten Möglichkeiten basierend auf Ihren Fähigkeiten und Ihrer Zeitverfügbarkeit verbindet."
+        },
+        {
+          "id": "pin-2",
+          "question": "Ist es möglich, gleichzeitig an mehreren Projekten teilzunehmen?",
+          "answer": "Ja, die Plattform ist für Flexibilität ausgelegt. GoodBot hilft Ihnen, Ihre Verpflichtungen zu verwalten und bietet Möglichkeiten, die mit Ihrer Verfügbarkeit übereinstimmen."
+        },
+        {
+          "id": "pin-3",
+          "question": "Wie kann ich meine Erfolge verfolgen und Belohnungen erhalten?",
+          "answer": "GoodBot ist verantwortlich für die Messung der Auswirkungen. Er sammelt und verarbeitet Daten zu jeder abgeschlossenen Unterstützungsaktion und erstellt automatisch klare, umsetzbare Wirkungsberichte. Diese greifbare Rückkopplungsschleife stellt sicher, dass Sie verifizierbaren Nachweis erhalten, dass Ihre Freundlichkeit wirklich einen Unterschied gemacht hat."
+        },
+        {
+          "id": "pin-4",
+          "question": "Wie kann ich Freiwilliger auf der Plattform werden?",
+          "answer": "GoodBot erhöht die Nutzerbindung, indem er jede gute Tat persönlich gestaltet. Er analysiert die bisherigen Beiträge und Vorlieben eines Nutzers und bietet ihm die inspirierendsten und relevantesten Möglichkeiten für seinen nächsten Beitrag an."
+        }
+      ]
+    },
+    "charitableOrg": {
+      "title": "Fragen von Wohltätigkeitsorganisationen",
+      "items": [
+        {
+          "id": "char-1",
+          "question": "Was ist DoGood Impact Inc.?",
+          "answer": "Es ist ein missionsorientiertes Technologieunternehmen, das die nächste Generation einer globalen Plattform für gegenseitige Hilfe aufbaut. Wir bauen eine digitale Brücke, auf der Freundlichkeit, verstärkt durch Künstliche Intelligenz (KI), sichtbar, messbar und ansteckend wird."
+        },
+        {
+          "id": "char-2",
+          "question": "Welches Problem löst DoGood?",
+          "answer": "Wir lösen das Paradoxon, dass Millionen von Menschen bereit sind zu geben und Millionen dringend Hilfe benötigen, doch diese beiden Gruppen sich aufgrund von Fragmentierung, mangelndem Vertrauen und der Komplexität, Wege zu finden, um zu helfen, zu oft nicht finden."
+        },
+        {
+          "id": "char-3",
+          "question": "Ist DoGood nur eine App oder ein soziales Netzwerk?",
+          "answer": "DoGood ist mehr als nur ein Vermittler oder eine App. Es ist ein integriertes digitales Ökosystem, in dem Freundlichkeit zu Handlung wird und Handlung zu realen, greifbaren Auswirkungen führt."
+        },
+        {
+          "id": "char-4",
+          "question": "In welchen Ländern ist die Plattform aktiv?",
+          "answer": "Die Plattform ist international skalierbar. Unsere Strategie ist ein schrittweiser globaler Start, beginnend mit Schlüsselregionen (USA und EU), mit dem Ziel, der Standard für globale gegenseitige Hilfe zu werden."
+        }
+      ]
+    },
+    "business": {
+      "title": "Geschäftsfragen",
+      "items": [
+        {
+          "id": "bus-1",
+          "question": "Wie finde ich Projekte, die Hilfe benötigen?",
+          "answer": "Sie können die GoodMap (interaktive Karte guter Taten) verwenden, um lokale und globale Bedürfnisse zu finden, oder sich auf den GoodBot KI verlassen, der Sie automatisch mit den relevantesten Möglichkeiten basierend auf Ihren Fähigkeiten und Ihrer Zeitverfügbarkeit abgleicht."
+        },
+        {
+          "id": "bus-2",
+          "question": "Ist es möglich, gleichzeitig an mehreren Projekten teilzunehmen?",
+          "answer": "Ja, die Plattform ist auf Flexibilität ausgelegt. GoodBot hilft Ihnen, Ihre Verpflichtungen zu verwalten und bietet Möglichkeiten, die mit Ihrer Verfügbarkeit übereinstimmen."
+        },
+        {
+          "id": "bus-3",
+          "question": "Wie kann ich meine Erfolge verfolgen und Belohnungen erhalten?",
+          "answer": "GoodBot ist verantwortlich für die Messung der Auswirkungen. Er sammelt und verarbeitet Daten zu jeder abgeschlossenen Unterstützungsaktion und erstellt automatisch klare, umsetzbare Wirkungsberichte. Diese greifbare Rückkopplungsschleife stellt sicher, dass Sie verifizierbaren Nachweis erhalten, dass Ihre Freundlichkeit wirklich einen Unterschied gemacht hat."
+        },
+        {
+          "id": "bus-4",
+          "question": "Wie kann ich Freiwilliger auf der Plattform werden?",
+          "answer": "GoodBot erhöht die Nutzerbindung, indem er jede gute Tat persönlich gestaltet. Er analysiert die bisherigen Beiträge und Vorlieben eines Nutzers und bietet ihm die inspirierendsten und relevantesten Möglichkeiten für seinen nächsten Beitrag an."
+        }
+      ]
+    }
+  }
+}

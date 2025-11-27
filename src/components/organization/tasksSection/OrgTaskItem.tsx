@@ -16,7 +16,7 @@ import { TaskItemProps } from '@/types';
 import { useLocale, useTranslations } from 'next-intl';
 import React from 'react';
 
-const OrgTaskItem = ({ task }: TaskItemProps): React.JSX.Element => {
+export const OrgTaskItem = ({ task }: TaskItemProps): React.JSX.Element => {
   const locale = useLocale();
   const t = useTranslations('organization');
   const {
@@ -91,5 +91,3 @@ const OrgTaskItem = ({ task }: TaskItemProps): React.JSX.Element => {
     </>
   );
 };
-
-export default OrgTaskItem;

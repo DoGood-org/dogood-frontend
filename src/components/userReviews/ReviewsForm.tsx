@@ -15,16 +15,14 @@ import * as yup from 'yup';
 import { Rating } from '../ui/Rating';
 import { Textarea } from '../ui/Textarea';
 import { Button } from '../ui/Button';
-import ReviewsSuccessContent from './ReviewsSuccessContent';
 import { IReviewsProps } from '@/types/userReviewsType';
+import { ReviewsSuccessContent } from './ReviewsSuccessContent';
 
 export const ReviewsForm: React.FC<IReviewsProps> = ({
   user,
   setIsOpen,
 }): React.JSX.Element => {
   const t = useTranslations('reviews');
-  const f = useTranslations('faq');
-  const downText = (f.raw('downtext') as any[])[0];
   const [isSubmitted, setIsSubmitted] = useState(false);
   const {
     register,
@@ -44,27 +42,19 @@ export const ReviewsForm: React.FC<IReviewsProps> = ({
   const onSubmit = async (
     data: yup.InferType<typeof reviewsSchema>
   ): Promise<void> => {
-    try {
-      const response = await sendReview({
-        targetUserId: user.id,
-        rating: data.rating,
-        comment: data.comment,
-      });
+    const response = await sendReview({
+      targetUserId: user.id,
+      rating: data.rating,
+      comment: data.comment,
+    });
 
-      if (response?.status === 'success') {
-        toast.success(downText.success);
-        setIsSubmitted(true);
-      } else {
-        toast.error(response?.message || downText.error);
-      }
-    } catch (_error: unknown) {
-      toast.error(downText.error);
-      console.error('Contact form submit error:', _error);
-    } finally {
-      setIsSubmitted(false);
+    if (response?.ok) {
+      toast.success(t('success'));
+      setIsSubmitted(true);
+    } else {
+      toast.error(t('error'));
     }
   };
-
   const onReset = (): void => {
     setValue('rating', 0);
     setValue('comment', '');

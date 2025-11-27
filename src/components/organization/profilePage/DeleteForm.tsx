@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
-const DeleteForm: React.FC<DeleteModalControls> = ({
+export const DeleteForm: React.FC<DeleteModalControls> = ({
   orgId,
   isOpen,
   setIsOpen,
@@ -17,15 +17,11 @@ const DeleteForm: React.FC<DeleteModalControls> = ({
   const handleDelOrg = async (orgId: string): Promise<void> => {
     setIsDeleting(true);
 
-    try {
-      const response = await deleteOrgProfile(orgId);
-      if (response.ok) {
-        toast.success('Organization deleted successfully!');
-      }
-    } catch (err: any) {
-      toast.error('Failed to delete organization: ' + err.message);
-    } finally {
-      setIsDeleting(false);
+    const response = await deleteOrgProfile(orgId);
+    if (response.ok) {
+      toast.success(t('successDel'));
+    } else {
+      toast.error(t('errorDel'));
     }
   };
   return (
@@ -54,5 +50,3 @@ const DeleteForm: React.FC<DeleteModalControls> = ({
     </div>
   );
 };
-
-export default DeleteForm;
