@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/Button';
 import { DonationModal } from '@/components/ui/modals/DonationModal/DonationModal';
 import { useMenuToggle } from '@/hooks/useMenuToggle';
-import { useTaskStore } from '@/zustand/stores/taskStore';
 import {
   TaskActionType,
   TaskStatus,
@@ -21,55 +20,41 @@ interface TaskControlButtonsProps {
 }
 
 export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
-  taskId,
   actionType,
   isHost,
   className = '',
 }) => {
   const t = useTranslations('map');
-  const { joinTask } = useTaskStore();
-  const {
-    isOpen: isModalOpen,
-    openMenu: openModal,
-    closeMenu: closeModal,
-  } = useMenuToggle();
+  const { isOpen, openMenu, closeMenu } = useMenuToggle();
 
-  // Хостові кнопки
-  if (isHost) {
-    return (
-      <div className={`flex space-x-2 ${className}`}>
-        <Button variant="primary" onClick={() => {}}>
-          Mark as finished
-        </Button>
-        <Button variant="secondary" onClick={() => {}}>
-          Close this task
-        </Button>
-      </div>
-    );
-  }
+  const isFundraising = actionType === TaskActionType.FUNDRAISING;
 
   return (
-    <div className={`flex space-x-2 ${className}`}>
-      {actionType === TaskActionType.FUNDRAISING && (
+    <div className={`w-full flex justify-end space-x-2 ${className}`}>
+      {isHost && !isFundraising && (
         <>
-          <Button
-            variant="primary"
-            onClick={openModal}
-            className="text-white w-full"
-          >
-            {t('donateBtn')}
+          <Button variant="primary" size="lg" onClick={() => {}}>
+            {t('markAsFinished')}
           </Button>
-          <DonationModal isOpen={isModalOpen} onClose={closeModal} />
+          <Button variant="secondary" size="lg" onClick={() => {}}>
+            {t('closeThisTask')}
+          </Button>
         </>
       )}
 
-      <Button
-        variant="primary"
-        onClick={() => joinTask(taskId)}
-        className="text-white w-full"
-      >
-        {t('join')}
-      </Button>
+      {isFundraising && (
+        <>
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={openMenu}
+            className="text-white"
+          >
+            {t('donateBtn')}
+          </Button>
+          <DonationModal isOpen={isOpen} onClose={closeMenu} />
+        </>
+      )}
     </div>
   );
 };

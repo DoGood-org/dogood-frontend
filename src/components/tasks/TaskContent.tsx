@@ -1,7 +1,7 @@
 'use client';
 
 import { generateMockTasks, generateTasks } from '../main/map/mockTasks';
-import { Container } from '../ui/Container';
+import { Container } from '@/components';
 import { Task } from '@/components/tasks/Task';
 import {
   ITaskDetails,
@@ -45,13 +45,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
 
   const otherTasksList: ITaskDetails[] = detailedTasks;
 
-  const {
-    category,
-    distance,
-    id: taskId,
-    actionType,
-    userParticipationStatus,
-  } = task;
+  const { category, distance, id: taskId, userParticipationStatus } = task;
 
   const taskStatus = 'IN_PROGRESS';
   const isHost = false;
@@ -68,7 +62,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
       <div className="flex justify-between mb-6 mt-6">
         <TaskControlButtons
           taskId={taskId}
-          actionType={actionType}
+          actionType={task.actionType}
           userParticipationStatus={userParticipationStatus}
           taskStatus={taskStatus}
           isHost={isHost}

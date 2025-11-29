@@ -60,4 +60,6 @@ export interface IExtendedITaskProps extends ITask {
   actionType: TaskActionType;
   userParticipationStatus: UserParticipationStatus;
   organizationId?: string;
+  isHost?: boolean;
+  status: TaskStatus;
 }

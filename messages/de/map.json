@@ -25,6 +25,7 @@
   "donate": "Spenden",
   "join": "Mitmachen",
   "seeMoreBtn": "Mehr anzeigen",
-  "confirmBtn": "Bestätigen",
-  "editBtn": "Bearbeiten"
+  "editBtn": "Bearbeiten",
+  "markAsFinished": "Als erledigt markieren",
+  "closeThisTask": "Diese Aufgabe schließen"
 }

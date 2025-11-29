@@ -6,14 +6,20 @@ import EditIcon from '@/components/icons/EditIcon';
 
 interface EditButtonProps {
   onClick: () => void;
+  isHost: boolean;
 }
 
-const EditButton = ({ onClick }: EditButtonProps): JSX.Element => {
+const EditButton = ({
+  onClick,
+  isHost,
+}: EditButtonProps): JSX.Element | null => {
   const t = useTranslations('tasks');
 
   const handleClick = (): void => {
     onClick?.();
   };
+
+  if (!isHost) return null;
   return (
     <>
       <Button

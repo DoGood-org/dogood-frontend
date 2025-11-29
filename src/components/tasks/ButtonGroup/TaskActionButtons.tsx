@@ -44,7 +44,6 @@ export const TaskActionButtons = ({
     return null;
   }
 
-  // Тут логіка переходу на сторінку /tasks/{taskId}
   const SeeMoreButton = (
     <Button
       variant="secondary"
@@ -52,14 +51,13 @@ export const TaskActionButtons = ({
       className={baseButtonClass}
       size="lg"
     >
-      {t('seeMore')}
+      {t('seeMoreBtn')}
     </Button>
   );
 
   if (isFundraising) {
     return (
-      <div className="flex space-x-2">
-        {}
+      <div className="flex w-full justify-between">
         <Button
           variant="primary"
           onClick={openModal}
@@ -75,7 +73,7 @@ export const TaskActionButtons = ({
   }
 
   return (
-    <div className="flex space-x-2">
+    <div className="flex w-full justify-between">
       <Button
         variant="primary"
         onClick={() => joinTask(taskId)}
