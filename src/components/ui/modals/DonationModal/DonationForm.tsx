@@ -88,12 +88,15 @@ export const DonationForm = ({
       };
 
       const response = await createCheckoutSession(payload);
-      if (!response.sessionId)
-        throw new Error('Failed to create checkout session');
+      if (!response.ok) {
+        throw new Error(
+          response.errorMessage || 'Failed to create checkout session'
+        );
+      }
 
       if (!stripe) throw new Error('Stripe not loaded');
 
-      await stripe.redirectToCheckout({ sessionId: response.sessionId });
+      await stripe.redirectToCheckout({ sessionId: response.data.sessionId });
     } catch (err: any) {
       toast.error(err.message || 'Unknown error');
       console.error(err);

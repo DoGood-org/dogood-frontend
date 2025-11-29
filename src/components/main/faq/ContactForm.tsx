@@ -40,12 +40,11 @@ export const ContactForm = ({
         phone: data.phone,
         message: data.interest,
       });
-
-      if (response?.status === 'success') {
+      if (response.ok) {
         toast.success(downText.success);
         reset();
       } else {
-        toast.error(response?.message || downText.error);
+        toast.error(response.errorMessage || downText.error);
       }
     } catch (_error: unknown) {
       toast.error(downText.error);
