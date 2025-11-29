@@ -1,4 +1,12 @@
 {
+  "title": "Häufig gestellte Fragen",
+  "filterPlaceholder": "Suche",
+  "filterLabel": "Ihre Frage",
+  "imageHeroAlt": "Hero Bild",
+  "contactSupportText": "Sie finden keine Antwort auf Ihre Frage? Schreiben Sie uns",
+  "contactSupportBtn": "Kontaktieren Sie uns",
+  "noResultText": "Keine Ergebnisse gefunden",
+
   "menu": {
     "general": "Allgemeines",
     "volunteer": "Freiwilliger",

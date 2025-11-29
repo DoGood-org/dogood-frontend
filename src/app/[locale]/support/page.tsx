@@ -1,8 +1,15 @@
-import { FAQSection } from '@/components/support/FAQSection';
+import { FAQSection, NewsList } from '@/components';
+import { ContactSupportSection } from '@/components/support/ContactSupportSection';
 import React from 'react';
 
 const SupportPage: React.FC = () => {
-  return <FAQSection />;
+  return (
+    <>
+      <FAQSection />
+      <ContactSupportSection />
+      <NewsList />
+    </>
+  );
 };
 
 export default SupportPage;

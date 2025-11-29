@@ -12,7 +12,7 @@ import { useTranslations } from 'next-intl';
 import { UserItem } from './UserItem';
 import bgMobile from '@/assets/images/reviews/bgMob.webp';
 import bgTablet from '@/assets/images/reviews/bgTabl.webp';
-import bgDesktop from '@/assets/images/reviews/bgMob.webp';
+import bgDesktop from '@/assets/images/reviews/bgDesck.webp';
 
 export const UsersList = (): React.JSX.Element => {
   const isMobile = useMediaQuery('(max-width: 767px)');
@@ -34,8 +34,7 @@ export const UsersList = (): React.JSX.Element => {
           alt="Hero background"
           fill
           priority
-          quality={100}
-          className="object-cover object-center"
+          className="object-cover"
         />
       </div>
       <div className="relative z-10 bg-transparent">
