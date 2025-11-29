@@ -25,10 +25,8 @@ export const TaskActionButtons = ({
   taskId,
   actionType,
   isHost,
-  // taskStatus,
   className = '',
-  // userParticipationStatus,
-}: TaskActionButtonsProps): JSX.Element => {
+}: TaskActionButtonsProps): JSX.Element | null => {
   const t = useTranslations('map');
   const { joinTask } = useTaskStore();
 
@@ -38,78 +36,55 @@ export const TaskActionButtons = ({
     closeMenu: closeModal,
   } = useMenuToggle();
 
-  // const hasJoinedOrDonated =
-  //   userParticipationStatus !== UserParticipationStatus.NONE;
   const isFundraising = actionType === TaskActionType.FUNDRAISING;
-  // const isActive = taskStatus === 'IN_PROGRESS';
 
   const baseButtonClass = `leading-[32px] ${className}`;
 
-  const buttons = [];
+  if (isHost && !isFundraising) {
+    return null;
+  }
 
-  if (isHost) {
-    if (isFundraising) {
-      buttons.push({
-        label: t('donateBtn'),
-        variant: 'primary',
-        onClick: openModal,
-        className: `${baseButtonClass} text-white`,
-      });
-    }
-  } else if (isFundraising) {
-    buttons.push(
-      {
-        label: t('donateBtn'),
-        variant: 'primary',
-        onClick: openModal,
-        className: `${baseButtonClass} text-white`,
-      },
-      {
-        label: t('seeMoreBtn'),
-        variant: 'secondary',
-        onClick: () => {},
-        className: `${baseButtonClass} bg-card`,
-      }
-    );
-  } else {
-    buttons.push(
-      {
-        label: t('join'),
-        variant: 'primary',
-        onClick: () => joinTask(taskId),
-        className: `${baseButtonClass} text-white`,
-      },
-      {
-        label: t('seeMoreBtn'),
-        variant: 'secondary',
-        onClick: () => {},
-        className: `${baseButtonClass} bg-card`,
-      }
+  // Тут логіка переходу на сторінку /tasks/{taskId}
+  const SeeMoreButton = (
+    <Button
+      variant="secondary"
+      onClick={() => {}}
+      className={baseButtonClass}
+      size="lg"
+    >
+      {t('seeMore')}
+    </Button>
+  );
+
+  if (isFundraising) {
+    return (
+      <div className="flex space-x-2">
+        {}
+        <Button
+          variant="primary"
+          onClick={openModal}
+          className={`${baseButtonClass} text-white`}
+          size="lg"
+        >
+          {t('donateBtn')}
+        </Button>
+        {SeeMoreButton}
+        <DonationModal isOpen={isModalOpen} onClose={closeModal} />
+      </div>
     );
   }
+
   return (
-    <>
-      {buttons.map((btn, index) => (
-        <Button
-          key={index}
-          variant={
-            btn.variant as
-              | 'secondary'
-              | 'primary'
-              | 'default'
-              | 'ghost'
-              | 'filters'
-              | 'tag'
-              | 'iconOnly'
-          }
-          size="lg"
-          className={btn.className}
-          onClick={btn.onClick}
-        >
-          {btn.label}
-        </Button>
-      ))}
-      <DonationModal isOpen={isModalOpen} onClose={closeModal} />
-    </>
+    <div className="flex space-x-2">
+      <Button
+        variant="primary"
+        onClick={() => joinTask(taskId)}
+        className={`${baseButtonClass} text-white`}
+        size="lg"
+      >
+        {t('join')}
+      </Button>
+      {SeeMoreButton}
+    </div>
   );
 };

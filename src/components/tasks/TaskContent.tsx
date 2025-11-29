@@ -9,7 +9,7 @@ import {
   UserParticipationStatus,
 } from '@/types/tasks.type';
 import { IconButtonGroup } from '@/components/tasks/ButtonGroup/IconButtonGroup';
-import { Button, OtherTasksSection, TaskActionButtons } from '@/components';
+import { OtherTasksSection, TaskControlButtons } from '@/components';
 import { LastNews } from './LastNews/LastNews';
 import { INewsItem } from '@/types';
 import { useTranslations } from 'next-intl';
@@ -54,7 +54,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   } = task;
 
   const taskStatus = 'IN_PROGRESS';
-  const isHost = true;
+  const isHost = false;
   return (
     <Container className="py-10">
       <Task task={task} />
@@ -66,24 +66,14 @@ export const TaskContent: React.FC<TaskContentProps> = ({
         taskId={taskId}
       />
       <div className="flex justify-between mb-6 mt-6">
-        <TaskActionButtons
+        <TaskControlButtons
           taskId={taskId}
           actionType={actionType}
           userParticipationStatus={userParticipationStatus}
           taskStatus={taskStatus}
           isHost={isHost}
-          className="w-[152px]"
+          className="w-[304px]"
         />
-        {isHost && (
-          <div className="flex space-x-2">
-            <Button variant="secondary" onClick={() => {}}>
-              Close this task
-            </Button>
-            <Button variant="primary" onClick={() => {}}>
-              Mark as finished
-            </Button>
-          </div>
-        )}
       </div>
       <OtherTasksSection tasks={otherTasksList} />
       <LastNews newsItems={newsItems} />
