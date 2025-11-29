@@ -1,7 +1,7 @@
 'use client';
 import { useMediaQuery } from '@/hooks';
 import { useTranslations } from 'next-intl';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HeroSupportDesck from '@/assets/images/support/supportImgDesk.webp';
 import HeroSupportTabl from '@/assets/images/support/supportImgTabl.webp';
 import HeroSupportMob from '@/assets/images/support/supportImgMob.webp';
@@ -21,6 +21,14 @@ export const ContactSupportSection = (): React.JSX.Element => {
       ? HeroSupportTabl
       : HeroSupportDesck;
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+    return (): void => document.body.classList.remove('overflow-hidden');
+  }, [isOpen]);
   return (
     <Section>
       <div className="md:relative md:mt-25">
