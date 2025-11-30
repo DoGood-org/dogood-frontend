@@ -124,6 +124,7 @@ export * from './publicAccount/UserReviewSection';
 export * from './publicAccount/UserTaskSection';
 export * from './support/FAQSection';
 export * from './tasks/DonationProgressBar';
+export * from './tasks/FinishTaskModal';
 export * from './tasks/ImagePlaceholder';
 export * from './tasks/Task';
 export * from './tasks/TaskCard';

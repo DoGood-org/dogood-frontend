@@ -9,6 +9,7 @@ import {
   UserParticipationStatus,
 } from '@/types/tasks.type';
 import { useTranslations } from 'next-intl';
+import { FinishTaskModal } from '@/components';
 
 interface TaskControlButtonsProps {
   taskId: string;
@@ -25,7 +26,17 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
   className = '',
 }) => {
   const t = useTranslations('map');
-  const { isOpen, openMenu, closeMenu } = useMenuToggle();
+  const {
+    isOpen: isDonateOpen,
+    openMenu: openDonate,
+    closeMenu: closeDonate,
+  } = useMenuToggle();
+
+  const {
+    isOpen: isFinishOpen,
+    openMenu: openFinish,
+    closeMenu: closeFinish,
+  } = useMenuToggle();
 
   const isFundraising = actionType === TaskActionType.FUNDRAISING;
 
@@ -36,9 +47,16 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
           <Button variant="primary" size="lg" onClick={() => {}}>
             {t('markAsFinished')}
           </Button>
-          <Button variant="secondary" size="lg" onClick={() => {}}>
+          <Button variant="secondary" size="lg" onClick={openFinish}>
             {t('closeThisTask')}
           </Button>
+          <FinishTaskModal
+            isOpen={isFinishOpen}
+            onClose={closeFinish}
+            onConfirm={() => {
+              closeFinish();
+            }}
+          />
         </>
       )}
 
@@ -47,12 +65,12 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
           <Button
             variant="primary"
             size="lg"
-            onClick={openMenu}
+            onClick={openDonate}
             className="text-white"
           >
             {t('donateBtn')}
           </Button>
-          <DonationModal isOpen={isOpen} onClose={closeMenu} />
+          <DonationModal isOpen={isDonateOpen} onClose={closeDonate} />
         </>
       )}
     </div>

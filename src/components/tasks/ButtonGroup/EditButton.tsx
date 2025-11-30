@@ -14,26 +14,25 @@ const EditButton = ({
   isHost,
 }: EditButtonProps): JSX.Element | null => {
   const t = useTranslations('tasks');
+  console.log('EditButton render, isHost =', isHost);
+  if (!isHost) return null;
 
   const handleClick = (): void => {
     onClick?.();
   };
 
-  if (!isHost) return null;
   return (
-    <>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={handleClick}
-        className="group flex items-center gap-1 md:gap-3 cursor-pointe md:pl-10"
-      >
-        <EditIcon className="size-6 group-hover:text-[#00c1ac]" />
-        <span className="text-base group-hover:text-[#00c1ac]">
-          {t('taskDetails.edit')}
-        </span>
-      </Button>
-    </>
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={handleClick}
+      className="group flex items-center gap-1 md:gap-3 cursor-pointer md:pl-10"
+    >
+      <EditIcon className="size-6 group-hover:text-[#00c1ac]" />
+      <span className="text-base group-hover:text-[#00c1ac]">
+        {t('taskDetails.edit')}
+      </span>
+    </Button>
   );
 };
 

@@ -14,6 +14,7 @@ import { Button } from '../ui/Button';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { LatLngLiteral } from 'leaflet';
 import EditButton from './ButtonGroup/EditButton';
+// import { useAuth } from '@/hooks';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
@@ -21,6 +22,7 @@ interface TaskDetailsProps {
 
 export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
   const t = useTranslations('tasks');
+  // const { user } = useAuth();
   const flyToCoords = useMapStore((s) => s.flyToCoords);
 
   const hasCoords = task.lat != null && task.lng != null;
@@ -41,11 +43,14 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
     console.log('Editing task now!');
   };
 
+  const isHost = true;
+  // const isHost = user?.id === task.host?.id;
+
   return (
     <section>
       <div className="flex items-baseline space-x-3">
         <h2 className="text-lg mb-5 pr-5">{task.title}</h2>
-        <EditButton onClick={handleEdit} />
+        <EditButton onClick={handleEdit} isHost={!!isHost} />
       </div>
       <h3 className="text-[20px] leading-[20px] mb-5">
         {t('taskDetails.details')}:

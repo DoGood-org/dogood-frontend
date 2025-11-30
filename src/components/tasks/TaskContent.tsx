@@ -48,7 +48,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   const { category, distance, id: taskId, userParticipationStatus } = task;
 
   const taskStatus = 'IN_PROGRESS';
-  const isHost = false;
+  const isHost = true;
   return (
     <Container className="py-10">
       <Task task={task} />
