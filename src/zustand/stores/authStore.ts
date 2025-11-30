@@ -36,7 +36,11 @@ type TAuthState = {
   error: string | null;
   login: (email: string, password: string) => Promise<IAuthResponse>;
   logout: () => Promise<void>;
-  register: (email: string, password: string, name: string) => Promise<void>;
+  register: (
+    email: string,
+    password: string,
+    name: string
+  ) => Promise<IAuthResponse>;
   verify: (token: string) => Promise<void>;
   registerCompany: (
     name: string,
@@ -113,11 +117,9 @@ export const authStore = create<TAuthState>()(
         });
       },
 
-      register: async (email, password, name): Promise<void> => {
-        set({ status: 'loading', error: null });
+      register: async (email, password, name): Promise<IAuthResponse> => {
         try {
-          const res = await service.register(email, password, name);
-          console.log('Register response:', res);
+          return await service.register(email, password, name);
         } catch (error) {
           const { message } = (error as any) || {};
           console.error('Register failed:', error);
@@ -126,7 +128,11 @@ export const authStore = create<TAuthState>()(
             error: 'Register failed',
             beMessage: message,
           });
-          return;
+          return {
+            ok: false,
+            status: 500,
+            message: 'Register failed',
+          };
         }
       },
 
