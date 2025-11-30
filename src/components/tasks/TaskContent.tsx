@@ -10,7 +10,7 @@ import {
 } from '@/types/tasks.type';
 import { IconButtonGroup } from '@/components/tasks/ButtonGroup/IconButtonGroup';
 import { OtherTasksSection, TaskControlButtons } from '@/components';
-import { LastNews } from './LastNews/LastNews';
+import { LastNews } from '@/components/tasks/LastNews/LastNews';
 import { INewsItem } from '@/types';
 import { useTranslations } from 'next-intl';
 

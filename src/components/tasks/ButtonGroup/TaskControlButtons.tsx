@@ -9,7 +9,7 @@ import {
   UserParticipationStatus,
 } from '@/types/tasks.type';
 import { useTranslations } from 'next-intl';
-import { FinishTaskModal } from '@/components';
+import { FinishTaskModal } from '@/components/tasks/FinishTaskModal/FinishTaskModal';
 
 interface TaskControlButtonsProps {
   taskId: string;
@@ -26,6 +26,7 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
   className = '',
 }) => {
   const t = useTranslations('map');
+
   const {
     isOpen: isDonateOpen,
     openMenu: openDonate,
@@ -43,11 +44,11 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
   return (
     <div className={`w-full flex justify-end space-x-2 ${className}`}>
       {isHost && !isFundraising && (
-        <>
-          <Button variant="primary" size="lg" onClick={() => {}}>
+        <div className="flex w-full justify-end flex-col md:flex-row">
+          <Button variant="primary" size="lg" onClick={openFinish}>
             {t('markAsFinished')}
           </Button>
-          <Button variant="secondary" size="lg" onClick={openFinish}>
+          <Button variant="secondary" size="lg" onClick={() => {}}>
             {t('closeThisTask')}
           </Button>
           <FinishTaskModal
@@ -57,7 +58,7 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
               closeFinish();
             }}
           />
-        </>
+        </div>
       )}
 
       {isFundraising && (
