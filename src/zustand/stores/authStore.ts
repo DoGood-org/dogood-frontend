@@ -78,19 +78,10 @@ export const authStore = create<TAuthState>()(
       error: null,
       beMessage: '',
       login: async (email, password): Promise<IAuthResponse> => {
-        set({ status: 'loading', error: null });
         try {
           const res = await service.login(email, password);
-          const { user, status } = res;
-          if (status === 'success') {
-            set({
-              user: user as User,
-              status: 'authorized',
-              error: null,
-              isLoggedIn: true,
-              beMessage: 'Login successful',
-            });
-          }
+          console.log('Login response from service should be short user:', res);
+
           return res;
         } catch (error) {
           console.error('Login failed:', error);
@@ -102,7 +93,8 @@ export const authStore = create<TAuthState>()(
           });
           return {
             ok: false,
-            data: { status: 'error', message: 'Login failed' },
+            status: 500,
+            message: 'Login failed',
           };
         }
       },
@@ -124,15 +116,8 @@ export const authStore = create<TAuthState>()(
       register: async (email, password, name): Promise<void> => {
         set({ status: 'loading', error: null });
         try {
-          const { status, message } = await service.register(
-            email,
-            password,
-            name
-          );
-          console.log('Register response:', status, message);
-          if (status === 'success') {
-            set({ status: 'verifying', error: null, beMessage: message });
-          }
+          const res = await service.register(email, password, name);
+          console.log('Register response:', res);
         } catch (error) {
           const { message } = (error as any) || {};
           console.error('Register failed:', error);

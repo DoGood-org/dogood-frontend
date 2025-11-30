@@ -12,17 +12,16 @@ export const apiRoutes = {
 
     refreshToken: '/refresh-token',
     logout: '/logout',
+    resendVerification: '/resend-verification',
+    forgotPassword: '/forgot-password',
+    resetPassword: (resetPasswordToken: string) =>
+      `/reset-password/${resetPasswordToken}`,
+    resentForgotPassword: '/resent-forgot-password',
   },
 
   // current user proxy
 
   user: {
-    signup: '/auth/signup',
-    resendVerification: '/auth/resend-verification',
-    forgotPassword: '/auth/forgot-password',
-    resetPassword: (resetPasswordToken: string) =>
-      `/auth/reset-password/${resetPasswordToken}`,
-    resentForgotPassword: '/auth/resent-forgot-password',
     current: '/auth/current-user',
     profileUpdate: '/user/profile',
     profileDelete: '/user/profile',

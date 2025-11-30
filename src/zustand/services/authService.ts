@@ -3,12 +3,13 @@ import { apiRoutes } from '@/lib/server/apiRoutes';
 import { ICurrentUser, User } from '@/types';
 
 export interface IAuthResponse {
-  ok: boolean;
-  data: {
-    message: string;
-    user?: User;
-    status?: 'success' | 'error';
-  };
+  ok?: boolean;
+  data?: Record<string, unknown>;
+
+  code?: string;
+  message: string;
+  user?: User;
+  status?: 200 | 403 | 401 | 500;
 }
 
 // interface IRegisterResponse {
@@ -72,12 +73,13 @@ export class AuthService {
   public register = async (
     email: string,
     password: string,
-    name: string
+    name: string,
+    lang: string = 'en'
   ): Promise<any> => {
-    return await fetchFromApi<IAuthResponse>(apiRoutes.user.signup, {
+    return await fetchFromApi<IAuthResponse>(apiRoutes.auth.signup, {
       method: 'POST',
-      data: { email, password, name },
-      auth: true,
+      data: { name, password, email },
+      params: { lang }, // ?lang=en
     });
   };
   public currentUser = async (): Promise<any> => {
@@ -97,7 +99,6 @@ export class AuthService {
     return await fetchFromApi<any>(apiRoutes.organizations.signup, {
       method: 'POST',
       data: { name, email, password, organizationName },
-      auth: true,
     });
   };
 }
