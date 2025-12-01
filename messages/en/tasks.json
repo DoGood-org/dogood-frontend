@@ -34,5 +34,13 @@
   },
    "task": {
     "notFound": "Task not found"
+  },
+    "finishTaskModal": {
+    "title": "Is your task really finished?",
+    "message": "Choose “Confirm” to close your task.",
+    "buttons": {
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    }
   }
 }

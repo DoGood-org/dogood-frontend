@@ -1,7 +1,7 @@
 'use client';
 
 import { generateMockTasks, generateTasks } from '../main/map/mockTasks';
-import { Container } from '../ui/Container';
+import { Container } from '@/components';
 import { Task } from '@/components/tasks/Task';
 import {
   ITaskDetails,
@@ -9,8 +9,8 @@ import {
   UserParticipationStatus,
 } from '@/types/tasks.type';
 import { IconButtonGroup } from '@/components/tasks/ButtonGroup/IconButtonGroup';
-import { OtherTasksSection, TaskActionButtons } from '@/components';
-import { LastNews } from './LastNews/LastNews';
+import { OtherTasksSection, TaskControlButtons } from '@/components';
+import { LastNews } from '@/components/tasks/LastNews/LastNews';
 import { INewsItem } from '@/types';
 import { useTranslations } from 'next-intl';
 
@@ -45,14 +45,10 @@ export const TaskContent: React.FC<TaskContentProps> = ({
 
   const otherTasksList: ITaskDetails[] = detailedTasks;
 
-  const {
-    category,
-    distance,
-    id: taskId,
-    actionType,
-    userParticipationStatus,
-  } = task;
+  const { category, distance, id: taskId, userParticipationStatus } = task;
 
+  const taskStatus = 'IN_PROGRESS';
+  const isHost = true;
   return (
     <Container className="py-10">
       <Task task={task} />
@@ -64,11 +60,13 @@ export const TaskContent: React.FC<TaskContentProps> = ({
         taskId={taskId}
       />
       <div className="flex justify-between mb-6 mt-6">
-        <TaskActionButtons
+        <TaskControlButtons
           taskId={taskId}
-          actionType={actionType}
+          actionType={task.actionType}
           userParticipationStatus={userParticipationStatus}
-          className="w-[152px]"
+          taskStatus={taskStatus}
+          isHost={isHost}
+          className="w-[304px]"
         />
       </div>
       <OtherTasksSection tasks={otherTasksList} />
