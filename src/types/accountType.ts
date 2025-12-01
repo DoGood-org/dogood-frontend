@@ -33,7 +33,7 @@ export interface UserDetailedProps {
   name: string;
   avatar?: string;
   customerId?: string;
-  paymentOptions?: PaymentProps[];
+  paymentOptions: PaymentProps[];
   email: string;
   siteRole: string;
   bio?: string;

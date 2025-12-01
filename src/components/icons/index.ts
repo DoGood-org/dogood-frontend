@@ -66,6 +66,7 @@ export { default as Medicine } from './Medicine';
 export { default as Megaphone } from './Megaphone';
 export { default as MessageIcon } from './MessageIcon';
 export { default as MessageSend } from './MessageSend';
+export { default as Minus } from './Minus';
 export { default as Moon } from './Moon';
 export { default as More } from './More';
 export { default as NameIcon } from './NameIcon';

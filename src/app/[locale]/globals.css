@@ -416,6 +416,7 @@ html {
 
 /*------------------utilities for scrollbar---------------------------*/
 @layer utilities {
+
   .custom-scrollbar::-webkit-scrollbar {
     width: 15px;
   }
