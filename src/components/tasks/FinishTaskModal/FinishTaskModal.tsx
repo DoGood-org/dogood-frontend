@@ -25,7 +25,7 @@ export const FinishTaskModal = ({
       isOpen={isOpen}
       onClose={onClose}
       wrapperClassName={cn(
-        'max-w-[354px] md:max-w-[574px] lg:max-w-[878px] p-5 md:p-9',
+        'max-w-[354px] md:max-w-[574px] lg:max-w-[878px] py-10 px-8 lg:py-20 lg:px-50',
         wrapperClassName
       )}
     >
