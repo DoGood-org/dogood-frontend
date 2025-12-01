@@ -1,4 +1,11 @@
 {
+  "title": "Frequently asked questions ",
+  "filterPlaceholder": "Search",
+  "filterLabel": "Your question",
+  "imageHeroAlt": "Hero Image",
+  "contactSupportText": "Can't find the answer to your question? Write to us",
+  "contactSupportBtn": "Contact us",
+  "noResultText": "No results found",
   "menu": {
     "general": "General",
     "volunteer": "Volunteer",
@@ -108,31 +115,6 @@
         }
       ]
     },
-    "charitableOrg": {
-      "title": "Charitable Organization Questions",
-      "items": [
-        {
-          "id": "char-1",
-          "question": "What is DoGood Impact Inc.?",
-          "answer": "It is a mission-driven tech company building the next-generation global mutual aid platform. We are building a digital bridge where kindness, amplified by Artificial Intelligence (AI), becomes visible, measurable, and contagious."
-        },
-        {
-          "id": "char-2",
-          "question": "What problem does DoGood solve?",
-          "answer": "We solve the paradox that millions of people are ready to give, and millions are in urgent need, yet these two groups too often fail to find each other due to fragmentation, a lack of trust, and the complexity of finding ways to help."
-        },
-        {
-          "id": "char-3",
-          "question": "Is DoGood just an app or a social network?",
-          "answer": "DoGood is more than just an intermediary or an app. It’s an integrated digital ecosystem where kindness becomes action, and action leads to real, tangible impact."
-        },
-        {
-          "id": "char-4",
-          "question": "In which countries does the platform operate?",
-          "answer": "The platform has international scalability. Our strategy is a gradual global launch, starting with key regions (US and EU), with the aim of becoming the standard for global mutual aid."
-        }
-      ]
-    },
     "business": {
       "title": "Business Questions",
       "items": [
@@ -155,6 +137,31 @@
           "id": "bus-4",
           "question": "How can I become a volunteer on the platform?",
           "answer": "GoodBot enhances user engagement by making every act of kindness deeply personal. It studies a user's past contributions and preferences, offering them the most inspiring and relevant opportunities for their next contribution."
+        }
+      ]
+    },
+    "charitableOrg": {
+      "title": "Charitable Organization Questions",
+      "items": [
+        {
+          "id": "char-1",
+          "question": "What is DoGood Impact Inc.?",
+          "answer": "It is a mission-driven tech company building the next-generation global mutual aid platform. We are building a digital bridge where kindness, amplified by Artificial Intelligence (AI), becomes visible, measurable, and contagious."
+        },
+        {
+          "id": "char-2",
+          "question": "What problem does DoGood solve?",
+          "answer": "We solve the paradox that millions of people are ready to give, and millions are in urgent need, yet these two groups too often fail to find each other due to fragmentation, a lack of trust, and the complexity of finding ways to help."
+        },
+        {
+          "id": "char-3",
+          "question": "Is DoGood just an app or a social network?",
+          "answer": "DoGood is more than just an intermediary or an app. It’s an integrated digital ecosystem where kindness becomes action, and action leads to real, tangible impact."
+        },
+        {
+          "id": "char-4",
+          "question": "In which countries does the platform operate?",
+          "answer": "The platform has international scalability. Our strategy is a gradual global launch, starting with key regions (US and EU), with the aim of becoming the standard for global mutual aid."
         }
       ]
     }

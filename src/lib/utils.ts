@@ -11,6 +11,7 @@ import { IHowItWorksItem } from '@/types/howItWorksItem';
 import { ICategoryItem, IDistanceItem } from '@/types/filter.type';
 import csc from 'country-state-city';
 import { FormLocation } from '@/types/settings';
+import { MenuCategoryData, MenuCategoryKey } from '@/types/support';
 
 export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
@@ -75,4 +76,51 @@ export const getInitialLocation = (
     region: stateCode,
     city: location.city,
   };
+};
+
+export const menuCategories: MenuCategoryKey[] = [
+  'general',
+  'volunteer',
+  'donor',
+  'personInNeed',
+  'business',
+  'charitableOrg',
+];
+
+export const getAllCategoriesData = (
+  t: any
+): Record<MenuCategoryKey, MenuCategoryData> => {
+  const allData: Partial<Record<MenuCategoryKey, MenuCategoryData>> = {};
+  menuCategories.forEach((category) => {
+    allData[category] = t.raw(`questions.${category}`);
+  });
+  return allData as Record<MenuCategoryKey, MenuCategoryData>;
+};
+
+export const getFilteredCategories = (
+  appliedFilter: string,
+  allCategoriesData: Record<MenuCategoryKey, MenuCategoryData>
+): MenuCategoryData[] => {
+  if (!appliedFilter) {
+    return [];
+  }
+  const filteredCategories: MenuCategoryData[] = [];
+
+  menuCategories.forEach((categoryKey) => {
+    const categoryData = allCategoriesData[categoryKey];
+    const filteredItems = categoryData.items.filter(
+      (item) =>
+        item.question.toLowerCase().includes(appliedFilter.toLowerCase()) ||
+        item.answer.toLowerCase().includes(appliedFilter.toLowerCase())
+    );
+
+    if (filteredItems.length > 0) {
+      filteredCategories.push({
+        ...categoryData,
+        items: filteredItems,
+      });
+    }
+  });
+
+  return filteredCategories;
 };
