@@ -24,7 +24,7 @@ export const OrganizationDesc = ({
   const adminRole = isAdminOrModerator(userRole);
 
   return (
-    <div className="flex flex-col md:grid md:grid-cols-[192px_425px] md:grid-rows-[192px_auto] md:gap-x-32px gap-11 lg:grid-cols-[336px_auto] lg:grid-rows-[auto_auto] lg:gap-x-20">
+    <div className="flex flex-col md:grid md:grid-cols-[192px_auto] md:grid-rows-[192px_auto] md:gap-x-32px gap-11 lg:grid-cols-[336px_auto] lg:grid-rows-[auto_auto] lg:gap-x-20">
       {/* IMAGE */}
       <div className="lg:row-span-full">
         <Image
