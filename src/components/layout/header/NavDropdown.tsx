@@ -4,8 +4,8 @@ import React, { useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { NavDropdownProps } from '@/types';
 import { CaretDown } from '@/components/icons';
-import { Button } from '@/components';
 import { useMediaQuery } from '@/hooks';
+import { Button } from '@/components/ui/Button';
 
 export const NavDropdown = ({
   trigger,

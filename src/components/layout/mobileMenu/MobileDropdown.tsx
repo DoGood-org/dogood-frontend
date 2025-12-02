@@ -2,15 +2,15 @@
 
 import React from 'react';
 import { MobileDropdownProps } from '@/types';
+import { CaretDown } from '@/components/icons';
+import { useIconComponents } from '@/hooks';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  Button,
-} from '@/components';
-import { CaretDown } from '@/components/icons';
-import { useIconComponents } from '@/hooks';
+} from '@/components/ui/Accordion';
+import { Button } from '@/components/ui/Button';
 
 export const MobileDropdown = ({
   trigger,
