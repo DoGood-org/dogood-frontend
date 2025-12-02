@@ -5,7 +5,7 @@ import { JSX } from 'react';
 import { motion } from 'framer-motion';
 import { ModalWrapper } from '@/components/ui/ModalWrapper';
 import { cn } from '@/lib/utils';
-import { PaymentSuccessContent } from '@/components';
+import { PaymentSuccessContent } from './PaymentSuccessContent';
 
 interface PaymentSuccessModalProps {
   isOpen: boolean;

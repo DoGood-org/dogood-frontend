@@ -3,7 +3,8 @@
 import React, { JSX } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
-import { CurrencySelect, Input } from '@/components';
+import { Input } from '@/components/ui/Input';
+import { CurrencySelect } from './CurrencySelect';
 
 interface CurrencyAndAmountProps {
   control: any;

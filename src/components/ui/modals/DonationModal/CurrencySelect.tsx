@@ -1,16 +1,16 @@
 'use client';
 
+import { cn } from '@/lib/utils';
+import { SelectProps } from '@radix-ui/react-select';
+import { JSX } from 'react';
+import { Label } from '@/components/ui/Label';
 import {
-  Label,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components';
-import { cn } from '@/lib/utils';
-import { SelectProps } from '@radix-ui/react-select';
-import { JSX } from 'react';
+} from '@/components/ui/Select';
 
 interface CurrencyFieldProps extends Omit<SelectProps, 'onValueChange'> {
   options: Array<{ value: string; label: string }>;

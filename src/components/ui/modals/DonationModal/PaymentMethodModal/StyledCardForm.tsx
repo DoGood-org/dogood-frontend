@@ -1,8 +1,8 @@
-import { CardForm } from '@/components';
 import { CardFormProps } from '@/types';
 import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
 import { CARD_FORM_OVERRIDE_CLASSES } from '@/lib/card-form-styles';
+import { CardForm } from '@/components/account/settingsPage/PaymentModal/CardForm';
 
 export const StyledCardForm = (props: CardFormProps): JSX.Element => {
   const t = useTranslations('card');

@@ -2,12 +2,6 @@
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
-import {
-  Button,
-  CurrencyAndAmountInput,
-  Input,
-  PaymentCardList,
-} from '@/components';
 import { JSX } from 'react';
 import { useCardInputs } from '@/hooks/useCardInputs';
 import {
@@ -20,6 +14,10 @@ import { toast } from 'react-toastify';
 import { donationSchema } from '@/lib/validation/donationSchema';
 import { createCheckoutSession } from '@/services/donationService';
 import { useStripe } from '@stripe/react-stripe-js';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
+import { CurrencyAndAmountInput } from './CurrencyAndAmountInput';
+import { PaymentCardList } from './PaymentCardList';
 
 const currencies = [
   { value: 'USD', label: 'USD' },
