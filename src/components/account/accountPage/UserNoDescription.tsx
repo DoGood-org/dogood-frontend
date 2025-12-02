@@ -1,9 +1,9 @@
 'use client';
 
-import { LinkWithArrow } from '@/components';
-import { useRouteMatch } from '@/hooks/useRouteMatch';
 import { useLocale, useTranslations } from 'next-intl';
 import { JSX } from 'react';
+import { useRouteMatch } from '@/hooks/useRouteMatch';
+import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 
 export const UserNoDescription = (): JSX.Element => {
   const t = useTranslations('account');

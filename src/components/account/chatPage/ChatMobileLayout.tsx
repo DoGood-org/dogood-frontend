@@ -1,10 +1,10 @@
 import React from 'react';
-import { ChatCardsList } from '@/components';
-import { ChatMessageList } from '@/components';
-import { ChatMessageInput } from '@/components';
-import { ChatSearchInput } from '@/components';
 import { ChatType, MessageType } from '@/types/chatType';
 import { getLastMessageTime } from '@/utils/chatDateUtils';
+import { ChatSearchInput } from '@/components/account/chatPage/ChatSearchInput';
+import { ChatMessageList } from '@/components/account/chatPage/ChatMessage/ChatMessagesList';
+import { ChatMessageInput } from '@/components/account/chatPage/ChatMessageInput';
+import { ChatCardsList } from '@/components/account/chatPage/ChatCard/ChatCardsList';
 
 interface ChatMobileLayoutProps {
   chats: ChatType[];

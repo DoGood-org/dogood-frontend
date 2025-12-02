@@ -5,8 +5,8 @@ import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { UserDetailedProps } from '@/types';
 import { cache } from 'react';
-import { PublicAccount } from '@/components';
 import { getUserById } from '@/services/publicUserService';
+import { PublicAccount } from '@/components/publicAccount/PublicAccount';
 
 interface Props {
   params: Promise<{ userId: string; locale: Tlocale }>;

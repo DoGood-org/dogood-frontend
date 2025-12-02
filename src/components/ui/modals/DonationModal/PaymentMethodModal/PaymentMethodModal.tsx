@@ -2,10 +2,10 @@
 
 import { JSX, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ModalWrapper } from '@/components';
 import { CloseIcon } from '@/components/icons';
 import { cn } from '@/lib/utils';
-import { StyledCardForm } from '@/components';
+import { ModalWrapper } from '@/components/ui/ModalWrapper';
+import { StyledCardForm } from './StyledCardForm';
 
 interface PaymentMethodModalProps {
   isOpen: boolean;

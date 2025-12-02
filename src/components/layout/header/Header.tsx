@@ -1,7 +1,10 @@
 'use client';
 
-import { Container, MobileMenu, Navigation, Logo } from '@/components';
 import { useMediaQuery } from '@/hooks';
+import { Container } from '@/components/ui/Container';
+import { Logo } from '@/components/ui/Logo';
+import { Navigation } from './Navigation';
+import { MobileMenu } from '../mobileMenu/MobileMenu';
 
 export const Header: React.FC = () => {
   const isDesktop = useMediaQuery('(min-width: 1440px)');

@@ -2,8 +2,11 @@
 
 import { TaskListProps } from '@/types';
 import { JSX, useEffect, useState } from 'react';
-import { Slider, NoTask, AccountTaskItem, TaskFilter } from '@/components';
 import { useRouteMatch } from '@/hooks/useRouteMatch';
+import { TaskFilter } from '@/components/ui/TaskFilter';
+import { Slider } from '@/components/ui/Slider';
+import { NoTask } from '@/components/account/accountPage/NoTask';
+import { AccountTaskItem } from '@/components/account/accountPage/AccountTaskItem';
 
 export const AccountTaskList = ({ tasks }: TaskListProps): JSX.Element => {
   const [filter, setFilter] = useState('ALL');

@@ -1,4 +1,4 @@
-import { LinkWithArrow } from '@/components';
+import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { useRouteMatch } from '@/hooks/useRouteMatch';
 import { useLocale, useTranslations } from 'next-intl';
 import { JSX } from 'react';

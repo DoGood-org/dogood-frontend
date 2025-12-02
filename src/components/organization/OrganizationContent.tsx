@@ -1,17 +1,15 @@
 'use client';
 
-import {
-  OrganizationContentPanel,
-  OrgJoinRequestSection,
-  OrgMemberSection,
-  OrgMoreSection,
-  OrgReviewSection,
-  OrgTasksSection,
-} from '@/components';
 import { getUserRole } from '@/lib/getUserRole';
 import { ContentProps, OrganizationDetailedProps } from '@/types';
 import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
+import { OrgTasksSection } from './tasksSection/OrgTasksSection';
+import { OrgMemberSection } from './memberSection/OrgMemberSection';
+import { OrgJoinRequestSection } from './requestSection/OrgJoinRequestSection';
+import { OrgReviewSection } from './reviewSection/OrgReviewSection';
+import { OrgMoreSection } from './moreSection/OrgMoreSection';
+import { OrganizationContentPanel } from './OrganizationContantPanel';
 
 export const OrganizationContent = ({
   organization,

@@ -1,7 +1,6 @@
 'use client';
 
 import { generateMockTasks, generateTasks } from '../main/map/mockTasks';
-import { Container } from '@/components';
 import { Task } from '@/components/tasks/Task';
 import {
   ITaskDetails,
@@ -9,10 +8,12 @@ import {
   UserParticipationStatus,
 } from '@/types/tasks.type';
 import { IconButtonGroup } from '@/components/tasks/ButtonGroup/IconButtonGroup';
-import { OtherTasksSection, TaskControlButtons } from '@/components';
 import { LastNews } from '@/components/tasks/LastNews/LastNews';
 import { INewsItem } from '@/types';
 import { useTranslations } from 'next-intl';
+import { Container } from '@/components/ui/Container';
+import { TaskControlButtons } from './ButtonGroup/TaskControlButtons';
+import { OtherTasksSection } from './OtherTasks/OtherTasksSection';
 
 interface TaskContentProps {
   slug: string;

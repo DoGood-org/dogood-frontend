@@ -1,14 +1,5 @@
 'use client';
-import {
-  LocationSelect,
-  Section,
-  SelectField,
-  DatePicker,
-  Textarea,
-  ImageUploadWithPreview,
-  Label,
-} from '@/components';
-import { Button } from '@/components';
+
 import { Controller, Resolver, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -20,13 +11,22 @@ import {
   settingsSchema,
 } from '@/lib/validation/settingsSchema';
 import { useTranslations } from 'next-intl';
-import { InputField } from '@/components';
 import { cardPreviewService } from '@/services/cardPreviewService';
 import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
 import { sendProfile } from '@/services/profileUserService';
 import { toast } from 'react-toastify';
 import { deleteFromCloudinary } from '@/services/cloudinary';
 import { lazyImport } from '@/lib/lazyImport';
+
+import { Section } from '@/components/ui/Section';
+import { Textarea } from '@/components/ui/Textarea';
+import { Button } from '@/components/ui/Button';
+import { Label } from '@/components/ui/Label';
+import { InputField } from './InputField';
+import { DatePicker } from './DatePicker';
+import { SelectField } from './SelectField';
+import { ImageUploadWithPreview } from './ImageUploadWithPreview';
+import { LocationSelect } from './LocationSelect';
 
 const PaymentList = lazyImport(
   () => import('@/components/account/settingsPage/PaymentList'),

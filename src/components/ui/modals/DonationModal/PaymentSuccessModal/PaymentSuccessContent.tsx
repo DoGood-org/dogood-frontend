@@ -1,7 +1,8 @@
 'use client';
 
 import { JSX } from 'react';
-import { ActionButtons, UiSuccessMessage } from '@/components';
+import { UiSuccessMessage } from '@/components/ui/UiSuccessMessage';
+import { ActionButtons } from './ActionButtons';
 
 export const PaymentSuccessContent = (): JSX.Element => {
   return (

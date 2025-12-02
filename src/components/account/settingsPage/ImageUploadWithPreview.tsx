@@ -1,5 +1,5 @@
-import { Label } from '@/components';
 import { Photo } from '@/components/icons';
+import { Label } from '@/components/ui/Label';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
 import { Dispatch, JSX, SetStateAction } from 'react';

@@ -1,5 +1,5 @@
 'use client';
-import { NotFoundComponent, Section } from '@/components';
+
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import NotFoundDesk from '@/assets/images/notFound/notFoundDesk.png';
 import NotFoundTabl from '@/assets/images/notFound/notFoundTabl.png';
@@ -7,6 +7,8 @@ import NotFoundMob from '@/assets/images/notFound/notFoundmob.png';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { ContactFormModal } from '@/components/support/ContactFormModal';
+import { Section } from '@/components/ui/Section';
+import { NotFoundComponent } from '@/components/layout/not-found/NotFoundComponent';
 
 export default function NotFound(): React.JSX.Element {
   const isMobile = useMediaQuery('(max-width: 767px)');

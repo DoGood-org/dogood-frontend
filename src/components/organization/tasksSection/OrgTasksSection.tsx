@@ -1,12 +1,5 @@
 'use client';
 
-import {
-  Button,
-  EmptyContent,
-  OrgTaskItem,
-  Slider,
-  TaskFilter,
-} from '@/components';
 import { Plus } from '@/components/icons';
 import { Role } from '@/lib/getUserRole';
 import { TaskProps } from '@/types';
@@ -14,6 +7,11 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { JSX, useEffect, useState } from 'react';
 import { useMediaQuery } from '@/hooks';
+import { Button } from '@/components/ui/Button';
+import { TaskFilter } from '@/components/ui/TaskFilter';
+import { Slider } from '@/components/ui/Slider';
+import { EmptyContent } from '../EmptyContent';
+import { OrgTaskItem } from './OrgTaskItem';
 
 export const OrgTasksSection = ({
   tasks,

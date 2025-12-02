@@ -1,4 +1,4 @@
-import { RegisterPageContent } from '@/components';
+import { RegisterPageContent } from '@/components/main/auth/RegisterPageContent';
 
 const RegisterPage: React.FC = () => {
   return <RegisterPageContent />;

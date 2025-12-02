@@ -1,8 +1,10 @@
 'use client';
 
-import { Container, ReviewCard, Section } from '@/components';
-import commentList from '@/data/reviews.json';
 import { useTranslations } from 'next-intl';
+import { Container } from '@/components/ui/Container';
+import { Section } from '@/components/ui/Section';
+import commentList from '@/data/reviews.json';
+import { ReviewCard } from './ReviewCard';
 
 export const ReviewsSection: React.FC = () => {
   const t = useTranslations('common');

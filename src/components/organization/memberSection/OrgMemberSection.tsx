@@ -1,10 +1,10 @@
-import { Button } from '@/components';
-import { Plus } from '@/components/icons';
-import { Role } from '@/lib/getUserRole';
-import { UserOrganization } from '@/types';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { JSX } from 'react';
+import { Plus } from '@/components/icons';
+import { Role } from '@/lib/getUserRole';
+import { UserOrganization } from '@/types';
+import { Button } from '@/components/ui/Button';
 
 export const OrgMemberSection = ({
   members,

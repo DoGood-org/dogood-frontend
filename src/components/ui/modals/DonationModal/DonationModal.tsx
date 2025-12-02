@@ -5,9 +5,9 @@ import { motion } from 'framer-motion';
 import { CloseIcon } from '@/components/icons';
 import { ModalWrapper } from '@/components/ui/ModalWrapper';
 import { cn } from '@/lib/utils';
-import { DonationForm } from '@/components';
 import { useTranslations } from 'next-intl';
-import { PaymentSuccessModal } from '@/components';
+import { DonationForm } from './DonationForm';
+import { PaymentSuccessModal } from './PaymentSuccessModal/PaymentSuccessModal';
 
 interface DonationModalProps {
   isOpen: boolean;

@@ -1,8 +1,10 @@
 'use client';
 
-import { OrganizationContent, OrganizationDesc, Section } from '@/components';
 import { OrganizationDetailedProps } from '@/types';
 import { JSX } from 'react';
+import { Section } from '@/components/ui/Section';
+import { OrganizationDesc } from './OrganizationDesc';
+import { OrganizationContent } from './OrganizationContent';
 
 export const OrganizationLayout = ({
   organization,
