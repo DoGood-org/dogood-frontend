@@ -2,8 +2,8 @@
 
 import { JSX, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components';
 import { More, Report } from '@/components/icons';
+import { Button } from '@/components/ui/Button';
 import { ReportModal } from './ReportModal';
 
 export const ReportUser = (): JSX.Element => {

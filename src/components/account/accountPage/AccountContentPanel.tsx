@@ -1,7 +1,9 @@
 'use client';
 
-import { AnimationTabs, Button, Section } from '@/components';
 import { Plus } from '@/components/icons';
+import { AnimationTabs } from '@/components/ui/AnimationTabs';
+import { Button } from '@/components/ui/Button';
+import { Section } from '@/components/ui/Section';
 import { useMediaQuery } from '@/hooks';
 import { useRouteMatch } from '@/hooks/useRouteMatch';
 import { ContentPanelProps } from '@/types';

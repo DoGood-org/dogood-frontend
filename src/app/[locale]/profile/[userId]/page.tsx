@@ -3,8 +3,8 @@ import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { PublicAccount } from '@/components';
 import { fetchUserById } from '@/facades/profileFacade';
+import { PublicAccount } from '@/components/publicAccount/PublicAccount';
 
 interface Props {
   params: Promise<{ userId: string; locale: Tlocale }>;

@@ -4,16 +4,14 @@ import { useState } from 'react';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { NavItem, NavItemRendererProps } from '@/types';
-import {
-  AccountLinks,
-  Button,
-  ListDropdown,
-  MobileDropdown,
-  NavDropdown,
-  SettingsList,
-  UserAvatar,
-} from '@/components';
 import { useAuth, useIconComponents } from '@/hooks';
+import { Button } from '@/components/ui/Button';
+import { ListDropdown } from './ListDropdown';
+import { SettingsList } from './SettingList';
+import { UserAvatar } from './UserAvatar';
+import { AccountLinks } from './AccountLinks';
+import { NavDropdown } from './NavDropdown';
+import { MobileDropdown } from '../mobileMenu/MobileDropdown';
 
 export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   navItem,

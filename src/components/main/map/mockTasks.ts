@@ -131,6 +131,7 @@ export function generateTasks(
       userParticipationStatus: UserParticipationStatus.NONE,
       organizationId: `org-${i}`,
       onToggleDescription: (): void => {},
+      status: 'PENDING',
     };
   });
 }

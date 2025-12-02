@@ -1,15 +1,17 @@
 'use client';
 
-import Image from 'next/image';
 import { JSX } from 'react';
+import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
-import { ChatCircle, Email, Phone, UserLocate } from '@/components/icons';
-import { Button, UserNoAvatar, UserNoDescription } from '@/components';
+import Link from 'next/link';
 import { UserDetailedProps } from '@/types';
 import { useRouteMatch } from '@/hooks/useRouteMatch';
-import Link from 'next/link';
-import { ReportUser } from '@/components/publicAccount/ReportUser';
 import { formatLocation } from '@/lib/formatLocation';
+import { ChatCircle, Email, Phone, UserLocate } from '@/components/icons';
+import { Button } from '@/components/ui/Button';
+import { ReportUser } from '@/components/publicAccount/ReportUser';
+import { UserNoAvatar } from '@/components/account/accountPage/UserNoAvatar';
+import { UserNoDescription } from '@/components/account/accountPage/UserNoDescription';
 
 export const UserDescription = ({
   user,

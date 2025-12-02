@@ -1,7 +1,8 @@
 import React from 'react';
 import { SocialLinks } from './SocialLinks';
-import { Container, Logo } from '@/components';
 import { useTranslations } from 'next-intl';
+import { Container } from '@/components/ui/Container';
+import { Logo } from '@/components/ui/Logo';
 
 export const Footer: React.FC = () => {
   const t = useTranslations('common');

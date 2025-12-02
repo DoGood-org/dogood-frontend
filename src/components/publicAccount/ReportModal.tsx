@@ -1,10 +1,11 @@
 'use client';
 
 import { JSX } from 'react';
-import { Button, Modal } from '@/components';
 import { useTranslations } from 'next-intl';
 import { reportReasons } from '@/constants/report';
 import { useForm } from 'react-hook-form';
+import { Modal } from '@/components/ui/Modal';
+import { Button } from '@/components/ui/Button';
 
 type ReportModalProps = {
   isOpen: boolean;

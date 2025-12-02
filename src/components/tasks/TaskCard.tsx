@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { ITaskDetails } from '@/types/tasks.type';
 import { ImagePlaceholder } from './ImagePlaceholder';
 import { Clock, DateIcon, Location } from '@/components/icons';
-import { DonationProgressBar } from '@/components';
+import { DonationProgressBar } from './DonationProgressBar';
 
 interface TaskCardProps {
   task: ITaskDetails;

@@ -1,15 +1,17 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
-import './globals.css';
-import React from 'react';
-import { Header, Footer, MainLayoutContent } from '@/components';
-import { ThemeInitializer } from '@/components/layout/theme/ThemeInitializer';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
+import React from 'react';
 import { routing } from '@/i18n/routing';
-import ToastProvider from '@/components/ToastProvider';
+import './globals.css';
 import { meta } from '@/data/metadata';
 import { getServerCurrentUser } from '@/lib/server/getCurrentUser';
+import ToastProvider from '@/components/ToastProvider';
+import { ThemeInitializer } from '@/components/layout/theme/ThemeInitializer';
+import { MainLayoutContent } from '@/components/layout/mainLayout/MainLayout';
+import { Header } from '@/components/layout/header/Header';
+import { Footer } from '@/components/layout/footer/Footer';
 
 const montserrat = Montserrat({
   subsets: ['latin'],

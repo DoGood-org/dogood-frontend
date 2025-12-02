@@ -2,7 +2,7 @@ import type { JSX } from 'react/jsx-runtime';
 import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { TaskContent } from '@/components';
+import { TaskContent } from '@/components/tasks/TaskContent';
 import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
 import { INewsItem } from '@/types';
 import { fetchNewsItem } from '@/facades/newsFacade';

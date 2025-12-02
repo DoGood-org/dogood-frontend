@@ -5,11 +5,11 @@ import Image from 'next/image';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { HeroContentLayer } from './HeroContentLayer';
 import { HeroPlanetLayer } from './HeroPlanetLayer';
-import { HeroSocialLink } from '@/components';
 
 import HeroBgMobile from '@/assets/images/hero/mob-hero.webp';
 import HeroBgTablet from '@/assets/images/hero/tablet-hero.webp';
 import HeroBgDesktop from '@/assets/images/hero/bg-hero.webp';
+import { HeroSocialLink } from './HeroSocialLink';
 
 export const HeroSection: React.FC = () => {
   const sectionRef = useRef(null);

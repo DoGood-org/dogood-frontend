@@ -1,4 +1,4 @@
-import { NewsItem } from '@/components';
+import { NewsItem } from '@/components/main/news/NewsItem';
 import { getNews } from '@/services/newsService';
 import { INewsItem, Tlocale } from '@/types';
 import { getTranslations } from 'next-intl/server';

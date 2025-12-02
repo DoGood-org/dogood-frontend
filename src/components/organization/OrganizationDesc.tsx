@@ -4,13 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { JSX } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { ChatCircle, Email, Phone, UserLocate } from '@/components/icons';
-import { UserNoDescription } from '@/components/account/accountPage/UserNoDescription';
-// import { Report } fro@/components/organization/ReportOrgort';
-import { Button } from '@/components/ui/Button';
 import { OrganizationDetailedProps } from '@/types';
 import { formatLocation } from '@/lib/formatLocation';
 import { getUserRole, isAdminOrModerator } from '@/lib/getUserRole';
+import { ChatCircle, Email, Phone, UserLocate } from '@/components/icons';
+import { Button } from '@/components/ui/Button';
+import { UserNoDescription } from '@/components/account/accountPage/UserNoDescription';
 import { ReportOrg } from './dotMenu/ReportOrg';
 
 export const OrganizationDesc = ({

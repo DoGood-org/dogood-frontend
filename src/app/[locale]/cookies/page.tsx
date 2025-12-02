@@ -2,10 +2,10 @@
 import React from 'react';
 import { Accordion } from '@/components/ui/Accordion';
 import { useTranslations } from 'next-intl';
-import { Container } from '@/components';
 import Line6 from '@/components/icons/Line6';
 import BackToTopButton from '@/components/ui/BackToTopButton';
 import CategoryItem, { Category } from '@/components/ui/CategoryItem';
+import { Container } from '@/components/ui/Container';
 
 const Cookies: React.FC = () => {
   const t = useTranslations('cookies');

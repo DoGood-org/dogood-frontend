@@ -8,12 +8,15 @@ import {
 } from '@stripe/react-stripe-js';
 import { useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
-import { Button, CardInputWrapper, CardNumberInput, Input } from '@/components';
 import { useState, JSX, useEffect } from 'react';
 import { CardData, CardFormProps } from '@/types';
 import { createCardPaymentMethod } from '@/services/createPaymentMethod';
 import { useCardInputs } from '@/hooks/useCardInputs';
 import { options } from '@/config/stripeElement';
+import { Input } from '@/components/ui/Input';
+import { CardNumberInput } from '@/components/account/settingsPage/PaymentModal/CardNumberInput';
+import { CardInputWrapper } from '@/components/account/settingsPage/PaymentModal/CardInputWrapper';
+import { Button } from '@/components/ui/Button';
 
 export const CardForm = ({
   onSuccess,

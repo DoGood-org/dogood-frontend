@@ -1,8 +1,8 @@
 'use client';
 
 import { ITaskDetails } from '@/types/tasks.type';
-import { TaskCard } from '@/components';
-import { TaskDetails } from '@/components';
+import { TaskCard } from './TaskCard';
+import { TaskDetails } from './TaskDetails';
 
 interface TaskProps {
   task: ITaskDetails;
