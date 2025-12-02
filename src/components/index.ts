@@ -106,7 +106,7 @@ export * from './organization/OrganizationContantPanel';
 export * from './organization/OrganizationContent';
 export * from './organization/OrganizationDesc';
 export * from './organization/OrganizationLayout';
-export * from './organization/Report';
+export * from './organization/dotMenu/ReportOrg';
 export * from './organization/memberSection/OrgMemberSection';
 export * from './organization/moreSection/OrgMoreSection';
 export * from './organization/profilePage/DeleteForm';
