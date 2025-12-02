@@ -1,14 +1,16 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { JSX } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { ChatCircle, Email, Phone, UserLocate } from '@/components/icons';
-import { Button, Report, UserNoDescription } from '@/components';
+import { UserNoDescription } from '@/components/account/accountPage/UserNoDescription';
+import { Report } from '@/components/organization/Report';
+import { Button } from '@/components/ui/Button';
 import { OrganizationDetailedProps } from '@/types';
 import { formatLocation } from '@/lib/formatLocation';
 import { getUserRole, isAdminOrModerator } from '@/lib/getUserRole';
-import Link from 'next/link';
 
 export const OrganizationDesc = ({
   organization,
