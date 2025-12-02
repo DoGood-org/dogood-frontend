@@ -4,10 +4,11 @@ import Image from 'next/image';
 import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
 import { Email, Phone, UserLocate } from '@/components/icons';
-import { Report, UserNoDescription } from '@/components';
 import { OrganizationDetailedProps } from '@/types';
 import { formatLocation } from '@/lib/formatLocation';
 import { getUserRole } from '@/lib/getUserRole';
+import { Report } from './Report';
+import { UserNoDescription } from '@/components/account/accountPage/UserNoDescription';
 
 export const OrganizationDesc = ({
   organization,

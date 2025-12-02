@@ -1,8 +1,10 @@
 import { ReviewProps } from '@/types';
 import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
-import { EmptyContent, ReviewItem, Slider } from '@/components';
 import { Role } from '@/lib/getUserRole';
+import { EmptyContent } from '../EmptyContent';
+import { Slider } from '@/components/ui/Slider';
+import { ReviewItem } from '@/components/account/accountPage/ReviewItem';
 
 export const OrgReviewSection = ({
   reviews,

@@ -1,7 +1,7 @@
 import { UserOrganization } from '@/types';
 import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
-import { EmptyContent } from '@/components';
+import { EmptyContent } from '../EmptyContent';
 
 export const OrgJoinRequestSection = ({
   members,

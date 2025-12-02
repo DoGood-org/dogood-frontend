@@ -1,10 +1,11 @@
 'use client';
 
-import { AnimationTabs, Section } from '@/components';
 import { useMediaQuery } from '@/hooks';
 import { OrganizationContelPanelProps } from '@/types';
 import { useLocale } from 'next-intl';
 import { JSX, useState } from 'react';
+import { AnimationTabs } from '@/components/ui/AnimationTabs';
+import { Section } from '@/components/ui/Section';
 
 export const OrganizationContentPanel = ({
   views,
