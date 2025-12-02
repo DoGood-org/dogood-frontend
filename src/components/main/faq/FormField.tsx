@@ -2,7 +2,7 @@
 import { cn } from '@/lib/utils';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { Input } from '../../ui/Input';
+import { Input } from '@/components/ui/Input';
 type Props = {
   name: string;
   label?: string;

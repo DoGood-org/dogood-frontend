@@ -3,14 +3,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
-import {
-  AboutImages,
-  AnimationTabs,
-  Container,
-  LinkWithArrow,
-  Section,
-} from '@/components';
 import { AboutSectionProps } from '@/types';
+import { Section } from '@/components/ui/Section';
+import { Container } from '@/components/ui/Container';
+import { AnimationTabs } from '@/components/ui/AnimationTabs';
+import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
+import { AboutImages } from './AboutImages';
 
 export const AboutSection: React.FC = () => {
   const t = useTranslations('about');

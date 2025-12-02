@@ -1,11 +1,13 @@
 'use client';
-import { AuthForm, safeNext } from '@/components';
+
 import { ForgotEnterEmail } from '@/components/main/auth/ForgotEnterEmail';
 import { ForgotPassword } from '@/components/main/auth/ForgotPassword';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useMemo } from 'react';
 import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
 import { IAuthResponse } from '@/zustand/services/authService';
+import { safeNext } from './safeNextPath';
+import { AuthForm } from './AuthForm';
 
 export const LoginPageContent: React.FC = () => {
   const router = useRouter();

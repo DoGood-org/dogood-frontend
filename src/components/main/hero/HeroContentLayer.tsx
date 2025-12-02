@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
-import { Button } from '@/components';
 import { HeroContentLayerProps } from '@/types/heroTypes';
+import { Button } from '@/components/ui/Button';
 
 export const HeroContentLayer: React.FC<HeroContentLayerProps> = ({
   yContent,
