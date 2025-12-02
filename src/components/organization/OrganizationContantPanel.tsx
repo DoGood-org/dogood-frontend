@@ -18,9 +18,9 @@ export const OrganizationContentPanel = ({
   const activeData = views.find(({ view }) => view === activeView);
 
   return (
-    <Section>
+    <Section className="pt-[26px] md:pt-[38px]">
       {activeData && (
-        <div className="mt-11 flex flex-col gap-5 transition-opacity duration-500 ease-in-out opacity-100">
+        <div className="flex flex-col gap-12 transition-opacity duration-500 ease-in-out opacity-100">
           <AnimationTabs
             views={views}
             activeView={activeView}
