@@ -1,9 +1,10 @@
 'use client';
 
 import { JSX, useMemo } from 'react';
-import { AccountContentPanel, AccountTaskList } from '@/components';
 import { ContentProps, TaskListProps } from '@/types';
 import { useTranslations } from 'next-intl';
+import { AccountTaskList } from '@/components/account/accountPage/AccountTaskList';
+import { AccountContentPanel } from '@/components/account/accountPage/AccountContentPanel';
 
 // масив статусів і відповідних ключів для views
 const statusMap = [

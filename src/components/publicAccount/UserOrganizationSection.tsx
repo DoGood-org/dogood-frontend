@@ -1,9 +1,10 @@
 'use client';
 
 import { JSX } from 'react';
-import { OrganizationList, Section } from '@/components';
 import { useTranslations } from 'next-intl';
 import { OrganizationListProps } from '@/types';
+import { Section } from '@/components/ui/Section';
+import { OrganizationList } from '@/components/account/accountPage/OrganizationList';
 
 export const UserOrganizationSection = ({
   organizations,

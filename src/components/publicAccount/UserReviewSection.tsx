@@ -1,7 +1,8 @@
 import { JSX } from 'react';
-import { ReviewsList, Section } from '@/components';
 import { useTranslations } from 'next-intl';
 import { ReviewListProps } from '@/types';
+import { Section } from '@/components/ui/Section';
+import { ReviewsList } from '@/components/account/accountPage/ReviewsList';
 
 export const UserReviewSection = ({
   reviews,

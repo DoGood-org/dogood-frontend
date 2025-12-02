@@ -1,11 +1,11 @@
 'use client';
 
 import { IExtendedITaskProps } from '@/types/tasks.type';
-import { OtherTaskItem } from '@/components';
 import { useTranslations } from 'next-intl';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { OtherTaskItem } from './OtherTaskItem';
 
 interface OtherListProps {
   tasks: IExtendedITaskProps[];

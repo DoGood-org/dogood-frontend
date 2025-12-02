@@ -2,7 +2,7 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import { INewsItem } from '@/types';
-import { NewsItem } from '@/components';
+import { NewsItem } from '@/components/main/news/NewsItem';
 
 interface NewsListItemsProps {
   newsItems: INewsItem[];
