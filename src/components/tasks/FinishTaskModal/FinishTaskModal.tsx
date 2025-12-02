@@ -1,6 +1,6 @@
 'use client';
 
-import { ModalWrapper } from '@/components';
+import { ModalWrapper } from '@/components/ui/ModalWrapper';
 import { FinishTaskModalContent } from '@/components/tasks/FinishTaskModal/FinishTaskModalContent';
 import { motion } from 'framer-motion';
 import { JSX } from 'react';
