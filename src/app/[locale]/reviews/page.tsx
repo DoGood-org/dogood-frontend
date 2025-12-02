@@ -1,4 +1,4 @@
-import { UsersList } from '@/components';
+import { UsersList } from '@/components/userReviews/UsersList';
 import React from 'react';
 
 const ReviewsPage: React.FC = () => {

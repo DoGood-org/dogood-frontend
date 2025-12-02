@@ -1,5 +1,5 @@
 // app/[locale]/(protected)/layout.tsx
-import { ProtectedLayoutContent } from '@/components';
+import { ProtectedLayoutContent } from '@/components/account/ProtectedLayoutContent/ProtectedLayoutContent';
 import { getServerCurrentUser } from '@/lib/server/getCurrentUser';
 import { ICurrentUser } from '@/types';
 import { redirect } from 'next/navigation';

@@ -3,7 +3,7 @@ import { getOrganizationById } from '@/services/organizationService';
 import { OrganizationDetailedProps, Tlocale } from '@/types';
 import { Metadata } from 'next';
 import React, { cache, JSX } from 'react';
-import { OrganizationProfile } from '@/components';
+import { OrganizationProfile } from '@/components/organization/profilePage/OrganizationProfile';
 
 interface Props {
   params: Promise<{ id: string; locale: Tlocale }>;
