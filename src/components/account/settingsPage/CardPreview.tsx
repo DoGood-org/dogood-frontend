@@ -1,10 +1,11 @@
 'use client';
 
 import { Dispatch, JSX, SetStateAction } from 'react';
-import { Button, cardIcons } from '@/components';
 import { useTranslations } from 'next-intl';
 import { CardData } from '@/types';
 import { cardPreviewService } from '@/services/cardPreviewService';
+import { cardIcons } from '@/components/account/settingsPage/PaymentModal/CardIcons';
+import { Button } from '@/components/ui/Button';
 
 type CardPreviewProps = {
   setEditingId: (paymentMethodId: string) => void;

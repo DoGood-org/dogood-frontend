@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import csc, { ICountry, IState, ICity } from 'country-state-city';
-import { SelectField } from '@/components';
 import { useTranslations } from 'next-intl';
+import { SelectField } from './SelectField';
 
 interface LocationSelectProps {
   onCountryChange: (value: string) => void;

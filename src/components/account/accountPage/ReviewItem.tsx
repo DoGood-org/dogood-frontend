@@ -1,4 +1,3 @@
-import { Rating, UserNoAvatar } from '@/components';
 import { More } from '@/components/icons';
 import { useRouteMatch } from '@/hooks/useRouteMatch';
 import { formatDate } from '@/lib/formateDate';
@@ -6,6 +5,8 @@ import { ReviewItemProps } from '@/types';
 import { useLocale } from 'next-intl';
 import Image from 'next/image';
 import { JSX } from 'react';
+import { UserNoAvatar } from '@/components/account/accountPage/UserNoAvatar';
+import { Rating } from '@/components/ui/Rating';
 
 export const ReviewItem = ({ review }: ReviewItemProps): JSX.Element => {
   const { rating, comment, createdAt, owner } = review;

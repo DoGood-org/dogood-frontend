@@ -1,7 +1,7 @@
 'use client';
 
-import { Input } from '@/components';
-import { Label } from '@/components';
+import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
 import { JSX } from 'react';
 import { FieldError } from 'react-hook-form';
 

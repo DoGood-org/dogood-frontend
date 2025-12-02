@@ -1,15 +1,13 @@
 'use client';
 
-import {
-  AccountContentPanel,
-  AccountTaskList,
-  OrganizationList,
-  ReviewsList,
-} from '@/components';
 import { ContentProps, UserDetailedProps } from '@/types';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { JSX } from 'react';
+import { AccountTaskList } from '@/components/account/accountPage/AccountTaskList';
+import { OrganizationList } from '@/components/account/accountPage/OrganizationList';
+import { ReviewsList } from '@/components/account/accountPage/ReviewsList';
+import { AccountContentPanel } from '@/components/account/accountPage/AccountContentPanel';
 
 export const AccountContent = ({
   user,
