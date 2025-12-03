@@ -27,7 +27,7 @@ export const OtherTaskList: React.FC<OtherListProps> = ({ tasks }) => {
     displayedTasks = tasks;
   } else {
     itemsPerSlide = 1;
-    displayedTasks = tasks.slice(0, 7);
+    displayedTasks = tasks.slice(0, 5);
   }
 
   if (!tasks || tasks.length === 0) {
@@ -41,12 +41,10 @@ export const OtherTaskList: React.FC<OtherListProps> = ({ tasks }) => {
   return (
     <div className="w-full flex flex-col items-center">
       <Slider
-        key={itemsPerSlide}
         items={displayedTasks}
         itemsPerSlide={itemsPerSlide}
         renderItem={(task) => <OtherTaskItem key={task.id} {...task} />}
-        listClassName="flex flex-row justify-center"
-        itemClassName="p-2 flex-shrink-0"
+        listClassName="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6"
       />
     </div>
   );

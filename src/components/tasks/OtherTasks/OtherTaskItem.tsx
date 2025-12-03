@@ -30,14 +30,14 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
         {distance && <span className="text-base">{distance}</span>}
       </div>
 
-      <div className="flex justify-between space-x-2 mt-auto">
+      <div className="flex justify-between mt-auto">
         <TaskActionButtons
           taskId={id}
           actionType={actionType}
           userParticipationStatus={userParticipationStatus}
           isHost={Boolean(isHost)}
           taskStatus={status}
-          className="min-w-[114px] max-w-[130px]"
+          className="max-w-[114px] w-full"
         />
       </div>
     </div>
