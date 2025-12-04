@@ -10,11 +10,19 @@ import { ReportModal } from '@/components/publicAccount/ReportModal';
 import { ReportItem } from './ReportItem';
 import { CopyLink } from './CopyLink';
 import { LeaveOrg } from './LeaveOrg';
+import { LeaveModal } from './LeaveModal';
 
-export const ReportOrg = ({ role }: { role: Role }): JSX.Element => {
+export const ReportOrg = ({
+  role,
+  orgId,
+}: {
+  role: Role;
+  orgId: string;
+}): JSX.Element => {
   const buttonRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const t = useTranslations('organization');
   const pathname = usePathname();
@@ -60,8 +68,7 @@ export const ReportOrg = ({ role }: { role: Role }): JSX.Element => {
   const memberVersion = (
     <ul>
       {baseList}
-      <LeaveOrg />
-      {/* <li className="">{t('dotMenu.leaveOrg')}</li> */}
+      <LeaveOrg setIsOpen={setIsOpen} setIsModalOpen={setIsLeaveModalOpen} />
     </ul>
   );
 
@@ -88,8 +95,8 @@ export const ReportOrg = ({ role }: { role: Role }): JSX.Element => {
           </div>
         )}
         {copied && (
-          <div className="absolute top-[25px] right-2 rounded-lg bg-card p-4 p-3 text-nowrap flex gap-4 justify-start">
-            <LinkCopied className="size-5 stroke-current" />
+          <div className="absolute top-[25px] right-2 rounded-lg bg-card p-4 p-3 text-nowrap flex gap-4 justify-start items-center text-foreground">
+            <LinkCopied className="size-5 fill-current" />
             {t('linkCopied')}
           </div>
         )}
@@ -98,6 +105,13 @@ export const ReportOrg = ({ role }: { role: Role }): JSX.Element => {
         <ReportModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
+        />
+      )}
+      {isLeaveModalOpen && (
+        <LeaveModal
+          isOpen={isLeaveModalOpen}
+          onClose={() => setIsLeaveModalOpen(false)}
+          orgId={orgId}
         />
       )}
     </>

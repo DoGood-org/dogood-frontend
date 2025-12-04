@@ -11,6 +11,7 @@ import { ChatCircle, Email, Phone, UserLocate } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
 import { UserNoDescription } from '@/components/account/accountPage/UserNoDescription';
 import { ReportOrg } from './dotMenu/ReportOrg';
+import { JoinButton } from './JoinButton';
 
 export const OrganizationDesc = ({
   organization,
@@ -18,8 +19,16 @@ export const OrganizationDesc = ({
   organization: OrganizationDetailedProps;
 }): JSX.Element => {
   const t = useTranslations('organization');
-  const { avatar, name, email, location, phoneNumber, description, members } =
-    organization;
+  const {
+    id,
+    avatar,
+    name,
+    email,
+    location,
+    phoneNumber,
+    description,
+    members,
+  } = organization;
 
   const locale = useLocale();
   const userRole = getUserRole(members);
@@ -44,7 +53,7 @@ export const OrganizationDesc = ({
       <div className="w-full lg:col-start-2 lg:row-start-1 ">
         <div className="flex justify-between">
           <h2 className="text-h2-m lg:text-h2-d">{name}</h2>
-          <ReportOrg role={userRole} />
+          <ReportOrg role={userRole} orgId={id} />
         </div>
         <p className="text-base lg:text-h3 mt-3 text-text-help lg:font-normal capitalize">
           {userRole.toLowerCase()}
@@ -88,12 +97,9 @@ export const OrganizationDesc = ({
               </Link>
             </Button>
           )}
-          {userRole === 'USER' && (
-            <Button className="text-white px-6">{t('joinButton')}</Button>
-          )}
+          {userRole === 'USER' && <JoinButton orgId={id} />}
         </div>
       </div>
-      {/* </div> */}
     </div>
   );
 };
