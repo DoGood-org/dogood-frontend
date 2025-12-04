@@ -1,11 +1,11 @@
 'use client';
 
-import { ModalWrapper } from '@/components';
 import { FinishTaskModalContent } from '@/components/tasks/FinishTaskModal/FinishTaskModalContent';
 import { motion } from 'framer-motion';
 import { JSX } from 'react';
 import { cn } from '@/lib/utils';
 import { CloseIcon } from '@/components/icons';
+import { ModalWrapper } from '@/components/ui/ModalWrapper';
 
 interface FinishTaskModalProps {
   isOpen: boolean;
