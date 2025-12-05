@@ -1,0 +1,131 @@
+{
+  "title": "Cookie-Praktiken auf Social-Impact-Plattformen und DoGood Cookie-Richtlinie",
+  "categories": [
+    {
+      "title": "Gängige Arten von Cookies auf Social-Impact-Plattformen",
+      "description": "Globale Social-Impact- und Charity-Plattformen verwenden typischerweise Cookies, die in mehrere Kategorien für unterschiedliche Zwecke eingeteilt sind. Die wichtigsten Typen umfassen:",
+      "examples": [
+        {
+          "type": "Unbedingt erforderliche Cookies",
+          "description": "Diese sind für die grundlegende Funktionalität und Sicherheit der Website essenziell. Sie ermöglichen Kernfunktionen wie Benutzeranmeldungen, Kontoauthentifizierung und sicheren Checkout. Ohne sie kann die Website nicht richtig funktionieren. Ein Sitzungs-Cookie hält Sie z. B. eingeloggt, während Sie durch die Seiten navigieren, und ein Sicherheits-Cookie kann Ihre Aktionen verifizieren (z. B. ein CSRF-Token oder ein Spam-Schutz-Token). Da diese Cookies notwendig sind, um den Dienst bereitzustellen, können Nutzer sie nicht deaktivieren (außer durch vollständiges Deaktivieren aller Cookies im Browser)."
+        },
+        {
+          "type": "Funktionale Cookies (Präferenzen)",
+          "description": "Diese Cookies verbessern die Benutzererfahrung, indem sie Präferenzen speichern und zusätzliche Funktionen unterstützen. Sie sind nicht zwingend erforderlich, helfen aber dabei, Ihre Einstellungen zu merken und die Nutzung zu personalisieren. Funktionale Cookies können z. B. Ihre gewählte Sprache speichern, Sie bei Rückkehr eingeloggt halten oder Formulardaten behalten, damit Sie diese nicht erneut eingeben müssen. Einige Plattformen integrieren Tools wie HubSpot für Kundenservice oder Chatfunktionen; HubSpot-Cookies können beispielsweise Informationen speichern, die Sie in Formularen oder Chats eingeben, und Sie bei späteren Besuchen wiedererkennen. Funktionale Cookies unterstützen auch Social-Sharing-Widgets oder das Einbetten von Inhalten (z. B. YouTube-Videos)."
+        },
+        {
+          "type": "Analyse- (Performance-) Cookies",
+          "description": "Diese Cookies sammeln Daten darüber, wie Besucher die Website nutzen, und helfen Organisationen, den Traffic zu messen und die Leistung zu verbessern. Analyse-Cookies ermöglichen es Plattformen zu verstehen, welche Seiten beliebt sind, wie lange Nutzer bleiben und wie sie interagieren, um die Seite zu optimieren. Seriöse Analysetools identifizieren Nutzer nicht persönlich. Google Analytics wird z. B. häufig verwendet und protokolliert üblicherweise Seitenaufrufe und IP-Adressen, aber nicht Ihren Namen oder persönliche Details. Tools wie Hotjar oder Microsoft Clarity können anonymisierte Sitzungsinformationen (Klicks, Scrollen, Bildschirmaufzeichnungen) speichern, um das Design zu verbessern. Diese Cookies werden nur gesetzt, wenn der Nutzer zustimmt – insbesondere in der EU."
+        },
+        {
+          "type": "Werbe- (Targeting-) Cookies",
+          "description": "Viele Plattformen – auch im sozialen Bereich – verwenden Werbe- oder Targeting-Cookies, um ihre Mission zu bewerben. Diese Cookies verfolgen Ihr Surfverhalten und Ihre Interaktionen, damit die Plattform relevante Werbung anzeigen oder die Effektivität von Kampagnen messen kann. Ein Meta Pixel (Facebook-Cookie) kann z. B. erfassen, wenn Sie auf eine DoGood-Werbung klicken und sich später registrieren. Google Ads Cookies ermöglichen ebenfalls personalisierte Werbung, wenn Sie zustimmen. Da Targeting-Cookies Nutzerprofile erstellen können, ist in Regionen wie der EU eine vorherige Zustimmung erforderlich."
+        }
+      ],
+      "moreInfo": "Zusätzlich zu den oben genannten Typen können Plattformen Kategorien unterschiedlich definieren (z. B. 'Essentiell' als Kombination aus ‚Notwendig‘ und ‚Funktional‘). Die vier Kategorien – Notwendig, Funktional, Analyse und Werbung – sind jedoch industrieweit Standard."
+    },
+    {
+      "title": "Gängige Cookie-Tools und Integrationen auf globalen Plattformen",
+      "description": "Plattformen wie DoGood nutzen häufig verschiedene Drittanbieter-Tools, die Cookies setzen, um Analysen, Marketing und zusätzliche Funktionen zu ermöglichen. Wichtige Integrationen umfassen:",
+      "examples": [
+        {
+          "type": "Google Analytics",
+          "description": "Fast alle großen Websites verwenden Google Analytics. Es setzt Cookies (z. B. _ga), um Besucher zu zählen und das Nutzerverhalten zu analysieren. Google Analytics verarbeitet aggregierte Daten und identifiziert keine Personen. Daten können auf US-Server übertragen werden."
+        },
+        {
+          "type": "Google Ads (DoubleClick)",
+          "description": "Wenn die Plattform Google-Werbekampagnen nutzt, werden Werbe-Cookies wie gcl oder IDE gesetzt, um die Leistung zu messen und Remarketing zu ermöglichen. Bei Zustimmung kann Google personalisierte Werbung anzeigen."
+        },
+        {
+          "type": "Meta Pixel (Facebook)",
+          "description": "Weit verbreitet bei Social-Impact-Plattformen. Es misst Interaktionen zwischen Facebook/Instagram-Werbung und Website-Aktionen (z. B. Registrierung). Daten werden an Meta übertragen und unterliegen deren Datenschutzrichtlinien."
+        },
+        {
+          "type": "Hotjar und ähnliche UX-Analyse-Tools",
+          "description": "Tools wie Hotjar, Microsoft Clarity oder FullStory zeichnen anonymisierte Sitzungen auf (Heatmaps, Klicks, Scrollen) und helfen, Designprobleme zu erkennen. Cookies werden nur nach Zustimmung gesetzt."
+        },
+        {
+          "type": "HubSpot",
+          "description": "Ein weit verbreitetes CRM und Marketingtool. HubSpot setzt Cookies (z. B. hubspotutk), um Nutzer zu erkennen, wenn sie Formulare ausfüllen oder Chatfunktionen nutzen. Die Cookies speichern eingegebene Informationen zur besseren Support-Kommunikation. Sie gehören zur Kategorie funktional/analytisch und benötigen Zustimmung."
+        },
+        {
+          "type": "Segment",
+          "description": "Ein Customer-Data-Plattform-Tool, das Daten aus verschiedenen Quellen bündelt. Segment setzt Cookies (wie ajs_anonymous_id), um Events zu verfolgen. Cookies identifizieren den Nutzer nur dann, wenn er sich einloggt oder persönliche Informationen bereitstellt."
+        },
+        {
+          "type": "Weitere Drittanbieter-Plugins",
+          "description": "Wenn Videos eingebettet werden (YouTube/Vimeo), setzen diese Cookies. Social-Media-Plattformen (Twitter/LinkedIn) können Cookies über Share-Buttons setzen. Sicherheitsdienste wie Cloudflare setzen notwendige Cookies für Bot-Schutz und Lastverteilung."
+        }
+      ],
+      "moreInfo": "Zusammengefasst nutzen Social-Impact-Plattformen gängige Tools wie Google Analytics, Google Ads, Meta Pixel, Hotjar, HubSpot und Segment. Eine Cookie-Richtlinie muss diese Tools transparent auflisten."
+    },
+    {
+      "title": "Einwilligungsmanagement: GDPR- vs. CCPA-Ansätze",
+      "description": "Die Nutzerzustimmung zu Cookies wird unter der EU-DSGVO und dem kalifornischen CCPA unterschiedlich gehandhabt. Führende Plattformen passen ihre Cookie-Banner entsprechend an, um beiden Vorgaben gerecht zu werden:",
+      "examples": [
+        {
+          "type": "DSGVO (EU/EWR)",
+          "description": "Nach der DSGVO (und der damit verbundenen ePrivacy-Richtlinie) ist vor dem Setzen nicht unbedingt erforderlicher Cookies eine ausdrückliche vorherige Einwilligung erforderlich. Das bedeutet: Wenn ein EU-Nutzer die Website besucht, darf kein Analytics- oder Werbe-Cookie gesetzt werden, bevor der Nutzer aktiv zugestimmt hat. Die Einwilligung muss eine klare, bestätigende Handlung sein – z. B. durch Klicken auf „Alle akzeptieren“ oder das Auswählen bestimmter Cookie-Kategorien – und darf nicht durch Schweigen oder Weitersurfen impliziert werden.\nIn der Praxis zeigen globale Plattformen beim ersten Besuch einen Hinweis an, dass Cookies verwendet werden, und bieten Optionen wie „Alle Cookies akzeptieren“ und „Einstellungen verwalten“. Viele beinhalten auch eine Schaltfläche „Alle ablehnen“, sodass die Ablehnung genauso einfach möglich ist wie die Zustimmung (was einige EU-Aufsichtsbehörden empfehlen). Nur technisch notwendige Cookies werden standardmäßig aktiviert, während Kategorien wie Analyse-, Funktions- oder Werbe-Cookies erst gesetzt werden, wenn der Nutzer zustimmt.\nPlattformen nutzen häufig ein Consent Management Platform-Tool (z. B. OneTrust, CookieYes, Cookiebot), um dies umzusetzen und die Einwilligung zu speichern. So erklärt etwa Target Aid, dass Nutzer beim ersten Besuch „um Zustimmung zur Nutzung von Cookies gebeten werden, wenn dies gesetzlich erforderlich ist, und dass bei Zustimmung entsprechende Technologien eingesetzt werden.“ Dies entspricht dem DSGVO-Prinzip der Opt-in-Einwilligung. Nutzer können ihre Einwilligung jederzeit widerrufen oder ändern – gemäß der DSGVO muss der Widerruf genauso einfach sein wie die Zustimmung."
+        },
+        {
+          "type": "CCPA/CPRA (Kalifornien)",
+          "description": "Der California Consumer Privacy Act verfolgt einen anderen Ansatz. Eine vorherige Zustimmung ist in der Regel nicht erforderlich (außer bei sensiblen Daten oder Minderjährigen), aber Nutzer müssen das Recht haben, dem „Verkauf“ ihrer personenbezogenen Daten zu widersprechen. Beim Einsatz von Cookies kann „Verkauf“ auch das Teilen von Daten mit Drittanbieter-Werbenetzwerken über Tracking-Cookies umfassen.\nKalifornische Nutzer sehen daher meist kein so strenges Cookie-Banner wie in der EU; jedoch muss die Website über die Datenerhebung informieren und einen „Do Not Sell My Personal Information“-Link oder ein entsprechendes Opt-out anbieten. Viele US-Plattformen zeigen lediglich einen kurzen Hinweis („Wir verwenden Cookies zur Verbesserung Ihrer Erfahrung…“) mit einer „Akzeptieren“-Schaltfläche und bieten im Footer einen „Do Not Sell“-Link oder „Cookie Settings“ an.\nDer CCPA basiert also auf einem Opt-out-Modell: Cookies dürfen gesetzt werden, aber der Nutzer kann die Weitergabe zu Werbezwecken nachträglich ablehnen. Seit den CPRA-Ergänzungen (2023) umfasst dies auch das „Sharing“ für zielgerichtete Werbung. Plattformen stellen daher sicher, dass bei einem Opt-out alle Cookies deaktiviert werden, die Daten an Dritte für Werbezwecke weitergeben würden."
+        },
+        {
+          "type": "Globale Compliance-Strategien",
+          "description": "Da DoGood voraussichtlich ein globales Publikum hat, nutzen viele Websites ein geo-abhängiges Banner oder einen einheitlichen Ansatz, der beide Rechtsräume abdeckt. Manche zeigen weltweit ein DSGVO-konformes Opt-in-Banner – ein strenger, aber sicherer Ansatz. Andere passen das Banner je nach Standort an: EU-Besucher erhalten ein Opt-in, US-Besucher einen Hinweis mit Opt-out.\nIn beiden Fällen empfiehlt sich ein „Privacy Preference Center“ bzw. Cookie-Einstellungsfenster. Nutzer können dort jederzeit ihre Entscheidungen überprüfen oder ändern, z. B. Analyse- oder Werbe-Cookies ein- oder ausschalten. Die Entscheidung wird meist in einem technisch notwendigen Cookie gespeichert (z. B. `cookieConsent=yes`), damit die Website sie bei zukünftigen Besuchen erkennt. Über einen Footer-Link wie „Cookie-Einstellungen“ kann der Nutzer seine Wahl jederzeit anpassen."
+        }
+      ],
+      "moreInfo": "Zusammengefasst verlangt die DSGVO ein Opt-in-Banner mit granularer Steuerung, während der CCPA Transparenz und ein leicht auffindbares Opt-out (z. B. über einen „Do Not Sell“-Link) fordert. DoGood wird beiden gerecht, indem es ein robustes System implementiert: keine nicht notwendigen Cookies für EU-Nutzer ohne Einwilligung und ein klares Opt-out für Nutzer in Kalifornien und anderen Regionen."
+    },
+    {
+      "title": "Cookie-Banner und Opt-in-Abläufe in der Praxis",
+      "description": "Cookie-Banner führender Plattformen folgen häufig denselben Prinzipien. Beim Besuch einer Seite wie GlobalGiving oder VolunteerMatch erscheint ein Pop-up, das informiert, dass die Website Cookies nutzt, und eine Auswahl anbietet. GlobalGiving zeigt beispielsweise Schaltflächen wie „Alle akzeptieren“, „Alle ablehnen (außer notwendige)“ sowie „Cookie-Einstellungen“ und verlinkt auf die vollständige Cookie-Richtlinie.\nIm Präferenzzentrum sind Cookies nach Kategorien mit Schaltern sortiert: – Technisch notwendige Cookies sind aktiviert und nicht deaktivierbar. – Funktions-, Analyse- und Werbe-Cookies haben Schalter, die (für DSGVO-Regionen) standardmäßig auf AUS stehen, bis der Nutzer zustimmt. Jede Kategorie ist in leicht verständlicher Sprache erklärt.\nEine gute Praxis (und teils gesetzliche Pflicht) ist, dass das Ablehnen genauso einfach sein muss wie das Akzeptieren. Der Banner enthält daher eine gut sichtbare „Ablehnen“-Option oder einen leicht zugänglichen Einstellungen-Link.",
+      "examples": [
+        {
+          "type": "Aufzeichnung der Einwilligung",
+          "description": "Sobald der Nutzer eine Entscheidung trifft, speichert die Website diese in einem technisch notwendigen Cookie (je nach Kategorie Ja/Nein). Dadurch erscheint das Banner nicht bei jedem Seitenaufruf erneut und die Einwilligung kann im Bedarfsfall nachgewiesen werden. Wenn ein Nutzer Cookies löscht oder ein neues Gerät nutzt, erscheint das Banner erneut."
+        },
+        {
+          "type": "Echte Beispiele",
+          "description": "Bei Big Life Foundation wird beispielsweise ausdrücklich darauf hingewiesen, dass optionale Cookies inaktiv bleiben, wenn der Nutzer nicht zustimmt. – Projects Abroad nutzt ein First-Party-Cookie, um zu speichern, ob der Nutzer zugestimmt hat, damit Bestätigungen nicht wiederholt abgefragt werden. – Diese Websites weisen auch darauf hin, dass das vollständige Blockieren aller Cookies im Browser die Funktionalität beeinträchtigen kann. Daher empfiehlt sich die Nutzung des Banner-Systems, um nur bestimmte Kategorien zu deaktivieren."
+        }
+      ],
+      "moreInfo": "Zusammengefasst kombinieren führende Plattformen klare Banner, einfache Opt-in/Opt-out-Optionen pro Kategorie und dauerhafte Präferenzzentren, um globale Anforderungen zu erfüllen. Basierend auf diesen Best Practices wird anschließend eine umfassende Cookie-Richtlinie für DoGood ausgearbeitet."
+    },
+
+    {
+      "title": "DoGood Cookie-Richtlinie (Beispielentwurf basierend auf Best Practices)",
+      "description": "Nachfolgend ein konsistenter, DSGVO-konformer Beispielentwurf für eine Cookie-Richtlinie, wie sie DoGood verwenden könnte. Die Richtlinie erklärt klar, welche Arten von Cookies eingesetzt werden, wofür sie genutzt werden und wie Nutzer ihre Einstellungen verwalten können.",
+      "policy": {
+        "introduction": "Wir verwenden Cookies und ähnliche Technologien, um unsere Website bereitzustellen, ihre Funktionalität zu verbessern, die Nutzung zu analysieren und – sofern Sie zustimmen – unsere Inhalte und Kampagnen zu optimieren. In dieser Richtlinie erfahren Sie, welche Cookies wir einsetzen und wie Sie Ihre Einstellungen verwalten können.",
+        "types": [
+          {
+            "name": "Unbedingt erforderliche Cookies",
+            "purpose": "Diese Cookies sind notwendig, damit die Website ordnungsgemäß funktioniert. Ohne sie können Grundfunktionen wie Login, Formularübermittlung, Spamschutz oder Sicherheit nicht bereitgestellt werden.",
+            "legal_basis": "Art. 6 Abs. 1 lit. b und f DSGVO – Bereitstellung des Dienstes und berechtigtes Interesse an Sicherheit."
+          },
+          {
+            "name": "Funktionale Cookies",
+            "purpose": "Sie ermöglichen eine verbesserte oder personalisierte Nutzung, etwa das Speichern von Spracheinstellungen, Formularinhalten oder Nutzerpräferenzen.",
+            "legal_basis": "Art. 6 Abs. 1 lit. a DSGVO – Einwilligung."
+          },
+          {
+            "name": "Analyse- und Performance-Cookies",
+            "purpose": "Sie helfen uns zu verstehen, wie Besucher unsere Website nutzen, welche Inhalte besonders relevant sind und wie wir die Benutzerfreundlichkeit verbessern können.",
+            "legal_basis": "Art. 6 Abs. 1 lit. a DSGVO – Einwilligung."
+          },
+          {
+            "name": "Marketing- und Tracking-Cookies",
+            "purpose": "Diese Cookies ermöglichen uns oder unseren Partnern, die Wirksamkeit von Kampagnen zu messen und Nutzern relevante Inhalte oder Werbung anzuzeigen.",
+            "legal_basis": "Art. 6 Abs. 1 lit. a DSGVO – Einwilligung."
+          }
+        ],
+        "consent_management": "Sie können Ihre Cookie-Einstellungen jederzeit über unser Cookie-Banner oder den Link 'Cookie-Einstellungen' im Footer anpassen. Dort können Sie einzelne Kategorien aktivieren oder deaktivieren. Bereits gesetzte Cookies können Sie über die Einstellungen Ihres Browsers löschen.",
+        "third_parties": "Wir arbeiten möglicherweise mit externen Dienstleistern wie Analyse- oder Marketingpartnern zusammen. Eine aktuelle Liste der eingebundenen Drittanbieter finden Sie jederzeit in den Cookie-Einstellungen im Banner.",
+        "data_storage_duration": "Die Speicherdauer hängt vom jeweiligen Cookie ab. Sitzungscookies werden nach Schließen des Browsers gelöscht, dauerhafte Cookies bleiben für einen definierten Zeitraum bestehen (z. B. 30 Tage, 6 Monate oder 1 Jahr), sofern sie nicht manuell gelöscht werden.",
+        "contact": "Wenn Sie Fragen zur Verwendung von Cookies oder zur Verarbeitung personenbezogener Daten haben, kontaktieren Sie uns bitte unter privacy@dogood.org."
+      }
+    }
+  ]
+}
