@@ -37,7 +37,7 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
           userParticipationStatus={userParticipationStatus}
           isHost={Boolean(isHost)}
           taskStatus={status}
-          className="max-w-[114px] w-full"
+          className="min-w-[114px] max-w-[130px] w-full"
         />
       </div>
     </div>

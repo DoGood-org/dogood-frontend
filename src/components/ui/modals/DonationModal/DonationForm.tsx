@@ -75,29 +75,34 @@ export const DonationForm = ({
   }): Promise<void> => {
     if (isSubmitting) return;
 
+    const { fullName, country, city, amount, currency, donationType } = data;
+
     try {
       const payload = {
-        fullName: data.fullName,
-        country: data.country,
-        city: data.city,
-        amount: data.amount,
-        currency: data.currency,
-        donationType: data.donationType,
+        fullName,
+        country,
+        city,
+        amount,
+        currency,
+        donationType,
       };
 
       const response = await createCheckoutSession(payload);
+
       if (!response.ok) {
-        throw new Error(
-          response.errorMessage || 'Failed to create checkout session'
-        );
+        toast.error(t('checkout.errorCreateSession'));
+        return;
       }
 
-      if (!stripe) throw new Error('Stripe not loaded');
+      if (!stripe) {
+        toast.error(t('checkout.paymentUnavailable'));
+        return;
+      }
 
       await stripe.redirectToCheckout({ sessionId: response.data.sessionId });
-    } catch (err: any) {
-      toast.error(err.message || 'Unknown error');
-      console.error(err);
+    } catch (err) {
+      console.error('Unexpected error in checkout handler:', err);
+      toast.error('checkout.unexpectedError');
     }
   };
 

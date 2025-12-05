@@ -14,7 +14,7 @@ const EditButton = ({
   isHost,
 }: EditButtonProps): JSX.Element | null => {
   const t = useTranslations('tasks');
-  console.log('EditButton render, isHost =', isHost);
+
   if (!isHost) return null;
 
   const handleClick = (): void => {
