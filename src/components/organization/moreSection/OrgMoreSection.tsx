@@ -12,7 +12,7 @@ export const OrgMoreSection = ({ info }: { info?: string }): JSX.Element => {
       {!info ? (
         <EmptyContent>{t('noInfo')}</EmptyContent>
       ) : (
-        // ---------change this code ------
+        // TODO ----------------
         <p className="whitespace-pre-line">{info}</p>
         // ----------------------
       )}

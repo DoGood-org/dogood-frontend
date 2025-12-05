@@ -1,9 +1,10 @@
+import { useOrgSectionTitle } from '@/hooks/useOrgSectionTitle';
+import { isAdminOrModerator, Role } from '@/lib/getUserRole';
+import { UserOrganization } from '@/types';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { JSX } from 'react';
 import { Plus } from '@/components/icons';
-import { Role } from '@/lib/getUserRole';
-import { UserOrganization } from '@/types';
 import { Button } from '@/components/ui/Button';
 
 export const OrgMemberSection = ({
@@ -15,11 +16,8 @@ export const OrgMemberSection = ({
 }): JSX.Element => {
   const t = useTranslations('organization');
 
-  const adminRole = role === 'ADMIN' || role === 'MODERATOR';
-
-  const title = adminRole
-    ? `${t('members.title')}`
-    : `${t('members.userTitle')}`;
+  const adminRole = isAdminOrModerator(role);
+  const title = useOrgSectionTitle(role, 'members');
 
   const activeMembers = members.filter((member) => member.status === 'ACTIVE');
 
@@ -34,14 +32,14 @@ export const OrgMemberSection = ({
           >
             <Link href="/tasks" className="text-white">
               <Plus className="size-5 fill-current" />
-              {t('members.addMember')}
+              {t('members.addMemberButton')}
             </Link>
           </Button>
         )}
       </div>
 
       {
-        // ---------change this code ------
+        // TODO ---------------
         <>
           <p>Count of members - {activeMembers.length}</p>
           <ul>

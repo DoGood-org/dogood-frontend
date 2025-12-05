@@ -1,7 +1,7 @@
 import { UserOrganization } from '@/types';
 import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
-import { EmptyContent } from '../EmptyContent';
+import { EmptyContent } from '@/components/organization/EmptyContent';
 
 export const OrgJoinRequestSection = ({
   members,
@@ -21,7 +21,7 @@ export const OrgJoinRequestSection = ({
       {!!pendingMembers.length ? (
         <EmptyContent>{t('noRequest')}</EmptyContent>
       ) : (
-        // ---------change this code ------
+        //TODO -------------------
         <p>Count of members - {pendingMembers.length}</p>
         // ----------------------
       )}

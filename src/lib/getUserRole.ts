@@ -14,3 +14,8 @@ export const getUserRole = (members: UserOrganization[]): Role => {
     return userRole;
   }
 };
+
+export const isAdminOrModerator = (role: Role): boolean => {
+  const adminRole = role === 'ADMIN' || role === 'MODERATOR';
+  return adminRole;
+};

@@ -3,8 +3,8 @@
 import { OrganizationDetailedProps } from '@/types';
 import { JSX } from 'react';
 import { Section } from '@/components/ui/Section';
-import { OrganizationDesc } from './OrganizationDesc';
-import { OrganizationContent } from './OrganizationContent';
+import { OrganizationDesc } from '@/components/organization/OrganizationDesc';
+import { OrganizationContent } from '@/components/organization/OrganizationContent';
 
 export const OrganizationLayout = ({
   organization,
