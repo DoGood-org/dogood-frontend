@@ -13,16 +13,10 @@ const CubeTransparent = (props: SVGProps<SVGSVGElement>) => (
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
-      clipPath="url(#prefix__a)"
     >
       <path d="M27 12H12v15h15z" />
       <path d="M20 5H5v15h15zM20 5l7 7M5 5l7 7M5 20l7 7M20 20l7 7" />
     </g>
-    <defs>
-      <clipPath id="prefix__a">
-        <path fill="#fff" d="M0 0h32v32H0z" />
-      </clipPath>
-    </defs>
   </svg>
 );
 export default CubeTransparent;

@@ -1,3 +1,4 @@
+export { default as AboutHeart } from './AboutHeart';
 export { default as AboutStar } from './AboutStar';
 export { default as AmericanExpress } from './AmericanExpress';
 export { default as Animal } from './Animal';

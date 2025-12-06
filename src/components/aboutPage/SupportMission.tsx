@@ -33,7 +33,6 @@ export const SupportMission: React.FC = () => {
             </div>
           </div>
 
-          {/* GoodBot Image */}
           <div className="flex justify-end items-center w-full order-1 md:order-2 mb-4 lg:mb-0 lg:absolute lg:right-0 lg:top-0 lg:w-[490px] lg:pr-30 lg:-mt-15">
             <Image
               src={GoodBotSupport}

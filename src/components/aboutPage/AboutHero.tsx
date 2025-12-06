@@ -3,10 +3,10 @@ import Image from 'next/image';
 
 import { useTranslations } from 'next-intl';
 import PlanetDesktop from '@/assets/images/aboutPage/PlanetDesck.png';
-import Globe from '@/assets/svg/Globe.svg';
-import CubeTransparent from '@/assets/svg/CubeTransparent.svg';
-import ShieldChek from '@/assets/svg/ShieldCheck.svg';
-import ShootingStar from '@/assets/svg/ShootingStar.svg';
+import { Globe } from '@/components/icons';
+import { CubeTransparent } from '@/components/icons';
+import { ShieldCheck } from '@/components/icons';
+import { ShootingStar } from '@/components/icons';
 import { Container } from '@/components';
 import { Section } from '@/components/ui/Section';
 
@@ -14,32 +14,13 @@ export const AboutHero: React.FC = () => {
   const t = useTranslations('aboutPage');
   const aboutHeroText = t.raw('hero') as any;
 
-  const VALUES = [
-    { id: 'global', label: aboutHeroText.cards.global, icon: Globe },
-    {
-      id: 'transparent',
-      label: aboutHeroText.cards.transparent,
-      icon: CubeTransparent,
-    },
-    { id: 'trusted', label: aboutHeroText.cards.trusted, icon: ShieldChek },
-    { id: 'impact', label: aboutHeroText.cards.impact, icon: ShootingStar },
-  ];
-
-  // const isMobile = useMediaQuery('(max-width: 767px)');
-  // const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1440px)');
-
-  // const heroImage = isMobile
-  //   ? PlanetMobile
-  //   : isTablet
-  //     ? PlanetTablet
-  //     : PlanetDesktop;
-
   return (
     <Section
       withContainer={false}
       className="relative min-h-[600px] lg:min-h-[700px] bg-background-secondary dark:bg-background   flex flex-col items-center justify-center overflow-hidden  text-white"
     >
       {/* Planet Background */}
+
       <div className=" relative sm:absolute min-w-[320px] min-h-[320px] max-w-[500px] md:max-w-full inset-0 m-auto flex items-center justify-center">
         <div className=" w-full h-full">
           <Image
@@ -66,17 +47,24 @@ export const AboutHero: React.FC = () => {
         </p>
 
         {/* Value Badges */}
-        <div className="grid w-full max-w-[800px]   justify-items-center  grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-4  ">
-          {VALUES.map((value) => (
-            <div
-              key={value.id}
-              className="w-full sm:max-w-[190px] px-[24px] py-3 max-h-20 gap-2  h-full bg-(--accent-bg) rounded-[12px] text-white font-medium flex flex-col items-center justify-center"
-            >
-              <Image className="mr-2" src={value.icon} alt={value.label} />
-              {value.label}
-            </div>
-          ))}
-        </div>
+        <ul className="grid w-full max-w-[800px]   justify-items-center  grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-4  ">
+          <li className="w-full sm:max-w-[190px] px-[24px] py-3 max-h-20 gap-2  h-full bg-(--accent-bg) rounded-[12px] text-white font-medium flex flex-col items-center justify-center ">
+            <Globe className="size-8" />
+            {aboutHeroText.cards.global}
+          </li>
+          <li className="w-full sm:max-w-[190px] px-[24px] py-3 max-h-20 gap-2  h-full bg-(--accent-bg) rounded-[12px] text-white font-medium flex flex-col items-center justify-center">
+            <CubeTransparent className="size-8" />
+            {aboutHeroText.cards.transparent}
+          </li>
+          <li className="w-full sm:max-w-[190px] px-[24px] py-3 max-h-20 gap-2  h-full bg-(--accent-bg) rounded-[12px] text-white font-medium flex flex-col items-center justify-center">
+            <ShieldCheck className="size-8" />
+            {aboutHeroText.cards.trusted}
+          </li>
+          <li className="w-full sm:max-w-[190px] px-[24px] py-3 max-h-20 gap-2  h-full bg-(--accent-bg) rounded-[12px] text-white font-medium flex flex-col items-center justify-center">
+            <ShootingStar className="size-8" />
+            {aboutHeroText.cards.impact}
+          </li>
+        </ul>
       </Container>
     </Section>
   );

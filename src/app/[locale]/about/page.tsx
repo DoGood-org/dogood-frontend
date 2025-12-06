@@ -1,27 +1,22 @@
-'use client';
-import React from 'react';
-import {
-  AboutHero,
-  WhatWeDo,
-  MissionAndBelieve,
-  MeetGoodBot,
-  OurEcosystem,
-  OurTeam,
-  SupportMission,
-} from '@/app/[locale]/about';
+import { AboutPage } from '@/components/aboutPage/AboutPage';
+import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
-const AboutPage: React.FC = () => {
-  return (
-    <>
-      <AboutHero />
-      <WhatWeDo />
-      <MissionAndBelieve />
-      <MeetGoodBot />
-      <OurEcosystem />
-      <OurTeam />
-      <SupportMission />
-    </>
-  );
+interface Props {
+  params: { locale: string };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'aboutPage' });
+  return {
+    title: t('aboutData.title'),
+    description: t('aboutData.description'),
+  };
+}
+
+const AboutPageMain: React.FC = () => {
+  return <AboutPage />;
 };
 
-export default AboutPage;
+export default AboutPageMain;

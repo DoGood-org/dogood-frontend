@@ -3,6 +3,7 @@
  */
 
 export * from './ToastProvider';
+export * from './aboutPage/index';
 export * from './account/accountPage/Account';
 export * from './account/accountPage/AccountContent';
 export * from './account/accountPage/AccountContentPanel';
