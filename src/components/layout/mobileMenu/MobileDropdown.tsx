@@ -29,6 +29,7 @@ export const MobileDropdown = ({
 
   return (
     <Accordion
+      isMobileMenu
       type="single"
       collapsible
       value={openItem}

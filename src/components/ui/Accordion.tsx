@@ -4,17 +4,31 @@ import * as React from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 
 import { cn } from '@/lib/utils';
+type AccordionProps = React.ComponentPropsWithoutRef<
+  typeof AccordionPrimitive.Root
+> & {
+  isMobileMenu?: boolean;
+};
 
 function Accordion({
   children,
+  isMobileMenu = false,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Root>): React.JSX.Element {
+}: AccordionProps): React.JSX.Element {
   return (
-    <AccordionPrimitive.Root asChild {...props}>
-      <li className="list-none" data-slot="accordion">
-        {children}
-      </li>
-    </AccordionPrimitive.Root>
+    <>
+      {isMobileMenu ? (
+        <AccordionPrimitive.Root asChild {...props}>
+          <li className="list-none" data-slot="accordion">
+            {children}
+          </li>
+        </AccordionPrimitive.Root>
+      ) : (
+        <AccordionPrimitive.Root data-slot="accordion" {...props}>
+          {children}
+        </AccordionPrimitive.Root>
+      )}
+    </>
   );
 }
 
@@ -61,19 +75,12 @@ function AccordionContent({
     <AccordionPrimitive.Content
       data-slot="accordion-content"
       className={cn(
-        'origin-top transition-[transform,opacity] duration-300 ease-in-out overflow-hidden text-sm',
-        'data-[state=open]:[transform:scaleY(1)] data-[state=open]:opacity-100',
-        'data-[state=closed]:[transform:scaleY(0)] data-[state=closed]:opacity-0',
+        'overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down',
         className
       )}
       {...props}
     >
-      <div
-        style={{ willChange: 'transform, opacity' }}
-        className={cn('pt-0 pb-4 break-words')}
-      >
-        {children}
-      </div>
+      <div className={cn('pt-0 pb-4 break-words')}>{children}</div>
     </AccordionPrimitive.Content>
   );
 }
