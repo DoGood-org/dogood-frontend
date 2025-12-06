@@ -19,12 +19,7 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
   return (
     <div className="border p-4 rounded-lg bg-card flex flex-col min-h-[270px]">
       <Link href={`/tasks/${id}`}>
-        <h3
-          className="relative mb-5 text-[20px] leading-[20px] tracking-[0] 
-            after:absolute after:left-0 after:top-[1.5rem] 
-            after:h-[1px] after:bg-current after:w-0 
-            hover:after:w-full after:transition-all after:duration-300 after:ease-in-out"
-        >
+        <h3 className="relative mb-5 text-[20px] leading-[20px] tracking-[0] underline">
           {title}
         </h3>
       </Link>

@@ -42,9 +42,9 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
   const isFundraising = actionType === TaskActionType.FUNDRAISING;
 
   return (
-    <div className={`w-full flex justify-end space-x-2 ${className}`}>
+    <div className={`w-full flex justify-end lg:mb-10 ${className}`}>
       {isHost && !isFundraising && (
-        <div className="flex w-full justify-end gap-6 flex-col md:flex-row lg:gap-12">
+        <div className="flex w-full justify-end gap-2 flex-col md:flex-row lg:gap-12">
           <Button variant="primary" size="lg" onClick={openFinish}>
             {t('markAsFinished')}
           </Button>

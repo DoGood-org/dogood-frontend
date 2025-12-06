@@ -47,7 +47,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
 
   return (
     <section>
-      <div className="flex items-baseline space-x-3">
+      <div className="flex items-baseline flex-wrap space-x-3">
         <h2 className="text-lg mb-5 pr-5">{task.title}</h2>
         <EditButton onClick={handleEdit} isHost={!!isHost} />
       </div>

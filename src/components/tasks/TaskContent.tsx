@@ -60,7 +60,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
         lng={task.lng}
         taskId={taskId}
       />
-      <div className="flex justify-between mb-6 mt-6">
+      <div className="flex justify-between mt-5">
         <TaskControlButtons
           taskId={taskId}
           actionType={task.actionType}
