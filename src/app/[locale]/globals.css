@@ -218,7 +218,6 @@ html {
   font-size: var(--font-size);
   position: relative;
   min-height: 100vh;
-
   overflow: visible;
 }
 
