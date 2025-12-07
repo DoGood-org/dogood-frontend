@@ -43,13 +43,16 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
     console.log('Editing task now!');
   };
 
-  const isHost = user?.id === task.host?.id;
+  const hostId = Number(task.host?.id);
+  const isHost = !!user && user.id === hostId;
 
   return (
     <section>
-      <div className="flex items-baseline flex-wrap space-x-3">
-        <h2 className="text-lg mb-5 pr-5">{task.title}</h2>
-        <EditButton onClick={handleEdit} isHost={!!isHost} />
+      <div className="flex items-baseline flex-wrap">
+        <h2 className="text-lg mb-5">{task.title}</h2>
+        <div className="ml-auto mr-4 md:mr-8">
+          <EditButton onClick={handleEdit} isHost={isHost} />
+        </div>
       </div>
       <h3 className="text-[20px] leading-[20px] mb-5">
         {t('taskDetails.details')}:
@@ -59,14 +62,14 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
         <div className="w-[80px] h-[80px] bg-[#00c1ac]"></div>
 
         <div>
-          <div className="flex gap-4 flex-col md:flex-row md:gap-6">
-            <h3 className="mb-3 text-base">
+          <div className="flex flex-col md:flex-row md:gap-6">
+            <h3 className="mb-2 text-base">
               <span className="font-semibold">
                 {t('taskDetails.location')}:
               </span>{' '}
               {task.locationName}
             </h3>
-            <div className="flex gap-2 md:gap-4 mb-2 md:mb-6 ml-4">
+            <div className="hidden md:flex gap-2 md:gap-4 ml-5">
               {hasCoords && (
                 <Button
                   type="button"
@@ -83,7 +86,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
             </div>
           </div>
 
-          <ul className="flex gap-3">
+          <ul className="flex gap-3 items-center">
             <li>
               <Image
                 src={task.picture || '/task/no-image.png'}

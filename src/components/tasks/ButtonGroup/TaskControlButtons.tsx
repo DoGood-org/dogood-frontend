@@ -44,7 +44,7 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
   return (
     <div className={`w-full flex justify-end lg:mb-10 ${className}`}>
       {isHost && !isFundraising && (
-        <div className="flex gap-2 flex-col md:w-[488px] md:flex-row md:gap-12">
+        <div className="flex gap-2 md:gap-12 flex-col md:flex-row">
           <Button variant="primary" size="lg" onClick={openFinish}>
             {t('markAsFinished')}
           </Button>
