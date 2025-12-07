@@ -11,7 +11,6 @@ export async function loadMessages(locale: string): Promise<Messages> {
     'about',
     'map',
     'faq',
-    'footer',
     'auth',
     'donate',
     'news',
