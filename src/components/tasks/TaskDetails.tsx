@@ -59,23 +59,23 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
         <div className="w-[80px] h-[80px] bg-[#00c1ac]"></div>
 
         <div>
-          <div className="flex flex-col md:flex-row md:gap-6">
+          <div className="flex gap-4 flex-col md:flex-row md:gap-6">
             <h3 className="mb-3 text-base">
               <span className="font-semibold">
                 {t('taskDetails.location')}:
               </span>{' '}
               {task.locationName}
             </h3>
-            <div className="flex gap-2 mb-2 md:mb-6">
+            <div className="flex gap-2 md:gap-4 mb-2 md:mb-6 ml-4">
               {hasCoords && (
                 <Button
                   type="button"
                   variant="iconOnly"
                   onClick={handleShowOnMap}
-                  className="flex items-center gap-1 group"
+                  className="flex items-center gap-1 group w-0 h-0"
                 >
                   <Location className="text-[#00c1ac] transition-colors duration-300 group-hover:stroke-[#999999]" />
-                  <span className="cursor-pointer underline text-base text-[#00c1ac] transition-colors duration-300 group-hover:text-[#999999]">
+                  <span className="cursor-pointer underline text-base text-[#00c1ac]">
                     {t('taskDetails.showOnMap')}
                   </span>
                 </Button>
