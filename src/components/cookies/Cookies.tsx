@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Section } from '@/components/ui/Section';
 import { CookiesList } from './CookiesList';
 import { BackgroundImage } from './BackgroundImage';
-import BackToTopButton from './BackToTopButton';
+import { BackToTopButton } from './BackToTopButton';
 
 export const Cookies = (): JSX.Element => {
   const t = useTranslations('cookies');
@@ -15,7 +15,7 @@ export const Cookies = (): JSX.Element => {
     <Section className="pt-6 lg:pt-4">
       <BackgroundImage />
       <div className="relative">
-        <h1 className="text-lg font-light m-0 pb-[24px] md:text-[40px] md:leading-[50px] lg:text-h2-d lg:pb-[80px]">
+        <h1 className="text-[32px] leading-10 m-0 md:text-[40px] md:leading-[50px] lg:text-h2-d">
           {t('title')}
         </h1>
         <CookiesList onOpenStateChange={setAccordionOpen} />

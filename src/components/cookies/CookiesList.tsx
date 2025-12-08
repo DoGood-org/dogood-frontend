@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
 import { CookieItem } from './CookieItem';
-import { Accordion } from '../ui/Accordion';
+import { Accordion } from '@/components/ui/Accordion';
 import { Category, CookiesListProps } from '@/types/cookiesType';
 
 export const CookiesList = ({
@@ -16,7 +16,11 @@ export const CookiesList = ({
   const categories = t.raw('categories') as Category[];
 
   return (
-    <Accordion type="multiple" onValueChange={handleChange}>
+    <Accordion
+      type="multiple"
+      onValueChange={handleChange}
+      className="mt-6 lg:mt-12"
+    >
       {categories.map((category, id) => (
         <CookieItem key={id} cookieItem={category} />
       ))}
