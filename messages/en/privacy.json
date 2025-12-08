@@ -1,0 +1,352 @@
+{
+  "title": "DoGood Privacy Policy",
+  "categories": [
+    {
+      "title": "1. Introduction",
+      "description": "Welcome to DoGood’s Privacy Policy. DoGood (“we,” “us,” or “our”) is a global mutual aid platform operated from the United States (incorporated in Delaware) with users in multiple jurisdictions including the European Union. We value your privacy and are committed to protecting your personal information. This policy describes what data we collect, how we use and share it, and your rights regarding that data. We adhere to all applicable privacy laws, including the EU General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA), as well as other relevant regulations, to ensure your information is handled lawfully and transparently. By using DoGood’s services, you agree to the data practices described in this Privacy Policy."
+    },
+    {
+      "title": "2. Information We Collect",
+      "description": "We collect various types of personal data from you when you use the DoGood platform. This includes:",
+      "examples": [
+        {
+          "type": "Account Registration Data:",
+          "description": "When you create an account, we collect information such as your name, email address, and login credentials (password). If you register via Google OAuth, we receive your name and email from Google to authenticate you."
+        },
+        {
+          "type": "Geolocation Data (GoodMap):",
+          "description": "With your permission, we collect your location or general geographic area while you use our GoodMap feature for finding nearby help requests or volunteer opportunities. This may include GPS coordinates or approximate location data."
+        },
+        {
+          "type": "Volunteering Activity Data:",
+          "description": "We record details of your mutual aid and volunteering activities on the platform, such as hours contributed, achievements unlocked, rewards earned, and your user level or ranking."
+        },
+        {
+          "type": "Communications and Chat Data:",
+          "description": "We collect content of communications on DoGood. This includes messages you exchange with other users and any interactions with our AI chatbot “GoodBot.” Chat conversations with GoodBot may be processed by our AI service provider to generate responses."
+        },
+        {
+          "type": "User-Generated Content:",
+          "description": "The platform enables you to post content, such as help offers, requests, comments, and media (photos, videos). We collect and store this content along with any metadata (e.g. timestamps, location tags) associated with it."
+        },
+        {
+          "type": "NGO/Company Profile Data:",
+          "description": "If you represent an NGO or company on DoGood, we collect information for organizational profiles. This can include organization name, your role or title, contact information, and any documents or certifications you upload to verify and manage your NGO/Company account."
+        },
+        {
+          "type": "Donation and Transaction Data:",
+          "description": "When you make or receive donations or payments through DoGood (for example, contributing to causes or reimbursing expenses via Stripe or PayPal), we collect information about the transaction. This includes the amount, currency, date, and the payment method. Note: We do not collect or store full payment card numbers; financial transactions are handled securely by third-party payment processors (such as Stripe or PayPal) on our behalf."
+        },
+        {
+          "type": "Device and Analytics Data:",
+          "description": "We automatically collect certain information about the devices and browsers you use to access DoGood. This includes your device type, operating system, browser type, IP address, and browsing behavior (e.g. pages visited, features used, time stamps). We also use cookies and similar tracking technologies to collect data about your interactions with our platform (see **Cookies** below). This information helps us understand usage patterns and improve our services."
+        }
+      ],
+      "moreInfo": "We consider all of the above to be “personal data” if it relates to an identified or identifiable individual. In some cases, the data (such as content you post) may include personal information about others; by providing it, you confirm you have the right to do so. We do not knowingly collect sensitive personal data such as government ID numbers or financial account passwords, except as necessary for the services described."
+    },
+    {
+      "title": "3. Purposes of Data Use",
+      "description": "We use your personal data for the following purposes:",
+      "examples": [
+        {
+          "type": "Providing and Improving the Service:",
+          "description": "To operate DoGood’s platform and core features, including creating your account, authenticating you, displaying GoodMap locations, facilitating volunteer activities, and processing donations or rewards. We also analyze usage to improve functionality, fix bugs, and develop new features."
+        },
+        {
+          "type": "Communication:",
+          "description": "To send service-related communications such as confirmations, notifications about activity (e.g. when someone responds to your post), updates, and administrative messages. We may also send newsletters or promotional emails about new features or opportunities, but you can opt out of marketing communications at any time."
+        },
+        {
+          "type": "AI Chatbot Functionality:",
+          "description": "If you use GoodBot, your messages and questions are processed by our AI provider (OpenAI) in order to generate helpful responses. This processing is solely to provide the GoodBot service to you. We may review chatbot conversations in aggregate or for moderation to improve the AI or ensure compliance with our policies."
+        },
+        {
+          "type": "Safety and Moderation:",
+          "description": "To monitor, investigate, and enforce community guidelines and platform rules. This includes reviewing content (including messages and posts) for inappropriate behavior, fraud prevention, security threats, or illegal activities. We use automated tools and human moderators to keep the community safe."
+        },
+        {
+          "type": "Analytics and Personalization:",
+          "description": "To analyze overall user trends and metrics in order to understand how our services are used. This helps us personalize your experience (such as showing relevant local opportunities), and to improve our platform’s design and content. Data used for analytics is often aggregated or anonymized."
+        },
+        {
+          "type": "Legal and Compliance:",
+          "description": "To comply with legal obligations that apply to us, such as financial reporting requirements for donations, responding to lawful requests by public authorities, or fulfilling obligations under privacy laws. We may use personal data to enforce our Terms of Service, to protect our legal rights, and to prevent fraud or other misuse of the platform."
+        }
+      ],
+      "moreInfo": "We will not use your personal information for purposes that are incompatible with the above, unless we obtain your consent or are required or permitted by law to do so."
+    },
+    {
+      "title": "4. Legal Bases for Processing (GDPR)",
+      "description": "If you are in the European Economic Area (EEA) or United Kingdom, we only process your personal data when we have a valid legal basis under the GDPR. Depending on the context, one or more of the following bases may apply:",
+      "examples": [
+        {
+          "type": "Consent:",
+          "description": "In certain cases we rely on your consent. For example, we ask for your consent before processing your precise geolocation data for GoodMap, or before sending marketing emails. You have the right to withdraw consent at any time."
+        },
+        {
+          "type": "Performance of a Contract:",
+          "description": "Most of our data processing is to provide you with the DoGood services you requested – this is considered necessary for the performance of our contract with you. For instance, we need to process your account information, posts, and messages to run the platform and facilitate mutual aid interactions."
+        },
+        {
+          "type": "Legal Obligation:",
+          "description": "Some processing is required to comply with our legal obligations. For example, we may retain transaction records for tax and accounting purposes or disclose information if legally compelled by a court order."
+        },
+        {
+          "type": "Legitimate Interests:",
+          "description": "We may process data as needed for our legitimate interests (or those of third parties) – for example, to maintain and secure our platform, prevent fraud, improve user experience, or communicate important updates to you. When we rely on this basis, we ensure that our legitimate interests are not overridden by your data protection rights and interests. You have the right to object to processing based on legitimate interests (see Your Rights below)."
+        }
+      ],
+      "moreInfo": "We will clearly inform you when we seek your consent and when providing personal data is necessary for us to fulfill a contract with you (e.g., creating an account or processing a donation). Where we rely on legal obligations or legitimate interests, we strive to transparently explain those purposes in this Policy."
+    },
+    {
+      "title": "5. Cookies and Tracking Technologies",
+      "description": "Like most online platforms, DoGood uses cookies and similar tracking technologies (such as web beacons or local storage) to provide and improve our services. Cookies are small text files placed on your device that help us recognize you and remember your preferences.",
+      "examples": [
+        {
+          "type": "Types of Cookies We Use:",
+          "description": "We use cookies for various purposes. Some cookies are essential for the site to function (for example, to keep you logged in or enable core site features). Others are functional or preference cookies that remember your choices (such as your language or region). We also use analytics cookies to collect information about how users interact with our site, which helps us improve performance and user experience. We do not use cookies for third-party advertising or marketing on DoGood at this time, and we do not share cookie data with advertisers."
+        },
+        {
+          "type": "Why We Use Cookies:",
+          "description": "Certain cookies are necessary for security and to prevent fraudulent activity, while others help provide a smoother experience by remembering user settings. Analytics cookies allow us to gather statistical information on usage (e.g., page views, referral sources) without directly identifying any user. None of the analytics information is used to profile individual users – it is all aggregated and anonymized for improving our services. All cookies that can identify you or your device are considered personal data under GDPR, and we handle them accordingly."
+        },
+        {
+          "type": "Your Choices:",
+          "description": "When you first visit, we may ask for your consent to place non-essential cookies (particularly if you are in a region like the EU where consent is required). You can manage cookie preferences through our cookie banner or settings at any time, and you can also control cookies through your browser settings (for example, to delete or block them). Note that if you disable certain cookies, some features of DoGood may not function properly."
+        },
+        {
+          "type": "“Do Not Track” Signals:",
+          "description": "Some browsers offer a “Do Not Track” (DNT) option that allows you to signal your preference regarding tracking. Currently, our site does not respond differently to DNT signals[6]. However, we treat all users’ data in accordance with this Privacy Policy, and we do not use your data for cross-site behavioral advertising."
+        }
+      ],
+      "moreInfo": "For more details, please see our Cookie Policy (if provided separately) or contact us with any questions about our use of cookies and tracking technologies."
+    },
+    {
+      "title": "6. Data Sharing and Disclosure",
+      "description": "We do not sell your personal information to third parties for profit. However, we do share your data with certain trusted third parties in order to operate the platform and comply with the law, as described below:",
+      "examples": [
+        {
+          "type": "Service Providers:",
+          "description": "We use third-party companies to support our services with specialized functions. These service providers (processors) handle data only as necessary to perform tasks on our behalf and are bound by contractual privacy obligations. Key service providers include: "
+        },
+        {
+          "type": "Amazon Web Services (AWS):",
+          "description": "Hosting and infrastructure for our platform and media content."
+        },
+        {
+          "type": "MongoDB Atlas:",
+          "description": "Cloud database service where we store user data securely."
+        },
+        {
+          "type": "Google (OAuth):",
+          "description": "Authentication service to allow users to register/login via Google accounts (we receive your name and email from Google)."
+        },
+        {
+          "type": "Stripe and PayPal:",
+          "description": "Payment processing providers for handling donations and transactions. They receive personal data necessary to process payments (such as your name, payment method details, and transaction amount) and are PCI-DSS compliant. For example, Stripe may collect identifying and payment information to process a donation. We do not store your credit card or banking details on our servers."
+        },
+        {
+          "type": "OpenAI:",
+          "description": "AI technology provider that powers the GoodBot chatbot. User messages to GoodBot and the AI’s responses may be transmitted to OpenAI’s systems for processing. OpenAI is contractually prohibited from using these personal conversations for any purpose other than providing the service to us."
+        },
+        {
+          "type": "Other Infrastructure Partners:",
+          "description": "We rely on services like Docker (container platform), WebSocket providers for real-time features, and hosting services such as Vercel or Render for application deployment. These providers may incidentally handle personal data (e.g., in server logs or data backups) as part of running our platform."
+        },
+        {
+          "type": "Analytics and Measurement:",
+          "description": "If we use analytics tools or error-tracking services (for example, a website analytics provider or performance monitoring tool), those third parties will collect usage data such as page requests, device information, and possibly cookies or IP addresses. Any such partners are obligated to not use this data for their own purposes. (If we use Google Analytics or similar in the future, we will update this policy to reflect that and obtain any required consent.)"
+        },
+        {
+          "type": "Business Transfers:",
+          "description": "If DoGood undergoes a business transaction such as a merger, acquisition, corporate reorganization, or sale of assets, your personal data may be transferred to the successor or new owner as part of that transaction. We will ensure any such party is bound to respect your personal information in line with this policy."
+        },
+        {
+          "type": "Legal Compliance and Protection:",
+          "description": "We may disclose personal information when required by law or in response to valid legal process (e.g., subpoenas, court orders). Additionally, we may share data if we believe in good faith that it is necessary to (i) comply with a legal obligation, (ii) protect and defend our rights or property, (iii) prevent fraud or abuse of our platform, (iv) protect the safety of our users or the public, or (v) address security or technical issues."
+        },
+        {
+          "type": "With Your Consent:",
+          "description": "In cases where you explicitly consent or direct us to share information, we will do so. For example, if you link DoGood with another service or opt into a feature that involves sharing data, we will disclose your information as needed with your permission."
+        }
+      ],
+      "moreInfo": "We require any third party receiving personal data to provide an adequate level of protection for your information. Where applicable, we sign Data Processing Agreements (DPAs) with our vendors to ensure they comply with GDPR and other privacy regulations when handling user data on our behalf."
+    },
+    {
+      "title": "7. Data Storage and Security",
+      "description": "Your personal data is stored on secure servers maintained by us or our cloud service providers. In general, we store and process data in the United States, but we and our service providers (such as AWS or MongoDB) may also use servers or infrastructure in other countries where they operate data centers. We take steps to ensure that international data transfers comply with applicable laws: if you are in the EU or UK, and your data is transferred to the U.S. or another country, we rely on legal mechanisms such as the European Commission’s Standard Contractual Clauses or other safeguards to protect your information.",
+      "content": "We employ industry-standard security measures to protect your personal data against unauthorized access, loss, or alteration. This includes the use of encryption (HTTPS/TLS) for data in transit, encryption at rest for sensitive databases, firewalls, and access controls to limit who within our team and our vendors can access your information. We also regularly monitor for potential vulnerabilities and attacks. Despite our efforts, please note that no method of transmission over the Internet or electronic storage is completely secure. We cannot guarantee absolute security of your data, as no system is 100% infallible. You are responsible for keeping your account credentials (passwords, OAuth tokens) confidential and we recommend that you use a unique, strong password and enable two-factor authentication if available.",
+      "moreInfo": "If we become aware of a data breach that affects your personal information, we will notify you and the relevant authorities as required by law."
+    },
+    {
+      "title": "8. Data Retention",
+      "description": "We retain personal data only for as long as necessary to fulfill the purposes described in this Privacy Policy, unless a longer retention period is required or permitted by law. This means, for example:",
+      "examples": [
+        {
+          "type": "Account Data:",
+          "description": "Account information and profile data are kept as long as your account is active. If you choose to delete your account, we will delete or anonymize your personal data within a reasonable period, except for information we are required to keep by law or for legitimate business needs."
+        },
+        {
+          "type": "User Content:",
+          "description": "Content you post (offers, requests, comments) and volunteering records may remain visible to other users unless you delete them or delete your account. Even after deletion, some data may persist in backups or archived copies for a short period."
+        },
+        {
+          "type": "Donations/Transactions:",
+          "description": "Donation and transaction records are retained to comply with financial regulations and audit requirements."
+        },
+        {
+          "type": "Messages and Chats:",
+          "description": "Chatbot conversations and user messages are typically stored for a limited duration to support user experience and moderation, then either deleted or anonymized, unless needed longer for safety investigations."
+        },
+        {
+          "type": "Analytics Logs:",
+          "description": "Analytics and log data are retained for internal analysis and security monitoring, generally for a shorter period unless required for site integrity (we might keep critical security logs longer)."
+        }
+      ],
+      "moreInfo": "When we have no ongoing legitimate need or legal obligation to process your personal data, we will either delete it or aggregate/anonymize it so it can no longer be linked to you. If deletion is not immediately possible (for example, because the data is stored in backups), we will securely store and isolate it until deletion is feasible."
+    },
+    {
+      "title": "9. Your Privacy Rights",
+      "description": "Depending on where you reside, you have certain rights regarding your personal information. DoGood is committed to honoring the rights of users under applicable privacy laws, including GDPR for EU residents and CCPA for California residents."
+    },
+    {
+      "title": "9.1 Rights of Individuals in the European Union (GDPR)",
+      "description": "If you are located in the European Economic Area (EEA) or a jurisdiction with similar data protection laws, you have the following rights under the GDPR:",
+      "examples": [
+        {
+          "type": "Right to Be Informed:",
+          "description": "You have the right to be informed about the collection and use of your personal data. This Privacy Policy is intended to provide you with that information."
+        },
+        {
+          "type": "Right of Access:",
+          "description": "You can request confirmation of whether we are processing your personal data and obtain a copy of the data we hold about you, as well as additional information about how your data is used."
+        },
+        {
+          "type": "Right to Rectification:",
+          "description": "If any personal data we have is inaccurate or incomplete, you have the right to have it corrected or updated."
+        },
+        {
+          "type": "Right to Erasure:",
+          "description": "You have the right to request deletion of your personal data in certain circumstances (also known as the “right to be forgotten”). We will erase your information upon request if it’s no longer needed for the purposes for which it was collected or if you withdraw consent, subject to some exceptions (for example, we might retain data if required by law)."
+        },
+        {
+          "type": "Right to Restrict Processing:",
+          "description": "You can ask us to restrict or suspend the processing of your personal data in certain scenarios—for instance, if you contest the data’s accuracy or object to our processing."
+        },
+        {
+          "type": "Right to Data Portability:",
+          "description": "You have the right to receive your personal data in a structured, commonly used, machine-readable format and to have that data transmitted to another controller where technically feasible. This applies to data you provided to us and that we process by automated means based on your consent or to fulfill a contract."
+        },
+        {
+          "type": "Right to Object:",
+          "description": "You may object to our processing of your personal data when it is based on legitimate interests, including any profiling, or if we were to use your data for direct marketing. If you object, we will cease processing your data for that purpose unless we have compelling legitimate grounds or it is needed for legal claims."
+        },
+        {
+          "type": "Rights Related to Automated Decision-Making:",
+          "description": "DoGood does not make any decisions about you that have legal or similarly significant effects solely by automated means, without human involvement. You have the right not to be subject to such decisions under GDPR Article 22. (Our GoodBot AI may provide answers or guidance, but it does not make binding decisions about your rights or access to services.)"
+        },
+        {
+          "type": "Right to Withdraw Consent:",
+          "description": "If we rely on your consent to process data, you can withdraw that consent at any time, without affecting the lawfulness of processing based on consent before its withdrawal."
+        },
+        {
+          "type": "Right to Complaint:",
+          "description": "If you believe we have infringed your data protection rights, you have the right to lodge a complaint with a supervisory data protection authority in your EU country of residence."
+        }
+      ]
+    },
+    {
+      "title": "9.2 Rights of California Residents (CCPA/CPRA)",
+      "description": "If you are a California resident, you have specific rights under the California Consumer Privacy Act (CCPA), as amended by the California Privacy Rights Act (CPRA). These include:",
+      "examples": [
+        {
+          "type": "Right to Know:",
+          "description": "You can request that we disclose the categories and specific pieces of personal information we have collected about you, the categories of sources of that information, the purpose for collecting it, and the categories of third parties with whom we share it. This is similar to an access request and covers the 12-month period preceding your request."
+        },
+
+        {
+          "type": "Right to Delete:",
+          "description": "You have the right to request that we delete personal information we have collected from you (with certain exceptions). Once we verify a deletion request, we will delete your personal data from our records and direct our service providers to do the same, unless an exception applies. Exceptions: The CCPA allows us to retain certain data, for example, to complete transactions you requested, detect security incidents, comply with legal obligations, or other purposes permitted by law."
+        },
+        {
+          "type": "Right to Correct:",
+          "description": "You have the right to request that we correct inaccurate personal information that we hold about you (taking into account the nature of the information and purpose of processing). We will update your data upon verification of your request."
+        },
+        {
+          "type": "Right to Opt-Out of Sale or Sharing:",
+          "description": "You can direct us not to sell your personal information to third parties. However, as noted above, DoGood does not sell personal data and has not sold any personal information in the past 12 months. We also do not share your personal information for cross-context behavioral advertising. Because we do not sell or share personal data in this way, we do not offer a “Do Not Sell or Share My Personal Information” link at this time."
+        },
+        {
+          "type": "Right to Limit Use of Sensitive Personal Information:",
+          "description": "If we collect any information deemed “sensitive” under California law (for example, precise geolocation or certain financial information), you have the right to limit our use or disclosure of that sensitive information to only what is necessary to perform the services or provide the goods. (At present, we do not use sensitive personal information for purposes beyond what is necessary to provide our services.)"
+        },
+        {
+          "type": "Right to Non-Discrimination:",
+          "description": "We will not discriminate against you for exercising any of your CCPA rights. This means, for example, we will not deny you our services, charge you a different price, or provide a different level of service just because you exercised your privacy rights."
+        }
+      ]
+    },
+    {
+      "title": "9.3 Exercising Your Access and Deletion Rights",
+      "description": "To exercise any of your applicable privacy rights or to make a request (whether under GDPR, CCPA, or other privacy laws):",
+      "examples": [
+        {
+          "type": "How to Contact Us:",
+          "description": "Please submit your request by emailing us at **privacy@dogood.com** (or using an online request form if we provide one). Include your name and the email associated with your DoGood account, and clearly describe the right you wish to exercise (for example, “request a copy of my data” or “delete my account data”)."
+        },
+        {
+          "type": "Verification:",
+          "description": "For your security, we will need to verify your identity before processing certain requests (such as access or deletion requests). We may ask you to provide additional information that matches our records (like confirming your email or recent activity) to ensure you are the account holder or an authorized agent. Authorized agents may make requests on behalf of California residents, but we will require proof of the authorization and still verify the user’s identity as required by law."
+        },
+        {
+          "type": "Response Time:",
+          "description": "We will respond to privacy rights requests within the timeframes required by law. Under GDPR, we generally respond within one month. Under CCPA, we will confirm receipt of your request within 10 days anчd aim to fulfill verified requests within 45 days (with an extension of an additional 45 days if reasonably necessary, in which case we will inform you of the delay)"
+        },
+        {
+          "type": "No Fee Required:",
+          "description": "We will not charge you a fee for exercising your rights. However, if a request is manifestly unfounded or excessive, we may decline or charge a reasonable fee as permitted by law."
+        },
+        {
+          "type": "Additional Rights:",
+          "description": "If you reside in other regions (for example, other U.S. states with privacy laws, or countries with their own data protection laws), you may have similar rights to access, correct, or delete your data. We will endeavor to honor all legitimate requests in accordance with applicable law."
+        }
+      ]
+    },
+    {
+      "title": "10. Children’s Privacy",
+      "description": "Our services are not directed to individuals under the age of 13, and we do not knowingly collect personal information from children under 13. If you are under 13, please do not use DoGood or provide any personal data. In the event we learn that we have collected personal information from a child under 13 without parental consent, we will take steps to delete that information promptly, in compliance with the U.S. Children’s Online Privacy Protection Act (COPPA). If you believe a child under 13 may have provided us with personal data, please contact us so that we can investigate and delete it.",
+      "content": "If our platform is used by minors aged 13 to 16 (for example, a teenager volunteering), we expect that they do so with the consent and supervision of a parent or guardian as required by applicable law. California residents under 16 years old have the right to opt-in (with parental consent if under 13) before any “sale” of their personal data, but as noted, DoGood does not sell personal data of any users[33]."
+    },
+    {
+      "title": "11. International Data Transfers",
+      "description": "DoGood is accessible to users around the world. When you use our services, your personal data may be transferred to or stored in countries other than your own, including the United States. We take steps to ensure that appropriate safeguards are in place for these transfers. For users in the EU or other regions with data transfer restrictions, this means that we rely on legal mechanisms such as Standard Contractual Clauses approved by the European Commission, or we operate under an adequacy decision where applicable, to ensure an equivalent level of data protection. You acknowledge that your data will be processed in countries which may have data protection laws different from those in your home country, but we will always protect your information as described in this Policy."
+    },
+    {
+      "title": "12. Updates to this Privacy Policy",
+      "description": "We may update or modify this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. If we make material changes, we will notify users by email or by posting a prominent notice on our site prior to the change becoming effective, in accordance with applicable laws. The “last updated” date at the end of this Policy indicates when the latest changes were made. We encourage you to review this Policy periodically to stay informed about how we protect your information. Your continued use of DoGood after any changes signifies your acceptance of the updated terms of the Privacy Policy."
+    },
+    {
+      "title": "13. Jurisdiction and Governing Law",
+      "description": "This Privacy Policy and any disputes related to it or to our handling of personal data are governed by the laws of the State of Delaware, USA, except to the extent that other local laws take precedence (such as applicable data protection laws for EU residents). By using DoGood, you acknowledge that any legal proceedings concerning this Policy shall fall under the jurisdiction of the courts located in Delaware, unless otherwise required by law. We operate in compliance with U.S. federal and state privacy regulations, as well as international laws like GDPR for our EU users. In case of any conflict between such laws, we will endeavor to honor the more protective requirements that apply to the given situation."
+    },
+    {
+      "title": "14. Contact Information",
+      "description": "If you have any questions, concerns, or requests regarding this Privacy Policy or your personal data, please contact us:",
+      "contacts": [
+        {
+          "type": "Email:",
+          "description": "privacy@dogood.com"
+        },
+        {
+          "type": "Postal Mail:",
+          "description": "DoGood, Inc., 123 Example Street, Wilmington, DE 19801, USA"
+        },
+        {
+          "type": "Attn:",
+          "description": "Privacy Officer / Data Protection Officer (DPO)"
+        }
+      ],
+      "moreInfo": "We will do our best to address any issue and respond promptly. If you are an EU resident and need to contact our EU representative or Data Protection Officer, please reach out to us at the above email and we will provide you with the appropriate contact information."
+    }
+  ]
+}

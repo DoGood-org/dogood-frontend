@@ -3,7 +3,8 @@ export type Category = {
   description: string | Example[];
   examples?: Example[];
   moreInfo?: string;
-  components: ComponentsProps[];
+  components?: ComponentsProps[];
+  contacts?: Example[];
 };
 
 export type Example = {
