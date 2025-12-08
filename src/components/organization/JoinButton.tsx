@@ -57,11 +57,15 @@ export const JoinButton = ({ orgId }: { orgId: string }): JSX.Element => {
                 <Button
                   onClick={handleUndoRequest}
                   variant="secondary"
-                  className="px-6 px-3"
+                  className="px-6 py-3"
                 >
                   {t('undoRequest')}
                 </Button>
-                <Button onClick={handleOnClose} className="px-6 px-3">
+                <Button
+                  variant="primary"
+                  onClick={handleOnClose}
+                  className="px-6 py-3"
+                >
                   {t('done')}
                 </Button>
               </div>
