@@ -24,7 +24,7 @@ export const CookieItem = ({
   return (
     <AccordionItem key={title} value={title} className="mb-2">
       <AccordionTrigger className="group text-start block">
-        <h2 className="text-[20px] leading-6 md:text-h2-m">{title}</h2>
+        <h2 className="text-[20px] leading-6 md:text-h2-m mr-4">{title}</h2>
         <div className="flex gap-2 items-center">
           <hr className="w-full border-t-1 md:border-t-2 border-foreground" />
           <CaretDown
