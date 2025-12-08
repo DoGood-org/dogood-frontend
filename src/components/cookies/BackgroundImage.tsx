@@ -22,20 +22,22 @@ export const BackgroundImage = (): JSX.Element => {
       : bgDesktopLight;
 
   return (
-    <div className="fixed inset-0 top-[103px] md:top-[133px] lg:top-[200px]">
+    <div className="fixed inset-0 top-[103px] md:top-[133px] lg:top-[200px] w-full">
       <Image
         src={backgroundImage}
         alt="Cookie background dark"
         fill
+        sizes="(min-width: 1440px) 100vw, (min-width: 768px) 100vw, 100vw"
         priority
-        className="object-cover object-top hidden dark:block"
+        className="object-cover object-top hidden dark:block w-full"
       />
       <Image
         src={backgroundImageLight}
         alt="Cookie background light"
         fill
+        sizes="(min-width: 1440px) 100vw, (min-width: 768px) 100vw, 100vw"
         priority
-        className="object-cover object-top dark:hidden"
+        className="object-cover object-top dark:hidden w-full"
       />
     </div>
   );
