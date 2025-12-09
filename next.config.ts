@@ -28,18 +28,6 @@ const nextConfig: NextConfig = {
     ],
   },
   compress: true,
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: '/auth/:path*',
-  //       destination: '/api/auth/:path*',
-  //     },
-  //     {
-  //       source: '/proxy/:path*',
-  //       destination: '/api/proxy/:path*',
-  //     },
-  //   ];
-  // },
 };
 
 const withNextIntl = createNextIntlPlugin();
