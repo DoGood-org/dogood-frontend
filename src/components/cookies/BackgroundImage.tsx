@@ -22,7 +22,7 @@ export const BackgroundImage = (): JSX.Element => {
       : bgDesktopLight;
 
   return (
-    <div className="absolute inset-0 top-[103px] md:top-[133px] lg:top-[200px] w-full">
+    <div className="absolute inset-0 top-[103px] md:top-[133px] lg:top-[200px] w-full overflow-hidden">
       <Image
         src={backgroundImage}
         alt="Cookie background dark"
