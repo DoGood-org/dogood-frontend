@@ -134,8 +134,8 @@
           "description": "Hosting und Infrastruktur für unsere Plattform und Medieninhalte."
         },
         {
-          "type": "MongoDB Atlas:",
-          "description": "Cloud-Datenbankdienst, in dem wir Nutzerdaten sicher speichern."
+          "type": "PostgreSQL, Prisma & PostGIS:",
+          "description": "Wir verwenden eine PostgreSQL-Datenbank, die über Prisma verwaltet wird und mit der PostGIS-Erweiterung ergänzt ist, um Geodaten sicher und effizient zu verarbeiten."
         },
         {
           "type": "Google (OAuth):",
