@@ -12,12 +12,9 @@ type Props = {
   newPassword?: string;
 };
 
-export default function ResetPasswordClient({
-  token,
-  locale,
-}: Props): JSX.Element {
+export default function ResetPasswordClient({ token }: Props): JSX.Element {
   const router = useRouter();
-  const { resetPassword, status } = authStore();
+  const { resetPassword } = authStore();
 
   return (
     // <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3">
