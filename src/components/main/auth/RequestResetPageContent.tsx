@@ -5,7 +5,7 @@ import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
 import { JSX, useEffect, useState } from 'react';
 import { IAuthResponse } from '@/zustand/services/authService';
 import { VerifyViaEmail } from './VerififyViaEmail';
-import { toast, ToastContainerProps, ToastOptions } from 'react-toastify';
+import { toast, ToastOptions } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 

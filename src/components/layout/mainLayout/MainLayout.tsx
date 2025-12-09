@@ -13,7 +13,6 @@ export const MainLayoutContent = ({
   children: React.ReactNode;
 }): JSX.Element => {
   useEffect(() => {
-    console.log('Hydrating auth store with user:', user);
     const s = authStore.getState();
     if (user) {
       s.user = user;

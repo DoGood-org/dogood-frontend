@@ -290,8 +290,8 @@ export const AuthForm: React.FC<Props> = (props) => {
             variant="ghost"
             className="py-0 mt-6"
             onClick={(e) => {
-              e.stopPropagation(); // <- stops bubbling
-              e.preventDefault(); // <- optional, if you also want to block default
+              e.stopPropagation();
+              e.preventDefault();
               props.onForgotPassword?.();
             }}
           >

@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const RAW_BACKEND = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000/';
-const BACKEND = RAW_BACKEND.replace(/\/+$/, ''); // strip trailing slash
+const BACKEND = RAW_BACKEND.replace(/\/+$/, '');
 
 async function handler(
   req: NextRequest,

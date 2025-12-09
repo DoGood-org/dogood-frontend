@@ -100,47 +100,6 @@ export const LoginPageContent: React.FC = () => {
             />
           </motion.div>
         )}
-        {/* {step === 'forgotPasswordEnterEmail' && (
-          <motion.div
-            key="forgotPasswordEnterEmail"
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.18, ease: 'easeOut' }}
-            layout
-            className="mt-4 w-full flex justify-center"
-          >
-            <ForgotEnterEmail
-              onSubmit={async (data) => {
-                console.log('Forgot email submitted:', data);
-                await requestToResetPassword(data.email);
-                setStep('resetPassword');
-              }}
-            />
-          </motion.div>
-        )} */}
-        {/* {step === 'resetPassword' && (
-          <motion.div
-            key="resetPassword"
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.18, ease: 'easeOut' }}
-            layout
-            className="mt-4 w-full flex justify-center"
-          >
-            <ForgotPassword
-              onSubmit={(data) => {
-                console.log('Reset password submitted:', data);
-
-                setStep(null);
-                router.replace('/login');
-              }}
-            />
-          </motion.div>
-        )} */}
       </AnimatePresence>
     </div>
   );
