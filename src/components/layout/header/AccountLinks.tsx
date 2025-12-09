@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl';
 import { AccountContentProps } from '@/types';
 import { LinkWithArrow } from '@/components';
 import { useIconComponents } from '@/hooks';
+import { toast } from 'react-toastify';
 
 export const AccountLinks: React.FC<AccountContentProps> = ({
   accountItem,
@@ -29,6 +30,7 @@ export const AccountLinks: React.FC<AccountContentProps> = ({
               <button
                 onClick={() => {
                   logout();
+                  toast.success('Logout successful');
                   onClose?.();
                 }}
                 className="flex items-center gap-3 cursor-pointer hover:text-btn-hover w-full justify-between"

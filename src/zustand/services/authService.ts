@@ -12,32 +12,6 @@ export interface IAuthResponse {
   status?: 200 | 403 | 401 | 500;
 }
 
-// interface IRegisterResponse {
-//   status?: 'success' | 'error';
-//   message: string;
-// }
-
-// interface ICurrentUser extends User {
-//   avatar: string | null;
-//   bio: string | null;
-//   birthDate: string | null;
-//   createdAt: string;
-//   email: string;
-//   gender: string | null;
-//   hostedTasks: [];
-//   isEmailVerified: true;
-//   joinedTasks: [];
-//   locationId: null;
-//   name: string;
-//   organizations: [];
-//   paymentOptions: [];
-//   phoneNumber: string | null;
-//   reviewsReceived: [];
-//   reviewsWritten: [];
-//   siteRole: string;
-//   updatedAt: string;
-//   userSettings: null;
-// }
 export interface ICurrentUserResponse {
   status?: 'success' | 'error';
   message?: string;

@@ -5,6 +5,8 @@ import type { Tlocale } from '@/types/locale';
 import { useRouter } from 'next/navigation';
 import { authStore } from '@/zustand/stores/authStore';
 import { ForgotPassword } from './ForgotPassword';
+import { IAuthResponse } from '@/zustand/services/authService';
+import { toast } from 'react-toastify';
 
 type Props = {
   token: string;
@@ -19,14 +21,13 @@ export default function ResetPasswordClient({ token }: Props): JSX.Element {
   return (
     <ForgotPassword
       onSubmit={async (data) => {
-        console.log('Reset password submitted:', data);
-        const res = await resetPassword(token, data.newPassword);
-        if (res?.ok || res.status === 200) {
-          console.log('Password reset successful, redirecting to login');
+        console.log('Reset password submitted:', data, token);
+        const res: IAuthResponse = await resetPassword(token, data.newPassword);
+        if (res.ok) {
+          toast.success('Password reset successfully');
           router.replace('/login');
         }
-
-        router.replace('/login');
+        toast.error('Failed to reset password');
       }}
     />
   );

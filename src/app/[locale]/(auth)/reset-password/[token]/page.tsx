@@ -12,7 +12,6 @@ export default async function Page({
   params,
 }: Props): Promise<React.JSX.Element> {
   const { locale, token } = await params;
-  console.log('Reset password page params:', { locale, token });
 
   return <ResetPasswordClient token={token} locale={locale} />;
 }

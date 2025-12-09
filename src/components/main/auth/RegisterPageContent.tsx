@@ -70,6 +70,7 @@ export const RegisterPageContent = (): React.ReactElement => {
             await registerCompany(
               (data as FormRegisterCompany).name,
               (data as FormRegisterCompany).email,
+
               (data as FormRegisterCompany).password,
               (data as FormRegisterCompany).companyName
             );

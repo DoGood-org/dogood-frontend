@@ -6,6 +6,7 @@ import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
 
 export const LoginPageContent: React.FC = () => {
   const router = useRouter();
@@ -57,6 +58,7 @@ export const LoginPageContent: React.FC = () => {
                 if (res?.ok || res.status === 200) {
                   const user = await currentUser({ silent: true });
                   console.log('Current user after login:', user);
+                  toast.success('Login successful');
                   return router.replace(next || '/');
                 }
                 console.log('Login response status code:', res?.status);

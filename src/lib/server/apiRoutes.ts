@@ -79,6 +79,7 @@ export const apiRoutes = {
 
   tasks: {
     list: '/task',
+    listByUser: (userId: string) => `/task/${userId}`,
     create: '/task',
     getById: (id: string | number) => `/task/${id}`,
     update: (id: string | number) => `/task/${id}`,

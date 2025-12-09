@@ -5,6 +5,8 @@ import type { Tlocale } from '@/types/locale';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { authStore } from '@/zustand/stores/authStore';
+import { toast } from 'react-toastify';
+import { IAuthResponse } from '@/zustand/services/authService';
 
 type Props = {
   code: string;
@@ -18,11 +20,16 @@ export default function VerifyEmailClient({
   const router = useRouter();
   const { verify, status } = authStore();
 
-  // 1) Call verify ONCE when component mounts / code changes
   useEffect(() => {
     (async (): Promise<void> => {
       try {
-        await verify(code);
+        const res: IAuthResponse = await verify(code);
+        console.log('Email verification result:', res);
+        if (res.ok) {
+          toast.success('Email verified successfully');
+        } else {
+          toast.error('Failed to verify email');
+        }
       } catch (e) {
         console.error('Email verification failed:', e);
       }

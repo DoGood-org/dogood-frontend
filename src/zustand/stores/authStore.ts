@@ -41,7 +41,7 @@ type TAuthState = {
     password: string,
     name: string
   ) => Promise<IAuthResponse>;
-  verify: (token: string) => Promise<void>;
+  verify: (token: string) => Promise<IAuthResponse>;
   registerCompany: (
     name: string,
     email: string,
@@ -54,7 +54,10 @@ type TAuthState = {
   refresh: () => Promise<void>;
   resendVerificationEmail: (email: string) => Promise<void>;
   requestToResetPassword: (email: string) => Promise<IAuthResponse>;
-  resetPassword: (resetToken: string, newPassword: string) => Promise<void>;
+  resetPassword: (
+    resetToken: string,
+    newPassword: string
+  ) => Promise<IAuthResponse>;
 };
 type Step =
   | null
@@ -167,10 +170,10 @@ export const authStore = create<TAuthState>()(
           return;
         }
       },
-      verify: async (token): Promise<void> => {
+      verify: async (token): Promise<IAuthResponse> => {
         try {
-          const { status } = await service.verify(token);
-          if (status === 'success') {
+          const res = await service.verify(token);
+          if (res.status === 'success') {
             set({
               isEmailVerified: true,
               status: 'authenticated',
@@ -186,8 +189,13 @@ export const authStore = create<TAuthState>()(
             isEmailVerified: false,
             beMessage: message,
           });
-          return;
+          return {
+            ok: false,
+            status: 500,
+            message: 'Verification failed',
+          };
         }
+        return { ok: true, message: 'Verification succeeded' };
       },
       currentUser: async (): Promise<ICurrentUserResponse | null> => {
         set({ status: 'loading', error: null });
@@ -253,12 +261,17 @@ export const authStore = create<TAuthState>()(
       resetPassword: async (
         resetToken: string,
         newPassword: string
-      ): Promise<void> => {
+      ): Promise<IAuthResponse> => {
         console.log('Resetting password with token:', resetToken);
         try {
-          await service.resetPassword(resetToken, newPassword);
+          return await service.resetPassword(resetToken, newPassword);
         } catch (e) {
           console.error('Reset password failed:', e);
+          return {
+            ok: false,
+            status: 500,
+            message: 'Reset password failed',
+          };
         }
       },
     }),
