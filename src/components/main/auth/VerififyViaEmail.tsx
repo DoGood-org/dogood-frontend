@@ -3,18 +3,28 @@ import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
 import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 type Props = {
   onResend: () => void;
   onWrongEmail: () => void;
   email?: string;
+  nextResendAt: number | null;
 };
 export const VerifyViaEmail: React.FC<Props> = ({
   onResend,
-  onWrongEmail,
   email,
+  nextResendAt,
 }) => {
   const t = useTranslations('auth');
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return (): void => clearInterval(id);
+  }, []);
+
+  const isDisabled = nextResendAt !== null && now < nextResendAt;
+
+  const secondsLeft = isDisabled ? Math.ceil((nextResendAt! - now) / 1000) : 0;
 
   return (
     <div
@@ -36,18 +46,18 @@ export const VerifyViaEmail: React.FC<Props> = ({
       </div>
 
       <div className="flex flex-col gap-3 md:text-[16px] font-normal w-full">
-        <Button variant="default" className="py-0" onClick={onResend}>
-          <a href="#" className="text-white ">
-            <p>{t('didntGetEmail')} </p>
-          </a>
-        </Button>
         <Button
-          variant="ghost"
-          className="py-0 m-0 justify-start w-full"
-          onClick={onWrongEmail}
+          variant="default"
+          className="py-0"
+          onClick={onResend}
+          disabled={isDisabled}
         >
           <a href="#" className="text-white ">
-            <p>{t('madeMistakeInEmail')} </p>
+            {isDisabled ? (
+              <p>{`Resend in ${secondsLeft} seconds`}</p>
+            ) : (
+              <p>{t('didntGetEmail')} </p>
+            )}
           </a>
         </Button>
       </div>
