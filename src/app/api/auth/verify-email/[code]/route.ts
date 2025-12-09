@@ -4,16 +4,17 @@ const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000/';
 
 export async function GET(
   _req: NextRequest,
-  ctx: { params: { token: string } }
+  ctx: { params: { code: string } }
 ): Promise<NextResponse> {
-  const { token } = ctx.params;
+  const { code } = await ctx.params;
 
   try {
-    console.log(`${API}verify-email/${token}`);
-    const backendRes = await fetch(`${API}verify-email/${token}`, {
+    console.log(`${API}auth/verify-email/${code}`);
+    const backendRes = await fetch(`${API}auth/verify-email/${code}`, {
       method: 'GET',
       cache: 'no-store',
     });
+    console.log('Backend response status:', backendRes.status);
 
     const ct = backendRes.headers.get('content-type') || '';
     const isJson = ct.includes('application/json');

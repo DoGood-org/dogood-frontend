@@ -59,6 +59,7 @@ export class AuthService {
     });
   };
   public verify = async (token: string): Promise<any> => {
+    console.log('AuthService verify called with token:', token);
     return await fetchFromApi(`${apiRoutes.auth.verifyEmail(token)}`, {
       method: 'GET',
     });
@@ -66,6 +67,28 @@ export class AuthService {
   public logout = async (): Promise<any> => {
     return await fetchFromApi(apiRoutes.auth.logout, {
       method: 'POST',
+    });
+  };
+  public resendVerificationEmail = async (email: string): Promise<any> => {
+    console.log('Resend verification email called for email:', email);
+    return await fetchFromApi(apiRoutes.auth.resendVerification, {
+      method: 'POST',
+      data: { email },
+    });
+  };
+  public forgotPassword = async (email: string): Promise<any> => {
+    return await fetchFromApi(apiRoutes.auth.forgotPassword, {
+      method: 'POST',
+      data: { email },
+    });
+  };
+  public resetPassword = async (
+    resetToken: string,
+    newPassword: string
+  ): Promise<any> => {
+    return await fetchFromApi(apiRoutes.auth.resetPassword(resetToken), {
+      method: 'POST',
+      data: { password: newPassword },
     });
   };
 

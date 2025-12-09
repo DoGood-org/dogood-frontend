@@ -52,13 +52,16 @@ type TAuthState = {
     silent?: boolean;
   }) => Promise<ICurrentUserResponse | null>;
   refresh: () => Promise<void>;
+  resendVerificationEmail: (email: string) => Promise<void>;
+  requestToResetPassword: (email: string) => Promise<IAuthResponse>;
+  resetPassword: (resetToken: string, newPassword: string) => Promise<void>;
 };
 type Step =
   | null
   | 'proceedToUserSpace'
   | 'proceedToLogin'
-  | 'forgotPassword'
-  | 'forgotEmail'
+  | 'resetPassword'
+  | 'forgotPasswordEnterEmail'
   | 'verification'
   | 'resendLink'
   | 'mistakeInEmail'
@@ -165,7 +168,6 @@ export const authStore = create<TAuthState>()(
         }
       },
       verify: async (token): Promise<void> => {
-        set({ status: 'loading', error: null });
         try {
           const { status } = await service.verify(token);
           if (status === 'success') {
@@ -230,6 +232,33 @@ export const authStore = create<TAuthState>()(
           // fallback: force logout if refresh fails
 
           await get().logout();
+        }
+      },
+      resendVerificationEmail: async (email: string): Promise<void> => {
+        try {
+          await service.resendVerificationEmail(email);
+        } catch (e) {
+          console.error('Resend verification email failed:', e);
+        }
+      },
+      requestToResetPassword: async (email: string): Promise<IAuthResponse> => {
+        console.log('Requesting password reset for email:', email);
+        try {
+          return await service.forgotPassword(email);
+        } catch (e) {
+          console.error('Request to reset password failed:', e);
+          throw e;
+        }
+      },
+      resetPassword: async (
+        resetToken: string,
+        newPassword: string
+      ): Promise<void> => {
+        console.log('Resetting password with token:', resetToken);
+        try {
+          await service.resetPassword(resetToken, newPassword);
+        } catch (e) {
+          console.error('Reset password failed:', e);
         }
       },
     }),

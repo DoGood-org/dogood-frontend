@@ -1,12 +1,11 @@
 'use client';
 import { AuthForm, safeNext, VerifyViaEmail } from '@/components';
-import { ForgotEnterEmail } from '@/components/main/auth/ForgotEnterEmail';
-import { ForgotPassword } from '@/components/main/auth/ForgotPassword';
+import { FormLogin } from '@/types';
 import { IAuthResponse } from '@/zustand/services/authService';
 import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 export const LoginPageContent: React.FC = () => {
   const router = useRouter();
@@ -14,7 +13,14 @@ export const LoginPageContent: React.FC = () => {
   const next = useMemo(() => safeNext(params.get('next')), [params]);
   const { step, setStep } = useAuthFlow();
   const { login, status, error, currentUser } = authStore();
-
+  const [formLogin, setFormLogin] = useState<FormLogin>({
+    email: '',
+    password: '',
+  });
+  const handleRequestToResetPassword = (): void => {
+    setStep('forgotPasswordEnterEmail');
+    router.replace('/reset-password');
+  };
   const variants: Variants = {
     initial: { opacity: 0, y: 12 },
     animate: { opacity: 1, y: 0 },
@@ -40,12 +46,13 @@ export const LoginPageContent: React.FC = () => {
           >
             <AuthForm
               type="login"
-              onForgotPassword={() => setStep('forgotEmail')}
+              onForgotPassword={() => handleRequestToResetPassword()}
               onFormSubmit={async (type, data) => {
                 const res: IAuthResponse = await login(
                   data.email,
                   data.password
                 );
+                setFormLogin({ email: data.email, password: '' });
                 console.log('Login response:', res);
                 if (res?.ok || res.status === 200) {
                   const user = await currentUser({ silent: true });
@@ -58,7 +65,7 @@ export const LoginPageContent: React.FC = () => {
                   return;
                 }
                 if (res?.status === 401) {
-                  setStep('forgotPassword');
+                  setStep('forgotPasswordEnterEmail');
                   return;
                 }
               }}
@@ -87,12 +94,13 @@ export const LoginPageContent: React.FC = () => {
                 console.log('Wrong email clicked');
                 setStep(null);
               }}
+              email={formLogin.email}
             />
           </motion.div>
         )}
-        {step === 'forgotEmail' && (
+        {/* {step === 'forgotPasswordEnterEmail' && (
           <motion.div
-            key="forgotEmail"
+            key="forgotPasswordEnterEmail"
             variants={variants}
             initial="initial"
             animate="animate"
@@ -102,16 +110,17 @@ export const LoginPageContent: React.FC = () => {
             className="mt-4 w-full flex justify-center"
           >
             <ForgotEnterEmail
-              onSubmit={(data) => {
+              onSubmit={async (data) => {
                 console.log('Forgot email submitted:', data);
-                setStep('forgotPassword');
+                await requestToResetPassword(data.email);
+                setStep('resetPassword');
               }}
             />
           </motion.div>
-        )}
-        {step === 'forgotPassword' && (
+        )} */}
+        {/* {step === 'resetPassword' && (
           <motion.div
-            key="forgotPassword"
+            key="resetPassword"
             variants={variants}
             initial="initial"
             animate="animate"
@@ -123,12 +132,13 @@ export const LoginPageContent: React.FC = () => {
             <ForgotPassword
               onSubmit={(data) => {
                 console.log('Reset password submitted:', data);
+
                 setStep(null);
                 router.replace('/login');
               }}
             />
           </motion.div>
-        )}
+        )} */}
       </AnimatePresence>
     </div>
   );
