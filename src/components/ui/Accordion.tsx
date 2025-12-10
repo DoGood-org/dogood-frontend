@@ -51,7 +51,7 @@ function AccordionTrigger({
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Trigger>): React.JSX.Element {
   return (
-    <AccordionPrimitive.Header className="flex w-full">
+    <div className="flex w-full">
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
@@ -62,7 +62,7 @@ function AccordionTrigger({
       >
         {children}
       </AccordionPrimitive.Trigger>
-    </AccordionPrimitive.Header>
+    </div>
   );
 }
 

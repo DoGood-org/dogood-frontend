@@ -13,17 +13,20 @@ import { parseRichText } from '@/lib/parsRichText';
 
 export const CookieItem = ({
   cookieItem,
+  withLine = true,
 }: {
   cookieItem: Category;
+  withLine?: boolean;
 }): JSX.Element => {
-  const { title, description, examples, moreInfo, components } = cookieItem;
+  const { title, description, examples, moreInfo, components, contacts } =
+    cookieItem;
 
   return (
     <AccordionItem key={title} value={title} className="mb-2">
       <AccordionTrigger className="group text-start block">
-        <h2 className="text-[20px] md:text-h3 ">{title}</h2>
+        <h2 className="text-[20px] leading-6 md:text-h2-m mr-4">{title}</h2>
         <div className="flex gap-2 items-center">
-          <hr className="w-full border-t-2 border-foreground" />
+          <hr className="w-full border-t-1 md:border-t-2 border-foreground" />
           <CaretDown
             className={`size-4 md:size-8 stroke-current group-data-[state=open]:rotate-180 transition-transform duration-700 size-3 translate-y-0.5 transition-transform duration-200
             `}
@@ -41,8 +44,21 @@ export const CookieItem = ({
             {examples.map((example, id) => (
               <li key={id} className="mt-8 ml-8 font-light">
                 <p className="whitespace-pre-line">
-                  <b className="font-semibold">{example.type}</b> -{' '}
+                  <b className="font-semibold mr-2">{example.type}</b>
+                  {withLine && <span className="mr-2">-</span>}
                   {parseRichText(example.description)}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+        {contacts && (
+          <ul className="list-disc mt-8">
+            {contacts.map((contact, id) => (
+              <li key={`${contact.type}-${id}`} className="ml-8 font-light">
+                <p>
+                  <strong className="font-semibold mr-2">{contact.type}</strong>
+                  {contact.description}
                 </p>
               </li>
             ))}

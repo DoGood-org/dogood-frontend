@@ -7,9 +7,9 @@ interface BackToTopButtonProps {
   show: boolean;
 }
 
-export default function BackToTopButton({
+export const BackToTopButton = ({
   show,
-}: BackToTopButtonProps): React.ReactElement | null {
+}: BackToTopButtonProps): React.ReactElement | null => {
   const t = useTranslations('cookies');
 
   if (!show) return null;
@@ -34,4 +34,4 @@ export default function BackToTopButton({
       </Button>
     </div>
   );
-}
+};
