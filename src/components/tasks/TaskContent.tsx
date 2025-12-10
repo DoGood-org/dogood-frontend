@@ -67,7 +67,6 @@ export const TaskContent: React.FC<TaskContentProps> = ({
           userParticipationStatus={userParticipationStatus}
           taskStatus={taskStatus}
           isHost={isHost}
-          className="w-[304px]"
         />
       </div>
       <OtherTasksSection tasks={otherTasksList} />

@@ -25,12 +25,12 @@ export const FinishTaskModal = ({
       isOpen={isOpen}
       onClose={onClose}
       wrapperClassName={cn(
-        'max-w-[354px] md:max-w-[574px] lg:max-w-[878px] py-10 px-8 lg:py-20 lg:px-50',
+        'max-w-[354px] md:max-w-[574px] lg:max-w-[878px] py-10 px-8 lg:py-20 lg:px-50 bg-[#696969] text-white',
         wrapperClassName
       )}
     >
       <motion.button
-        className="absolute top-4 right-4 cursor-pointer text_tag hover:text-[#696969] z-10"
+        className="absolute top-4 right-4 cursor-pointer text_tag hover:text-[#999999] z-10"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={onClose}

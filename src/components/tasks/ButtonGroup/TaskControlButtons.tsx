@@ -42,27 +42,28 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
   const isFundraising = actionType === TaskActionType.FUNDRAISING;
 
   return (
-    <div className={`w-full flex justify-end lg:mb-10 ${className}`}>
+    <div className={`w-full flex ${className}`}>
       {isHost && !isFundraising && (
-        <div className="flex gap-2 md:gap-12 flex-col md:flex-row">
+        <div
+          className="w-full flex justify-center gap-2 flex-col md:justify-end
+          md:gap-12 md:flex-row mb-20 md:mb-0"
+        >
           <Button variant="primary" size="lg" onClick={openFinish}>
             {t('markAsFinished')}
           </Button>
-          <Button variant="secondary" size="lg" onClick={() => {}}>
+          <Button
+            variant="secondary"
+            className="hover:border"
+            size="lg"
+            onClick={() => {}}
+          >
             {t('closeThisTask')}
           </Button>
-          <FinishTaskModal
-            isOpen={isFinishOpen}
-            onClose={closeFinish}
-            onConfirm={() => {
-              closeFinish();
-            }}
-          />
         </div>
       )}
 
       {isFundraising && (
-        <>
+        <div className="w-full flex justify-end mb-20 md:mb-0">
           <Button
             variant="primary"
             size="lg"
@@ -71,9 +72,15 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
           >
             {t('donateBtn')}
           </Button>
-          <DonationModal isOpen={isDonateOpen} onClose={closeDonate} />
-        </>
+        </div>
       )}
+      <FinishTaskModal
+        isOpen={isFinishOpen}
+        onClose={closeFinish}
+        onConfirm={() => closeFinish()}
+      />
+
+      <DonationModal isOpen={isDonateOpen} onClose={closeDonate} />
     </div>
   );
 };
