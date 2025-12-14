@@ -1,5 +1,4 @@
 'use client';
-import { AuthForm, safeNext, VerifyViaEmail } from '@/components';
 import { FormLogin } from '@/types';
 import { IAuthResponse } from '@/zustand/services/authService';
 import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
@@ -7,6 +6,9 @@ import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
+import { safeNext } from './safeNextPath';
+import { AuthForm } from './AuthForm';
+import { VerifyViaEmail } from './VerififyViaEmail';
 
 export const LoginPageContent: React.FC = () => {
   const router = useRouter();

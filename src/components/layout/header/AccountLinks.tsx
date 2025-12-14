@@ -3,9 +3,10 @@
 import { authStore } from '@/zustand/stores/authStore';
 import { useLocale } from 'next-intl';
 import { AccountContentProps } from '@/types';
-import { LinkWithArrow } from '@/components';
+
 import { useIconComponents } from '@/hooks';
 import { toast } from 'react-toastify';
+import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 
 export const AccountLinks: React.FC<AccountContentProps> = ({
   accountItem,
