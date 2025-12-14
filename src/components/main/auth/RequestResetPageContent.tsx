@@ -20,7 +20,7 @@ export const RequestToResetPageContent = (): JSX.Element => {
   const { step, setStep } = useAuthFlow();
   const [email, setEmail] = useState<string>('');
   const [attempts, setAttempts] = useState(0);
-  const MAX_ATTEMPTS = 2;
+  const MAX_ATTEMPTS = 4;
   const RESEND_COOLDOWN = 60_000;
 
   const [nextResendAt, setNextResendAt] = useState<number | null>(null);
@@ -55,9 +55,10 @@ export const RequestToResetPageContent = (): JSX.Element => {
                 if (res.ok) {
                   toast.success('Password reset email sent');
                   setStep('resetPassword');
+                  toast.dismiss();
                 } else {
                   const options: ToastOptions = {
-                    autoClose: 20000,
+                    autoClose: false,
                   };
 
                   toast(
@@ -67,17 +68,12 @@ export const RequestToResetPageContent = (): JSX.Element => {
                         <Button
                           className="px-2 py-1"
                           onClick={async () => {
-                            if (attempts >= MAX_ATTEMPTS) {
-                              toast.dismiss();
-                              return;
-                            }
-
+                            toast.dismiss();
                             setAttempts((x) => x + 1);
-                            await requestToResetPassword(data.email);
                           }}
-                          disabled={attempts >= MAX_ATTEMPTS}
+                          disabled={attempts === MAX_ATTEMPTS - 1}
                         >
-                          {attempts >= MAX_ATTEMPTS
+                          {attempts === MAX_ATTEMPTS - 1
                             ? 'No attempts left'
                             : 'Try again'}
                         </Button>
