@@ -4,5 +4,8 @@ export async function POST(): Promise<NextResponse> {
   ['accessToken'].forEach((n) =>
     res.cookies.set(n, '', { httpOnly: true, path: '/', maxAge: 0 })
   );
+  ['refreshToken'].forEach((n) =>
+    res.cookies.set(n, '', { httpOnly: true, path: '/', maxAge: 0 })
+  );
   return res;
 }

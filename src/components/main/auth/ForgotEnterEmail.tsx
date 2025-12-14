@@ -29,7 +29,7 @@ export const ForgotEnterEmail = ({ onSubmit }: Props): JSX.Element => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center  rounded-[10px] bg-background-secondary text-white shadow-md
+      className="flex flex-col rounded-[10px] bg-background-secondary text-white shadow-md
  p-4 w-[353px]
  md:w-[486px] md:p-10"
     >

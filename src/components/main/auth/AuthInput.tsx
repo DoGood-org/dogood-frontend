@@ -30,11 +30,11 @@ export const AuthInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
 
   return (
     <>
-      <div className="flex flex-col gap-[8px] w-full">
+      <div className="flex flex-col gap-[8px] w-full ">
         <label className=" block text-base font-normal" htmlFor={props.htmlFor}>
           {props.label}
         </label>
-        <div className="relative flex items-center">
+        <div className="relative flex items-center w-full">
           <Input
             ref={ref}
             onChange={props.onChange}
@@ -62,7 +62,7 @@ export const AuthInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
           />
           {props.iconRight && props.icon && (
             <span
-              className={`absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#696969] 
+              className={`absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#696969]
                 ${showValid || showError ? 'right-10' : 'right-3'} `}
               onClick={props.onIconClick}
             >

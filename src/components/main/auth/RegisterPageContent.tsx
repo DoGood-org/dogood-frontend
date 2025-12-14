@@ -5,6 +5,7 @@ import { AuthForm } from './AuthForm';
 import { FormRegisterCompany, FormRegisterPerson } from '@/types/authType';
 import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
 import { VerifyViaEmail } from '@/components/main/auth/VerififyViaEmail';
+import { IAuthResponse } from '@/zustand/services/authService';
 
 export const RegisterPageContent = (): React.ReactElement => {
   const { step, setStep } = useAuthFlow();
@@ -44,11 +45,14 @@ export const RegisterPageContent = (): React.ReactElement => {
               password: '',
               repeatPassword: '',
             });
-            await register(
+            const response: IAuthResponse = await register(
               (data as FormRegisterPerson).email,
               (data as FormRegisterPerson).password,
               (data as FormRegisterPerson).name
             );
+            if (response.ok) {
+              setStep('verification');
+            }
           }}
         />
       )}
@@ -66,6 +70,7 @@ export const RegisterPageContent = (): React.ReactElement => {
             await registerCompany(
               (data as FormRegisterCompany).name,
               (data as FormRegisterCompany).email,
+
               (data as FormRegisterCompany).password,
               (data as FormRegisterCompany).companyName
             );

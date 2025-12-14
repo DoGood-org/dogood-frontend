@@ -1,31 +1,29 @@
+'use client';
 import axios from 'axios';
 
-const PROXY = (): string => {
-  const appLocal = process.env.API_URL_INTERNAL;
-  const appPublic = process.env.BASE_URL;
+// const NEXT_API = '/api/'; // Next.js API routes
 
-  let app = '';
-  if (process.env.NODE_ENV === 'production') {
-    if (appPublic) app = appPublic;
-  } else {
-    app = appLocal || 'http://localhost:3000';
-  }
-
-  return app;
-};
-const BACKEND = process.env.NEXT_PUBLIC_API_URL;
-
-const guestBase = BACKEND ? `${BACKEND}` : '/api'; // public routes (login/logout/refresh/signup)
-const authBase = PROXY() ? `${PROXY()}/api/proxy` : '/api/proxy'; // protected routes via server proxy
+// const BASE_URL = process.env.BASE_URL;
+// const PROXY = () => {
+//   if (process.env.NODE_ENV === 'development') {
+//     return 'http://localhost:3000/';
+//   } else if (process.env.NODE_ENV === 'production') {
+//     return BASE_URL;
+//   }
+//   return null;
+// };
+// const BACKEND = process.env.NEXT_PUBLIC_API_URL;
+// const guestBase = BASE_URL ?? `${BASE_URL}api/`; // public routes (login/logout/refresh/signup)
+// const authBase = PROXY() ?? `${PROXY()}api/proxy`; // protected routes via server proxy
 
 const apiAuth = axios.create({
-  baseURL: authBase,
+  baseURL: '/api/proxy',
   withCredentials: true,
 });
 
 const apiGuest = axios.create({
-  baseURL: guestBase,
-  withCredentials: false,
+  baseURL: '/api/auth',
+  withCredentials: true,
 });
 
 const api = {

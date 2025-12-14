@@ -3,18 +3,28 @@ import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
 import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 type Props = {
   onResend: () => void;
   onWrongEmail: () => void;
   email?: string;
+  nextResendAt?: number | null;
 };
 export const VerifyViaEmail: React.FC<Props> = ({
   onResend,
-  onWrongEmail,
   email,
+  nextResendAt = null,
 }) => {
   const t = useTranslations('auth');
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return (): void => clearInterval(id);
+  }, []);
+
+  const isDisabled = nextResendAt !== null && now < nextResendAt;
+
+  const secondsLeft = isDisabled ? Math.ceil((nextResendAt! - now) / 1000) : 0;
 
   return (
     <div
@@ -23,8 +33,7 @@ export const VerifyViaEmail: React.FC<Props> = ({
     md:p-8  md:w-[446px] justify-center items-center text-white rounded-[10px]  shadow-md"
     >
       <div
-        className="flex flex-col w-full justify-start items-center mb-4
-      md:mb-6
+        className="flex flex-col w-full justify-start
       "
       >
         <AuthTitleSubtitle title={t('verificationRequired')} />
@@ -36,16 +45,18 @@ export const VerifyViaEmail: React.FC<Props> = ({
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 items-center  md:text-[16px] font-normal ">
-        <Button variant="ghost" className="py-0 h-full" onClick={onResend}>
-          <a href="#" className="text-[var(--text-gray)] ">
+      <div className="flex flex-col gap-3 md:text-[16px] font-normal w-full">
+        <Button
+          variant="default"
+          className="py-0"
+          onClick={onResend}
+          disabled={isDisabled}
+        >
+          {isDisabled ? (
+            <p>{`Resend in ${secondsLeft} seconds`}</p>
+          ) : (
             <p>{t('didntGetEmail')} </p>
-          </a>
-        </Button>
-        <Button variant="ghost" className="py-0 h-full" onClick={onWrongEmail}>
-          <a href="#" className="text-[var(--text-gray)] ">
-            <p>{t('madeMistakeInEmail')} </p>
-          </a>
+          )}
         </Button>
       </div>
     </div>
