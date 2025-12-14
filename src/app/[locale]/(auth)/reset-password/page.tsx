@@ -1,4 +1,4 @@
-import { RequestToResetPageContent } from '@/components';
+import { RequestToResetPageContent } from '@/components/main/auth/RequestResetPageContent';
 import { JSX } from 'react';
 
 const resetPasswordPage = (): JSX.Element => {

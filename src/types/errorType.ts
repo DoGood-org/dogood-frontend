@@ -2,7 +2,7 @@ import { routing } from '@/i18n/routing';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import enCommon from '../../messages/en/common.json';
 import enHeader from '../../messages/en/header.json';
-import enFooter from '../../messages/en/footer.json';
+// import enFooter from '../../messages/en/footer.json';
 
 export interface ButtonPanelProps {
   variantBtn1: 'primary' | 'secondary' | null | undefined;
@@ -28,5 +28,5 @@ export type AppLocale = (typeof routing.locales)[number];
 export type Messages = {
   common: typeof enCommon;
   header: typeof enHeader;
-  footer: typeof enFooter;
+  // footer: typeof enFooter;
 };
