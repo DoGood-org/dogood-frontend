@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000/';
-
-export async function GET(
-  _req: NextRequest,
-  ctx: { params: { code: string } }
-): Promise<NextResponse> {
+type Ctx = {
+  params: Promise<{ code: string }>;
+};
+export async function GET(_req: NextRequest, ctx: Ctx): Promise<NextResponse> {
   const { code } = await ctx.params;
 
   try {

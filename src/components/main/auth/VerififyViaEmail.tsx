@@ -13,7 +13,7 @@ type Props = {
 export const VerifyViaEmail: React.FC<Props> = ({
   onResend,
   email,
-  nextResendAt,
+  nextResendAt = null,
 }) => {
   const t = useTranslations('auth');
   const [now, setNow] = useState(() => Date.now());
@@ -52,13 +52,11 @@ export const VerifyViaEmail: React.FC<Props> = ({
           onClick={onResend}
           disabled={isDisabled}
         >
-          <a href="#" className="text-white ">
-            {isDisabled ? (
-              <p>{`Resend in ${secondsLeft} seconds`}</p>
-            ) : (
-              <p>{t('didntGetEmail')} </p>
-            )}
-          </a>
+          {isDisabled ? (
+            <p>{`Resend in ${secondsLeft} seconds`}</p>
+          ) : (
+            <p>{t('didntGetEmail')} </p>
+          )}
         </Button>
       </div>
     </div>
