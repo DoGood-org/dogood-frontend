@@ -1,5 +1,6 @@
 'use client';
-import { Section } from '@/components';
+
+import { Section } from '@/components/ui/Section';
 import { getHowItWorks } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import React from 'react';

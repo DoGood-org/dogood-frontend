@@ -2,13 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import * as Sentry from '@sentry/nextjs';
-import {
-  Footer,
-  Header,
-  NotFoundComponent,
-  Section,
-  ThemeInitializer,
-} from '@/components';
 import { NextIntlClientProvider } from 'next-intl';
 import { routing } from '@/i18n/routing';
 import { useParams } from 'next/navigation';
@@ -18,6 +11,11 @@ import ErrordMob from '@/assets/images/notFound/errorMob.png';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { AppLocale } from '@/types/errorType';
 import { loadMessages } from '@/i18n/request';
+import { ThemeInitializer } from '@/components/layout/theme/ThemeInitializer';
+import { Header } from '@/components/layout/header/Header';
+import { Section } from '@/components/ui/Section';
+import { NotFoundComponent } from '@/components/layout/not-found/NotFoundComponent';
+import { Footer } from '@/components/layout/footer/Footer';
 
 export default function GlobalError({
   error,

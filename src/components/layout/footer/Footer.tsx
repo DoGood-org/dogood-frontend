@@ -1,13 +1,18 @@
+'use client';
+
 import React from 'react';
 import { SocialLinks } from './SocialLinks';
-import { Container, Logo } from '@/components';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { Container } from '@/components/ui/Container';
+import { Logo } from '@/components/ui/Logo';
+import Link from 'next/link';
 
 export const Footer: React.FC = () => {
   const t = useTranslations('common');
+  const locale = useLocale();
 
   return (
-    <footer className="w-full bg-[#111215] py-[36px] lg:py-[32px] mt-auto">
+    <footer className="w-full bg-[#111215] py-[36px] lg:py-[32px] mt-auto z-100">
       <Container className="flex flex-col items-center gap-[32px] lg:flex-row lg:justify-between">
         <div>
           <Logo />
@@ -25,10 +30,31 @@ export const Footer: React.FC = () => {
           </a>
         </div>
       </Container>
-      <div className="block text-center">
-        <p className="font-normal text-[12px] lg:text-[14px] text-white">
-          © 2025 DoGood. All rights reserved.
-        </p>
+      <div className="flex flex-col lg:flex-row justify-center items-center text-center text-[12px] md:text-[14px]  text-white gap-1">
+        <div className="flex gap-1 pr-2 border-r border-white">
+          <p>© 2025 DoGood. </p>
+          <p>{t('allRights')}</p>
+        </div>
+        <div className="flex justify-center">
+          <Link
+            href={`/${locale}/privacy`}
+            className="block border-r border-white px-2 hover:text-btn-hover focus:text-btn-hover active:text-btn-active"
+          >
+            {t('privacy')}
+          </Link>
+          <Link
+            href={`/${locale}/terms`}
+            className="block border-r border-white px-2 hover:text-btn-hover focus:text-btn-hover active:text-btn-active"
+          >
+            {t('terms')}
+          </Link>
+        </div>
+        <Link
+          href={`/${locale}/cookies`}
+          className="pl-2 hover:text-btn-hover focus:text-btn-hover active:text-btn-active"
+        >
+          {t('cookies')}
+        </Link>
       </div>
     </footer>
   );

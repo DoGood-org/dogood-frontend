@@ -1,15 +1,5 @@
 'use client';
 
-import {
-  LocationSelect,
-  Section,
-  SelectField,
-  DatePicker,
-  Textarea,
-  ImageUploadWithPreview,
-  Label,
-} from '@/components';
-import { Button } from '@/components';
 import { Controller, Resolver, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -21,13 +11,22 @@ import {
   settingsSchema,
 } from '@/lib/validation/settingsSchema';
 import { useTranslations } from 'next-intl';
-import { InputField } from '@/components';
 import { cardPreviewService } from '@/services/cardPreviewService';
 import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
-import { sendProfile } from '@/services/settingService';
+import { sendProfile } from '@/services/profileUserService';
 import { toast } from 'react-toastify';
-import { deleteFromCloudinary, isCloudinaryUrl } from '@/lib/cloudinary';
+import { deleteFromCloudinary } from '@/services/cloudinary';
 import { lazyImport } from '@/lib/lazyImport';
+
+import { Section } from '@/components/ui/Section';
+import { Textarea } from '@/components/ui/Textarea';
+import { Button } from '@/components/ui/Button';
+import { Label } from '@/components/ui/Label';
+import { InputField } from './InputField';
+import { DatePicker } from './DatePicker';
+import { SelectField } from './SelectField';
+import { ImageUploadWithPreview } from './ImageUploadWithPreview';
+import { LocationSelect } from './LocationSelect';
 
 const PaymentList = lazyImport(
   () => import('@/components/account/settingsPage/PaymentList'),
@@ -44,8 +43,6 @@ export const Settings = (): React.JSX.Element => {
   const [image, setImage] = useState<any>(null);
   const t = useTranslations('settings');
   const oldAvatarRef = useRef<string>('');
-  const f = useTranslations('faq');
-  const downText = (f.raw('downtext') as any[])[0];
   const {
     register,
     handleSubmit,
@@ -121,62 +118,13 @@ export const Settings = (): React.JSX.Element => {
     const oldAvatar = oldAvatarRef.current;
     const newAvatar = data.avatar;
 
-    try {
-      const response = await sendProfile({
-        name: data.name,
-        bio: data.bio,
-        avatar: data.avatar,
-        location: data.location
-          ? {
-              country: selectedCountryObj?.name || data.location.country,
-              region: selectedStateObj?.name || data.location.region,
-              city: data.location.city,
-            }
-          : undefined,
-        gender: data.gender,
-        birthDate: data.birthDate
-          ? format(data.birthDate, 'yyyy-MM-dd')
-          : undefined,
-        phoneNumber: data.phoneNumber || undefined,
-        paymentOptionIds:
-          paymentOptionIds.length > 0 ? paymentOptionIds : undefined,
-      });
-
-      if (response?.status === 'success') {
-        if (
-          oldAvatar &&
-          oldAvatar !== newAvatar &&
-          isCloudinaryUrl(oldAvatar)
-        ) {
-          try {
-            const deleteResult = await deleteFromCloudinary(oldAvatar);
-            console.log('Delete result:', deleteResult);
-
-            if (deleteResult.error) {
-              console.warn('Failed to delete old avatar:', deleteResult.error);
-            } else {
-              console.log('Old avatar successfully deleted from Cloudinary');
-            }
-          } catch (deleteError) {
-            console.warn('Error deleting old avatar:', deleteError);
-          }
-        }
-
-        oldAvatarRef.current = data.avatar || '';
-        toast.success(downText.success);
-        reset();
-      } else {
-        toast.error(response?.message || downText.error);
-      }
-    } catch (_error: unknown) {
-      toast.error(downText.error);
-      console.error('Contact form submit error:', _error);
+    if (oldAvatar && oldAvatar !== newAvatar) {
+      await deleteFromCloudinary(oldAvatar);
     }
-
-    console.log('Form submitted:', {
-      fullName: data.name,
+    const response = await sendProfile({
+      name: data.name,
       bio: data.bio,
-      avatar: image?.secure_url || data.avatar,
+      avatar: data.avatar,
       location: data.location
         ? {
             country: selectedCountryObj?.name || data.location.country,
@@ -188,8 +136,18 @@ export const Settings = (): React.JSX.Element => {
       birthDate: data.birthDate
         ? format(data.birthDate, 'yyyy-MM-dd')
         : undefined,
-      phoneNumber: data.phoneNumber,
+      phoneNumber: data.phoneNumber || undefined,
+      paymentOptionIds:
+        paymentOptionIds.length > 0 ? paymentOptionIds : undefined,
     });
+
+    if (response.ok) {
+      toast.success(t('success'));
+    } else {
+      toast.error(t('error'));
+    }
+    oldAvatarRef.current = data.avatar || '';
+    reset();
   };
 
   const onReset = (): void => {
@@ -211,10 +169,6 @@ export const Settings = (): React.JSX.Element => {
   useEffect(() => {
     return (): void => {
       cardPreviewService.cleanupUnattachedCard();
-
-      if (oldAvatarRef.current && isCloudinaryUrl(oldAvatarRef.current)) {
-        deleteFromCloudinary(oldAvatarRef.current).catch(console.warn);
-      }
     };
   }, []);
 

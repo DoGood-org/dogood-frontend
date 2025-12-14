@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { IReviewsSuccessContent } from '@/types/userReviewsType';
 
-const ReviewsSuccessContent: React.FC<IReviewsSuccessContent> = ({
+export const ReviewsSuccessContent: React.FC<IReviewsSuccessContent> = ({
   setIsOpen,
 }): React.JSX.Element => {
   const t = useTranslations('reviews');
@@ -24,5 +24,3 @@ const ReviewsSuccessContent: React.FC<IReviewsSuccessContent> = ({
     </div>
   );
 };
-
-export default ReviewsSuccessContent;

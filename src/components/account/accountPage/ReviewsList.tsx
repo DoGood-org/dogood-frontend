@@ -1,6 +1,8 @@
 import { JSX } from 'react';
 import { ReviewListProps } from '@/types';
-import { NoReviews, ReviewItem, Slider } from '@/components';
+import { Slider } from '@/components/ui/Slider';
+import { NoReviews } from '@/components/account/accountPage/NoReviews';
+import { ReviewItem } from '@/components/account/accountPage/ReviewItem';
 
 export const ReviewsList = ({ reviews }: ReviewListProps): JSX.Element => {
   if (!reviews || reviews.length === 0) {

@@ -11,6 +11,7 @@
   "seeProfile": "See Profile",
   "sendReview": "Send Review",
   "success": "You've successfully leave review!",
+  "error": "Failed to send review. Please try again later.",
   "backBtn": "Go home",
   "reviewBtn": "Leave another review"
 }

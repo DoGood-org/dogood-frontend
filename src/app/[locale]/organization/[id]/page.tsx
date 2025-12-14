@@ -2,24 +2,13 @@ import type { JSX } from 'react/jsx-runtime';
 import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { OrganizationLayout } from '@/components';
-import { OrganizationDetailedProps } from '@/types';
-import { getOrganizationById } from '@/services/organizationService';
-import { cache } from 'react';
 import { notFound } from 'next/navigation';
+import { fetchOrganizationById } from '@/facades/organizationFacade';
+import { OrganizationLayout } from '@/components/organization/OrganizationLayout';
 
 interface Props {
   params: Promise<{ id: string; locale: Tlocale }>;
 }
-
-const fetchOrganizationById = cache(
-  async (id: string): Promise<OrganizationDetailedProps | null> => {
-    const organization = await getOrganizationById(id);
-
-    if (!organization) notFound();
-    return organization;
-  }
-);
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id, locale } = await params;

@@ -2,12 +2,12 @@
 
 import { JSX, useEffect, useState } from 'react';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
-import { DonationCardPreview } from '@/components';
 import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
 import { useTranslations } from 'next-intl';
 import { stripeService } from '@/services/stripeService';
-import { PaymentMethodModal } from '@/components';
 import SvgPlus from '@/components/icons/Plus';
+import { DonationCardPreview } from './DonationCardPreview';
+import { PaymentMethodModal } from './PaymentMethodModal/PaymentMethodModal';
 
 export const PaymentCardList = (): JSX.Element => {
   const [open, setOpen] = useState(false);

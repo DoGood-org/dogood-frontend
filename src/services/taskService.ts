@@ -1,4 +1,4 @@
-import { fetchFromApi } from '@/lib/apiFetcher';
+import { fetchFromApi, FetchResult } from '@/lib/apiFetcher';
 import { ITaskDetails } from '@/types/tasks.type';
 
 interface ITasksApiResponse {
@@ -7,13 +7,9 @@ interface ITasksApiResponse {
 
 export const getOtherTasksService = async (
   userId: number
-): Promise<ITaskDetails[]> => {
-  const response = await fetchFromApi<ITasksApiResponse>(
-    `/api/tasks/other/${userId}`,
-    {
-      method: 'GET',
-      auth: true,
-    }
-  );
-  return response.data || [];
+): Promise<FetchResult<ITasksApiResponse>> => {
+  return fetchFromApi<ITasksApiResponse>(`/api/tasks/other/${userId}`, {
+    method: 'GET',
+    auth: true,
+  });
 };

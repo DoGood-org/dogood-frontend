@@ -1,6 +1,6 @@
 import { Drop, Heart, Pill } from '@/components/icons';
 import { useTranslations } from 'next-intl';
-import { Section } from '../../ui/Section';
+import { Section } from '@/components/ui/Section';
 import { DonateCard } from './DonateCard';
 
 export const Donate = (): React.JSX.Element => {

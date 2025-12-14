@@ -34,6 +34,7 @@
   "category-all": "All",
   "showOnMap": "Show on map",
   "seeMoreBtn": "See more",
-  "confirmBtn": "Confirm",
-  "editBtn": "Edit"
+  "editBtn": "Edit",
+  "markAsFinished": "Mark as finished",
+  "closeThisTask": "Close this task"
 }

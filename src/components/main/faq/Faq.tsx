@@ -2,7 +2,7 @@
 
 import Line6 from '@/components/icons/Line6';
 import React from 'react';
-import { Section } from '../../ui/Section';
+import { Section } from '@/components/ui/Section';
 import { ContactForm } from './ContactForm';
 import { useTranslations } from 'next-intl';
 

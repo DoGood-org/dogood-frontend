@@ -3,23 +3,13 @@ import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
-import { getNewsById } from '@/services/newsService';
 import { notFound } from 'next/navigation';
-import { INewsItem } from '@/types';
-import { cache } from 'react';
 import { newsFormatDate } from '@/utils/newsFormatDate';
+import { fetchNewsItem } from '@/facades/newsFacade';
 
 interface Props {
   params: Promise<{ slug: string; locale: Tlocale }>;
 }
-
-const fetchNewsItem = cache(
-  async (slug: string, locale: Tlocale): Promise<INewsItem | null> => {
-    const newsItem = await getNewsById(slug, locale);
-    if (!newsItem) notFound();
-    return newsItem;
-  }
-);
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, locale } = await params;
@@ -73,7 +63,7 @@ justify-center
     >
       <h2 className="text-foreground">{t('newsItemPage.title', { title })}</h2>
       <p className="text-foreground">{newsFormatDate(createdAt)}</p>
-      <p className="text-foreground">{title}</p>
+      <h3 className="text-foreground">{title}</h3>
       <p className="mb-6">{content}</p>
       {image && (
         <Image

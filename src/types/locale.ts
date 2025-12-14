@@ -1,1 +1,1 @@
-export type Tlocale = 'uk' | 'en';
+export type Tlocale = 'de' | 'en';

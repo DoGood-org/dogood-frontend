@@ -1,5 +1,5 @@
-import { Label } from '@/components';
 import { Photo } from '@/components/icons';
+import { Label } from '@/components/ui/Label';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
 import { Dispatch, JSX, SetStateAction } from 'react';
@@ -20,14 +20,13 @@ export const ImageUploadWithPreview = ({
   <div className="space-y-2 text-center mx-auto md:ml-0">
     {label && <Label className="block text-base text-white">{label}</Label>}
 
-    <div className="relative w-[160px] h-[185px] rounded-md overflow-hidden border border-card group">
+    <div className="relative w-[225px] h-[225px] md:w-[250px] md:h-[250px] lg:w-[335px] lg:h-[335px] rounded-md overflow-hidden border border-card group">
       {image?.secure_url || defaultImage ? (
         <Image
           src={image?.secure_url || defaultImage || ''}
           alt="Upload preview"
-          className="object-cover mx-auto"
+          className="object-cover mx-auto w-[225px] h-[225px] md:w-[250px] md:h-[250px] lg:w-[335px] lg:h-[335px]"
           fill
-          sizes="w-[160px] h-[185px]"
         />
       ) : (
         <div className="w-full h-full bg-card" />

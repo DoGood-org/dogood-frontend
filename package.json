@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"node scripts/watch-barrels.mjs\" \"next dev --turbopack\" \"npm run svgr:watch\"",
+    "dev": "concurrently \"next dev --turbopack\" \"npm run svgr:watch\"",
     "build": "next build",
     "start": "next start",
     "lint": "eslint src",

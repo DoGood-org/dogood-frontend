@@ -10,9 +10,9 @@ import {
   useSwipe,
 } from '@/hooks';
 import { CarouselItem, getVisibleItems } from '@/lib/carouselUtils';
-import { Button } from '@/components';
 import { CaretDoubleRight } from '@/components/icons';
 import { useRouteMatch } from '@/hooks/useRouteMatch';
+import { Button } from './Button';
 
 export const AnimationTabs = ({
   views,
