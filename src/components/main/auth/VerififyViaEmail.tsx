@@ -8,7 +8,7 @@ type Props = {
   onResend: () => void;
   onWrongEmail: () => void;
   email?: string;
-  nextResendAt: number | null;
+  nextResendAt?: number | null;
 };
 export const VerifyViaEmail: React.FC<Props> = ({
   onResend,

@@ -89,10 +89,10 @@ export const LoginPageContent: React.FC = () => {
             className="mt-4 w-full flex justify-center"
           >
             <VerifyViaEmail
-              onResend={() => {
+              onResend={(): void => {
                 console.log('Resend verification email clicked');
               }}
-              onWrongEmail={() => {
+              onWrongEmail={(): void => {
                 console.log('Wrong email clicked');
                 setStep(null);
               }}
