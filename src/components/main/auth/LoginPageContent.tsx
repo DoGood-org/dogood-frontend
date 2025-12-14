@@ -29,8 +29,6 @@ export const LoginPageContent: React.FC = () => {
     password: '',
   });
 
-  console.log(step, status);
-
   const handleRequestToResetPassword = (): void => {
     setStep('forgotPasswordEnterEmail');
     router.replace('/reset-password');
@@ -63,7 +61,6 @@ export const LoginPageContent: React.FC = () => {
                   data.email,
                   data.password
                 );
-                console.log('login res', res);
                 setFormLogin({ email: data.email, password: '' });
                 if (res?.ok || res.status === 200) {
                   await currentUser({ silent: true });
