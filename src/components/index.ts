@@ -4,12 +4,13 @@
 
 export * from './ToastProvider';
 export * from './aboutPage/AboutHero';
-export * from './aboutPage/WhatWeDo';
-export * from './aboutPage/MissionAndBelieve';
+export * from './aboutPage/AboutPage';
 export * from './aboutPage/MeetGoodBot';
+export * from './aboutPage/MissionAndBelieve';
 export * from './aboutPage/OurEcosystem';
 export * from './aboutPage/OurTeam';
 export * from './aboutPage/SupportMission';
+export * from './aboutPage/WhatWeDo';
 export * from './account/accountPage/Account';
 export * from './account/accountPage/AccountContent';
 export * from './account/accountPage/AccountContentPanel';
