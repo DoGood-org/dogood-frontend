@@ -7,9 +7,9 @@ export interface IAuthResponse {
   data?: Record<string, unknown>;
 
   code?: string;
-  message: string;
+  errorMessage: string;
   user?: User;
-  status?: 200 | 403 | 401 | 500;
+  status?: 200 | 403 | 401 | 500 | 400;
 }
 
 export interface ICurrentUserResponse {

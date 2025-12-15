@@ -15,15 +15,25 @@ export const LoginPageContent: React.FC = () => {
   const params = useSearchParams();
   const next = useMemo(() => safeNext(params.get('next')), [params]);
   const { step, setStep } = useAuthFlow();
-  const { login, status, error, currentUser } = authStore();
+  const {
+    login,
+    status,
+    error,
+    currentUser,
+
+    resendVerificationEmail,
+    nextResendAt,
+  } = authStore();
   const [formLogin, setFormLogin] = useState<FormLogin>({
     email: '',
     password: '',
   });
+
   const handleRequestToResetPassword = (): void => {
     setStep('forgotPasswordEnterEmail');
     router.replace('/reset-password');
   };
+
   const variants: Variants = {
     initial: { opacity: 0, y: 12 },
     animate: { opacity: 1, y: 0 },
@@ -31,10 +41,6 @@ export const LoginPageContent: React.FC = () => {
   };
   return (
     <div className=" login text-foreground flex flex-col items-center justify-center w-full">
-      {status === 'apiError' && error && (
-        <p className="text-red-500">{error}</p>
-      )}
-
       <AnimatePresence mode="wait">
         {!step && (
           <motion.div
@@ -56,16 +62,16 @@ export const LoginPageContent: React.FC = () => {
                   data.password
                 );
                 setFormLogin({ email: data.email, password: '' });
-                console.log('Login response:', res);
                 if (res?.ok || res.status === 200) {
-                  const user = await currentUser({ silent: true });
-                  console.log('Current user after login:', user);
-                  toast.success('Login successful');
+                  await currentUser({ silent: true });
                   return router.replace(next || '/');
                 }
-                console.log('Login response status code:', res?.status);
+                if (res?.status === 400) {
+                  toast.error(res.errorMessage);
+                }
                 if (res?.status === 403) {
                   setStep('verification');
+                  toast.warn(res.errorMessage);
                   return;
                 }
                 if (res?.status === 401) {
@@ -91,17 +97,19 @@ export const LoginPageContent: React.FC = () => {
             className="mt-4 w-full flex justify-center"
           >
             <VerifyViaEmail
-              onResend={(): void => {
-                console.log('Resend verification email clicked');
+              onResend={async () => {
+                await resendVerificationEmail(formLogin.email);
               }}
-              onWrongEmail={(): void => {
-                console.log('Wrong email clicked');
-                setStep(null);
-              }}
+              onWrongEmail={() => setStep(null)}
               email={formLogin.email}
+              nextResendAt={nextResendAt}
             />
           </motion.div>
         )}
+        {step === 'mistakeApi' &&
+          (toast.error('An unexpected error occurred. Please try again later.'),
+          router.replace('/'),
+          null)}
       </AnimatePresence>
     </div>
   );

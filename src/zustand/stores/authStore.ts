@@ -15,6 +15,7 @@ import {
   IAuthResponse,
   ICurrentUserResponse,
 } from '@/zustand/services/authService';
+import { toast } from 'react-toastify';
 
 type Status =
   | 'idle'
@@ -58,6 +59,9 @@ type TAuthState = {
     resetToken: string,
     newPassword: string
   ) => Promise<IAuthResponse>;
+
+  nextResendAt: number | null;
+  setNextResendAt: (ts: number | null) => void;
 };
 type Step =
   | null
@@ -87,11 +91,22 @@ export const authStore = create<TAuthState>()(
       status: 'idle',
       error: null,
       beMessage: '',
+      nextResendAt: null,
+      setNextResendAt: (ts): any => set({ nextResendAt: ts }),
+
       login: async (email, password): Promise<IAuthResponse> => {
         try {
           const res = await service.login(email, password);
-          console.log('Login response from service should be short user:', res);
 
+          if (res.ok) {
+            toast.success('Login successful');
+            set({
+              status: 'authorized',
+              error: null,
+              isLoggedIn: true,
+            });
+            return res;
+          }
           return res;
         } catch (error) {
           console.error('Login failed:', error);
@@ -104,7 +119,7 @@ export const authStore = create<TAuthState>()(
           return {
             ok: false,
             status: 500,
-            message: 'Login failed',
+            errorMessage: 'Login failed',
           };
         }
       },
@@ -125,10 +140,21 @@ export const authStore = create<TAuthState>()(
 
       register: async (email, password, name): Promise<IAuthResponse> => {
         try {
-          return await service.register(email, password, name);
+          const res = await service.register(email, password, name);
+          if (!res.ok) {
+            toast.error(
+              'Sign up failed: ' + (res.errorMessage || 'Something went wrong')
+            );
+          }
+          if (res.ok) {
+            toast.success('Registration successful');
+            set({ status: 'verifying', error: null, beMessage: res.message });
+            return res;
+          }
+          return res;
         } catch (error) {
           const { message } = (error as any) || {};
-          console.error('Register failed:', error);
+          toast.error('Registration failed');
           set({
             status: 'apiError',
             error: 'Register failed',
@@ -137,7 +163,7 @@ export const authStore = create<TAuthState>()(
           return {
             ok: false,
             status: 500,
-            message: 'Register failed',
+            errorMessage: 'Register failed',
           };
         }
       },
@@ -148,20 +174,26 @@ export const authStore = create<TAuthState>()(
         password,
         organizationName
       ): Promise<void> => {
-        set({ status: 'loading', error: null });
         try {
-          const { status, message } = await service.registerCompany(
+          const res = await service.registerCompany(
             name,
             email,
             password,
             organizationName
           );
-          if (status === 'success') {
-            set({ status: 'verifying', error: null, beMessage: message });
+          if (!res.ok) {
+            toast.error(
+              'Login failed: ' + (res.errorMessage || 'Something went wrong')
+            );
+          }
+          if (res.ok) {
+            toast.success('Organization registration successful');
+            set({ status: 'verifying', error: null });
+            return;
           }
         } catch (error) {
           const { message } = (error as any) || {};
-          console.error('Register company failed:', error);
+          toast.error('Organization registration failed');
           set({
             status: 'apiError',
             error: 'Register company failed',
@@ -173,7 +205,8 @@ export const authStore = create<TAuthState>()(
       verify: async (token): Promise<IAuthResponse> => {
         try {
           const res = await service.verify(token);
-          if (res.status === 'success') {
+          if (res.ok) {
+            toast.success('Email verification successful');
             set({
               isEmailVerified: true,
               status: 'authenticated',
@@ -182,7 +215,7 @@ export const authStore = create<TAuthState>()(
           }
         } catch (error) {
           const { message } = (error as any) || {};
-          console.error('Verification failed:', error);
+          toast.error('Verification failed');
           set({
             status: 'apiError',
             error: 'Verification failed',
@@ -192,20 +225,20 @@ export const authStore = create<TAuthState>()(
           return {
             ok: false,
             status: 500,
-            message: 'Verification failed',
+            errorMessage: 'Verification failed',
           };
         }
-        return { ok: true, message: 'Verification succeeded' };
+        return { ok: true, errorMessage: 'Verification succeeded' };
       },
       currentUser: async (): Promise<ICurrentUserResponse | null> => {
         set({ status: 'loading', error: null });
         try {
-          const { data, ok } = await service.currentUser();
-          if (!ok) {
+          const res = await service.currentUser();
+          if (!res.ok) {
             throw new Error('Failed to fetch current user');
           }
 
-          const { user, status, message } = data;
+          const { user, status, message } = res;
           set({
             user: user as ICurrentUser,
             status: 'authorized',
@@ -228,9 +261,17 @@ export const authStore = create<TAuthState>()(
       },
       refresh: async (): Promise<void> => {
         try {
-          set({ status: 'refreshing', error: null });
-          await get().currentUser();
+          const res: any = await get().currentUser();
+          if (res && res.user) {
+            set({
+              status: 'authorized',
+              error: null,
+              isLoggedIn: true,
+            });
+            return;
+          }
         } catch (e: any) {
+          console.error('Token refresh failed:', e);
           set({
             status: 'apiError',
             error: e?.message ?? 'Refresh failed',
@@ -243,16 +284,34 @@ export const authStore = create<TAuthState>()(
         }
       },
       resendVerificationEmail: async (email: string): Promise<void> => {
+        const COOLDOWN_MS = 60_000;
+
+        const next = get().nextResendAt;
+        if (next && Date.now() < next) return;
+
         try {
-          await service.resendVerificationEmail(email);
+          const res = await service.resendVerificationEmail(email);
+
+          if (res.ok) {
+            toast.success('Verification email resent successfully');
+
+            set({ nextResendAt: Date.now() + COOLDOWN_MS });
+            return;
+          }
+
+          toast.error(res.errorMessage || 'Resend verification email failed');
         } catch (e) {
           console.error('Resend verification email failed:', e);
+          toast.error('Resend verification email failed');
         }
       },
       requestToResetPassword: async (email: string): Promise<IAuthResponse> => {
-        console.log('Requesting password reset for email:', email);
         try {
-          return await service.forgotPassword(email);
+          const res = await service.forgotPassword(email);
+          if (res.ok) {
+            return res;
+          }
+          return res;
         } catch (e) {
           console.error('Request to reset password failed:', e);
           throw e;
@@ -262,15 +321,20 @@ export const authStore = create<TAuthState>()(
         resetToken: string,
         newPassword: string
       ): Promise<IAuthResponse> => {
-        console.log('Resetting password with token:', resetToken);
         try {
-          return await service.resetPassword(resetToken, newPassword);
+          const res = await service.resetPassword(resetToken, newPassword);
+          if (res.ok) {
+            toast.success('Password reset successful');
+            return res;
+          }
+          return res;
         } catch (e) {
+          toast.error('Reset password failed');
           console.error('Reset password failed:', e);
           return {
             ok: false,
             status: 500,
-            message: 'Reset password failed',
+            errorMessage: 'Reset password failed',
           };
         }
       },
@@ -289,6 +353,7 @@ export const authStore = create<TAuthState>()(
       partialize: (s) => ({
         user: s.user,
         isLoggedIn: s.isLoggedIn,
+        nextResendAt: s.nextResendAt,
       }),
     }
   )

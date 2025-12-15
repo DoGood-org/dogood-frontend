@@ -45,7 +45,11 @@ export async function POST(req: Request): Promise<NextResponse> {
       });
       if (fullUser.ok) {
         const userData = await fullUser.json();
-        console.log('Fetched current user after login:', userData);
+        console.log('Fetched current user after login:', userData?.user);
+        console.log(
+          'Fetched current user settings after login:',
+          userData?.user?.userSettings
+        );
       } else {
         console.warn(
           'Failed to fetch current user after login:',

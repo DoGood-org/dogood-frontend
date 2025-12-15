@@ -1,6 +1,7 @@
 'use client';
 import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
 import { Button } from '@/components/ui/Button';
+import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { useTranslations } from 'next-intl';
 
 import React, { useEffect, useState } from 'react';
@@ -13,6 +14,7 @@ type Props = {
 export const VerifyViaEmail: React.FC<Props> = ({
   onResend,
   email,
+  onWrongEmail,
   nextResendAt = null,
 }) => {
   const t = useTranslations('auth');
@@ -58,6 +60,16 @@ export const VerifyViaEmail: React.FC<Props> = ({
             <p>{t('didntGetEmail')} </p>
           )}
         </Button>
+      </div>
+      <div className="flex flex-col gap-3 md:text-[16px] font-normal w-full">
+        <LinkWithArrow
+          href="#"
+          text={t('wrongEmailAddress')}
+          onClick={(e): void => {
+            e.preventDefault();
+            onWrongEmail();
+          }}
+        />
       </div>
     </div>
   );
