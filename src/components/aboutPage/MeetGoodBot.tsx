@@ -26,6 +26,7 @@ export const MeetGoodBot: React.FC = () => {
                 src={GoodBotImage}
                 alt="GoodBot Character"
                 fill
+                sizes="300"
                 className="object-contain"
               />
             </div>

@@ -31,6 +31,7 @@ export const WhatWeDo: React.FC = () => {
             src={whatWeDoImage}
             alt="What we do"
             fill
+            sizes="300"
             className="object-cover"
           />
         </div>

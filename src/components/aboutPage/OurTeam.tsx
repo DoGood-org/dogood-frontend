@@ -56,7 +56,13 @@ export const OurTeam: React.FC = () => {
         </div>
 
         <div className="relative w-full h-[300px] md:h-[400px] rounded-2xl overflow-hidden">
-          <Image src={ourTeam} alt="Our Team" fill className="object-cover" />
+          <Image
+            src={ourTeam}
+            alt="Our Team"
+            fill
+            sizes="300"
+            className="object-cover"
+          />
         </div>
       </Container>
     </Section>
