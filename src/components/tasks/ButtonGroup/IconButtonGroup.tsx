@@ -33,7 +33,7 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center gap-2">
           <FavoriteToggleButton />
-          {lat && lng && taskId && (
+          {lat !== undefined && lng !== undefined && taskId && (
             <MapDotButton lat={lat} lng={lng} taskId={taskId} />
           )}
         </div>

@@ -4,11 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
 import { useCardInputs } from '@/hooks/useCardInputs';
-import {
-  DonationFormProps,
-  DonationFormValues,
-  DonationType,
-} from '@/types/donationType';
+import { DonationFormProps, DonationFormValues } from '@/types/donationType';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
 import { donationSchema } from '@/lib/validation/donationSchema';
@@ -65,29 +61,11 @@ export const DonationForm = ({
     },
   ] as const;
 
-  const onSubmit: SubmitHandler<DonationFormValues> = async (data: {
-    fullName: string;
-    country: string;
-    city: string;
-    amount: number;
-    currency: NonNullable<'USD' | 'EUR' | undefined>;
-    donationType: DonationType;
-  }): Promise<void> => {
-    if (isSubmitting) return;
-
-    const { fullName, country, city, amount, currency, donationType } = data;
-
+  const onSubmit: SubmitHandler<DonationFormValues> = async (
+    data
+  ): Promise<void> => {
     try {
-      const payload = {
-        fullName,
-        country,
-        city,
-        amount,
-        currency,
-        donationType,
-      };
-
-      const response = await createCheckoutSession(payload);
+      const response = await createCheckoutSession(data);
 
       if (!response.ok) {
         toast.error(t('checkout.errorCreateSession'));
@@ -99,10 +77,15 @@ export const DonationForm = ({
         return;
       }
 
+      if (!response.data?.sessionId) {
+        toast.error(t('checkout.unexpectedError'));
+        return;
+      }
+
       await stripe.redirectToCheckout({ sessionId: response.data.sessionId });
     } catch (err) {
       console.error('Unexpected error in checkout handler:', err);
-      toast.error('checkout.unexpectedError');
+      toast.error(t('checkout.unexpectedError'));
     }
   };
 

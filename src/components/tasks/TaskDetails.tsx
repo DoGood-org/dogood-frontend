@@ -63,29 +63,27 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
         {/* !!!!add mini map !!!!*/}
         <div className="w-[80px] h-[80px] bg-[#00c1ac]"></div>
 
-        <div>
-          <div className="flex flex-col md:flex-row md:items-baseline">
+        <div className="flex flex-col">
+          <div className="flex items-start md:gap-7 lg:gap-5 ">
             <p className="mb-2 text-base">
               <span className="font-semibold">
                 {t('taskDetails.location')}:
               </span>{' '}
               {task.locationName}
             </p>
-            <div className="hidden md:flex gap-2 md:gap-4 ml-5">
-              {hasCoords && (
-                <Button
-                  type="button"
-                  variant="iconOnly"
-                  onClick={handleShowOnMap}
-                  className="flex items-center gap-1 group px-0"
-                >
-                  <Location className="text-[#00c1ac] transition-colors duration-300 group-hover:stroke-[#999999]" />
-                  <span className="cursor-pointer underline text-base text-[#00c1ac]">
-                    {t('taskDetails.showOnMap')}
-                  </span>
-                </Button>
-              )}
-            </div>
+            {hasCoords && (
+              <Button
+                type="button"
+                variant="iconOnly"
+                onClick={handleShowOnMap}
+                className="hidden md:flex items-center h-6 gap-2 group p-0"
+              >
+                <Location className="text-[#00c1ac] transition-colors duration-300 group-hover:stroke-[#999999]" />
+                <span className="cursor-pointer underline text-base text-[#00c1ac]">
+                  {t('taskDetails.showOnMap')}
+                </span>
+              </Button>
+            )}
           </div>
 
           <ul className="flex gap-3 items-center">

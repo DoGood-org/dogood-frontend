@@ -32,7 +32,7 @@ export const OtherTaskList: React.FC<OtherListProps> = ({ tasks }) => {
 
   if (!tasks || tasks.length === 0) {
     return (
-      <p className="text-center p-6 text-gray-500 h-[235px]">
+      <p className="text-center p-6 text-[#696969] h-[235px]">
         {t('otherTask.noTasks')}
       </p>
     );

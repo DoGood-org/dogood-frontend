@@ -8,12 +8,13 @@ import { stripeService } from '@/services/stripeService';
 import SvgPlus from '@/components/icons/Plus';
 import { DonationCardPreview } from './DonationCardPreview';
 import { PaymentMethodModal } from './PaymentMethodModal/PaymentMethodModal';
+import { CardData } from '@/types';
 
 export const PaymentCardList = (): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [_editingId, setEditingId] = useState<string | null>(null);
   const t = useTranslations('settings');
-  const [cardsFromDB, setCardsFromDB] = useState<any[]>([]);
+  const [cardsFromDB, setCardsFromDB] = useState<CardData[]>([]);
   const { tempCards } = cardPreviewStore();
 
   const handleAddCard = (): void => {
@@ -87,7 +88,11 @@ export const PaymentCardList = (): JSX.Element => {
       </button>
 
       {open && (
-        <PaymentMethodModal isOpen={open} onClose={() => setOpen(false)} />
+        <PaymentMethodModal
+          wrapperClassName="upper-modal"
+          isOpen={open}
+          onClose={() => setOpen(false)}
+        />
       )}
     </div>
   );

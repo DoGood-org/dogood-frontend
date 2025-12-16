@@ -1,19 +1,19 @@
 'use client';
 
 import { JSX, useCallback, useState } from 'react';
-import { motion } from 'framer-motion';
-import { CloseIcon } from '@/components/icons';
 import { ModalWrapper } from '@/components/ui/ModalWrapper';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import { DonationForm } from './DonationForm';
 import { PaymentSuccessModal } from './PaymentSuccessModal/PaymentSuccessModal';
 import { Spinner } from '@/components/ui/Spinner';
+import { ModalCloseButton } from '@/components/ui/ModalCloseButton';
 
 interface DonationModalProps {
   isOpen: boolean;
   onClose: () => void;
   wrapperClassName?: string;
+  isUpperModal?: boolean;
 }
 
 export const DonationModal = ({
@@ -27,10 +27,8 @@ export const DonationModal = ({
   const t = useTranslations('card');
 
   const handleDonationSuccess = useCallback((): void => {
-    onClose();
-
     setIsPaymentSuccessful(true);
-  }, [onClose]);
+  }, []);
 
   const handleSuccessModalClose = useCallback((): void => {
     setIsPaymentSuccessful(false);
@@ -38,7 +36,6 @@ export const DonationModal = ({
 
   const handleCloseOnSubmitting = useCallback(() => {
     if (!isSubmitting) {
-      setIsSubmitting(false);
       onClose();
     }
   }, [isSubmitting, onClose]);
@@ -51,17 +48,13 @@ export const DonationModal = ({
           'max-w-[354px] md:max-w-[574px] lg:max-w-[994px] p-5 md:p-9',
           wrapperClassName
         )}
+        ignoreSelectors={['.upper-modal']}
       >
-        <motion.button
-          className="absolute top-4 right-4 cursor-pointer text_tag hover:text-[#696969] z-10"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+        <ModalCloseButton
           onClick={handleCloseOnSubmitting}
-          aria-label="Close modal"
-          type="button"
-        >
-          <CloseIcon className="w-6 h-6" />
-        </motion.button>
+          className="top-5 right-5 
+                md:top-9 md:right-9"
+        />
         <h2 className="text-base mb-3 text-center">{t('title')}</h2>
         {isSubmitting ? (
           <div className="flex justify-center items-center h-40">
@@ -74,10 +67,13 @@ export const DonationModal = ({
           />
         )}
       </ModalWrapper>
-      <PaymentSuccessModal
-        isOpen={isPaymentSuccessful}
-        onClose={handleSuccessModalClose}
-      />
+      {isPaymentSuccessful && (
+        <PaymentSuccessModal
+          isOpen={isPaymentSuccessful}
+          onClose={handleSuccessModalClose}
+          wrapperClassName="upper-modal"
+        />
+      )}
     </>
   );
 };

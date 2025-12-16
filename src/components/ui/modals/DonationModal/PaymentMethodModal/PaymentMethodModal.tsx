@@ -1,11 +1,10 @@
 'use client';
 
 import { JSX, useState } from 'react';
-import { motion } from 'framer-motion';
-import { CloseIcon } from '@/components/icons';
 import { cn } from '@/lib/utils';
 import { ModalWrapper } from '@/components/ui/ModalWrapper';
 import { StyledCardForm } from './StyledCardForm';
+import { ModalCloseButton } from '@/components/ui/ModalCloseButton';
 
 interface PaymentMethodModalProps {
   isOpen: boolean;
@@ -18,11 +17,11 @@ export const PaymentMethodModal = ({
   onClose,
   wrapperClassName = '',
 }: PaymentMethodModalProps): JSX.Element => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [, setIsSubmitting] = useState(false);
 
   const handleSuccess = (): void => {
-    onClose();
     setIsSubmitting(false);
+    onClose();
   };
 
   return (
@@ -34,21 +33,11 @@ export const PaymentMethodModal = ({
         wrapperClassName
       )}
     >
-      <motion.button
-        className="absolute top-4 right-4 cursor-pointer text_tag hover:text-[#696969] z-10"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+      <ModalCloseButton
         onClick={onClose}
-        aria-label="Close modal"
-        type="button"
-      >
-        <CloseIcon
-          className={cn(
-            'w-6 h-6',
-            isSubmitting && 'text-gray-400 cursor-not-allowed'
-          )}
-        />
-      </motion.button>
+        className="top-5
+            right-5  md:top-9 md:right-9"
+      />
 
       <StyledCardForm
         onSuccess={handleSuccess}

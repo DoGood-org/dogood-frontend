@@ -40,7 +40,7 @@ export const FavoriteToggleButton: React.FC = () => {
             'size-6 transition-all duration-300',
             isFavorite
               ? 'text-[#ee0606] fill-[#ee0606] stroke-[#ee0606]'
-              : 'text-tag_text fill-transparent stroke-tag_tex'
+              : 'text-tag_text fill-transparent stroke-tag_text'
           )}
         />
       </motion.div>

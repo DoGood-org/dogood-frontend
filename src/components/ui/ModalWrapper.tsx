@@ -1,10 +1,11 @@
 'use client';
 
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Portal from '@/components/ui/portal/Portal';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { cn } from '@/lib/utils';
+import { useModalFocusAndScroll } from '@/hooks/useModalFocusAndScroll';
 
 interface ModalWrapperProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface ModalWrapperProps {
   children: ReactNode;
   wrapperClassName?: string;
   backdropClassName?: string;
+  ignoreSelectors?: string[];
 }
 
 const backdropVariants = {
@@ -32,16 +34,11 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   children,
   wrapperClassName = '',
   backdropClassName = 'bg-black/50 backdrop-blur-sm',
+  ignoreSelectors = [],
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    }
-    return (): void => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isOpen]);
+
+  useModalFocusAndScroll(modalRef, isOpen);
 
   useClickOutside({
     ref: modalRef,
@@ -49,33 +46,42 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
     options: {
       enabled: isOpen,
       detectEscapeKey: true,
+      ignoreSelectors,
     },
   });
 
+  const isUpperModal = wrapperClassName.includes('upper-modal');
+
+  const backdropMarker = isUpperModal ? 'upper-modal' : '';
+
   return (
     <Portal>
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
             className={cn(
-              'fixed inset-0 z-50 flex items-center justify-center',
+              backdropMarker,
+              'fixed inset-0 z-50 flex items-center justify-center p-4',
               backdropClassName
             )}
             variants={backdropVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            role="presentation"
+            transition={{ duration: 0.3, ease: 'easeOut' }}
           >
             <motion.div
               ref={modalRef}
+              tabIndex={-1}
               className={cn(
-                'relative w-full rounded-xl bg-[#fffcfc] dark:bg-[#303030] shadow-2xl',
+                'relative w-full rounded-xl bg-[#fffcfc] dark:bg-[#303030] shadow-2xl outline-none',
                 wrapperClassName
               )}
               variants={modalVariants}
-              transition={{ duration: 0.3 }}
-              onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              transition={{ duration: 0.35, ease: 'easeOut' }}
             >
               {children}
             </motion.div>

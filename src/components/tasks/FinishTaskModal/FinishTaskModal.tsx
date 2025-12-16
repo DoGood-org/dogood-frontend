@@ -2,10 +2,9 @@
 
 import { ModalWrapper } from '@/components/ui/ModalWrapper';
 import { FinishTaskModalContent } from '@/components/tasks/FinishTaskModal/FinishTaskModalContent';
-import { motion } from 'framer-motion';
 import { JSX } from 'react';
 import { cn } from '@/lib/utils';
-import { CloseIcon } from '@/components/icons';
+import { ModalCloseButton } from '@/components/ui/ModalCloseButton';
 
 interface FinishTaskModalProps {
   isOpen: boolean;
@@ -29,16 +28,11 @@ export const FinishTaskModal = ({
         wrapperClassName
       )}
     >
-      <motion.button
-        className="absolute top-4 right-4 cursor-pointer text_tag hover:text-[#999999] z-10"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+      <ModalCloseButton
         onClick={onClose}
-        aria-label="Close modal"
-        type="button"
-      >
-        <CloseIcon className="w-6 h-6" />
-      </motion.button>
+        className="top-5 right-5"
+        iconClassName="hover:text-[#999999] "
+      />
       <FinishTaskModalContent onClose={onClose} onConfirm={onConfirm} />
     </ModalWrapper>
   );

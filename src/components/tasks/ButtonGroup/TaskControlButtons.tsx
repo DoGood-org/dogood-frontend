@@ -39,6 +39,8 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
     closeMenu: closeFinish,
   } = useMenuToggle();
 
+  const handleCloseTask = (): void => {};
+
   const isFundraising = actionType === TaskActionType.FUNDRAISING;
 
   return (
@@ -55,7 +57,7 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
             variant="secondary"
             className="hover:border"
             size="lg"
-            onClick={() => {}}
+            onClick={handleCloseTask}
           >
             {t('closeThisTask')}
           </Button>
@@ -77,7 +79,7 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
       <FinishTaskModal
         isOpen={isFinishOpen}
         onClose={closeFinish}
-        onConfirm={() => closeFinish()}
+        onConfirm={closeFinish}
       />
 
       <DonationModal isOpen={isDonateOpen} onClose={closeDonate} />
