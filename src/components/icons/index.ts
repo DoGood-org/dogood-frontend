@@ -49,6 +49,8 @@ export { default as Info } from './Info';
 export { default as Jcb } from './Jcb';
 export { default as LearnIcon } from './LearnIcon';
 export { default as Line6 } from './Line6';
+export { default as Link } from './Link';
+export { default as LinkCopied } from './LinkCopied';
 export { default as LinkedIn } from './LinkedIn';
 export { default as List } from './List';
 export { default as ListChecks } from './ListChecks';

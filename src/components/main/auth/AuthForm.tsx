@@ -30,6 +30,7 @@ type Props = {
   ) => void;
   isLoading?: boolean;
   errorMessage?: string;
+  onSuccess?: () => void;
 };
 
 export const AuthForm: React.FC<Props> = (props) => {
@@ -285,9 +286,14 @@ export const AuthForm: React.FC<Props> = (props) => {
         />
         {type === 'login' && (
           <Button
+            type="button"
             variant="ghost"
-            className="py-0 h-full mt-6"
-            onClick={props.onForgotPassword}
+            className="py-0 mt-6"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              props.onForgotPassword?.();
+            }}
           >
             <a href="#" className="text-[var(--text-gray)] ">
               <p>{t('forgotPass')} </p>

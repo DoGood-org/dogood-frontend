@@ -218,6 +218,7 @@ html {
   font-size: var(--font-size);
   position: relative;
   min-height: 100vh;
+  overflow: visible;
 }
 
 .montserrat {
@@ -416,7 +417,6 @@ html {
 
 /*------------------utilities for scrollbar---------------------------*/
 @layer utilities {
-
   .custom-scrollbar::-webkit-scrollbar {
     width: 15px;
   }
@@ -819,5 +819,24 @@ html {
   }
   to {
     transform: translateX(110%);
+  }
+}
+
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
   }
 }

@@ -3,23 +3,12 @@ import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { UserDetailedProps } from '@/types';
-import { cache } from 'react';
-import { getUserById } from '@/services/publicUserService';
+import { fetchUserById } from '@/facades/profileFacade';
 import { PublicAccount } from '@/components/publicAccount/PublicAccount';
 
 interface Props {
   params: Promise<{ userId: string; locale: Tlocale }>;
 }
-
-const fetchUserById = cache(
-  async (userId: string): Promise<UserDetailedProps | null> => {
-    const user = await getUserById(userId);
-
-    if (!user) notFound();
-    return user;
-  }
-);
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { userId, locale } = await params;

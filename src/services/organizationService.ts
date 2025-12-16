@@ -1,6 +1,7 @@
+import { fetchFromApi, FetchResult } from '@/lib/apiFetcher';
 import { mockOrganization } from '@/data/mockOrganization';
 import { OrganizationDetailedProps } from '@/types';
-// import { fetchFromApi } from '@/lib/apiFetcher';
+import { DeleteOrgResponse } from '@/types/settings';
 
 export const getOrganizationById = async (
   id: string | number
@@ -18,4 +19,19 @@ export const getOrganizationById = async (
   if (!organization) throw new Error('Organization not found in API response.');
 
   return organization;
+};
+
+interface IMemberOrgValue {
+  userId: string;
+  organizationId: string;
+}
+
+export const removeMemberFromOrganization = async (
+  data: IMemberOrgValue
+): Promise<FetchResult<DeleteOrgResponse>> => {
+  return fetchFromApi('/organization/members', {
+    method: 'DELETE',
+    data,
+    auth: true,
+  });
 };

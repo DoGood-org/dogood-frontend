@@ -11,7 +11,6 @@ export async function loadMessages(locale: string): Promise<Messages> {
     'about',
     'map',
     'faq',
-    'footer',
     'auth',
     'donate',
     'news',
@@ -26,6 +25,7 @@ export async function loadMessages(locale: string): Promise<Messages> {
     'organization',
     'reviews',
     'support',
+    'privacy',
   ];
 
   const messages = Object.fromEntries(

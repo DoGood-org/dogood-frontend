@@ -4,59 +4,64 @@ const API = process.env.NEXT_PUBLIC_API_URL; // BACKEND
 export async function POST(req: Request): Promise<NextResponse> {
   try {
     const body = await req.json();
-
-    const r = await fetch(`${API}/auth/login`, {
+    // Forward login request to backend API in env the route ends with / so here no slash before auth
+    const backendRes = await fetch(`${API}auth/login`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(body),
       cache: 'no-store',
+      credentials: 'include',
     });
 
-    const ct = r.headers.get('content-type') || '';
-    const raw = ct.includes('application/json')
-      ? await r.json()
-      : await r.text();
-    const payload: any = typeof raw === 'string' ? { message: raw } : raw;
+    const buf = await backendRes.arrayBuffer();
+    const response = new NextResponse(buf, {
+      status: backendRes.status,
+      statusText: backendRes.statusText,
+      headers: {
+        'content-type':
+          backendRes.headers.get('content-type') ?? 'application/json',
+      },
+    });
+    const raw = (backendRes.headers as any).raw?.();
+    const setCookies: string[] | undefined = raw?.['set-cookie'];
 
-    const access =
-      payload?.accessToken ??
-      payload?.data?.accessToken ??
-      payload?.tokens?.access ??
-      null;
-
-    const refresh =
-      payload?.refreshToken ??
-      payload?.data?.refreshToken ??
-      payload?.tokens?.refresh ??
-      null;
-
-    const res = NextResponse.json(payload, { status: r.status });
-
-    if (r.ok && access && refresh) {
-      const secure =
-        process.env.NODE_ENV === 'development' ||
-        process.env.NODE_ENV === 'production';
-      res.cookies.set('accessToken', access, {
-        httpOnly: true,
-        sameSite: 'lax',
-        secure,
-        path: '/',
-        maxAge: 60 * 15,
-      });
-      res.cookies.set('refreshToken', refresh, {
-        httpOnly: true,
-        sameSite: 'lax',
-        secure,
-        path: '/',
-        maxAge: 60 * 60 * 24 * 30,
-      });
+    if (setCookies?.length) {
+      for (const c of setCookies) response.headers.append('set-cookie', c);
+    } else {
+      const singleCookie = backendRes.headers.get('set-cookie');
+      if (singleCookie) response.headers.append('set-cookie', singleCookie);
     }
 
-    return res;
-  } catch (err: any) {
-    console.error('login route error:', err);
+    if (response.status === 200) {
+      console.log('Login successful from proxy');
+      const fullUser = await fetch(`${API}auth/current-user`, {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          cookie: response.headers.get('set-cookie') || '',
+        },
+        cache: 'no-store',
+        credentials: 'include',
+      });
+      if (fullUser.ok) {
+        const userData = await fullUser.json();
+        console.log('Fetched current user after login:', userData?.user);
+        console.log(
+          'Fetched current user settings after login:',
+          userData?.user?.userSettings
+        );
+      } else {
+        console.warn(
+          'Failed to fetch current user after login:',
+          fullUser.status
+        );
+      }
+    }
+
+    return response;
+  } catch (err) {
     return NextResponse.json(
-      { message: 'Login failed', error: err?.message ?? String(err) },
+      { message: 'Login failed', error: String(err) },
       { status: 500 }
     );
   }
