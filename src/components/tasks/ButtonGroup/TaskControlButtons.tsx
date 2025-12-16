@@ -39,13 +39,17 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
     closeMenu: closeFinish,
   } = useMenuToggle();
 
-  const handleCloseTask = (): void => {};
+  const handleCloseTask = (): void => {
+    // TODO:
+  };
 
   const isFundraising = actionType === TaskActionType.FUNDRAISING;
+  const showHostButtons = isHost && !isFundraising;
+  const showDonateButton = isFundraising;
 
   return (
     <div className={`w-full flex ${className}`}>
-      {isHost && !isFundraising && (
+      {showHostButtons && (
         <div
           className="w-full flex justify-center gap-2 flex-col md:justify-end
           md:gap-12 md:flex-row mb-20 md:mb-0"
@@ -64,7 +68,7 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
         </div>
       )}
 
-      {isFundraising && (
+      {showDonateButton && (
         <div className="w-full flex justify-end mb-20 md:mb-0">
           <Button
             variant="primary"
