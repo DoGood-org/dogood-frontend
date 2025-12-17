@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { JSX } from 'react';
 import { Plus } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
+import { OrgMemberList } from './OrgMemberList';
 
 export const OrgMemberSection = ({
   members,
@@ -41,7 +42,8 @@ export const OrgMemberSection = ({
       {
         // TODO ---------------
         <>
-          <p>Count of members - {activeMembers.length}</p>
+          <OrgMemberList members={activeMembers} />
+          {/* <p>Count of members - {activeMembers.length}</p>
           <ul>
             {activeMembers.map((member) => (
               <li key={member.id}>
@@ -49,7 +51,7 @@ export const OrgMemberSection = ({
                 <p>{member.role}</p>
               </li>
             ))}
-          </ul>
+          </ul> */}
         </>
         // ----------------------
       }
