@@ -1,7 +1,7 @@
 import { useEffect, RefObject } from 'react';
 
 let openModals: number = 0;
-let lastActiveElement: HTMLElement | null = null;
+const focusStack: (HTMLElement | null)[] = [];
 let prevOverflow: string = '';
 
 const FOCUSABLE_SELECTOR =
@@ -13,13 +13,17 @@ export function useModalFocusAndScroll(
 ): void {
   useEffect(() => {
     const modal = ref.current;
+
+    if (typeof window === 'undefined') return;
+
     if (!isOpen || !modal) return;
 
     const body = document.body;
 
+    focusStack.push(document.activeElement as HTMLElement | null);
+
     if (openModals === 0) {
       prevOverflow = body.style.overflow;
-      lastActiveElement = document.activeElement as HTMLElement | null;
       body.style.overflow = 'hidden';
     }
 
@@ -67,10 +71,13 @@ export function useModalFocusAndScroll(
       modal.removeEventListener('keydown', handleKeyDown);
       openModals--;
 
+      const lastActiveElement = focusStack.pop();
+      if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
+        lastActiveElement.focus();
+      }
+
       if (openModals === 0) {
         body.style.overflow = prevOverflow;
-        lastActiveElement?.focus();
-        lastActiveElement = null;
       }
     };
   }, [isOpen, ref]);

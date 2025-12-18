@@ -32,7 +32,8 @@ export const DonationModal = ({
 
   const handleSuccessModalClose = useCallback((): void => {
     setIsPaymentSuccessful(false);
-  }, []);
+    onClose();
+  }, [onClose]);
 
   const handleCloseOnSubmitting = useCallback(() => {
     if (!isSubmitting) {

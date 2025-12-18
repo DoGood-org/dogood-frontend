@@ -18,7 +18,7 @@ export const ModalCloseButton = ({
   iconClassName = '',
   isUpperModal = false,
 }: ModalCloseButtonProps): JSX.Element => {
-  const handleMouseDown = (e: MouseEvent<HTMLButtonElement>): void => {
+  const handleClick = (e: MouseEvent<HTMLButtonElement>): void => {
     e.stopPropagation();
     onClick();
   };
@@ -32,7 +32,7 @@ export const ModalCloseButton = ({
       )}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      onMouseDown={handleMouseDown}
+      onClick={handleClick}
       aria-label="Close modal"
       type="button"
     >
