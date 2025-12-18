@@ -6,7 +6,7 @@ interface ImagePlaceholderProps {
 }
 
 export const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
-  className,
+  className = '',
   imageUrl,
 }) => {
   const src = imageUrl || '/task/no-image.png';

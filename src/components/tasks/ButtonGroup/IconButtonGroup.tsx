@@ -32,9 +32,13 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
       <TaskCategoryIconsList categories={categories} />
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center gap-2">
-          <FavoriteToggleButton />
-          {lat !== undefined && lng !== undefined && taskId && (
-            <MapDotButton lat={lat} lng={lng} taskId={taskId} />
+          {taskId && (
+            <>
+              <FavoriteToggleButton taskId={taskId} />
+              {lat !== undefined && lng !== undefined && (
+                <MapDotButton lat={lat} lng={lng} taskId={taskId} />
+              )}
+            </>
           )}
         </div>
         <span>{clientDistance ?? '-- km'}</span>

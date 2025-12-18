@@ -1,5 +1,5 @@
 'use client';
-
+import { useTaskStore } from '@/zustand/stores/taskStore';
 import { Button } from '@/components/ui/Button';
 import { DonationModal } from '@/components/ui/modals/DonationModal/DonationModal';
 import { useMenuToggle } from '@/hooks/useMenuToggle';
@@ -21,29 +21,33 @@ interface TaskControlButtonsProps {
 }
 
 export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
+  taskId,
   actionType,
+  taskStatus,
   isHost,
   className = '',
 }) => {
   const t = useTranslations('map');
+  const { updateTaskStatus } = useTaskStore();
 
-  const {
-    isOpen: isDonateOpen,
-    openMenu: openDonate,
-    closeMenu: closeDonate,
-  } = useMenuToggle();
+  const finishModal = useMenuToggle();
+  const donateModal = useMenuToggle();
 
-  const {
-    isOpen: isFinishOpen,
-    openMenu: openFinish,
-    closeMenu: closeFinish,
-  } = useMenuToggle();
+  const handleFinishTask = (): void => {
+    updateTaskStatus(taskId, 'COMPLETED');
+    finishModal.closeMenu();
+  };
 
   const handleCloseTask = (): void => {
-    // TODO:
+    updateTaskStatus(taskId, 'CLOSED');
   };
 
   const isFundraising = actionType === TaskActionType.FUNDRAISING;
+
+  const isActive = taskStatus !== 'COMPLETED' && taskStatus !== 'CLOSED';
+
+  if (!isActive) return null;
+
   const showHostButtons = isHost && !isFundraising;
   const showDonateButton = isFundraising;
 
@@ -54,7 +58,7 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
           className="w-full flex justify-center gap-2 flex-col md:justify-end
           md:gap-12 md:flex-row mb-20 md:mb-0"
         >
-          <Button variant="primary" size="lg" onClick={openFinish}>
+          <Button variant="primary" size="lg" onClick={finishModal.openMenu}>
             {t('markAsFinished')}
           </Button>
           <Button
@@ -73,7 +77,7 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
           <Button
             variant="primary"
             size="lg"
-            onClick={openDonate}
+            onClick={donateModal.openMenu}
             className="text-white"
           >
             {t('donateBtn')}
@@ -81,12 +85,15 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
         </div>
       )}
       <FinishTaskModal
-        isOpen={isFinishOpen}
-        onClose={closeFinish}
-        onConfirm={closeFinish}
+        isOpen={finishModal.isOpen}
+        onClose={finishModal.closeMenu}
+        onConfirm={handleFinishTask}
       />
 
-      <DonationModal isOpen={isDonateOpen} onClose={closeDonate} />
+      <DonationModal
+        isOpen={donateModal.isOpen}
+        onClose={donateModal.closeMenu}
+      />
     </div>
   );
 };
