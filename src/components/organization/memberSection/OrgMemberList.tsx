@@ -1,27 +1,40 @@
-import { filterMemberByRole } from '@/lib/filterMemberByRole';
 import { UserOrganization } from '@/types';
+import { ROLE_CONFIG } from '@/constants/roleConfig';
+import { groupMembersByRole } from '@/lib/groupMembersByRole';
 import { JSX } from 'react';
+import { Slider } from '@/components/ui/Slider';
+import { OrgMemberItem } from './OrgMemberItem';
 
 export const OrgMemberList = ({
   members,
 }: {
   members: UserOrganization[];
 }): JSX.Element => {
-  const orgRoles = ['ADMIN', 'MODERATOR', 'MEMBER'];
+  const grouped = groupMembersByRole(members);
+
   return (
-    <>
-      {orgRoles.map((role) => (
-        <>
-          <h2 className="capitalize">{role.toLowerCase()}</h2>
-          <ul>
-            {filterMemberByRole(members, role).map((member, id) => (
-              <li key={`${member.userId}-${id}`}>
-                <p>{member.userId}</p>
-              </li>
-            ))}
-          </ul>
-        </>
-      ))}
-    </>
+    <div className="space-y-8">
+      {ROLE_CONFIG.map(({ role, title }) => {
+        const roleMembers = grouped[role];
+
+        if (!roleMembers.length) return null;
+
+        return (
+          <section key={role}>
+            <h3 className="text-[20px] mb-4">
+              {title} ({roleMembers.length})
+            </h3>
+
+            <Slider
+              items={roleMembers}
+              itemsPerSlide={2}
+              renderItem={(member, id) => (
+                <OrgMemberItem key={`${id}-${member.userId}`} member={member} />
+              )}
+            />
+          </section>
+        );
+      })}
+    </div>
   );
 };

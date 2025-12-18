@@ -39,22 +39,7 @@ export const OrgMemberSection = ({
         )}
       </div>
 
-      {
-        // TODO ---------------
-        <>
-          <OrgMemberList members={activeMembers} />
-          {/* <p>Count of members - {activeMembers.length}</p>
-          <ul>
-            {activeMembers.map((member) => (
-              <li key={member.id}>
-                <p>{member.userId}</p>
-                <p>{member.role}</p>
-              </li>
-            ))}
-          </ul> */}
-        </>
-        // ----------------------
-      }
+      <OrgMemberList members={activeMembers} />
     </>
   );
 };
