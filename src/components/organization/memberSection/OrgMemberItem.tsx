@@ -9,6 +9,9 @@ export const OrgMemberItem = ({
   member: UserOrganization;
 }): JSX.Element => {
   const { user } = member;
+  const imageStyles =
+    'shrink-0 w-[100px] h-[100px] md:w-[100px] md:h-[100px] lg:h-[100px] lg:w-[100px] object-cover rounded-lg self-center md:self-start';
+
   return (
     <div
       key={member.id}
@@ -16,17 +19,17 @@ export const OrgMemberItem = ({
     >
       {user.avatar ? (
         <Image
-          src={user.avatar ?? '/account/avatar.png'}
-          alt={user.name ?? 'User'}
+          src={user.avatar}
+          alt={user.name}
           width={100}
           height={100}
-          className="shrink-0 w-[100px] h-[100px] object-cover rounded-lg self-center md:self-start"
+          className={imageStyles}
         />
       ) : (
-        <UserNoAvatar className="shrink-0 w-[100px] h-[100px] object-cover rounded-lg self-center md:self-start" />
+        <UserNoAvatar className={imageStyles} />
       )}
 
-      <p>{user.name}</p>
+      <p className="text-base  font-semibold">{user.name}</p>
     </div>
   );
 };
