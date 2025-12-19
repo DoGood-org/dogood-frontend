@@ -1,4 +1,4 @@
-import { fetchFromApi, FetchResult } from '@/lib/apiFetcher';
+import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
 import { ReviewsFormData } from '@/types/reviews';
 
 export const sendReview = async (

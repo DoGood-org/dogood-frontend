@@ -36,6 +36,7 @@ export const apiRoutes = {
 
   organizations: {
     signup: '/organization/signup',
+    getById: (id: string | number) => `/organization/${id}`,
     update: (id: string | number) => `/organization/${id}`,
     delete: (id: string | number) => `/organization/${id}`,
 

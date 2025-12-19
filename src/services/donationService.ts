@@ -1,4 +1,4 @@
-import { fetchFromApi, FetchResult } from '@/lib/apiFetcher';
+import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
 import { DonationFormValues } from '@/types/donationType';
 
 export const createCheckoutSession = async (

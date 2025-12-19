@@ -1,4 +1,4 @@
-import { fetchFromApi, FetchResult } from '@/lib/apiFetcher';
+import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
 import { ContactFormData, ContactResponse } from '@/types/contact';
 
 export const sendContact = async (
