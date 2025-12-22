@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { CloseIcon } from '@/components/icons';
 import { cn } from '@/lib/utils';
-import { JSX, MouseEvent } from 'react';
+import { JSX, KeyboardEvent, MouseEvent } from 'react';
 
 interface ModalCloseButtonProps {
   onClick: () => void;
@@ -18,9 +18,18 @@ export const ModalCloseButton = ({
   iconClassName = '',
   isUpperModal = false,
 }: ModalCloseButtonProps): JSX.Element => {
-  const handleClick = (e: MouseEvent<HTMLButtonElement>): void => {
+  const handleMouseDown = (e: MouseEvent<HTMLButtonElement>): void => {
+    e.preventDefault();
     e.stopPropagation();
     onClick();
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>): void => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      e.stopPropagation();
+      onClick();
+    }
   };
 
   return (
@@ -32,7 +41,8 @@ export const ModalCloseButton = ({
       )}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      onClick={handleClick}
+      onMouseDown={handleMouseDown}
+      onKeyDown={handleKeyDown}
       aria-label="Close modal"
       type="button"
     >

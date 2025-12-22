@@ -1,6 +1,6 @@
 'use client';
 
-import { JSX, useEffect, useState } from 'react';
+import { JSX, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ModalWrapper } from '@/components/ui/ModalWrapper';
 import { StyledCardForm } from './StyledCardForm';
@@ -41,14 +41,6 @@ export const PaymentMethodModal = ({
         city: editingCard.city || '',
       }
     : undefined;
-
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent): void => {
-      if (e.key === 'Escape' && !isSubmitting) onClose();
-    };
-    document.addEventListener('keydown', handleEsc);
-    return (): void => document.removeEventListener('keydown', handleEsc);
-  }, [isSubmitting, onClose]);
 
   return (
     <ModalWrapper

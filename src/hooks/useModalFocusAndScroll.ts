@@ -1,16 +1,29 @@
-import { useEffect, RefObject } from 'react';
+import { useEffect, RefObject, useCallback } from 'react';
 
 let openModals: number = 0;
 const focusStack: (HTMLElement | null)[] = [];
 let prevOverflow: string = '';
 
 const FOCUSABLE_SELECTOR =
-  'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+  'button, [href], input, select, textarea, [tabindex]:not([tabindex^="-"])';
 
 export function useModalFocusAndScroll(
   ref: RefObject<HTMLElement | null>,
   isOpen: boolean
 ): void {
+  const getFocusableElements = useCallback((): HTMLElement[] => {
+    const modal = ref.current;
+    if (!modal) return [];
+    return Array.from(
+      modal.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+    ).filter(
+      (el) =>
+        !el.hasAttribute('disabled') &&
+        !el.hasAttribute('hidden') &&
+        el.getAttribute('aria-hidden') !== 'true'
+    );
+  }, [ref]);
+
   useEffect(() => {
     const modal = ref.current;
 
@@ -20,65 +33,78 @@ export function useModalFocusAndScroll(
 
     const body = document.body;
 
-    focusStack.push(document.activeElement as HTMLElement | null);
+    const currentActive = document.activeElement;
+    if (currentActive instanceof HTMLElement) {
+      focusStack.push(currentActive);
+    }
 
     if (openModals === 0) {
-      prevOverflow = body.style.overflow;
+      prevOverflow = window.getComputedStyle(body).overflow;
       body.style.overflow = 'hidden';
     }
 
     openModals++;
 
-    const focusableElements = Array.from(
-      modal.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
-    ).filter((el) => !el.hasAttribute('disabled'));
-
-    if (focusableElements.length > 0) {
-      focusableElements[0].focus();
-    } else {
-      modal.tabIndex = -1;
-      modal.focus();
-    }
+    requestAnimationFrame(() => {
+      const focusable = getFocusableElements();
+      if (focusable.length > 0) {
+        focusable[0].focus();
+      } else {
+        modal.tabIndex = -1;
+        modal.focus();
+      }
+    });
 
     // Focus trap
     const handleKeyDown = (e: KeyboardEvent): void => {
+      if (e.key === 'Escape') {
+        modal.dispatchEvent(new CustomEvent('modal:close'));
+        return;
+      }
+
       if (e.key !== 'Tab') return;
 
-      if (focusableElements.length === 0) {
+      const elements = getFocusableElements();
+      if (elements.length === 0) {
         e.preventDefault();
         return;
       }
 
-      const first = focusableElements[0];
-      const last = focusableElements[focusableElements.length - 1];
+      const first = elements[0];
+      const last = elements[elements.length - 1];
+      const active = document.activeElement;
 
       if (e.shiftKey) {
-        if (document.activeElement === first) {
+        if (active === first) {
           e.preventDefault();
           last.focus();
         }
       } else {
-        if (document.activeElement === last) {
+        if (active === last) {
           e.preventDefault();
           first.focus();
         }
       }
     };
 
-    modal.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
 
     return (): void => {
-      modal.removeEventListener('keydown', handleKeyDown);
-      openModals--;
+      document.removeEventListener('keydown', handleKeyDown);
+      openModals = Math.max(0, openModals - 1);
 
-      const lastActiveElement = focusStack.pop();
-      if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
-        lastActiveElement.focus();
+      const lastFocused = focusStack.pop();
+      if (
+        lastFocused &&
+        typeof lastFocused.focus === 'function' &&
+        document.contains(lastFocused)
+      ) {
+        lastFocused.focus();
       }
 
       if (openModals === 0) {
         body.style.overflow = prevOverflow;
       }
     };
-  }, [isOpen, ref]);
+  }, [isOpen, getFocusableElements, ref]);
 }
