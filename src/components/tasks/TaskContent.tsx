@@ -14,6 +14,7 @@ import { useTranslations } from 'next-intl';
 import { Container } from '@/components/ui/Container';
 import { TaskControlButtons } from './ButtonGroup/TaskControlButtons';
 import { OtherTasksSection } from './OtherTasks/OtherTasksSection';
+import { authStore } from '@/zustand/stores/authStore';
 
 interface TaskContentProps {
   slug: string;
@@ -24,6 +25,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   slug,
   newsItems,
 }) => {
+  const currentUser = authStore((state) => state.user);
   const t = useTranslations('tasks');
   const tasks = generateTasks(49.8429, 24.0316);
   const detailedTasks: ITaskDetails[] = generateMockTasks(tasks).map(
@@ -49,7 +51,12 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   const { category, distance, id: taskId, userParticipationStatus } = task;
 
   const taskStatus = 'IN_PROGRESS';
-  const isHost = true;
+
+  const isHost =
+    currentUser != null && task.host?.id !== undefined
+      ? String(task.host.id) === String(currentUser.id)
+      : false;
+
   return (
     <Container className="py-10">
       <Task task={task} />
