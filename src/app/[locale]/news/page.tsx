@@ -10,7 +10,7 @@ type Props = {
 const NewsPage = async ({ params }: Props): Promise<React.ReactElement> => {
   const { locale } = await params;
   const newsResult = await getNews(locale);
-  const t = await getTranslations('news');
+  const t = await getTranslations({ locale, namespace: 'news' });
 
   if (!newsResult.ok) {
     return (
