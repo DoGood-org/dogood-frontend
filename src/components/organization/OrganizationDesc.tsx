@@ -9,7 +9,6 @@ import { formatLocation } from '@/lib/formatLocation';
 import { getUserRole, isAdminOrModerator } from '@/lib/getUserRole';
 import { ChatCircle, Email, Phone, UserLocate } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
-import { UserNoDescription } from '@/components/account/accountPage/UserNoDescription';
 import { ReportOrg } from './dotMenu/ReportOrg';
 import { JoinButton } from './JoinButton';
 
@@ -83,7 +82,7 @@ export const OrganizationDesc = ({
               <p className="whitespace-pre-line text-base">{description}</p>
             </>
           ) : (
-            <UserNoDescription />
+            <p className="text-base">{t('noDescription')}</p>
           )}
         </div>
 

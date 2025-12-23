@@ -12,17 +12,20 @@ export const ProtectedLayoutContent = ({
   children: React.ReactNode;
 }): React.JSX.Element => {
   useEffect(() => {
-    const s = authStore.getState();
     if (user) {
-      s.user = user;
-      s.isLoggedIn = true;
-      s.isEmailVerified = user.isEmailVerified;
-      s.status = 'authorized';
+      authStore.setState({
+        user,
+        isLoggedIn: true,
+        isEmailVerified: user.isEmailVerified,
+        status: 'authorized',
+      });
     } else {
-      s.user = null;
-      s.isLoggedIn = false;
-      s.isEmailVerified = false;
-      s.status = 'forbidden';
+      authStore.setState({
+        user: null,
+        isLoggedIn: false,
+        isEmailVerified: false,
+        status: 'forbidden',
+      });
     }
   }, [user]);
   if (!user) {

@@ -1,4 +1,4 @@
-import { fetchFromApi, FetchResult } from '@/lib/apiFetcher';
+import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
 import { INewsItemApiResponse, INewsListApiResponse, Tlocale } from '@/types';
 
 export const getNews = async (

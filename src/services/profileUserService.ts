@@ -1,4 +1,4 @@
-import { fetchFromApi, FetchResult } from '@/lib/apiFetcher';
+import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
 import { ProfileFormData } from '@/types/settings';
 
 export const sendProfile = async (

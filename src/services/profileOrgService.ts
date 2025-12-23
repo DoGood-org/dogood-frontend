@@ -1,4 +1,4 @@
-import { fetchFromApi, FetchResult } from '@/lib/apiFetcher';
+import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
 import { DeleteOrgResponse, ProfileOrgFormData } from '@/types/settings';
 
 export const sendOrgProfile = async (

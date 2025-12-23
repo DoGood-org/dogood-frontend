@@ -1,7 +1,6 @@
 import type { JSX } from 'react/jsx-runtime';
 import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import { fetchOrganizationById } from '@/facades/organizationFacade';
 import { OrganizationLayout } from '@/components/organization/OrganizationLayout';
 
@@ -25,10 +24,6 @@ export default async function OrganizationPage({
   const { id } = await params;
 
   const organization = await fetchOrganizationById(id);
-
-  if (!organization) {
-    notFound();
-  }
 
   return <OrganizationLayout organization={organization} />;
 }

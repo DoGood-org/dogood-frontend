@@ -1,4 +1,4 @@
-import { fetchFromApi, FetchResult } from '../lib/apiFetcher';
+import { fetchFromApi, FetchResult } from '../lib/api/apiFetcher';
 
 export interface CloudinaryDeleteResponse {
   result: string;
