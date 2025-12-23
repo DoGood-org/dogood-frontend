@@ -1,4 +1,4 @@
-import { fetchFromApi } from '@/lib/apiFetcher';
+import { fetchFromApi } from '@/lib/api/apiFetcher';
 import { apiRoutes } from '@/lib/server/apiRoutes';
 import { ICurrentUser, User } from '@/types';
 

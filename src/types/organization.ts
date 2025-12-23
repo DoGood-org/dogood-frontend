@@ -4,6 +4,7 @@ import {
   IUserAccount,
   PaymentProps,
   TaskProps,
+  UserDetailedProps,
 } from './accountType';
 import { ReviewProps } from './reviewType';
 import { FormLocation } from './settings';
@@ -39,6 +40,7 @@ export interface UserOrganization {
   organizationId: string;
   role: OrganizationRole;
   status: MembershipStatus;
+  user: UserDetailedProps;
 }
 
 export interface OrganizationDetailedProps {
@@ -62,4 +64,13 @@ export interface OrgMobileNavProps {
   views: ContentProps[];
   activeView: string;
   onChange: (view: string) => void;
+}
+
+export interface OrganizationApiResponse {
+  status: string;
+  code: string;
+  message: string;
+  data: {
+    organization: OrganizationDetailedProps;
+  };
 }

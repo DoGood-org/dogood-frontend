@@ -1,7 +1,8 @@
 // lib/server/getServerCurrentUser.ts
+import { ICurrentUser } from '@/types';
 import { cookies, headers } from 'next/headers';
 
-export async function getServerCurrentUser(): Promise<any | null> {
+export async function getServerCurrentUser(): Promise<ICurrentUser | null> {
   const h = await headers();
   const proto = h.get('x-forwarded-proto');
   const host = h.get('x-forwarded-host') ?? h.get('host') ?? 'localhost:3000';
@@ -22,5 +23,9 @@ export async function getServerCurrentUser(): Promise<any | null> {
   });
 
   if (!res.ok) return null;
-  return res.json();
+  // return res.json();
+  const data = await res.json();
+
+  // ⬇️ ВАЖЛИВО
+  return data?.user ?? null;
 }

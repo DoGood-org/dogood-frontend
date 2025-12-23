@@ -1,6 +1,6 @@
-import { OrganizationDetailedProps } from '@/types';
-
-export const mockOrganization: OrganizationDetailedProps[] = [
+// import { OrganizationDetailedProps } from '@/types';
+// : OrganizationDetailedProps[]
+export const mockOrganization = [
   {
     id: '1',
     name: 'Peace Volunteers',

@@ -1,7 +1,8 @@
-import api from '@/lib/api';
+// import api from '@/lib/api';
 import { AxiosError } from 'axios';
 import { HTTP_METHOD } from 'next/dist/server/web/http';
 import * as Sentry from '@sentry/nextjs';
+import { getApiInstance } from './getApiInstanse';
 
 export interface ApiResponse<T> {
   data: T;
@@ -67,9 +68,9 @@ export const fetchFromApi = async <T>(
   } = options;
 
   try {
-    const instance = auth ? api.auth : api.guest;
-
-    const response = await instance(endpoint, {
+    const instance = getApiInstance(auth);
+    const response = await instance.request({
+      url: endpoint,
       method,
       data,
       params,

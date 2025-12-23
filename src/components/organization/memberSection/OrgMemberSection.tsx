@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { JSX } from 'react';
 import { Plus } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
+import { OrgMemberList } from './OrgMemberList';
 
 export const OrgMemberSection = ({
   members,
@@ -23,12 +24,12 @@ export const OrgMemberSection = ({
 
   return (
     <>
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-start">
         <h2 className="text-h2-m lg:text-h2">{title}</h2>
         {adminRole && members.length <= 1 && (
           <Button
             asChild
-            className="gap-[10px] mt-11 md:mt-0 align-right self-end"
+            className="gap-[10px] mt-6 md:mt-0 align-right md:self-end"
           >
             <Link href="/tasks" className="text-white">
               <Plus className="size-5 fill-current" />
@@ -38,21 +39,7 @@ export const OrgMemberSection = ({
         )}
       </div>
 
-      {
-        // TODO ---------------
-        <>
-          <p>Count of members - {activeMembers.length}</p>
-          <ul>
-            {activeMembers.map((member) => (
-              <li key={member.id}>
-                <p>{member.userId}</p>
-                <p>{member.role}</p>
-              </li>
-            ))}
-          </ul>
-        </>
-        // ----------------------
-      }
+      <OrgMemberList members={activeMembers} />
     </>
   );
 };
