@@ -1,19 +1,32 @@
 'use client';
 import { Favorite } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { useTaskStore } from '@/zustand/stores/taskStore';
+import { useMemo } from 'react';
 
-export const FavoriteToggleButton: React.FC = () => {
-  const [isFavorite, setIsFavorite] = useState(false);
+interface FavoriteToggleButtonProps {
+  taskId: string;
+}
 
-  const handleFavoriteClick = (): void => {
-    setIsFavorite((prev) => !prev);
-  };
+export const FavoriteToggleButton: React.FC<FavoriteToggleButtonProps> = ({
+  taskId,
+}) => {
+  const { tasks, toggleFavorite } = useTaskStore();
+
+  const isFavorite = useMemo(
+    () => tasks.find((t) => t.id === taskId)?.isFavorite ?? false,
+    [tasks, taskId]
+  );
 
   return (
-    <Button variant="iconOnly" size="icon" onClick={handleFavoriteClick}>
+    <Button
+      variant="iconOnly"
+      size="icon"
+      aria-pressed={isFavorite}
+      onClick={() => toggleFavorite(taskId)}
+    >
       <motion.div
         initial={false}
         animate={
@@ -40,7 +53,7 @@ export const FavoriteToggleButton: React.FC = () => {
             'size-6 transition-all duration-300',
             isFavorite
               ? 'text-[#ee0606] fill-[#ee0606] stroke-[#ee0606]'
-              : 'text-tag_text fill-transparent stroke-tag_tex'
+              : 'text-tag_text fill-transparent stroke-tag_text'
           )}
         />
       </motion.div>

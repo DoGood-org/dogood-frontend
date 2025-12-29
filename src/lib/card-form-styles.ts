@@ -11,11 +11,6 @@ export const CARD_FORM_OVERRIDE_CLASSES = `
 
   /* INPUT FOCUS STYLES */
   [&_input]:ring-0       
-  [&_input]:focus-within:ring-0 
-  [&_input]:focus:ring-2 
-  [&_input]:focus:ring-[#00c1ac]
-  [&_input]:focus:border-[#00c1ac]
-  [&_input]:focus:text-[#010101]
   
   /* INPUT CLEANUP STYLES */
   [&_input]:rounded-sm 

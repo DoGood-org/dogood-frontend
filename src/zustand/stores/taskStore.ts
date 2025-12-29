@@ -1,4 +1,4 @@
-import { IExtendedITaskProps } from '@/types/tasks.type';
+import { IExtendedITaskProps, TaskStatus } from '@/types/tasks.type';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -15,6 +15,8 @@ interface TTaskActions {
   joinTask: (taskId: string) => void;
   setTasksByKey: (key: string, tasks: IExtendedITaskProps[]) => void;
   setHighlightedTaskId: (taskId: string | null) => void;
+  toggleFavorite: (taskId: string) => void;
+  updateTaskStatus: (taskId: string, status: TaskStatus) => void;
 }
 
 type TTaskStore = TTaskState & TTaskActions;
@@ -39,11 +41,31 @@ export const useTaskStore = create<TTaskStore>()(
           joinedTasks: updated.filter((task) => task.isSelected),
         });
       },
+      toggleFavorite: (taskId): void => {
+        const updatedTasks = get().tasks.map((task) =>
+          task.id === taskId ? { ...task, isFavorite: !task.isFavorite } : task
+        );
+        set({
+          tasks: updatedTasks,
+          joinedTasks: updatedTasks.filter((task) => task.isSelected),
+        });
+      },
       setTasksByKey: (key, tasks): void => {
         const updated = { ...get().tasksByKey, [key]: tasks };
         set({ tasksByKey: updated });
         const allTasks = Object.values(updated).flat();
         set({ tasks: allTasks });
+      },
+      updateTaskStatus: (taskId: string, status: TaskStatus): void => {
+        set((prev) => {
+          const updatedTasks = prev.tasks.map((t) =>
+            t.id === taskId ? { ...t, status } : t
+          );
+          return {
+            tasks: updatedTasks,
+            joinedTasks: updatedTasks.filter((t) => t.isSelected),
+          };
+        });
       },
       setHighlightedTaskId: (taskId): any => set({ highlightedTaskId: taskId }),
     }),

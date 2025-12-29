@@ -4,8 +4,7 @@ import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { TaskContent } from '@/components/tasks/TaskContent';
 import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
-import { INewsItem } from '@/types';
-import { fetchNewsItem } from '@/facades/newsFacade';
+import { fetchLastNews } from '@/facades/newsFacade';
 
 interface Props {
   params: Promise<{ slug: string; locale: Tlocale }>;
@@ -32,14 +31,12 @@ export default async function IdTaskItemPage({
 }: Props): Promise<JSX.Element> {
   const { slug, locale } = await params;
 
-  const newsItem = await fetchNewsItem(slug, locale);
-
-  const newsItems: INewsItem[] = newsItem ? [newsItem] : [];
+  const newsLastItems = await fetchLastNews(locale);
 
   return (
     <StripeProviderLazy>
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        <TaskContent slug={slug} newsItems={newsItems} />
+        <TaskContent slug={slug} newsItems={newsLastItems} />
       </div>
     </StripeProviderLazy>
   );

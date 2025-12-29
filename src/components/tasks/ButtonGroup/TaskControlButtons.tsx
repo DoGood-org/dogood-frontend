@@ -1,5 +1,5 @@
 'use client';
-
+import { useTaskStore } from '@/zustand/stores/taskStore';
 import { Button } from '@/components/ui/Button';
 import { DonationModal } from '@/components/ui/modals/DonationModal/DonationModal';
 import { useMenuToggle } from '@/hooks/useMenuToggle';
@@ -21,59 +21,79 @@ interface TaskControlButtonsProps {
 }
 
 export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
+  taskId,
   actionType,
+  taskStatus,
   isHost,
   className = '',
 }) => {
   const t = useTranslations('map');
+  const { updateTaskStatus } = useTaskStore();
 
-  const {
-    isOpen: isDonateOpen,
-    openMenu: openDonate,
-    closeMenu: closeDonate,
-  } = useMenuToggle();
+  const finishModal = useMenuToggle();
+  const donateModal = useMenuToggle();
 
-  const {
-    isOpen: isFinishOpen,
-    openMenu: openFinish,
-    closeMenu: closeFinish,
-  } = useMenuToggle();
+  const handleFinishTask = (): void => {
+    updateTaskStatus(taskId, 'COMPLETED');
+    finishModal.closeMenu();
+  };
+
+  const handleCloseTask = (): void => {
+    updateTaskStatus(taskId, 'CLOSED');
+  };
 
   const isFundraising = actionType === TaskActionType.FUNDRAISING;
 
+  const isActive = taskStatus !== 'COMPLETED' && taskStatus !== 'CLOSED';
+
+  if (!isActive) return null;
+
+  const showHostButtons = isHost && !isFundraising;
+  const showDonateButton = isFundraising;
+
   return (
-    <div className={`w-full flex justify-end space-x-2 ${className}`}>
-      {isHost && !isFundraising && (
-        <div className="flex w-full justify-end gap-6 flex-col md:flex-row lg:gap-12">
-          <Button variant="primary" size="lg" onClick={openFinish}>
+    <div className={`w-full flex ${className}`}>
+      {showHostButtons && (
+        <div
+          className="w-full flex justify-center gap-2 flex-col md:justify-end
+          md:gap-12 md:flex-row mb-20 md:mb-0"
+        >
+          <Button variant="primary" size="lg" onClick={finishModal.openMenu}>
             {t('markAsFinished')}
           </Button>
-          <Button variant="secondary" size="lg" onClick={() => {}}>
+          <Button
+            variant="secondary"
+            className="hover:border"
+            size="lg"
+            onClick={handleCloseTask}
+          >
             {t('closeThisTask')}
           </Button>
-          <FinishTaskModal
-            isOpen={isFinishOpen}
-            onClose={closeFinish}
-            onConfirm={() => {
-              closeFinish();
-            }}
-          />
         </div>
       )}
 
-      {isFundraising && (
-        <>
+      {showDonateButton && (
+        <div className="w-full flex justify-end mb-20 md:mb-0">
           <Button
             variant="primary"
             size="lg"
-            onClick={openDonate}
+            onClick={donateModal.openMenu}
             className="text-white"
           >
             {t('donateBtn')}
           </Button>
-          <DonationModal isOpen={isDonateOpen} onClose={closeDonate} />
-        </>
+        </div>
       )}
+      <FinishTaskModal
+        isOpen={finishModal.isOpen}
+        onClose={finishModal.closeMenu}
+        onConfirm={handleFinishTask}
+      />
+
+      <DonationModal
+        isOpen={donateModal.isOpen}
+        onClose={donateModal.closeMenu}
+      />
     </div>
   );
 };

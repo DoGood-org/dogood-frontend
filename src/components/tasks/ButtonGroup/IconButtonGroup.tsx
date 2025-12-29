@@ -27,14 +27,18 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
     setClientDistance(distance);
   }, [distance]);
   return (
-    <div className="relative flex items-center justify-between py-5">
+    <div className="relative flex items-center justify-between py-2 md:py-5">
       <span className="absolute top-0 left-0 h-px w-full bg-text-gray"></span>
       <TaskCategoryIconsList categories={categories} />
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center gap-2">
-          <FavoriteToggleButton />
-          {lat && lng && taskId && (
-            <MapDotButton lat={lat} lng={lng} taskId={taskId} />
+          {taskId && (
+            <>
+              <FavoriteToggleButton taskId={taskId} />
+              {lat !== undefined && lng !== undefined && (
+                <MapDotButton lat={lat} lng={lng} taskId={taskId} />
+              )}
+            </>
           )}
         </div>
         <span>{clientDistance ?? '-- km'}</span>

@@ -18,26 +18,38 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
 }) => {
   return (
     <div className="border p-4 rounded-lg bg-card flex flex-col min-h-[270px]">
-      <Link href={`/tasks/${id}`}>
-        <h3 className="text-base text-[20px] leading-[20px] tracking-[0] mb-5">
-          {title}
-        </h3>
-      </Link>
-      <h4 className="text-base tracking-[0] mb-5">{subtitle}</h4>
-
-      <div className="flex justify-between items-center mb-4">
-        <TaskCategoryIconsList categories={category} />
-        {distance && <span className="text-base">{distance}</span>}
+      <div className="relative min-h-[100px]">
+        <div className="h-[44px] overflow-hidden mb-2">
+          <Link href={`/tasks/${id}`}>
+            <h3
+              className="text-[20px] leading-[20px] tracking-[0]
+              underline decoration-1 line-clamp-2
+              decoration-black/40 hover:decoration-black
+              dark:decoration-white/50 dark:hover:decoration-white
+              transition-colors duration-300"
+            >
+              {title}
+            </h3>
+          </Link>
+        </div>
+        <h4 className="text-base tracking-[0] line-clamp-2">{subtitle}</h4>
       </div>
 
-      <div className="flex justify-between space-x-2 mt-auto">
+      <div className="mt-auto">
+        <div className="flex justify-between items-center">
+          <TaskCategoryIconsList categories={category} />
+          {distance && <span className="text-base">{distance}</span>}
+        </div>
+      </div>
+
+      <div className="flex justify-between mt-auto">
         <TaskActionButtons
           taskId={id}
           actionType={actionType}
           userParticipationStatus={userParticipationStatus}
           isHost={Boolean(isHost)}
           taskStatus={status}
-          className="min-w-[114px] max-w-[130px]"
+          className="min-w-[114px] max-w-[130px] w-full"
         />
       </div>
     </div>

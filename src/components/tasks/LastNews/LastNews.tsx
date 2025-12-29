@@ -5,24 +5,22 @@ import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
 import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { NewsListItems } from './NewsListItems';
+import { useMediaQuery } from '@/hooks';
 
 interface LastNewsProps {
   newsItems?: INewsItem[];
-  maxItems?: number;
 }
 
-export const LastNews = ({
-  newsItems = [],
-  maxItems = 4,
-}: LastNewsProps): JSX.Element => {
-  const sortedNews = [...newsItems].sort((a, b) => {
-    const dateA = new Date(a.createdAt).getTime();
-    const dateB = new Date(b.createdAt).getTime();
-    return dateB - dateA;
-  });
-
+export const LastNews = ({ newsItems = [] }: LastNewsProps): JSX.Element => {
   const t = useTranslations('news');
 
+  const isDesktop = useMediaQuery('(min-width: 1440px)');
+  const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1439px)');
+  const maxItems = isDesktop ? 4 : isTablet ? 2 : 1;
+
+  const sortedNews = [...newsItems].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
   const slicedNews = sortedNews.slice(0, maxItems);
 
   return (
