@@ -10,11 +10,11 @@ import {
   parseDescription,
   parseRequirements,
 } from '@/utils/tasks';
-import { Button } from '../ui/Button';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { LatLngLiteral } from 'leaflet';
-import EditButton from './ButtonGroup/EditButton';
 import { useAuth } from '@/hooks';
+import { Button } from '@/components/ui/Button';
+import EditButton from './ButtonGroup/EditButton';
 
 interface TaskDetailsProps {
   task: ITaskDetails;

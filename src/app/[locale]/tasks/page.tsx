@@ -1,3 +1,5 @@
+// import { CreateTask } from '@/components/tasks/CreatePage/CreateTask';
+
 const TaskPage: React.FC = () => {
   return (
     <div
@@ -14,9 +16,14 @@ text-foreground
   flex-col
   items-center
   justify-center
+          // w-full
+          // max-w-[1440px]     // Обмежуємо ширину, щоб на великих моніторах не роз'їжджалося
+          // mx-auto            // ЦЕ ГОЛОВНЕ: центрує блок по горизонталі (Margin X Auto             // Відступ збоку для мобільних
+          // md:pl-[60px]       // Відступ збоку для планшетів
+          // lg:pl-[100px] 
   "
     >
-      task Page
+      {/* <CreateTask /> */}
     </div>
   );
 };

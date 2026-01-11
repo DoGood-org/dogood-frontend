@@ -1,3 +1,4 @@
+import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
 import { IExtendedITaskProps, TaskStatus } from '@/types/tasks.type';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -19,7 +20,22 @@ interface TTaskActions {
   updateTaskStatus: (taskId: string, status: TaskStatus) => void;
 }
 
-type TTaskStore = TTaskState & TTaskActions;
+interface TCreateTaskState {
+  createStep: number;
+  createTaskDraft: Partial<IExtendedITaskProps>;
+}
+
+interface TCreateTaskActions {
+  nextCreateStep: () => void;
+  prevCreateStep: () => void;
+  setCreateTaskDraft: (data: Partial<IExtendedITaskProps>) => void;
+  resetCreateTask: () => void;
+}
+
+type TTaskStore = TTaskState &
+  TTaskActions &
+  TCreateTaskState &
+  TCreateTaskActions;
 
 export const useTaskStore = create<TTaskStore>()(
   persist<TTaskStore, [], [], Pick<TTaskState, 'tasks' | 'joinedTasks'>>(
@@ -68,6 +84,39 @@ export const useTaskStore = create<TTaskStore>()(
         });
       },
       setHighlightedTaskId: (taskId): any => set({ highlightedTaskId: taskId }),
+      createStep: 0,
+      createTaskDraft: {},
+
+      nextCreateStep: (): void => {
+        set((state) => ({
+          createStep: Math.min(
+            state.createStep + 1,
+            CREATE_TASK_STEPS.length - 1
+          ),
+        }));
+      },
+
+      prevCreateStep: (): void => {
+        set((state) => ({
+          createStep: Math.max(state.createStep - 1, 0),
+        }));
+      },
+
+      setCreateTaskDraft: (data): void => {
+        set((state) => ({
+          createTaskDraft: {
+            ...state.createTaskDraft,
+            ...data,
+          },
+        }));
+      },
+
+      resetCreateTask: (): void => {
+        set({
+          createStep: 0,
+          createTaskDraft: {},
+        });
+      },
     }),
     {
       name: 'task-storage',

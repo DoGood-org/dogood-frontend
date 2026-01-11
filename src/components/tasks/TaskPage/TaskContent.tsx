@@ -1,20 +1,20 @@
 'use client';
 
-import { generateMockTasks, generateTasks } from '../main/map/mockTasks';
-import { Task } from '@/components/tasks/Task';
+import { generateMockTasks, generateTasks } from '../../main/map/mockTasks';
 import {
   ITaskDetails,
   TaskActionType,
   UserParticipationStatus,
 } from '@/types/tasks.type';
-import { IconButtonGroup } from '@/components/tasks/ButtonGroup/IconButtonGroup';
-import { LastNews } from '@/components/tasks/LastNews/LastNews';
+import { IconButtonGroup } from '@/components/tasks/TaskPage/ButtonGroup/IconButtonGroup';
+import { LastNews } from '@/components/tasks/TaskPage/LastNews/LastNews';
 import { INewsItem } from '@/types';
 import { useTranslations } from 'next-intl';
 import { Container } from '@/components/ui/Container';
 import { TaskControlButtons } from './ButtonGroup/TaskControlButtons';
 import { OtherTasksSection } from './OtherTasks/OtherTasksSection';
 import { authStore } from '@/zustand/stores/authStore';
+import { Task } from './Task';
 
 interface TaskContentProps {
   slug: string;
