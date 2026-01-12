@@ -1,0 +1,99 @@
+{
+  "aboutData": {
+    "title": "Über uns - DoGood Impact Inc.",
+    "description": "Erfahren Sie mehr über DoGood Impact Inc., unsere Mission, Menschen, Anliegen und Unternehmen durch technologiegetriebene Freundlichkeit und sozialen Einfluss zu verbinden."
+  },
+  "hero": {
+    "title": "Wir verbinden Menschen, Anliegen und Unternehmen",
+    "metaDescription": "DoGood Impact Inc. ist ein missionsorientiertes Technologieunternehmen, das die nächste Generation einer globalen Mutual-Aid-Plattform entwickelt – Freundlichkeit in sinnvolle Aktionen verwandelt.",
+    "cards": {
+      "global": "Global",
+      "transparent": "Transparent",
+      "trusted": "Vertrauenswürdig",
+      "impact": "Impact-Driven"
+    }
+  },
+  "whatWeDo": {
+    "title": "Was wir tun",
+    "description": "Wir befähigen Einzelpersonen, gemeinnützige Organisationen und Gemeinschaften, einfach um Hilfe zu bitten und Hilfe anzubieten",
+    "cards": {
+      "card1": {
+        "title": "Transparenz und Vertrauen",
+        "description": "Jede Interaktion basiert auf Offenheit und Verantwortlichkeit"
+      },
+      "card2": {
+        "title": "Sicherheit durch Verifizierung",
+        "description": "Robuste Datenschutz- und Verifizierungssysteme halten unsere Gemeinschaft sicher"
+      },
+      "card3": {
+        "title": "Messbarer Einfluss",
+        "description": "Jede freundliche Handlung wird verfolgt, gefeiert und quantifiziert"
+      }
+    }
+  },
+  "ourMission": {
+    "title": "Unsere Mission",
+    "title2": "Woran wir glauben",
+    "description": "Die Plattform entstand aus einer einfachen, aber kraftvollen Beobachtung: Millionen von Menschen sind bereit zu helfen, und Millionen mehr benötigen Unterstützung – aber zu oft finden sie sich nicht.",
+    "description2": "Wir glauben, dass Freundlichkeit, verstärkt durch Technologie, die Kraft hat, die Welt zu verändern."
+  },
+  "meetGoodBot": {
+    "title": "Lernen Sie GoodBot kennen",
+    "description": "Im Herzen unserer Plattform steht eine menschenzentrierte KI, die Menschen verbindet, Bedürfnisse verifiziert und Gutes tun einfach, inspirierend und messbar macht.",
+    "list": {
+      "item1": "Verbindet Menschen mit sinnvollen Möglichkeiten.",
+      "item2": "Verifiziert Bedürfnisse und stellt Authentizität sicher",
+      "item3": "Macht Gutes tun einfach und inspirierend",
+      "item4": "Misst und feiert jeden Einfluss"
+    }
+  },
+  "ourEcosystem": {
+    "title": "Unser Ökosystem ermöglicht",
+    "subTitle": "Eine vernetzte Gemeinschaft, in der jeder zu positivem Wandel beitragen kann",
+    "cards": {
+      "Volunteers": {
+        "title": "Freiwillige",
+        "description": "Entdecken Sie echte Anliegen, die Sie unterstützen können, und machen Sie einen greifbaren Unterschied"
+      },
+      "NGOsNonprofits": {
+        "title": "NGOs & gemeinnützige Organisationen",
+        "description": "Koordinieren Sie Hilfe effizient und sicher mit verifizierter Unterstützung"
+      },
+      "Businesses": {
+        "title": "Unternehmen",
+        "description": "Engagieren Sie sich sozial verantwortlich und mobilisieren Sie Ihre Ressourcen für den guten Zweck"
+      },
+      "EveryGoodDeed": {
+        "title": "Jede gute Tat",
+        "description": "Jede Handlung, ob groß oder klein, trägt zu einer Welle des Wandels bei"
+      }
+    }
+  },
+  "ourTeam": {
+    "title": "Unser Team",
+    "description": "Wir sind ein Team von Innovatoren, Technologen und Sozialunternehmern – vereint durch den Glauben, dass Freundlichkeit global skaliert werden kann.",
+    "list": {
+      "item1": {
+        "itemTitle": "Getrieben von Innovation",
+        "itemDescription": "Wir entwickeln bahnbrechende Lösungen für globale Herausforderungen"
+      },
+      "item2": {
+        "itemTitle": "Engagiert für Wirkung",
+        "itemDescription": "Unser Handeln wird von dem Wunsch geleitet, einen positiven Einfluss zu erzielen"
+      },
+      "item3": {
+        "itemTitle": "Vielfalt und Inklusion",
+        "itemDescription": "Wir schätzen unterschiedliche Perspektiven und fördern eine integrative Kultur"
+      },
+      "item4": {
+        "itemTitle": "Zusammenarbeit und Gemeinschaft",
+        "itemDescription": "Gemeinsam schaffen wir eine unterstützende Umgebung für Wachstum und Veränderung"
+      }
+    }
+  },
+  "supportMission": {
+    "title": "Unterstützen Sie unsere Mission",
+    "description": "Ihre Spende hilft uns, die Plattform kostenlos, transparent und für jeden zugänglich zu halten, der einen Unterschied machen möchte. Jeder Beitrag zählt.❤",
+    "buttonText": "Jetzt spenden"
+  }
+}
