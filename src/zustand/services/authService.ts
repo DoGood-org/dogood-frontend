@@ -1,107 +1,101 @@
-import { fetchFromApi } from '@/lib/apiFetcher';
+import { fetchFromApi } from '@/lib/api/apiFetcher';
+import { apiRoutes } from '@/lib/server/apiRoutes';
 import { ICurrentUser, User } from '@/types';
 
 export interface IAuthResponse {
-  status: 'success' | 'error';
-  message: string;
+  ok?: boolean;
+  data?: Record<string, unknown>;
+
+  code?: string;
+  errorMessage: string;
   user?: User;
+  status?: 200 | 403 | 401 | 500 | 400;
 }
 
-interface IRegisterResponse {
-  status?: 'success' | 'error';
-  message: string;
-}
-
-// interface ICurrentUser extends User {
-//   avatar: string | null;
-//   bio: string | null;
-//   birthDate: string | null;
-//   createdAt: string;
-//   email: string;
-//   gender: string | null;
-//   hostedTasks: [];
-//   isEmailVerified: true;
-//   joinedTasks: [];
-//   locationId: null;
-//   name: string;
-//   organizations: [];
-//   paymentOptions: [];
-//   phoneNumber: string | null;
-//   reviewsReceived: [];
-//   reviewsWritten: [];
-//   siteRole: string;
-//   updatedAt: string;
-//   userSettings: null;
-// }
 export interface ICurrentUserResponse {
   status?: 'success' | 'error';
   message?: string;
-  user: ICurrentUser;
+  user: ICurrentUser | null;
 }
-interface IRefreshResponse {
-  status?: 'success' | 'error';
-  message?: string;
-}
-
-type IVerifyResponse = IRegisterResponse;
-
 export class AuthService {
-  public login = async (
-    email: string,
-    password: string
-  ): Promise<IAuthResponse> => {
-    const { user, status, message } = await fetchFromApi<IAuthResponse>(
-      '/auth/login',
-      {
-        method: 'POST',
-        data: { email, password },
-        auth: true,
-      }
-    );
-    return { user, status, message };
+  //auth methods all where cookies magic
+  public login = async (email: string, password: string): Promise<any> => {
+    const response = await fetchFromApi(apiRoutes.auth.login, {
+      method: 'POST',
+      data: { email, password },
+    });
+    return response;
   };
-  public logout = async (): Promise<void> => {
-    return await fetchFromApi('auth/logout', {
+  public refreshTokens = async (): Promise<any> => {
+    return await fetchFromApi<any>(apiRoutes.auth.refreshToken, {
       method: 'POST',
       auth: true,
     });
   };
-  public currentUser = async (): Promise<ICurrentUserResponse> => {
-    return await fetchFromApi<ICurrentUserResponse>('auth/current-user', {
+  public verify = async (token: string): Promise<any> => {
+    console.log('AuthService verify called with token:', token);
+    return await fetchFromApi(`${apiRoutes.auth.verifyEmail(token)}`, {
       method: 'GET',
-      auth: true,
     });
   };
+  public logout = async (): Promise<any> => {
+    return await fetchFromApi(apiRoutes.auth.logout, {
+      method: 'POST',
+    });
+  };
+  public resendVerificationEmail = async (email: string): Promise<any> => {
+    console.log('Resend verification email called for email:', email);
+    return await fetchFromApi(apiRoutes.auth.resendVerification, {
+      method: 'POST',
+      data: { email },
+    });
+  };
+  public forgotPassword = async (email: string): Promise<any> => {
+    return await fetchFromApi(apiRoutes.auth.forgotPassword, {
+      method: 'POST',
+      data: { email },
+    });
+  };
+  public resetPassword = async (
+    resetToken: string,
+    newPassword: string
+  ): Promise<any> => {
+    return await fetchFromApi(apiRoutes.auth.resetPassword(resetToken), {
+      method: 'POST',
+      data: { password: newPassword },
+    });
+  };
+
+  //proxy everything else
   public register = async (
     email: string,
     password: string,
-    name: string
-  ): Promise<IAuthResponse> => {
-    return await fetchFromApi<IAuthResponse>('auth/signup', {
+    name: string,
+    lang: string = 'en'
+  ): Promise<any> => {
+    return await fetchFromApi<IAuthResponse>(apiRoutes.auth.signup, {
       method: 'POST',
-      data: { email, password, name },
+      data: { name, password, email },
+      params: { lang }, // ?lang=en
     });
+  };
+  public currentUser = async (): Promise<any> => {
+    const curr = await fetchFromApi<any>(apiRoutes.user.current, {
+      method: 'GET',
+      auth: true,
+    });
+    console.log('Current user response from service:', curr);
+    return curr;
   };
   public registerCompany = async (
     name: string,
     email: string,
     password: string,
     organizationName: string
-  ): Promise<IAuthResponse> => {
-    return await fetchFromApi<IAuthResponse>('/auth/signup/organization', {
+  ): Promise<any> => {
+    return await fetchFromApi<any>(apiRoutes.organizations.signup, {
       method: 'POST',
       data: { name, email, password, organizationName },
-    });
-  };
-  public refreshTokens = async (): Promise<IRefreshResponse> => {
-    return await fetchFromApi<IRefreshResponse>('auth/refresh-token', {
-      method: 'POST',
-      auth: true,
-    });
-  };
-  public verify = async (token: string): Promise<IVerifyResponse> => {
-    return await fetchFromApi(`auth/verify-email/${token}`, {
-      method: 'GET',
     });
   };
 }

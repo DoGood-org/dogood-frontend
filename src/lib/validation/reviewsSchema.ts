@@ -1,0 +1,14 @@
+import * as yup from 'yup';
+
+export const reviewsSchema = yup.object().shape({
+  targetUserId: yup.string().required('Target ID is required'),
+  rating: yup
+    .number()
+    .min(1, 'Rating must be at least 1 star')
+    .max(5, 'Rating cannot exceed 5 stars')
+    .nullable()
+    .required('Rating is required'),
+  comment: yup.string().optional(),
+});
+
+export type ReviewsFormValues = yup.InferType<typeof reviewsSchema>;

@@ -1,0 +1,17 @@
+{
+  "title": "Leave a review for",
+  "imageAlt": "User avatar",
+  "imageHeroAlt": "Hero image",
+  "subtitle": "How would you rate your experience with",
+  "feedback": "Leave feedback",
+  "placeholder": "Share feedback about your experience...",
+  "cancelBtn": "Cancel",
+  "sendBtn": "Send review",
+  "taskMembers": "Task members",
+  "seeProfile": "See Profile",
+  "sendReview": "Send Review",
+  "success": "You've successfully leave review!",
+  "error": "Failed to send review. Please try again later.",
+  "backBtn": "Go home",
+  "reviewBtn": "Leave another review"
+}

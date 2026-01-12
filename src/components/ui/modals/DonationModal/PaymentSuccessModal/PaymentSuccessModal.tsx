@@ -1,11 +1,10 @@
 'use client';
 
-import { CloseIcon } from '@/components/icons';
 import { JSX } from 'react';
-import { motion } from 'framer-motion';
 import { ModalWrapper } from '@/components/ui/ModalWrapper';
 import { cn } from '@/lib/utils';
-import { PaymentSuccessContent } from '@/components';
+import { PaymentSuccessContent } from './PaymentSuccessContent';
+import { ModalCloseButton } from '@/components/ui/ModalCloseButton';
 
 interface PaymentSuccessModalProps {
   isOpen: boolean;
@@ -27,16 +26,11 @@ export const PaymentSuccessModal = ({
         wrapperClassName
       )}
     >
-      <motion.button
-        className="absolute top-5 right-5 md:top-10 md:right-10 cursor-pointer text_tag hover:text-[#696969] z-10"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+      <ModalCloseButton
         onClick={onClose}
-        aria-label="Close modal"
-        type="button"
-      >
-        <CloseIcon className="w-6 h-6" />
-      </motion.button>
+        className="top-5 right-5 
+        md:top-9 md:right-9"
+      />
       <PaymentSuccessContent />
     </ModalWrapper>
   );

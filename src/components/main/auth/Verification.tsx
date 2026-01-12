@@ -148,8 +148,8 @@ export const Verification: React.FC<Props> = ({
 
   return (
     <div
-      className="bg-background-secondary flex flex-col gap-[16px] p-4 
-    
+      className="bg-background-secondary flex flex-col gap-[16px] p-4
+
     md:p-8  md:w-[446px] justify-center items-center text-white rounded-[10px]  shadow-md"
     >
       <div

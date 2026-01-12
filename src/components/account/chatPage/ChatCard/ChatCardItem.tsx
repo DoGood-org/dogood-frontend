@@ -3,8 +3,8 @@
 import { cn } from '@/lib/utils';
 import { ChatCardProps } from '@/types/chatType';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/Avatar';
-import { ChatEllipsisMenu } from '@/components';
 import { formatChatDate } from '@/utils/chatDateUtils';
+import { ChatEllipsisMenu } from '@/components/account/chatPage/ChatModal/ChatEllipsisMenu';
 
 export const ChatCardItem: React.FC<ChatCardProps> = ({
   chat,

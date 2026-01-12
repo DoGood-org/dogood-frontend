@@ -1,6 +1,8 @@
 import { JSX } from 'react';
-import { NoOrganizations, OrganizationItem, Slider } from '@/components';
 import { OrganizationListProps } from '@/types';
+import { Slider } from '@/components/ui/Slider';
+import { NoOrganizations } from '@/components/account/accountPage/NoOrganizations';
+import { OrganizationItem } from '@/components/account/accountPage/OrganizationItem';
 
 export const OrganizationList = ({
   organizations = [],

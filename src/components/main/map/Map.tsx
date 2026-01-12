@@ -61,7 +61,7 @@ export const Map: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     initMap('main');
-  }, []);
+  }, [initMap]);
 
   useEffect(() => {
     if (!isInView) return;
@@ -69,7 +69,7 @@ export const Map: React.FC = (): JSX.Element => {
       checkLocationPermission();
     };
     run();
-  }, [isInView]);
+  }, [isInView, checkLocationPermission]);
 
   // Imitate backend data generation
   // This should be replaced with actual data fetching logic
@@ -89,7 +89,7 @@ export const Map: React.FC = (): JSX.Element => {
       new Set(newTasks.flatMap((task) => task.category))
     );
     setCategories(categories);
-  }, [userLocation, radius]);
+  }, [userLocation, radius, key, tasksByKey, setTasksByKey, setCategories]);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
   const highLightedRef = useRef<L.Marker | null>(null);

@@ -2,24 +2,18 @@
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
-import {
-  Button,
-  CurrencyAndAmountInput,
-  Input,
-  PaymentCardList,
-} from '@/components';
 import { JSX } from 'react';
 import { useCardInputs } from '@/hooks/useCardInputs';
-import {
-  DonationFormProps,
-  DonationFormValues,
-  DonationType,
-} from '@/types/donationType';
+import { DonationFormProps, DonationFormValues } from '@/types/donationType';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
 import { donationSchema } from '@/lib/validation/donationSchema';
 import { createCheckoutSession } from '@/services/donationService';
 import { useStripe } from '@stripe/react-stripe-js';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
+import { CurrencyAndAmountInput } from './CurrencyAndAmountInput';
+import { PaymentCardList } from './PaymentCardList';
 
 const currencies = [
   { value: 'USD', label: 'USD' },
@@ -67,36 +61,31 @@ export const DonationForm = ({
     },
   ] as const;
 
-  const onSubmit: SubmitHandler<DonationFormValues> = async (data: {
-    fullName: string;
-    country: string;
-    city: string;
-    amount: number;
-    currency: NonNullable<'USD' | 'EUR' | undefined>;
-    donationType: DonationType;
-  }): Promise<void> => {
-    if (isSubmitting) return;
-
+  const onSubmit: SubmitHandler<DonationFormValues> = async (
+    data
+  ): Promise<void> => {
     try {
-      const payload = {
-        fullName: data.fullName,
-        country: data.country,
-        city: data.city,
-        amount: data.amount,
-        currency: data.currency,
-        donationType: data.donationType,
-      };
+      const response = await createCheckoutSession(data);
 
-      const response = await createCheckoutSession(payload);
-      if (!response.sessionId)
-        throw new Error('Failed to create checkout session');
+      if (!response.ok) {
+        toast.error(t('checkout.errorCreateSession'));
+        return;
+      }
 
-      if (!stripe) throw new Error('Stripe not loaded');
+      if (!stripe) {
+        toast.error(t('checkout.paymentUnavailable'));
+        return;
+      }
 
-      await stripe.redirectToCheckout({ sessionId: response.sessionId });
-    } catch (err: any) {
-      toast.error(err.message || 'Unknown error');
-      console.error(err);
+      if (!response.data?.sessionId) {
+        toast.error(t('checkout.unexpectedError'));
+        return;
+      }
+
+      await stripe.redirectToCheckout({ sessionId: response.data.sessionId });
+    } catch (err) {
+      console.error('Unexpected error in checkout handler:', err);
+      toast.error(t('checkout.unexpectedError'));
     }
   };
 

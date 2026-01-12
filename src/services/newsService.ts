@@ -1,34 +1,19 @@
-import { fetchFromApi } from '@/lib/apiFetcher';
-import {
-  INewsItem,
-  INewsItemApiResponse,
-  INewsListApiResponse,
-  Tlocale,
-} from '@/types';
+import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
+import { INewsItemApiResponse, INewsListApiResponse, Tlocale } from '@/types';
 
-export const getNews = async (locale: Tlocale): Promise<INewsItem[]> => {
-  const response = await fetchFromApi<INewsListApiResponse>(
-    `/posts/${locale}`,
-    {
-      method: 'GET',
-    }
-  );
-  return response.data?.posts ?? [];
+export const getNews = async (
+  locale: Tlocale
+): Promise<FetchResult<INewsListApiResponse>> => {
+  return fetchFromApi<INewsListApiResponse>(`/posts/${locale}`, {
+    method: 'GET',
+  });
 };
 
 export const getNewsById = async (
   id: string | number,
-  locale: string
-): Promise<INewsItem> => {
-  const response = await fetchFromApi<INewsItemApiResponse>(
-    `/posts/${id}/${locale}`,
-    {
-      method: 'GET',
-    }
-  );
-  const { post } = response.data;
-
-  if (!post) throw new Error('News item not found in API response.');
-
-  return post;
+  locale: Tlocale
+): Promise<FetchResult<INewsItemApiResponse>> => {
+  return fetchFromApi<INewsItemApiResponse>(`/posts/${id}/${locale}`, {
+    method: 'GET',
+  });
 };

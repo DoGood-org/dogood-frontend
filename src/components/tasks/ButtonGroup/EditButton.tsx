@@ -6,28 +6,29 @@ import EditIcon from '@/components/icons/EditIcon';
 
 interface EditButtonProps {
   onClick: () => void;
+  isHost: boolean;
 }
 
-const EditButton = ({ onClick }: EditButtonProps): JSX.Element => {
+const EditButton = ({
+  onClick,
+  isHost,
+}: EditButtonProps): JSX.Element | null => {
   const t = useTranslations('tasks');
 
-  const handleClick = (): void => {
-    onClick?.();
-  };
+  if (isHost) return null;
+
   return (
-    <>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={handleClick}
-        className="group flex items-center gap-1 md:gap-3 cursor-pointe md:pl-10"
-      >
-        <EditIcon className="size-6 group-hover:text-[#00c1ac]" />
-        <span className="text-base group-hover:text-[#00c1ac]">
-          {t('taskDetails.edit')}
-        </span>
-      </Button>
-    </>
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={onClick}
+      className="group flex items-center gap-1 cursor-pointer"
+    >
+      <EditIcon className="size-6 text-foreground group-hover:text-[#00c1ac]" />
+      <span className="text-base text-foreground group-hover:text-[#00c1ac]">
+        {t('taskDetails.edit')}
+      </span>
+    </Button>
   );
 };
 

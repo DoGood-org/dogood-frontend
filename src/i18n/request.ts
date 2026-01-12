@@ -12,7 +12,6 @@ export async function loadMessages(locale: string): Promise<Messages> {
     'aboutPage',
     'map',
     'faq',
-    'footer',
     'auth',
     'donate',
     'news',
@@ -23,6 +22,11 @@ export async function loadMessages(locale: string): Promise<Messages> {
     'tasks',
     'chat',
     'card',
+    'cookies',
+    'organization',
+    'reviews',
+    'support',
+    'privacy',
   ];
 
   const messages = Object.fromEntries(

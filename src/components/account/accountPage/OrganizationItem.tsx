@@ -1,4 +1,4 @@
-import { LinkWithArrow } from '@/components';
+import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { OrganizationItemProps } from '@/types';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';

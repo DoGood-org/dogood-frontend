@@ -15,6 +15,7 @@ export interface RatingProps
   rating: number;
   setRating?: (rating: number) => void;
   error?: FieldError;
+  className?: string;
 }
 
 export interface StarItemProps {
@@ -27,6 +28,7 @@ export interface StarItemProps {
   onClick: (index: number) => void;
   handleKey: (e: KeyboardEvent) => void;
   computeFocus: (rating: number, index: number) => number;
+  className?: string;
 }
 
 export interface ReviewProps {

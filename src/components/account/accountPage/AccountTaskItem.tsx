@@ -1,5 +1,5 @@
-import { LinkWithArrow } from '@/components';
 import { Animal, Food, Medicine, Nature } from '@/components/icons';
+import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
 import { TaskItemProps } from '@/types';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';

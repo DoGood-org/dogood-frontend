@@ -2,10 +2,9 @@ import type { JSX } from 'react/jsx-runtime';
 import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { TaskContent } from '@/components';
+import { TaskContent } from '@/components/tasks/TaskContent';
 import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
-import { getNews } from '@/services/newsService';
-import { INewsItem } from '@/types';
+import { fetchLastNews } from '@/facades/newsFacade';
 
 interface Props {
   params: Promise<{ slug: string; locale: Tlocale }>;
@@ -32,12 +31,12 @@ export default async function IdTaskItemPage({
 }: Props): Promise<JSX.Element> {
   const { slug, locale } = await params;
 
-  const newsItems: INewsItem[] = await getNews(locale);
+  const newsLastItems = await fetchLastNews(locale);
 
   return (
     <StripeProviderLazy>
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        <TaskContent slug={slug} newsItems={newsItems} />
+        <TaskContent slug={slug} newsItems={newsLastItems} />
       </div>
     </StripeProviderLazy>
   );

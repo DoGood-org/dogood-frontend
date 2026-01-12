@@ -13,6 +13,7 @@ type ModalProps = {
   children: React.ReactNode;
   wrapperClassName?: string;
   buttonClassName?: string;
+  withBackButton?: boolean;
 };
 
 export const Modal = ({
@@ -21,6 +22,7 @@ export const Modal = ({
   children,
   wrapperClassName = '',
   buttonClassName = '',
+  withBackButton = true,
 }: ModalProps): JSX.Element => {
   const modalRef = useRef<HTMLDivElement>(null);
   const t = useTranslations('settings');
@@ -60,20 +62,22 @@ export const Modal = ({
               wrapperClassName
             )}
           >
-            <button
-              onClick={onClose}
-              className={cn(
-                'text-current flex items-center pr-2 cursor-pointer group absolute t-6 r-6',
-                buttonClassName
-              )}
-              aria-label="Back"
-              type="button"
-            >
-              <Back className="w-5 h-5 text-bg-icon mr-2 group-hover:text-btn-hover group-active:text-btn-active" />
-              <span className="text-base text-foreground group-hover:text-btn-hover group-active:text-btn-active">
-                {t('payment.back')}
-              </span>
-            </button>
+            {withBackButton && (
+              <button
+                onClick={onClose}
+                className={cn(
+                  'text-current flex items-center pr-2 cursor-pointer group absolute t-6 r-6',
+                  buttonClassName
+                )}
+                aria-label="Back"
+                type="button"
+              >
+                <Back className="w-5 h-5 text-bg-icon mr-2 group-hover:text-btn-hover group-active:text-btn-active" />
+                <span className="text-base text-foreground group-hover:text-btn-hover group-active:text-btn-active">
+                  {t('payment.back')}
+                </span>
+              </button>
+            )}
             {children}
           </div>
         </motion.div>

@@ -1,13 +1,13 @@
 'use client';
 
+import { Label } from '@/components/ui/Label';
 import {
-  Label,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components';
+} from '@/components/ui/Select';
 import { SelectProps } from '@radix-ui/react-select';
 
 interface SelectFieldProps extends SelectProps {

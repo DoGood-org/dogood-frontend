@@ -1,4 +1,4 @@
-import { Section } from '@/components';
+import { Section } from '@/components/ui/Section';
 
 export default function AuthLayout({
   children,

@@ -1,7 +1,6 @@
 'use client';
 
 import { generateMockTasks, generateTasks } from '../main/map/mockTasks';
-import { Container } from '../ui/Container';
 import { Task } from '@/components/tasks/Task';
 import {
   ITaskDetails,
@@ -9,10 +8,13 @@ import {
   UserParticipationStatus,
 } from '@/types/tasks.type';
 import { IconButtonGroup } from '@/components/tasks/ButtonGroup/IconButtonGroup';
-import { OtherTasksSection, TaskActionButtons } from '@/components';
-import { LastNews } from './LastNews/LastNews';
+import { LastNews } from '@/components/tasks/LastNews/LastNews';
 import { INewsItem } from '@/types';
 import { useTranslations } from 'next-intl';
+import { Container } from '@/components/ui/Container';
+import { TaskControlButtons } from './ButtonGroup/TaskControlButtons';
+import { OtherTasksSection } from './OtherTasks/OtherTasksSection';
+import { authStore } from '@/zustand/stores/authStore';
 
 interface TaskContentProps {
   slug: string;
@@ -23,6 +25,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   slug,
   newsItems,
 }) => {
+  const currentUser = authStore((state) => state.user);
   const t = useTranslations('tasks');
   const tasks = generateTasks(49.8429, 24.0316);
   const detailedTasks: ITaskDetails[] = generateMockTasks(tasks).map(
@@ -45,13 +48,14 @@ export const TaskContent: React.FC<TaskContentProps> = ({
 
   const otherTasksList: ITaskDetails[] = detailedTasks;
 
-  const {
-    category,
-    distance,
-    id: taskId,
-    actionType,
-    userParticipationStatus,
-  } = task;
+  const { category, distance, id: taskId, userParticipationStatus } = task;
+
+  const taskStatus = 'IN_PROGRESS';
+
+  const isHost =
+    currentUser != null && task.host?.id !== undefined
+      ? String(task.host.id) === String(currentUser.id)
+      : false;
 
   return (
     <Container className="py-10">
@@ -63,12 +67,13 @@ export const TaskContent: React.FC<TaskContentProps> = ({
         lng={task.lng}
         taskId={taskId}
       />
-      <div className="flex justify-between mb-6 mt-6">
-        <TaskActionButtons
+      <div className="flex justify-between mt-5">
+        <TaskControlButtons
           taskId={taskId}
-          actionType={actionType}
+          actionType={task.actionType}
           userParticipationStatus={userParticipationStatus}
-          className="w-[152px]"
+          taskStatus={taskStatus}
+          isHost={isHost}
         />
       </div>
       <OtherTasksSection tasks={otherTasksList} />

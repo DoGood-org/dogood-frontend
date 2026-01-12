@@ -5,11 +5,19 @@ import { AuthForm } from './AuthForm';
 import { FormRegisterCompany, FormRegisterPerson } from '@/types/authType';
 import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
 import { VerifyViaEmail } from '@/components/main/auth/VerififyViaEmail';
+import { IAuthResponse } from '@/zustand/services/authService';
 
 export const RegisterPageContent = (): React.ReactElement => {
   const { step, setStep } = useAuthFlow();
 
-  const { register, registerCompany, status, isEmailVerified } = authStore();
+  const {
+    register,
+    registerCompany,
+    status,
+    isEmailVerified,
+    resendVerificationEmail,
+    nextResendAt,
+  } = authStore();
 
   const [choice, setChoice] = useState<'human' | 'company' | null>(null);
 
@@ -44,11 +52,14 @@ export const RegisterPageContent = (): React.ReactElement => {
               password: '',
               repeatPassword: '',
             });
-            await register(
+            const response: IAuthResponse = await register(
               (data as FormRegisterPerson).email,
               (data as FormRegisterPerson).password,
               (data as FormRegisterPerson).name
             );
+            if (response.ok) {
+              setStep('verification');
+            }
           }}
         />
       )}
@@ -66,6 +77,7 @@ export const RegisterPageContent = (): React.ReactElement => {
             await registerCompany(
               (data as FormRegisterCompany).name,
               (data as FormRegisterCompany).email,
+
               (data as FormRegisterCompany).password,
               (data as FormRegisterCompany).companyName
             );
@@ -74,11 +86,16 @@ export const RegisterPageContent = (): React.ReactElement => {
       )}
       {step === 'verification' && choice && (
         <VerifyViaEmail
-          onResend={() => setStep('resendLink')}
+          onResend={async () => {
+            await resendVerificationEmail(
+              choice === 'human' ? formPersonData.email : formCompanyData.email
+            );
+          }}
           onWrongEmail={() => setStep('mistakeInEmail')}
           email={
             choice === 'human' ? formPersonData.email : formCompanyData.email
           }
+          nextResendAt={nextResendAt}
         />
       )}
       {step === 'mistakeInEmail' && choice === 'human' && (
@@ -103,14 +120,19 @@ export const RegisterPageContent = (): React.ReactElement => {
       )}
       {step === 'resendLink' && (
         <>
-          <p>We will send it in 13 sec. Maybe timer here? </p>
-
           <VerifyViaEmail
-            onResend={() => setStep('resendLink')}
-            onWrongEmail={() => setStep('mistakeInEmail')}
+            onResend={async () => {
+              await resendVerificationEmail(
+                choice === 'human'
+                  ? formPersonData.email
+                  : formCompanyData.email
+              );
+            }}
+            onWrongEmail={() => setStep(null)}
             email={
               choice === 'human' ? formPersonData.email : formCompanyData.email
             }
+            nextResendAt={nextResendAt}
           />
         </>
       )}

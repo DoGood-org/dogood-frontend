@@ -1,12 +1,27 @@
+import { getNews, getNewsById } from '@/services/newsService';
 import { INewsItem, Tlocale } from '@/types';
-import { getNews } from '@/services/newsService';
+import { cache } from 'react';
 
-export const fetchNews = async (locale: Tlocale): Promise<INewsItem[]> => {
-  try {
-    const news = await getNews(locale);
-    return news;
-  } catch (error) {
-    console.error('Failed to fetch news:', error);
-    return [];
+export const fetchNewsItem = cache(
+  async (slug: string, locale: Tlocale): Promise<INewsItem | null> => {
+    const result = await getNewsById(slug, locale);
+
+    if (!result.ok) {
+      return null;
+    }
+
+    return result.data?.data?.post ?? null;
   }
-};
+);
+
+export const fetchLastNews = cache(
+  async (locale: Tlocale): Promise<INewsItem[]> => {
+    const result = await getNews(locale);
+
+    if (!result.ok) {
+      return [];
+    }
+
+    return result.data?.data?.posts ?? [];
+  }
+);

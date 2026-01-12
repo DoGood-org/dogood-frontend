@@ -7,10 +7,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/Popover';
-import { Input } from '@/components';
 import { format, isAfter, subYears } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { CalendarDots } from '@/components/icons';
+import { Input } from '@/components/ui/Input';
 
 interface DatePickerProps {
   value?: Date;

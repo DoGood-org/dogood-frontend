@@ -4,15 +4,31 @@ import * as React from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 
 import { cn } from '@/lib/utils';
+type AccordionProps = React.ComponentPropsWithoutRef<
+  typeof AccordionPrimitive.Root
+> & {
+  isMobileMenu?: boolean;
+};
 
 function Accordion({
   children,
+  isMobileMenu = false,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Root>): React.JSX.Element {
+}: AccordionProps): React.JSX.Element {
   return (
-    <AccordionPrimitive.Root asChild {...props}>
-      <li data-slot="accordion">{children}</li>
-    </AccordionPrimitive.Root>
+    <>
+      {isMobileMenu ? (
+        <AccordionPrimitive.Root asChild {...props}>
+          <li className="list-none" data-slot="accordion">
+            {children}
+          </li>
+        </AccordionPrimitive.Root>
+      ) : (
+        <AccordionPrimitive.Root data-slot="accordion" {...props}>
+          {children}
+        </AccordionPrimitive.Root>
+      )}
+    </>
   );
 }
 
@@ -35,18 +51,18 @@ function AccordionTrigger({
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Trigger>): React.JSX.Element {
   return (
-    <AccordionPrimitive.Header className="flex">
+    <div className="flex w-full">
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          'hover:cursor-pointer focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-4 transition-all duration-700 outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50',
+          'group hover:cursor-pointer focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center justify-between gap-[8px] transition-all duration-700 outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 ',
           className
         )}
         {...props}
       >
         {children}
       </AccordionPrimitive.Trigger>
-    </AccordionPrimitive.Header>
+    </div>
   );
 }
 
@@ -58,10 +74,13 @@ function AccordionContent({
   return (
     <AccordionPrimitive.Content
       data-slot="accordion-content"
-      className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm"
+      className={cn(
+        'overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down',
+        className
+      )}
       {...props}
     >
-      <div className={cn('pt-0 pb-4', className)}>{children}</div>
+      <div className={cn('pt-0 pb-4 break-words')}>{children}</div>
     </AccordionPrimitive.Content>
   );
 }

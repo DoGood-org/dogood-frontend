@@ -56,8 +56,11 @@ export interface ITaskDetails extends ITask {
 
 export interface IExtendedITaskProps extends ITask {
   isSelected?: boolean;
+  isFavorite?: boolean;
   onToggleDescription?: () => void;
   actionType: TaskActionType;
   userParticipationStatus: UserParticipationStatus;
   organizationId?: string;
+  isHost?: boolean;
+  status: TaskStatus;
 }

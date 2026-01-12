@@ -1,7 +1,7 @@
-import { Section } from '@/components';
 import { JSX } from 'react';
 import { UserDescription } from './UserDescription';
 import { mockUser } from '@/data/mockUser';
+import { Section } from '@/components/ui/Section';
 
 export const Account = (): JSX.Element => {
   return (

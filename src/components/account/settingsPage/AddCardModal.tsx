@@ -1,10 +1,11 @@
 'use client';
 
 import { JSX, useEffect, useState } from 'react';
-import { CardForm, Modal } from '@/components';
 import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
 import { CardData } from '@/types';
 import { useTranslations } from 'next-intl';
+import { Modal } from '@/components/ui/Modal';
+import { CardForm } from '@/components/account/settingsPage/PaymentModal/CardForm';
 
 export type CardModalProps = {
   open: boolean;

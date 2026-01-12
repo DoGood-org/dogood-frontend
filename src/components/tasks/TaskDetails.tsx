@@ -14,6 +14,7 @@ import { Button } from '../ui/Button';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { LatLngLiteral } from 'leaflet';
 import EditButton from './ButtonGroup/EditButton';
+import { useAuth } from '@/hooks';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
@@ -21,6 +22,7 @@ interface TaskDetailsProps {
 
 export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
   const t = useTranslations('tasks');
+  const { user } = useAuth();
   const flyToCoords = useMapStore((s) => s.flyToCoords);
 
   const hasCoords = task.lat != null && task.lng != null;
@@ -41,45 +43,50 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
     console.log('Editing task now!');
   };
 
+  const hostId = Number(task.host?.id);
+  const isHost = !!user && user.id === hostId;
+
   return (
-    <section>
-      <div className="flex items-baseline space-x-3">
-        <h2 className="text-lg mb-5 pr-5">{task.title}</h2>
-        <EditButton onClick={handleEdit} />
+    <section className="w-full max-w-[800px]">
+      <div className="flex flex-wrap md:flex-nowrap items-baseline">
+        <h1 className="w-full max-w-[500px] text-lg mb-2 md:mb-5 mr-5">
+          {task.title}
+        </h1>
+        <div className="ml-auto mr-11 md:ml-0">
+          <EditButton onClick={handleEdit} isHost={isHost} />
+        </div>
       </div>
       <h3 className="text-[20px] leading-[20px] mb-5">
         {t('taskDetails.details')}:
       </h3>
-      <div className="flex gap-3 mb-5">
+      <div className="flex gap-3 mb-5 w-full">
         {/* !!!!add mini map !!!!*/}
         <div className="w-[80px] h-[80px] bg-[#00c1ac]"></div>
 
-        <div>
-          <div className="flex flex-col md:flex-row md:gap-6">
-            <h3 className="mb-3 text-base">
+        <div className="flex flex-col">
+          <div className="flex items-start md:gap-7 lg:gap-5 ">
+            <p className="mb-2 text-base">
               <span className="font-semibold">
                 {t('taskDetails.location')}:
               </span>{' '}
               {task.locationName}
-            </h3>
-            <div className="flex gap-2 mb-2 md:mb-6">
-              {hasCoords && (
-                <Button
-                  type="button"
-                  variant="iconOnly"
-                  onClick={handleShowOnMap}
-                  className="flex items-center gap-1 group"
-                >
-                  <Location className="text-[#00c1ac] transition-colors duration-300 group-hover:stroke-[#999999]" />
-                  <span className="cursor-pointer underline text-base text-[#00c1ac] transition-colors duration-300 group-hover:text-[#999999]">
-                    {t('taskDetails.showOnMap')}
-                  </span>
-                </Button>
-              )}
-            </div>
+            </p>
+            {hasCoords && (
+              <Button
+                type="button"
+                variant="iconOnly"
+                onClick={handleShowOnMap}
+                className="hidden md:flex items-center h-6 gap-2 group p-0"
+              >
+                <Location className="text-[#00c1ac] transition-colors duration-300 group-hover:stroke-[#999999]" />
+                <span className="cursor-pointer underline text-base text-[#00c1ac]">
+                  {t('taskDetails.showOnMap')}
+                </span>
+              </Button>
+            )}
           </div>
 
-          <ul className="flex gap-3">
+          <ul className="flex gap-3 items-center">
             <li>
               <Image
                 src={task.picture || '/task/no-image.png'}

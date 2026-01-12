@@ -1,7 +1,9 @@
 'use client';
 
-import { AnimationTabs, Button, Section, TaskFilter } from '@/components';
 import { Plus } from '@/components/icons';
+import { AnimationTabs } from '@/components/ui/AnimationTabs';
+import { Button } from '@/components/ui/Button';
+import { Section } from '@/components/ui/Section';
 import { useMediaQuery } from '@/hooks';
 import { useRouteMatch } from '@/hooks/useRouteMatch';
 import { ContentPanelProps } from '@/types';
@@ -12,7 +14,6 @@ import { JSX, useState } from 'react';
 export const AccountContentPanel = ({
   views,
   viewComponents,
-  onFilterChange,
 }: ContentPanelProps): JSX.Element => {
   const t = useTranslations('account');
   const locale = useLocale();
@@ -51,12 +52,6 @@ export const AccountContentPanel = ({
               </Button>
             )}
           </div>
-          {activeData?.id === 'task' && (
-            <TaskFilter
-              role="ADMIN"
-              onChange={(status) => onFilterChange(status)}
-            />
-          )}
           {viewComponents[activeData.id]}
         </div>
       )}

@@ -17,5 +17,10 @@
   "delete": "Delete",
   "confirmDelete": "Are you sure you want to delete the card?",
   "processing": "Processing...",
-  "donate": "Donate"
+  "donate": "Donate",
+    "checkout": {
+    "errorCreateSession": "Unable to create checkout session. Please try again.",
+    "paymentUnavailable": "Payment system is unavailable.",
+    "unexpectedError": "An unexpected error has occurred."
+  }
 }

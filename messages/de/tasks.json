@@ -34,5 +34,13 @@
   },
     "task": {
     "notFound": "Aufgabe nicht gefunden"
+  },
+    "finishTaskModal": {
+    "title": "Ist Ihre Aufgabe wirklich erledigt?",
+    "message": "Wählen Sie „Bestätigen“, um Ihre Aufgabe zu schließen.",
+    "buttons": {
+      "cancel": "Abbrechen",
+      "confirm": "Bestätigen"
+    }
   }
 }

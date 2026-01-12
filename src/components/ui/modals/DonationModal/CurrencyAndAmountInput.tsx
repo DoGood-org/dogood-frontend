@@ -1,15 +1,22 @@
 'use client';
 
 import React, { JSX } from 'react';
-import { Controller } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormRegister,
+} from 'react-hook-form';
 import { useTranslations } from 'next-intl';
-import { CurrencySelect, Input } from '@/components';
+import { Input } from '@/components/ui/Input';
+import { CurrencySelect } from './CurrencySelect';
+import { DonationFormValues } from '@/lib/validation/donationSchema';
 
 interface CurrencyAndAmountProps {
-  control: any;
-  register: any;
-  errors: any;
-  touchedFields?: any;
+  control: Control<DonationFormValues>;
+  register: UseFormRegister<DonationFormValues>;
+  errors: FieldErrors<DonationFormValues>;
+  touchedFields?: Partial<Record<keyof DonationFormValues, boolean>>;
   submitCount?: number;
   currencies: { value: string; label: string }[];
   currencyFieldName?: string;

@@ -1,88 +1,96 @@
-import { cookies, headers } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
-const API = process.env.NEXT_PUBLIC_API_URL;
-if (!API) throw new Error('BACKEND_URL / NEXT_PUBLIC_API_URL is not set');
+const BACKEND = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000/';
 
-const backend = API;
-async function forward(req: Request, segs: string[]): Promise<NextResponse> {
-  const url = new URL(req.url);
-  const target = `${backend}/${segs.join('/')}${url.search}`;
+export const runtime = 'nodejs';
 
-  const incoming = await headers();
-  const fwdHeaders = new Headers(incoming); //  copy
-  fwdHeaders.delete('host');
-  fwdHeaders.delete('content-length');
+async function handler(
+  req: NextRequest,
+  { params }: { params: Promise<{ path?: string[] }> }
+): Promise<NextResponse> {
+  const { path } = await params;
 
+  const incomingUrl = new URL(req.url);
+  const subPath = (path ?? []).join('/'); // 'auth/current-user', 'task', etc.
+
+  const target = new URL(subPath, BACKEND);
+  console.log(`Proxying request to: ${target.toString()}`);
+  target.search = incomingUrl.search;
+
+  const headers = new Headers(req.headers);
+  headers.delete('host');
+  headers.delete('content-length');
+
+  // ---- read cookies from Next side ----
   const cookieStore = await cookies();
   const access = cookieStore.get('accessToken')?.value;
   const refresh = cookieStore.get('refreshToken')?.value;
+
   if (access) {
-    console.log('Proxying with access token:');
+    console.log('Proxying with access token');
+    headers.set('authorization', `Bearer ${access}`);
   } else {
-    console.log('No access token cookie found');
-  }
-  if (refresh) {
-    console.log('Proxying with refresh token:');
+    console.log('No access token');
   }
 
-  if (access) fwdHeaders.set('authorization', `Bearer ${access}`);
+  if (refresh) {
+    console.log('Proxying with refresh token ');
+  }
 
   const init: RequestInit = {
     method: req.method,
-    body: ['GET', 'HEAD'].includes(req.method)
-      ? undefined
-      : await req.arrayBuffer(),
-    headers: fwdHeaders,
-    cache: 'no-store',
+    headers,
+    redirect: 'manual',
+    credentials: 'include',
   };
 
-  let r = await fetch(target, init);
+  console.log(`Proxy request method: ${init}`);
 
-  //refresh 1 time if 401
-  if (r.status === 401) {
-    const refreshRes = await fetch(`${url.origin}/api/auth/refresh-token`, {
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    init.body = req.body;
+  }
+
+  const callBackend: () => Promise<any> = () => fetch(target.toString(), init);
+
+  // ---- 1st attempt ----
+  let backendRes = await callBackend();
+
+  // ---- refresh ----
+  if (backendRes.status === 401 && refresh) {
+    const reqUrlObj = new URL(req.url);
+
+    const refreshRes = await fetch(`${reqUrlObj.origin}/auth/refresh-token`, {
       method: 'POST',
       cache: 'no-store',
     });
-    if (refreshRes.ok) r = await fetch(target, init);
+
+    if (refreshRes.ok) {
+      backendRes = await callBackend();
+    }
   }
 
-  return new NextResponse(r.body, { status: r.status, headers: r.headers });
+  // ---- build response ----
+  const body = await backendRes.arrayBuffer();
+
+  const res = new NextResponse(body, {
+    status: backendRes.status,
+    statusText: backendRes.statusText,
+  });
+
+  backendRes.headers.forEach((value: string, key: string) => {
+    if (key.toLowerCase() === 'content-length') return;
+    res.headers.set(key, value);
+  });
+
+  return res;
 }
 
-export async function GET(
-  req: Request,
-  ctx: { params: Promise<{ path: string[] }> }
-): Promise<NextResponse> {
-  const { path } = await ctx.params;
-  return forward(req, path);
-}
-export async function POST(
-  req: Request,
-  ctx: { params: Promise<{ path: string[] }> }
-): Promise<NextResponse> {
-  const { path } = await ctx.params;
-  return forward(req, path);
-}
-export async function PUT(
-  req: Request,
-  ctx: { params: Promise<{ path: string[] }> }
-): Promise<NextResponse> {
-  const { path } = await ctx.params;
-  return forward(req, path);
-}
-export async function PATCH(
-  req: Request,
-  ctx: { params: Promise<{ path: string[] }> }
-): Promise<NextResponse> {
-  const { path } = await ctx.params;
-  return forward(req, path);
-}
-export async function DELETE(
-  req: Request,
-  ctx: { params: Promise<{ path: string[] }> }
-): Promise<NextResponse> {
-  const { path } = await ctx.params;
-  return forward(req, path);
-}
+export {
+  handler as GET,
+  handler as POST,
+  handler as PUT,
+  handler as PATCH,
+  handler as DELETE,
+  handler as OPTIONS,
+};

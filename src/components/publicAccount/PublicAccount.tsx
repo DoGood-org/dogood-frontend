@@ -1,14 +1,12 @@
 'use client';
 
-import {
-  Section,
-  UserDescription,
-  UserOrganizationSection,
-  UserReviewSection,
-  UserTaskSection,
-} from '@/components';
 import { JSX } from 'react';
 import { UserDetailedProps } from '@/types';
+import { Section } from '@/components/ui/Section';
+import { UserDescription } from '@/components/account/accountPage/UserDescription';
+import { UserTaskSection } from './UserTaskSection';
+import { UserOrganizationSection } from './UserOrganizationSection';
+import { UserReviewSection } from './UserReviewSection';
 
 export const PublicAccount = ({
   user,

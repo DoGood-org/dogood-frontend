@@ -1,17 +1,17 @@
 'use client';
 
-import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useEffect } from 'react';
-import { EmptyState } from '@/components';
-import { Section } from '@/components/ui/Section';
 import { navigationStore } from '@/zustand/stores/navigationStore';
 import { MessageType } from '@/types/chatType';
 import mocks from './mocks.json';
-
-import { ChatMobileLayout } from './ChatMobileLayout';
-import { ChatDesktopLayout } from './ChatDesktopLayout';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useChats } from '@/hooks/useChats';
 import { useChatMessages } from '@/hooks/useChatMessages';
+
+import { Section } from '@/components/ui/Section';
+import { ChatMobileLayout } from './ChatMobileLayout';
+import { ChatDesktopLayout } from './ChatDesktopLayout';
+import { EmptyState } from './EmptyState';
 
 export const Chat: React.FC = () => {
   const { chats: initialChats, messages: initialMessages } = mocks;

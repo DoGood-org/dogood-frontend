@@ -11,9 +11,10 @@ const buttonVariants = cva(
       variant: {
         default:
           'bg-btn hover:bg-btn-hover focus:bg-btn-hover active:bg-btn-hover text-btn-primary rounded-sm px-3 text-base',
-        ghost: 'text-btn-text text-base border-1 border-transparent',
+        ghost:
+          'text-btn-text text-base border-1 border-transparent group transition-colors duration-500',
         primary:
-          'text-btn-primary text-base bg-btn overflow-hidden hover:bg-btn-hover focus::bg-btn-hover active:bg-btn-active group transition-colors duration-500',
+          'text-btn-text text-base bg-btn overflow-hidden hover:bg-btn-hover focus::bg-btn-hover active:bg-btn-active group transition-colors duration-500',
         secondary:
           'text-btn-secondary border-1 border-btn-outline hover:border-2 hover:border-btn-outline-hover focus::border-btn-outline-hover',
         filters: 'bg-card',
