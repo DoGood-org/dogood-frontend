@@ -1,6 +1,6 @@
 import React from 'react';
 import { Section } from '@/components/ui/Section';
-import { Container } from '@/components';
+import { Container } from '@/components/ui/Container';
 
 import { AboutHeart } from '@/components/icons';
 import { AboutStar } from '@/components/icons';

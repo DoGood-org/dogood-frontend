@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 
 import { Section } from '@/components/ui/Section';
-import { Container } from '@/components';
+import { Container } from '@/components/ui/Container';
 
 import GoodBotImage from '@/assets/images/aboutPage/meetGoodBot.png';
 import { Connect } from '@/components/icons';

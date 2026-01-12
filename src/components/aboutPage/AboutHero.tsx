@@ -7,7 +7,7 @@ import { Globe } from '@/components/icons';
 import { CubeTransparent } from '@/components/icons';
 import { ShieldCheck } from '@/components/icons';
 import { ShootingStar } from '@/components/icons';
-import { Container } from '@/components';
+import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 
 export const AboutHero: React.FC = () => {

@@ -1,9 +1,10 @@
 import { AboutPage } from '@/components/aboutPage/AboutPage';
+import { Tlocale } from '@/types';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 interface Props {
-  params: { locale: string };
+  params: Promise<{ locale: Tlocale }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

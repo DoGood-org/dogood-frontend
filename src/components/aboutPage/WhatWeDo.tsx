@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Section } from '@/components/ui/Section';
-import { Container } from '@/components';
+import { Container } from '@/components/ui/Container';
 
 import whatWeDoImage from '@/assets/images/aboutPage/WhatWeDo.png';
 import { Lock } from '@/components/icons';

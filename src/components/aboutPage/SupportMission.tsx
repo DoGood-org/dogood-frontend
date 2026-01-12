@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Section } from '@/components/ui/Section';
-import { Container } from '@/components';
+import { Container } from '@/components/ui/Container';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { Link } from '@/i18n/navigation';

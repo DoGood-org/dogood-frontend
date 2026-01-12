@@ -5,7 +5,7 @@ import { Rocket } from '@/components/icons';
 import { AboutHeart } from '@/components/icons';
 import { Lamp } from '@/components/icons';
 import { Section } from '@/components/ui/Section';
-import { Container } from '@/components';
+import { Container } from '@/components/ui/Container';
 import { useTranslations } from 'next-intl';
 
 export const OurTeam: React.FC = () => {

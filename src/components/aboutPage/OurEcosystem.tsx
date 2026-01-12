@@ -1,6 +1,6 @@
 import React from 'react';
 import { Section } from '@/components/ui/Section';
-import { Container } from '@/components';
+import { Container } from '@/components/ui/Container';
 import { useTranslations } from 'next-intl';
 import { Businesses } from '@/components/icons';
 import { Ngos } from '@/components/icons';
