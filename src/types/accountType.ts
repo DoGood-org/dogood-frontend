@@ -27,27 +27,56 @@ export interface ContentPanelProps {
   viewComponents: Record<string, React.ReactNode>;
   role?: OrganizationRole | 'USER';
 }
-
 export interface UserDetailedProps {
-  id: string;
+  id: string | number;
   name: string;
-  avatar?: string;
+  // avatar: string | null;
   customerId?: string;
   paymentOptions: PaymentProps[];
   email: string;
   siteRole: string;
-  bio?: string;
-  gender: string;
-  birthDate?: string;
-  phoneNumber?: string;
+  profile: UserProfileProps | null;
+  // bio: string | null;
+  // gender: string;
+  // birthDate: string | null;
+  // phoneNumber?: string;
   userSettings: UserSettingsProps;
-  location?: Location;
+  location?: Location | null;
   hostedTasks?: HostedTaskProps[];
   joinedTasks?: TaskProps[];
   reviewsWritten?: ReviewProps[];
   reviewsReceived?: ReviewProps[];
   organizations?: OrganizationProps[];
 }
+
+export type UserProfileProps = {
+  avatar: string | null;
+  bio: string | null;
+  gender: string;
+  birthDate: string | null;
+  phoneNumber: string | null;
+};
+
+// export interface UserDetailedProps {
+//   id: string | number;
+//   name: string;
+//   avatar?: string;
+//   customerId?: string;
+//   paymentOptions: PaymentProps[];
+//   email: string;
+//   siteRole: string;
+//   bio?: string;
+//   gender: string;
+//   birthDate?: string;
+//   phoneNumber?: string;
+//   userSettings: UserSettingsProps;
+//   location?: Location;
+//   hostedTasks?: HostedTaskProps[];
+//   joinedTasks?: TaskProps[];
+//   reviewsWritten?: ReviewProps[];
+//   reviewsReceived?: ReviewProps[];
+//   organizations?: OrganizationProps[];
+// }
 
 export type PaymentProps = {
   id: number;
