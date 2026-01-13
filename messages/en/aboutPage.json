@@ -1,0 +1,97 @@
+{
+  "aboutData": {
+    "title": "About Us - DoGood Impact Inc.",
+    "description": "Learn more about DoGood Impact Inc., our mission to connect people, causes, and companies through technology-driven kindness and social impact."
+  },
+  "hero": {
+    "title": "We Connect People, Causes, and Companies",
+    "highlight": "DoGood Impact Inc. ",
+    "metaDescription": "is a mission-driven tech company building the next-generation global mutual aid platform — turning kindness into meaningful action.",
+    "cards": {
+      "global": "Global",
+      "transparent": "Transparent",
+      "trusted": "Trusted",
+      "impact": "Impact-Driven"
+    }
+  },
+  "whatWeDo": {
+    "title": "What We Do",
+    "description": "We empower individuals, nonprofits, and communities to easily request and offer help",
+    "cards": {
+      "card1": {
+        "title": "Transparency and Trust",
+        "description": "Every interaction is built on openness and accountability"
+      },
+      "card2": {
+        "title": "Safety Through Verification",
+        "description": "Robust data protection and verification systems keep our community safe"
+      },
+      "card3": {
+        "title": "Measurable Impact",
+        "description": "Every act of kindness is tracked, celebrated, and quantified"
+      }
+    }
+  },
+  "ourMission": {
+    "title": "Our Mission",
+    "title2": "What We Believe",
+    "description": "The platform was born from a simple but powerful observation: millions of people are ready to help, and millions more need support — but too often, they never find each other.",
+    "description2": "We believe that kindness, amplified by technology, has the power to reshape the world."
+  },
+
+  "meetGoodBot": {
+    "title": "Meet GoodBot",
+    "description": "At the heart of our platform is a human-centered AI that connects people, verifies needs, and makes doing good simple, inspiring, and measurable.",
+    "list": {
+      "item1": "Connects people with meaningful opportunities.",
+      "item2": "Verifies needs and ensures authenticity",
+      "item3": "Makes doing good simple and inspiring",
+      "item4": "Measures and celebrates every impact"
+    }
+  },
+  "ourEcosystem": {
+    "title": "Our Ecosystem Enables",
+    "subTitle": "A connected community where everyone can contribute to positive change",
+    "cards": {
+      "Volunteers": {
+        "title": "Volunteers",
+        "description": "Discover real causes to support and make a tangible difference"
+      },
+      "NGOsNonprofits": {
+        "title": "NGOs & Nonprofits",
+        "description": "Coordinate aid efficiently and securely with verified support"
+      },
+      "Businesses": {
+        "title": "Businesses",
+        "description": "Engage teams in meaningful social impact initiatives"
+      },
+      "EveryGoodDeed": {
+        "title": "Every Good Deed",
+        "description": "Recorded, celebrated, and rewarded on our platform"
+      }
+    }
+  },
+  "ourTeam": {
+    "title": "Our Team",
+    "description": "We are a team of innovators, technologists, and social impact leaders — united by the belief that kindness can scale globally.",
+    "list": {
+      "item1": {
+        "itemTitle": "Driven by Innovation",
+        "itemDescription": "Building cutting-edge solutions for global challenges"
+      },
+      "item2": {
+        "itemTitle": "Mission-Focused",
+        "itemDescription": "Every decision guided by our commitment to social good"
+      },
+      "item3": {
+        "itemTitle": "Human-Centered",
+        "itemDescription": "Technology serving compassion and connection"
+      }
+    }
+  },
+  "supportMission": {
+    "title": "Support Our Mission",
+    "description": " Your donation helps us keep the platform free, transparent, and accessible for everyone who wants to make a difference.  Every contribution counts. ❤",
+    "buttonText": "Donate Now"
+  }
+}

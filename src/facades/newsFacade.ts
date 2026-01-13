@@ -1,4 +1,4 @@
-import { getNewsById } from '@/services/newsService';
+import { getNews, getNewsById } from '@/services/newsService';
 import { INewsItem, Tlocale } from '@/types';
 import { cache } from 'react';
 
@@ -11,5 +11,17 @@ export const fetchNewsItem = cache(
     }
 
     return result.data?.data?.post ?? null;
+  }
+);
+
+export const fetchLastNews = cache(
+  async (locale: Tlocale): Promise<INewsItem[]> => {
+    const result = await getNews(locale);
+
+    if (!result.ok) {
+      return [];
+    }
+
+    return result.data?.data?.posts ?? [];
   }
 );
