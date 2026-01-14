@@ -9,7 +9,7 @@ import {
   UserParticipationStatus,
 } from '@/types/tasks.type';
 import { useTranslations } from 'next-intl';
-import { FinishTaskModal } from '@/components/tasks/TaskPage/FinishTaskModal/FinishTaskModal';
+import { FinishTaskModal } from '@/components/tasks/taskPage/FinishTaskModal/FinishTaskModal';
 
 interface TaskControlButtonsProps {
   taskId: string;

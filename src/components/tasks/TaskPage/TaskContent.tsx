@@ -6,8 +6,8 @@ import {
   TaskActionType,
   UserParticipationStatus,
 } from '@/types/tasks.type';
-import { IconButtonGroup } from '@/components/tasks/TaskPage/ButtonGroup/IconButtonGroup';
-import { LastNews } from '@/components/tasks/TaskPage/LastNews/LastNews';
+import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
+import { LastNews } from '@/components/tasks/taskPage/LastNews/LastNews';
 import { INewsItem } from '@/types';
 import { useTranslations } from 'next-intl';
 import { Container } from '@/components/ui/Container';

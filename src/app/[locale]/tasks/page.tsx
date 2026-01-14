@@ -16,11 +16,13 @@ text-foreground
   flex-col
   items-center
   justify-center
+  
+            // my-container 
           // w-full
-          // max-w-[1440px]     // Обмежуємо ширину, щоб на великих моніторах не роз'їжджалося
-          // mx-auto            // ЦЕ ГОЛОВНЕ: центрує блок по горизонталі (Margin X Auto             // Відступ збоку для мобільних
-          // md:pl-[60px]       // Відступ збоку для планшетів
-          // lg:pl-[100px] 
+          // max-w-[1440px]    
+          // mx-auto                  
+          // // md:pl-[60px]       
+          // // lg:pl-[100px] 
   "
     >
       {/* <CreateTask /> */}

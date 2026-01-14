@@ -4,8 +4,8 @@ import { INewsItem } from '@/types';
 import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
 import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
-import { NewsListItems } from './NewsListItems';
 import { useMediaQuery } from '@/hooks';
+import { NewsListItems } from './NewsListItems';
 
 interface LastNewsProps {
   newsItems?: INewsItem[];

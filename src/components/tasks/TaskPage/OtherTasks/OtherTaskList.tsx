@@ -2,9 +2,9 @@
 
 import { IExtendedITaskProps } from '@/types/tasks.type';
 import { useTranslations } from 'next-intl';
-import { OtherTaskItem } from './OtherTaskItem';
 import { Slider } from '@/components/ui/Slider';
 import { useMediaQuery } from '@/hooks';
+import { OtherTaskItem } from '@/components/tasks/taskPage/OtherTasks/OtherTaskItem';
 
 interface OtherListProps {
   tasks: IExtendedITaskProps[];

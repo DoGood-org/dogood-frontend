@@ -13,8 +13,9 @@ export const CreateSection = ({
     <section
       className={`
         rounded-xl
-        background-secondary
-        px-12
+        bg-[#cfcfcf] dark:bg-[#303030]
+        p-5
+        md:p-12
         ${className}
       `}
     >

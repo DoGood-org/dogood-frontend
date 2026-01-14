@@ -17,8 +17,8 @@ export const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
       className={`rounded-lg object-cover ${className}`}
       src={src}
       alt={altText}
-      width={354}
-      height={418}
+      width={415}
+      height={364}
       unoptimized
     />
   );

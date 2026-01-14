@@ -1,7 +1,7 @@
 'use client';
 
 import { ModalWrapper } from '@/components/ui/ModalWrapper';
-import { FinishTaskModalContent } from '@/components/tasks/TaskPage/FinishTaskModal/FinishTaskModalContent';
+import { FinishTaskModalContent } from '@/components/tasks/taskPage/FinishTaskModal/FinishTaskModalContent';
 import { JSX } from 'react';
 import { cn } from '@/lib/utils';
 import { ModalCloseButton } from '@/components/ui/ModalCloseButton';

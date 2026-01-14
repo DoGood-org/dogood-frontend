@@ -6,9 +6,8 @@ import {
 } from '@/components/main/map/mockTasks';
 import { useTranslations } from 'next-intl';
 import { IExtendedITaskProps } from '@/types/tasks.type';
-
-import { OtherTaskList } from './OtherTaskList';
 import { useEffect, useState } from 'react';
+import { OtherTaskList } from './OtherTaskList';
 
 type Props = {
   tasks: IExtendedITaskProps[];

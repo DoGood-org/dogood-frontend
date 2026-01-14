@@ -1,9 +1,9 @@
 'use client';
 
 import { IExtendedITaskProps } from '@/types/tasks.type';
-import { TaskActionButtons } from '../ButtonGroup/TaskActionButtons';
 import { TaskCategoryIconsList } from '@/components/main/map/tasksPanel/TaskCategoryIconList';
 import { Link } from '@/i18n/navigation';
+import { TaskActionButtons } from '@/components/tasks/taskPage/ButtonGroup/TaskActionButtons';
 
 export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
   id,

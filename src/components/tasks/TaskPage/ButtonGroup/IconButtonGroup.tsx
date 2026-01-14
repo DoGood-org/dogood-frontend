@@ -1,8 +1,8 @@
 'use client';
 
 import { TaskCategoryIconsList } from '@/components/main/map/tasksPanel/TaskCategoryIconList';
-import { FavoriteToggleButton } from '@/components/tasks/TaskPage/ButtonGroup/FavoriteToggleButton';
-import { MapDotButton } from '@/components/tasks/TaskPage/ButtonGroup/MapDotButton';
+import { FavoriteToggleButton } from '@/components/tasks/taskPage/ButtonGroup/FavoriteToggleButton';
+import { MapDotButton } from '@/components/tasks/taskPage/ButtonGroup/MapDotButton';
 import { MarkerCategoryEnum } from '@/types';
 import { useEffect, useState } from 'react';
 

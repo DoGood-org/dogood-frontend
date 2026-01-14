@@ -1,8 +1,8 @@
-import { Step1BasicInfo } from '@/components/tasks/CreatePage/steps/Step1BasicInfo';
-import { Step2Category } from '@/components/tasks/CreatePage/steps/Step2Category';
-import { Step3Description } from '@/components/tasks/CreatePage/steps/Step3Description';
-import { Step4Payment } from '@/components/tasks/CreatePage/steps/Step4Payment';
-import { Step5Preview } from '@/components/tasks/CreatePage/steps/Step5Preview';
+import { Step1BasicInfo } from '@/components/tasks/сreatePage/steps/BasicInfo/Step1BasicInfo';
+import { Step2Category } from '@/components/tasks/сreatePage/steps/Step2Category';
+import { Step3Description } from '@/components/tasks/сreatePage/steps/Step3Description';
+import { Step4Payment } from '@/components/tasks/сreatePage/steps/Step4Payment';
+import { Step5Preview } from '@/components/tasks/сreatePage/steps/Step5Preview';
 
 export const CREATE_TASK_STEPS = [
   {
