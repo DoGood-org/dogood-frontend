@@ -1,9 +1,9 @@
 'use client';
 
 import type { JSX, ReactNode } from 'react';
-import { CreateSection } from './CreateSection';
+import { StepCard } from './StepCard';
 import { BackNextButtons } from './Buttons/BackNextButtons';
-import { ImagePlaceholder } from './ImagePlaceholder';
+import { ImageUpload } from './ImageUpload';
 
 type StepLayoutProps = {
   children: ReactNode;
@@ -18,15 +18,15 @@ export const StepLayout = ({
 }: StepLayoutProps): JSX.Element => {
   return (
     <div className={`lg:px-20 ${className}`}>
-      <CreateSection>
+      <StepCard>
         <div className="flex gap-6 flex-col lg:flex-row items-center lg:items-baseline md:px-14 lg:px-0">
           <div className="shrink-0">
             <h3 className="text-base mb-1">Add picture</h3>
-            <ImagePlaceholder className="md:w-[432px] md:h-[238px] lg:w-[415px] lg:h-[336px]" />
+            <ImageUpload className="w-[320px] h-[238px] md:w-[432px] md:h-[238px] lg:w-[415px] lg:h-[336px]" />
           </div>
 
-          <div className="flex">
-            <div className="flex-1 flex flex-col justify-between">
+          <div className="flex w-full">
+            <div className="flex-1 flex flex-col justify-between w-full">
               <div>{children}</div>
 
               <div className="flex justify-end">
@@ -35,7 +35,7 @@ export const StepLayout = ({
             </div>
           </div>
         </div>
-      </CreateSection>
+      </StepCard>
     </div>
   );
 };

@@ -10,9 +10,5 @@ export const CreateTask = (): JSX.Element | null => {
   const StepComponent = CREATE_TASK_STEPS[step]?.component;
   if (!StepComponent) return null;
 
-  return (
-    <>
-      <StepComponent />
-    </>
-  );
+  return <StepComponent />;
 };

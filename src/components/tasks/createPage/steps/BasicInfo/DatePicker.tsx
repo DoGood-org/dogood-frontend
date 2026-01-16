@@ -47,14 +47,14 @@ export const DatePicker = ({
             value={value ? format(value, 'dd-MM-yyyy') : ''}
             placeholder={placeholder}
             className={cn(
-              'w-full pr-10 cursor-pointer bg-white text-base text-black placeholder-[#010101] py-3 px-2',
+              'w-full h-[48px] pr-10 cursor-pointer bg-white text-base text-black placeholder-[#010101] py-3 px-2',
               'focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0',
               'rounded-sm border-2 border-[#999999]',
               disabled && 'opacity-50 cursor-not-allowed',
               className
             )}
           />
-          <CalendarIcon className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2" />
+          <CalendarIcon className="absolute w-6 h-6 right-3 top-1/2 -translate-y-1/2" />
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0 bg-text-gray" align="start">

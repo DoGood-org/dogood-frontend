@@ -6,7 +6,7 @@ import { Section } from '@/components/ui/Section';
 
 export const Step1BasicInfo = (): JSX.Element => {
   return (
-    <Section withContainer={true} className="md:my-8 lg:my-8">
+    <Section className="md:my-8 lg:my-8">
       <StepHeader step={1} />
       <BasicInfo />
     </Section>

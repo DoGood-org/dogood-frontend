@@ -15,10 +15,14 @@ type BasicInfoFormValues = {
   time?: string;
 };
 
+export const formInputClasses =
+  'bg-white h-[48px] text-base text-black placeholder-black ' +
+  'py-3 px-2 rounded-sm border-2 border-field ' +
+  'focus-visible:ring-0 focus-visible:ring-offset-0';
+
 export const BasicInfoForm = (): JSX.Element => {
   const {
     control,
-    // register,
     formState: { errors },
   } = useForm<BasicInfoFormValues>({
     defaultValues: {
@@ -36,8 +40,8 @@ export const BasicInfoForm = (): JSX.Element => {
         <Label
           htmlFor="title"
           className="mb-2
-        text-[#696969]
-        dark:text-[#999999]"
+          text-text-help
+          dark:text-gray"
         >
           Title
         </Label>
@@ -47,12 +51,10 @@ export const BasicInfoForm = (): JSX.Element => {
           render={({ field }) => (
             <Input
               {...field}
-              onChange={field.onChange}
               type="text"
               placeholder="Title"
               aria-label="Title"
-              className="bg-white text-base text-black placeholder-black py-3 px-2 rounded-sm border-2
-              border-[#999999] focus-visible:ring-0 focus-visible:ring-offset-0"
+              className={formInputClasses}
             />
           )}
         />
@@ -62,8 +64,8 @@ export const BasicInfoForm = (): JSX.Element => {
         <Label
           htmlFor="location"
           className="mb-2
-        text-[#696969]
-        dark:text-[#999999]"
+          text-text-help
+          dark:text-gray"
         >
           Location
         </Label>
@@ -73,12 +75,10 @@ export const BasicInfoForm = (): JSX.Element => {
           render={({ field }) => (
             <Input
               {...field}
-              onChange={field.onChange}
               type="text"
               placeholder="Location"
               aria-label="Location"
-              className="bg-white text-base text-black placeholder-black py-3 px-2
-              rounded-sm border-2 border-[#999999] focus-visible:ring-0 focus-visible:ring-offset-0"
+              className={formInputClasses}
             />
           )}
         />
@@ -86,7 +86,11 @@ export const BasicInfoForm = (): JSX.Element => {
 
       <div className="flex gap-6">
         <div className="flex-1">
-          <Label className="mb-2 block text-sm font-medium text-[#696969] dark:text-[#999999]">
+          <Label
+            htmlFor="startDate"
+            className="mb-2 block text-sm font-medium
+            text-text-help dark:text-gray"
+          >
             Date from
           </Label>
           <Controller
@@ -108,7 +112,11 @@ export const BasicInfoForm = (): JSX.Element => {
         </div>
 
         <div className="flex-1">
-          <Label className="mb-2 block text-sm font-medium text-[#696969] dark:text-[#999999]">
+          <Label
+            htmlFor="finishDate"
+            className="mb-2 block text-sm font-medium 
+            text-text-help dark:text-gray"
+          >
             Date to
           </Label>
           <Controller
@@ -131,17 +139,20 @@ export const BasicInfoForm = (): JSX.Element => {
       </div>
 
       <div>
-        <Label className="mb-2 block text-sm font-medium text-[#696969] dark:text-[#999999]">
+        <Label
+          htmlFor="time"
+          className="mb-2 block text-sm font-medium
+          text-text-help dark:text-gray"
+        >
           Time
         </Label>
 
         <Controller
           name="time"
           control={control}
-          defaultValue=""
           render={({ field }) => (
             <TimePicker
-              value={field.value}
+              value={field.value ?? ''}
               setValue={field.onChange}
               placeholder="Time"
             />

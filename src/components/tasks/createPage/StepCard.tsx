@@ -5,7 +5,7 @@ interface WizardSectionProps {
   className?: string;
 }
 
-export const CreateSection = ({
+export const StepCard = ({
   children,
   className = '',
 }: WizardSectionProps): JSX.Element => {
@@ -14,7 +14,8 @@ export const CreateSection = ({
       className={`
         rounded-xl
         bg-[#cfcfcf] dark:bg-[#303030]
-        p-5
+        px-4
+        py-12
         md:p-12
         ${className}
       `}
