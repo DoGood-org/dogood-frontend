@@ -10,9 +10,9 @@ import { cn } from '@/lib/utils';
 import { TimeIcon } from '@/components/icons';
 
 const times = Array.from({ length: 24 * 2 }, (_, i) => {
-  const h = String(Math.floor(i / 2)).padStart(2, '0');
+  const h = Math.floor(i / 2);
   const m = i % 2 === 0 ? '00' : '30';
-  return `${h}:${m}`;
+  return `${h}-${m}`;
 });
 
 interface TimePickerProps {
@@ -37,12 +37,6 @@ export const TimePicker = ({
     }
   }, [open]);
 
-  const formatDisplayTime = (time: string): string => {
-    if (!time) return '';
-    const [h, m] = time.split(':');
-    return `${Number(h)}-${m}`;
-  };
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
@@ -52,9 +46,7 @@ export const TimePicker = ({
           !value && 'text-gray-500'
         )}
       >
-        <span className={'text-black'}>
-          {value ? formatDisplayTime(value) : placeholder}
-        </span>
+        <span className={'text-black'}>{value ? value : placeholder}</span>
         <TimeIcon className="w-6 h-6" />
       </PopoverTrigger>
 
@@ -67,9 +59,9 @@ export const TimePicker = ({
             const isSelected = t === value;
             return (
               <button
-                type="button"
                 key={t}
                 ref={isSelected ? selectedRef : null}
+                type="button"
                 className={cn(
                   'px-4 py-2 h-[48px] cursor-pointer transition-colors',
                   'hover:bg-white/20',

@@ -3,7 +3,7 @@
 import type { JSX, ReactNode } from 'react';
 import { StepCard } from './StepCard';
 import { BackNextButtons } from './Buttons/BackNextButtons';
-import { ImageUpload } from './ImageUpload';
+import { PictureField } from './PictureField';
 
 type StepLayoutProps = {
   children: ReactNode;
@@ -22,7 +22,7 @@ export const StepLayout = ({
         <div className="flex gap-6 flex-col lg:flex-row items-center lg:items-baseline md:px-14 lg:px-0">
           <div className="shrink-0">
             <h3 className="text-base mb-1">Add picture</h3>
-            <ImageUpload className="w-[320px] h-[238px] md:w-[432px] md:h-[238px] lg:w-[415px] lg:h-[336px]" />
+            <PictureField />
           </div>
 
           <div className="flex w-full">

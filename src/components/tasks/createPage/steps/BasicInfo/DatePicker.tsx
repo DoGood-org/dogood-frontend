@@ -15,17 +15,19 @@ import { CalendarIcon } from '@/components/icons';
 interface DatePickerProps {
   value?: Date;
   onChange: (date?: Date) => void;
+  onBlur?: () => void;
   placeholder?: string;
   className?: string;
-  disabled?: boolean;
+  disabledDate?: (date: Date) => boolean;
 }
 
 export const DatePicker = ({
   value,
   onChange,
+  onBlur,
   placeholder = 'Select date',
   className,
-  disabled = false,
+  disabledDate,
 }: DatePickerProps): React.JSX.Element => {
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
 
@@ -39,18 +41,17 @@ export const DatePicker = ({
       <PopoverTrigger asChild>
         <div
           className="relative"
-          onClick={() => !disabled && setIsPopoverOpen(true)}
+          onClick={() => setIsPopoverOpen(true)}
+          onBlur={onBlur}
         >
           <Input
             readOnly
-            disabled={disabled}
             value={value ? format(value, 'dd-MM-yyyy') : ''}
             placeholder={placeholder}
             className={cn(
               'w-full h-[48px] pr-10 cursor-pointer bg-white text-base text-black placeholder-[#010101] py-3 px-2',
               'focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0',
               'rounded-sm border-2 border-[#999999]',
-              disabled && 'opacity-50 cursor-not-allowed',
               className
             )}
           />
@@ -62,7 +63,7 @@ export const DatePicker = ({
           mode="single"
           selected={value}
           onSelect={handleSelect}
-          disabled={(date) => date > new Date()}
+          disabled={disabledDate}
           captionLayout="dropdown"
           className="w-full h-[320px] text-form-field border-none"
         />

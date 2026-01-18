@@ -1,4 +1,5 @@
 'use client';
+
 import { JSX } from 'react';
 import { StepHeader } from '../../StepHeader';
 import { BasicInfo } from './BasicInfo';

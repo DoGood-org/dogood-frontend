@@ -1,16 +1,14 @@
+'use client';
+
 import { EditIcon } from '@/components/icons';
 import Image from 'next/image';
 import { CldUploadWidget } from 'next-cloudinary';
 import { JSX } from 'react';
-
-interface UploadResultInfo {
-  secure_url?: string;
-  public_id?: string;
-}
+import { UploadResultInfo } from '@/types/createTask.type';
 
 interface ImageUploadProps {
   image?: UploadResultInfo | null;
-  setImage?: React.Dispatch<React.SetStateAction<UploadResultInfo | null>>;
+  setImage?: (image: UploadResultInfo | null) => void;
   defaultImage?: string | null;
   label?: string;
   className?: string;
@@ -26,8 +24,8 @@ export const ImageUpload = ({
   return (
     <div className={`relative ${className}`}>
       <Image
-        className="rounded-lg object-cover w-full h-full"
-        src={image?.secure_url || defaultImage || '/task/no-image.png'}
+        className="rounded-lg object-cover"
+        src={image?.secure_url || defaultImage || ''}
         alt="Uploaded image"
         width={415}
         height={364}
@@ -36,9 +34,12 @@ export const ImageUpload = ({
 
       <CldUploadWidget
         uploadPreset="dogood"
-        onSuccess={({ info }) =>
-          info && typeof info !== 'string' && setImage?.(info)
-        }
+        onSuccess={(result) => {
+          const info = result.info;
+          if (info && typeof info === 'object' && 'secure_url' in info) {
+            setImage?.(info as UploadResultInfo);
+          }
+        }}
       >
         {({ open }) => (
           <button
