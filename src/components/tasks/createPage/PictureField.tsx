@@ -14,10 +14,9 @@ export const PictureField = ({
 }: PictureFieldProps): JSX.Element => {
   const {
     control,
-    watch,
     formState: { errors },
   } = useFormContext<BasicInfoFormValues>();
-  const defaultImage = watch('picture') || '/task/no-image.png';
+  const defaultImage = '/task/no-image.png';
 
   return (
     <div className={className}>

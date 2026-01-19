@@ -23,15 +23,22 @@ export const ImageUpload = ({
 }: ImageUploadProps): JSX.Element => {
   return (
     <div className={`relative ${className}`}>
-      <Image
-        className="rounded-lg object-cover"
-        src={image?.secure_url || defaultImage || ''}
-        alt="Uploaded image"
-        width={415}
-        height={364}
-        unoptimized
-      />
-
+      <div
+        className="
+          relative shrink-0
+          w-[320px] h-[238px]
+          md:w-[432px] md:h-[238px]
+          lg:w-[415px] lg:h-[336px]
+        "
+      >
+        <Image
+          className="rounded-lg object-cover"
+          src={image?.secure_url || defaultImage || ''}
+          alt="Uploaded image"
+          fill
+          unoptimized
+        />
+      </div>
       <CldUploadWidget
         uploadPreset="dogood"
         onSuccess={(result) => {
