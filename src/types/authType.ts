@@ -1,4 +1,5 @@
 import { HostedTaskProps, TaskProps, UserProfileProps } from './accountType';
+import { Tlocale } from './locale';
 import { OrganizationProps } from './organization';
 import { ReviewProps } from './reviewType';
 
@@ -9,7 +10,8 @@ export interface UseAuth {
 }
 export interface IUserSettings {
   theme: 'light' | 'dark';
-  language: string;
+  // language: string;
+  language: Tlocale;
 }
 
 export interface User {
@@ -18,7 +20,7 @@ export interface User {
   email: string;
   avatarUrl?: string;
   siteRole?: string;
-  userSettings?: IUserSettings;
+  userSettings: IUserSettings;
 }
 
 export interface ICurrentUser extends User {

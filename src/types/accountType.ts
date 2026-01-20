@@ -19,7 +19,7 @@ export interface IUserAccount {
   email: string;
   avatarUrl?: string;
   siteRole?: string;
-  settings?: IUserSettings;
+  userSettings?: IUserSettings;
 }
 
 export interface ContentPanelProps {
@@ -125,7 +125,7 @@ export type TaskListProps = {
 
 export interface IUserApiResponse {
   status: string;
-  // data: {
-  user: UserDetailedProps;
-  // };
+  data: {
+    user: UserDetailedProps;
+  };
 }
