@@ -25,6 +25,7 @@ export { default as Diners } from './Diners';
 export { default as Discover } from './Discover';
 export { default as DiscoverCard } from './DiscoverCard';
 export { default as Dollar } from './Dollar';
+export { default as Donation } from './Donation';
 export { default as Drop } from './Drop';
 export { default as Edit } from './Edit';
 export { default as EditIcon } from './EditIcon';

@@ -26,7 +26,7 @@ export const StepLayout = ({
           </div>
 
           <div className="flex w-full">
-            <div className="flex-1 flex flex-col justify-between w-full">
+            <div className="flex-1 flex flex-col">
               <div>{children}</div>
 
               <div className="flex justify-end">

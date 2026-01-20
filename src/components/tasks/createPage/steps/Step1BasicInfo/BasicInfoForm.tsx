@@ -40,7 +40,7 @@ export const BasicInfoForm = (): JSX.Element => {
           />
         )}
       </FormField>
-      <div className="flex gap-6">
+      <div className="flex flex-col gap-6 md:flex-row">
         <FormField name="startDate" label="Date from" required>
           {(field) => (
             <DatePicker

@@ -16,14 +16,19 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       {showBack && (
         <Button
           variant="secondary"
-          className="hover:border"
+          className="hover:border px-10 py-3 md:px-6"
           onClick={prevCreateStep}
           size="lg"
         >
           Go back
         </Button>
       )}
-      <Button variant="primary" size="lg" onClick={nextCreateStep}>
+      <Button
+        variant="primary"
+        size="lg"
+        className="px-10 py-3 md:px-6"
+        onClick={nextCreateStep}
+      >
         Next step
       </Button>
     </div>
