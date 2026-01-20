@@ -19,15 +19,16 @@ export const UserDescription = ({
   user: UserDetailedProps;
 }): JSX.Element => {
   const t = useTranslations('account');
-  const { avatar, name, email, siteRole, bio, location, phoneNumber } = user;
+  const { profile, name, email, siteRole, location } = user;
+  // const { avatar, bio, phoneNumber } = profile;
   const isPublicProfilePage = useRouteMatch('/profile');
   const locale = useLocale();
 
   return (
     <div className="flex flex-col md:flex-row gap-11 lg:gap-20">
-      {avatar ? (
+      {profile?.avatar ? (
         <Image
-          src={avatar}
+          src={profile?.avatar}
           alt={`${name} avatar`}
           width={353}
           height={352}
@@ -51,10 +52,10 @@ export const UserDescription = ({
             {formatLocation(location)}
           </p>
         )}
-        {phoneNumber && (
+        {profile?.phoneNumber && (
           <p className="flex gap-2 text-text-help mt-6">
             <Phone />
-            {phoneNumber}
+            {profile?.phoneNumber}
           </p>
         )}
         {email && (
@@ -63,10 +64,10 @@ export const UserDescription = ({
             {email}
           </p>
         )}
-        {bio ? (
+        {profile?.bio ? (
           <>
             <h3 className="mt-6">{t('description')}</h3>
-            <p className="whitespace-pre-line mt-6 text-base">{bio}</p>
+            <p className="whitespace-pre-line mt-6 text-base">{profile?.bio}</p>
           </>
         ) : (
           <UserNoDescription />
