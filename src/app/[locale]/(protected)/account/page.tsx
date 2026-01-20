@@ -1,9 +1,16 @@
 import { Account } from '@/components/account/accountPage/Account';
-import React from 'react';
-import { mockUser } from '@/data/mockUser';
+import { JSX } from 'react';
+import { fetchCurrentUser } from '@/facades/accountFacade';
+import { notFound } from 'next/navigation';
+// import { useAuth } from '@/hooks';
 
-const AccountPage: React.FC = () => {
-  return <Account user={mockUser} />;
-};
+export default async function AccountPage(): Promise<JSX.Element> {
+  const user = await fetchCurrentUser();
+  console.log('AccountPage -> ', user);
 
-export default AccountPage;
+  if (!user) {
+    notFound();
+  }
+
+  return <Account user={user} />;
+}

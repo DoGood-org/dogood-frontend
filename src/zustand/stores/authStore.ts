@@ -9,7 +9,7 @@
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import type { ICurrentUser, User } from '@/types';
+import type { ICurrentUser } from '@/types';
 import {
   AuthService,
   IAuthResponse,
@@ -28,7 +28,7 @@ type Status =
   | 'forbidden'; // 403 from API;
 
 type TAuthState = {
-  user: User | ICurrentUser | null;
+  user: ICurrentUser | null;
   isLoggedIn: boolean;
   isEmailVerified: boolean;
 
