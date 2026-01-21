@@ -1,45 +1,25 @@
 'use client';
 
-import { Input } from '@/components/ui/Input';
 import { JSX } from 'react';
-import { DatePicker } from './DatePicker';
-import { TimePicker } from './TimePicker';
-import { FormField } from './FormField';
+import { DatePicker } from '../../Form/DatePicker';
+import { TimePicker } from '../../Form/TimePicker';
+import { FormField } from '../../Form/FormField';
 import { useFormContext } from 'react-hook-form';
 import { BasicInfoFormValues } from '@/types/createTask.type';
-
-export const formInputClasses =
-  'bg-white h-[48px] text-base text-black placeholder-black ' +
-  'py-3 px-2 rounded-sm border-2 border-[#999999] ' +
-  'focus-visible:ring-0 focus-visible:ring-offset-0';
+import { FormInput } from '../../Form/FormInput';
 
 export const BasicInfoForm = (): JSX.Element => {
   const { getValues } = useFormContext<BasicInfoFormValues>();
   return (
     <form className="flex flex-col gap-2 mb-9 lg:mb-12">
-      <FormField name="title" label="Title" required>
-        {(field) => (
-          <Input
-            {...field}
-            id={field.name}
-            type="text"
-            placeholder="Title"
-            className={formInputClasses}
-          />
-        )}
-      </FormField>
-      <FormField name="location" label="Location" required>
-        {(field) => (
-          <Input
-            {...field}
-            id={field.name}
-            type="text"
-            placeholder="Location"
-            aria-label="Location"
-            className={formInputClasses}
-          />
-        )}
-      </FormField>
+      <FormInput name="title" label="Title" placeholder="Title" required />
+
+      <FormInput
+        name="location"
+        label="Location"
+        placeholder="Location"
+        required
+      />
       <div className="flex flex-col gap-6 md:flex-row">
         <FormField name="startDate" label="Date from" required>
           {(field) => (

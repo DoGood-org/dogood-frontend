@@ -1,6 +1,6 @@
 import { Step1BasicInfo } from '@/components/tasks/createPage/steps/Step1BasicInfo/Step1BasicInfo';
 import { Step2Category } from '@/components/tasks/createPage/steps/Step2Categories/Step2Category';
-import { Step3Description } from '@/components/tasks/createPage/steps/Step3Description';
+import { Step3Description } from '@/components/tasks/createPage/steps/Step3Description/Step3Description';
 import { Step4Payment } from '@/components/tasks/createPage/steps/Step4Payment';
 import { Step5Preview } from '@/components/tasks/createPage/steps/Step5Preview';
 
