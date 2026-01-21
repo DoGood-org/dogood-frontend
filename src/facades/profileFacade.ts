@@ -5,9 +5,9 @@ import { cache } from 'react';
 
 export const fetchUserById = cache(
   async (userId: string): Promise<UserDetailedProps | null> => {
-    const user = await getUserById(userId);
+    const result = await getUserById(userId);
 
-    if (!user) notFound();
-    return user;
+    if (!result.ok) notFound();
+    return result.data.data.user;
   }
 );
