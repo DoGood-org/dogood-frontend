@@ -9,6 +9,7 @@ export const enum MarkerCategoryEnum {
   MyPosition = 'myPosition',
   Default = 'default',
   MyPin = 'myPin',
+  Donation = 'donation',
 }
 export const enum EnumMapLayers {
   Satellite = 'EsriSatellite',

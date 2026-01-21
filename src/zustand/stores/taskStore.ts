@@ -38,12 +38,22 @@ type TTaskStore = TTaskState &
   TCreateTaskActions;
 
 export const useTaskStore = create<TTaskStore>()(
-  persist<TTaskStore, [], [], Pick<TTaskState, 'tasks' | 'joinedTasks'>>(
+  persist<
+    TTaskStore,
+    [],
+    [],
+    Pick<
+      TTaskState & TCreateTaskState,
+      'tasks' | 'joinedTasks' | 'createStep' | 'createTaskDraft'
+    >
+  >(
     (set, get) => ({
       tasks: [],
       joinedTasks: [],
       tasksByKey: {},
       highlightedTaskId: null,
+      createStep: 0,
+      createTaskDraft: {},
 
       setTasks: (tasks): any => set({ tasks }),
       setJoinedTasks: (tasks): any => set({ joinedTasks: tasks }),
@@ -84,8 +94,6 @@ export const useTaskStore = create<TTaskStore>()(
         });
       },
       setHighlightedTaskId: (taskId): any => set({ highlightedTaskId: taskId }),
-      createStep: 0,
-      createTaskDraft: {},
 
       nextCreateStep: (): void => {
         set((state) => ({
@@ -120,10 +128,17 @@ export const useTaskStore = create<TTaskStore>()(
     }),
     {
       name: 'task-storage',
-      partialize: function (state): Pick<TTaskState, 'tasks' | 'joinedTasks'> {
+      partialize: function (
+        state
+      ): Pick<
+        TTaskState & TCreateTaskState,
+        'tasks' | 'joinedTasks' | 'createStep' | 'createTaskDraft'
+      > {
         return {
           tasks: state.tasks,
           joinedTasks: state.joinedTasks,
+          createStep: state.createStep,
+          createTaskDraft: state.createTaskDraft,
         };
       },
     }

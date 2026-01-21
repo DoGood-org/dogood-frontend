@@ -42,7 +42,7 @@ export const TimePicker = ({
       <PopoverTrigger
         className={cn(
           'w-full flex justify-between items-center px-2 py-3 rounded-sm border-2',
-          'border-[#999999] bg-white hover:bg-gray-50 transition-colors text-left',
+          'border-[#999999] bg-white transition-colors text-left',
           !value && 'text-gray-500'
         )}
       >
@@ -57,6 +57,7 @@ export const TimePicker = ({
         <div className="flex flex-col">
           {times.map((t) => {
             const isSelected = t === value;
+            const displayTime = t.replace('-', ':');
             return (
               <button
                 key={t}
@@ -72,7 +73,7 @@ export const TimePicker = ({
                   setOpen(false);
                 }}
               >
-                {t}
+                {displayTime}
               </button>
             );
           })}

@@ -10,7 +10,7 @@ import { BasicInfoFormValues } from '@/types/createTask.type';
 
 export const formInputClasses =
   'bg-white h-[48px] text-base text-black placeholder-black ' +
-  'py-3 px-2 rounded-sm border-2 border-field ' +
+  'py-3 px-2 rounded-sm border-2 border-[#999999] ' +
   'focus-visible:ring-0 focus-visible:ring-offset-0';
 
 export const BasicInfoForm = (): JSX.Element => {

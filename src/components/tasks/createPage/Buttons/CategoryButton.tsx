@@ -28,7 +28,7 @@ export const CategoryButton = ({
         className={cn(
           colorClass,
           'relative flex items-center justify-start gap-2 h-[56px] w-full',
-          isSelected ? 'border border-white' : ''
+          isSelected ? 'border-2 border-white' : ''
         )}
       >
         {Icon && (
