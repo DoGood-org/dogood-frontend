@@ -38,7 +38,7 @@ export const UserDescription = ({
         <UserNoAvatar />
       )}
 
-      <div>
+      <div className="w-full">
         <div className="flex justify-between">
           <h2 className="text-h2-m md:text-h2 lg:text-h2-d">{name}</h2>
           {isPublicProfilePage && <ReportUser />}
