@@ -40,7 +40,7 @@ export const ContactSupportSection = (): React.JSX.Element => {
           className="rounded-xl object-fill mb-4 mx-auto md:mb-0 md:absolute md:-top-28 md:-right-4 lg:-top-5 lg:right-6"
         />
         <div className="bg-btn-active p-12 rounded-lg ">
-          <p className="mb-6 md:text-h2-m md:w-[341px] md:mb-4 lg:text-h2 lg:w-[654px] lg:mb-[134px]">
+          <p className="mb-6 md:text-h2-m md:w-[341px] md:mb-4 lg:text-h2 lg:w-[654px] lg:mb-[134px] text-foreground">
             {t('contactSupportText')}
           </p>
           <Button

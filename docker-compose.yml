@@ -3,7 +3,7 @@ services:
     image: redis:latest
     container_name: redis-front
     ports:
-      - "6379:6379"
+      - '6379:6379'
     restart: unless-stopped
     networks:
       - dev-network
@@ -15,14 +15,14 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "5444:5432"
+      - '5444:5432'
     restart: unless-stopped
     env_file:
       - .env
     networks:
       - dev-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER}']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -35,11 +35,12 @@ services:
       dockerfile: Dockerfile
       target: dev
     container_name: dogood-front
-    command: bash -c "chmod 777 entrypoint.sh && ./entrypoint.sh && sleep infinity"
+    command:
+      bash -c "chmod 777 entrypoint.sh && ./entrypoint.sh && sleep infinity"
     ports:
-      - "3000:3000"
-      - "5000:5000"
-      - "5555:5555"
+      - '3000:3000'
+      - '5000:5000'
+      - '5555:5555'
     env_file:
       - .env
     depends_on:
@@ -53,6 +54,7 @@ services:
     volumes:
       - ./:/frontend
       - /frontend/node_modules
+      - next_cache:/frontend/.next
 
 networks:
   dev-network:

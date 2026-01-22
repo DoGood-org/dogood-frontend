@@ -3,40 +3,48 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { Rating } from '../ui/Rating';
 import { Button } from '../ui/Button';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { UserNoAvatar } from '../account/accountPage/UserNoAvatar';
 import { IUserItemProps } from '@/types/userReviewsType';
 import { ReviewsFormModal } from './ReviewsFormModal';
+import { useRouter } from 'next/navigation';
 
 export const UserItem: React.FC<IUserItemProps> = ({
   user: { id, name, avatar, rating },
 }): React.JSX.Element => {
   const t = useTranslations('reviews');
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  const locale = useLocale();
+
+  const handleSeeProfile = (): void => {
+    router.push(`${locale}/profile/${id}`);
+  };
   return (
-    <div className="flex flex-col w-[337px] md:flex-row md:w-[628px] lg:w-[606px] md:gap-6 bg-card rounded-xl p-8 md:p-4 lg:p-6 items-center">
+    <div className="flex flex-col w-[321px] md:flex-row md:w-[628px] lg:w-[677px] md:gap-6 bg-card rounded-xl p-4 md:p-6 lg:p-6 items-center">
       {avatar ? (
         <Image
           src={avatar}
           alt={name}
-          width={273}
+          width={289}
           height={273}
-          className="rounded-[10px] object-cover w-[273px] h-[273px] md:w-[150px] md:h-[150px] object-cover shrink-0"
+          className="rounded-[10px] object-cover w-[289px] h-[273px] md:w-[120px] md:h-[120px] object-cover shrink-0 mb-8 md:mb-0"
         />
       ) : (
-        <UserNoAvatar className="rounded-[10px] w-[273px] h-[273px] md:w-[150px] md:h-[150px] object-cover shrink-0" />
+        <UserNoAvatar className="rounded-[10px] w-[289px] h-[273px] md:w-[120px] md:h-[120px] object-cover shrink-0 mb-8 md:mb-0" />
       )}
-      <div className="flex flex-col gap-8 w-full md:gap-0 md:items-stretch md:h-[150px]">
+      <div className="flex flex-col gap-8 w-full md:gap-6 md:items-stretch md:h-[104px]">
         <span className="flex flex-col gap-2 justify-start md:flex-row md:justify-between lg:justify-start md:items-center w-full">
-          <h2 className="text-h2-m md:text-base md:ml-1 lg:text-h3">
+          <h3 className="text-h3 md:text-base md:ml-1 lg:text-h3">
             <span className="block">{name}</span>
-          </h2>
+          </h3>
           <Rating rating={rating} className="p-2 block md:p-1 lg:p-2" />
         </span>
         <div className="flex justify-between md:gap-3 lg:gap-6 md:justify-end mt-auto lg:text-base">
           <Button
             variant="secondary"
-            className="px-5 md:px-2 h-[38px] lg:h-12 text-xs lg:text-base lg:px-6"
+            className="px-5 md:px-2 h-[38px] lg:h-12 text-base lg:px-6"
+            onClick={handleSeeProfile}
           >
             {t('seeProfile')}
           </Button>
