@@ -10,7 +10,7 @@ const formInputClasses =
   'py-3 px-2 rounded-sm border-2 border-[#999999] ' +
   'focus-visible:ring-0 focus-visible:ring-offset-0 w-full';
 
-interface FormInputProps<T extends FieldValues> {
+export interface FormInputProps<T extends FieldValues> {
   name: Path<T>;
   label: string;
   required?: boolean;

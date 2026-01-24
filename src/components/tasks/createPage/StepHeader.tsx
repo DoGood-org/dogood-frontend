@@ -15,12 +15,12 @@ export const StepHeader = ({
 }: StepHeaderProps): JSX.Element => {
   return (
     <div className="relative flex flex-col md:flex-row items-center justify-between w-full gap-4">
-      <h2 className="text-lg mb-8 lg:pl-[80px]">{title}</h2>
+      <h2 className="text-lg mb-8 lg:pl-40">{title}</h2>
       <div
         className="absolute top-[20px] right-[0px]
-        md:-top-[30px] md:-right-[40px] lg:-top-[70px] lg:-right-[170px] 
+        md:-top-[30px] md:-right-[40px] lg:-top-[70px] lg:-right-[90px] 
         flex flex-shrink-0 w-[138px] md:w-[178px] lg:w-[248px] lg:h-[248px]
-      aspect-square mx-auto md:mx-0 rounded-full overflow-hidden"
+        aspect-square mx-auto md:mx-0 rounded-full overflow-hidden"
       >
         <Image
           src={Abstract}

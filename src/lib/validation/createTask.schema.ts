@@ -15,24 +15,27 @@ export const basicInfoSchema = yup.object({
   startDate: yup
     .date()
     .typeError('Start date is required')
+    .nullable()
     .required('Start date is required'),
   finishDate: yup
     .date()
     .typeError('Finish date is required')
     .min(yup.ref('startDate'), 'Finish date cannot be earlier than start date')
+    .nullable()
     .required('Finish date is required'),
+  description: yup
+    .string()
+    .trim()
+    .max(500, 'Maximum 500 characters')
+    .required('Description is required'),
   time: yup
     .string()
     .trim()
     .required('Time is required')
-    .test('valid-format', 'Invalid time format', (val) => {
-      if (!val) return false;
-      const [h, m] = val.split('-');
-      if (!h || !m) return false;
-      const hNum = parseInt(h, 10);
-      const mNum = parseInt(m, 10);
-      return hNum >= 0 && hNum <= 23 && (mNum === 0 || mNum === 30);
-    }),
+    .matches(
+      /^([0-9]|1[0-9]|2[0-3])-(00|05|10|15|20|25|30|35|40|45|50|55)$/,
+      'Invalid time format'
+    ),
 });
 
 export type BasicInfoFormValues = yup.InferType<typeof basicInfoSchema>;

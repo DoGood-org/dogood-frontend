@@ -11,7 +11,7 @@ import { FormInput } from '../../Form/FormInput';
 export const BasicInfoForm = (): JSX.Element => {
   const { getValues } = useFormContext<BasicInfoFormValues>();
   return (
-    <form className="flex flex-col gap-2 mb-9 lg:mb-12">
+    <form className="flex flex-col gap-2 mb-9 lg:mb-12 md:px-[60px] lg:px-0">
       <FormInput name="title" label="Title" placeholder="Title" required />
 
       <FormInput
@@ -20,12 +20,13 @@ export const BasicInfoForm = (): JSX.Element => {
         placeholder="Location"
         required
       />
-      <div className="flex flex-col gap-6 md:flex-row">
+      <div className="flex flex-col gap-2 md:gap-6 md:flex-row">
         <FormField name="startDate" label="Date from" required>
           {(field) => (
             <DatePicker
               value={field.value}
               onChange={field.onChange}
+              onBlur={field.onBlur}
               placeholder="16-05-2025"
               disabledDate={(date) => date > new Date()}
             />
@@ -36,6 +37,7 @@ export const BasicInfoForm = (): JSX.Element => {
             <DatePicker
               value={field.value}
               onChange={field.onChange}
+              onBlur={field.onBlur}
               placeholder="16-06-2025"
               disabledDate={(date) => {
                 const startDate = getValues('startDate');
@@ -45,15 +47,18 @@ export const BasicInfoForm = (): JSX.Element => {
           )}
         </FormField>
       </div>
-      <FormField name="time" label="Time" required>
-        {(field) => (
-          <TimePicker
-            value={field.value ?? ''}
-            setValue={field.onChange}
-            placeholder="Time"
-          />
-        )}
-      </FormField>
+      <div className="md:w-[198px]">
+        <FormField name="time" label="Time" required>
+          {(field) => (
+            <TimePicker
+              value={field.value ?? ''}
+              setValue={field.onChange}
+              onBlur={field.onBlur}
+              placeholder="Time"
+            />
+          )}
+        </FormField>
+      </div>
     </form>
   );
 };

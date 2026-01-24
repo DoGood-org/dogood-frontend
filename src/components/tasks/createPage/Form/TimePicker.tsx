@@ -1,84 +1,137 @@
 'use client';
 
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { TimeIcon } from '@/components/icons';
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
 } from '@/components/ui/Popover';
-import * as React from 'react';
-import { cn } from '@/lib/utils';
-import { TimeIcon } from '@/components/icons';
-
-const times = Array.from({ length: 24 * 2 }, (_, i) => {
-  const h = Math.floor(i / 2);
-  const m = i % 2 === 0 ? '00' : '30';
-  return `${h}-${m}`;
-});
 
 interface TimePickerProps {
   value?: string;
   setValue: (val: string) => void;
+  onBlur?: () => void;
   placeholder?: string;
 }
 
+interface TimeColumnProps {
+  label: string;
+  items: string[];
+  selectedValue: string | null;
+  onSelect: (value: string) => void;
+}
+
+const hours = Array.from({ length: 24 }, (_, i) => i.toString());
+
+const minutes = Array.from({ length: 12 }, (_, i) =>
+  (i * 5).toString().padStart(2, '0')
+);
+
 export const TimePicker = ({
-  value = '',
+  value,
   setValue,
-  placeholder = 'Time',
-}: TimePickerProps): React.JSX.Element | null => {
-  const [open, setOpen] = React.useState(false);
-  const selectedRef = React.useRef<HTMLButtonElement | null>(null);
+  onBlur,
+  placeholder = 'Select time',
+}: TimePickerProps): React.JSX.Element => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [selectedHour, setSelectedHour] = React.useState<string | null>(
+    value ? value.split('-')[0] : null
+  );
+  const [selectedMinute, setSelectedMinute] = React.useState<string | null>(
+    value ? value.split('-')[1] : null
+  );
 
   React.useEffect(() => {
-    if (open && selectedRef.current) {
-      selectedRef.current.scrollIntoView({
-        block: 'center',
-      });
+    if (!value) {
+      setSelectedHour(null);
+      setSelectedMinute(null);
+      return;
     }
-  }, [open]);
+
+    const [h, m] = value.split('-');
+    setSelectedHour(h);
+    setSelectedMinute(m);
+  }, [value]);
+
+  const handleSelect = (h: string, m: string): void => {
+    setValue(`${h}-${m}`);
+    setIsOpen(false);
+  };
+
+  const handleOpenChange = (open: boolean): void => {
+    setIsOpen(open);
+    if (!open) onBlur?.();
+  };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
-        className={cn(
-          'w-full flex justify-between items-center px-2 py-3 rounded-sm border-2',
-          'border-[#999999] bg-white transition-colors text-left',
-          !value && 'text-gray-500'
-        )}
-      >
-        <span className={'text-black'}>{value ? value : placeholder}</span>
-        <TimeIcon className="w-6 h-6" />
+    <Popover open={isOpen} onOpenChange={handleOpenChange}>
+      <PopoverTrigger asChild>
+        <div
+          className={cn(
+            'flex justify-between items-center px-3 py-3 md:max-w-[198px] w-full rounded-sm border-2 border-[#999999] bg-white text-black transition-all outline-none cursor-pointer',
+            !value && 'text-gray-400'
+          )}
+        >
+          <input
+            type="text"
+            readOnly
+            value={value || ''}
+            placeholder={placeholder}
+            className="w-full bg-transparent outline-none text-black placeholder-black cursor-pointer"
+          />
+          <TimeIcon className="w-6 h-6" />
+        </div>
       </PopoverTrigger>
 
       <PopoverContent
-        className="w-full max-h-60 overflow-y-auto custom-scrollbar-hide bg-text-gray text-white rounded-sm shadow-lg p-0"
         align="start"
+        sideOffset={4}
+        className="flex p-0 border-2 border-[#999999] bg-[#999999] shadow-xl w-auto rounded-md overflow-hidden outline-none"
       >
-        <div className="flex flex-col">
-          {times.map((t) => {
-            const isSelected = t === value;
-            const displayTime = t.replace('-', ':');
-            return (
-              <button
-                key={t}
-                ref={isSelected ? selectedRef : null}
-                type="button"
-                className={cn(
-                  'px-4 py-2 h-[48px] cursor-pointer transition-colors',
-                  'hover:bg-white/20',
-                  isSelected && 'bg-white/30 font-bold'
-                )}
-                onClick={() => {
-                  setValue(t);
-                  setOpen(false);
-                }}
-              >
-                {displayTime}
-              </button>
-            );
-          })}
-        </div>
+        <TimeColumn
+          label="Hrs"
+          items={hours}
+          selectedValue={selectedHour}
+          onSelect={(h: string) => handleSelect(h, selectedMinute || '00')}
+        />
+        <TimeColumn
+          label="Min"
+          items={minutes}
+          selectedValue={selectedMinute}
+          onSelect={(m: string) => handleSelect(selectedHour || '00', m)}
+        />
       </PopoverContent>
     </Popover>
   );
 };
+
+const TimeColumn = ({
+  items,
+  selectedValue,
+  onSelect,
+  label,
+}: TimeColumnProps): React.JSX.Element => (
+  <div className="w-[100px] flex flex-col border-r border-white/20 last:border-0 bg-[#999999]">
+    <div className="text-[10px] font-bold uppercase text-center py-1.5 opacity-80 bg-black/40  dark:bg-black/60 text-white/80">
+      {label}
+    </div>
+    <div className="flex flex-col p-1 overflow-y-auto custom-scrollbar-hide max-h-48">
+      {items.map((item: string) => (
+        <button
+          key={item}
+          onClick={() => onSelect(item)}
+          className={cn(
+            'px-1 py-1 text-sm rounded-sm text-center transition-all duration-200 mb-0.5 last:mb-0',
+            selectedValue === item
+              ? 'bg-white text-black font-bold shadow-sm'
+              : 'hover:bg-white/20 text-white'
+          )}
+        >
+          {item}
+        </button>
+      ))}
+    </div>
+  </div>
+);

@@ -16,12 +16,13 @@ export const CreateTaskForm = ({
     defaultValues: {
       title: '',
       location: '',
-      startDate: new Date(),
-      finishDate: new Date(),
+      startDate: undefined,
+      finishDate: undefined,
       time: '',
       picture: '',
+      description: '',
     },
-    mode: 'onChange',
+    mode: 'onTouched',
   });
 
   return <FormProvider {...methods}>{children}</FormProvider>;

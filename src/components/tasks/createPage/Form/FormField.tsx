@@ -31,14 +31,14 @@ export const FormField = <TFormValues extends FieldValues>({
   } = useFormContext<TFormValues>();
 
   const error = errors[name]?.message as string | undefined;
+  const labelClass = error
+    ? 'mb-2 block text-error'
+    : 'mb-2 block text-text-help dark:text-gray';
   const starClass = error ? 'text-error' : 'text-text-help dark:text-gray';
 
   return (
     <div className="mb-2">
-      <Label
-        htmlFor={name}
-        className="mb-2 block text-text-help dark:text-gray"
-      >
+      <Label htmlFor={name} className={labelClass}>
         {label}
         {required && <span className={`ml-1 ${starClass}`}>*</span>}
       </Label>

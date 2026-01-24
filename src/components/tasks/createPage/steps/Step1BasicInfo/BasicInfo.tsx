@@ -1,3 +1,5 @@
+'use client';
+
 import { JSX } from 'react';
 import { BasicInfoForm } from './BasicInfoForm';
 import { StepLayout } from '../../StepLayout';

@@ -5,6 +5,7 @@ export type BasicInfoFormValues = {
   finishDate: Date;
   time: string;
   picture: string;
+  description: string;
 };
 
 export type UploadResultInfo = {

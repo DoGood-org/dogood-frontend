@@ -34,16 +34,20 @@ export const DatePicker = ({
   const handleSelect = (date?: Date): void => {
     onChange(date);
     if (date) setIsPopoverOpen(false);
+    onBlur?.();
+  };
+
+  const handleOpenChange = (open: boolean): void => {
+    setIsPopoverOpen(open);
+    if (!open) {
+      onBlur?.();
+    }
   };
 
   return (
-    <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+    <Popover open={isPopoverOpen} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
-        <div
-          className="relative"
-          onClick={() => setIsPopoverOpen(true)}
-          onBlur={onBlur}
-        >
+        <div className="relative" onClick={() => setIsPopoverOpen(true)}>
           <Input
             readOnly
             value={value ? format(value, 'dd-MM-yyyy') : ''}
