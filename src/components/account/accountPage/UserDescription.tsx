@@ -20,7 +20,6 @@ export const UserDescription = ({
 }): JSX.Element => {
   const t = useTranslations('account');
   const { profile, name, email, siteRole, location } = user;
-  // const { avatar, bio, phoneNumber } = profile;
   const isPublicProfilePage = useRouteMatch('/profile');
   const locale = useLocale();
 
