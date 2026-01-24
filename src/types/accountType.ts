@@ -30,16 +30,11 @@ export interface ContentPanelProps {
 export interface UserDetailedProps {
   id: string | number;
   name: string;
-  // avatar: string | null;
   customerId?: string;
-  paymentOptions: PaymentProps[];
+  paymentOptions: PaymentProps[] | [];
   email: string;
   siteRole: string;
   profile: UserProfileProps | null;
-  // bio: string | null;
-  // gender: string;
-  // birthDate: string | null;
-  // phoneNumber?: string;
   userSettings: UserSettingsProps;
   location?: Location | null;
   hostedTasks?: HostedTaskProps[];

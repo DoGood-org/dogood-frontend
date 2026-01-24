@@ -1,4 +1,9 @@
-import { HostedTaskProps, TaskProps, UserProfileProps } from './accountType';
+import {
+  HostedTaskProps,
+  PaymentProps,
+  TaskProps,
+  UserProfileProps,
+} from './accountType';
 import { Tlocale } from './locale';
 import { OrganizationProps } from './organization';
 import { ReviewProps } from './reviewType';
@@ -36,7 +41,8 @@ export interface ICurrentUser extends User {
   locationId: null;
   name: string;
   organizations: OrganizationProps[] | [];
-  paymentOptions: [];
+  paymentOptions: PaymentProps[] | [];
+  stripeCustomerId?: string;
   phoneNumber: string | null;
   reviewsReceived: ReviewProps[] | [];
   reviewsWrittenUser: ReviewProps[] | [];

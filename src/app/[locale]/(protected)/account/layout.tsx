@@ -1,31 +1,19 @@
 'use client';
 
 import { JSX } from 'react';
-// import { useSyncCurrentPage } from '@/hooks/useSyncCurrentPage';
 import { navigationStore } from '@/zustand/stores/navigationStore';
 import { Container } from '@/components/ui/Container';
 import { SidebarNavigation } from '@/components/account/navigation/SidebarNavigation';
 import { AccountContent } from '@/components/account/accountPage/AccountContent';
 import { BottomNavigation } from '@/components/account/navigation/BottomNavigation';
 import { useAuth } from '@/hooks';
-// import { notFound } from 'next/navigation';
-// import { fetchCurrentUser } from '@/facades/accountFacade';
-// import { useRedirectToLogin } from '@/hooks/useRedirectToLogin';
 
 export default function AccountLayout({
   children,
 }: {
   children: React.ReactNode;
 }): JSX.Element {
-  // useSyncCurrentPage();
-
-  // const user = await fetchCurrentUser();
   const { user } = useAuth();
-  console.log('AccountLayout => ', user);
-
-  // if (!user) {
-  //   notFound();
-  // }
 
   const isChatMessageOpen = navigationStore((state) => state.isChatMessageOpen);
 
