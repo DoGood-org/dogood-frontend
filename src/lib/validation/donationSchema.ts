@@ -1,10 +1,13 @@
 import * as yup from 'yup';
 
+const MAX_AMOUNT = 10_000;
+
 export const donationSchema = yup.object().shape({
   fullName: yup
     .string()
     .trim()
     .required('Full name is required')
+    .min(2, 'Full name is too short')
     .max(100, 'Full name must be at most 100 characters'),
 
   country: yup
@@ -21,17 +24,19 @@ export const donationSchema = yup.object().shape({
 
   amount: yup
     .number()
+    .transform((value, originalValue) =>
+      originalValue === '' ? undefined : value
+    )
     .typeError('Amount must be a number')
     .required('Amount is required')
     .positive('Amount must be greater than 0')
-    .max(10_000, 'Amount too large'),
+    .max(MAX_AMOUNT, `Amount must be less than ${MAX_AMOUNT}`),
 
-  currency: yup.string().oneOf(['USD', 'EUR']).required(),
+  currency: yup.string().oneOf(['USD', 'EUR'], 'Invalid currency').required(),
 
   donationType: yup
     .string()
     .oneOf(['USER', 'ORGANIZATION'])
-    .default('USER')
     .required('Donation type is required'),
 });
 

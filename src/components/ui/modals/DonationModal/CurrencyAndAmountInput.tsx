@@ -1,45 +1,29 @@
 'use client';
 
 import React, { JSX } from 'react';
-import {
-  Control,
-  Controller,
-  FieldErrors,
-  UseFormRegister,
-} from 'react-hook-form';
-import { useTranslations } from 'next-intl';
+import { Controller, useFormContext } from 'react-hook-form';
 import { Input } from '@/components/ui/Input';
 import { CurrencySelect } from './CurrencySelect';
-import { DonationFormValues } from '@/lib/validation/donationSchema';
 
 interface CurrencyAndAmountProps {
-  control: Control<DonationFormValues>;
-  register: UseFormRegister<DonationFormValues>;
-  errors: FieldErrors<DonationFormValues>;
-  touchedFields?: Partial<Record<keyof DonationFormValues, boolean>>;
-  submitCount?: number;
   currencies: { value: string; label: string }[];
-  currencyFieldName?: string;
-  amountFieldName?: string;
-  isRequired?: boolean;
+  amountName?: string;
+  currencyName?: string;
 }
 
 export const CurrencyAndAmountInput = ({
-  control,
-  register,
-  errors,
   currencies,
+  amountName = 'amount',
+  currencyName = 'currency',
 }: CurrencyAndAmountProps): JSX.Element => {
-  const currencyName = 'currency';
-  const amountName = 'amount';
-
-  const t = useTranslations('card');
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext();
 
   return (
     <div className="flex flex-col gap-1">
-      <label htmlFor={amountName} className="text-base">
-        {t('amountQuestion')}*
-      </label>
       <div className="flex gap-2">
         <Input
           id={amountName}
@@ -85,7 +69,7 @@ export const CurrencyAndAmountInput = ({
 
       {errors[amountName] && (
         <p className="text-red-500 text-sm mt-1">
-          {errors[amountName].message}
+          {errors[amountName]?.message as string}
         </p>
       )}
     </div>

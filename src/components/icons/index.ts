@@ -12,6 +12,7 @@ export { default as CaretDown } from './CaretDown';
 export { default as ChatCircle } from './ChatCircle';
 export { default as ChatIcon } from './ChatIcon';
 export { default as ChatSearch } from './ChatSearch';
+export { default as CheckIcon } from './CheckIcon';
 export { default as ChevronDown } from './ChevronDown';
 export { default as ChevronLeft } from './ChevronLeft';
 export { default as ChevronRight } from './ChevronRight';
