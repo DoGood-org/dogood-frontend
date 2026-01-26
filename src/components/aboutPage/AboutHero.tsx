@@ -19,8 +19,8 @@ export const AboutHero: React.FC = () => {
       withContainer={false}
       className="relative min-h-[600px] lg:min-h-[700px] bg-background-secondary dark:bg-background   flex flex-col items-center justify-center overflow-hidden  text-white"
     >
-      <div className="relative sm:absolute w-70 h-70 sm:w-full sm:h-full  flex items-center justify-center">
-        <div className="w-full h-full relative">
+      <div className=" relative sm:absolute min-w-[320px] min-h-[320px] max-w-[500px] md:max-w-full inset-0 m-auto flex items-center justify-center">
+        <div className=" w-full h-full relative">
           <Image
             src={PlanetDesktop}
             alt="Planet Earth"

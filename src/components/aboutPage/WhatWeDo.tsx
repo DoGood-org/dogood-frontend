@@ -16,8 +16,8 @@ export const WhatWeDo: React.FC = () => {
 
   return (
     <Section withContainer={false}>
-      <Container className="flex flex-col items-center ">
-        <div className="text-center mb-8 ">
+      <Container className="flex flex-col ">
+        <div className="text-center mb-8 lg:mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl   mb-4">
             {WhatWeDo.title}
           </h2>
@@ -26,7 +26,7 @@ export const WhatWeDo: React.FC = () => {
           </p>
         </div>
 
-        <div className="relative w-full h-[400px] md:h-[400px] lg:h-[500px] mb-8 lg:mb-12 rounded-2xl overflow-hidden">
+        <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] mb-8 lg:mb-12 rounded-2xl overflow-hidden">
           <Image
             src={whatWeDoImage}
             alt="What we do"
@@ -36,7 +36,7 @@ export const WhatWeDo: React.FC = () => {
           />
         </div>
 
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 max-w-6xl">
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <li className="bg-[#6969690D]  shadow-md shadow-[#99999966] rounded-lg p-6  transition-colors">
             <Shield className="size-6 mb-4" />
             <h3 className="   mb-2">{WhatWeDo.cards.card1.title}</h3>

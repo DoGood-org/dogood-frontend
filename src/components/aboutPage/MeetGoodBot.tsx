@@ -18,7 +18,7 @@ export const MeetGoodBot: React.FC = () => {
 
   return (
     <Section withContainer={false} className="bg-background">
-      <Container className="flex   ">
+      <Container className="flex px-12 max-w-6xl  ">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6  lg:gap-6 items-center">
           <div className="relative bg-card w-full h-full   rounded-lg flex items-center justify-center ">
             <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] ">
