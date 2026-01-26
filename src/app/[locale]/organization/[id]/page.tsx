@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const organization = await fetchOrganizationById(id);
 
   return {
-    title: organization.name,
+    title: organization?.name,
   };
 }
 
