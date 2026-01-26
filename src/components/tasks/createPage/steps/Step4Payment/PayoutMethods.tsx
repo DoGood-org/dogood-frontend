@@ -4,6 +4,7 @@ import { JSX } from 'react';
 import { useTranslations } from 'next-intl';
 import { useFormContext } from 'react-hook-form';
 import { CurrencyAndAmountInput } from '@/components/ui/modals/DonationModal/CurrencyAndAmountInput';
+import { PaymentCardList } from '@/components/ui/modals/DonationModal/PaymentCardList';
 
 export const PayoutMethods = (): JSX.Element => {
   const t = useTranslations('card');
@@ -19,21 +20,18 @@ export const PayoutMethods = (): JSX.Element => {
   const hasError = !!(errors.amount || errors.currency);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col mb-6 md:px-[60px] lg:px-0">
       <div>
-        <h2 className="text-xl font-bold">Donation needs</h2>
-        <p>Fill gaps about your donation needs and financial information</p>
+        <h2 className="text-text-base mb-2">Donation needs</h2>
+        <p className="text-[12px] leading-[16px] tracking-[0%] mb-2">
+          Fill gaps about your donation needs and financial information
+        </p>
       </div>
 
-      <div>
-        <h2 className="text-xl font-bold">Financial information</h2>
-        <p>Select the account to receive funds...</p>
-      </div>
-
-      <div className="mt-4">
+      <div className="">
         <h3
           className={`text-base font-medium mb-2 ${
-            hasError ? 'text-red-500' : 'text-gray-900'
+            hasError ? 'text-error' : 'text-gray'
           }`}
         >
           {t('amountQuestion')}*
@@ -44,7 +42,14 @@ export const PayoutMethods = (): JSX.Element => {
           amountName="amount"
           currencyName="currency"
         />
+        <div className="mt-2">
+          <h2 className="text-text-base mb-2">Financial information</h2>
+          <p className="text-[12px] leading-[16px] tracking-[0%] mb-2">
+            Select the account to receive funds...
+          </p>
+        </div>
       </div>
+      <PaymentCardList scrollable={false} />
     </div>
   );
 };

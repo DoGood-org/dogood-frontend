@@ -41,7 +41,6 @@ export const CurrencyAndAmountInput = ({
           className="
             h-12 w-[118px] bg-[#ffffff] rounded-sm flex items-center p-3
             border border-[#111113] text-[#010101]
-            focus:border-[#00c1ac]
             focus:ring-0 focus:ring-offset-0
             focus-visible:ring-0 focus-visible:ring-offset-0
             focus-within:ring-0
