@@ -110,7 +110,7 @@ export const useTaskStore = create<TTaskStore>()(
         }));
       },
 
-      setCreateTaskDraft: (data): void => {
+      setCreateTaskDraft: (data: Partial<IExtendedITaskProps>): void => {
         set((state) => ({
           createTaskDraft: {
             ...state.createTaskDraft,
@@ -122,7 +122,7 @@ export const useTaskStore = create<TTaskStore>()(
       resetCreateTask: (): void => {
         set({
           createStep: 0,
-          createTaskDraft: {},
+          createTaskDraft: {} as Partial<IExtendedITaskProps>,
         });
       },
     }),

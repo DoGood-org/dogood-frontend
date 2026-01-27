@@ -19,6 +19,7 @@ export const StepCard = ({
         px-4
         py-12
         md:p-12
+        lg:mx-[80px]
         ${className}
       `}
     >

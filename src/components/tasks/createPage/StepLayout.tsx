@@ -17,7 +17,7 @@ export const StepLayout = ({
   className = '',
 }: StepLayoutProps): JSX.Element => {
   return (
-    <div className={`lg:px-40 ${className}`}>
+    <div className={`lg:px-20 ${className}`}>
       <StepCard>
         <div className="flex gap-6 flex-col lg:flex-row items-center lg:items-baseline lg:px-0">
           <div className="shrink-0">
