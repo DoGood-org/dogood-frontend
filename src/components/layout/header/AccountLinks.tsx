@@ -2,6 +2,7 @@
 
 import { authStore } from '@/zustand/stores/authStore';
 import { useLocale } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { AccountContentProps } from '@/types';
 
 import { useIconComponents } from '@/hooks';
@@ -14,6 +15,7 @@ export const AccountLinks: React.FC<AccountContentProps> = ({
 }) => {
   const { logged = [], noLogged = [] } = accountItem.content || {};
   const locale = useLocale();
+  const router = useRouter();
   const { logout } = authStore();
   const isLoggedIn = authStore((state) => state.isLoggedIn);
   const icons = useIconComponents();
@@ -22,6 +24,13 @@ export const AccountLinks: React.FC<AccountContentProps> = ({
 
   if (!activeList.length) return null;
 
+  const handleLogOut = async (): Promise<void> => {
+    await logout();
+    toast.success('Logout successful');
+    onClose?.();
+    router.refresh();
+  };
+
   return (
     <ul className="flex gap-4 items-center flex-col pt-2 pr-10 lg:p-0">
       {activeList.map(({ name, src, icon }, index) => {
@@ -29,11 +38,7 @@ export const AccountLinks: React.FC<AccountContentProps> = ({
           <li key={`${index}-${name}`} className="flex w-full">
             {src === '/logout' ? (
               <button
-                onClick={() => {
-                  logout();
-                  toast.success('Logout successful');
-                  onClose?.();
-                }}
+                onClick={handleLogOut}
                 className="flex items-center gap-3 cursor-pointer hover:text-btn-hover w-full justify-between"
               >
                 {name}

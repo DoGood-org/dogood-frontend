@@ -17,9 +17,9 @@ export const OrgMemberItem = ({
       key={member.id}
       className="bg-card p-4 gap-6 items-center rounded-lg flex md:gap-8"
     >
-      {user.avatar ? (
+      {user.profile?.avatar ? (
         <Image
-          src={user.avatar}
+          src={user.profile?.avatar}
           alt={user.name}
           width={100}
           height={100}

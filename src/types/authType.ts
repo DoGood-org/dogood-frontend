@@ -1,11 +1,22 @@
+import {
+  HostedTaskProps,
+  PaymentProps,
+  TaskProps,
+  UserProfileProps,
+} from './accountType';
+import { Tlocale } from './locale';
+import { OrganizationProps } from './organization';
+import { ReviewProps } from './reviewType';
+
 export interface UseAuth {
   isLoggedIn: boolean;
   isEmailVerified: boolean;
-  user: User | null;
+  user: ICurrentUser | null;
 }
 export interface IUserSettings {
   theme: 'light' | 'dark';
-  language: string;
+  // language: string;
+  language: Tlocale;
 }
 
 export interface User {
@@ -14,7 +25,7 @@ export interface User {
   email: string;
   avatarUrl?: string;
   siteRole?: string;
-  settings?: IUserSettings;
+  userSettings: IUserSettings;
 }
 
 export interface ICurrentUser extends User {
@@ -24,19 +35,21 @@ export interface ICurrentUser extends User {
   createdAt: string;
   email: string;
   gender: string | null;
-  hostedTasks: [];
+  hostedTasks: HostedTaskProps[] | [];
   isEmailVerified: true;
-  joinedTasks: [];
+  joinedTasks: TaskProps[] | [];
   locationId: null;
   name: string;
-  organizations: [];
-  paymentOptions: [];
+  organizations: OrganizationProps[] | [];
+  paymentOptions: PaymentProps[] | [];
+  stripeCustomerId?: string;
   phoneNumber: string | null;
-  reviewsReceived: [];
-  reviewsWritten: [];
+  reviewsReceived: ReviewProps[] | [];
+  reviewsWrittenUser: ReviewProps[] | [];
   siteRole: string;
+  tasks: TaskProps[] | [];
   updatedAt: string;
-  userSettings: null;
+  profile: UserProfileProps | null;
 }
 
 export interface AuthState {
