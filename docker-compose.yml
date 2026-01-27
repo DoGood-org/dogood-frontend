@@ -37,7 +37,6 @@ services:
     container_name: dogood-front
     command: bash -c "chmod 777 entrypoint.sh && ./entrypoint.sh && sleep infinity"
     ports:
-      - "3000:3000"
       - "5000:5000"
       - "5555:5555"
     env_file:
