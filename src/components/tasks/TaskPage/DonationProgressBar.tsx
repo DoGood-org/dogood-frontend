@@ -14,7 +14,7 @@ export const DonationProgressBar: React.FC<ProgressBarProps> = ({
     100
   );
   return (
-    <div className="relative w-[236px] h-[28px] bg-text-gray">
+    <div className="relative w-[236px] h-[28px] md:w-full bg-text-gray">
       <div
         className="h-full bg-[#00c1ac] transition-all duration-500 ease-in-out"
         style={{ width: `${percentage}%` }}

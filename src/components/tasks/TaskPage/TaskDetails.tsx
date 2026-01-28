@@ -18,9 +18,13 @@ import EditButton from './ButtonGroup/EditButton';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
+  showEditButton?: boolean;
 }
 
-export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
+export const TaskDetails: React.FC<TaskDetailsProps> = ({
+  task,
+  showEditButton = true,
+}) => {
   const t = useTranslations('tasks');
   const { user } = useAuth();
   const flyToCoords = useMapStore((s) => s.flyToCoords);
@@ -53,7 +57,11 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
           {task.title}
         </h1>
         <div className="ml-auto mr-11 md:ml-0">
-          <EditButton onClick={handleEdit} isHost={isHost} />
+          <EditButton
+            onClick={handleEdit}
+            isHost={isHost}
+            show={showEditButton}
+          />
         </div>
       </div>
       <h3 className="text-[20px] leading-[20px] mb-5">

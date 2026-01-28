@@ -3,7 +3,7 @@ import { Step1BasicInfo } from '@/components/tasks/createPage/steps/Step1BasicIn
 import { Step2Category } from '@/components/tasks/createPage/steps/Step2Categories/Step2Category';
 import { Step3Description } from '@/components/tasks/createPage/steps/Step3Description/Step3Description';
 import { Step4Payment } from '@/components/tasks/createPage/steps/Step4Payment/Step4Payment';
-import { Step5Preview } from '@/components/tasks/createPage/steps/Step5Preview';
+import { Step5Preview } from '@/components/tasks/createPage/steps/Step5Preview/Step5Preview';
 
 export const CREATE_TASK_STEPS = [
   {

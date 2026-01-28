@@ -17,17 +17,20 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const taskInfo = [
     {
       icon: <DateIcon />,
-      label: `${t('taskCard.start')}: ${task.startDate}`,
+      label: `${t('taskCard.start')}: ${task.startDate ?? 'N/A'}`,
     },
-    { icon: <DateIcon />, label: `${t('taskCard.finish')}: ${task.endDate}` },
+    {
+      icon: <DateIcon />,
+      label: `${t('taskCard.finish')}: ${task.endDate ?? 'N/A'}`,
+    },
     {
       icon: <Clock />,
       label: `${t('taskCard.time')}: 
-     ${task.startTime} ${t('taskCard.localTime')}`,
+     ${task.startTime ?? '--'} ${t('taskCard.localTime')}`,
     },
     {
       icon: <Location />,
-      label: `${t('taskCard.location')}: ${task.locationName}`,
+      label: `${t('taskCard.location')}: ${task.locationName ?? 'Unknown'}`,
     },
   ];
 

@@ -130,6 +130,7 @@ export function generateTasks(
       actionType: TaskActionType.VOLUNTEERING,
       userParticipationStatus: UserParticipationStatus.NONE,
       organizationId: `org-${i}`,
+      ownerType: 'organization',
       onToggleDescription: (): void => {},
       status: 'PENDING',
     };

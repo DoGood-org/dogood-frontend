@@ -7,15 +7,17 @@ import Image from 'next/image';
 interface StepHeaderProps {
   step: number;
   title?: string;
+  titleClassName?: string;
 }
 
 export const StepHeader = ({
   step,
   title = 'Create your next task',
+  titleClassName = 'text-lg mb-8 lg:pl-40',
 }: StepHeaderProps): JSX.Element => {
   return (
-    <div className="relative flex flex-col md:flex-row items-center justify-between w-full gap-4">
-      <h2 className="text-lg mb-8 lg:pl-40">{title}</h2>
+    <div className="relative flex flex-col md:flex-row justify-between w-full gap-4">
+      <h2 className={titleClassName}>{title}</h2>
       <div
         className="absolute top-[20px] right-[0px]
         md:-top-[30px] md:-right-[40px] lg:-top-[70px] lg:-right-[90px] 

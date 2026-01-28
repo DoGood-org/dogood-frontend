@@ -7,15 +7,17 @@ import EditIcon from '@/components/icons/EditIcon';
 interface EditButtonProps {
   onClick: () => void;
   isHost: boolean;
+  show?: boolean;
 }
 
 const EditButton = ({
   onClick,
   isHost,
+  show = true,
 }: EditButtonProps): JSX.Element | null => {
   const t = useTranslations('tasks');
 
-  if (isHost) return null;
+  if (isHost || !show) return null;
 
   return (
     <Button
