@@ -4,7 +4,7 @@ import { JSX } from 'react';
 import { Section } from '@/components/ui/Section';
 import { TaskOwnerForm } from './TaskOwnerForm';
 import { useTaskStore } from '@/zustand/stores/taskStore';
-import { OrganizationFromBack, TaskOwnerId } from '@/types/tasks.type';
+import { OrganizationFromBack, TaskOwnerValue } from '@/types/tasks.type';
 
 interface Step0TaskOwnerProps {
   organizations: OrganizationFromBack[];
@@ -17,16 +17,16 @@ export const Step0TaskOwner = ({
 }: Step0TaskOwnerProps): JSX.Element => {
   const { createTaskDraft, setCreateTaskDraft } = useTaskStore();
 
-  const currentValue: TaskOwnerId | undefined =
-    createTaskDraft.ownerType === 'user'
-      ? 'user'
-      : createTaskDraft.organizationId;
+  const currentValue: TaskOwnerValue | undefined =
+    createTaskDraft.organizationId
+      ? { type: 'ORGANIZATION', organizationId: createTaskDraft.organizationId }
+      : { type: 'USER' };
 
-  const handleOwnerChange = (value: TaskOwnerId | undefined): void => {
-    if (value === 'user') {
-      setCreateTaskDraft({ ownerType: 'user', organizationId: undefined });
+  const handleOwnerChange = (value: TaskOwnerValue): void => {
+    if (value.type === 'USER') {
+      setCreateTaskDraft({ organizationId: undefined });
     } else {
-      setCreateTaskDraft({ ownerType: 'organization', organizationId: value });
+      setCreateTaskDraft({ organizationId: value.organizationId });
     }
   };
 

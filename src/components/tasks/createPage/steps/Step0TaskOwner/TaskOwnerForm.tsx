@@ -1,21 +1,21 @@
 'use client';
 
 import { JSX, useMemo } from 'react';
-import { OrganizationFromBack, TaskOwnerId } from '@/types/tasks.type';
+import { OrganizationFromBack, TaskOwnerValue } from '@/types/tasks.type';
 import { StepCard } from '../../StepCard';
 import { ConfirmButton } from '../../Buttons/ConfirmButton';
 import { Check } from '@/components/icons/Check';
 import { Label } from '@/components/ui/Label';
 
 interface TaskOwnerFormProps {
-  value: TaskOwnerId | undefined;
-  onChange: (value: TaskOwnerId | undefined) => void;
+  value: TaskOwnerValue | undefined;
+  onChange: (value: TaskOwnerValue) => void;
   organizations: OrganizationFromBack[];
   userName: string;
 }
 
 interface Option {
-  id: TaskOwnerId;
+  id: string;
   label: string;
   disabled?: boolean;
 }
@@ -32,7 +32,7 @@ export const TaskOwnerForm = ({
 
   const options: Option[] = useMemo(() => {
     const userOption = {
-      id: 'user' as TaskOwnerId,
+      id: 'user',
       label: `${userName || 'User name'} (private)`,
     };
 
@@ -40,7 +40,7 @@ export const TaskOwnerForm = ({
       return [
         userOption,
         {
-          id: 'org-placeholder' as TaskOwnerId,
+          id: 'org-placeholder',
           label: 'Organization name',
           disabled: true,
         },
@@ -48,12 +48,29 @@ export const TaskOwnerForm = ({
     }
 
     const orgOptions: Option[] = adminOrModeratorOrgs.map((org) => ({
-      id: org.id as TaskOwnerId,
+      id: org.id,
       label: org.name,
     }));
 
     return [userOption, ...orgOptions];
   }, [adminOrModeratorOrgs, userName]);
+
+  const isChecked = (optId: string): boolean => {
+    if (!value) return false;
+
+    if (value.type === 'USER') return optId === 'user';
+    if (value.type === 'ORGANIZATION') return value.organizationId === optId;
+
+    return false;
+  };
+
+  const handleChange = (optId: string): void => {
+    if (optId === 'user') {
+      onChange({ type: 'USER' });
+    } else {
+      onChange({ type: 'ORGANIZATION', organizationId: optId });
+    }
+  };
 
   return (
     <StepCard className="h-[456px] md:h-[504px]">
@@ -66,8 +83,10 @@ export const TaskOwnerForm = ({
           {options.map((opt) => (
             <Label
               key={opt.id}
-              className={`group flex items-center gap-3 select-none 
-                ${opt.disabled} ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+              className={`group flex items-center gap-3 select-none ${
+                opt.disabled
+                  ? 'cursor-not-allowed opacity-50'
+                  : 'cursor-pointer'
               }`}
             >
               <div className="relative flex items-center justify-center w-6 h-6">
@@ -80,8 +99,8 @@ export const TaskOwnerForm = ({
                       ? 'cursor-not-allowed border-black'
                       : 'cursor-pointer'
                   }`}
-                  checked={value === opt.id}
-                  onChange={() => onChange(opt.id)}
+                  checked={isChecked(opt.id)}
+                  onChange={() => handleChange(opt.id)}
                 />
                 <div className="absolute inset-0 flex items-center justify-center text-btn-outline opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity duration-200">
                   <Check />

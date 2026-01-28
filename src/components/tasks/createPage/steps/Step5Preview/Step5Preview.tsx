@@ -7,6 +7,7 @@ import { MarkerCategoryEnum } from '@/types/mapType';
 import { TaskActionType } from '@/types/tasks.type';
 import { Section } from '@/components/ui/Section';
 import { BasicInfoFormValues } from '@/types/createTask.type';
+import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
 
 interface TaskPreviewProps {
   task?: ITaskDetails;
@@ -72,9 +73,16 @@ const mockTask: ITaskDetails = createTaskFromForm(mockTaskValues);
 export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
   const currentTask = task ?? mockTask;
   return (
-    <Section>
+    <Section withContainer={true} className="mt-8 mb-8">
       <StepHeader step={5} title="Preview" titleClassName="text-lg mb-8 pl-0" />
       <Task task={currentTask} showEditButton={false} />
+      <IconButtonGroup
+        categories={currentTask.category}
+        distance={currentTask.distance}
+        lat={currentTask.lat}
+        lng={currentTask.lng}
+        taskId={currentTask.id}
+      />
     </Section>
   );
 };

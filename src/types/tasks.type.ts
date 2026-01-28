@@ -1,7 +1,9 @@
 import { MarkerCategoryEnum } from '@/types/mapType';
 import { ReactElement } from 'react';
 
-export type TaskOwnerId = 'user' | string;
+export type TaskOwnerValue =
+  | { type: 'USER' }
+  | { type: 'ORGANIZATION'; organizationId: string };
 
 export interface OrganizationFromBack {
   id: string;
@@ -71,5 +73,4 @@ export interface IExtendedITaskProps extends ITask {
   organizationId?: string;
   isHost?: boolean;
   status: TaskStatus;
-  ownerType: TaskOwnerId;
 }
