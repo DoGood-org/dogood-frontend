@@ -67,6 +67,7 @@ export interface OrgMobileNavProps {
   onChange: (view: string) => void;
 }
 
+// api types
 export interface OrganizationApiResponse {
   status: string;
   code: string;
@@ -74,4 +75,35 @@ export interface OrganizationApiResponse {
   data: {
     organization: OrganizationDetailedProps;
   };
+}
+
+export interface IDeleteMemberOrgRequest {
+  userId: string;
+  organizationId: string;
+}
+
+export interface IMemberValue {
+  userId: string;
+  role: string;
+  status: string;
+}
+export interface IAddMemberOrgRequest extends IMemberValue {
+  organizationId: string;
+}
+
+export interface AddMemberResponse {
+  code: string;
+  message: string;
+  member: IMemberValue;
+}
+
+export interface DeleteMemberResponse {
+  code: string;
+  message: string;
+}
+
+export interface UpdateMemberRoleRequest {
+  organizationId: string;
+  userId: string;
+  role: string;
 }

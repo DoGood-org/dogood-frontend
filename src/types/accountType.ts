@@ -124,3 +124,9 @@ export interface IUserApiResponse {
     user: UserDetailedProps;
   };
 }
+
+export type UserShort = {
+  id: string;
+  name: string;
+  avatar: string | null;
+};

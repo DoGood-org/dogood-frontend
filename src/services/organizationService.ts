@@ -1,7 +1,14 @@
 import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
 // import { mockOrganization } from '@/data/mockOrganization';
-import { OrganizationApiResponse, OrganizationDetailedProps } from '@/types';
-import { DeleteOrgResponse } from '@/types/settings';
+import {
+  AddMemberResponse,
+  DeleteMemberResponse,
+  IAddMemberOrgRequest,
+  IDeleteMemberOrgRequest,
+  OrganizationApiResponse,
+  OrganizationDetailedProps,
+  UpdateMemberRoleRequest,
+} from '@/types';
 import { apiRoutes } from '@/lib/server/apiRoutes';
 
 export const getOrganizationById = async (
@@ -22,38 +29,31 @@ export const getOrganizationById = async (
   };
 };
 
-// export const getOrganizationById = async (
-//   id: string | number
-// ): Promise<OrganizationDetailedProps> => {
-//   // const response =
-//   // return await fetchFromApi<OrganizationDetailedProps>(
-//   //   apiRoutes.organizations.getById(id),
-//   //   {
-//   //     method: 'GET',
-//   //   }
-//   // );
-
-//   // const { organization } = response;
-
-//   const organization = mockOrganization.find(
-//     (organization) => organization.id === id
-//   );
-
-//   if (!organization) throw new Error('Organization not found in API response.');
-
-//   return organization;
-// };
-
-interface IMemberOrgValue {
-  userId: string;
-  organizationId: string;
-}
+export const addMemberToOrganization = async (
+  data: IAddMemberOrgRequest
+): Promise<FetchResult<AddMemberResponse>> => {
+  return fetchFromApi(apiRoutes.organizations.addMember, {
+    method: 'POST',
+    data,
+    auth: true,
+  });
+};
 
 export const removeMemberFromOrganization = async (
-  data: IMemberOrgValue
-): Promise<FetchResult<DeleteOrgResponse>> => {
-  return fetchFromApi('/organization/members', {
+  data: IDeleteMemberOrgRequest
+): Promise<FetchResult<DeleteMemberResponse>> => {
+  return fetchFromApi(apiRoutes.organizations.deleteMember, {
     method: 'DELETE',
+    data,
+    auth: true,
+  });
+};
+
+export const updateMemberRole = async (
+  data: UpdateMemberRoleRequest
+): Promise<FetchResult<AddMemberResponse>> => {
+  return fetchFromApi(apiRoutes.organizations.updateMemberRole, {
+    method: 'PATCH',
     data,
     auth: true,
   });
