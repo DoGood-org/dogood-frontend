@@ -93,12 +93,14 @@ export const TaskOwnerForm = ({
                 <input
                   type="radio"
                   name="taskOwner"
+                  value={opt.id}
                   disabled={opt.disabled}
-                  className={`peer appearance-none w-6 h-6 border-2 border-black rounded-sm bg-transparent checked:border-black transition-all z-10 ${
-                    opt.disabled
-                      ? 'cursor-not-allowed border-black'
-                      : 'cursor-pointer'
-                  }`}
+                  className={`
+                      peer appearance-none w-6 h-6 border-2 rounded-sm bg-transparent transition-all z-10
+                      ${opt.disabled ? 'cursor-not-allowed' : 'cursor-pointer'}
+                      border-black dark:border-white
+                      checked:border-black dark:checked:border-white
+                    `}
                   checked={isChecked(opt.id)}
                   onChange={() => handleChange(opt.id)}
                 />
@@ -106,7 +108,7 @@ export const TaskOwnerForm = ({
                   <Check />
                 </div>
               </div>
-              <span className="text-[18px] text-gray-800 group-hover:text-black transition-colors">
+              <span className="text-[18px] text-gray group-hover:text-black transition-colors">
                 {opt.label}
               </span>
             </Label>

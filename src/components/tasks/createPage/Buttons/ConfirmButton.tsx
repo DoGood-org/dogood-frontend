@@ -1,13 +1,13 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
-import { TaskOwnerId } from '@/types/tasks.type';
+import { TaskOwnerValue } from '@/types/tasks.type';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { JSX } from 'react';
 
 interface ConfirmButtonProps {
   disabled?: boolean;
-  owner?: TaskOwnerId | null;
+  owner?: TaskOwnerValue | null;
   onConfirm?: () => void;
 }
 
@@ -22,7 +22,11 @@ export const ConfirmButton = ({
   const handleConfirm = (): void => {
     if (!owner) return;
 
-    setCreateTaskDraft({ ownerType: owner });
+    if (owner.type === 'USER') {
+      setCreateTaskDraft({ organizationId: undefined });
+    } else {
+      setCreateTaskDraft({ organizationId: owner.organizationId });
+    }
     onConfirm?.();
     nextCreateStep();
   };

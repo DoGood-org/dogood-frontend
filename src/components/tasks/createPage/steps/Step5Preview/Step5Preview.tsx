@@ -8,6 +8,7 @@ import { TaskActionType } from '@/types/tasks.type';
 import { Section } from '@/components/ui/Section';
 import { BasicInfoFormValues } from '@/types/createTask.type';
 import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
+import { BackNextButtons } from '../../Buttons/BackNextButtons';
 
 interface TaskPreviewProps {
   task?: ITaskDetails;
@@ -83,6 +84,9 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
         lng={currentTask.lng}
         taskId={currentTask.id}
       />
+      <div className="mt-8 flex justify-end">
+        <BackNextButtons showBack={true} />
+      </div>
     </Section>
   );
 };

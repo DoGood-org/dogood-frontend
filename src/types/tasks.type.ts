@@ -70,7 +70,7 @@ export interface IExtendedITaskProps extends ITask {
   onToggleDescription?: () => void;
   actionType: TaskActionType;
   userParticipationStatus: UserParticipationStatus;
-  organizationId?: string;
+  organizationId?: string | null;
   isHost?: boolean;
   status: TaskStatus;
 }

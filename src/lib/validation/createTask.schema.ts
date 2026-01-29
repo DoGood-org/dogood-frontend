@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 
 export const basicInfoSchema = yup.object({
+  organizationId: yup.string().nullable(),
   picture: yup.string().required('Picture is required'),
   title: yup
     .string()
