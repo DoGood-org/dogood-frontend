@@ -12,8 +12,10 @@ import { AddMember } from './AddMember';
 
 export const OrgMemberList = ({
   members,
+  orgId,
 }: {
   members: UserOrganization[];
+  orgId: string;
 }): JSX.Element => {
   const grouped = groupMembersByRole(members);
   const t = useTranslations('organization');
@@ -32,7 +34,9 @@ export const OrgMemberList = ({
                 {title} ({roleMembers.length})
               </h3>
               {!!noEmptyMemberList && role === 'MODERATOR' && <AddModerator />}
-              {!!noEmptyMemberList && role === 'MEMBER' && <AddMember />}
+              {!!noEmptyMemberList && role === 'MEMBER' && (
+                <AddMember organizationId={orgId} existingMembers={members} />
+              )}
             </div>
 
             {roleMembers.length ? (

@@ -27,7 +27,11 @@ export const OrganizationContent = ({
   const viewComponents: Record<string, React.ReactNode> = {
     tasks: <OrgTasksSection tasks={organization.tasks} role={userRole} />,
     members: (
-      <OrgMemberSection members={organization.members} role={userRole} />
+      <OrgMemberSection
+        members={organization.members}
+        role={userRole}
+        orgId={organization.id}
+      />
     ),
     requests: <OrgJoinRequestSection members={organization.members} />,
     reviews: (
