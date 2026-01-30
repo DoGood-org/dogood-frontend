@@ -6,6 +6,7 @@ import { useTaskStore } from '@/zustand/stores/taskStore';
 import { JSX, useEffect, useState } from 'react';
 import { Step0TaskOwner } from './steps/Step0TaskOwner/Step0TaskOwner';
 import { OrganizationFromBack } from '@/types/tasks.type';
+import { CreateTaskSuccess } from './CreateTaskSuccess';
 
 interface CreateTaskProp {
   organizations: OrganizationFromBack[];
@@ -17,6 +18,7 @@ export const CreateTask = ({
   currentUserName,
 }: CreateTaskProp): JSX.Element | null => {
   const step = useTaskStore((s) => s.createStep);
+  const isSuccess = useTaskStore((s) => s.isSuccess);
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
@@ -29,6 +31,10 @@ export const CreateTask = ({
         <Spinner />
       </div>
     );
+  }
+
+  if (isSuccess) {
+    return <CreateTaskSuccess />;
   }
 
   if (step === 0) {

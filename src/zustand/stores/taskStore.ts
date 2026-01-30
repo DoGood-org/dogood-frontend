@@ -23,6 +23,7 @@ interface TTaskActions {
 interface TCreateTaskState {
   createStep: number;
   createTaskDraft: Partial<IExtendedITaskProps>;
+  isSuccess: boolean;
 }
 
 interface TCreateTaskActions {
@@ -30,6 +31,7 @@ interface TCreateTaskActions {
   prevCreateStep: () => void;
   setCreateTaskDraft: (data: Partial<IExtendedITaskProps>) => void;
   resetCreateTask: () => void;
+  setIsSuccess: (status: boolean) => void;
 }
 
 type TTaskStore = TTaskState &
@@ -54,6 +56,7 @@ export const useTaskStore = create<TTaskStore>()(
       highlightedTaskId: null,
       createStep: 0,
       createTaskDraft: {},
+      isSuccess: false,
 
       setTasks: (tasks): any => set({ tasks }),
       setJoinedTasks: (tasks): any => set({ joinedTasks: tasks }),
@@ -110,6 +113,10 @@ export const useTaskStore = create<TTaskStore>()(
         }));
       },
 
+      setIsSuccess: (status: boolean): void => {
+        set({ isSuccess: status });
+      },
+
       setCreateTaskDraft: (data: Partial<IExtendedITaskProps>): void => {
         set((state) => ({
           createTaskDraft: {
@@ -123,6 +130,7 @@ export const useTaskStore = create<TTaskStore>()(
         set({
           createStep: 0,
           createTaskDraft: {} as Partial<IExtendedITaskProps>,
+          isSuccess: false,
         });
       },
     }),

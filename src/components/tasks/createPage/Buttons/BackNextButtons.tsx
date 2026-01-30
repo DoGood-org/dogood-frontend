@@ -5,7 +5,8 @@ import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
 import { cn } from '@/lib/utils';
 // import { MarkerCategoryEnum } from '@/types';
 import { useTaskStore } from '@/zustand/stores/taskStore';
-import { JSX } from 'react';
+import { JSX, useState } from 'react';
+import { RequiredFieldsModal } from '../RequiredFieldsModal/RequiredFieldsModal';
 
 type Props = {
   showBack?: boolean;
@@ -14,6 +15,9 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   const createStep = useTaskStore((s) => s.createStep);
   const prevCreateStep = useTaskStore((s) => s.prevCreateStep);
   const nextCreateStep = useTaskStore((s) => s.nextCreateStep);
+  const setIsSuccess = useTaskStore((s) => s.setIsSuccess);
+
+  const [isRequiredModalOpen, setIsRequiredModalOpen] = useState(false);
 
   // const category = useTaskStore((s) => s.createTaskDraft.category);
 
@@ -35,10 +39,19 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       ? 'Preview'
       : 'Next step';
 
+  const isFormValid = true;
+
   const handleNextClick = (): void => {
-    if (isLastStep) {
-      console.log('Task submitted for moderation');
+    if (!isFormValid) {
+      setIsRequiredModalOpen(true);
+      return;
     }
+
+    if (isLastStep) {
+      setIsSuccess(true);
+      return;
+    }
+
     nextCreateStep();
   };
 
@@ -68,25 +81,32 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
     );
 
   return (
-    <div className={containerClass(isLastStep)}>
-      {showLeftButton && (
+    <>
+      <div className={containerClass(isLastStep)}>
+        {showLeftButton && (
+          <Button
+            variant="secondary"
+            className={backButtonClass(isLastStep)}
+            onClick={prevCreateStep}
+            size="lg"
+          >
+            {leftButtonText}
+          </Button>
+        )}
         <Button
-          variant="secondary"
-          className={backButtonClass(isLastStep)}
-          onClick={prevCreateStep}
+          variant="primary"
           size="lg"
+          className={nextButtonClass(isLastStep)}
+          onClick={handleNextClick}
         >
-          {leftButtonText}
+          {rightButtonText}
         </Button>
-      )}
-      <Button
-        variant="primary"
-        size="lg"
-        className={nextButtonClass(isLastStep)}
-        onClick={handleNextClick}
-      >
-        {rightButtonText}
-      </Button>
-    </div>
+      </div>
+
+      <RequiredFieldsModal
+        isOpen={isRequiredModalOpen}
+        onClose={() => setIsRequiredModalOpen(false)}
+      />
+    </>
   );
 };
