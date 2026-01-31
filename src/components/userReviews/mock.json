@@ -1,68 +1,102 @@
-[
-  {
-    "id": "1",
-    "name": "Moonbeam ",
-    "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
-    "rating": 4
-  },
-  {
-    "id": "2",
-    "name": "Penelope",
-    "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
-    "rating": 5
-  },
-  {
-    "id": "3",
-    "name": "Sigizmund",
-    "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
-    "rating": 4
-  },
-  {
-    "id": "4",
-    "name": "Tootsie",
-    "avatar": "https://randomuser.me/api/portraits/women/4.jpg",
-    "rating": 5
-  },
-  {
-    "id": "5",
-    "name": "Vaniamin",
-    "avatar": "https://randomuser.me/api/portraits/men/5.jpg",
-    "rating": 3
-  },
-  {
-    "id": "6",
-    "name": "Sofiia",
-    "avatar": "https://randomuser.me/api/portraits/women/6.jpg",
-    "rating": 4
-  },
-  {
-    "id": "7",
-    "name": "Maksymilian",
-    "avatar": "https://randomuser.me/api/portraits/men/7.jpg",
-    "rating": 2
-  },
-  {
-    "id": "8",
-    "name": "Kateryna",
-    "avatar": "https://randomuser.me/api/portraits/women/8.jpg",
-    "rating": 5
-  },
-  {
-    "id": "9",
-    "name": "Bartholomew",
-    "avatar": "https://randomuser.me/api/portraits/men/9.jpg",
-    "rating": 4
-  },
-  {
-    "id": "10",
-    "name": "Olena",
-    "avatar": "https://randomuser.me/api/portraits/women/10.jpg",
-    "rating": 5
-  },
-  {
-    "id": "11",
-    "name": "Ambassador",
-    "avatar": "https://randomuser.me/api/portraits/men/11.jpg",
-    "rating": 5
+{
+  "data": {
+    "id": 0,
+    "title": "'Peace Volunteers 1'",
+    "description": "📦 Humanitarian aid coordination \n 🧭 Volunteer and event management \n 📣 Social media and outreach \n 🤝 Partner and recipient communication \n 📷 Photo and video documentation",
+
+    "picture": "/account/org1.png",
+    "startDate": "2025-05-01T14:05:00.000Z",
+    "startTime": "2025-05-01T14:30:00.000Z",
+    "endDate": "2025-05-01T14:05:00.000Z",
+    "location": {
+      "lat": 45.7833,
+      "lng": 21.2333
+    },
+    "locationName": "United States, Alabama,Argo",
+    "status": "PENDING",
+    "categories": ["NATURE"],
+    "host": {
+      "type": "",
+      "user": {
+        "id": 1,
+        "name": "",
+        "email": "",
+        "createdAt": "",
+        "updatedAt": ""
+      },
+      "organization": {
+        "id": "1",
+        "name": "Peace Volunteers",
+        "createdAt": "2025-05-01T14:05:00.000Z"
+      }
+    },
+    "joinedUsers": [
+      {
+        "id": "1",
+        "name": "Moonbeam ",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "rating": 4
+      },
+      {
+        "id": "2",
+        "name": "Penelope",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "rating": 5
+      },
+      {
+        "id": "3",
+        "name": "Sigizmund",
+        "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
+        "rating": 4
+      },
+      {
+        "id": "4",
+        "name": "Tootsie",
+        "avatar": "https://randomuser.me/api/portraits/women/4.jpg",
+        "rating": 5
+      },
+      {
+        "id": "5",
+        "name": "Vaniamin",
+        "avatar": "https://randomuser.me/api/portraits/men/5.jpg",
+        "rating": 3
+      },
+      {
+        "id": "6",
+        "name": "Sofiia",
+        "avatar": "https://randomuser.me/api/portraits/women/6.jpg",
+        "rating": 4
+      },
+      {
+        "id": "7",
+        "name": "Maksymilian",
+        "avatar": "https://randomuser.me/api/portraits/men/7.jpg",
+        "rating": 2
+      },
+      {
+        "id": "8",
+        "name": "Kateryna",
+        "avatar": "https://randomuser.me/api/portraits/women/8.jpg",
+        "rating": 5
+      },
+      {
+        "id": "9",
+        "name": "Bartholomew",
+        "avatar": "https://randomuser.me/api/portraits/men/9.jpg",
+        "rating": 4
+      },
+      {
+        "id": "10",
+        "name": "Olena",
+        "avatar": "https://randomuser.me/api/portraits/women/10.jpg",
+        "rating": 5
+      },
+      {
+        "id": "11",
+        "name": "Ambassador",
+        "avatar": "https://randomuser.me/api/portraits/men/11.jpg",
+        "rating": 5
+      }
+    ]
   }
-]
+}
