@@ -1,23 +1,26 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
 import { TaskOwnerValue } from '@/types/tasks.type';
-import { useTaskStore } from '@/zustand/stores/taskStore';
+import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import { JSX } from 'react';
 
 interface ConfirmButtonProps {
   disabled?: boolean;
   owner?: TaskOwnerValue | null;
   onConfirm?: () => void;
+  className?: string;
 }
 
 export const ConfirmButton = ({
   disabled,
   onConfirm,
   owner,
+  className,
 }: ConfirmButtonProps): JSX.Element => {
-  const nextCreateStep = useTaskStore((s) => s.nextCreateStep);
-  const setCreateTaskDraft = useTaskStore((s) => s.setCreateTaskDraft);
+  const nextCreateStep = useCreateTaskStore((s) => s.nextCreateStep);
+  const setCreateTaskDraft = useCreateTaskStore((s) => s.setCreateTaskDraft);
 
   const handleConfirm = (): void => {
     if (!owner) return;
@@ -34,7 +37,7 @@ export const ConfirmButton = ({
   const isDisabled = disabled || !owner;
 
   return (
-    <div className="flex justify-end">
+    <div className={cn('flex justify-end', className)}>
       <Button
         variant="primary"
         size="lg"

@@ -4,18 +4,18 @@ import { Button } from '@/components/ui/Button';
 import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
 import { cn } from '@/lib/utils';
 // import { MarkerCategoryEnum } from '@/types';
-import { useTaskStore } from '@/zustand/stores/taskStore';
 import { JSX, useState } from 'react';
 import { RequiredFieldsModal } from '../RequiredFieldsModal/RequiredFieldsModal';
+import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 
 type Props = {
   showBack?: boolean;
 };
 export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
-  const createStep = useTaskStore((s) => s.createStep);
-  const prevCreateStep = useTaskStore((s) => s.prevCreateStep);
-  const nextCreateStep = useTaskStore((s) => s.nextCreateStep);
-  const setIsSuccess = useTaskStore((s) => s.setIsSuccess);
+  const createStep = useCreateTaskStore((s) => s.createStep);
+  const prevCreateStep = useCreateTaskStore((s) => s.prevCreateStep);
+  const nextCreateStep = useCreateTaskStore((s) => s.nextCreateStep);
+  const setIsSuccess = useCreateTaskStore((s) => s.setIsSuccess);
 
   const [isRequiredModalOpen, setIsRequiredModalOpen] = useState(false);
 

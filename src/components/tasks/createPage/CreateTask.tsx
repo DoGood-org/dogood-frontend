@@ -2,11 +2,11 @@
 
 import { Spinner } from '@/components/ui/Spinner';
 import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
-import { useTaskStore } from '@/zustand/stores/taskStore';
 import { JSX, useEffect, useState } from 'react';
 import { Step0TaskOwner } from './steps/Step0TaskOwner/Step0TaskOwner';
 import { OrganizationFromBack } from '@/types/tasks.type';
 import { CreateTaskSuccess } from './CreateTaskSuccess';
+import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 
 interface CreateTaskProp {
   organizations: OrganizationFromBack[];
@@ -17,8 +17,8 @@ export const CreateTask = ({
   organizations,
   currentUserName,
 }: CreateTaskProp): JSX.Element | null => {
-  const step = useTaskStore((s) => s.createStep);
-  const isSuccess = useTaskStore((s) => s.isSuccess);
+  const step = useCreateTaskStore((s) => s.createStep);
+  const isSuccess = useCreateTaskStore((s) => s.isSuccess);
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {

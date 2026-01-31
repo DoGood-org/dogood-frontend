@@ -3,8 +3,8 @@
 import { JSX } from 'react';
 import { Section } from '@/components/ui/Section';
 import { TaskOwnerForm } from './TaskOwnerForm';
-import { useTaskStore } from '@/zustand/stores/taskStore';
 import { OrganizationFromBack, TaskOwnerValue } from '@/types/tasks.type';
+import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 
 export interface Step0TaskOwnerProps {
   organizations: OrganizationFromBack[];
@@ -15,7 +15,7 @@ export const Step0TaskOwner = ({
   organizations,
   currentUserName,
 }: Step0TaskOwnerProps): JSX.Element => {
-  const { createTaskDraft, setCreateTaskDraft } = useTaskStore();
+  const { createTaskDraft, setCreateTaskDraft } = useCreateTaskStore();
 
   const currentValue: TaskOwnerValue = createTaskDraft.organizationId
     ? { type: 'ORGANIZATION', organizationId: createTaskDraft.organizationId }

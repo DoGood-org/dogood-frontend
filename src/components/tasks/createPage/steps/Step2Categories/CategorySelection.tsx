@@ -1,11 +1,11 @@
 import { CATEGORIES } from '@/constants/createTask.categories';
 import { CategoryButton } from '../../Buttons/CategoryButton';
 import { JSX } from 'react';
-import { useTaskStore } from '@/zustand/stores/taskStore';
 import { MarkerCategoryEnum } from '@/types';
+import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 
 export const CategorySelection = (): JSX.Element => {
-  const { createTaskDraft, setCreateTaskDraft } = useTaskStore();
+  const { createTaskDraft, setCreateTaskDraft } = useCreateTaskStore();
 
   const selectedCategories: MarkerCategoryEnum[] =
     createTaskDraft.category ?? [];

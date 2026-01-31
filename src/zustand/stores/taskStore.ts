@@ -1,4 +1,3 @@
-import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
 import { IExtendedITaskProps, TaskStatus } from '@/types/tasks.type';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -20,43 +19,15 @@ interface TTaskActions {
   updateTaskStatus: (taskId: string, status: TaskStatus) => void;
 }
 
-interface TCreateTaskState {
-  createStep: number;
-  createTaskDraft: Partial<IExtendedITaskProps>;
-  isSuccess: boolean;
-}
-
-interface TCreateTaskActions {
-  nextCreateStep: () => void;
-  prevCreateStep: () => void;
-  setCreateTaskDraft: (data: Partial<IExtendedITaskProps>) => void;
-  resetCreateTask: () => void;
-  setIsSuccess: (status: boolean) => void;
-}
-
-type TTaskStore = TTaskState &
-  TTaskActions &
-  TCreateTaskState &
-  TCreateTaskActions;
+type TTaskStore = TTaskState & TTaskActions;
 
 export const useTaskStore = create<TTaskStore>()(
-  persist<
-    TTaskStore,
-    [],
-    [],
-    Pick<
-      TTaskState & TCreateTaskState,
-      'tasks' | 'joinedTasks' | 'createStep' | 'createTaskDraft'
-    >
-  >(
+  persist<TTaskStore, [], [], Pick<TTaskState, 'tasks' | 'joinedTasks'>>(
     (set, get) => ({
       tasks: [],
       joinedTasks: [],
       tasksByKey: {},
       highlightedTaskId: null,
-      createStep: 0,
-      createTaskDraft: {},
-      isSuccess: false,
 
       setTasks: (tasks): any => set({ tasks }),
       setJoinedTasks: (tasks): any => set({ joinedTasks: tasks }),
@@ -97,56 +68,13 @@ export const useTaskStore = create<TTaskStore>()(
         });
       },
       setHighlightedTaskId: (taskId): any => set({ highlightedTaskId: taskId }),
-
-      nextCreateStep: (): void => {
-        set((state) => ({
-          createStep: Math.min(
-            state.createStep + 1,
-            CREATE_TASK_STEPS.length - 1
-          ),
-        }));
-      },
-
-      prevCreateStep: (): void => {
-        set((state) => ({
-          createStep: Math.max(state.createStep - 1, 0),
-        }));
-      },
-
-      setIsSuccess: (status: boolean): void => {
-        set({ isSuccess: status });
-      },
-
-      setCreateTaskDraft: (data: Partial<IExtendedITaskProps>): void => {
-        set((state) => ({
-          createTaskDraft: {
-            ...state.createTaskDraft,
-            ...data,
-          },
-        }));
-      },
-
-      resetCreateTask: (): void => {
-        set({
-          createStep: 0,
-          createTaskDraft: {} as Partial<IExtendedITaskProps>,
-          isSuccess: false,
-        });
-      },
     }),
     {
       name: 'task-storage',
-      partialize: function (
-        state
-      ): Pick<
-        TTaskState & TCreateTaskState,
-        'tasks' | 'joinedTasks' | 'createStep' | 'createTaskDraft'
-      > {
+      partialize: function (state): Pick<TTaskState, 'tasks' | 'joinedTasks'> {
         return {
           tasks: state.tasks,
           joinedTasks: state.joinedTasks,
-          createStep: state.createStep,
-          createTaskDraft: state.createTaskDraft,
         };
       },
     }

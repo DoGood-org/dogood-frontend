@@ -11,10 +11,10 @@ export const CreateTaskSuccess = (): JSX.Element => {
   const router = useRouter();
 
   return (
-    <Section className="flex flex-col items-center justify-center min-h-screen lg:mx-20">
+    <Section className="flex flex-col items-center justify-center min-h-screen lg:mx-40">
       <UiSuccessMessage className="absolute -top-10 z-50 flex justify-start max-none" />
       <StepCard className="relative -top-34">
-        <h2 className="text-h1 mb-2 text-center w-full md:max-w-[504px] lg:max-w-full">
+        <h2 className="text-h1 mb-2 text-center w-full lg:max-w-full">
           You&apos;ve successfully created your task!
         </h2>
 
