@@ -31,6 +31,7 @@ export interface IAccordionDataProps {
   categoryData: MenuCategoryData;
   openItem: string | null;
   toggleItem: (itemId: string) => void;
+  appliedFilter?: string;
 }
 export interface ICustomAccordionProps {
   menuCategories: MenuCategoryKey[];
@@ -43,6 +44,7 @@ export interface ICustomAccordionProps {
   setOpenItem: (itemId: string | null) => void;
   toggleItem: (itemId: string) => void;
   t: any;
+  appliedFilter: string;
 }
 export interface IFilterProps {
   handleFilterChange: (filter: string) => void;

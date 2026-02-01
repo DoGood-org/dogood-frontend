@@ -17,6 +17,7 @@ export const CustomAccordion = ({
   setOpenItem,
   toggleItem,
   t,
+  appliedFilter,
 }: ICustomAccordionProps): JSX.Element => {
   return (
     <div className="w-full mx-auto">
@@ -49,6 +50,7 @@ export const CustomAccordion = ({
                   categoryData={category}
                   openItem={openItem}
                   toggleItem={toggleItem}
+                  appliedFilter={appliedFilter}
                 />
               </div>
             ))
