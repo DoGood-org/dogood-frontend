@@ -1,18 +1,17 @@
 import { CATEGORIES } from '@/constants/createTask.categories';
 import { CategoryButton } from '../../Buttons/CategoryButton';
 import { JSX } from 'react';
-import { MarkerCategoryEnum } from '@/types';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
+import { TaskCategoryEnum } from '@/types/createTask.type';
 
 export const CategorySelection = (): JSX.Element => {
   const { createTaskDraft, setCreateTaskDraft } = useCreateTaskStore();
 
-  const selectedCategories: MarkerCategoryEnum[] =
-    createTaskDraft.category ?? [];
+  const selectedCategories: TaskCategoryEnum[] = createTaskDraft.category ?? [];
 
-  const toggleCategory = (id: MarkerCategoryEnum): void => {
+  const toggleCategory = (id: TaskCategoryEnum): void => {
     const updated = selectedCategories.includes(id)
-      ? selectedCategories.filter((catId: MarkerCategoryEnum) => catId !== id)
+      ? selectedCategories.filter((catId) => catId !== id)
       : [...selectedCategories, id];
 
     setCreateTaskDraft({ category: updated });

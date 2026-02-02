@@ -1,12 +1,11 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
-import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
 import { cn } from '@/lib/utils';
-// import { MarkerCategoryEnum } from '@/types';
 import { JSX, useState } from 'react';
 import { RequiredFieldsModal } from '../RequiredFieldsModal/RequiredFieldsModal';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
+import { TaskCategoryEnum } from '@/types/createTask.type';
 
 type Props = {
   showBack?: boolean;
@@ -19,15 +18,15 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
 
   const [isRequiredModalOpen, setIsRequiredModalOpen] = useState(false);
 
-  // const category = useTaskStore((s) => s.createTaskDraft.category);
+  const category = useCreateTaskStore((s) => s.createTaskDraft.category);
+  const isDonation = Array.isArray(category)
+    ? category.includes(TaskCategoryEnum.Donation)
+    : category === TaskCategoryEnum.Donation;
 
-  // const isDonation = Array.isArray(category)
-  //   ? category.includes(MarkerCategoryEnum.Donation)
-  //   : category === MarkerCategoryEnum.Donation;
-
-  const lastStepIndex = CREATE_TASK_STEPS.length - 1;
+  const lastStepIndex = isDonation ? 5 : 4;
 
   const isLastStep = createStep === lastStepIndex;
+
   const isBeforeLastStep = createStep === lastStepIndex - 1;
 
   const showLeftButton = showBack && createStep > 0;
@@ -39,6 +38,7 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       ? 'Preview'
       : 'Next step';
 
+  // Тут можна додати реальну валідацію полів
   const isFormValid = true;
 
   const handleNextClick = (): void => {
@@ -48,6 +48,7 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
     }
 
     if (isLastStep) {
+      // Тут можна викликати функцію відправки даних на сервер
       setIsSuccess(true);
       return;
     }

@@ -1,9 +1,9 @@
 import { Animal, Donation, Food, Medicine, Nature } from '@/components/icons';
-import { MarkerCategoryEnum } from '@/types';
+import { TaskCategoryEnum } from '@/types/createTask.type';
 import { ReactElement, SVGProps } from 'react';
 
 export interface CategoryConfig {
-  id: MarkerCategoryEnum;
+  id: TaskCategoryEnum;
   label: string;
   icon: (props: SVGProps<SVGSVGElement>) => ReactElement;
   colorClass: string;
@@ -12,31 +12,31 @@ export interface CategoryConfig {
 
 export const CATEGORIES: CategoryConfig[] = [
   {
-    id: MarkerCategoryEnum.Nature,
+    id: TaskCategoryEnum.Nature,
     label: 'Nature',
     icon: Nature,
     colorClass: 'bg-[#00c1ac]',
   },
   {
-    id: MarkerCategoryEnum.Animal,
+    id: TaskCategoryEnum.Animal,
     label: 'Animal',
     icon: Animal,
     colorClass: 'bg-animal',
   },
   {
-    id: MarkerCategoryEnum.Food,
+    id: TaskCategoryEnum.Food,
     label: 'Food',
     icon: Food,
     colorClass: 'bg-food',
   },
   {
-    id: MarkerCategoryEnum.Medicine,
+    id: TaskCategoryEnum.Medicine,
     label: 'Medicine',
     icon: Medicine,
     colorClass: 'bg-medicine',
   },
   {
-    id: MarkerCategoryEnum.Donation,
+    id: TaskCategoryEnum.Donation,
     label: 'Donation',
     icon: Donation,
     withWhiteCircle: true,

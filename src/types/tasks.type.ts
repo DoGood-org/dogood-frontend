@@ -1,5 +1,5 @@
-import { MarkerCategoryEnum } from '@/types/mapType';
 import { ReactElement } from 'react';
+import { TaskCategoryEnum } from './createTask.type';
 
 export type TaskOwnerValue =
   | { type: 'USER' }
@@ -15,7 +15,7 @@ export interface ITask {
   title: string;
   subtitle: string;
   icon?: ReactElement;
-  category: MarkerCategoryEnum[];
+  category: TaskCategoryEnum[];
   description: string;
   distance: string;
   lat: number;

@@ -9,8 +9,8 @@ export const enum MarkerCategoryEnum {
   MyPosition = 'myPosition',
   Default = 'default',
   MyPin = 'myPin',
-  Donation = 'donation',
 }
+
 export const enum EnumMapLayers {
   Satellite = 'EsriSatellite',
   OpenStreetMap = 'OpenStreetMap',
@@ -91,6 +91,7 @@ export type MapIcons = {
   myPosition: Icon | null;
   default: Icon | null;
   myPin: Icon | null;
+  donation: Icon | null;
 };
 
 export type LeafletModule = {

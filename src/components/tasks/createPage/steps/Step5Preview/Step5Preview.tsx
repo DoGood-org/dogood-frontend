@@ -3,11 +3,10 @@ import { JSX } from 'react';
 import { StepHeader } from '../../StepHeader';
 import { Task } from '@/components/tasks/taskPage/Task';
 import { ITaskDetails, UserParticipationStatus } from '@/types/tasks.type';
-import { MarkerCategoryEnum } from '@/types/mapType';
 import { TaskActionType } from '@/types/tasks.type';
 import { Section } from '@/components/ui/Section';
-import { BasicInfoFormValues } from '@/types/createTask.type';
-import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
+import { BasicInfoFormValues, TaskCategoryEnum } from '@/types/createTask.type';
+// import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
 import { BackNextButtons } from '../../Buttons/BackNextButtons';
 
 interface TaskPreviewProps {
@@ -15,7 +14,7 @@ interface TaskPreviewProps {
 }
 
 type CreateTaskValues = BasicInfoFormValues & {
-  category: MarkerCategoryEnum[];
+  category: TaskCategoryEnum[];
   actionType: TaskActionType;
   userParticipationStatus?: UserParticipationStatus;
   organizationId?: string;
@@ -61,7 +60,7 @@ const mockTaskValues: CreateTaskValues = {
   picture:
     'https://res.cloudinary.com/dinpgnkhh/image/upload/v1760461912/dog_gc3uel.png',
   description: 'Join our volunteer team to care for rescued animals...',
-  category: [MarkerCategoryEnum.Animal, MarkerCategoryEnum.Nature],
+  category: [TaskCategoryEnum.Animal, TaskCategoryEnum.Nature],
   actionType: TaskActionType.VOLUNTEERING,
   userParticipationStatus: UserParticipationStatus.NONE,
   isOrganization: true,
@@ -77,13 +76,13 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
     <Section withContainer={true} className="mt-8 mb-8">
       <StepHeader step={5} title="Preview" titleClassName="text-lg mb-8 pl-0" />
       <Task task={currentTask} showEditButton={false} />
-      <IconButtonGroup
+      {/* <IconButtonGroup
         categories={currentTask.category}
         distance={currentTask.distance}
         lat={currentTask.lat}
         lng={currentTask.lng}
         taskId={currentTask.id}
-      />
+      /> */}
       <div className="mt-8 flex justify-end">
         <BackNextButtons showBack={true} />
       </div>

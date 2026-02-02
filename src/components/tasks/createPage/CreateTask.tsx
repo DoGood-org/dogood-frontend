@@ -46,7 +46,7 @@ export const CreateTask = ({
     );
   }
 
-  const StepComponent = CREATE_TASK_STEPS[step]?.component;
+  const StepComponent = CREATE_TASK_STEPS[step - 1]?.component;
   if (!StepComponent) return null;
 
   return <StepComponent />;

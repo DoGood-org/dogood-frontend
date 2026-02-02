@@ -5,8 +5,8 @@ import { DatePicker } from '../../Form/DatePicker';
 import { TimePicker } from '../../Form/TimePicker';
 import { FormField } from '../../Form/FormField';
 import { useFormContext } from 'react-hook-form';
-import { BasicInfoFormValues } from '@/types/createTask.type';
 import { FormInput } from '../../Form/FormInput';
+import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 
 export const BasicInfoForm = (): JSX.Element => {
   const { getValues } = useFormContext<BasicInfoFormValues>();
@@ -24,7 +24,7 @@ export const BasicInfoForm = (): JSX.Element => {
         <FormField name="startDate" label="Date from" required>
           {(field) => (
             <DatePicker
-              value={field.value}
+              value={field.value ?? undefined}
               onChange={field.onChange}
               onBlur={field.onBlur}
               placeholder="16-05-2025"
@@ -35,7 +35,7 @@ export const BasicInfoForm = (): JSX.Element => {
         <FormField name="finishDate" label="Date to" required>
           {(field) => (
             <DatePicker
-              value={field.value}
+              value={field.value ?? undefined}
               onChange={field.onChange}
               onBlur={field.onBlur}
               placeholder="16-06-2025"

@@ -1,7 +1,6 @@
 import * as yup from 'yup';
 
 export const basicInfoSchema = yup.object({
-  organizationId: yup.string().nullable(),
   picture: yup.string().required('Picture is required'),
   title: yup
     .string()
@@ -16,13 +15,13 @@ export const basicInfoSchema = yup.object({
   startDate: yup
     .date()
     .typeError('Start date is required')
-    .nullable()
+    .optional()
     .required('Start date is required'),
   finishDate: yup
     .date()
     .typeError('Finish date is required')
     .min(yup.ref('startDate'), 'Finish date cannot be earlier than start date')
-    .nullable()
+    .optional()
     .required('Finish date is required'),
   description: yup
     .string()

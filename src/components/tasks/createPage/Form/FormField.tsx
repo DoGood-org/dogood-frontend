@@ -4,33 +4,35 @@ import { JSX } from 'react';
 import {
   Controller,
   useFormContext,
-  FieldValues,
   Path,
   ControllerRenderProps,
+  get,
 } from 'react-hook-form';
 import { Label } from '@/components/ui/Label';
+import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 
-interface FormFieldProps<TFormValues extends FieldValues> {
-  name: Path<TFormValues>;
+interface FormFieldProps<TName extends Path<BasicInfoFormValues>> {
+  name: TName;
   label: string;
   required?: boolean;
   children: (
-    field: ControllerRenderProps<TFormValues, Path<TFormValues>>
+    field: ControllerRenderProps<BasicInfoFormValues, TName>
   ) => JSX.Element;
 }
 
-export const FormField = <TFormValues extends FieldValues>({
+export const FormField = <TName extends Path<BasicInfoFormValues>>({
   name,
   label,
   children,
   required = false,
-}: FormFieldProps<TFormValues>): JSX.Element => {
+}: FormFieldProps<TName>): JSX.Element => {
   const {
     control,
     formState: { errors },
-  } = useFormContext<TFormValues>();
+  } = useFormContext<BasicInfoFormValues>();
 
-  const error = errors[name]?.message as string | undefined;
+  const error = get(errors, name)?.message;
+
   const labelClass = error
     ? 'mb-2 block text-error'
     : 'mb-2 block text-text-help dark:text-gray';
@@ -44,6 +46,7 @@ export const FormField = <TFormValues extends FieldValues>({
       </Label>
       <Controller
         name={name}
+        rules={{ required }}
         control={control}
         render={({ field }) => children(field)}
       />

@@ -7,6 +7,7 @@ interface CreateTaskState {
   createStep: number;
   createTaskDraft: Partial<IExtendedITaskProps>;
   isSuccess: boolean;
+  isReview: boolean;
 }
 
 interface CreateTaskActions {
@@ -15,6 +16,7 @@ interface CreateTaskActions {
   setCreateTaskDraft: (data: Partial<IExtendedITaskProps>) => void;
   resetCreateTask: () => void;
   setIsSuccess: (status: boolean) => void;
+  setIsReview: (status: boolean) => void;
 }
 
 export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
@@ -23,6 +25,7 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
       createStep: 0,
       createTaskDraft: {},
       isSuccess: false,
+      isReview: false,
 
       nextCreateStep: (): void => {
         set((state) => ({
@@ -51,12 +54,16 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
           },
         }));
       },
+      setIsReview: (status: boolean): void => {
+        set({ isReview: status });
+      },
 
       resetCreateTask: (): void => {
         set({
           createStep: 0,
           createTaskDraft: {} as Partial<IExtendedITaskProps>,
           isSuccess: false,
+          isReview: false,
         });
       },
     }),

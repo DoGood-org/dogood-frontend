@@ -1,12 +1,10 @@
-export type BasicInfoFormValues = {
-  title: string;
-  location: string;
-  startDate: Date;
-  finishDate: Date;
-  time: string;
-  picture: string;
-  description: string;
-};
+export const enum TaskCategoryEnum {
+  Nature = 'nature',
+  Animal = 'animal',
+  Food = 'food',
+  Medicine = 'medicine',
+  Donation = 'donation',
+}
 
 export type UploadResultInfo = {
   secure_url?: string;

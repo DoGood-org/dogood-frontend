@@ -2,8 +2,10 @@
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { basicInfoSchema } from '@/lib/validation/createTask.schema';
-import { BasicInfoFormValues } from '@/types/createTask.type';
+import {
+  BasicInfoFormValues,
+  basicInfoSchema,
+} from '@/lib/validation/createTask.schema';
 import { JSX } from 'react';
 
 export const CreateTaskForm = ({
@@ -24,6 +26,8 @@ export const CreateTaskForm = ({
     },
     mode: 'onTouched',
   });
+
+  console.log(methods.watch());
 
   return <FormProvider {...methods}>{children}</FormProvider>;
 };
