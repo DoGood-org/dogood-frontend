@@ -1,3 +1,4 @@
+import { TaskCategoryEnum } from '@/types/createTask.type';
 import * as yup from 'yup';
 
 export const basicInfoSchema = yup.object({
@@ -36,6 +37,11 @@ export const basicInfoSchema = yup.object({
       /^([0-9]|1[0-9]|2[0-3])-(00|05|10|15|20|25|30|35|40|45|50|55)$/,
       'Invalid time format'
     ),
+  category: yup
+    .array()
+    .of(yup.mixed<TaskCategoryEnum>())
+    .min(1, 'Select at least one category')
+    .required('Category is required'),
 });
 
 export type BasicInfoFormValues = yup.InferType<typeof basicInfoSchema>;

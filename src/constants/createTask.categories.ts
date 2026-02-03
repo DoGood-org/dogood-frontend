@@ -42,4 +42,4 @@ export const CATEGORIES: CategoryConfig[] = [
     withWhiteCircle: true,
     colorClass: 'bg-[#01425c]',
   },
-];
+] as const;

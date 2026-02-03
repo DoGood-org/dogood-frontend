@@ -15,13 +15,14 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   const prevCreateStep = useCreateTaskStore((s) => s.prevCreateStep);
   const nextCreateStep = useCreateTaskStore((s) => s.nextCreateStep);
   const setIsSuccess = useCreateTaskStore((s) => s.setIsSuccess);
+  const setCreateStep = useCreateTaskStore((s) => s.setCreateStep);
+  const { createTaskDraft } = useCreateTaskStore();
 
   const [isRequiredModalOpen, setIsRequiredModalOpen] = useState(false);
 
-  const category = useCreateTaskStore((s) => s.createTaskDraft.category);
-  const isDonation = Array.isArray(category)
-    ? category.includes(TaskCategoryEnum.Donation)
-    : category === TaskCategoryEnum.Donation;
+  const isDonation = Array.isArray(createTaskDraft.category)
+    ? createTaskDraft.category.includes(TaskCategoryEnum.Donation)
+    : createTaskDraft.category === TaskCategoryEnum.Donation;
 
   const lastStepIndex = isDonation ? 5 : 4;
 
@@ -29,16 +30,17 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
 
   const isBeforeLastStep = createStep === lastStepIndex - 1;
 
+  const isActuallyLastStep = isLastStep || (!isDonation && createStep === 3);
+
   const showLeftButton = showBack && createStep > 0;
   const leftButtonText = isLastStep ? 'Edit' : 'Go back';
 
-  const rightButtonText = isLastStep
+  const rightButtonText = isActuallyLastStep
     ? 'Confirm'
     : isBeforeLastStep
       ? 'Preview'
       : 'Next step';
 
-  // Тут можна додати реальну валідацію полів
   const isFormValid = true;
 
   const handleNextClick = (): void => {
@@ -47,9 +49,12 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       return;
     }
 
-    if (isLastStep) {
-      // Тут можна викликати функцію відправки даних на сервер
+    if (isActuallyLastStep) {
       setIsSuccess(true);
+    }
+
+    if (isBeforeLastStep) {
+      setCreateStep(lastStepIndex);
       return;
     }
 

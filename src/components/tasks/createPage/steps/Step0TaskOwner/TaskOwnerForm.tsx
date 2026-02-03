@@ -73,7 +73,7 @@ export const TaskOwnerForm = ({
   };
 
   return (
-    <StepCard className="h-[456px] md:h-[504px]">
+    <StepCard className="h-[456px] md:h-[504px] lg:h-[595px]">
       <div className="h-full flex flex-col justify-between">
         <h2 className="text-[20px] leading-[24px] mb-8 font-medium">
           Create task as:

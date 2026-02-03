@@ -5,9 +5,10 @@ import { Task } from '@/components/tasks/taskPage/Task';
 import { ITaskDetails, UserParticipationStatus } from '@/types/tasks.type';
 import { TaskActionType } from '@/types/tasks.type';
 import { Section } from '@/components/ui/Section';
-import { BasicInfoFormValues, TaskCategoryEnum } from '@/types/createTask.type';
-// import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
+import { TaskCategoryEnum } from '@/types/createTask.type';
+import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
 import { BackNextButtons } from '../../Buttons/BackNextButtons';
+import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 
 interface TaskPreviewProps {
   task?: ITaskDetails;
@@ -76,13 +77,13 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
     <Section withContainer={true} className="mt-8 mb-8">
       <StepHeader step={5} title="Preview" titleClassName="text-lg mb-8 pl-0" />
       <Task task={currentTask} showEditButton={false} />
-      {/* <IconButtonGroup
+      <IconButtonGroup
         categories={currentTask.category}
         distance={currentTask.distance}
         lat={currentTask.lat}
         lng={currentTask.lng}
         taskId={currentTask.id}
-      /> */}
+      />
       <div className="mt-8 flex justify-end">
         <BackNextButtons showBack={true} />
       </div>

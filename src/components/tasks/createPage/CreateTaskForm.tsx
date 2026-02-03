@@ -15,6 +15,8 @@ export const CreateTaskForm = ({
 }): JSX.Element => {
   const methods = useForm<BasicInfoFormValues>({
     resolver: yupResolver(basicInfoSchema),
+    mode: 'onTouched',
+    shouldUnregister: false,
     defaultValues: {
       title: '',
       location: '',
@@ -23,8 +25,8 @@ export const CreateTaskForm = ({
       time: '',
       picture: '',
       description: '',
+      category: [],
     },
-    mode: 'onTouched',
   });
 
   console.log(methods.watch());

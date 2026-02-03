@@ -6,14 +6,14 @@ import {
   TaskActionType,
   UserParticipationStatus,
 } from '@/types/tasks.type';
-// import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
+import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
 import { LastNews } from '@/components/tasks/taskPage/LastNews/LastNews';
 import { INewsItem } from '@/types';
 import { useTranslations } from 'next-intl';
 import { Container } from '@/components/ui/Container';
-// import { TaskControlButtons } from './ButtonGroup/TaskControlButtons';
+import { TaskControlButtons } from './ButtonGroup/TaskControlButtons';
 import { OtherTasksSection } from './OtherTasks/OtherTasksSection';
-// import { authStore } from '@/zustand/stores/authStore';
+import { authStore } from '@/zustand/stores/authStore';
 import { Task } from './Task';
 
 interface TaskContentProps {
@@ -25,7 +25,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   slug,
   newsItems,
 }) => {
-  // const currentUser = authStore((state) => state.user);
+  const currentUser = authStore((state) => state.user);
   const t = useTranslations('tasks');
   const tasks = generateTasks(49.8429, 24.0316);
   const detailedTasks: ITaskDetails[] = generateMockTasks(tasks).map(
@@ -48,33 +48,33 @@ export const TaskContent: React.FC<TaskContentProps> = ({
 
   const otherTasksList: ITaskDetails[] = detailedTasks;
 
-  // const { category, distance, id: taskId, userParticipationStatus } = task;
+  const { category, distance, id: taskId, userParticipationStatus } = task;
 
-  // const taskStatus = 'IN_PROGRESS';
+  const taskStatus = 'IN_PROGRESS';
 
-  // const isHost =
-  //   currentUser != null && task.host?.id !== undefined
-  //     ? String(task.host.id) === String(currentUser.id)
-  //     : false;
+  const isHost =
+    currentUser != null && task.host?.id !== undefined
+      ? String(task.host.id) === String(currentUser.id)
+      : false;
 
   return (
     <Container className="py-10">
       <Task task={task} />
-      {/* <IconButtonGroup
+      <IconButtonGroup
         categories={category}
         distance={distance}
         lat={task.lat}
         lng={task.lng}
         taskId={taskId}
-      /> */}
+      />
       <div className="flex justify-between mt-5">
-        {/* <TaskControlButtons
+        <TaskControlButtons
           taskId={taskId}
           actionType={task.actionType}
           userParticipationStatus={userParticipationStatus}
           taskStatus={taskStatus}
           isHost={isHost}
-        /> */}
+        />
       </div>
       <OtherTasksSection tasks={otherTasksList} />
       <LastNews newsItems={newsItems} />
