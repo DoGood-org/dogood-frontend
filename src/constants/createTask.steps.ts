@@ -9,25 +9,30 @@ export const CREATE_TASK_STEPS = [
     id: 'basic',
     title: 'Basic info',
     component: Step1BasicInfo,
+    fields: ['title', 'location', 'picture', 'time', 'startDate', 'finishDate'],
   },
   {
     id: 'category',
     title: 'Category',
     component: Step2Category,
+    fields: ['category'],
   },
   {
     id: 'description',
     title: 'Description',
     component: Step3Description,
+    fields: ['description'],
   },
   {
     id: 'payment',
     title: 'Payment',
     component: Step4Payment,
+    fields: ['amount', 'currency'],
   },
   {
     id: 'preview',
     title: 'Preview',
     component: Step5Preview,
+    fields: [],
   },
 ];

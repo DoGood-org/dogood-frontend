@@ -26,6 +26,9 @@ export const CreateTaskForm = ({
       picture: '',
       description: '',
       category: [],
+      amount: '',
+      currency: '',
+      requirements: '',
     },
   });
 

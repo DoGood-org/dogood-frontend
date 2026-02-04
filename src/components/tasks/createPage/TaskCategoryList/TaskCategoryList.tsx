@@ -18,7 +18,7 @@ export const TaskCategoryList = ({
 
   return (
     <ul>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="flex gap-4">
         {selectedCategories.map((cat) => (
           <TaskCategoryItem
             key={cat.id}

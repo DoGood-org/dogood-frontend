@@ -18,13 +18,13 @@ export const TaskCategoryItem = ({
     <div className="flex gap2">
       {withWhiteCircle ? (
         <div
-          className={`flex items-center justify-center w-12 h-12 rounded-full ${colorClass ?? 'bg-gray'}`}
+          className={`flex items-center justify-center w-12 h-12 rounded-full ${colorClass ?? 'bg-white'}`}
         >
-          <Icon className="w-5 h-5 text-white" />
+          <Icon className="w-5 h-5 text-white stroke-white fill-none" />
         </div>
       ) : (
         <div
-          className={`flex items-center justify-center w-12 h-12 rounded-full ${colorClass ?? 'border-text-gray'}`}
+          className={`flex items-center justify-center w-12 h-12 rounded-full ${colorClass ?? 'bg-white'}`}
         >
           <Icon className="w-5 h-5 text-white" />
         </div>

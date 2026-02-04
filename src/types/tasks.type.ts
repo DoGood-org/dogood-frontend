@@ -73,4 +73,5 @@ export interface IExtendedITaskProps extends ITask {
   organizationId?: string | null;
   isHost?: boolean;
   status: TaskStatus;
+  ownerType?: 'user' | 'organization';
 }

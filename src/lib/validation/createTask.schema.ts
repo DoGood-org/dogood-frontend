@@ -42,6 +42,9 @@ export const basicInfoSchema = yup.object({
     .of(yup.mixed<TaskCategoryEnum>())
     .min(1, 'Select at least one category')
     .required('Category is required'),
+  amount: yup.string().required('Amount is required'),
+  currency: yup.string().required('Currency is required'),
+  requirements: yup.string().ensure(),
 });
 
 export type BasicInfoFormValues = yup.InferType<typeof basicInfoSchema>;

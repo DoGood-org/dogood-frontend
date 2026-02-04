@@ -6,6 +6,8 @@ import { JSX, useState } from 'react';
 import { RequiredFieldsModal } from '../RequiredFieldsModal/RequiredFieldsModal';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import { TaskCategoryEnum } from '@/types/createTask.type';
+import { useFormContext } from 'react-hook-form';
+import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
 
 type Props = {
   showBack?: boolean;
@@ -13,16 +15,18 @@ type Props = {
 export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   const createStep = useCreateTaskStore((s) => s.createStep);
   const prevCreateStep = useCreateTaskStore((s) => s.prevCreateStep);
-  const nextCreateStep = useCreateTaskStore((s) => s.nextCreateStep);
   const setIsSuccess = useCreateTaskStore((s) => s.setIsSuccess);
   const setCreateStep = useCreateTaskStore((s) => s.setCreateStep);
-  const { createTaskDraft } = useCreateTaskStore();
 
   const [isRequiredModalOpen, setIsRequiredModalOpen] = useState(false);
 
-  const isDonation = Array.isArray(createTaskDraft.category)
-    ? createTaskDraft.category.includes(TaskCategoryEnum.Donation)
-    : createTaskDraft.category === TaskCategoryEnum.Donation;
+  const { trigger, watch } = useFormContext();
+
+  const category = watch('category');
+
+  const isDonation = Array.isArray(category)
+    ? category.includes(TaskCategoryEnum.Donation)
+    : category === TaskCategoryEnum.Donation;
 
   const lastStepIndex = isDonation ? 5 : 4;
 
@@ -41,12 +45,15 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       ? 'Preview'
       : 'Next step';
 
-  const isFormValid = true;
+  const handleNextClick = async (): Promise<void> => {
+    const stepIndex = createStep === 0 ? null : createStep - 1;
 
-  const handleNextClick = (): void => {
-    if (!isFormValid) {
-      setIsRequiredModalOpen(true);
-      return;
+    if (stepIndex !== null) {
+      const isValid = await trigger(CREATE_TASK_STEPS[stepIndex].fields);
+      if (!isValid) {
+        setIsRequiredModalOpen(true);
+        return;
+      }
     }
 
     if (isActuallyLastStep) {
@@ -58,7 +65,7 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       return;
     }
 
-    nextCreateStep();
+    setCreateStep(createStep + 1);
   };
 
   const containerClass = (isLastStep: boolean): string =>

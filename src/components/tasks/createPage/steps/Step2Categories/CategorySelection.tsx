@@ -1,20 +1,24 @@
 import { CATEGORIES } from '@/constants/createTask.categories';
 import { CategoryButton } from '../../Buttons/CategoryButton';
 import { JSX } from 'react';
-import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import { TaskCategoryEnum } from '@/types/createTask.type';
+import { useFormContext } from 'react-hook-form';
 
 export const CategorySelection = (): JSX.Element => {
-  const { createTaskDraft, setCreateTaskDraft } = useCreateTaskStore();
+  const { setValue, watch } = useFormContext();
 
-  const selectedCategories: TaskCategoryEnum[] = createTaskDraft.category ?? [];
+  const selectedCategories: TaskCategoryEnum[] = watch('category') || [];
 
   const toggleCategory = (id: TaskCategoryEnum): void => {
-    const updated = selectedCategories.includes(id)
+    const next = selectedCategories.includes(id)
       ? selectedCategories.filter((catId) => catId !== id)
       : [...selectedCategories, id];
 
-    setCreateTaskDraft({ category: updated });
+    setValue('category', next, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
   };
   return (
     <section className="mb-[50px] md:px-[60px] lg:px-0">

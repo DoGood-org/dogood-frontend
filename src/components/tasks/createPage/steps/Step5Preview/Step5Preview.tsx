@@ -61,12 +61,14 @@ const mockTaskValues: CreateTaskValues = {
   picture:
     'https://res.cloudinary.com/dinpgnkhh/image/upload/v1760461912/dog_gc3uel.png',
   description: 'Join our volunteer team to care for rescued animals...',
-  category: [TaskCategoryEnum.Animal, TaskCategoryEnum.Nature],
+  category: [TaskCategoryEnum.Animal, TaskCategoryEnum.Donation],
   actionType: TaskActionType.VOLUNTEERING,
   userParticipationStatus: UserParticipationStatus.NONE,
   isOrganization: true,
   organizationId: 'org-1',
   requirements: 'Love and compassion for animals',
+  amount: '0',
+  currency: 'USD',
 };
 
 const mockTask: ITaskDetails = createTaskFromForm(mockTaskValues);

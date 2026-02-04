@@ -84,9 +84,7 @@ export const TaskOwnerForm = ({
             <Label
               key={opt.id}
               className={`group flex items-center gap-3 select-none ${
-                opt.disabled
-                  ? 'cursor-not-allowed opacity-50'
-                  : 'cursor-pointer'
+                opt.disabled ? 'cursor-not-allowed' : 'cursor-pointer'
               }`}
             >
               <div className="relative flex items-center justify-center w-6 h-6">

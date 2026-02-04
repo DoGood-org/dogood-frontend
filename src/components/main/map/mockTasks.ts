@@ -1,5 +1,6 @@
 import { calculateDistanceInMeters } from '@/lib/mapUtils';
-import { MarkerCategoryEnum } from '@/types/mapType';
+import { TaskCategoryEnum } from '@/types/createTask.type';
+// import { MarkerCategoryEnum } from '@/types/mapType';
 import {
   IExtendedITaskProps,
   ITask,
@@ -59,25 +60,21 @@ In addition to your time, we urgently need donations for:
 ];
 
 const CATEGORIES = [
-  [
-    MarkerCategoryEnum.Medicine,
-    MarkerCategoryEnum.Nature,
-    MarkerCategoryEnum.Animal,
-  ],
-  [MarkerCategoryEnum.Nature],
-  [MarkerCategoryEnum.Animal, MarkerCategoryEnum.Medicine],
-  [MarkerCategoryEnum.Food],
-  [MarkerCategoryEnum.Medicine, MarkerCategoryEnum.Nature],
-  [MarkerCategoryEnum.Animal],
-  [MarkerCategoryEnum.Food, MarkerCategoryEnum.Nature],
-  [MarkerCategoryEnum.Nature],
-  [MarkerCategoryEnum.Medicine],
-  [MarkerCategoryEnum.Animal, MarkerCategoryEnum.Medicine],
-  [MarkerCategoryEnum.Food, MarkerCategoryEnum.Nature],
-  [MarkerCategoryEnum.Medicine, MarkerCategoryEnum.Food],
-  [MarkerCategoryEnum.Nature, MarkerCategoryEnum.Animal],
-  [MarkerCategoryEnum.Food, MarkerCategoryEnum.Medicine],
-  [MarkerCategoryEnum.Nature],
+  [TaskCategoryEnum.Medicine, TaskCategoryEnum.Nature, TaskCategoryEnum.Animal],
+  [TaskCategoryEnum.Nature],
+  [TaskCategoryEnum.Animal, TaskCategoryEnum.Medicine],
+  [TaskCategoryEnum.Food],
+  [TaskCategoryEnum.Medicine, TaskCategoryEnum.Nature],
+  [TaskCategoryEnum.Animal],
+  [TaskCategoryEnum.Food, TaskCategoryEnum.Nature],
+  [TaskCategoryEnum.Nature],
+  [TaskCategoryEnum.Medicine],
+  [TaskCategoryEnum.Animal, TaskCategoryEnum.Medicine],
+  [TaskCategoryEnum.Food, TaskCategoryEnum.Nature],
+  [TaskCategoryEnum.Medicine, TaskCategoryEnum.Food],
+  [TaskCategoryEnum.Nature, TaskCategoryEnum.Animal],
+  [TaskCategoryEnum.Food, TaskCategoryEnum.Medicine],
+  [TaskCategoryEnum.Nature],
 ];
 
 const MOCK_LOCATIONS = [

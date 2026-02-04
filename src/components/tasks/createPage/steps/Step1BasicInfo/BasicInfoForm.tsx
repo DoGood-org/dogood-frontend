@@ -9,7 +9,9 @@ import { FormInput } from '../../Form/FormInput';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 
 export const BasicInfoForm = (): JSX.Element => {
-  const { getValues } = useFormContext<BasicInfoFormValues>();
+  const { watch } = useFormContext<BasicInfoFormValues>();
+  const startDate = watch('startDate');
+
   return (
     <form className="flex flex-col gap-2 mb-9 lg:mb-12 md:px-[60px] lg:px-0">
       <FormInput name="title" label="Title" placeholder="Title" required />
@@ -39,10 +41,9 @@ export const BasicInfoForm = (): JSX.Element => {
               onChange={field.onChange}
               onBlur={field.onBlur}
               placeholder="16-06-2025"
-              disabledDate={(date) => {
-                const startDate = getValues('startDate');
-                return startDate ? date < startDate : false;
-              }}
+              disabledDate={(date) =>
+                startDate ? date < new Date(startDate) : false
+              }
             />
           )}
         </FormField>

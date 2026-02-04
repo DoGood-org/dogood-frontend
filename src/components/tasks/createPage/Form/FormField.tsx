@@ -7,29 +7,27 @@ import {
   Path,
   ControllerRenderProps,
   get,
+  FieldValues,
 } from 'react-hook-form';
 import { Label } from '@/components/ui/Label';
-import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 
-interface FormFieldProps<TName extends Path<BasicInfoFormValues>> {
-  name: TName;
+interface FormFieldProps<T extends FieldValues, TFieldName extends Path<T>> {
+  name: TFieldName;
   label: string;
   required?: boolean;
-  children: (
-    field: ControllerRenderProps<BasicInfoFormValues, TName>
-  ) => JSX.Element;
+  children: (field: ControllerRenderProps<T, TFieldName>) => JSX.Element;
 }
 
-export const FormField = <TName extends Path<BasicInfoFormValues>>({
+export const FormField = <T extends FieldValues, TFieldName extends Path<T>>({
   name,
   label,
   children,
   required = false,
-}: FormFieldProps<TName>): JSX.Element => {
+}: FormFieldProps<T, TFieldName>): JSX.Element => {
   const {
     control,
     formState: { errors },
-  } = useFormContext<BasicInfoFormValues>();
+  } = useFormContext<T>();
 
   const error = get(errors, name)?.message;
 
