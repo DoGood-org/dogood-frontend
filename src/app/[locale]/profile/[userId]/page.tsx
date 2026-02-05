@@ -1,7 +1,6 @@
 import type { JSX } from 'react/jsx-runtime';
 import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { fetchUserById } from '@/facades/profileFacade';
 import { PublicAccount } from '@/components/publicAccount/PublicAccount';
@@ -11,22 +10,13 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { userId, locale } = await params;
-
-  const t = await getTranslations({ locale, namespace: 'common' });
+  const { userId } = await params;
 
   const user = await fetchUserById(userId);
 
-  if (!user) {
-    return {
-      title: t('notFoundTitle'),
-      description: t('notFountDescr'),
-    };
-  }
-
   return {
-    title: `DoGood | ${user.name}`,
-    description: `DoGood | ${user.name}`,
+    title: `DoGood | ${user?.name}`,
+    description: `DoGood | ${user?.name}`,
   };
 }
 

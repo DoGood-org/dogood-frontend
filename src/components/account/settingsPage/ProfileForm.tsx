@@ -121,6 +121,7 @@ export const Settings = (): React.JSX.Element => {
     if (oldAvatar && oldAvatar !== newAvatar) {
       await deleteFromCloudinary(oldAvatar);
     }
+    console.log(data);
     const response = await sendProfile({
       name: data.name,
       bio: data.bio,

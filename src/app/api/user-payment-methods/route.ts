@@ -1,10 +1,9 @@
-import { mockUser } from '@/data/mockUser';
+import { getServerCurrentUser } from '@/lib/server/getCurrentUser';
 import { stripe } from '@/lib/stripe';
 import { NextResponse } from 'next/server';
 
 export async function GET(): Promise<NextResponse> {
-  // const user = await getCurrentUserFromSession();
-  const user = mockUser;
+  const user = await getServerCurrentUser();
 
   if (!user)
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

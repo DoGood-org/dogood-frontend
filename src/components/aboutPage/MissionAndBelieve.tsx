@@ -12,7 +12,7 @@ export const MissionAndBelieve: React.FC = () => {
 
   return (
     <Section withContainer={false}>
-      <Container className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12 px-12 py-6 max-w-6xl">
+      <Container className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 lg:px-12 py-6 lg:max-w-5xl">
         <div className="bg-(--accent-bg)  rounded-xl p-6 ">
           <div className="flex flex-col  gap-3 mb-4">
             <AboutHeart className="size-6" />

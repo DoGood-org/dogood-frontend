@@ -17,7 +17,7 @@ export default async function ProtectedLayout({
   if (!me) {
     // no user, redirect to login
     const localePrefix = locale === 'en' ? '' : `/${locale}`;
-    redirect(`${localePrefix}/login?next=${localePrefix}/account`);
+    redirect(`${localePrefix}/login?next=/account`);
   }
 
   return (
