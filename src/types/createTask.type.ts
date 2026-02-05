@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export const enum TaskCategoryEnum {
   Nature = 'nature',
   Animal = 'animal',
@@ -9,4 +11,11 @@ export const enum TaskCategoryEnum {
 export type UploadResultInfo = {
   secure_url?: string;
   public_id?: string;
+};
+
+export type StepLayoutProps = {
+  children: ReactNode;
+  showBack?: boolean;
+  className?: string;
+  title?: string;
 };

@@ -1,13 +1,13 @@
 'use client';
 
 import { JSX } from 'react';
-import { StepLayout } from '../../StepLayout';
 import { DescriptionForm } from './DescriptionForm';
+import { DynamicStepLayout } from '../../DynamicStepLayout';
 
 export const Description = (): JSX.Element => {
   return (
-    <StepLayout showBack={true}>
+    <DynamicStepLayout>
       <DescriptionForm />
-    </StepLayout>
+    </DynamicStepLayout>
   );
 };

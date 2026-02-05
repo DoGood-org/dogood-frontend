@@ -24,7 +24,6 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
       createStep: 0,
       createTaskDraft: {},
       isSuccess: false,
-      isReview: false,
 
       nextCreateStep: (): void => {
         set((state) => ({

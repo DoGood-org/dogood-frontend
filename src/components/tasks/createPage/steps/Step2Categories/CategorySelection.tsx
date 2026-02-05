@@ -21,7 +21,7 @@ export const CategorySelection = (): JSX.Element => {
     });
   };
   return (
-    <section className="mb-[50px] md:px-[60px] lg:px-0">
+    <section className="mb-[50px]">
       <h2 className="text-base mb-4 text-foreground">Choose a category</h2>
       <p className="text-[12px] mb-4">You can pick up a few categories</p>
       <div className="grid grid-cols-2 gap-4 max-w-[320px] w-full">

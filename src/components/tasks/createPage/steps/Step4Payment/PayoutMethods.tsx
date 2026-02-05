@@ -20,7 +20,7 @@ export const PayoutMethods = (): JSX.Element => {
   const hasError = !!(errors.amount || errors.currency);
 
   return (
-    <div className="flex flex-col mb-6 md:px-[60px] lg:px-0">
+    <div className="flex flex-col mb-6">
       <div>
         <h2 className="text-text-base mb-2">Donation needs</h2>
         <p className="text-[12px] leading-[16px] tracking-[0%] mb-2">

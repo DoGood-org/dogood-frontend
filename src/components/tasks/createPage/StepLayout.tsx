@@ -1,27 +1,25 @@
 'use client';
 
-import type { JSX, ReactNode } from 'react';
+import type { JSX } from 'react';
 import { StepCard } from './StepCard';
 import { BackNextButtons } from './Buttons/BackNextButtons';
 import { PictureField } from './PictureField';
-
-type StepLayoutProps = {
-  children: ReactNode;
-  showBack?: boolean;
-  className?: string;
-};
+import { StepLayoutProps } from '@/types/createTask.type';
 
 export const StepLayout = ({
   children,
   showBack = true,
   className = '',
+  title = 'Add picture',
 }: StepLayoutProps): JSX.Element => {
   return (
     <div className={`lg:px-20 ${className}`}>
       <StepCard>
-        <div className="flex gap-6 flex-col lg:flex-row items-center lg:items-baseline lg:px-0">
+        <div className="flex gap-6 flex-col lg:flex-row md:px-[60px] lg:px-0">
           <div className="shrink-0">
-            <h3 className="text-base mb-1">Add picture</h3>
+            <h3 className="text-base text-foreground max-w-[353px] md:max-w-[432px] lg:max-w-[415px] truncate">
+              {title}
+            </h3>
             <PictureField />
           </div>
 

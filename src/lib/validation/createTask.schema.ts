@@ -2,7 +2,7 @@ import { TaskCategoryEnum } from '@/types/createTask.type';
 import * as yup from 'yup';
 
 export const basicInfoSchema = yup.object({
-  picture: yup.string().required('Picture is required'),
+  picture: yup.string().nullable(),
   title: yup
     .string()
     .trim()

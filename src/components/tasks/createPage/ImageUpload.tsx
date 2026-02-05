@@ -22,7 +22,7 @@ export const ImageUpload = ({
   label = 'Change picture',
 }: ImageUploadProps): JSX.Element => {
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative inline-block ${className}`}>
       <div
         className="
           relative shrink-0

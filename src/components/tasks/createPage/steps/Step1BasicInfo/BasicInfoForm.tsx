@@ -13,7 +13,7 @@ export const BasicInfoForm = (): JSX.Element => {
   const startDate = watch('startDate');
 
   return (
-    <form className="flex flex-col gap-2 mb-9 lg:mb-12 md:px-[60px] lg:px-0">
+    <form className="flex flex-col gap-2 mb-9 lg:mb-12">
       <FormInput name="title" label="Title" placeholder="Title" required />
 
       <FormInput

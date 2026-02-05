@@ -24,6 +24,7 @@ export const TaskCategoryList = ({
             key={cat.id}
             icon={cat.icon}
             colorClass={cat.colorClass}
+            withWhiteCircle={cat.withWhiteCircle}
           />
         ))}
       </div>

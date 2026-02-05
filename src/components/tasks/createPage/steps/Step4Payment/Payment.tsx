@@ -1,13 +1,13 @@
 'use client';
 
 import { JSX } from 'react';
-import { StepLayout } from '../../StepLayout';
 import { PayoutMethods } from './PayoutMethods';
+import { DynamicStepLayout } from '../../DynamicStepLayout';
 
 export const Payment = (): JSX.Element => {
   return (
-    <StepLayout showBack={true}>
+    <DynamicStepLayout>
       <PayoutMethods />
-    </StepLayout>
+    </DynamicStepLayout>
   );
 };
