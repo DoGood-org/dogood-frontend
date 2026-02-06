@@ -1,37 +1,31 @@
-import { TaskCategoryEnum } from '@/types/createTask.type';
 import * as yup from 'yup';
 
+const MAX_AMOUNT = 10_000;
+
 export const basicInfoSchema = yup.object({
-  picture: yup.string().nullable(),
+  picture: yup.string().nullable().defined().default(null),
   title: yup
     .string()
-    .trim()
     .required('Title is required')
+    .trim()
     .max(100, 'Title must be at most 100 characters'),
   location: yup
     .string()
     .trim()
     .required('Location is required')
     .max(150, 'Location must be at most 150 characters'),
-  startDate: yup
-    .date()
-    .typeError('Start date is required')
-    .optional()
-    .required('Start date is required'),
+  startDate: yup.date().nullable().required('Start date is required'),
   finishDate: yup
     .date()
-    .typeError('Finish date is required')
-    .min(yup.ref('startDate'), 'Finish date cannot be earlier than start date')
-    .optional()
-    .required('Finish date is required'),
+    .nullable()
+    .required('Finish date is required')
+    .min(yup.ref('startDate'), 'Finish date cannot be before start date'),
   description: yup
     .string()
-    .trim()
-    .max(500, 'Maximum 500 characters')
-    .required('Description is required'),
+    .required('Description is required')
+    .max(500, 'Maximum 500 characters'),
   time: yup
     .string()
-    .trim()
     .required('Time is required')
     .matches(
       /^([0-9]|1[0-9]|2[0-3])-(00|05|10|15|20|25|30|35|40|45|50|55)$/,
@@ -39,12 +33,24 @@ export const basicInfoSchema = yup.object({
     ),
   category: yup
     .array()
-    .of(yup.mixed<TaskCategoryEnum>())
-    .min(1, 'Select at least one category')
-    .required('Category is required'),
-  amount: yup.string().required('Amount is required'),
-  currency: yup.string().required('Currency is required'),
-  requirements: yup.string().ensure(),
+    .of(yup.string())
+    .required('Category is required')
+    .min(1, 'Category must have at least one item'),
+  amount: yup
+    .number()
+    .transform((originalValue) =>
+      originalValue === '' ? undefined : Number(originalValue)
+    )
+    .typeError('Amount must be a number')
+    .required('Amount is required')
+    .positive('Amount must be greater than 0')
+    .max(MAX_AMOUNT, `Amount must be less than ${MAX_AMOUNT}`),
+  currency: yup
+    .string()
+    .oneOf(['USD', 'EUR'] as const)
+    .required('Currency is required'),
+  requirements: yup.string().required('Requirements is required'),
+  organizationId: yup.string().nullable().defined().default(null),
 });
 
 export type BasicInfoFormValues = yup.InferType<typeof basicInfoSchema>;

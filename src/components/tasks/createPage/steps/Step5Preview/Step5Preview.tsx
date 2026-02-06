@@ -5,10 +5,10 @@ import { Task } from '@/components/tasks/taskPage/Task';
 import { ITaskDetails, UserParticipationStatus } from '@/types/tasks.type';
 import { TaskActionType } from '@/types/tasks.type';
 import { Section } from '@/components/ui/Section';
-import { TaskCategoryEnum } from '@/types/createTask.type';
 import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
 import { BackNextButtons } from '../../Buttons/BackNextButtons';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
+import { TaskCategoryEnum } from '@/types/createTask.type';
 
 interface TaskPreviewProps {
   task?: ITaskDetails;
@@ -39,8 +39,8 @@ function createTaskFromForm(
     picture: values.picture,
     status: 'PENDING',
     locationName: values.location,
-    startDate: values.startDate.toISOString().slice(0, 10),
-    endDate: values.finishDate.toISOString().slice(0, 10),
+    startDate: values.startDate?.toISOString().slice(0, 10) ?? '',
+    endDate: values.finishDate?.toISOString().slice(0, 10) ?? '',
     startTime: values.time,
     actionType: values.actionType,
     userParticipationStatus:
@@ -67,7 +67,7 @@ const mockTaskValues: CreateTaskValues = {
   isOrganization: true,
   organizationId: 'org-1',
   requirements: 'Love and compassion for animals',
-  amount: '0',
+  amount: 5,
   currency: 'USD',
 };
 

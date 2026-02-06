@@ -43,7 +43,7 @@ export type TaskStatus =
   | 'CLOSED';
 
 export interface ITaskDetails extends ITask {
-  picture?: string;
+  picture?: string | null;
   status: TaskStatus;
   locationName?: string;
   isOrganization?: boolean;
@@ -62,6 +62,8 @@ export interface ITaskDetails extends ITask {
   };
   isFavorite?: boolean;
   relatedTasks?: ITask[];
+  amount?: number;
+  currency?: 'USD' | 'EUR';
 }
 
 export interface IExtendedITaskProps extends ITask {

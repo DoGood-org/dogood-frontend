@@ -3,8 +3,8 @@
 import { useFormContext, Controller } from 'react-hook-form';
 import { JSX } from 'react';
 import { ImageUpload } from './ImageUpload';
-import { UploadResultInfo } from '@/types/createTask.type';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
+import { UploadResultInfo } from '@/types/createTask.type';
 
 type PictureFieldProps = {
   className?: string;

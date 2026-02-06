@@ -8,6 +8,7 @@ import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import { useFormContext } from 'react-hook-form';
 import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
+import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 
 type Props = {
   showBack?: boolean;
@@ -17,10 +18,11 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   const prevCreateStep = useCreateTaskStore((s) => s.prevCreateStep);
   const setIsSuccess = useCreateTaskStore((s) => s.setIsSuccess);
   const setCreateStep = useCreateTaskStore((s) => s.setCreateStep);
+  const resetCreateTask = useCreateTaskStore((s) => s.resetCreateTask);
 
   const [isRequiredModalOpen, setIsRequiredModalOpen] = useState(false);
 
-  const { trigger, watch } = useFormContext();
+  const { trigger, watch, reset } = useFormContext();
 
   const category = watch('category');
 
@@ -45,6 +47,21 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       ? 'Preview'
       : 'Next step';
 
+  const defaultValues: BasicInfoFormValues = {
+    picture: null,
+    title: '',
+    location: '',
+    startDate: new Date(),
+    finishDate: new Date(),
+    description: '',
+    time: '',
+    category: [],
+    amount: 0,
+    currency: 'USD',
+    requirements: '',
+    organizationId: null,
+  };
+
   const handleNextClick = async (): Promise<void> => {
     const stepIndex = createStep === 0 ? null : createStep - 1;
 
@@ -57,7 +74,29 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
     }
 
     if (isActuallyLastStep) {
+      const data = watch() as BasicInfoFormValues;
+
+      const payload = {
+        ...defaultValues,
+        ...data,
+        startDate: new Date(
+          data.startDate ?? defaultValues.startDate
+        ).toISOString(),
+        endDate: new Date(
+          data.finishDate ?? defaultValues.finishDate
+        ).toISOString(),
+        startTime: data.time ?? defaultValues.time,
+        categories: (data.category ?? defaultValues.category).map(
+          (c) => c?.toUpperCase() || ''
+        ),
+        locationName: data.location ?? defaultValues.location,
+      };
+
+      console.log(payload);
+      resetCreateTask();
+      reset(defaultValues);
       setIsSuccess(true);
+      return;
     }
 
     if (isBeforeLastStep) {

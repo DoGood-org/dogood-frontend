@@ -26,7 +26,7 @@ export const BasicInfoForm = (): JSX.Element => {
         <FormField name="startDate" label="Date from" required>
           {(field) => (
             <DatePicker
-              value={field.value ?? undefined}
+              value={field.value ?? ''}
               onChange={field.onChange}
               onBlur={field.onBlur}
               placeholder="16-05-2025"
@@ -37,7 +37,7 @@ export const BasicInfoForm = (): JSX.Element => {
         <FormField name="finishDate" label="Date to" required>
           {(field) => (
             <DatePicker
-              value={field.value ?? undefined}
+              value={field.value ?? ''}
               onChange={field.onChange}
               onBlur={field.onBlur}
               placeholder="16-06-2025"

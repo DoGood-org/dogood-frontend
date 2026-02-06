@@ -30,6 +30,7 @@ export const FormInput = <T extends FieldValues>({
     {(field) => (
       <Input
         {...field}
+        value={field.value ?? ''}
         id={name}
         type={type}
         autoComplete="off"

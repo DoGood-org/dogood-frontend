@@ -55,9 +55,16 @@ export const TimePicker = ({
     setSelectedMinute(m);
   }, [value]);
 
-  const handleSelect = (h: string, m: string): void => {
-    setValue(`${h}-${m}`);
-    setIsOpen(false);
+  const handleSelect = (h: string | null, m: string | null): void => {
+    const newHour = h ?? selectedHour;
+    const newMinute = m ?? selectedMinute;
+
+    setSelectedHour(newHour);
+    setSelectedMinute(newMinute);
+
+    if (newHour && newMinute) {
+      setValue(`${newHour}-${newMinute}`);
+    }
   };
 
   const handleOpenChange = (open: boolean): void => {
@@ -121,7 +128,9 @@ const TimeColumn = ({
       {items.map((item: string) => (
         <button
           key={item}
+          type="button"
           onClick={() => onSelect(item)}
+          aria-pressed={selectedValue === item}
           className={cn(
             'px-1 py-1 text-sm rounded-sm text-center transition-all duration-200 mb-0.5 last:mb-0',
             selectedValue === item

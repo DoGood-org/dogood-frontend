@@ -1,21 +1,25 @@
 import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
-import { IExtendedITaskProps } from '@/types/tasks.type';
+import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface CreateTaskState {
   createStep: number;
-  createTaskDraft: Partial<IExtendedITaskProps>;
+  createTaskDraft: CreateTaskDraft;
   isSuccess: boolean;
+  hasHydrated: boolean;
 }
+
+export type CreateTaskDraft = Partial<BasicInfoFormValues>;
 
 interface CreateTaskActions {
   nextCreateStep: () => void;
   prevCreateStep: () => void;
   setCreateStep: (step: number) => void;
-  setCreateTaskDraft: (data: Partial<IExtendedITaskProps>) => void;
+  setCreateTaskDraft: (data: CreateTaskDraft) => void;
   resetCreateTask: () => void;
   setIsSuccess: (status: boolean) => void;
+  setHasHydrated: (value: boolean) => void;
 }
 
 export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
@@ -24,6 +28,11 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
       createStep: 0,
       createTaskDraft: {},
       isSuccess: false,
+      hasHydrated: false,
+
+      setHasHydrated: (value: boolean): void => {
+        set({ hasHydrated: value });
+      },
 
       nextCreateStep: (): void => {
         set((state) => ({
@@ -48,7 +57,7 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
         set({ isSuccess: status });
       },
 
-      setCreateTaskDraft: (data: Partial<IExtendedITaskProps>): void => {
+      setCreateTaskDraft: (data): void => {
         set((state) => ({
           createTaskDraft: {
             ...state.createTaskDraft,
@@ -60,7 +69,7 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
       resetCreateTask: (): void => {
         set({
           createStep: 0,
-          createTaskDraft: {} as Partial<IExtendedITaskProps>,
+          createTaskDraft: {},
           isSuccess: false,
         });
       },
@@ -71,6 +80,11 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
         createStep: state.createStep,
         createTaskDraft: state.createTaskDraft,
       }),
+      onRehydrateStorage:
+        () =>
+        (state?: CreateTaskState & CreateTaskActions): void => {
+          state?.setHasHydrated(true);
+        },
     }
   )
 );
