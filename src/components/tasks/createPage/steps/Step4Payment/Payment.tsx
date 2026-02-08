@@ -2,12 +2,12 @@
 
 import { JSX } from 'react';
 import { PayoutMethods } from './PayoutMethods';
-import { DynamicStepLayout } from '../../DynamicStepLayout';
+import { StepLayout } from '../../StepLayout';
 
 export const Payment = (): JSX.Element => {
   return (
-    <DynamicStepLayout>
+    <StepLayout showBack={true}>
       <PayoutMethods />
-    </DynamicStepLayout>
+    </StepLayout>
   );
 };

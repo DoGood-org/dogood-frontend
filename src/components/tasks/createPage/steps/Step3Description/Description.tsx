@@ -2,12 +2,12 @@
 
 import { JSX } from 'react';
 import { DescriptionForm } from './DescriptionForm';
-import { DynamicStepLayout } from '../../DynamicStepLayout';
+import { StepLayout } from '../../StepLayout';
 
 export const Description = (): JSX.Element => {
   return (
-    <DynamicStepLayout>
+    <StepLayout showBack={true}>
       <DescriptionForm />
-    </DynamicStepLayout>
+    </StepLayout>
   );
 };

@@ -49,13 +49,13 @@ export const BasicInfoForm = (): JSX.Element => {
         </FormField>
       </div>
       <div className="md:w-[198px]">
-        <FormField name="time" label="Time" required>
+        <FormField name="time" label="Start time" required>
           {(field) => (
             <TimePicker
               value={field.value ?? ''}
               setValue={field.onChange}
               onBlur={field.onBlur}
-              placeholder="Time"
+              placeholder="Start time"
             />
           )}
         </FormField>

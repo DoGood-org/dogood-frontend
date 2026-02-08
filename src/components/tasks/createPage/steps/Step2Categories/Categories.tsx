@@ -1,11 +1,11 @@
 import { JSX } from 'react';
 import { CategorySelection } from './CategorySelection';
-import { DynamicStepLayout } from '../../DynamicStepLayout';
+import { StepLayout } from '../../StepLayout';
 
 export const Categories = (): JSX.Element => {
   return (
-    <DynamicStepLayout>
+    <StepLayout showBack={true}>
       <CategorySelection />
-    </DynamicStepLayout>
+    </StepLayout>
   );
 };

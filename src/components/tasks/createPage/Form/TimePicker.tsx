@@ -134,7 +134,7 @@ const TimeColumn = ({
           className={cn(
             'px-1 py-1 text-sm rounded-sm text-center transition-all duration-200 mb-0.5 last:mb-0',
             selectedValue === item
-              ? 'bg-white text-black font-bold shadow-sm'
+              ? 'bg-white/40 text-white font-bold shadow-sm'
               : 'hover:bg-white/20 text-white'
           )}
         >

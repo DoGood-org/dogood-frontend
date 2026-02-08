@@ -52,9 +52,9 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
     title: '',
     location: '',
     startDate: new Date(),
-    finishDate: new Date(),
+    endDate: new Date(),
     description: '',
-    time: '',
+    startTime: '',
     category: [],
     amount: 0,
     currency: 'USD',
@@ -82,10 +82,8 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
         startDate: new Date(
           data.startDate ?? defaultValues.startDate
         ).toISOString(),
-        endDate: new Date(
-          data.finishDate ?? defaultValues.finishDate
-        ).toISOString(),
-        startTime: data.time ?? defaultValues.time,
+        endDate: new Date(data.endDate ?? defaultValues.endDate).toISOString(),
+        startTime: data.startTime ?? defaultValues.startTime,
         categories: (data.category ?? defaultValues.category).map(
           (c) => c?.toUpperCase() || ''
         ),

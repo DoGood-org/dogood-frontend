@@ -15,7 +15,7 @@ export const basicInfoSchema = yup.object({
     .required('Location is required')
     .max(150, 'Location must be at most 150 characters'),
   startDate: yup.date().nullable().required('Start date is required'),
-  finishDate: yup
+  endDate: yup
     .date()
     .nullable()
     .required('Finish date is required')
@@ -24,7 +24,7 @@ export const basicInfoSchema = yup.object({
     .string()
     .required('Description is required')
     .max(500, 'Maximum 500 characters'),
-  time: yup
+  startTime: yup
     .string()
     .required('Time is required')
     .matches(
@@ -49,7 +49,7 @@ export const basicInfoSchema = yup.object({
     .string()
     .oneOf(['USD', 'EUR'] as const)
     .required('Currency is required'),
-  requirements: yup.string().required('Requirements is required'),
+  requirements: yup.string().defined(),
   organizationId: yup.string().nullable().defined().default(null),
 });
 

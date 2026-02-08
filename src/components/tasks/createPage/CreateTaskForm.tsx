@@ -6,7 +6,7 @@ import {
   BasicInfoFormValues,
   basicInfoSchema,
 } from '@/lib/validation/createTask.schema';
-import { JSX, useEffect } from 'react';
+import { JSX, useEffect, useRef } from 'react';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 
 export const CreateTaskForm = ({
@@ -17,42 +17,32 @@ export const CreateTaskForm = ({
   const { createTaskDraft, hasHydrated, setCreateTaskDraft } =
     useCreateTaskStore();
 
-  const defaultValues: BasicInfoFormValues = {
+  const defaultValuesRef = useRef<BasicInfoFormValues>({
     picture: createTaskDraft.picture ?? null,
     title: createTaskDraft.title ?? '',
     location: createTaskDraft.location ?? '',
-    startDate: createTaskDraft.startDate
-      ? new Date(createTaskDraft.startDate)
-      : new Date(),
-    finishDate: createTaskDraft.finishDate
-      ? new Date(createTaskDraft.finishDate)
-      : new Date(),
+    startDate: createTaskDraft.startDate ?? new Date(),
+    endDate: createTaskDraft.endDate ?? new Date(),
+    startTime: createTaskDraft.startTime ?? '',
     description: createTaskDraft.description ?? '',
-    time: createTaskDraft.time ?? '',
     category: createTaskDraft.category ?? [],
     amount: createTaskDraft.amount ?? 0,
     currency: createTaskDraft.currency ?? 'USD',
     requirements: createTaskDraft.requirements ?? '',
     organizationId: createTaskDraft.organizationId ?? null,
-  };
+  });
 
   const methods = useForm<BasicInfoFormValues>({
     resolver: yupResolver(basicInfoSchema),
     mode: 'onTouched',
-    defaultValues,
+    defaultValues: defaultValuesRef.current,
   });
-
-  useEffect(() => {
-    if (hasHydrated) {
-      methods.reset(createTaskDraft);
-    }
-  }, [hasHydrated]);
 
   useEffect(() => {
     if (!hasHydrated) return;
 
     const subscription = methods.watch((values) => {
-      setCreateTaskDraft(values as BasicInfoFormValues);
+      setCreateTaskDraft(values);
     });
 
     return (): void => subscription.unsubscribe();

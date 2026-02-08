@@ -1,6 +1,5 @@
 'use client';
 
-import { Spinner } from '@/components/ui/Spinner';
 import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
 import { JSX } from 'react';
 import { Step0TaskOwner } from './steps/Step0TaskOwner/Step0TaskOwner';
@@ -19,15 +18,6 @@ export const CreateTask = ({
 }: CreateTaskProp): JSX.Element | null => {
   const step = useCreateTaskStore((s) => s.createStep);
   const isSuccess = useCreateTaskStore((s) => s.isSuccess);
-  const hasHydrated = useCreateTaskStore((s) => s.hasHydrated);
-
-  if (!hasHydrated) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Spinner />
-      </div>
-    );
-  }
 
   if (isSuccess) {
     return <CreateTaskSuccess />;
