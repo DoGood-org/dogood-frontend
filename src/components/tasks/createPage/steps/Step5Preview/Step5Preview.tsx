@@ -38,10 +38,11 @@ function createTaskFromForm(
     category: values.category,
     picture: values.picture,
     status: 'PENDING',
-    locationName: values.location,
+    locationName: values.locationName,
+    location: values.location,
     startDate: values.startDate?.toISOString().slice(0, 10) ?? '',
-    endDate: values.finishDate?.toISOString().slice(0, 10) ?? '',
-    startTime: values.time,
+    endDate: values.endDate?.toISOString().slice(0, 10) ?? '',
+    startTime: values.startTime,
     actionType: values.actionType,
     userParticipationStatus:
       values.userParticipationStatus ?? UserParticipationStatus.NONE,
@@ -54,10 +55,11 @@ function createTaskFromForm(
 
 const mockTaskValues: CreateTaskValues = {
   title: 'Help Animals in Need',
-  location: 'Willow Creek, Oregon',
+  locationName: 'Willow Creek, Oregon',
+  location: { lat: 50.4501, lng: 30.5234 },
   startDate: new Date(),
-  finishDate: new Date(),
-  time: '09:00 AM',
+  endDate: new Date(),
+  startTime: '09:00 AM',
   picture:
     'https://res.cloudinary.com/dinpgnkhh/image/upload/v1760461912/dog_gc3uel.png',
   description: 'Join our volunteer team to care for rescued animals...',

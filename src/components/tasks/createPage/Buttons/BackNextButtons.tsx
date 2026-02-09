@@ -50,7 +50,8 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   const defaultValues: BasicInfoFormValues = {
     picture: null,
     title: '',
-    location: '',
+    location: null,
+    locationName: '',
     startDate: new Date(),
     endDate: new Date(),
     description: '',
@@ -87,7 +88,8 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
         categories: (data.category ?? defaultValues.category).map(
           (c) => c?.toUpperCase() || ''
         ),
-        locationName: data.location ?? defaultValues.location,
+        location: data.location ?? defaultValues.location,
+        locationName: data.locationName ?? defaultValues.locationName,
       };
 
       console.log(payload);

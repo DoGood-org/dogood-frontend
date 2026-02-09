@@ -20,7 +20,15 @@ export const CreateTaskForm = ({
   const defaultValuesRef = useRef<BasicInfoFormValues>({
     picture: createTaskDraft.picture ?? null,
     title: createTaskDraft.title ?? '',
-    location: createTaskDraft.location ?? '',
+    locationName: createTaskDraft.locationName ?? '',
+    location:
+      createTaskDraft.location?.lat != null &&
+      createTaskDraft.location?.lng != null
+        ? {
+            lat: createTaskDraft.location.lat,
+            lng: createTaskDraft.location.lng,
+          }
+        : null,
     startDate: createTaskDraft.startDate ?? new Date(),
     endDate: createTaskDraft.endDate ?? new Date(),
     startTime: createTaskDraft.startTime ?? '',
@@ -42,7 +50,7 @@ export const CreateTaskForm = ({
     if (!hasHydrated) return;
 
     const subscription = methods.watch((values) => {
-      setCreateTaskDraft(values);
+      setCreateTaskDraft(values as BasicInfoFormValues);
     });
 
     return (): void => subscription.unsubscribe();

@@ -11,8 +11,16 @@ interface TFilterState {
   distanceFilter: IDistanceFilter | null;
   searchQuery: string;
   searchIsActive: boolean;
+  locationData: ILocationData | null;
+  radius: number;
 
   sortBy: 'distance' | 'title';
+}
+
+export interface ILocationData {
+  address: string;
+  lat: number;
+  lng: number;
 }
 
 interface TFilterActions {
@@ -26,6 +34,8 @@ interface TFilterActions {
   removeDistanceFilter: () => void;
   resetFilters: () => void;
   setSearchActive: (active: boolean) => void;
+  setLocationData: (data: ILocationData | null) => void;
+  setRadius: (radius: number) => void;
 }
 type TFilterStore = TFilterState & TFilterActions;
 
@@ -38,6 +48,8 @@ const initialState: TFilterState = {
   currentPage: 1,
   itemsPerPage: 13,
   searchIsActive: false,
+  locationData: null,
+  radius: 10,
 };
 export const useFilterStore = create<TFilterStore>()(
   persist(
@@ -91,6 +103,13 @@ export const useFilterStore = create<TFilterStore>()(
           searchQuery: '',
           sortBy: 'distance',
         }),
+      setLocationData: (data: ILocationData | null): void => {
+        set({ locationData: data, currentPage: 1 });
+      },
+
+      setRadius: (radius: number): void => {
+        set({ radius, currentPage: 1 });
+      },
     }),
     { name: 'task-filters' }
   )

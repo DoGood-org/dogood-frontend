@@ -5,7 +5,7 @@ import { FormInputTextarea } from '../../Form/FormInputTextarea';
 
 export const DescriptionForm = (): JSX.Element => {
   return (
-    <form className="flex flex-col gap-4 mb-[144px] w-[329px] md:w-[432px] lg:w-[421px]">
+    <div className="flex flex-col gap-4 mb-[144px] w-[329px] md:w-[432px] lg:w-[421px]">
       <FormInputTextarea
         name="description"
         label="Add a description"
@@ -19,6 +19,6 @@ export const DescriptionForm = (): JSX.Element => {
         required={false}
         placeholder="Add requirements"
       />
-    </form>
+    </div>
   );
 };

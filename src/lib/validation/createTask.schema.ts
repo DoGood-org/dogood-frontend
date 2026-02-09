@@ -10,14 +10,17 @@ export const basicInfoSchema = yup.object({
     .trim()
     .max(100, 'Title must be at most 100 characters'),
   location: yup
-    .string()
-    .trim()
-    .required('Location is required')
-    .max(150, 'Location must be at most 150 characters'),
-  startDate: yup.date().nullable().required('Start date is required'),
+    .object({
+      lat: yup.number().required(),
+      lng: yup.number().required(),
+    })
+    .nullable()
+    .default(null),
+  locationName: yup.string().nullable().required('Location is required'),
+  startDate: yup.date().optional().required('Start date is required'),
   endDate: yup
     .date()
-    .nullable()
+    .optional()
     .required('Finish date is required')
     .min(yup.ref('startDate'), 'Finish date cannot be before start date'),
   description: yup

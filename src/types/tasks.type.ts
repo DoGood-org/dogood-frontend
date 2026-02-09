@@ -46,6 +46,7 @@ export interface ITaskDetails extends ITask {
   picture?: string | null;
   status: TaskStatus;
   locationName?: string;
+  location?: { lat: number; lng: number } | null;
   isOrganization?: boolean;
   organizationId?: string;
   startDate?: string;

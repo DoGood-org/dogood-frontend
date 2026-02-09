@@ -4,23 +4,28 @@ import { JSX } from 'react';
 import { DatePicker } from '../../Form/DatePicker';
 import { TimePicker } from '../../Form/TimePicker';
 import { FormField } from '../../Form/FormField';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { FormInput } from '../../Form/FormInput';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
+import { LocationSearchInput } from '../../Form/LocationAutocomplete';
 
 export const BasicInfoForm = (): JSX.Element => {
-  const { watch } = useFormContext<BasicInfoFormValues>();
-  const startDate = watch('startDate');
+  const { control } = useFormContext<BasicInfoFormValues>();
+  const startDate = useWatch({
+    control,
+    name: 'startDate',
+  });
 
   return (
-    <form className="flex flex-col gap-2 mb-9 lg:mb-12">
+    <div className="flex flex-col gap-2 mb-9 lg:mb-12">
       <FormInput name="title" label="Title" placeholder="Title" required />
 
-      <FormInput
-        name="location"
+      <LocationSearchInput
+        name="locationName"
         label="Location"
-        placeholder="Location"
-        required
+        onSelect={(location) => {
+          console.log('Вибрана локація:', location);
+        }}
       />
       <div className="flex flex-col gap-2 md:gap-6 md:flex-row">
         <FormField name="startDate" label="Date from" required>
@@ -34,7 +39,7 @@ export const BasicInfoForm = (): JSX.Element => {
             />
           )}
         </FormField>
-        <FormField name="finishDate" label="Date to" required>
+        <FormField name="endDate" label="Date to" required>
           {(field) => (
             <DatePicker
               value={field.value ?? ''}
@@ -42,14 +47,14 @@ export const BasicInfoForm = (): JSX.Element => {
               onBlur={field.onBlur}
               placeholder="16-06-2025"
               disabledDate={(date) =>
-                startDate ? date < new Date(startDate) : false
+                startDate ? date < new Date(startDate) : date < new Date()
               }
             />
           )}
         </FormField>
       </div>
       <div className="md:w-[198px]">
-        <FormField name="time" label="Start time" required>
+        <FormField name="startTime" label="Start time" required>
           {(field) => (
             <TimePicker
               value={field.value ?? ''}
@@ -60,6 +65,6 @@ export const BasicInfoForm = (): JSX.Element => {
           )}
         </FormField>
       </div>
-    </form>
+    </div>
   );
 };

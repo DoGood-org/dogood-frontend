@@ -44,7 +44,6 @@ export const FormField = <T extends FieldValues, TFieldName extends Path<T>>({
       </Label>
       <Controller
         name={name}
-        rules={{ required }}
         control={control}
         render={({ field }) => children(field)}
       />
