@@ -16,6 +16,7 @@ export const FormInputTextarea = <T extends FieldValues>({
     {(field) => (
       <Textarea
         {...field}
+        value={field.value ?? ''}
         id={name}
         maxLength={500}
         placeholder={placeholder}

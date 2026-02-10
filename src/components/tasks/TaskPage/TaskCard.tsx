@@ -14,6 +14,8 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const t = useTranslations('tasks');
   const goalAmount = 10000;
 
+  const imageUrl = task.picture || undefined;
+
   const taskInfo = [
     {
       icon: <DateIcon />,
@@ -37,7 +39,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   return (
     <section className="mb-5 md:flex lg:flex lg:flex-col">
       <ImagePlaceholder
-        imageUrl={task.picture}
+        imageUrl={imageUrl}
         className="md:w-[324px] lg:w-[400px] lg:h-[500px] lg:mb-2"
       />
       <div className="rounded-lg py-8 px-6 w-[354px] lg:w-[400px] bg-[#D2D5D5] dark:bg-[#2A2D2D]">

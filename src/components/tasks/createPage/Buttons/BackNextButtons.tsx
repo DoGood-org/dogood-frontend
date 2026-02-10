@@ -68,6 +68,7 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
 
     if (stepIndex !== null) {
       const isValid = await trigger(CREATE_TASK_STEPS[stepIndex].fields);
+
       if (!isValid) {
         setIsRequiredModalOpen(true);
         return;

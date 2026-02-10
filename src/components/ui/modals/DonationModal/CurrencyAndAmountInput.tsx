@@ -29,6 +29,7 @@ export const CurrencyAndAmountInput = ({
           id={amountName}
           type="number"
           {...register(amountName, {
+            valueAsNumber: true,
             required: 'Enter the donation amount',
             min: { value: 1, message: 'The amount must be no less than 1' },
           })}

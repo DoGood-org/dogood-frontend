@@ -1,3 +1,5 @@
+'use client';
+
 import { JSX } from 'react';
 import { CategorySelection } from './CategorySelection';
 import { StepLayout } from '../../StepLayout';

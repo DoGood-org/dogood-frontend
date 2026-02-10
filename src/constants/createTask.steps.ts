@@ -9,7 +9,14 @@ export const CREATE_TASK_STEPS = [
     id: 'basic',
     title: 'Basic info',
     component: Step1BasicInfo,
-    fields: ['title', 'location', 'picture', 'time', 'startDate', 'finishDate'],
+    fields: [
+      'title',
+      'locationName',
+      'picture',
+      'startTime',
+      'startDate',
+      'endDate',
+    ],
   },
   {
     id: 'category',

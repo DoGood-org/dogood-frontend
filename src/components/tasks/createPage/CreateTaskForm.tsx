@@ -6,7 +6,7 @@ import {
   BasicInfoFormValues,
   basicInfoSchema,
 } from '@/lib/validation/createTask.schema';
-import { JSX, useEffect, useRef } from 'react';
+import { JSX, useEffect, useMemo } from 'react';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 
 export const CreateTaskForm = ({
@@ -17,33 +17,40 @@ export const CreateTaskForm = ({
   const { createTaskDraft, hasHydrated, setCreateTaskDraft } =
     useCreateTaskStore();
 
-  const defaultValuesRef = useRef<BasicInfoFormValues>({
-    picture: createTaskDraft.picture ?? null,
-    title: createTaskDraft.title ?? '',
-    locationName: createTaskDraft.locationName ?? '',
-    location:
-      createTaskDraft.location?.lat != null &&
-      createTaskDraft.location?.lng != null
-        ? {
-            lat: createTaskDraft.location.lat,
-            lng: createTaskDraft.location.lng,
-          }
-        : null,
-    startDate: createTaskDraft.startDate ?? new Date(),
-    endDate: createTaskDraft.endDate ?? new Date(),
-    startTime: createTaskDraft.startTime ?? '',
-    description: createTaskDraft.description ?? '',
-    category: createTaskDraft.category ?? [],
-    amount: createTaskDraft.amount ?? 0,
-    currency: createTaskDraft.currency ?? 'USD',
-    requirements: createTaskDraft.requirements ?? '',
-    organizationId: createTaskDraft.organizationId ?? null,
-  });
+  const defaultValues = useMemo(
+    () => ({
+      amount: createTaskDraft.amount || undefined,
+      currency: createTaskDraft.currency || 'USD',
+      title: createTaskDraft.title || '',
+      locationName: createTaskDraft.locationName || '',
+      description: createTaskDraft.description || '',
+      startTime: createTaskDraft.startTime || '',
+      requirements: createTaskDraft.requirements || '',
+      picture: createTaskDraft.picture ?? null,
+      category: createTaskDraft.category || [],
+      organizationId: createTaskDraft.organizationId ?? null,
+      location:
+        createTaskDraft.location?.lat != null &&
+        createTaskDraft.location?.lng != null
+          ? {
+              lat: createTaskDraft.location.lat,
+              lng: createTaskDraft.location.lng,
+            }
+          : null,
+      startDate: createTaskDraft.startDate
+        ? new Date(createTaskDraft.startDate)
+        : undefined,
+      endDate: createTaskDraft.endDate
+        ? new Date(createTaskDraft.endDate)
+        : undefined,
+    }),
+    [createTaskDraft]
+  );
 
   const methods = useForm<BasicInfoFormValues>({
     resolver: yupResolver(basicInfoSchema),
     mode: 'onTouched',
-    defaultValues: defaultValuesRef.current,
+    defaultValues: defaultValues,
   });
 
   useEffect(() => {

@@ -8,6 +8,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { FormInput } from '../../Form/FormInput';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 import { LocationSearchInput } from '../../Form/LocationAutocomplete';
+import { format } from 'date-fns';
 
 export const BasicInfoForm = (): JSX.Element => {
   const { control } = useFormContext<BasicInfoFormValues>();
@@ -31,10 +32,10 @@ export const BasicInfoForm = (): JSX.Element => {
         <FormField name="startDate" label="Date from" required>
           {(field) => (
             <DatePicker
-              value={field.value ?? ''}
+              value={field.value ?? undefined}
               onChange={field.onChange}
               onBlur={field.onBlur}
-              placeholder="16-05-2025"
+              placeholder={format(new Date(), 'dd-MM-yyyy')}
               disabledDate={(date) => date > new Date()}
             />
           )}
@@ -42,10 +43,10 @@ export const BasicInfoForm = (): JSX.Element => {
         <FormField name="endDate" label="Date to" required>
           {(field) => (
             <DatePicker
-              value={field.value ?? ''}
+              value={field.value ?? undefined}
               onChange={field.onChange}
               onBlur={field.onBlur}
-              placeholder="16-06-2025"
+              placeholder={format(new Date(), 'dd-MM-yyyy')}
               disabledDate={(date) =>
                 startDate ? date < new Date(startDate) : date < new Date()
               }

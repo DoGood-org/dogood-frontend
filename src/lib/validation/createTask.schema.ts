@@ -8,7 +8,8 @@ export const basicInfoSchema = yup.object({
     .string()
     .required('Title is required')
     .trim()
-    .max(100, 'Title must be at most 100 characters'),
+    .max(100, 'Title must be at most 100 characters')
+    .min(3, 'Title must be at least 3 characters'),
   location: yup
     .object({
       lat: yup.number().required(),
@@ -17,16 +18,17 @@ export const basicInfoSchema = yup.object({
     .nullable()
     .default(null),
   locationName: yup.string().nullable().required('Location is required'),
-  startDate: yup.date().optional().required('Start date is required'),
+  startDate: yup.date().nullable().required('Start date is required'),
   endDate: yup
     .date()
-    .optional()
+    .nullable()
     .required('Finish date is required')
     .min(yup.ref('startDate'), 'Finish date cannot be before start date'),
   description: yup
     .string()
     .required('Description is required')
-    .max(500, 'Maximum 500 characters'),
+    .max(500, 'Maximum 500 characters')
+    .min(5, 'Title must be at least 3 characters'),
   startTime: yup
     .string()
     .required('Time is required')
@@ -52,7 +54,11 @@ export const basicInfoSchema = yup.object({
     .string()
     .oneOf(['USD', 'EUR'] as const)
     .required('Currency is required'),
-  requirements: yup.string().defined(),
+  requirements: yup
+    .string()
+    .defined()
+    .max(300, 'Maximum 300 characters')
+    .min(5, 'Title must be at least 3 characters'),
   organizationId: yup.string().nullable().defined().default(null),
 });
 

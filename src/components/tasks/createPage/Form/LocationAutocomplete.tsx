@@ -75,7 +75,7 @@ export const LocationSearchInput = ({
   const [suggestions, setSuggestions] = useState<NominatimResult[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
   const setLocationData = useFilterStore((s) => s.setLocationData);
-  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleSearch = (q: string): void => {
     setValue(name, q, { shouldDirty: true });
@@ -154,7 +154,7 @@ export const LocationSearchInput = ({
                 {suggestions.map((item, index) => (
                   <li
                     key={item.place_id}
-                    onClick={() => handleSelect(item)}
+                    onMouseDown={() => handleSelect(item)}
                     onMouseEnter={() => setActiveIndex(index)}
                     className={`cursor-pointer p-3 border-b last:border-none transition-colors 
                       ${index === activeIndex ? 'bg-[#999999]' : 'bg-[#696969]'} text-white`}
