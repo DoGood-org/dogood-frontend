@@ -11,11 +11,14 @@ import { LocationSearchInput } from '../../Form/LocationAutocomplete';
 import { format } from 'date-fns';
 
 export const BasicInfoForm = (): JSX.Element => {
-  const { control } = useFormContext<BasicInfoFormValues>();
+  const { control, setValue } = useFormContext<BasicInfoFormValues>();
   const startDate = useWatch({
     control,
     name: 'startDate',
   });
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   return (
     <div className="flex flex-col gap-2 mb-9 lg:mb-12">
@@ -25,7 +28,7 @@ export const BasicInfoForm = (): JSX.Element => {
         name="locationName"
         label="Location"
         onSelect={(location) => {
-          console.log('Вибрана локація:', location);
+          setValue('locationName', location.address, { shouldValidate: true });
         }}
       />
       <div className="flex flex-col gap-2 md:gap-6 md:flex-row">
@@ -36,7 +39,7 @@ export const BasicInfoForm = (): JSX.Element => {
               onChange={field.onChange}
               onBlur={field.onBlur}
               placeholder={format(new Date(), 'dd-MM-yyyy')}
-              disabledDate={(date) => date > new Date()}
+              disabledDate={(date) => date < today}
             />
           )}
         </FormField>
@@ -48,7 +51,7 @@ export const BasicInfoForm = (): JSX.Element => {
               onBlur={field.onBlur}
               placeholder={format(new Date(), 'dd-MM-yyyy')}
               disabledDate={(date) =>
-                startDate ? date < new Date(startDate) : date < new Date()
+                date < (startDate ? new Date(startDate) : today)
               }
             />
           )}

@@ -5,6 +5,7 @@ import { StepCard } from './StepCard';
 import { BackNextButtons } from './Buttons/BackNextButtons';
 import { PictureField } from './PictureField';
 import { StepLayoutProps } from '@/types/createTask.type';
+import { StepIndicator } from './StepIndicator';
 
 export const StepLayout = ({
   children,
@@ -34,6 +35,9 @@ export const StepLayout = ({
           </div>
         </div>
       </StepCard>
+      <div className="mt-6">
+        <StepIndicator />
+      </div>
     </div>
   );
 };

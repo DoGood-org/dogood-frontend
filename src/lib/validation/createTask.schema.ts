@@ -63,3 +63,19 @@ export const basicInfoSchema = yup.object({
 });
 
 export type BasicInfoFormValues = yup.InferType<typeof basicInfoSchema>;
+
+export const defaultTaskValues: BasicInfoFormValues = {
+  picture: null,
+  title: '',
+  location: null,
+  locationName: '',
+  startDate: new Date(),
+  endDate: new Date(),
+  description: '',
+  startTime: '',
+  category: [],
+  amount: 0,
+  currency: 'USD',
+  requirements: '',
+  organizationId: null,
+};

@@ -8,7 +8,10 @@ import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import { useFormContext } from 'react-hook-form';
 import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
-import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
+import {
+  BasicInfoFormValues,
+  defaultTaskValues,
+} from '@/lib/validation/createTask.schema';
 
 type Props = {
   showBack?: boolean;
@@ -47,22 +50,6 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       ? 'Preview'
       : 'Next step';
 
-  const defaultValues: BasicInfoFormValues = {
-    picture: null,
-    title: '',
-    location: null,
-    locationName: '',
-    startDate: new Date(),
-    endDate: new Date(),
-    description: '',
-    startTime: '',
-    category: [],
-    amount: 0,
-    currency: 'USD',
-    requirements: '',
-    organizationId: null,
-  };
-
   const handleNextClick = async (): Promise<void> => {
     const stepIndex = createStep === 0 ? null : createStep - 1;
 
@@ -79,23 +66,34 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       const data = watch() as BasicInfoFormValues;
 
       const payload = {
-        ...defaultValues,
+        ...defaultTaskValues,
         ...data,
         startDate: new Date(
-          data.startDate ?? defaultValues.startDate
+          data.startDate ?? defaultTaskValues.startDate
         ).toISOString(),
-        endDate: new Date(data.endDate ?? defaultValues.endDate).toISOString(),
-        startTime: data.startTime ?? defaultValues.startTime,
-        categories: (data.category ?? defaultValues.category).map(
+        endDate: new Date(
+          data.endDate ?? defaultTaskValues.endDate
+        ).toISOString(),
+        startTime: ((): string => {
+          if (!data.startTime)
+            return new Date(
+              data.startDate ?? defaultTaskValues.startDate
+            ).toISOString();
+          const [hourStr, minuteStr] = data.startTime.split('-');
+          const date = new Date(data.startDate ?? defaultTaskValues.startDate);
+          date.setHours(Number(hourStr), Number(minuteStr), 0, 0);
+          return date.toISOString();
+        })(),
+        category: (data.category ?? defaultTaskValues.category).map(
           (c) => c?.toUpperCase() || ''
         ),
-        location: data.location ?? defaultValues.location,
-        locationName: data.locationName ?? defaultValues.locationName,
+        location: data.location ?? defaultTaskValues.location,
+        locationName: data.locationName ?? defaultTaskValues.locationName,
       };
 
       console.log(payload);
       resetCreateTask();
-      reset(defaultValues);
+      reset(defaultTaskValues);
       setIsSuccess(true);
       return;
     }

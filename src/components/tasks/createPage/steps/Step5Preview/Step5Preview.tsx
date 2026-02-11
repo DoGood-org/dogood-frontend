@@ -9,6 +9,7 @@ import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconBut
 import { BackNextButtons } from '../../Buttons/BackNextButtons';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 import { TaskCategoryEnum } from '@/types/createTask.type';
+import { StepIndicator } from '../../StepIndicator';
 
 interface TaskPreviewProps {
   task?: ITaskDetails;
@@ -90,6 +91,9 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
       />
       <div className="mt-8 flex justify-end">
         <BackNextButtons showBack={true} />
+      </div>
+      <div className="mt-6">
+        <StepIndicator />
       </div>
     </Section>
   );

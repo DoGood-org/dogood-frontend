@@ -6,7 +6,7 @@ import {
   BasicInfoFormValues,
   basicInfoSchema,
 } from '@/lib/validation/createTask.schema';
-import { JSX, useEffect, useMemo } from 'react';
+import { JSX, useMemo } from 'react';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 
 export const CreateTaskForm = ({
@@ -14,20 +14,19 @@ export const CreateTaskForm = ({
 }: {
   children: React.ReactNode;
 }): JSX.Element | null => {
-  const { createTaskDraft, hasHydrated, setCreateTaskDraft } =
-    useCreateTaskStore();
+  const { createTaskDraft, hasHydrated } = useCreateTaskStore();
 
   const defaultValues = useMemo(
     () => ({
-      amount: createTaskDraft.amount || undefined,
-      currency: createTaskDraft.currency || 'USD',
-      title: createTaskDraft.title || '',
-      locationName: createTaskDraft.locationName || '',
-      description: createTaskDraft.description || '',
-      startTime: createTaskDraft.startTime || '',
-      requirements: createTaskDraft.requirements || '',
+      amount: createTaskDraft.amount ?? undefined,
+      currency: createTaskDraft.currency ?? 'USD',
+      title: createTaskDraft.title ?? '',
+      locationName: createTaskDraft.locationName ?? '',
+      description: createTaskDraft.description ?? '',
+      startTime: createTaskDraft.startTime ?? '',
+      requirements: createTaskDraft.requirements ?? '',
       picture: createTaskDraft.picture ?? null,
-      category: createTaskDraft.category || [],
+      category: createTaskDraft.category ?? [],
       organizationId: createTaskDraft.organizationId ?? null,
       location:
         createTaskDraft.location?.lat != null &&
@@ -52,16 +51,6 @@ export const CreateTaskForm = ({
     mode: 'onTouched',
     defaultValues: defaultValues,
   });
-
-  useEffect(() => {
-    if (!hasHydrated) return;
-
-    const subscription = methods.watch((values) => {
-      setCreateTaskDraft(values as BasicInfoFormValues);
-    });
-
-    return (): void => subscription.unsubscribe();
-  }, [hasHydrated, methods, setCreateTaskDraft]);
 
   if (!hasHydrated) return null;
 
