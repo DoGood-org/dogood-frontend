@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
@@ -9,6 +8,12 @@ import { Shield } from '@/components/icons';
 import { VectorTop } from '@/components/icons';
 
 import { useTranslations } from 'next-intl';
+
+const whatWeDoList = [
+  { icon: Shield, text: 'card1' },
+  { icon: Lock, text: 'card2' },
+  { icon: VectorTop, text: 'card3' },
+];
 
 export const WhatWeDo: React.FC = () => {
   const t = useTranslations('aboutPage');
@@ -37,27 +42,18 @@ export const WhatWeDo: React.FC = () => {
         </div>
 
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 max-w-6xl">
-          <li className="bg-[#6969690D]  shadow-md shadow-[#99999966] rounded-lg p-6  transition-colors">
-            <Shield className="size-6 mb-4" />
-            <h3 className="   mb-2">{WhatWeDo.cards.card1.title}</h3>
-            <p className="leading-base!  text-text-gray">
-              {WhatWeDo.cards.card1.description}
-            </p>
-          </li>
-          <li className="bg-[#6969690D]  shadow-md shadow-[#99999966] rounded-lg p-6  transition-colors">
-            <Lock className="size-6 mb-4" />
-            <h3 className="   mb-2">{WhatWeDo.cards.card2.title}</h3>
-            <p className="leading-base!  text-text-gray">
-              {WhatWeDo.cards.card2.description}
-            </p>
-          </li>
-          <li className="bg-[#6969690D]  shadow-md shadow-[#99999966] rounded-lg p-6  transition-colors">
-            <VectorTop className="size-6 mb-4" />
-            <h3 className="   mb-2">{WhatWeDo.cards.card3.title}</h3>
-            <p className="leading-base!  text-text-gray">
-              {WhatWeDo.cards.card3.description}
-            </p>
-          </li>
+          {whatWeDoList.map((item) => (
+            <li
+              key={item.text}
+              className="bg-[#6969690D]  shadow-md shadow-[#99999966] rounded-lg p-6  transition-colors"
+            >
+              <item.icon className="size-6 mb-4" />
+              <h3 className="   mb-2">{WhatWeDo.cards[item.text].title}</h3>
+              <p className="leading-base!  text-text-gray">
+                {WhatWeDo.cards[item.text].description}
+              </p>
+            </li>
+          ))}
         </ul>
       </Container>
     </Section>
