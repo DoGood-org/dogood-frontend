@@ -1,4 +1,3 @@
-import React from 'react';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { useTranslations } from 'next-intl';
@@ -7,6 +6,12 @@ import { Ngos } from '@/components/icons';
 import { Volunteers } from '@/components/icons';
 import { Medal } from '@/components/icons';
 
+const ourEcosystemList = [
+  { icon: Volunteers, text: 'Volunteers' },
+  { icon: Ngos, text: 'NGOsNonprofits' },
+  { icon: Businesses, text: 'Businesses' },
+  { icon: Medal, text: 'EveryGoodDeed' },
+];
 export const OurEcosystem: React.FC = () => {
   const t = useTranslations('aboutPage');
   const OurEcosystem = t.raw('ourEcosystem') as any;
@@ -24,42 +29,20 @@ export const OurEcosystem: React.FC = () => {
         </div>
 
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <li className="bg-(--accent-bg) rounded-xl p-6 hover:bg-primary/15 transition-all hover:scale-105 gap-4  flex flex-col  ">
-            <Volunteers className="size-8" />
-            <h3 className="  text-white pb-2 ">
-              {OurEcosystem.cards.Volunteers.title}
-            </h3>
-            <p className="text-white/70  text-sm/6 font- ">
-              {OurEcosystem.cards.Volunteers.description}
-            </p>
-          </li>
-          <li className="bg-(--accent-bg) rounded-xl p-6 hover:bg-primary/15 transition-all hover:scale-105 gap-4  flex flex-col  ">
-            <Ngos className="size-8" />
-            <h3 className="  text-white pb-2 ">
-              {OurEcosystem.cards.NGOsNonprofits.title}
-            </h3>
-            <p className="text-white/70  text-sm/6 font- ">
-              {OurEcosystem.cards.NGOsNonprofits.description}
-            </p>
-          </li>
-          <li className="bg-(--accent-bg) rounded-xl p-6 hover:bg-primary/15 transition-all hover:scale-105 gap-4  flex flex-col  ">
-            <Businesses className="size-8" />
-            <h3 className="  text-white pb-2 ">
-              {OurEcosystem.cards.Businesses.title}
-            </h3>
-            <p className="text-white/70  text-sm/6 font- ">
-              {OurEcosystem.cards.Businesses.description}
-            </p>
-          </li>
-          <li className="bg-(--accent-bg) rounded-xl p-6 hover:bg-primary/15 transition-all hover:scale-105 gap-4  flex flex-col  ">
-            <Medal className="size-8" />
-            <h3 className="  text-white pb-2 ">
-              {OurEcosystem.cards.EveryGoodDeed.title}
-            </h3>
-            <p className="text-white/70  text-sm/6 font- ">
-              {OurEcosystem.cards.EveryGoodDeed.description}
-            </p>
-          </li>
+          {ourEcosystemList.map((item) => (
+            <li
+              key={item.text}
+              className="bg-(--accent-bg) rounded-xl p-6 hover:bg-primary/15 transition-all hover:scale-105 gap-4  flex flex-col  "
+            >
+              <item.icon className="size-8" />
+              <h3 className="  text-white pb-2 ">
+                {OurEcosystem.cards[item.text].title}
+              </h3>
+              <p className="text-white/70  text-sm/6 font- ">
+                {OurEcosystem.cards[item.text].description}
+              </p>
+            </li>
+          ))}
         </ul>
       </Container>
     </Section>

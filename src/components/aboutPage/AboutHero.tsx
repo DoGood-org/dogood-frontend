@@ -10,6 +10,13 @@ import { ShootingStar } from '@/components/icons';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 
+const HeroList = [
+  { icon: Globe, text: 'global' },
+  { icon: CubeTransparent, text: 'transparent' },
+  { icon: ShieldCheck, text: 'trusted' },
+  { icon: ShootingStar, text: 'impact' },
+];
+
 export const AboutHero: React.FC = () => {
   const t = useTranslations('aboutPage');
   const aboutHeroText = t.raw('hero') as any;
@@ -31,7 +38,6 @@ export const AboutHero: React.FC = () => {
         </div>
       </div>
 
-      {/* Content */}
       <Container className="relative z-10 text-center p-4 flex flex-col items-center">
         <h1 className="md:text-5xl text-3xl  mb-4 lg:mb-6">
           {aboutHeroText.title}
@@ -44,24 +50,16 @@ export const AboutHero: React.FC = () => {
           {aboutHeroText.metaDescription}
         </p>
 
-        {/* Value Badges */}
         <ul className="grid w-full max-w-[800px]   justify-items-center  grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-4  ">
-          <li className="w-full sm:max-w-[190px] px-[24px] py-3 max-h-20 gap-2  h-full bg-(--accent-bg) rounded-[12px] text-white font-medium flex flex-col items-center justify-center ">
-            <Globe className="size-8" />
-            {aboutHeroText.cards.global}
-          </li>
-          <li className="w-full sm:max-w-[190px] px-[24px] py-3 max-h-20 gap-2  h-full bg-(--accent-bg) rounded-[12px] text-white font-medium flex flex-col items-center justify-center">
-            <CubeTransparent className="size-8" />
-            {aboutHeroText.cards.transparent}
-          </li>
-          <li className="w-full sm:max-w-[190px] px-[24px] py-3 max-h-20 gap-2  h-full bg-(--accent-bg) rounded-[12px] text-white font-medium flex flex-col items-center justify-center">
-            <ShieldCheck className="size-8" />
-            {aboutHeroText.cards.trusted}
-          </li>
-          <li className="w-full sm:max-w-[190px] px-[24px] py-3 max-h-20 gap-2  h-full bg-(--accent-bg) rounded-[12px] text-white font-medium flex flex-col items-center justify-center">
-            <ShootingStar className="size-8" />
-            {aboutHeroText.cards.impact}
-          </li>
+          {HeroList.map((item) => (
+            <li
+              key={item.text}
+              className="w-full sm:max-w-[190px] px-[24px] py-3 max-h-20 gap-2  h-full bg-(--accent-bg) rounded-[12px] text-white font-medium flex flex-col items-center justify-center "
+            >
+              <item.icon className="size-8" />
+              {aboutHeroText.cards[item.text]}
+            </li>
+          ))}
         </ul>
       </Container>
     </Section>
