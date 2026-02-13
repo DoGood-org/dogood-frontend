@@ -1,7 +1,6 @@
 import { fetcher } from '@/lib/fetcher';
 import { stripeRequest } from '@/lib/stripeRequest';
 import { CardData } from '@/types';
-import { mockUser } from '@/data/mockUser';
 import { Stripe } from '@stripe/stripe-js';
 
 let stripePromise: Promise<Stripe | null> | null = null;
@@ -51,12 +50,8 @@ export const stripeService = {
   },
 
   getOrCreateCustomer(): Promise<string> {
-    const user = mockUser; // замінити коли буде реальний бек
     return stripeRequest<string>(
-      fetcher.post('/api/create-customer', {
-        name: user.name,
-        email: user.email,
-      }),
+      fetcher.post('/api/create-customer'),
       (data) => data.customerId as string
     );
   },

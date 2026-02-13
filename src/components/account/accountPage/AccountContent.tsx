@@ -1,6 +1,6 @@
 'use client';
 
-import { ContentProps, UserDetailedProps } from '@/types';
+import { ContentProps, ICurrentUser } from '@/types';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { JSX } from 'react';
@@ -12,7 +12,8 @@ import { AccountContentPanel } from '@/components/account/accountPage/AccountCon
 export const AccountContent = ({
   user,
 }: {
-  user: UserDetailedProps;
+  // user: UserDetailedProps;
+  user: ICurrentUser;
 }): JSX.Element => {
   const pathname = usePathname();
   const segments = pathname.split('/').filter(Boolean);

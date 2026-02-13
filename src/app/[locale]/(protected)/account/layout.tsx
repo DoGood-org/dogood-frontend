@@ -1,20 +1,19 @@
 'use client';
 
-import React from 'react';
-import { useSyncCurrentPage } from '@/hooks/useSyncCurrentPage';
+import { JSX } from 'react';
 import { navigationStore } from '@/zustand/stores/navigationStore';
-import { mockUser } from '@/data/mockUser';
 import { Container } from '@/components/ui/Container';
 import { SidebarNavigation } from '@/components/account/navigation/SidebarNavigation';
 import { AccountContent } from '@/components/account/accountPage/AccountContent';
 import { BottomNavigation } from '@/components/account/navigation/BottomNavigation';
+import { useAuth } from '@/hooks';
 
 export default function AccountLayout({
   children,
 }: {
   children: React.ReactNode;
-}): React.JSX.Element {
-  useSyncCurrentPage();
+}): JSX.Element {
+  const { user } = useAuth();
 
   const isChatMessageOpen = navigationStore((state) => state.isChatMessageOpen);
 
@@ -27,7 +26,7 @@ export default function AccountLayout({
         </aside>
         {children}
       </div>
-      <AccountContent user={mockUser} />
+      {user && <AccountContent user={user} />}
       {showBottomNavigation && <BottomNavigation />}
     </Container>
   );

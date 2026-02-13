@@ -26,6 +26,7 @@ export const apiRoutes = {
     profileUpdate: '/user/profile',
     profileDelete: '/user/profile',
     settingsUpdate: '/user/settings',
+    getById: (id: string | number) => `/user/profile/${id}`,
   },
 
   donate: {

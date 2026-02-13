@@ -29,9 +29,9 @@ export const mockOrganization = [
         startTime: '2025-11-19T14:30:00',
         locationName: {
           id: 1,
-          country: '',
-          region: '',
-          city: '',
+          country: 'United States',
+          region: 'Alabama',
+          city: 'Argo',
         },
       },
       {

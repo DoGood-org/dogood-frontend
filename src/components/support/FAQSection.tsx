@@ -58,6 +58,7 @@ export const FAQSection = (): React.JSX.Element => {
         setOpenItem={setOpenItem}
         toggleItem={toggleItem}
         t={t}
+        appliedFilter={appliedFilter}
       />
     </Section>
   );

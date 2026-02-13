@@ -1,7 +1,7 @@
 import {
   ContentPanelProps,
   ContentProps,
-  IUserAccount,
+  // IUserAccount,
   PaymentProps,
   TaskProps,
   UserDetailedProps,
@@ -14,8 +14,9 @@ export interface OrganizationProps {
   id: string;
   name: string;
   description: string;
-  members: IUserAccount[];
-  logo: string;
+  // members: IUserAccount[];
+  avatar: string;
+  membersCount: number;
 }
 
 export interface OrganizationContelPanelProps extends ContentPanelProps {
