@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
+import { TaskActionType, UserParticipationStatus } from './tasks.type';
+import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 
-export const enum TaskCategoryEnum {
+export enum TaskCategoryEnum {
   Nature = 'nature',
   Animal = 'animal',
   Food = 'food',
@@ -18,4 +20,9 @@ export type StepLayoutProps = {
   showBack?: boolean;
   className?: string;
   title?: string;
+};
+
+export type BasicInfoFormValuesExtended = BasicInfoFormValues & {
+  actionType?: TaskActionType;
+  userParticipationStatus?: UserParticipationStatus;
 };

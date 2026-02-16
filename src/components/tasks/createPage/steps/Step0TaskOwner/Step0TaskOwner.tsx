@@ -30,7 +30,7 @@ export const Step0TaskOwner = ({
   };
 
   return (
-    <Section className="md:my-8 lg:my-8">
+    <Section className="md:my-8 lg:my-8 my-container">
       <h1 className="text-h1 mb-8 lg:ml-20">Create your next task</h1>
       <TaskOwnerForm
         value={currentValue}

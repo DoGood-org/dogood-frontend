@@ -129,7 +129,7 @@ export function generateTasks(
       organizationId: `org-${i}`,
       ownerType: 'organization',
       onToggleDescription: (): void => {},
-      status: 'PENDING',
+      status: TaskStatus.PENDING,
     };
   });
 }
@@ -169,7 +169,7 @@ export function extendTaskToDetails(
 export function generateMockTasks(tasks: ITask[]): ITaskDetails[] {
   return tasks.map((task, i) =>
     extendTaskToDetails(task, {
-      status: 'IN_PROGRESS',
+      status: TaskStatus.IN_PROGRESS,
       locationName: MOCK_LOCATIONS[i] || `${i + 1}`,
       isOrganization: i % 2 === 0,
       organizationId: `org-${i}`,

@@ -1,6 +1,6 @@
 'use client';
 
-import { ITaskDetails } from '@/types/tasks.type';
+import { ITaskDetails, UserParticipationStatus } from '@/types/tasks.type';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Location } from '@/components/icons';
@@ -15,6 +15,7 @@ import { LatLngLiteral } from 'leaflet';
 import { useAuth } from '@/hooks';
 import { Button } from '@/components/ui/Button';
 import EditButton from './ButtonGroup/EditButton';
+import { TaskCategoryEnum } from '@/types/createTask.type';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
@@ -143,7 +144,12 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
         <h4 className="text-base font-medium mb-2">
           {t('taskDetails.donationNeeds')}:
         </h4>
-        <span className="block text-base mb-6">10000 USD</span>
+        {task.category.includes(TaskCategoryEnum.Donation) &&
+          task.userParticipationStatus === UserParticipationStatus.NONE && (
+            <span className="block text-base mb-6">
+              {(task.amount ?? 0).toLocaleString()} {task.currency ?? 'USD'}
+            </span>
+          )}
         {parsedRequirements.length > 0 && (
           <>
             <h4 className="text-base font-medium mt-3 mb-1">

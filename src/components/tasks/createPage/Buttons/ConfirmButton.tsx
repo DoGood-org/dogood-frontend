@@ -4,7 +4,9 @@ import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { TaskOwnerValue } from '@/types/tasks.type';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
+import { useFormContext } from 'react-hook-form';
 import { JSX } from 'react';
+import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 
 interface ConfirmButtonProps {
   disabled?: boolean;
@@ -20,15 +22,16 @@ export const ConfirmButton = ({
   className,
 }: ConfirmButtonProps): JSX.Element => {
   const nextCreateStep = useCreateTaskStore((s) => s.nextCreateStep);
-  const setCreateTaskDraft = useCreateTaskStore((s) => s.setCreateTaskDraft);
+
+  const { setValue } = useFormContext<BasicInfoFormValues>();
 
   const handleConfirm = (): void => {
     if (!owner) return;
 
     if (owner.type === 'USER') {
-      setCreateTaskDraft({ organizationId: undefined });
+      setValue('organizationId', null);
     } else {
-      setCreateTaskDraft({ organizationId: owner.organizationId });
+      setValue('organizationId', owner.organizationId);
     }
     onConfirm?.();
     nextCreateStep();

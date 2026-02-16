@@ -61,7 +61,10 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
             {t('taskCard.donationNeeds')} {goalAmount}$
           </h3>
           <div className="flex flex-col items-center justify-center">
-            <DonationProgressBar currentAmount={7500} goalAmount={10000} />
+            <DonationProgressBar
+              currentAmount={task.amount ?? 0}
+              goalAmount={10000}
+            />
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { generateMockTasks, generateTasks } from '../../main/map/mockTasks';
 import {
   ITaskDetails,
   TaskActionType,
+  TaskStatus,
   UserParticipationStatus,
 } from '@/types/tasks.type';
 import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
@@ -27,7 +28,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
 }) => {
   const currentUser = authStore((state) => state.user);
   const t = useTranslations('tasks');
-  const tasks = generateTasks(49.8429, 24.0316);
+  const tasks = generateTasks(0, 0);
   const detailedTasks: ITaskDetails[] = generateMockTasks(tasks).map(
     (task) => ({
       ...task,
@@ -50,7 +51,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
 
   const { category, distance, id: taskId, userParticipationStatus } = task;
 
-  const taskStatus = 'IN_PROGRESS';
+  const taskStatus = TaskStatus.IN_PROGRESS;
 
   const isHost =
     currentUser != null && task.host?.id !== undefined
@@ -62,6 +63,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
       <Task task={task} />
       <IconButtonGroup
         categories={category}
+        location={task.location}
         distance={distance}
         lat={task.lat}
         lng={task.lng}

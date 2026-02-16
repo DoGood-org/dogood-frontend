@@ -6,19 +6,16 @@ import { UiSuccessMessage } from '@/components/ui/UiSuccessMessage';
 import { useRouter } from 'next/navigation';
 import { JSX } from 'react';
 import { StepCard } from './StepCard';
-import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 
 export const CreateTaskSuccess = (): JSX.Element => {
   const router = useRouter();
-  const resetCreateTask = useCreateTaskStore((s) => s.resetCreateTask);
 
   const handleGoHome = (): void => {
-    resetCreateTask();
     router.push('/');
   };
 
   return (
-    <Section className="flex flex-col items-center justify-center min-h-screen lg:mx-40">
+    <Section className="flex flex-col items-center justify-center min-h-screen my-container">
       <UiSuccessMessage className="absolute -top-10 z-50 flex justify-start max-none" />
       <StepCard className="relative -top-34">
         <h2 className="text-h1 mb-2 text-center w-full lg:max-w-full">

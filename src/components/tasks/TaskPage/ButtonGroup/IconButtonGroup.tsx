@@ -8,6 +8,7 @@ import { TaskCategoryList } from '../../createPage/TaskCategoryList/TaskCategory
 
 interface IconButtonGroupProps {
   categories: TaskCategoryEnum[];
+  location?: { lat: number; lng: number } | null;
   distance: string;
   lat?: number;
   lng?: number;
@@ -17,6 +18,7 @@ interface IconButtonGroupProps {
 export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
   distance,
   categories,
+  location,
   lat,
   lng,
   taskId,
@@ -44,6 +46,7 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
           )}
         </div>
         <span>{clientDistance ?? '-- km'}</span>
+        {location ? `${location.lat}, ${location.lng}` : '-- km'}
       </div>
     </div>
   );

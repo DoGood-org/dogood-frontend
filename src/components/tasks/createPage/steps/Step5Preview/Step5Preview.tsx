@@ -1,83 +1,119 @@
 'use client';
-import { JSX } from 'react';
+
+import { JSX, useMemo } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { StepHeader } from '../../StepHeader';
 import { Task } from '@/components/tasks/taskPage/Task';
-import { ITaskDetails, UserParticipationStatus } from '@/types/tasks.type';
-import { TaskActionType } from '@/types/tasks.type';
 import { Section } from '@/components/ui/Section';
 import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
 import { BackNextButtons } from '../../Buttons/BackNextButtons';
-import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
-import { TaskCategoryEnum } from '@/types/createTask.type';
 import { StepIndicator } from '../../StepIndicator';
+
+import {
+  ITaskDetails,
+  TaskStatus,
+  UserParticipationStatus,
+  TaskActionType,
+} from '@/types/tasks.type';
+import {
+  BasicInfoFormValuesExtended,
+  TaskCategoryEnum,
+} from '@/types/createTask.type';
 
 interface TaskPreviewProps {
   task?: ITaskDetails;
 }
 
-type CreateTaskValues = BasicInfoFormValues & {
-  category: TaskCategoryEnum[];
-  actionType: TaskActionType;
-  userParticipationStatus?: UserParticipationStatus;
-  organizationId?: string;
-  isOrganization?: boolean;
-  requirements?: string;
-};
+export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
+  if (!task || typeof task !== 'object') {
+    throw new Error('Invalid task data from backend');
+  }
 
-function createTaskFromForm(
-  values: CreateTaskValues,
-  overrides?: Partial<ITaskDetails>
-): ITaskDetails {
+  const lat =
+    typeof task.lat === 'number' ? task.lat : (task.location?.lat ?? 0);
+  const lng =
+    typeof task.lng === 'number' ? task.lng : (task.location?.lng ?? 0);
+
+  const category = Array.isArray(task.category)
+    ? (task.category.filter(Boolean) as TaskCategoryEnum[])
+    : [];
+
+  const parseDate = (date: any): string => {
+    if (!date) return '';
+    const d = new Date(date);
+    return isNaN(d.getTime()) ? '' : d.toISOString().slice(0, 10);
+  };
+
   return {
-    id: `task-${Date.now()}`,
-    title: values.title,
-    subtitle: '',
-    description: values.description,
-    distance: '0 km',
+    id: task.id ?? `task-${Date.now()}`,
+    title: task.title || '',
+    subtitle: task.subtitle || '',
+    description: task.description || '',
+    distance: '0',
     lat: 0,
     lng: 0,
-    category: values.category,
-    picture: values.picture,
-    status: 'PENDING',
-    locationName: values.locationName,
-    location: values.location,
-    startDate: values.startDate?.toISOString().slice(0, 10) ?? '',
-    endDate: values.endDate?.toISOString().slice(0, 10) ?? '',
-    startTime: values.startTime,
-    actionType: values.actionType,
+    category,
+    picture: task.picture ?? null,
+    status: Object.values(TaskStatus).includes(task.status)
+      ? task.status
+      : TaskStatus.PENDING,
+    locationName: task.locationName || '',
+    location: { lat, lng },
+    isOrganization: !!task.organizationId,
+    organizationId: task.organizationId,
+    startDate: parseDate(task.startDate),
+    endDate: parseDate(task.endDate),
+    startTime: task.startTime || '',
+    actionType: task.actionType || TaskActionType.VOLUNTEERING,
     userParticipationStatus:
-      values.userParticipationStatus ?? UserParticipationStatus.NONE,
-    isOrganization: values.isOrganization ?? false,
-    organizationId: values.organizationId,
-    requirements: values.requirements,
-    ...overrides,
+      task.userParticipationStatus || UserParticipationStatus.NONE,
+    requirements: task.requirements || '',
+    amount: task.amount ?? 0,
+    currency: task.currency || 'USD',
   };
 }
 
-const mockTaskValues: CreateTaskValues = {
-  title: 'Help Animals in Need',
-  locationName: 'Willow Creek, Oregon',
-  location: { lat: 50.4501, lng: 30.5234 },
-  startDate: new Date(),
-  endDate: new Date(),
-  startTime: '09:00 AM',
-  picture:
-    'https://res.cloudinary.com/dinpgnkhh/image/upload/v1760461912/dog_gc3uel.png',
-  description: 'Join our volunteer team to care for rescued animals...',
-  category: [TaskCategoryEnum.Animal, TaskCategoryEnum.Donation],
-  actionType: TaskActionType.VOLUNTEERING,
-  userParticipationStatus: UserParticipationStatus.NONE,
-  isOrganization: true,
-  organizationId: 'org-1',
-  requirements: 'Love and compassion for animals',
-  amount: 5,
-  currency: 'USD',
-};
-
-const mockTask: ITaskDetails = createTaskFromForm(mockTaskValues);
-
 export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
-  const currentTask = task ?? mockTask;
+  const { watch } = useFormContext<BasicInfoFormValuesExtended>();
+  const formValues = watch();
+
+  const liveTask: ITaskDetails = useMemo(() => {
+    return {
+      id: `preview-${Date.now()}`,
+      title: formValues.title || 'Нове завдання',
+      subtitle: '',
+      distance: '0',
+      description: formValues.description || '',
+      category: (formValues.category ?? []).filter(
+        Boolean
+      ) as TaskCategoryEnum[],
+      picture: formValues.picture ?? null,
+      status: TaskStatus.PENDING,
+      locationName: formValues.locationName || '',
+      location: formValues.location ?? { lat: 0, lng: 0 },
+      isOrganization: !!formValues.organizationId,
+      organizationId: formValues.organizationId ?? undefined,
+      lat: 0,
+      lng: 0,
+      startDate:
+        formValues.startDate instanceof Date
+          ? formValues.startDate.toISOString().slice(0, 10)
+          : '',
+      endDate:
+        formValues.endDate instanceof Date
+          ? formValues.endDate.toISOString().slice(0, 10)
+          : '',
+      startTime: formValues.startTime || '',
+      actionType: formValues.actionType ?? TaskActionType.VOLUNTEERING,
+      userParticipationStatus: UserParticipationStatus.NONE,
+      requirements: formValues.requirements ?? '',
+      amount: formValues.amount ?? 0,
+      currency: formValues.currency ?? 'USD',
+    };
+  }, [formValues]);
+
+  const currentTask = task ?? liveTask;
+
   return (
     <Section withContainer={true} className="mt-8 mb-8">
       <StepHeader step={5} title="Preview" titleClassName="text-lg mb-8 pl-0" />
@@ -85,6 +121,7 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
       <IconButtonGroup
         categories={currentTask.category}
         distance={currentTask.distance}
+        location={currentTask.location ?? null}
         lat={currentTask.lat}
         lng={currentTask.lng}
         taskId={currentTask.id}

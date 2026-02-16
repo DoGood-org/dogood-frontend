@@ -1,11 +1,10 @@
 import { Animal, Donation, Food, Medicine, Nature } from '@/components/icons';
 import { TaskCategoryEnum } from '@/types/createTask.type';
-import { ReactElement, SVGProps } from 'react';
 
 export interface CategoryConfig {
   id: TaskCategoryEnum;
   label: string;
-  icon: (props: SVGProps<SVGSVGElement>) => ReactElement;
+  icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
   colorClass: string;
   withWhiteCircle?: boolean;
 }

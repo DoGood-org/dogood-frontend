@@ -17,6 +17,7 @@ export interface ITask {
   icon?: ReactElement;
   category: TaskCategoryEnum[];
   description: string;
+  location?: { lat: number; lng: number } | null;
   distance: string;
   lat: number;
   lng: number;
@@ -34,19 +35,19 @@ export enum UserParticipationStatus {
   DONATED = 'DONATED',
 }
 
-export type TaskStatus =
-  | 'PENDING'
-  | 'CREATED'
-  | 'IN_PROGRESS'
-  | 'COMPLETED'
-  | 'REJECTED'
-  | 'CLOSED';
+export enum TaskStatus {
+  PENDING = 'PENDING',
+  CREATED = 'CREATED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED',
+  REJECTED = 'REJECTED',
+  CLOSED = 'CLOSED',
+}
 
 export interface ITaskDetails extends ITask {
   picture?: string | null;
   status: TaskStatus;
   locationName?: string;
-  location?: { lat: number; lng: number } | null;
   isOrganization?: boolean;
   organizationId?: string;
   startDate?: string;

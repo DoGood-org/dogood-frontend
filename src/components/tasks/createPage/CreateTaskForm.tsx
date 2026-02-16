@@ -6,7 +6,7 @@ import {
   BasicInfoFormValues,
   basicInfoSchema,
 } from '@/lib/validation/createTask.schema';
-import { JSX, useMemo } from 'react';
+import { JSX, useEffect, useMemo } from 'react';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 
 export const CreateTaskForm = ({
@@ -14,7 +14,8 @@ export const CreateTaskForm = ({
 }: {
   children: React.ReactNode;
 }): JSX.Element | null => {
-  const { createTaskDraft, hasHydrated } = useCreateTaskStore();
+  const { createTaskDraft, hasHydrated, setCreateTaskDraft } =
+    useCreateTaskStore();
 
   const defaultValues = useMemo(
     () => ({
@@ -51,6 +52,14 @@ export const CreateTaskForm = ({
     mode: 'onTouched',
     defaultValues: defaultValues,
   });
+
+  useEffect(() => {
+    if (!hasHydrated) return;
+    const subscription = methods.watch((values) => {
+      setCreateTaskDraft(values as BasicInfoFormValues);
+    });
+    return (): void => subscription.unsubscribe();
+  }, [hasHydrated, methods, setCreateTaskDraft]);
 
   if (!hasHydrated) return null;
 
