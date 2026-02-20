@@ -1,13 +1,13 @@
 'use client';
 
 import { JSX } from 'react';
-import { DatePicker } from '../../Form/DatePicker';
-import { TimePicker } from '../../Form/TimePicker';
-import { FormField } from '../../Form/FormField';
+import { DatePicker } from '@/components/tasks/createPage/Form/DatePicker';
+import { TimePicker } from '@/components/tasks/createPage/Form/TimePicker';
+import { FormField } from '@/components/tasks/createPage/Form/FormField';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { FormInput } from '../../Form/FormInput';
+import { FormInput } from '@/components/tasks/createPage/Form/FormInput';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
-import { LocationSearchInput } from '../../Form/LocationAutocomplete';
+import { LocationSearchInput } from '@/components/tasks/createPage/Form/LocationAutocomplete';
 import { format } from 'date-fns';
 
 export const BasicInfoForm = (): JSX.Element => {
@@ -28,7 +28,24 @@ export const BasicInfoForm = (): JSX.Element => {
         name="locationName"
         label="Location"
         onSelect={(location) => {
-          setValue('locationName', location.address, { shouldValidate: true });
+          setValue('locationName', location.address, {
+            shouldValidate: true,
+          });
+
+          if (
+            typeof location.lat === 'number' &&
+            typeof location.lng === 'number'
+          ) {
+            setValue(
+              'location',
+              { lat: location.lat, lng: location.lng },
+              {
+                shouldDirty: true,
+                shouldTouch: true,
+                shouldValidate: true,
+              }
+            );
+          }
         }}
       />
       <div className="flex flex-col gap-2 md:gap-6 md:flex-row">

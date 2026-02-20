@@ -1,7 +1,21 @@
-import React from 'react';
+import CreateTaskPage from '@/components/tasks/createPage/CreateTaskPage';
+import { OrganizationFromBack } from '@/types/tasks.type';
+import React, { JSX } from 'react';
 
-const DonatePage: React.FC = () => {
-  return <div>DonatePage</div>;
+interface Props {
+  organizations: OrganizationFromBack[];
+  currentUserName: string;
+}
+
+const DonatePage = ({ organizations, currentUserName }: Props): JSX.Element => {
+  return (
+    <>
+      <CreateTaskPage
+        organizations={organizations}
+        currentUserName={currentUserName}
+      />
+    </>
+  );
 };
 
 export default DonatePage;

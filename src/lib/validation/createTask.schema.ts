@@ -1,3 +1,4 @@
+import { TaskCategoryEnum } from '@/types/createTask.type';
 import * as yup from 'yup';
 
 const MAX_AMOUNT = 10_000;
@@ -38,7 +39,12 @@ export const basicInfoSchema = yup.object({
     ),
   category: yup
     .array()
-    .of(yup.string())
+    .of(
+      yup
+        .mixed<TaskCategoryEnum>()
+        .oneOf(Object.values(TaskCategoryEnum))
+        .defined()
+    )
     .required('Category is required')
     .min(1, 'Category must have at least one item'),
   amount: yup
@@ -58,7 +64,7 @@ export const basicInfoSchema = yup.object({
     .string()
     .defined()
     .max(300, 'Maximum 300 characters')
-    .min(5, 'Title must be at least 3 characters'),
+    .min(5, 'Requirements must be at least 5 characters'),
   organizationId: yup.string().nullable().defined().default(null),
 });
 

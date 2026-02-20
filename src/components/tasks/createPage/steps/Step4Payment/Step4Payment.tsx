@@ -1,7 +1,7 @@
 'use client';
 import { JSX } from 'react';
 import { Section } from '@/components/ui/Section';
-import { StepHeader } from '../../StepHeader';
+import { StepHeader } from '@/components/tasks/createPage/StepHeader';
 import { Payment } from './Payment';
 
 export const Step4Payment = (): JSX.Element => {

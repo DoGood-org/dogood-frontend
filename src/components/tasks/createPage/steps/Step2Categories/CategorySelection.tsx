@@ -1,5 +1,7 @@
+'use client';
+
 import { CATEGORIES } from '@/constants/createTask.categories';
-import { CategoryButton } from '../../Buttons/CategoryButton';
+import { CategoryButton } from '@/components/tasks/createPage/Buttons/CategoryButton';
 import { JSX } from 'react';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import { useFormContext } from 'react-hook-form';

@@ -2,7 +2,7 @@
 
 import { JSX } from 'react';
 import { PayoutMethods } from './PayoutMethods';
-import { StepLayout } from '../../StepLayout';
+import { StepLayout } from '@/components/tasks/createPage/StepLayout';
 
 export const Payment = (): JSX.Element => {
   return (

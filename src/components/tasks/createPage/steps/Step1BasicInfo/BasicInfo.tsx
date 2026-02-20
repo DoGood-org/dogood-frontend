@@ -2,7 +2,7 @@
 
 import { JSX } from 'react';
 import { BasicInfoForm } from './BasicInfoForm';
-import { StepLayout } from '../../StepLayout';
+import { StepLayout } from '@/components/tasks/createPage/StepLayout';
 
 export const BasicInfo = (): JSX.Element => {
   return (

@@ -78,7 +78,7 @@ export const TimePicker = ({
         <div
           className={cn(
             'flex justify-between items-center px-3 py-3 md:max-w-[198px] w-full rounded-sm border-2 border-[#999999] bg-white text-black transition-all outline-none cursor-pointer',
-            !value && 'text-gray-400'
+            !value && 'text-gray'
           )}
         >
           <input

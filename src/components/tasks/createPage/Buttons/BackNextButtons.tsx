@@ -12,6 +12,15 @@ import {
   BasicInfoFormValues,
   defaultTaskValues,
 } from '@/lib/validation/createTask.schema';
+import { useTaskStore } from '@/zustand/stores/taskStore';
+import { useMapStore } from '@/zustand/stores/mapStore';
+import { MarkerCategoryEnum } from '@/types';
+import {
+  IExtendedITaskProps,
+  TaskActionType,
+  TaskStatus,
+  UserParticipationStatus,
+} from '@/types/tasks.type';
 
 type Props = {
   showBack?: boolean;
@@ -22,6 +31,8 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   const setIsSuccess = useCreateTaskStore((s) => s.setIsSuccess);
   const setCreateStep = useCreateTaskStore((s) => s.setCreateStep);
   const resetCreateTask = useCreateTaskStore((s) => s.resetCreateTask);
+
+  const addMarker = useMapStore((s) => s.addMarker);
 
   const [isRequiredModalOpen, setIsRequiredModalOpen] = useState(false);
 
@@ -50,6 +61,23 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       ? 'Preview'
       : 'Next step';
 
+  const mapCategoryToMarker = (
+    category: TaskCategoryEnum
+  ): MarkerCategoryEnum => {
+    switch (category) {
+      case TaskCategoryEnum.Medicine:
+        return MarkerCategoryEnum.Medicine;
+      case TaskCategoryEnum.Nature:
+        return MarkerCategoryEnum.Nature;
+      case TaskCategoryEnum.Animal:
+        return MarkerCategoryEnum.Animal;
+      case TaskCategoryEnum.Food:
+        return MarkerCategoryEnum.Food;
+      default:
+        return MarkerCategoryEnum.Default;
+    }
+  };
+
   const handleNextClick = async (): Promise<void> => {
     const stepIndex = createStep === 0 ? null : createStep - 1;
 
@@ -75,22 +103,58 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
           data.endDate ?? defaultTaskValues.endDate
         ).toISOString(),
         startTime: ((): string => {
-          if (!data.startTime)
+          if (!data.startTime) {
             return new Date(
               data.startDate ?? defaultTaskValues.startDate
             ).toISOString();
+          }
           const [hourStr, minuteStr] = data.startTime.split('-');
           const date = new Date(data.startDate ?? defaultTaskValues.startDate);
           date.setHours(Number(hourStr), Number(minuteStr), 0, 0);
           return date.toISOString();
         })(),
-        category: (data.category ?? defaultTaskValues.category).map(
-          (c) => c?.toUpperCase() || ''
-        ),
+        category: data.category,
         location: data.location ?? defaultTaskValues.location,
         locationName: data.locationName ?? defaultTaskValues.locationName,
       };
 
+      const id = crypto.randomUUID();
+
+      const newTask: IExtendedITaskProps = {
+        id,
+        title: payload.title,
+        subtitle: payload.description.slice(0, 60),
+        description: payload.description,
+        category: payload.category,
+        location: payload.location,
+        lat: payload.location?.lat ?? 0,
+        lng: payload.location?.lng ?? 0,
+        distance: '0 km',
+        actionType: isDonation
+          ? TaskActionType.FUNDRAISING
+          : TaskActionType.VOLUNTEERING,
+        userParticipationStatus: UserParticipationStatus.NONE,
+        status: TaskStatus.CREATED,
+        organizationId: payload.organizationId,
+        isFavorite: false,
+        isSelected: false,
+      };
+
+      const existingLocal = useTaskStore.getState().tasksByKey['local'] || [];
+      useTaskStore
+        .getState()
+        .setTasksByKey('local', [...existingLocal, newTask]);
+
+      if (!isDonation && payload.location && payload.category.length > 0) {
+        addMarker({
+          id,
+          lat: payload.location.lat,
+          lng: payload.location.lng,
+          title: payload.title,
+          description: payload.description,
+          category: mapCategoryToMarker(payload.category[0]),
+        });
+      }
       console.log(payload);
       resetCreateTask();
       reset(defaultTaskValues);

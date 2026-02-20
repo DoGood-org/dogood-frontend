@@ -1,15 +1,15 @@
 'use client';
 
 import { IExtendedITaskProps } from '@/types/tasks.type';
-// import { TaskCategoryIconsList } from '@/components/main/map/tasksPanel/TaskCategoryIconList';
 import { Link } from '@/i18n/navigation';
 import { TaskActionButtons } from '@/components/tasks/taskPage/ButtonGroup/TaskActionButtons';
+import { TaskCategoryList } from '../../createPage/TaskCategoryList/TaskCategoryList';
 
 export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
   id,
   title,
   subtitle,
-  // category,
+  category,
   distance,
   actionType,
   userParticipationStatus,
@@ -37,7 +37,7 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
 
       <div className="mt-auto">
         <div className="flex justify-between items-center">
-          {/* <TaskCategoryIconsList categories={category} /> */}
+          <TaskCategoryList categories={category} />
           {distance && <span className="text-base">{distance}</span>}
         </div>
       </div>

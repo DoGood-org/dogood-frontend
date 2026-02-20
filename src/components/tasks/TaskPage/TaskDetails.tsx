@@ -52,7 +52,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
   const isHost = !!user && user.id === hostId;
 
   return (
-    <section className="w-full max-w-[800px]">
+    <section className="w-full max-w-[353px] md:max-w-[648px] lg:max-w-[800px]">
       <div className="flex flex-wrap md:flex-nowrap items-baseline">
         <h1 className="w-full max-w-[500px] text-lg mb-2 md:mb-5 mr-5">
           {task.title}
@@ -129,7 +129,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
               ))}
             </ul>
           ) : (
-            <p key={idx} className="text-base mb-4">
+            <p key={idx} className="text-base mb-4 break-words">
               {line}
             </p>
           )
@@ -157,7 +157,9 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
             </h4>
             <ul className="list-disc text-base pl-8">
               {parsedRequirements.map((req, idx) => (
-                <li key={idx}>{req}</li>
+                <li key={idx} className="break-words">
+                  {req}
+                </li>
               ))}
             </ul>
           </>

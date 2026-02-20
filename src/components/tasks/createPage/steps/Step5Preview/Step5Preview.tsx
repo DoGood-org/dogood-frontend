@@ -2,12 +2,12 @@
 
 import { JSX, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { StepHeader } from '../../StepHeader';
+import { StepHeader } from '@/components/tasks/createPage/StepHeader';
 import { Task } from '@/components/tasks/taskPage/Task';
 import { Section } from '@/components/ui/Section';
 import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
-import { BackNextButtons } from '../../Buttons/BackNextButtons';
-import { StepIndicator } from '../../StepIndicator';
+import { BackNextButtons } from '@/components/tasks/createPage/Buttons/BackNextButtons';
+import { StepIndicator } from '@/components/tasks/createPage/StepIndicator';
 
 import {
   ITaskDetails,
@@ -24,6 +24,12 @@ interface TaskPreviewProps {
   task?: ITaskDetails;
 }
 
+const formatTime = (timeStr: string): string => {
+  if (!timeStr) return '';
+  const [start] = timeStr.split('-');
+  return start ? `${start}:00` : '';
+};
+
 export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
   if (!task || typeof task !== 'object') {
     throw new Error('Invalid task data from backend');
@@ -35,7 +41,9 @@ export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
     typeof task.lng === 'number' ? task.lng : (task.location?.lng ?? 0);
 
   const category = Array.isArray(task.category)
-    ? (task.category.filter(Boolean) as TaskCategoryEnum[])
+    ? task.category
+        .filter(Boolean)
+        .map((c: string) => c.toLowerCase() as TaskCategoryEnum)
     : [];
 
   const parseDate = (date: any): string => {
@@ -50,8 +58,8 @@ export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
     subtitle: task.subtitle || '',
     description: task.description || '',
     distance: '0',
-    lat: 0,
-    lng: 0,
+    lat,
+    lng,
     category,
     picture: task.picture ?? null,
     status: Object.values(TaskStatus).includes(task.status)
@@ -63,7 +71,7 @@ export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
     organizationId: task.organizationId,
     startDate: parseDate(task.startDate),
     endDate: parseDate(task.endDate),
-    startTime: task.startTime || '',
+    startTime: formatTime(task.startTime || ''),
     actionType: task.actionType || TaskActionType.VOLUNTEERING,
     userParticipationStatus:
       task.userParticipationStatus || UserParticipationStatus.NONE,
@@ -80,7 +88,7 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
   const liveTask: ITaskDetails = useMemo(() => {
     return {
       id: `preview-${Date.now()}`,
-      title: formValues.title || 'Нове завдання',
+      title: formValues.title || '',
       subtitle: '',
       distance: '0',
       description: formValues.description || '',
@@ -93,8 +101,8 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
       location: formValues.location ?? { lat: 0, lng: 0 },
       isOrganization: !!formValues.organizationId,
       organizationId: formValues.organizationId ?? undefined,
-      lat: 0,
-      lng: 0,
+      lat: formValues.location?.lat ?? 0,
+      lng: formValues.location?.lng ?? 0,
       startDate:
         formValues.startDate instanceof Date
           ? formValues.startDate.toISOString().slice(0, 10)
@@ -103,7 +111,7 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
         formValues.endDate instanceof Date
           ? formValues.endDate.toISOString().slice(0, 10)
           : '',
-      startTime: formValues.startTime || '',
+      startTime: formatTime(formValues.startTime || ''),
       actionType: formValues.actionType ?? TaskActionType.VOLUNTEERING,
       userParticipationStatus: UserParticipationStatus.NONE,
       requirements: formValues.requirements ?? '',

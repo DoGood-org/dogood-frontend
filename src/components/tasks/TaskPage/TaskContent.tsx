@@ -1,12 +1,6 @@
 'use client';
 
-import { generateMockTasks, generateTasks } from '../../main/map/mockTasks';
-import {
-  ITaskDetails,
-  TaskActionType,
-  TaskStatus,
-  UserParticipationStatus,
-} from '@/types/tasks.type';
+import { extendTaskToDetails } from '../../main/map/mockTasks';
 import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
 import { LastNews } from '@/components/tasks/taskPage/LastNews/LastNews';
 import { INewsItem } from '@/types';
@@ -16,6 +10,8 @@ import { TaskControlButtons } from './ButtonGroup/TaskControlButtons';
 import { OtherTasksSection } from './OtherTasks/OtherTasksSection';
 import { authStore } from '@/zustand/stores/authStore';
 import { Task } from './Task';
+import { useMemo } from 'react';
+import { useTaskStore } from '@/zustand/stores/taskStore';
 
 interface TaskContentProps {
   slug: string;
@@ -28,36 +24,36 @@ export const TaskContent: React.FC<TaskContentProps> = ({
 }) => {
   const currentUser = authStore((state) => state.user);
   const t = useTranslations('tasks');
-  const tasks = generateTasks(0, 0);
-  const detailedTasks: ITaskDetails[] = generateMockTasks(tasks).map(
-    (task) => ({
-      ...task,
-      actionType:
-        task.id === 'task-0'
-          ? TaskActionType.FUNDRAISING
-          : TaskActionType.VOLUNTEERING,
-      userParticipationStatus:
-        task.id === 'task-1'
-          ? UserParticipationStatus.JOINED
-          : UserParticipationStatus.NONE,
-    })
+  const storeTasks = useTaskStore((state) => state.tasks);
+
+  const allDetailedTasks = useMemo(
+    () => storeTasks.map((task) => extendTaskToDetails(task)),
+    [storeTasks]
   );
 
-  const task = detailedTasks.find((t) => t.id === slug);
+  const task = useMemo(
+    () => allDetailedTasks.find((t) => String(t.id) === String(slug)),
+    [allDetailedTasks, slug]
+  );
+
+  const otherTasksList = useMemo(
+    () => allDetailedTasks.filter((t) => String(t.id) !== String(slug)),
+    [allDetailedTasks, slug]
+  );
 
   if (!task) return <div>{t('task.notFound')}</div>;
 
-  const otherTasksList: ITaskDetails[] = detailedTasks;
+  const {
+    id: taskId,
+    category,
+    distance,
+    userParticipationStatus,
+    status: taskStatus,
+  } = task;
 
-  const { category, distance, id: taskId, userParticipationStatus } = task;
-
-  const taskStatus = TaskStatus.IN_PROGRESS;
-
-  const isHost =
-    currentUser != null && task.host?.id !== undefined
-      ? String(task.host.id) === String(currentUser.id)
-      : false;
-
+  const isHost = currentUser
+    ? String(task.host?.id) === String(currentUser.id)
+    : false;
   return (
     <Container className="py-10">
       <Task task={task} />

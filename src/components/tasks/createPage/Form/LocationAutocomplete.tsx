@@ -5,6 +5,7 @@ import { useFormContext } from 'react-hook-form';
 import { FormField } from './FormField';
 import { Input } from '@/components/ui/Input';
 import { useFilterStore } from '@/zustand/stores/filterStore';
+import { MOCK_LOCATIONS_SEARCH } from '@/components/main/map/mockTasks';
 
 interface LocationData {
   address: string;
@@ -12,7 +13,7 @@ interface LocationData {
   lng: number;
 }
 
-interface NominatimResult {
+export interface NominatimResult {
   place_id: string;
   display_name: string;
   lat: string;
@@ -30,39 +31,6 @@ const locationInputClasses =
   'py-3 px-2 rounded-sm border-2 border-[#999999] ' +
   'focus-visible:ring-0 focus-visible:ring-offset-0 w-full ' +
   'autofill:bg-white autofill:text-black';
-
-const MOCK_LOCATIONS: NominatimResult[] = [
-  {
-    place_id: '1',
-    display_name: 'Kyiv, Ukraine',
-    lat: '50.4501',
-    lon: '30.5234',
-  },
-  {
-    place_id: '2',
-    display_name: 'Paris, France',
-    lat: '48.8566',
-    lon: '2.3522',
-  },
-  {
-    place_id: '3',
-    display_name: 'London, Greater London',
-    lat: '51.5072',
-    lon: '0.1276',
-  },
-  {
-    place_id: '4',
-    display_name: 'New York, NY, United States',
-    lat: '40.7128',
-    lon: '-74.0060',
-  },
-  {
-    place_id: '5',
-    display_name: 'Berlin, Germany',
-    lat: '52.5200',
-    lon: '13.4050',
-  },
-];
 
 export const LocationSearchInput = ({
   name,
@@ -93,7 +61,7 @@ export const LocationSearchInput = ({
     }
 
     searchTimeoutRef.current = setTimeout(() => {
-      const res = MOCK_LOCATIONS.filter((l) =>
+      const res = MOCK_LOCATIONS_SEARCH.filter((l) =>
         l.display_name.toLowerCase().includes(q.toLowerCase())
       );
       setSuggestions(res);
@@ -157,7 +125,7 @@ export const LocationSearchInput = ({
                     onMouseDown={() => handleSelect(item)}
                     onMouseEnter={() => setActiveIndex(index)}
                     className={`cursor-pointer p-3 border-b last:border-none transition-colors 
-                      ${index === activeIndex ? 'bg-[#999999]' : 'bg-[#696969]'} text-white`}
+                      ${index === activeIndex ? 'bg-[#999999]' : 'bg-text-gray'} text-white`}
                   >
                     {item.display_name}
                   </li>
