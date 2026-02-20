@@ -113,7 +113,7 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
           date.setHours(Number(hourStr), Number(minuteStr), 0, 0);
           return date.toISOString();
         })(),
-        category: data.category,
+        category: data.categories,
         location: data.location ?? defaultTaskValues.location,
         locationName: data.locationName ?? defaultTaskValues.locationName,
       };

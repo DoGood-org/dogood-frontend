@@ -37,7 +37,7 @@ export const basicInfoSchema = yup.object({
       /^([0-9]|1[0-9]|2[0-3])-(00|05|10|15|20|25|30|35|40|45|50|55)$/,
       'Invalid time format'
     ),
-  category: yup
+  categories: yup
     .array()
     .of(
       yup
@@ -79,7 +79,7 @@ export const defaultTaskValues: BasicInfoFormValues = {
   endDate: new Date(),
   description: '',
   startTime: '',
-  category: [],
+  categories: [],
   amount: 0,
   currency: 'USD',
   requirements: '',

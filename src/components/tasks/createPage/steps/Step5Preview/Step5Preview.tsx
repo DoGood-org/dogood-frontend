@@ -40,8 +40,8 @@ export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
   const lng =
     typeof task.lng === 'number' ? task.lng : (task.location?.lng ?? 0);
 
-  const category = Array.isArray(task.category)
-    ? task.category
+  const category = Array.isArray(task.categories)
+    ? task.categories
         .filter(Boolean)
         .map((c: string) => c.toLowerCase() as TaskCategoryEnum)
     : [];
@@ -92,7 +92,7 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
       subtitle: '',
       distance: '0',
       description: formValues.description || '',
-      category: (formValues.category ?? []).filter(
+      category: (formValues.categories ?? []).filter(
         Boolean
       ) as TaskCategoryEnum[],
       picture: formValues.picture ?? null,

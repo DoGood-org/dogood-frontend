@@ -27,7 +27,7 @@ export const CreateTaskForm = ({
       startTime: createTaskDraft.startTime ?? '',
       requirements: createTaskDraft.requirements ?? '',
       picture: createTaskDraft.picture ?? null,
-      category: createTaskDraft.category ?? [],
+      category: createTaskDraft.categories ?? [],
       organizationId: createTaskDraft.organizationId ?? null,
       location:
         createTaskDraft.location?.lat != null &&
