@@ -5,11 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Location } from '@/components/icons';
 import { useTranslations } from 'next-intl';
-import {
-  getOrganizerInfo,
-  parseDescription,
-  parseRequirements,
-} from '@/utils/tasks';
+import { parseDescription, parseRequirements } from '@/utils/tasks';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { LatLngLiteral } from 'leaflet';
 import { useAuth } from '@/hooks';
@@ -32,15 +28,24 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
 
   const hasCoords = task.lat != null && task.lng != null;
 
-  const taskCoords: LatLngLiteral = hasCoords
+  const taskCoords: LatLngLiteral | null = hasCoords
     ? { lat: task.lat as number, lng: task.lng as number }
-    : { lat: 48.8566, lng: 2.3522 };
+    : null;
 
   const handleShowOnMap = (): void => {
-    if (hasCoords) flyToCoords(taskCoords, 17);
+    if (taskCoords) {
+      flyToCoords(taskCoords, 17);
+    }
   };
 
-  const { name: organizerName, link: organizerLink } = getOrganizerInfo(task);
+  const { organization, host } = task;
+
+  const organizerName =
+    organization?.name || host?.name || 'Невідомий організатор';
+
+  const organizerLink = organization
+    ? `/organizations/${organization.id}`
+    : `/users/${host?.id}`;
   const parsedRequirements = parseRequirements(task.requirements);
   const parsedDescription = parseDescription(task.description);
 
@@ -141,14 +146,17 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
         <h3 className="text-[20px] leading-[20px] mb-2">
           {t('taskDetails.howYouCanHelp')}:
         </h3>
-        <h4 className="text-base font-medium mb-2">
-          {t('taskDetails.donationNeeds')}:
-        </h4>
         {task.category.includes(TaskCategoryEnum.Donation) &&
-          task.userParticipationStatus === UserParticipationStatus.NONE && (
-            <span className="block text-base mb-6">
-              {(task.amount ?? 0).toLocaleString()} {task.currency ?? 'USD'}
-            </span>
+          task.userParticipationStatus === UserParticipationStatus.NONE &&
+          (task.amount ?? 0) > 0 && (
+            <div className="mb-3">
+              <h4 className="text-base font-medium mb-2">
+                {t('taskDetails.donationNeeds')}:
+              </h4>
+              <span className="block text-base mb-2">
+                {(task.amount ?? 0).toLocaleString()} {task.currency ?? 'USD'}
+              </span>
+            </div>
           )}
         {parsedRequirements.length > 0 && (
           <>

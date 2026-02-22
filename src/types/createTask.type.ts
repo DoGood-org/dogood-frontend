@@ -26,3 +26,19 @@ export type BasicInfoFormValuesExtended = BasicInfoFormValues & {
   actionType?: TaskActionType;
   userParticipationStatus?: UserParticipationStatus;
 };
+
+export type CreateTaskDraft = Partial<
+  BasicInfoFormValues & {
+    host?: {
+      id?: string;
+      type: 'USER' | 'ORGANIZATION';
+      name?: string;
+      avatar?: string;
+      organization?: {
+        id: string;
+        name: string;
+        createdAt: string;
+      };
+    };
+  }
+>;

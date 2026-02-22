@@ -37,7 +37,7 @@ export const basicInfoSchema = yup.object({
       /^([0-9]|1[0-9]|2[0-3])-(00|05|10|15|20|25|30|35|40|45|50|55)$/,
       'Invalid time format'
     ),
-  categories: yup
+  category: yup
     .array()
     .of(
       yup
@@ -65,7 +65,14 @@ export const basicInfoSchema = yup.object({
     .defined()
     .max(300, 'Maximum 300 characters')
     .min(5, 'Requirements must be at least 5 characters'),
-  organizationId: yup.string().nullable().defined().default(null),
+  organization: yup
+    .object({
+      id: yup.string().required(),
+      name: yup.string().required(),
+      createdAt: yup.string().required(),
+    })
+    .nullable()
+    .default(null),
 });
 
 export type BasicInfoFormValues = yup.InferType<typeof basicInfoSchema>;
@@ -79,9 +86,9 @@ export const defaultTaskValues: BasicInfoFormValues = {
   endDate: new Date(),
   description: '',
   startTime: '',
-  categories: [],
+  category: [],
   amount: 0,
   currency: 'USD',
   requirements: '',
-  organizationId: null,
+  organization: null,
 };

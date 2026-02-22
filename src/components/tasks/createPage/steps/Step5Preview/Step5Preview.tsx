@@ -27,7 +27,14 @@ interface TaskPreviewProps {
 const formatTime = (timeStr: string): string => {
   if (!timeStr) return '';
   const [start] = timeStr.split('-');
-  return start ? `${start}:00` : '';
+  if (!start) return '';
+
+  let [hours, minutes] = start.split(':').map(Number);
+  if (minutes === undefined) minutes = 0;
+
+  const ampm = 'AM';
+  hours = hours % 12 || 12;
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
 };
 
 export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
@@ -40,8 +47,8 @@ export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
   const lng =
     typeof task.lng === 'number' ? task.lng : (task.location?.lng ?? 0);
 
-  const category = Array.isArray(task.categories)
-    ? task.categories
+  const category = Array.isArray(task.category)
+    ? task.category
         .filter(Boolean)
         .map((c: string) => c.toLowerCase() as TaskCategoryEnum)
     : [];
@@ -68,7 +75,7 @@ export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
     locationName: task.locationName || '',
     location: { lat, lng },
     isOrganization: !!task.organizationId,
-    organizationId: task.organizationId,
+    organization: task.organization,
     startDate: parseDate(task.startDate),
     endDate: parseDate(task.endDate),
     startTime: formatTime(task.startTime || ''),
@@ -92,15 +99,15 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
       subtitle: '',
       distance: '0',
       description: formValues.description || '',
-      category: (formValues.categories ?? []).filter(
+      category: (formValues.category ?? []).filter(
         Boolean
       ) as TaskCategoryEnum[],
       picture: formValues.picture ?? null,
       status: TaskStatus.PENDING,
       locationName: formValues.locationName || '',
       location: formValues.location ?? { lat: 0, lng: 0 },
-      isOrganization: !!formValues.organizationId,
-      organizationId: formValues.organizationId ?? undefined,
+      isOrganization: !!formValues.organization,
+      organizationId: formValues.organization ?? undefined,
       lat: formValues.location?.lat ?? 0,
       lng: formValues.location?.lng ?? 0,
       startDate:

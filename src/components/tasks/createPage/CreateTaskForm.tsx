@@ -5,9 +5,23 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import {
   BasicInfoFormValues,
   basicInfoSchema,
+  defaultTaskValues,
 } from '@/lib/validation/createTask.schema';
 import { JSX, useEffect, useMemo } from 'react';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
+import {
+  BasicInfoFormValuesExtended,
+  CreateTaskDraft,
+} from '@/types/createTask.type';
+
+const getOrganizationValue = (
+  host: CreateTaskDraft['host'],
+  draft: CreateTaskDraft['organization']
+): BasicInfoFormValues['organization'] => {
+  if (host?.organization) return host.organization;
+  if (draft) return draft;
+  return null;
+};
 
 export const CreateTaskForm = ({
   children,
@@ -17,46 +31,44 @@ export const CreateTaskForm = ({
   const { createTaskDraft, hasHydrated, setCreateTaskDraft } =
     useCreateTaskStore();
 
-  const defaultValues = useMemo(
-    () => ({
-      amount: createTaskDraft.amount ?? undefined,
-      currency: createTaskDraft.currency ?? 'USD',
+  const defaultValues = useMemo(() => {
+    const organizationValue = getOrganizationValue(
+      createTaskDraft.host,
+      createTaskDraft.organization
+    );
+
+    return {
+      ...defaultTaskValues,
       title: createTaskDraft.title ?? '',
-      locationName: createTaskDraft.locationName ?? '',
       description: createTaskDraft.description ?? '',
+      locationName: createTaskDraft.locationName ?? '',
       startTime: createTaskDraft.startTime ?? '',
       requirements: createTaskDraft.requirements ?? '',
       picture: createTaskDraft.picture ?? null,
-      category: createTaskDraft.categories ?? [],
-      organizationId: createTaskDraft.organizationId ?? null,
-      location:
-        createTaskDraft.location?.lat != null &&
-        createTaskDraft.location?.lng != null
-          ? {
-              lat: createTaskDraft.location.lat,
-              lng: createTaskDraft.location.lng,
-            }
-          : null,
+      category: createTaskDraft.category ?? [],
+      amount: createTaskDraft.amount ?? undefined,
+      currency: createTaskDraft.currency ?? 'USD',
+      organization: organizationValue,
+      host: createTaskDraft.host ?? undefined,
       startDate: createTaskDraft.startDate
         ? new Date(createTaskDraft.startDate)
         : undefined,
       endDate: createTaskDraft.endDate
         ? new Date(createTaskDraft.endDate)
         : undefined,
-    }),
-    [createTaskDraft]
-  );
+    } as BasicInfoFormValuesExtended;
+  }, [createTaskDraft]);
 
-  const methods = useForm<BasicInfoFormValues>({
+  const methods = useForm<BasicInfoFormValuesExtended>({
     resolver: yupResolver(basicInfoSchema),
     mode: 'onTouched',
-    defaultValues: defaultValues,
+    defaultValues,
   });
 
   useEffect(() => {
     if (!hasHydrated) return;
     const subscription = methods.watch((values) => {
-      setCreateTaskDraft(values as BasicInfoFormValues);
+      setCreateTaskDraft(values as BasicInfoFormValuesExtended);
     });
     return (): void => subscription.unsubscribe();
   }, [hasHydrated, methods, setCreateTaskDraft]);

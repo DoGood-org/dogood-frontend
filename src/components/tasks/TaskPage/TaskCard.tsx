@@ -10,11 +10,23 @@ interface TaskCardProps {
   task: ITaskDetails;
 }
 
+const formatTime = (timeStr: string): string => {
+  if (!timeStr) return '';
+  const [start] = timeStr.split('-');
+  if (!start) return '';
+
+  let [hours, minutes] = start.split(':').map(Number);
+  if (minutes === undefined) minutes = 0;
+
+  const ampm = 'AM';
+  hours = hours % 12 || 12;
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+};
+
 export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
+  console.log(task);
   const t = useTranslations('tasks');
   const goalAmount = 10000;
-
-  const imageUrl = task.picture || undefined;
 
   const taskInfo = [
     {
@@ -27,8 +39,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
     },
     {
       icon: <Clock />,
-      label: `${t('taskCard.time')}: 
-     ${task.startTime ?? '--'} ${t('taskCard.localTime')}`,
+      label: `${t('taskCard.time')}: ${task.startTime ? formatTime(task.startTime) : '--'} ${t('taskCard.localTime')}`,
     },
     {
       icon: <Location />,
@@ -39,7 +50,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   return (
     <section className="mb-5 md:flex lg:flex lg:flex-col">
       <ImagePlaceholder
-        imageUrl={imageUrl}
+        imageUrl={task.picture ?? undefined}
         className="md:w-[324px] lg:w-[400px] lg:h-[500px] lg:mb-2"
       />
       <div className="rounded-lg py-8 px-6 w-[354px] lg:w-[400px] bg-[#D2D5D5] dark:bg-[#2A2D2D]">
@@ -51,8 +62,10 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
               </h2>
             </li>
             {taskInfo.map((item, index) => (
-              <li key={index} className="flex items-center gap-2">
-                {item.icon}
+              <li key={index} className="flex items-start gap-2">
+                <div className="w-6 h-6 flex items-center justify-center flex-shrink-0">
+                  {item.icon}
+                </div>
                 <p className="text_tag text-base">{item.label}</p>
               </li>
             ))}
@@ -63,7 +76,8 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
           <div className="flex flex-col items-center justify-center">
             <DonationProgressBar
               currentAmount={task.amount ?? 0}
-              goalAmount={10000}
+              goalAmount={task.amount ?? 1}
+              isPreview={true}
             />
           </div>
         </div>

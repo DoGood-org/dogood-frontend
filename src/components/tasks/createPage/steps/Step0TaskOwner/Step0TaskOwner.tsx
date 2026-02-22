@@ -19,18 +19,25 @@ export const Step0TaskOwner = ({
   const { createTaskDraft, setCreateTaskDraft } = useCreateTaskStore();
   const { setValue } = useFormContext();
 
-  const currentValue: TaskOwnerValue = createTaskDraft.organizationId
-    ? { type: 'ORGANIZATION', organizationId: createTaskDraft.organizationId }
+  const currentValue: TaskOwnerValue = createTaskDraft.organization
+    ? { type: 'ORGANIZATION', organizationId: createTaskDraft.organization.id }
     : { type: 'USER' };
 
   const handleOwnerChange = (value: TaskOwnerValue): void => {
     const orgId = value.type === 'USER' ? null : value.organizationId;
-
-    setCreateTaskDraft({ organizationId: orgId });
-
-    setValue('organizationId', orgId, { shouldDirty: true });
+    setCreateTaskDraft({
+      organization: orgId
+        ? { id: orgId, name: '', createdAt: new Date().toISOString() }
+        : null,
+    });
+    setValue(
+      'organization',
+      orgId
+        ? { id: orgId, name: '', createdAt: new Date().toISOString() }
+        : null,
+      { shouldDirty: true }
+    );
   };
-
   return (
     <Section className="md:my-8 lg:my-8 my-container">
       <h1 className="text-h1 mb-8 lg:ml-20">Create your next task</h1>

@@ -1,5 +1,5 @@
 import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
-import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
+import { CreateTaskDraft } from '@/types/createTask.type';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -9,8 +9,6 @@ interface CreateTaskState {
   isSuccess: boolean;
   hasHydrated: boolean;
 }
-
-export type CreateTaskDraft = Partial<BasicInfoFormValues>;
 
 interface CreateTaskActions {
   nextCreateStep: () => void;

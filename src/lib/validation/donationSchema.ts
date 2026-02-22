@@ -1,7 +1,5 @@
 import * as yup from 'yup';
 
-const MAX_AMOUNT = 10_000;
-
 export const donationSchema = yup.object().shape({
   fullName: yup
     .string()
@@ -29,8 +27,7 @@ export const donationSchema = yup.object().shape({
     )
     .typeError('Amount must be a number')
     .required('Amount is required')
-    .positive('Amount must be greater than 0')
-    .max(MAX_AMOUNT, `Amount must be less than ${MAX_AMOUNT}`),
+    .positive('Amount must be greater than 0'),
 
   currency: yup.string().oneOf(['USD', 'EUR'], 'Invalid currency').required(),
 

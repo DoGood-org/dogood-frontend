@@ -9,14 +9,14 @@ import { useFormContext } from 'react-hook-form';
 export const CategorySelection = (): JSX.Element => {
   const { setValue, watch } = useFormContext();
 
-  const selectedCategories: TaskCategoryEnum[] = watch('categories') || [];
+  const selectedCategories: TaskCategoryEnum[] = watch('category') || [];
 
   const toggleCategory = (id: TaskCategoryEnum): void => {
     const next = selectedCategories.includes(id)
       ? selectedCategories.filter((catId) => catId !== id)
       : [...selectedCategories, id];
 
-    setValue('categories', next, {
+    setValue('category', next, {
       shouldDirty: true,
       shouldTouch: true,
       shouldValidate: true,

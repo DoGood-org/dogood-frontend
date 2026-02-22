@@ -113,7 +113,7 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
           date.setHours(Number(hourStr), Number(minuteStr), 0, 0);
           return date.toISOString();
         })(),
-        category: data.categories,
+        category: data.category,
         location: data.location ?? defaultTaskValues.location,
         locationName: data.locationName ?? defaultTaskValues.locationName,
       };
@@ -124,8 +124,13 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
         id,
         title: payload.title,
         subtitle: payload.description.slice(0, 60),
+        startDate: payload.startDate,
+        endDate: payload.endDate,
+        startTime: payload.startTime,
+        picture: payload.picture ?? null,
         description: payload.description,
         category: payload.category,
+        locationName: payload.locationName,
         location: payload.location,
         lat: payload.location?.lat ?? 0,
         lng: payload.location?.lng ?? 0,
@@ -135,9 +140,12 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
           : TaskActionType.VOLUNTEERING,
         userParticipationStatus: UserParticipationStatus.NONE,
         status: TaskStatus.CREATED,
-        organizationId: payload.organizationId,
+        organization: payload.organization,
         isFavorite: false,
         isSelected: false,
+        amount: payload.amount ?? 0,
+        currency: payload.currency ?? 'USD',
+        requirements: payload.requirements ?? '',
       };
 
       const existingLocal = useTaskStore.getState().tasksByKey['local'] || [];

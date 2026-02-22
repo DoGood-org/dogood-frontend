@@ -127,7 +127,11 @@ export function generateTasks(
       isSelected: false,
       actionType: TaskActionType.VOLUNTEERING,
       userParticipationStatus: UserParticipationStatus.NONE,
-      organizationId: `org-${i}`,
+      organization: {
+        id: `org-${i}`,
+        name: `Organization ${i}`,
+        createdAt: new Date().toISOString(),
+      },
       ownerType: 'ORGANISATION',
       onToggleDescription: (): void => {},
       status: TaskStatus.PENDING,
@@ -141,25 +145,29 @@ export function extendTaskToDetails(
 ): ITaskDetails {
   return {
     ...task,
-    picture:
-      overrides?.picture ??
-      'https://res.cloudinary.com/dinpgnkhh/image/upload/v1760461912/dog_gc3uel.png',
+    // picture:
+    //   overrides?.picture ??
+    //   'https://res.cloudinary.com/dinpgnkhh/image/upload/v1760461912/dog_gc3uel.png',
     status: overrides?.status ?? ('PENDING' as TaskStatus),
-    locationName: overrides?.locationName ?? 'Unknown location',
+    // locationName: overrides?.locationName ?? 'Unknown location',
     isOrganization: overrides?.isOrganization ?? false,
-    organizationId: overrides?.organizationId ?? `org-${task.id}`,
+    organization: {
+      id: `org-${task.id}`,
+      name: `Organization ${task.id}`,
+      createdAt: new Date().toISOString(),
+    },
     startDate: overrides?.startDate ?? new Date().toISOString().slice(0, 10),
-    startTime: overrides?.startTime ?? '09:00 AM',
+    // startTime: overrides?.startTime ?? '09:00 AM',
     endDate: overrides?.endDate ?? new Date().toISOString().slice(0, 10),
-    requirements:
-      overrides?.requirements ??
-      [
-        'Stray, abandoned, and injured animals currently living in our shelter.',
-        'Requirements:',
-        'Love and compassion for animals',
-        'Reliability and responsibility',
-        'Ability to dedicate at least 2–3 hours per week.',
-      ].join(' '),
+    // requirements:
+    //   overrides?.requirements ??
+    //   [
+    //     'Stray, abandoned, and injured animals currently living in our shelter.',
+    //     'Requirements:',
+    //     'Love and compassion for animals',
+    //     'Reliability and responsibility',
+    //     'Ability to dedicate at least 2–3 hours per week.',
+    //   ].join(' '),
     actionType: overrides?.actionType ?? TaskActionType.VOLUNTEERING,
     userParticipationStatus:
       overrides?.userParticipationStatus ?? UserParticipationStatus.NONE,
@@ -173,7 +181,11 @@ export function generateMockTasks(tasks: ITask[]): ITaskDetails[] {
       status: TaskStatus.IN_PROGRESS,
       locationName: MOCK_LOCATIONS[i] || `${i + 1}`,
       isOrganization: i % 2 === 0,
-      organizationId: `org-${i}`,
+      organization: {
+        id: `org-${i}`,
+        name: `Organization ${i}`,
+        createdAt: new Date().toISOString(),
+      },
     })
   );
 }
