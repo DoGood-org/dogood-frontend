@@ -37,7 +37,6 @@ export type CreateTaskDraft = Partial<
       organization?: {
         id: string;
         name: string;
-        createdAt: string;
       };
     };
   }

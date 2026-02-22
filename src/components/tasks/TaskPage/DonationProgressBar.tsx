@@ -9,10 +9,10 @@ export const DonationProgressBar: React.FC<ProgressBarProps> = ({
   currentAmount,
   goalAmount,
 }) => {
-  const percentage = Math.min(
-    Math.max((currentAmount / goalAmount) * 100, 0),
-    100
-  );
+  const percentage =
+    goalAmount > 0
+      ? Math.min(Math.max((currentAmount / goalAmount) * 100, 0), 100)
+      : 0;
   return (
     <div className="relative w-[236px] h-[28px] md:w-full bg-text-gray">
       <div

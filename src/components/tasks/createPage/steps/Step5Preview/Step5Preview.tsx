@@ -27,14 +27,7 @@ interface TaskPreviewProps {
 const formatTime = (timeStr: string): string => {
   if (!timeStr) return '';
   const [start] = timeStr.split('-');
-  if (!start) return '';
-
-  let [hours, minutes] = start.split(':').map(Number);
-  if (minutes === undefined) minutes = 0;
-
-  const ampm = 'AM';
-  hours = hours % 12 || 12;
-  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+  return start ? `${start}:00` : '';
 };
 
 export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
@@ -74,7 +67,6 @@ export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
       : TaskStatus.PENDING,
     locationName: task.locationName || '',
     location: { lat, lng },
-    isOrganization: !!task.organizationId,
     organization: task.organization,
     startDate: parseDate(task.startDate),
     endDate: parseDate(task.endDate),

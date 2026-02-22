@@ -55,11 +55,9 @@ export interface ITaskDetails extends ITask {
   picture?: string | null;
   status: TaskStatus;
   locationName?: string;
-  isOrganization?: boolean;
   organization?: {
     id: string;
     name: string;
-    createdAt: string;
   } | null;
   startDate?: string;
   startTime?: string;

@@ -150,7 +150,6 @@ export function extendTaskToDetails(
     //   'https://res.cloudinary.com/dinpgnkhh/image/upload/v1760461912/dog_gc3uel.png',
     status: overrides?.status ?? ('PENDING' as TaskStatus),
     // locationName: overrides?.locationName ?? 'Unknown location',
-    isOrganization: overrides?.isOrganization ?? false,
     organization: {
       id: `org-${task.id}`,
       name: `Organization ${task.id}`,
@@ -180,7 +179,6 @@ export function generateMockTasks(tasks: ITask[]): ITaskDetails[] {
     extendTaskToDetails(task, {
       status: TaskStatus.IN_PROGRESS,
       locationName: MOCK_LOCATIONS[i] || `${i + 1}`,
-      isOrganization: i % 2 === 0,
       organization: {
         id: `org-${i}`,
         name: `Organization ${i}`,

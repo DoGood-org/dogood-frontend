@@ -69,7 +69,6 @@ export const basicInfoSchema = yup.object({
     .object({
       id: yup.string().required(),
       name: yup.string().required(),
-      createdAt: yup.string().required(),
     })
     .nullable()
     .default(null),

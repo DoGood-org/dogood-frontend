@@ -6,6 +6,7 @@ import { TaskOwnerForm } from './TaskOwnerForm';
 import { OrganizationFromBack, TaskOwnerValue } from '@/types/tasks.type';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import { useFormContext } from 'react-hook-form';
+import { BasicInfoFormValuesExtended } from '@/types/createTask.type';
 
 export interface Step0TaskOwnerProps {
   organizations: OrganizationFromBack[];
@@ -17,27 +18,26 @@ export const Step0TaskOwner = ({
   currentUserName,
 }: Step0TaskOwnerProps): JSX.Element => {
   const { createTaskDraft, setCreateTaskDraft } = useCreateTaskStore();
-  const { setValue } = useFormContext();
+  const { setValue } = useFormContext<BasicInfoFormValuesExtended>();
 
   const currentValue: TaskOwnerValue = createTaskDraft.organization
     ? { type: 'ORGANIZATION', organizationId: createTaskDraft.organization.id }
     : { type: 'USER' };
 
   const handleOwnerChange = (value: TaskOwnerValue): void => {
-    const orgId = value.type === 'USER' ? null : value.organizationId;
-    setCreateTaskDraft({
-      organization: orgId
-        ? { id: orgId, name: '', createdAt: new Date().toISOString() }
-        : null,
-    });
-    setValue(
-      'organization',
-      orgId
-        ? { id: orgId, name: '', createdAt: new Date().toISOString() }
-        : null,
-      { shouldDirty: true }
-    );
+    if (value.type === 'USER') {
+      setCreateTaskDraft({ organization: null });
+      setValue('organization', null);
+      return;
+    }
+
+    const org = organizations.find((o) => o.id === value.organizationId);
+    const organization = org ? { id: org.id, name: org.name } : null;
+
+    setCreateTaskDraft({ organization });
+    setValue('organization', organization);
   };
+
   return (
     <Section className="md:my-8 lg:my-8 my-container">
       <h1 className="text-h1 mb-8 lg:ml-20">Create your next task</h1>

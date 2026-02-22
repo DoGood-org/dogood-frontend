@@ -5,13 +5,13 @@ import { cn } from '@/lib/utils';
 import { JSX, useState } from 'react';
 import { RequiredFieldsModal } from '../RequiredFieldsModal/RequiredFieldsModal';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
-import { TaskCategoryEnum } from '@/types/createTask.type';
+import {
+  BasicInfoFormValuesExtended,
+  TaskCategoryEnum,
+} from '@/types/createTask.type';
 import { useFormContext } from 'react-hook-form';
 import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
-import {
-  BasicInfoFormValues,
-  defaultTaskValues,
-} from '@/lib/validation/createTask.schema';
+import { defaultTaskValues } from '@/lib/validation/createTask.schema';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { MarkerCategoryEnum } from '@/types';
@@ -64,18 +64,15 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   const mapCategoryToMarker = (
     category: TaskCategoryEnum
   ): MarkerCategoryEnum => {
-    switch (category) {
-      case TaskCategoryEnum.Medicine:
-        return MarkerCategoryEnum.Medicine;
-      case TaskCategoryEnum.Nature:
-        return MarkerCategoryEnum.Nature;
-      case TaskCategoryEnum.Animal:
-        return MarkerCategoryEnum.Animal;
-      case TaskCategoryEnum.Food:
-        return MarkerCategoryEnum.Food;
-      default:
-        return MarkerCategoryEnum.Default;
-    }
+    const mapping: Record<TaskCategoryEnum, MarkerCategoryEnum> = {
+      [TaskCategoryEnum.Medicine]: MarkerCategoryEnum.Medicine,
+      [TaskCategoryEnum.Nature]: MarkerCategoryEnum.Nature,
+      [TaskCategoryEnum.Animal]: MarkerCategoryEnum.Animal,
+      [TaskCategoryEnum.Food]: MarkerCategoryEnum.Food,
+      [TaskCategoryEnum.Donation]: MarkerCategoryEnum.Default,
+    };
+
+    return mapping[category] || MarkerCategoryEnum.Default;
   };
 
   const handleNextClick = async (): Promise<void> => {
@@ -91,28 +88,26 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
     }
 
     if (isActuallyLastStep) {
-      const data = watch() as BasicInfoFormValues;
+      const data = watch() as BasicInfoFormValuesExtended;
+
+      const startDate = new Date(data.startDate ?? defaultTaskValues.startDate);
+      const endDate = new Date(data.endDate ?? defaultTaskValues.endDate);
+
+      const startTime = data.startTime
+        ? ((): string => {
+            const [hourStr, minuteStr] = data.startTime.split('-');
+            const date = new Date(startDate);
+            date.setHours(Number(hourStr), Number(minuteStr), 0, 0);
+            return date.toISOString();
+          })()
+        : startDate.toISOString();
 
       const payload = {
         ...defaultTaskValues,
         ...data,
-        startDate: new Date(
-          data.startDate ?? defaultTaskValues.startDate
-        ).toISOString(),
-        endDate: new Date(
-          data.endDate ?? defaultTaskValues.endDate
-        ).toISOString(),
-        startTime: ((): string => {
-          if (!data.startTime) {
-            return new Date(
-              data.startDate ?? defaultTaskValues.startDate
-            ).toISOString();
-          }
-          const [hourStr, minuteStr] = data.startTime.split('-');
-          const date = new Date(data.startDate ?? defaultTaskValues.startDate);
-          date.setHours(Number(hourStr), Number(minuteStr), 0, 0);
-          return date.toISOString();
-        })(),
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        startTime,
         category: data.category,
         location: data.location ?? defaultTaskValues.location,
         locationName: data.locationName ?? defaultTaskValues.locationName,

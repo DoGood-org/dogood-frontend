@@ -113,7 +113,7 @@ export const TaskOwnerForm = ({
           ))}
         </div>
 
-        <ConfirmButton owner={value} disabled={!value} />
+        <ConfirmButton disabled={!value} onConfirm={() => {}} />
       </div>
     </StepCard>
   );

@@ -10,23 +10,21 @@ interface TaskCardProps {
   task: ITaskDetails;
 }
 
-const formatTime = (timeStr: string): string => {
-  if (!timeStr) return '';
-  const [start] = timeStr.split('-');
-  if (!start) return '';
-
-  let [hours, minutes] = start.split(':').map(Number);
-  if (minutes === undefined) minutes = 0;
-
-  const ampm = 'AM';
-  hours = hours % 12 || 12;
-  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+const formatTime = (isoString?: string): string => {
+  if (!isoString) return 'N/A';
+  const date = new Date(isoString);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 };
 
 export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   console.log(task);
   const t = useTranslations('tasks');
-  const goalAmount = 10000;
+
+  const donation = 10000;
+  const donationGoal = (task as any).goalAmount ?? 0;
+  const collected = task.amount ?? 0;
 
   const taskInfo = [
     {
@@ -39,7 +37,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
     },
     {
       icon: <Clock />,
-      label: `${t('taskCard.time')}: ${task.startTime ? formatTime(task.startTime) : '--'} ${t('taskCard.localTime')}`,
+      label: `${t('taskCard.time')}: ${formatTime(task.startTime)} ${t('taskCard.localTime')}`,
     },
     {
       icon: <Location />,
@@ -71,13 +69,12 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
             ))}
           </ul>
           <h3 className="mb-4 text-base text-[#00c1ac] font-semibold">
-            {t('taskCard.donationNeeds')} {goalAmount}$
+            {t('taskCard.donationNeeds')} {donation}$
           </h3>
           <div className="flex flex-col items-center justify-center">
             <DonationProgressBar
-              currentAmount={task.amount ?? 0}
-              goalAmount={task.amount ?? 1}
-              isPreview={true}
+              currentAmount={collected}
+              goalAmount={donationGoal}
             />
           </div>
         </div>
