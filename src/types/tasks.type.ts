@@ -80,5 +80,4 @@ export interface IExtendedITaskProps extends ITaskDetails {
   userParticipationStatus: UserParticipationStatus;
   isHost?: boolean;
   status: TaskStatus;
-  ownerType?: 'USER' | 'ORGANISATION';
 }

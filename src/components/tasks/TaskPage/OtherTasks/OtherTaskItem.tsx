@@ -10,7 +10,7 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
   title,
   subtitle,
   category,
-  distance,
+  location,
   actionType,
   userParticipationStatus,
   isHost,
@@ -37,14 +37,19 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
 
       <div className="mt-auto">
         <div className="flex justify-between items-center">
-          <TaskCategoryList categories={category} />
-          {distance && <span className="text-base">{distance}</span>}
+          <TaskCategoryList categories={category} hideDonation />
+          {location && (
+            <p className="text-sm mt-1">
+              {location.lat}, {location.lng}
+            </p>
+          )}
         </div>
       </div>
 
       <div className="flex justify-between mt-auto">
         <TaskActionButtons
           taskId={id}
+          category={category}
           actionType={actionType}
           userParticipationStatus={userParticipationStatus}
           isHost={Boolean(isHost)}

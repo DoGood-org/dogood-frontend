@@ -26,11 +26,29 @@ interface TaskPreviewProps {
 
 const formatTime = (timeStr: string): string => {
   if (!timeStr) return '';
-  const [start] = timeStr.split('-');
-  return start ? `${start}:00` : '';
+
+  const startTime = timeStr.includes('-') ? timeStr.split('-')[0] : timeStr;
+
+  if (
+    startTime &&
+    !startTime.includes(':00') &&
+    startTime.split(':').length === 2
+  ) {
+    return `${startTime}:00`;
+  }
+
+  return startTime;
 };
 
-export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
+const parseDate = (date?: string | number | Date): string => {
+  if (!date) return '';
+  const d = new Date(date);
+  return isNaN(d.getTime()) ? '' : d.toISOString().slice(0, 10);
+};
+
+export function transformBackendTaskToITaskDetails({
+  task,
+}: TaskPreviewProps): ITaskDetails {
   if (!task || typeof task !== 'object') {
     throw new Error('Invalid task data from backend');
   }
@@ -45,12 +63,6 @@ export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
         .filter(Boolean)
         .map((c: string) => c.toLowerCase() as TaskCategoryEnum)
     : [];
-
-  const parseDate = (date: any): string => {
-    if (!date) return '';
-    const d = new Date(date);
-    return isNaN(d.getTime()) ? '' : d.toISOString().slice(0, 10);
-  };
 
   return {
     id: task.id ?? `task-${Date.now()}`,
@@ -71,7 +83,7 @@ export function transformBackendTaskToITaskDetails(task: any): ITaskDetails {
     startDate: parseDate(task.startDate),
     endDate: parseDate(task.endDate),
     startTime: formatTime(task.startTime || ''),
-    actionType: task.actionType || TaskActionType.VOLUNTEERING,
+    actionType: task.actionType || TaskActionType.FUNDRAISING,
     userParticipationStatus:
       task.userParticipationStatus || UserParticipationStatus.NONE,
     requirements: task.requirements || '',
@@ -127,10 +139,7 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
       <Task task={currentTask} showEditButton={false} />
       <IconButtonGroup
         categories={currentTask.category}
-        distance={currentTask.distance}
         location={currentTask.location ?? null}
-        lat={currentTask.lat}
-        lng={currentTask.lng}
         taskId={currentTask.id}
       />
       <div className="mt-8 flex justify-end">

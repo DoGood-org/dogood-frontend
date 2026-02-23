@@ -7,15 +7,20 @@ import { TaskCategoryEnum } from '@/types/createTask.type';
 
 interface TaskCategoryListProps {
   categories?: TaskCategoryEnum[];
+  hideDonation?: boolean;
 }
 
 export const TaskCategoryList = ({
   categories = [],
+  hideDonation = false,
 }: TaskCategoryListProps): JSX.Element => {
-  const selectedCategories = CATEGORIES.filter((cat) =>
-    categories.includes(cat.id as TaskCategoryEnum)
-  );
+  const filteredCategories = hideDonation
+    ? categories.filter((cat) => cat !== TaskCategoryEnum.Donation)
+    : categories;
 
+  const selectedCategories = CATEGORIES.filter((cat) =>
+    filteredCategories.includes(cat.id as TaskCategoryEnum)
+  );
   return (
     <ul>
       <div className="flex gap-4">

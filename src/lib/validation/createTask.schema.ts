@@ -1,8 +1,6 @@
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import * as yup from 'yup';
 
-const MAX_AMOUNT = 10_000;
-
 export const basicInfoSchema = yup.object({
   picture: yup.string().nullable().defined().default(null),
   title: yup
@@ -18,7 +16,7 @@ export const basicInfoSchema = yup.object({
     })
     .nullable()
     .default(null),
-  locationName: yup.string().nullable().required('Location is required'),
+  locationName: yup.string().trim().required('Location is required'),
   startDate: yup.date().nullable().required('Start date is required'),
   endDate: yup
     .date()
@@ -54,8 +52,7 @@ export const basicInfoSchema = yup.object({
     )
     .typeError('Amount must be a number')
     .required('Amount is required')
-    .positive('Amount must be greater than 0')
-    .max(MAX_AMOUNT, `Amount must be less than ${MAX_AMOUNT}`),
+    .min(0, 'Amount must be at least 0'),
   currency: yup
     .string()
     .oneOf(['USD', 'EUR'] as const)

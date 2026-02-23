@@ -8,19 +8,16 @@ import { TaskCategoryList } from '../../createPage/TaskCategoryList/TaskCategory
 interface IconButtonGroupProps {
   categories: TaskCategoryEnum[];
   location?: { lat: number; lng: number } | null;
-  distance: string;
-  lat?: number;
-  lng?: number;
   taskId?: string;
 }
 
 export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
   categories,
   location,
-  lat,
-  lng,
   taskId,
 }) => {
+  const lat = location?.lat;
+  const lng = location?.lng;
   return (
     <div className="relative flex items-center justify-between py-2 md:py-5">
       <span className="absolute top-0 left-0 h-px w-full bg-text-gray"></span>
@@ -36,7 +33,7 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
             </>
           )}
         </div>
-        {location ? `${location.lat}, ${location.lng}` : '-- km'}
+        {lat !== undefined && lng !== undefined ? `${lat}, ${lng}` : '-- km'}
       </div>
     </div>
   );

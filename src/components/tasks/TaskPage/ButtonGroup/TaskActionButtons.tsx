@@ -11,6 +11,7 @@ import {
 } from '@/types/tasks.type';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { JSX } from 'react';
+import { TaskCategoryEnum } from '@/types/createTask.type';
 
 interface TaskActionButtonsProps {
   taskId: string;
@@ -19,11 +20,13 @@ interface TaskActionButtonsProps {
   taskStatus: TaskStatus;
   userParticipationStatus: UserParticipationStatus;
   className?: string;
+  category: TaskCategoryEnum | TaskCategoryEnum[];
 }
 
 export const TaskActionButtons = ({
   taskId,
   actionType,
+  category,
   isHost,
   className = '',
 }: TaskActionButtonsProps): JSX.Element | null => {
@@ -36,28 +39,21 @@ export const TaskActionButtons = ({
     closeMenu: closeModal,
   } = useMenuToggle();
 
-  const isFundraising = actionType === TaskActionType.FUNDRAISING;
+  const isDonation =
+    actionType === TaskActionType.FUNDRAISING ||
+    (Array.isArray(category)
+      ? category.includes(TaskCategoryEnum.Donation)
+      : category === TaskCategoryEnum.Donation);
 
   const baseButtonClass = `leading-[32px] ${className}`;
 
-  if (isHost && !isFundraising) {
+  if (isHost && !isDonation) {
     return null;
   }
 
-  const SeeMoreButton = (
-    <Button
-      variant="secondary"
-      onClick={() => {}}
-      className={baseButtonClass}
-      size="lg"
-    >
-      {t('seeMoreBtn')}
-    </Button>
-  );
-
-  if (isFundraising) {
-    return (
-      <div className="flex w-full justify-between">
+  return (
+    <div className="flex w-full justify-between gap-3 mt-4">
+      {isDonation ? (
         <Button
           variant="primary"
           onClick={openModal}
@@ -66,23 +62,29 @@ export const TaskActionButtons = ({
         >
           {t('donateBtn')}
         </Button>
-        {SeeMoreButton}
-        <DonationModal isOpen={isModalOpen} onClose={closeModal} />
-      </div>
-    );
-  }
+      ) : (
+        <Button
+          variant="primary"
+          onClick={() => joinTask(taskId)}
+          className={`${baseButtonClass} text-white`}
+          size="lg"
+        >
+          {t('join')}
+        </Button>
+      )}
 
-  return (
-    <div className="flex w-full justify-between">
       <Button
-        variant="primary"
-        onClick={() => joinTask(taskId)}
-        className={`${baseButtonClass} text-white`}
+        variant="secondary"
+        className={baseButtonClass}
         size="lg"
+        onClick={() => {}} // Тут /tasks/[id]
       >
-        {t('join')}
+        {t('seeMoreBtn')}
       </Button>
-      {SeeMoreButton}
+
+      {isDonation && (
+        <DonationModal isOpen={isModalOpen} onClose={closeModal} />
+      )}
     </div>
   );
 };

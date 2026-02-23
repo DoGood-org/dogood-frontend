@@ -46,7 +46,6 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   const {
     id: taskId,
     category,
-    distance,
     userParticipationStatus,
     status: taskStatus,
   } = task;
@@ -60,9 +59,6 @@ export const TaskContent: React.FC<TaskContentProps> = ({
       <IconButtonGroup
         categories={category}
         location={task.location}
-        distance={distance}
-        lat={task.lat}
-        lng={task.lng}
         taskId={taskId}
       />
       <div className="flex justify-between mt-5">

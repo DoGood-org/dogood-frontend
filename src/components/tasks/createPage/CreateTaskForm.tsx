@@ -12,7 +12,9 @@ import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import {
   BasicInfoFormValuesExtended,
   CreateTaskDraft,
+  TaskCategoryEnum,
 } from '@/types/createTask.type';
+import { TaskActionType } from '@/types/tasks.type';
 
 const getOrganizationValue = (
   host: CreateTaskDraft['host'],
@@ -67,9 +69,19 @@ export const CreateTaskForm = ({
 
   useEffect(() => {
     if (!hasHydrated) return;
+
     const subscription = methods.watch((values) => {
-      setCreateTaskDraft(values as BasicInfoFormValuesExtended);
+      const isFundraising =
+        (values.amount && values.amount > 0) ||
+        values.category?.includes(TaskCategoryEnum.Donation);
+      setCreateTaskDraft({
+        ...values,
+        actionType: isFundraising
+          ? TaskActionType.FUNDRAISING
+          : TaskActionType.VOLUNTEERING,
+      } as BasicInfoFormValuesExtended);
     });
+
     return (): void => subscription.unsubscribe();
   }, [hasHydrated, methods, setCreateTaskDraft]);
 
