@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
-import { JSX, useState } from 'react';
+import { JSX, useMemo, useState } from 'react';
 import { RequiredFieldsModal } from '../RequiredFieldsModal/RequiredFieldsModal';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import {
@@ -36,20 +36,24 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
 
   const [isRequiredModalOpen, setIsRequiredModalOpen] = useState(false);
 
-  const { trigger, watch, reset } = useFormContext();
+  const { trigger, watch, reset } =
+    useFormContext<BasicInfoFormValuesExtended>();
 
-  const category = watch('category');
+  const formValues = watch();
 
-  const isDonation = Array.isArray(category)
-    ? category.includes(TaskCategoryEnum.Donation)
-    : category === TaskCategoryEnum.Donation;
+  const isDonation = useMemo(() => {
+    const hasDonationCategory = Array.isArray(formValues.category)
+      ? formValues.category.includes(TaskCategoryEnum.Donation)
+      : formValues.category === TaskCategoryEnum.Donation;
+
+    const hasAmount = Number(formValues.amount) > 0;
+
+    return hasDonationCategory || hasAmount;
+  }, [formValues.category, formValues.amount]);
 
   const lastStepIndex = isDonation ? 5 : 4;
-
   const isLastStep = createStep === lastStepIndex;
-
   const isBeforeLastStep = createStep === lastStepIndex - 1;
-
   const isActuallyLastStep = isLastStep || (!isDonation && createStep === 3);
 
   const showLeftButton = showBack && createStep > 0;
@@ -80,7 +84,6 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
 
     if (stepIndex !== null) {
       const isValid = await trigger(CREATE_TASK_STEPS[stepIndex].fields);
-
       if (!isValid) {
         setIsRequiredModalOpen(true);
         return;
@@ -89,6 +92,16 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
 
     if (isActuallyLastStep) {
       const data = watch() as BasicInfoFormValuesExtended;
+
+      const hasDonationCategory = data.category.includes(
+        TaskCategoryEnum.Donation
+      );
+      const hasAmount = data.amount && Number(data.amount) > 0;
+      const finalIsDonation = hasDonationCategory || hasAmount;
+
+      const actionType = finalIsDonation
+        ? TaskActionType.FUNDRAISING
+        : TaskActionType.VOLUNTEERING;
 
       const startDate = new Date(data.startDate ?? defaultTaskValues.startDate);
       const endDate = new Date(data.endDate ?? defaultTaskValues.endDate);
@@ -130,9 +143,7 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
         lat: payload.location?.lat ?? 0,
         lng: payload.location?.lng ?? 0,
         distance: '0 km',
-        actionType: isDonation
-          ? TaskActionType.FUNDRAISING
-          : TaskActionType.VOLUNTEERING,
+        actionType,
         userParticipationStatus: UserParticipationStatus.NONE,
         status: TaskStatus.CREATED,
         organization: payload.organization,
@@ -148,7 +159,11 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
         .getState()
         .setTasksByKey('local', [...existingLocal, newTask]);
 
-      if (!isDonation && payload.location && payload.category.length > 0) {
+      if (
+        actionType === TaskActionType.VOLUNTEERING &&
+        payload.location &&
+        payload.category.length > 0
+      ) {
         addMarker({
           id,
           lat: payload.location.lat,
@@ -221,10 +236,12 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
         </Button>
       </div>
 
-      <RequiredFieldsModal
-        isOpen={isRequiredModalOpen}
-        onClose={() => setIsRequiredModalOpen(false)}
-      />
+      {isRequiredModalOpen && (
+        <RequiredFieldsModal
+          isOpen={isRequiredModalOpen}
+          onClose={() => setIsRequiredModalOpen(false)}
+        />
+      )}
     </>
   );
 };

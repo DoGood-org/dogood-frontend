@@ -1,6 +1,5 @@
 'use client';
 
-import { extendTaskToDetails } from '../../main/map/mockTasks';
 import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
 import { LastNews } from '@/components/tasks/taskPage/LastNews/LastNews';
 import { INewsItem } from '@/types';
@@ -12,6 +11,7 @@ import { authStore } from '@/zustand/stores/authStore';
 import { Task } from './Task';
 import { useMemo } from 'react';
 import { useTaskStore } from '@/zustand/stores/taskStore';
+import { transformBackendTaskToITaskDetails } from '@/utils/taskTransform';
 
 interface TaskContentProps {
   slug: string;
@@ -27,7 +27,8 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   const storeTasks = useTaskStore((state) => state.tasks);
 
   const allDetailedTasks = useMemo(
-    () => storeTasks.map((task) => extendTaskToDetails(task)),
+    () =>
+      storeTasks.map((task) => transformBackendTaskToITaskDetails({ task })),
     [storeTasks]
   );
 

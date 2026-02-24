@@ -19,84 +19,17 @@ import {
   BasicInfoFormValuesExtended,
   TaskCategoryEnum,
 } from '@/types/createTask.type';
-
-interface TaskPreviewProps {
-  task?: ITaskDetails;
-}
-
-const formatTime = (timeStr: string): string => {
-  if (!timeStr) return '';
-
-  const startTime = timeStr.includes('-') ? timeStr.split('-')[0] : timeStr;
-
-  if (
-    startTime &&
-    !startTime.includes(':00') &&
-    startTime.split(':').length === 2
-  ) {
-    return `${startTime}:00`;
-  }
-
-  return startTime;
-};
-
-const parseDate = (date?: string | number | Date): string => {
-  if (!date) return '';
-  const d = new Date(date);
-  return isNaN(d.getTime()) ? '' : d.toISOString().slice(0, 10);
-};
-
-export function transformBackendTaskToITaskDetails({
-  task,
-}: TaskPreviewProps): ITaskDetails {
-  if (!task || typeof task !== 'object') {
-    throw new Error('Invalid task data from backend');
-  }
-
-  const lat =
-    typeof task.lat === 'number' ? task.lat : (task.location?.lat ?? 0);
-  const lng =
-    typeof task.lng === 'number' ? task.lng : (task.location?.lng ?? 0);
-
-  const category = Array.isArray(task.category)
-    ? task.category
-        .filter(Boolean)
-        .map((c: string) => c.toLowerCase() as TaskCategoryEnum)
-    : [];
-
-  return {
-    id: task.id ?? `task-${Date.now()}`,
-    title: task.title || '',
-    subtitle: task.subtitle || '',
-    description: task.description || '',
-    distance: '0',
-    lat,
-    lng,
-    category,
-    picture: task.picture ?? null,
-    status: Object.values(TaskStatus).includes(task.status)
-      ? task.status
-      : TaskStatus.PENDING,
-    locationName: task.locationName || '',
-    location: { lat, lng },
-    organization: task.organization,
-    startDate: parseDate(task.startDate),
-    endDate: parseDate(task.endDate),
-    startTime: formatTime(task.startTime || ''),
-    actionType: task.actionType || TaskActionType.FUNDRAISING,
-    userParticipationStatus:
-      task.userParticipationStatus || UserParticipationStatus.NONE,
-    requirements: task.requirements || '',
-    amount: task.amount ?? 0,
-    currency: task.currency || 'USD',
-  };
-}
+import { formatTime, TaskPreviewProps } from '@/utils/taskTransform';
 
 export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
   const { watch } = useFormContext<BasicInfoFormValuesExtended>();
   const formValues = watch();
 
   const liveTask: ITaskDetails = useMemo(() => {
+    const finalIsDonation =
+      (formValues.category ?? []).includes(TaskCategoryEnum.Donation) ||
+      Number(formValues.amount) > 0;
+
     return {
       id: `preview-${Date.now()}`,
       title: formValues.title || '',
@@ -123,7 +56,9 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
           ? formValues.endDate.toISOString().slice(0, 10)
           : '',
       startTime: formatTime(formValues.startTime || ''),
-      actionType: formValues.actionType ?? TaskActionType.VOLUNTEERING,
+      actionType: finalIsDonation
+        ? TaskActionType.FUNDRAISING
+        : TaskActionType.VOLUNTEERING,
       userParticipationStatus: UserParticipationStatus.NONE,
       requirements: formValues.requirements ?? '',
       amount: formValues.amount ?? 0,

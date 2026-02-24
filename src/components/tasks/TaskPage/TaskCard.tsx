@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { ITaskDetails } from '@/types/tasks.type';
+import { ITaskDetails, TaskActionType } from '@/types/tasks.type';
 import { ImagePlaceholder } from './ImagePlaceholder';
 import { Clock, DateIcon, Location } from '@/components/icons';
 import { DonationProgressBar } from './DonationProgressBar';
@@ -25,6 +25,8 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const donation = 10000;
   const donationGoal = (task as any).goalAmount ?? 0;
   const collected = task.amount ?? 0;
+
+  const isFundraising = task.actionType === TaskActionType.FUNDRAISING;
 
   const taskInfo = [
     {
@@ -68,15 +70,19 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
               </li>
             ))}
           </ul>
-          <h3 className="mb-4 text-base text-[#00c1ac] font-semibold">
-            {t('taskCard.donationNeeds')} {donation}$
-          </h3>
-          <div className="flex flex-col items-center justify-center">
-            <DonationProgressBar
-              currentAmount={collected}
-              goalAmount={donationGoal}
-            />
-          </div>
+          {isFundraising && (
+            <>
+              <h3 className="mb-4 text-base text-[#00c1ac] font-semibold">
+                {t('taskCard.donationNeeds')} {donation}$
+              </h3>
+              <div className="flex flex-col items-center justify-center">
+                <DonationProgressBar
+                  currentAmount={collected}
+                  goalAmount={donationGoal}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>
