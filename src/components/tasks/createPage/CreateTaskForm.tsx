@@ -7,7 +7,7 @@ import {
   basicInfoSchema,
   defaultTaskValues,
 } from '@/lib/validation/createTask.schema';
-import { JSX, useEffect, useMemo } from 'react';
+import { JSX, useEffect, useMemo, useRef } from 'react';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import {
   BasicInfoFormValuesExtended,
@@ -33,7 +33,9 @@ export const CreateTaskForm = ({
   const { createTaskDraft, hasHydrated, setCreateTaskDraft } =
     useCreateTaskStore();
 
-  const defaultValues = useMemo(() => {
+  const isResetting = useRef(false);
+
+  const initialValues = useMemo(() => {
     const organizationValue = getOrganizationValue(
       createTaskDraft.host,
       createTaskDraft.organization
@@ -41,17 +43,8 @@ export const CreateTaskForm = ({
 
     return {
       ...defaultTaskValues,
-      title: createTaskDraft.title ?? '',
-      description: createTaskDraft.description ?? '',
-      locationName: createTaskDraft.locationName ?? '',
-      startTime: createTaskDraft.startTime ?? '',
-      requirements: createTaskDraft.requirements ?? '',
-      picture: createTaskDraft.picture ?? null,
-      category: createTaskDraft.category ?? [],
-      amount: createTaskDraft.amount ?? undefined,
-      currency: createTaskDraft.currency ?? 'USD',
+      ...createTaskDraft,
       organization: organizationValue,
-      host: createTaskDraft.host ?? undefined,
       startDate: createTaskDraft.startDate
         ? new Date(createTaskDraft.startDate)
         : undefined,
@@ -64,26 +57,41 @@ export const CreateTaskForm = ({
   const methods = useForm<BasicInfoFormValuesExtended>({
     resolver: yupResolver(basicInfoSchema),
     mode: 'onTouched',
-    defaultValues,
+    defaultValues: initialValues,
   });
+
+  const { reset, watch } = methods;
+
+  useEffect(() => {
+    if (hasHydrated) {
+      isResetting.current = true;
+      reset(initialValues);
+      setTimeout(() => {
+        isResetting.current = false;
+      }, 0);
+    }
+  }, [hasHydrated, reset, initialValues]);
 
   useEffect(() => {
     if (!hasHydrated) return;
 
-    const subscription = methods.watch((values) => {
+    const subscription = watch((values) => {
+      if (isResetting.current) return;
+
       const isFundraising =
         (values.amount && values.amount > 0) ||
         values.category?.includes(TaskCategoryEnum.Donation);
+
       setCreateTaskDraft({
         ...values,
         actionType: isFundraising
           ? TaskActionType.FUNDRAISING
           : TaskActionType.VOLUNTEERING,
-      } as BasicInfoFormValuesExtended);
+      } as CreateTaskDraft);
     });
 
     return (): void => subscription.unsubscribe();
-  }, [hasHydrated, methods, setCreateTaskDraft]);
+  }, [hasHydrated, watch, setCreateTaskDraft]);
 
   if (!hasHydrated) return null;
 

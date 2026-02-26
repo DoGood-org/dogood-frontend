@@ -1,5 +1,6 @@
 import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
 import { CreateTaskDraft } from '@/types/createTask.type';
+import { TaskActionType } from '@/types/tasks.type';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -56,12 +57,24 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
       },
 
       setCreateTaskDraft: (data): void => {
-        set((state) => ({
-          createTaskDraft: {
-            ...state.createTaskDraft,
-            ...data,
-          },
-        }));
+        set((state) => {
+          const nextDraft = { ...state.createTaskDraft, ...data };
+
+          if (nextDraft.actionType === TaskActionType.VOLUNTEERING) {
+            nextDraft.amount = 0;
+            nextDraft.currency = undefined;
+          }
+
+          const isDonation =
+            nextDraft.actionType === TaskActionType.FUNDRAISING;
+          const nextStep =
+            !isDonation && state.createStep > 4 ? 4 : state.createStep;
+
+          return {
+            createTaskDraft: nextDraft,
+            createStep: nextStep,
+          };
+        });
       },
 
       resetCreateTask: (): void => {

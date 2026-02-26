@@ -10,14 +10,6 @@ interface TaskCardProps {
   task: ITaskDetails;
 }
 
-const formatTime = (isoString?: string): string => {
-  if (!isoString) return 'N/A';
-  const date = new Date(isoString);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-};
-
 export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   console.log(task);
   const t = useTranslations('tasks');
@@ -39,7 +31,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
     },
     {
       icon: <Clock />,
-      label: `${t('taskCard.time')}: ${formatTime(task.startTime)} ${t('taskCard.localTime')}`,
+      label: `${t('taskCard.time')}: ${task.startTime ?? 'N/A'} ${t('taskCard.localTime')}`,
     },
     {
       icon: <Location />,

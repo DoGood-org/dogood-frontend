@@ -27,7 +27,7 @@ type Props = {
 };
 export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   const createStep = useCreateTaskStore((s) => s.createStep);
-  const prevCreateStep = useCreateTaskStore((s) => s.prevCreateStep);
+  // const prevCreateStep = useCreateTaskStore((s) => s.prevCreateStep);
   const setIsSuccess = useCreateTaskStore((s) => s.setIsSuccess);
   const setCreateStep = useCreateTaskStore((s) => s.setCreateStep);
   const resetCreateTask = useCreateTaskStore((s) => s.resetCreateTask);
@@ -45,25 +45,29 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
     const hasDonationCategory = Array.isArray(formValues.category)
       ? formValues.category.includes(TaskCategoryEnum.Donation)
       : formValues.category === TaskCategoryEnum.Donation;
-
     const hasAmount = Number(formValues.amount) > 0;
-
     return hasDonationCategory || hasAmount;
   }, [formValues.category, formValues.amount]);
 
-  const lastStepIndex = isDonation ? 5 : 4;
-  const isLastStep = createStep === lastStepIndex;
-  const isBeforeLastStep = createStep === lastStepIndex - 1;
-  const isActuallyLastStep = isLastStep || (!isDonation && createStep === 3);
+  const PREVIEW_STEP = 5;
+  const PAYMENT_STEP = 4;
+  const DESCRIPTION_STEP = 3;
 
-  const showLeftButton = showBack && createStep > 0;
-  const leftButtonText = isLastStep ? 'Edit' : 'Go back';
+  const isLastStep = createStep === PREVIEW_STEP;
 
-  const rightButtonText = isActuallyLastStep
+  const isBeforePreview =
+    createStep === PAYMENT_STEP ||
+    (createStep === DESCRIPTION_STEP && !isDonation);
+
+  const rightButtonText = isLastStep
     ? 'Confirm'
-    : isBeforeLastStep
+    : isBeforePreview
       ? 'Preview'
       : 'Next step';
+
+  // 👇 нові змінні для кнопки назад
+  const showLeftButton = showBack && createStep > 0;
+  const leftButtonText = isLastStep ? 'Edit' : 'Go back';
 
   const mapCategoryToMarker = (
     category: TaskCategoryEnum
@@ -90,7 +94,7 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       }
     }
 
-    if (isActuallyLastStep) {
+    if (isLastStep) {
       const data = watch() as BasicInfoFormValuesExtended;
 
       const hasDonationCategory = data.category.includes(
@@ -180,12 +184,19 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       return;
     }
 
-    if (isBeforeLastStep) {
-      setCreateStep(lastStepIndex);
+    if (createStep === DESCRIPTION_STEP && !isDonation) {
+      setCreateStep(PREVIEW_STEP);
+    } else {
+      setCreateStep(createStep + 1);
+    }
+  };
+
+  const handleBackClick = (): void => {
+    if (createStep === PREVIEW_STEP && !isDonation) {
+      setCreateStep(DESCRIPTION_STEP);
       return;
     }
-
-    setCreateStep(createStep + 1);
+    setCreateStep(Math.max(0, createStep - 1));
   };
 
   const containerClass = (isLastStep: boolean): string =>
@@ -220,7 +231,7 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
           <Button
             variant="secondary"
             className={backButtonClass(isLastStep)}
-            onClick={prevCreateStep}
+            onClick={handleBackClick}
             size="lg"
           >
             {leftButtonText}

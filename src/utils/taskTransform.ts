@@ -10,12 +10,23 @@ export interface TaskPreviewProps {
   task?: ITaskDetails;
 }
 
-export const formatTime = (isoString?: string): string => {
-  if (!isoString) return 'N/A';
-  const date = new Date(isoString);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+export const formatTime = (time: string): string => {
+  if (!time || typeof time !== 'string') return '';
+
+  const parts = time.split('-');
+  if (parts.length !== 2) return '';
+
+  const hourNum = Number(parts[0]);
+  const minuteNum = Number(parts[1]);
+
+  if (isNaN(hourNum) || isNaN(minuteNum)) return '';
+
+  const ampm = hourNum >= 12 ? 'PM' : 'AM';
+  const hour12 = hourNum % 12 || 12;
+
+  return `${hour12.toString().padStart(2, '0')}:${minuteNum
+    .toString()
+    .padStart(2, '0')} ${ampm}`;
 };
 
 const parseDate = (date?: string | number | Date): string => {

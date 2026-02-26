@@ -5,6 +5,8 @@ import { CategoryButton } from '@/components/tasks/createPage/Buttons/CategoryBu
 import { JSX } from 'react';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import { useFormContext } from 'react-hook-form';
+import { TaskActionType } from '@/types/tasks.type';
+import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 
 export const CategorySelection = (): JSX.Element => {
   const { setValue, watch } = useFormContext();
@@ -12,16 +14,32 @@ export const CategorySelection = (): JSX.Element => {
   const selectedCategories: TaskCategoryEnum[] = watch('category') || [];
 
   const toggleCategory = (id: TaskCategoryEnum): void => {
+    const isRemovingDonation =
+      id === TaskCategoryEnum.Donation && selectedCategories.includes(id);
+
     const next = selectedCategories.includes(id)
       ? selectedCategories.filter((catId) => catId !== id)
       : [...selectedCategories, id];
 
-    setValue('category', next, {
-      shouldDirty: true,
-      shouldTouch: true,
-      shouldValidate: true,
+    const nextActionType = next.includes(TaskCategoryEnum.Donation)
+      ? TaskActionType.FUNDRAISING
+      : TaskActionType.VOLUNTEERING;
+
+    setValue('category', next, { shouldValidate: true });
+
+    if (isRemovingDonation) {
+      setValue('amount', 0);
+      setValue('currency', undefined);
+    }
+
+    useCreateTaskStore.getState().setCreateTaskDraft({
+      category: next,
+      actionType: nextActionType,
+      amount: isRemovingDonation ? 0 : undefined,
+      currency: isRemovingDonation ? undefined : undefined,
     });
   };
+
   return (
     <section className="mb-[50px]">
       <h2 className="text-base mb-4 text-foreground">Choose a category</h2>

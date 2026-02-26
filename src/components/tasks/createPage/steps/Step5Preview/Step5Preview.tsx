@@ -25,6 +25,12 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
   const { watch } = useFormContext<BasicInfoFormValuesExtended>();
   const formValues = watch();
 
+  const isDonation =
+    (formValues.category ?? []).includes(TaskCategoryEnum.Donation) ||
+    Number(formValues.amount) > 0;
+
+  const previewStep = isDonation ? 5 : 4;
+
   const liveTask: ITaskDetails = useMemo(() => {
     const finalIsDonation =
       (formValues.category ?? []).includes(TaskCategoryEnum.Donation) ||
@@ -70,7 +76,11 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
 
   return (
     <Section withContainer={true} className="mt-8 mb-8">
-      <StepHeader step={5} title="Preview" titleClassName="text-lg mb-8 pl-0" />
+      <StepHeader
+        step={previewStep}
+        title="Preview"
+        titleClassName="text-lg mb-8 pl-0"
+      />
       <Task task={currentTask} showEditButton={false} />
       <IconButtonGroup
         categories={currentTask.category}

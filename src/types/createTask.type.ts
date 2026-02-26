@@ -28,7 +28,7 @@ export type BasicInfoFormValuesExtended = BasicInfoFormValues & {
 };
 
 export type CreateTaskDraft = Partial<
-  BasicInfoFormValues & {
+  BasicInfoFormValuesExtended & {
     host?: {
       id?: string;
       type: 'USER' | 'ORGANIZATION';
