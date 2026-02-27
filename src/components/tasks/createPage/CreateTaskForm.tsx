@@ -3,7 +3,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  BasicInfoFormValues,
   basicInfoSchema,
   defaultTaskValues,
 } from '@/lib/validation/createTask.schema';
@@ -14,15 +13,14 @@ import {
   CreateTaskDraft,
   TaskCategoryEnum,
 } from '@/types/createTask.type';
-import { TaskActionType } from '@/types/tasks.type';
+import { TaskActionType, TaskHost } from '@/types/tasks.type';
 
 const getOrganizationValue = (
-  host: CreateTaskDraft['host'],
-  draft: CreateTaskDraft['organization']
-): BasicInfoFormValues['organization'] => {
-  if (host?.organization) return host.organization;
-  if (draft) return draft;
-  return null;
+  host?: TaskHost,
+  draftOrg?: { id: string; name: string } | null
+): string | null => {
+  if (host?.type === 'ORGANIZATION') return host.organization.id;
+  return draftOrg?.id ?? null;
 };
 
 export const CreateTaskForm = ({
@@ -33,7 +31,7 @@ export const CreateTaskForm = ({
   const { createTaskDraft, hasHydrated, setCreateTaskDraft } =
     useCreateTaskStore();
 
-  const isResetting = useRef(false);
+  const isInitialized = useRef(false);
 
   const initialValues = useMemo(() => {
     const organizationValue = getOrganizationValue(
@@ -45,6 +43,9 @@ export const CreateTaskForm = ({
       ...defaultTaskValues,
       ...createTaskDraft,
       organization: organizationValue,
+      host: createTaskDraft.host || undefined,
+      joinedUsers: createTaskDraft.joinedUsers || [],
+      amount: createTaskDraft.amount || undefined,
       startDate: createTaskDraft.startDate
         ? new Date(createTaskDraft.startDate)
         : undefined,
@@ -63,20 +64,17 @@ export const CreateTaskForm = ({
   const { reset, watch } = methods;
 
   useEffect(() => {
-    if (hasHydrated) {
-      isResetting.current = true;
+    if (hasHydrated && !isInitialized.current) {
       reset(initialValues);
-      setTimeout(() => {
-        isResetting.current = false;
-      }, 0);
+      isInitialized.current = true;
     }
   }, [hasHydrated, reset, initialValues]);
 
   useEffect(() => {
     if (!hasHydrated) return;
 
-    const subscription = watch((values) => {
-      if (isResetting.current) return;
+    const subscription = watch((values, { type }) => {
+      if (!type) return;
 
       const isFundraising =
         (values.amount && values.amount > 0) ||

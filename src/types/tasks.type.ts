@@ -1,9 +1,12 @@
 import { ReactElement } from 'react';
 import { TaskCategoryEnum } from './createTask.type';
 
-export type TaskOwnerValue =
-  | { type: 'USER' }
-  | { type: 'ORGANIZATION'; organizationId: string };
+export type TaskHost =
+  | {
+      type: 'USER';
+      user: { id: string; name: string; email?: string; avatar?: string };
+    }
+  | { type: 'ORGANIZATION'; organization: { id: string; name: string } };
 
 export interface OrganizationFromBack {
   id: string;
@@ -44,13 +47,6 @@ export enum TaskStatus {
   CLOSED = 'CLOSED',
 }
 
-export interface HostData {
-  id: string;
-  type: 'USER' | 'ORGANIZATION';
-  userId?: string | null;
-  organizationId?: string | null;
-}
-
 export interface ITaskDetails extends ITask {
   picture?: string | null;
   status: TaskStatus;
@@ -65,7 +61,7 @@ export interface ITaskDetails extends ITask {
   requirements?: string;
   actionType: TaskActionType;
   userParticipationStatus: UserParticipationStatus;
-  host?: HostData & { name?: string; avatar?: string };
+  host?: TaskHost;
   isFavorite?: boolean;
   relatedTasks?: ITask[];
   amount?: number;

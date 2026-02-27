@@ -1,17 +1,18 @@
 'use client';
 
 import { JSX, useMemo } from 'react';
-import { OrganizationFromBack, TaskOwnerValue } from '@/types/tasks.type';
+import { OrganizationFromBack, TaskHost } from '@/types/tasks.type';
 import { StepCard } from '@/components/tasks/createPage/StepCard';
 import { ConfirmButton } from '@/components/tasks/createPage/Buttons/ConfirmButton';
 import { Check } from '@/components/icons/Check';
 import { Label } from '@/components/ui/Label';
 
 interface TaskOwnerFormProps {
-  value: TaskOwnerValue | undefined;
-  onChange: (value: TaskOwnerValue) => void;
+  value: TaskHost | undefined;
+  onChange: (value: TaskHost) => void;
   organizations: OrganizationFromBack[];
   userName: string;
+  userId: string;
 }
 
 interface Option {
@@ -25,6 +26,7 @@ export const TaskOwnerForm = ({
   onChange,
   organizations,
   userName,
+  userId,
 }: TaskOwnerFormProps): JSX.Element => {
   const adminOrModeratorOrgs = organizations.filter(
     (org) => org.userRole === 'admin' || org.userRole === 'moderator'
@@ -59,16 +61,25 @@ export const TaskOwnerForm = ({
     if (!value) return false;
 
     if (value.type === 'USER') return optId === 'user';
-    if (value.type === 'ORGANIZATION') return value.organizationId === optId;
+    if (value.type === 'ORGANIZATION') return value.organization.id === optId;
 
     return false;
   };
 
   const handleChange = (optId: string): void => {
     if (optId === 'user') {
-      onChange({ type: 'USER' });
+      onChange({
+        type: 'USER',
+        user: { id: userId, name: userName },
+      });
     } else {
-      onChange({ type: 'ORGANIZATION', organizationId: optId });
+      const org = organizations.find((o) => o.id === optId);
+      if (org) {
+        onChange({
+          type: 'ORGANIZATION',
+          organization: { id: org.id, name: org.name },
+        });
+      }
     }
   };
 

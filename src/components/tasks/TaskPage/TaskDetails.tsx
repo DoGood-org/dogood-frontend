@@ -41,11 +41,21 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
   const { organization, host } = task;
 
   const organizerName =
-    organization?.name || host?.name || 'Невідомий організатор';
+    organization?.name ||
+    (host?.type === 'USER'
+      ? host.user.name
+      : host?.type === 'ORGANIZATION'
+        ? host.organization.name
+        : undefined) ||
+    'Невідомий організатор';
 
   const organizerLink = organization
     ? `/organizations/${organization.id}`
-    : `/users/${host?.id}`;
+    : task.host?.type === 'USER'
+      ? `/users/${task.host.user.id}`
+      : task.host?.type === 'ORGANIZATION'
+        ? `/organizations/${task.host.organization.id}`
+        : '#';
   const parsedRequirements = parseRequirements(task.requirements);
   const parsedDescription = parseDescription(task.description);
 
@@ -53,7 +63,12 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
     console.log('Editing task now!');
   };
 
-  const hostId = Number(task.host?.id);
+  const hostId =
+    task.host?.type === 'USER'
+      ? task.host.user.id
+      : task.host?.type === 'ORGANIZATION'
+        ? task.host.organization.id
+        : undefined;
   const isHost = !!user && user.id === hostId;
 
   return (

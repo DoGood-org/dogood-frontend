@@ -1,5 +1,9 @@
 import { ReactNode } from 'react';
-import { TaskActionType, UserParticipationStatus } from './tasks.type';
+import {
+  TaskActionType,
+  TaskHost,
+  UserParticipationStatus,
+} from './tasks.type';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 
 export enum TaskCategoryEnum {
@@ -25,19 +29,8 @@ export type StepLayoutProps = {
 export type BasicInfoFormValuesExtended = BasicInfoFormValues & {
   actionType?: TaskActionType;
   userParticipationStatus?: UserParticipationStatus;
+  host?: TaskHost;
+  joinedUsers?: { id: string; name: string }[];
 };
 
-export type CreateTaskDraft = Partial<
-  BasicInfoFormValuesExtended & {
-    host?: {
-      id?: string;
-      type: 'USER' | 'ORGANIZATION';
-      name?: string;
-      avatar?: string;
-      organization?: {
-        id: string;
-        name: string;
-      };
-    };
-  }
->;
+export type CreateTaskDraft = Partial<BasicInfoFormValuesExtended>;
