@@ -4,11 +4,12 @@ import { IExtendedITaskProps } from '@/types/tasks.type';
 import { Link } from '@/i18n/navigation';
 import { TaskActionButtons } from '@/components/tasks/taskPage/ButtonGroup/TaskActionButtons';
 import { TaskCategoryList } from '../../createPage/TaskCategoryList/TaskCategoryList';
+import { useTaskDistance } from '@/hooks/useTaskDistance';
 
 export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
   id,
   title,
-  subtitle,
+  description,
   category,
   location,
   actionType,
@@ -16,6 +17,7 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
   isHost,
   status,
 }) => {
+  const distance = useTaskDistance(location);
   return (
     <div className="border p-4 rounded-lg bg-card flex flex-col min-h-[270px]">
       <div className="relative min-h-[100px]">
@@ -32,17 +34,21 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
             </h3>
           </Link>
         </div>
-        <h4 className="text-base tracking-[0] line-clamp-2">{subtitle}</h4>
+        <p className="text-base tracking-[0] line-clamp-2">{description}</p>
       </div>
 
       <div className="mt-auto">
         <div className="flex justify-between items-center">
           <TaskCategoryList categories={category} hideDonation />
-          {location && (
-            <p className="text-sm mt-1">
-              {location.lat}, {location.lng}
-            </p>
-          )}
+          <div className="flex-shrink-0">
+            {distance ? (
+              <span className="text-sm font-semibold text-text-gray whitespace-nowrap">
+                {distance}
+              </span>
+            ) : (
+              <span className="text-xs text-gray-400 italic"> -- km</span>
+            )}
+          </div>
         </div>
       </div>
 

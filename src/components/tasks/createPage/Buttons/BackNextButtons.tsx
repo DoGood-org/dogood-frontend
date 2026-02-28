@@ -27,7 +27,6 @@ type Props = {
 };
 export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   const createStep = useCreateTaskStore((s) => s.createStep);
-  // const prevCreateStep = useCreateTaskStore((s) => s.prevCreateStep);
   const setIsSuccess = useCreateTaskStore((s) => s.setIsSuccess);
   const setCreateStep = useCreateTaskStore((s) => s.setCreateStep);
   const resetCreateTask = useCreateTaskStore((s) => s.resetCreateTask);
@@ -65,7 +64,6 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       ? 'Preview'
       : 'Next step';
 
-  // 👇 нові змінні для кнопки назад
   const showLeftButton = showBack && createStep > 0;
   const leftButtonText = isLastStep ? 'Edit' : 'Go back';
 

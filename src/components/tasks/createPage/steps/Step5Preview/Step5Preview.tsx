@@ -20,10 +20,13 @@ import {
   TaskCategoryEnum,
 } from '@/types/createTask.type';
 import { formatTime, TaskPreviewProps } from '@/utils/taskTransform';
+import { useTaskDistance } from '@/hooks/useTaskDistance';
 
 export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
   const { watch } = useFormContext<BasicInfoFormValuesExtended>();
   const formValues = watch();
+
+  const previewDistance = useTaskDistance(formValues.location, '0.1 km');
 
   const isDonation =
     (formValues.category ?? []).includes(TaskCategoryEnum.Donation) ||
@@ -35,12 +38,16 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
     const finalIsDonation =
       (formValues.category ?? []).includes(TaskCategoryEnum.Donation) ||
       Number(formValues.amount) > 0;
+    const displayDistance =
+      !previewDistance || previewDistance === '0 km'
+        ? '0.1 km'
+        : previewDistance;
 
     return {
       id: `preview-${Date.now()}`,
       title: formValues.title || '',
       subtitle: '',
-      distance: '0',
+      distance: displayDistance,
       description: formValues.description || '',
       category: (formValues.category ?? []).filter(
         Boolean
@@ -70,7 +77,8 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
       amount: formValues.amount ?? 0,
       currency: formValues.currency ?? 'USD',
     };
-  }, [formValues]);
+  }, [formValues, previewDistance]);
+  console.log('LIVE TASK OBJECT:', liveTask);
 
   const currentTask = task ?? liveTask;
 
@@ -86,6 +94,7 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
         categories={currentTask.category}
         location={currentTask.location ?? null}
         taskId={currentTask.id}
+        distance={currentTask.distance}
       />
       <div className="mt-8 flex justify-end">
         <BackNextButtons showBack={true} />

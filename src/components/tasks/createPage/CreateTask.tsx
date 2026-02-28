@@ -10,11 +10,13 @@ import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 interface CreateTaskProp {
   organizations: OrganizationFromBack[];
   currentUserName: string;
+  currentUserId: string;
 }
 
 export const CreateTask = ({
   organizations,
   currentUserName,
+  currentUserId,
 }: CreateTaskProp): JSX.Element | null => {
   const step = useCreateTaskStore((s) => s.createStep);
   const isSuccess = useCreateTaskStore((s) => s.isSuccess);
@@ -28,6 +30,7 @@ export const CreateTask = ({
       <Step0TaskOwner
         organizations={organizations}
         currentUserName={currentUserName}
+        currentUserId={currentUserId}
       />
     );
   }

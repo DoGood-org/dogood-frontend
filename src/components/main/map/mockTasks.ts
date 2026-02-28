@@ -130,9 +130,7 @@ export function generateTasks(
       organization: {
         id: `org-${i}`,
         name: `Organization ${i}`,
-        createdAt: new Date().toISOString(),
       },
-      ownerType: 'ORGANISATION',
       onToggleDescription: (): void => {},
       status: TaskStatus.PENDING,
     };
@@ -153,7 +151,6 @@ export function extendTaskToDetails(
     organization: {
       id: `org-${task.id}`,
       name: `Organization ${task.id}`,
-      createdAt: new Date().toISOString(),
     },
     startDate: overrides?.startDate ?? new Date().toISOString().slice(0, 10),
     // startTime: overrides?.startTime ?? '09:00 AM',
@@ -182,7 +179,6 @@ export function generateMockTasks(tasks: ITask[]): ITaskDetails[] {
       organization: {
         id: `org-${i}`,
         name: `Organization ${i}`,
-        createdAt: new Date().toISOString(),
       },
     })
   );

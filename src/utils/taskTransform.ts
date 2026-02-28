@@ -13,13 +13,14 @@ export interface TaskPreviewProps {
 export const formatTime = (time: string): string => {
   if (!time || typeof time !== 'string') return '';
 
-  const parts = time.split('-');
-  if (parts.length !== 2) return '';
+  const normalized = time.includes(':') ? time.split(':') : time.split('-');
 
-  const hourNum = Number(parts[0]);
-  const minuteNum = Number(parts[1]);
+  if (normalized.length !== 2) return time;
 
-  if (isNaN(hourNum) || isNaN(minuteNum)) return '';
+  const hourNum = Number(normalized[0]);
+  const minuteNum = Number(normalized[1]);
+
+  if (isNaN(hourNum) || isNaN(minuteNum)) return time;
 
   const ampm = hourNum >= 12 ? 'PM' : 'AM';
   const hour12 = hourNum % 12 || 12;
@@ -86,3 +87,53 @@ export function transformBackendTaskToITaskDetails({
     currency: task.currency || 'USD',
   };
 }
+
+export const formatISOTimeTo12h = (isoString?: string): string => {
+  if (!isoString) return '';
+
+  if (isoString.includes('AM') || isoString.includes('PM')) {
+    return isoString;
+  }
+
+  const date = new Date(isoString);
+  if (isNaN(date.getTime())) {
+    if (isoString.includes(':')) return formatTime(isoString);
+    return '';
+  }
+
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  const hour12 = hours % 12 || 12;
+
+  return `${hour12.toString().padStart(2, '0')}:${minutes
+    .toString()
+    .padStart(2, '0')} ${ampm}`;
+};
+
+export const getDistanceStr = (
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+): string => {
+  const R = 6371e3;
+  const φ1 = (lat1 * Math.PI) / 180;
+  const φ2 = (lat2 * Math.PI) / 180;
+  const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+  const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+  const a =
+    Math.sin(Δφ / 2) ** 2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c;
+
+  if (d < 1000) {
+    return `${Math.round(d)} km`;
+  }
+
+  const km = d / 1000;
+
+  return km > 10 ? `${Math.round(km)} km` : `${km.toFixed(1)} km`;
+};

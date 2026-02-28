@@ -5,6 +5,7 @@ import { ITaskDetails, TaskActionType } from '@/types/tasks.type';
 import { ImagePlaceholder } from './ImagePlaceholder';
 import { Clock, DateIcon, Location } from '@/components/icons';
 import { DonationProgressBar } from './DonationProgressBar';
+import { formatISOTimeTo12h } from '@/utils/taskTransform';
 
 interface TaskCardProps {
   task: ITaskDetails;
@@ -31,7 +32,9 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
     },
     {
       icon: <Clock />,
-      label: `${t('taskCard.time')}: ${task.startTime ?? 'N/A'} ${t('taskCard.localTime')}`,
+      label: `${t('taskCard.time')}: ${
+        formatISOTimeTo12h(task.startTime) || 'N/A'
+      } ${t('taskCard.localTime')}`,
     },
     {
       icon: <Location />,

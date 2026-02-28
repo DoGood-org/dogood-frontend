@@ -91,7 +91,7 @@ export type MapIcons = {
   myPosition: Icon | null;
   default: Icon | null;
   myPin: Icon | null;
-  donation: Icon | null;
+  // donation: Icon | null;
 };
 
 export type LeafletModule = {

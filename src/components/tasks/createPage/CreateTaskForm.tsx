@@ -18,9 +18,14 @@ import { TaskActionType, TaskHost } from '@/types/tasks.type';
 const getOrganizationValue = (
   host?: TaskHost,
   draftOrg?: { id: string; name: string } | null
-): string | null => {
-  if (host?.type === 'ORGANIZATION') return host.organization.id;
-  return draftOrg?.id ?? null;
+): { id: string; name: string } | null => {
+  if (host?.type === 'ORGANIZATION') {
+    return {
+      id: host.organization.id,
+      name: host.organization.name,
+    };
+  }
+  return draftOrg ?? null;
 };
 
 export const CreateTaskForm = ({
