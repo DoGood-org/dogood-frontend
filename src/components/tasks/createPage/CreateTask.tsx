@@ -13,8 +13,13 @@ interface CreateTaskProp {
   currentUserId: string;
 }
 
+const mockOrganizations: OrganizationFromBack[] = [
+  { id: 'org-1', name: 'Charity A', userRole: 'admin' },
+  { id: 'org-2', name: 'Helping Hands', userRole: 'moderator' },
+  { id: 'org-3', name: 'Animal Care', userRole: 'member' },
+];
+
 export const CreateTask = ({
-  organizations,
   currentUserName,
   currentUserId,
 }: CreateTaskProp): JSX.Element | null => {
@@ -28,7 +33,7 @@ export const CreateTask = ({
   if (step === 0) {
     return (
       <Step0TaskOwner
-        organizations={organizations}
+        organizations={mockOrganizations}
         currentUserName={currentUserName}
         currentUserId={currentUserId}
       />

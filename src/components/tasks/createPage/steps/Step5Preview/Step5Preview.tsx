@@ -14,6 +14,7 @@ import {
   TaskStatus,
   UserParticipationStatus,
   TaskActionType,
+  OrganizationFromBack,
 } from '@/types/tasks.type';
 import {
   BasicInfoFormValuesExtended,
@@ -22,7 +23,14 @@ import {
 import { formatTime, TaskPreviewProps } from '@/utils/taskTransform';
 import { useTaskDistance } from '@/hooks/useTaskDistance';
 
-export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
+interface ExtendedTaskPreviewProps extends TaskPreviewProps {
+  organizations?: OrganizationFromBack[];
+}
+
+export const Step5Preview = ({
+  task,
+  organizations = [],
+}: ExtendedTaskPreviewProps): JSX.Element => {
   const { watch } = useFormContext<BasicInfoFormValuesExtended>();
   const formValues = watch();
 
@@ -43,6 +51,10 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
         ? '0.1 km'
         : previewDistance;
 
+    const selectedOrg = organizations?.find(
+      (org) => org.id === formValues.organizationId
+    );
+
     return {
       id: `preview-${Date.now()}`,
       title: formValues.title || '',
@@ -56,8 +68,10 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
       status: TaskStatus.PENDING,
       locationName: formValues.locationName || '',
       location: formValues.location ?? { lat: 0, lng: 0 },
-      isOrganization: !!formValues.organization,
-      organizationId: formValues.organization ?? undefined,
+      organization:
+        formValues.isOrganization && formValues.organizationId
+          ? { id: formValues.organizationId, name: selectedOrg?.name || '' }
+          : null,
       lat: formValues.location?.lat ?? 0,
       lng: formValues.location?.lng ?? 0,
       startDate:
@@ -77,7 +91,7 @@ export const Step5Preview = ({ task }: TaskPreviewProps): JSX.Element => {
       amount: formValues.amount ?? 0,
       currency: formValues.currency ?? 'USD',
     };
-  }, [formValues, previewDistance]);
+  }, [formValues, previewDistance, organizations]);
   console.log('LIVE TASK OBJECT:', liveTask);
 
   const currentTask = task ?? liveTask;

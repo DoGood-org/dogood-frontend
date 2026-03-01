@@ -1,12 +1,21 @@
 import { ReactElement } from 'react';
 import { TaskCategoryEnum } from './createTask.type';
 
-export type TaskHost =
+export type TaskOwnerValue =
+  | { type: 'USER' }
+  | { type: 'ORGANIZATION'; organizationId: string };
+
+type HostData =
   | {
       type: 'USER';
-      user: { id: string; name: string; email?: string; avatar?: string };
+      userId: string;
+      organizationId: null;
     }
-  | { type: 'ORGANIZATION'; organization: { id: string; name: string } };
+  | {
+      type: 'ORGANIZATION';
+      organizationId: string;
+      userId: null;
+    };
 
 export interface OrganizationFromBack {
   id: string;
@@ -61,7 +70,7 @@ export interface ITaskDetails extends ITask {
   requirements?: string;
   actionType: TaskActionType;
   userParticipationStatus: UserParticipationStatus;
-  host?: TaskHost;
+  host?: HostData & { name?: string; avatar?: string };
   isFavorite?: boolean;
   relatedTasks?: ITask[];
   amount?: number;
@@ -72,8 +81,5 @@ export interface IExtendedITaskProps extends ITaskDetails {
   isSelected?: boolean;
   isFavorite?: boolean;
   onToggleDescription?: () => void;
-  actionType: TaskActionType;
-  userParticipationStatus: UserParticipationStatus;
   isHost?: boolean;
-  status: TaskStatus;
 }

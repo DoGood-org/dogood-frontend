@@ -143,27 +143,27 @@ export function extendTaskToDetails(
 ): ITaskDetails {
   return {
     ...task,
-    // picture:
-    //   overrides?.picture ??
-    //   'https://res.cloudinary.com/dinpgnkhh/image/upload/v1760461912/dog_gc3uel.png',
+    picture:
+      overrides?.picture ??
+      'https://res.cloudinary.com/dinpgnkhh/image/upload/v1760461912/dog_gc3uel.png',
     status: overrides?.status ?? ('PENDING' as TaskStatus),
-    // locationName: overrides?.locationName ?? 'Unknown location',
+    locationName: overrides?.locationName ?? 'Unknown location',
     organization: {
       id: `org-${task.id}`,
       name: `Organization ${task.id}`,
     },
     startDate: overrides?.startDate ?? new Date().toISOString().slice(0, 10),
-    // startTime: overrides?.startTime ?? '09:00 AM',
+    startTime: overrides?.startTime ?? '09:00 AM',
     endDate: overrides?.endDate ?? new Date().toISOString().slice(0, 10),
-    // requirements:
-    //   overrides?.requirements ??
-    //   [
-    //     'Stray, abandoned, and injured animals currently living in our shelter.',
-    //     'Requirements:',
-    //     'Love and compassion for animals',
-    //     'Reliability and responsibility',
-    //     'Ability to dedicate at least 2–3 hours per week.',
-    //   ].join(' '),
+    requirements:
+      overrides?.requirements ??
+      [
+        'Stray, abandoned, and injured animals currently living in our shelter.',
+        'Requirements:',
+        'Love and compassion for animals',
+        'Reliability and responsibility',
+        'Ability to dedicate at least 2–3 hours per week.',
+      ].join(' '),
     actionType: overrides?.actionType ?? TaskActionType.VOLUNTEERING,
     userParticipationStatus:
       overrides?.userParticipationStatus ?? UserParticipationStatus.NONE,

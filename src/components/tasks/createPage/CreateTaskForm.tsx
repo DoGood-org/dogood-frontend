@@ -13,20 +13,7 @@ import {
   CreateTaskDraft,
   TaskCategoryEnum,
 } from '@/types/createTask.type';
-import { TaskActionType, TaskHost } from '@/types/tasks.type';
-
-const getOrganizationValue = (
-  host?: TaskHost,
-  draftOrg?: { id: string; name: string } | null
-): { id: string; name: string } | null => {
-  if (host?.type === 'ORGANIZATION') {
-    return {
-      id: host.organization.id,
-      name: host.organization.name,
-    };
-  }
-  return draftOrg ?? null;
-};
+import { TaskActionType } from '@/types/tasks.type';
 
 export const CreateTaskForm = ({
   children,
@@ -39,21 +26,13 @@ export const CreateTaskForm = ({
   const isInitialized = useRef(false);
 
   const initialValues = useMemo(() => {
-    const organizationValue = getOrganizationValue(
-      createTaskDraft.host,
-      createTaskDraft.organization
-    );
-
     return {
       ...defaultTaskValues,
       ...createTaskDraft,
-      organization: organizationValue,
-      host: createTaskDraft.host || undefined,
-      joinedUsers: createTaskDraft.joinedUsers || [],
-      amount: createTaskDraft.amount || undefined,
+      amount: createTaskDraft.amount,
       startDate: createTaskDraft.startDate
         ? new Date(createTaskDraft.startDate)
-        : undefined,
+        : defaultTaskValues.startDate,
       endDate: createTaskDraft.endDate
         ? new Date(createTaskDraft.endDate)
         : undefined,
@@ -82,7 +61,7 @@ export const CreateTaskForm = ({
       if (!type) return;
 
       const isFundraising =
-        (values.amount && values.amount > 0) ||
+        (values.amount ?? 0) > 0 ||
         values.category?.includes(TaskCategoryEnum.Donation);
 
       setCreateTaskDraft({

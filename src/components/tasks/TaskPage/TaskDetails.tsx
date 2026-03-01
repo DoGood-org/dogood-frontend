@@ -43,18 +43,18 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
   const organizerName =
     organization?.name ||
     (host?.type === 'USER'
-      ? host.user.name
+      ? host.name
       : host?.type === 'ORGANIZATION'
-        ? host.organization.name
+        ? host.name
         : undefined) ||
     'Невідомий організатор';
 
   const organizerLink = organization
     ? `/organizations/${organization.id}`
-    : task.host?.type === 'USER'
-      ? `/users/${task.host.user.id}`
-      : task.host?.type === 'ORGANIZATION'
-        ? `/organizations/${task.host.organization.id}`
+    : host?.type === 'USER'
+      ? `/users/${host.userId}`
+      : host?.type === 'ORGANIZATION'
+        ? `/organizations/${host.organizationId}`
         : '#';
   const parsedRequirements = parseRequirements(task.requirements);
   const parsedDescription = parseDescription(task.description);
@@ -64,12 +64,13 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
   };
 
   const hostId =
-    task.host?.type === 'USER'
-      ? task.host.user.id
-      : task.host?.type === 'ORGANIZATION'
-        ? task.host.organization.id
+    host?.type === 'USER'
+      ? host.userId
+      : host?.type === 'ORGANIZATION'
+        ? host.organizationId
         : undefined;
-  const isHost = !!user && user.id === hostId;
+
+  const isHost = !!user && hostId != null && String(user.id) === String(hostId);
 
   return (
     <section className="w-full max-w-[353px] md:max-w-[648px] lg:max-w-[800px]">

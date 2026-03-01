@@ -3,7 +3,7 @@
 import { JSX } from 'react';
 import { Section } from '@/components/ui/Section';
 import { TaskOwnerForm } from './TaskOwnerForm';
-import { OrganizationFromBack, TaskHost } from '@/types/tasks.type';
+import { OrganizationFromBack, TaskOwnerValue } from '@/types/tasks.type';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import { useFormContext } from 'react-hook-form';
 import { BasicInfoFormValuesExtended } from '@/types/createTask.type';
@@ -22,22 +22,21 @@ export const Step0TaskOwner = ({
   const { createTaskDraft, setCreateTaskDraft } = useCreateTaskStore();
   const { setValue } = useFormContext<BasicInfoFormValuesExtended>();
 
-  const currentValue: TaskHost = createTaskDraft.organization
-    ? { type: 'ORGANIZATION', organization: createTaskDraft.organization }
-    : { type: 'USER', user: { id: currentUserId, name: currentUserName } };
+  const currentValue: TaskOwnerValue = createTaskDraft.organizationId
+    ? { type: 'ORGANIZATION', organizationId: createTaskDraft.organizationId }
+    : { type: 'USER' };
 
-  const handleOwnerChange = (value: TaskHost): void => {
+  const handleOwnerChange = (value: TaskOwnerValue): void => {
     if (value.type === 'USER') {
-      setCreateTaskDraft({ organization: null });
-      setValue('organization', null);
+      setCreateTaskDraft({ organizationId: null });
+      setValue('isOrganization', false);
+      setValue('organizationId', null);
       return;
     }
 
-    const org = organizations.find((o) => o.id === value.organization?.id);
-    const organization = org ? { id: org.id, name: org.name } : null;
-
-    setCreateTaskDraft({ organization });
-    setValue('organization', organization);
+    setCreateTaskDraft({ organizationId: value.organizationId });
+    setValue('isOrganization', true);
+    setValue('organizationId', value.organizationId);
   };
   return (
     <Section className="md:my-8 lg:my-8 my-container">

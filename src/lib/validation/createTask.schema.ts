@@ -62,13 +62,8 @@ export const basicInfoSchema = yup.object({
     .defined()
     .max(300, 'Maximum 300 characters')
     .min(5, 'Requirements must be at least 5 characters'),
-  organization: yup
-    .object({
-      id: yup.string().required(),
-      name: yup.string().required(),
-    })
-    .nullable()
-    .default(null),
+  isOrganization: yup.boolean().required(),
+  organizationId: yup.string().uuid().nullable().default(null),
 });
 
 export type BasicInfoFormValues = yup.InferType<typeof basicInfoSchema>;
@@ -86,5 +81,6 @@ export const defaultTaskValues: BasicInfoFormValues = {
   amount: 0,
   currency: 'USD',
   requirements: '',
-  organization: null,
+  isOrganization: false,
+  organizationId: null,
 };

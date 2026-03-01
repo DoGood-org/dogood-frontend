@@ -51,12 +51,10 @@ export const TaskContent: React.FC<TaskContentProps> = ({
     status: taskStatus,
   } = task;
 
-  const isHost = currentUser
-    ? task.host?.type === 'USER'
-      ? String(task.host.user.id) === String(currentUser.id)
-      : false
-    : false;
-
+  const isHost =
+    currentUser && task.host?.type === 'USER'
+      ? String(task.host.userId) === String(currentUser.id)
+      : false;
   return (
     <Container className="py-10">
       <Task task={task} />

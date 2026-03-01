@@ -17,6 +17,7 @@ import { useMapStore } from '@/zustand/stores/mapStore';
 import { MarkerCategoryEnum } from '@/types';
 import {
   IExtendedITaskProps,
+  OrganizationFromBack,
   TaskActionType,
   TaskStatus,
   UserParticipationStatus,
@@ -24,8 +25,12 @@ import {
 
 type Props = {
   showBack?: boolean;
+  organizations?: OrganizationFromBack[];
 };
-export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
+export const BackNextButtons = ({
+  showBack = true,
+  organizations,
+}: Props): JSX.Element => {
   const createStep = useCreateTaskStore((s) => s.createStep);
   const setIsSuccess = useCreateTaskStore((s) => s.setIsSuccess);
   const setCreateStep = useCreateTaskStore((s) => s.setCreateStep);
@@ -130,6 +135,10 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
 
       const id = crypto.randomUUID();
 
+      const selectedOrg = organizations?.find(
+        (org) => org.id === data.organizationId
+      );
+
       const newTask: IExtendedITaskProps = {
         id,
         title: payload.title,
@@ -148,7 +157,9 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
         actionType,
         userParticipationStatus: UserParticipationStatus.NONE,
         status: TaskStatus.CREATED,
-        organization: payload.organization,
+        organization: data.organizationId
+          ? { id: data.organizationId, name: selectedOrg?.name ?? '' }
+          : null,
         isFavorite: false,
         isSelected: false,
         amount: payload.amount ?? 0,
