@@ -38,23 +38,16 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
     }
   };
 
-  const { organization, host } = task;
+  const { host } = task;
 
-  const organizerName =
-    organization?.name ||
-    (host?.type === 'USER'
-      ? host.name
-      : host?.type === 'ORGANIZATION'
-        ? host.name
-        : undefined) ||
-    'Невідомий організатор';
+  const organizerName = task.organization?.name ?? task.host?.name ?? '';
 
-  const organizerLink = organization
-    ? `/organizations/${organization.id}`
-    : host?.type === 'USER'
-      ? `/users/${host.userId}`
-      : host?.type === 'ORGANIZATION'
-        ? `/organizations/${host.organizationId}`
+  const organizerLink = task.organization
+    ? `/organizations/${task.organization.id}`
+    : task.host?.type === 'USER'
+      ? `/users/${task.host.userId}`
+      : task.host?.type === 'ORGANIZATION'
+        ? `/organizations/${task.host.organizationId}`
         : '#';
   const parsedRequirements = parseRequirements(task.requirements);
   const parsedDescription = parseDescription(task.description);

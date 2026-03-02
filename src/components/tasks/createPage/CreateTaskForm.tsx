@@ -11,9 +11,7 @@ import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import {
   BasicInfoFormValuesExtended,
   CreateTaskDraft,
-  TaskCategoryEnum,
 } from '@/types/createTask.type';
-import { TaskActionType } from '@/types/tasks.type';
 
 export const CreateTaskForm = ({
   children,
@@ -60,15 +58,8 @@ export const CreateTaskForm = ({
     const subscription = watch((values, { type }) => {
       if (!type) return;
 
-      const isFundraising =
-        (values.amount ?? 0) > 0 ||
-        values.category?.includes(TaskCategoryEnum.Donation);
-
       setCreateTaskDraft({
         ...values,
-        actionType: isFundraising
-          ? TaskActionType.FUNDRAISING
-          : TaskActionType.VOLUNTEERING,
       } as CreateTaskDraft);
     });
 

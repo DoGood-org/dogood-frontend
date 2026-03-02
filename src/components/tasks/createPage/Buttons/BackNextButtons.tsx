@@ -26,10 +26,14 @@ import {
 type Props = {
   showBack?: boolean;
   organizations?: OrganizationFromBack[];
+  currentUserId?: string;
+  currentUserName?: string;
 };
 export const BackNextButtons = ({
   showBack = true,
   organizations,
+  currentUserId,
+  currentUserName,
 }: Props): JSX.Element => {
   const createStep = useCreateTaskStore((s) => s.createStep);
   const setIsSuccess = useCreateTaskStore((s) => s.setIsSuccess);
@@ -136,8 +140,15 @@ export const BackNextButtons = ({
       const id = crypto.randomUUID();
 
       const selectedOrg = organizations?.find(
-        (org) => org.id === data.organizationId
+        (org) => String(org.id) === String(data.organizationId)
       );
+
+      const hostName =
+        data.isOrganization && selectedOrg
+          ? selectedOrg.name
+          : !data.isOrganization && currentUserName
+            ? currentUserName
+            : '';
 
       const newTask: IExtendedITaskProps = {
         id,
@@ -157,9 +168,22 @@ export const BackNextButtons = ({
         actionType,
         userParticipationStatus: UserParticipationStatus.NONE,
         status: TaskStatus.CREATED,
-        organization: data.organizationId
-          ? { id: data.organizationId, name: selectedOrg?.name ?? '' }
-          : null,
+        host:
+          data.isOrganization && selectedOrg
+            ? {
+                type: 'ORGANIZATION',
+                organizationId: selectedOrg.id,
+                name: selectedOrg.name,
+              }
+            : {
+                type: 'USER',
+                userId: Number(currentUserId ?? 0),
+                name: hostName,
+              },
+        organization:
+          data.isOrganization && selectedOrg
+            ? { id: selectedOrg.id, name: selectedOrg.name }
+            : null,
         isFavorite: false,
         isSelected: false,
         amount: payload.amount ?? 0,

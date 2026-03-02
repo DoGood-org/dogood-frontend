@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { TaskActionType } from './tasks.type';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 
 export enum TaskCategoryEnum {
@@ -23,7 +22,6 @@ export type StepLayoutProps = {
 };
 
 export type BasicInfoFormValuesExtended = BasicInfoFormValues & {
-  actionType?: TaskActionType;
   isOrganization: boolean;
   organizationId: string | null;
 };

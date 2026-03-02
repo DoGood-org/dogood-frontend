@@ -15,6 +15,7 @@ import {
   UserParticipationStatus,
   TaskActionType,
   OrganizationFromBack,
+  TaskHost,
 } from '@/types/tasks.type';
 import {
   BasicInfoFormValuesExtended,
@@ -25,11 +26,15 @@ import { useTaskDistance } from '@/hooks/useTaskDistance';
 
 interface ExtendedTaskPreviewProps extends TaskPreviewProps {
   organizations?: OrganizationFromBack[];
+  currentUserId?: string;
+  currentUserName?: string;
 }
 
 export const Step5Preview = ({
   task,
   organizations = [],
+  currentUserId,
+  currentUserName,
 }: ExtendedTaskPreviewProps): JSX.Element => {
   const { watch } = useFormContext<BasicInfoFormValuesExtended>();
   const formValues = watch();
@@ -51,9 +56,23 @@ export const Step5Preview = ({
         ? '0.1 km'
         : previewDistance;
 
-    const selectedOrg = organizations?.find(
-      (org) => org.id === formValues.organizationId
+    const selectedOrg = organizations.find(
+      (org) =>
+        org.id.toString() === (formValues.organizationId ?? '').toString()
     );
+
+    const host: TaskHost =
+      formValues.isOrganization && selectedOrg
+        ? {
+            type: 'ORGANIZATION',
+            organizationId: selectedOrg.id,
+            name: selectedOrg.name,
+          }
+        : {
+            type: 'USER',
+            userId: Number(currentUserId ?? 0),
+            name: currentUserName ?? '',
+          };
 
     return {
       id: `preview-${Date.now()}`,
@@ -68,10 +87,6 @@ export const Step5Preview = ({
       status: TaskStatus.PENDING,
       locationName: formValues.locationName || '',
       location: formValues.location ?? { lat: 0, lng: 0 },
-      organization:
-        formValues.isOrganization && formValues.organizationId
-          ? { id: formValues.organizationId, name: selectedOrg?.name || '' }
-          : null,
       lat: formValues.location?.lat ?? 0,
       lng: formValues.location?.lng ?? 0,
       startDate:
@@ -90,8 +105,19 @@ export const Step5Preview = ({
       requirements: formValues.requirements ?? '',
       amount: formValues.amount ?? 0,
       currency: formValues.currency ?? 'USD',
+      host,
+      organization:
+        formValues.isOrganization && selectedOrg
+          ? { id: selectedOrg.id, name: selectedOrg.name }
+          : null,
     };
-  }, [formValues, previewDistance, organizations]);
+  }, [
+    formValues,
+    previewDistance,
+    organizations,
+    currentUserId,
+    currentUserName,
+  ]);
   console.log('LIVE TASK OBJECT:', liveTask);
 
   const currentTask = task ?? liveTask;
@@ -111,7 +137,12 @@ export const Step5Preview = ({
         distance={currentTask.distance}
       />
       <div className="mt-8 flex justify-end">
-        <BackNextButtons showBack={true} />
+        <BackNextButtons
+          showBack={true}
+          organizations={organizations}
+          currentUserId={currentUserId}
+          currentUserName={currentUserName}
+        />
       </div>
       <div className="mt-6">
         <StepIndicator />

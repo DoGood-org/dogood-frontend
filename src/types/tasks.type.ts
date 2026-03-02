@@ -5,16 +5,13 @@ export type TaskOwnerValue =
   | { type: 'USER' }
   | { type: 'ORGANIZATION'; organizationId: string };
 
-type HostData =
-  | {
-      type: 'USER';
-      userId: string;
-      organizationId: null;
-    }
+export type TaskHost =
+  | { type: 'USER'; userId?: number; name?: string; avatar?: string }
   | {
       type: 'ORGANIZATION';
-      organizationId: string;
-      userId: null;
+      organizationId?: string;
+      name?: string;
+      avatar?: string;
     };
 
 export interface OrganizationFromBack {
@@ -70,7 +67,7 @@ export interface ITaskDetails extends ITask {
   requirements?: string;
   actionType: TaskActionType;
   userParticipationStatus: UserParticipationStatus;
-  host?: HostData & { name?: string; avatar?: string };
+  host?: TaskHost;
   isFavorite?: boolean;
   relatedTasks?: ITask[];
   amount?: number;

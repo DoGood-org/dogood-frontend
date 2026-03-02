@@ -75,6 +75,7 @@ export function transformBackendTaskToITaskDetails({
       : TaskStatus.PENDING,
     locationName: task.locationName || '',
     location: { lat, lng },
+    host: task.host,
     organization: task.organization,
     startDate: parseDate(task.startDate),
     endDate: parseDate(task.endDate),
