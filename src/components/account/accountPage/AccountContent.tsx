@@ -22,7 +22,7 @@ export const AccountContent = ({
   const views = t.raw('contentViews') as ContentProps[];
 
   const viewComponents: Record<string, React.ReactNode> = {
-    task: <AccountTaskList tasks={user.joinedTasks} />,
+    task: <AccountTaskList tasks={user.tasks} />,
     organization: <OrganizationList organizations={user.organizations} />,
     reviews: <ReviewsList reviews={user.reviewsReceived} />,
   };
