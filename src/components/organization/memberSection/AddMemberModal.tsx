@@ -9,6 +9,7 @@ import { searchUsersByName } from '@/services/publicUserService';
 import { useAddMemberToOrganization } from '@/hooks/useAddMemberToOrganization';
 import { useDebounce } from '@/hooks/useDebounce';
 import Image from 'next/image';
+import { ChatSearch } from '@/components/icons';
 // import { addUserToOrganization } from '@/api/organizations';
 
 export type AddMemberModalProps = {
@@ -82,13 +83,16 @@ export const AddMemberModal = ({
 
   return (
     <div>
-      <input
-        name="userName"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search user by name"
-        className="border-b border-solid border-white w-full outline-none py-3 px-2 mb-6"
-      />
+      <div className="border-b border-solid border-white w-full py-3 px-2 mb-6 flex gap-2">
+        <ChatSearch className="size-6 stroke-current rotate-90" />
+        <input
+          name="userName"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search user by name"
+          className=" w-full outline-none"
+        />
+      </div>
 
       {isLoading && <p>Loading...</p>}
       {isError && <p>Error</p>}

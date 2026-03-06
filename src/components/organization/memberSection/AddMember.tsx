@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
 import { useTranslations } from 'next-intl';
 import { JSX, useState } from 'react';
-import { AddMemberModal } from '../requestSection/AddMemberModal';
+import { AddMemberModal } from './AddMemberModal';
 import { UserOrganization } from '@/types';
 
 type AddMemberProps = {
