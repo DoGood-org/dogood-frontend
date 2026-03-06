@@ -3,7 +3,7 @@ import { Step2Category } from '@/components/tasks/createPage/steps/Step2Categori
 import { Step3Description } from '@/components/tasks/createPage/steps/Step3Description/Step3Description';
 import { Step4Payment } from '@/components/tasks/createPage/steps/Step4Payment/Step4Payment';
 import { Step5Preview } from '@/components/tasks/createPage/steps/Step5Preview/Step5Preview';
-import { BasicInfoFormValuesExtended } from '@/types/createTask.type';
+import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 import { JSX } from 'react';
 import { Path } from 'react-hook-form';
 
@@ -11,7 +11,7 @@ interface TaskStep<Props = object> {
   id: string;
   title: string;
   component: (props: Props) => JSX.Element;
-  fields: Path<BasicInfoFormValuesExtended>[];
+  fields: Path<BasicInfoFormValues>[];
 }
 
 export const CREATE_TASK_STEPS: TaskStep[] = [

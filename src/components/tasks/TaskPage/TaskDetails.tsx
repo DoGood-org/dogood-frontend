@@ -1,6 +1,6 @@
 'use client';
 
-import { ITaskDetails, UserParticipationStatus } from '@/types/tasks.type';
+import { ITaskDetails } from '@/types/tasks.type';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Location } from '@/components/icons';
@@ -11,7 +11,7 @@ import { LatLngLiteral } from 'leaflet';
 import { useAuth } from '@/hooks';
 import { Button } from '@/components/ui/Button';
 import EditButton from './ButtonGroup/EditButton';
-import { TaskCategoryEnum } from '@/types/createTask.type';
+import { isDonationCategory } from '@/utils/isDonationCategory';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
@@ -64,6 +64,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
         : undefined;
 
   const isHost = !!user && hostId != null && String(user.id) === String(hostId);
+  const isDonationTask = isDonationCategory(task.category);
 
   return (
     <section className="w-full max-w-[353px] md:max-w-[648px] lg:max-w-[800px]">
@@ -155,18 +156,16 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
         <h3 className="text-[20px] leading-[20px] mb-2">
           {t('taskDetails.howYouCanHelp')}:
         </h3>
-        {task.category.includes(TaskCategoryEnum.Donation) &&
-          task.userParticipationStatus === UserParticipationStatus.NONE &&
-          (task.amount ?? 0) > 0 && (
-            <div className="mb-3">
-              <h4 className="text-base font-medium mb-2">
-                {t('taskDetails.donationNeeds')}:
-              </h4>
-              <span className="block text-base mb-2">
-                {(task.amount ?? 0).toLocaleString()} {task.currency ?? 'USD'}
-              </span>
-            </div>
-          )}
+        {isDonationTask && (task.amount ?? 0) > 0 && (
+          <div className="mb-3">
+            <h4 className="text-base font-medium mb-2">
+              {t('taskDetails.donationNeeds')}:
+            </h4>
+            <span className="block text-base mb-2">
+              {(task.amount ?? 0).toLocaleString()} {task.currency ?? 'USD'}
+            </span>
+          </div>
+        )}
         {parsedRequirements.length > 0 && (
           <>
             <h4 className="text-base font-medium mt-3 mb-1">

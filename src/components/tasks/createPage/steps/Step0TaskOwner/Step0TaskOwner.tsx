@@ -6,7 +6,7 @@ import { TaskOwnerForm } from './TaskOwnerForm';
 import { OrganizationFromBack, TaskOwnerValue } from '@/types/tasks.type';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import { useFormContext } from 'react-hook-form';
-import { BasicInfoFormValuesExtended } from '@/types/createTask.type';
+import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 
 export interface Step0TaskOwnerProps {
   organizations: OrganizationFromBack[];
@@ -20,7 +20,7 @@ export const Step0TaskOwner = ({
   currentUserId,
 }: Step0TaskOwnerProps): JSX.Element => {
   const { createTaskDraft, setCreateTaskDraft } = useCreateTaskStore();
-  const { setValue } = useFormContext<BasicInfoFormValuesExtended>();
+  const { setValue } = useFormContext<BasicInfoFormValues>();
 
   const currentValue: TaskOwnerValue = createTaskDraft.organizationId
     ? { type: 'ORGANIZATION', organizationId: createTaskDraft.organizationId }

@@ -13,26 +13,13 @@ interface CreateTaskProp {
   currentUserId: string;
 }
 
-const mockOrganizations: OrganizationFromBack[] = [
-  { id: 'org-1', name: 'Charity A', userRole: 'admin' },
-  { id: 'org-2', name: 'Helping Hands', userRole: 'moderator' },
-  { id: 'org-3', name: 'Animal Care', userRole: 'member' },
-];
-
-const mockUser = {
-  id: '777',
-  name: 'Svitlana Miroshnychenko',
-};
-
 export const CreateTask = ({
   currentUserName,
   currentUserId,
+  organizations,
 }: CreateTaskProp): JSX.Element | null => {
   const step = useCreateTaskStore((s) => s.createStep);
   const isSuccess = useCreateTaskStore((s) => s.isSuccess);
-
-  const finalUserId = currentUserId || mockUser.id;
-  const finalUserName = currentUserName || mockUser.name;
 
   if (isSuccess) {
     return <CreateTaskSuccess />;
@@ -41,9 +28,9 @@ export const CreateTask = ({
   if (step === 0) {
     return (
       <Step0TaskOwner
-        organizations={mockOrganizations}
-        currentUserName={finalUserName}
-        currentUserId={finalUserId}
+        organizations={organizations}
+        currentUserName={currentUserName}
+        currentUserId={currentUserId}
       />
     );
   }
@@ -54,9 +41,9 @@ export const CreateTask = ({
 
   return (
     <StepComponent
-      organizations={mockOrganizations}
-      currentUserId={finalUserId}
-      currentUserName={finalUserName}
+      organizations={organizations}
+      currentUserId={currentUserId}
+      currentUserName={currentUserName}
     />
   );
 };

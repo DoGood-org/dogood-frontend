@@ -12,12 +12,11 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
   description,
   category,
   location,
-  actionType,
-  userParticipationStatus,
   isHost,
   status,
 }) => {
   const distance = useTaskDistance(location);
+
   return (
     <div className="border p-4 rounded-lg bg-card flex flex-col min-h-[270px]">
       <div className="relative min-h-[100px]">
@@ -56,8 +55,6 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
         <TaskActionButtons
           taskId={id}
           category={category}
-          actionType={actionType}
-          userParticipationStatus={userParticipationStatus}
           isHost={Boolean(isHost)}
           taskStatus={status}
           className="min-w-[114px] max-w-[130px] w-full"

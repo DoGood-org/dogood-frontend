@@ -1,4 +1,5 @@
 import { TaskCategoryEnum } from '@/types/createTask.type';
+import { TaskStatus } from '@/types/tasks.type';
 import * as yup from 'yup';
 
 export const basicInfoSchema = yup.object({
@@ -27,7 +28,7 @@ export const basicInfoSchema = yup.object({
     .string()
     .required('Description is required')
     .max(500, 'Maximum 500 characters')
-    .min(5, 'Title must be at least 3 characters'),
+    .min(5, 'Description must be at least 5 characters'),
   startTime: yup
     .string()
     .required('Time is required')
@@ -47,8 +48,8 @@ export const basicInfoSchema = yup.object({
     .min(1, 'Category must have at least one item'),
   amount: yup
     .number()
-    .transform((originalValue) =>
-      originalValue === '' ? undefined : Number(originalValue)
+    .transform((value, originalValue) =>
+      originalValue === '' ? undefined : value
     )
     .typeError('Amount must be a number')
     .required('Amount is required')
@@ -64,6 +65,10 @@ export const basicInfoSchema = yup.object({
     .min(5, 'Requirements must be at least 5 characters'),
   isOrganization: yup.boolean().required(),
   organizationId: yup.string().uuid().nullable().default(null),
+  status: yup
+    .mixed<TaskStatus>()
+    .oneOf(Object.values(TaskStatus))
+    .required('Status is required'),
 });
 
 export type BasicInfoFormValues = yup.InferType<typeof basicInfoSchema>;
@@ -78,9 +83,10 @@ export const defaultTaskValues: BasicInfoFormValues = {
   description: '',
   startTime: '',
   category: [],
-  amount: 0,
+  amount: undefined as unknown as number,
   currency: 'USD',
   requirements: '',
   isOrganization: false,
   organizationId: null,
+  status: TaskStatus.PENDING,
 };

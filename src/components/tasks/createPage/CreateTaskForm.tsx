@@ -3,15 +3,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
+  BasicInfoFormValues,
   basicInfoSchema,
   defaultTaskValues,
 } from '@/lib/validation/createTask.schema';
 import { JSX, useEffect, useMemo, useRef } from 'react';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
-import {
-  BasicInfoFormValuesExtended,
-  CreateTaskDraft,
-} from '@/types/createTask.type';
+import { CreateTaskDraft } from '@/types/createTask.type';
 
 export const CreateTaskForm = ({
   children,
@@ -27,17 +25,17 @@ export const CreateTaskForm = ({
     return {
       ...defaultTaskValues,
       ...createTaskDraft,
-      amount: createTaskDraft.amount,
+      amount: createTaskDraft.amount ?? (undefined as unknown as number),
       startDate: createTaskDraft.startDate
         ? new Date(createTaskDraft.startDate)
-        : defaultTaskValues.startDate,
+        : undefined,
       endDate: createTaskDraft.endDate
         ? new Date(createTaskDraft.endDate)
         : undefined,
-    } as BasicInfoFormValuesExtended;
+    } as BasicInfoFormValues;
   }, [createTaskDraft]);
 
-  const methods = useForm<BasicInfoFormValuesExtended>({
+  const methods = useForm<BasicInfoFormValues>({
     resolver: yupResolver(basicInfoSchema),
     mode: 'onTouched',
     defaultValues: initialValues,

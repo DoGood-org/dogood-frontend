@@ -4,24 +4,27 @@ import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { JSX, useMemo, useState } from 'react';
 import { RequiredFieldsModal } from '../RequiredFieldsModal/RequiredFieldsModal';
-import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import {
-  BasicInfoFormValuesExtended,
-  TaskCategoryEnum,
-} from '@/types/createTask.type';
+  DESCRIPTION_STEP,
+  PAYMENT_STEP,
+  PREVIEW_STEP,
+  useCreateTaskStore,
+} from '@/zustand/stores/createTask.store';
 import { useFormContext } from 'react-hook-form';
 import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
-import { defaultTaskValues } from '@/lib/validation/createTask.schema';
+import {
+  BasicInfoFormValues,
+  defaultTaskValues,
+} from '@/lib/validation/createTask.schema';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
-import { MarkerCategoryEnum } from '@/types';
 import {
   IExtendedITaskProps,
   OrganizationFromBack,
-  TaskActionType,
   TaskStatus,
-  UserParticipationStatus,
 } from '@/types/tasks.type';
+import { isDonationCategory } from '@/utils/isDonationCategory';
+import { mapCategoryToMarker } from '@/utils/mapCategoryToMarker';
 
 type Props = {
   showBack?: boolean;
@@ -44,22 +47,17 @@ export const BackNextButtons = ({
 
   const [isRequiredModalOpen, setIsRequiredModalOpen] = useState(false);
 
-  const { trigger, watch, reset } =
-    useFormContext<BasicInfoFormValuesExtended>();
+  const { trigger, watch, reset, setValue } =
+    useFormContext<BasicInfoFormValues>();
 
-  const formValues = watch();
+  const category = watch('category');
+  const amount = watch('amount');
 
   const isDonation = useMemo(() => {
-    const hasDonationCategory = Array.isArray(formValues.category)
-      ? formValues.category.includes(TaskCategoryEnum.Donation)
-      : formValues.category === TaskCategoryEnum.Donation;
-    const hasAmount = Number(formValues.amount) > 0;
+    const hasDonationCategory = isDonationCategory(category);
+    const hasAmount = Number(amount) > 0;
     return hasDonationCategory || hasAmount;
-  }, [formValues.category, formValues.amount]);
-
-  const PREVIEW_STEP = 5;
-  const PAYMENT_STEP = 4;
-  const DESCRIPTION_STEP = 3;
+  }, [category, amount]);
 
   const isLastStep = createStep === PREVIEW_STEP;
 
@@ -76,22 +74,8 @@ export const BackNextButtons = ({
   const showLeftButton = showBack && createStep > 0;
   const leftButtonText = isLastStep ? 'Edit' : 'Go back';
 
-  const mapCategoryToMarker = (
-    category: TaskCategoryEnum
-  ): MarkerCategoryEnum => {
-    const mapping: Record<TaskCategoryEnum, MarkerCategoryEnum> = {
-      [TaskCategoryEnum.Medicine]: MarkerCategoryEnum.Medicine,
-      [TaskCategoryEnum.Nature]: MarkerCategoryEnum.Nature,
-      [TaskCategoryEnum.Animal]: MarkerCategoryEnum.Animal,
-      [TaskCategoryEnum.Food]: MarkerCategoryEnum.Food,
-      [TaskCategoryEnum.Donation]: MarkerCategoryEnum.Default,
-    };
-
-    return mapping[category] || MarkerCategoryEnum.Default;
-  };
-
   const handleNextClick = async (): Promise<void> => {
-    const stepIndex = createStep === 0 ? null : createStep - 1;
+    const stepIndex = createStep > 0 ? createStep - 1 : null;
 
     if (stepIndex !== null) {
       const isValid = await trigger(CREATE_TASK_STEPS[stepIndex].fields);
@@ -101,18 +85,15 @@ export const BackNextButtons = ({
       }
     }
 
+    const currentCategory = watch('category');
+    const hasDonation = isDonationCategory(currentCategory);
+
+    if (!hasDonation) {
+      setValue('amount', undefined as unknown as number, { shouldDirty: true });
+    }
+
     if (isLastStep) {
-      const data = watch() as BasicInfoFormValuesExtended;
-
-      const hasDonationCategory = data.category.includes(
-        TaskCategoryEnum.Donation
-      );
-      const hasAmount = data.amount && Number(data.amount) > 0;
-      const finalIsDonation = hasDonationCategory || hasAmount;
-
-      const actionType = finalIsDonation
-        ? TaskActionType.FUNDRAISING
-        : TaskActionType.VOLUNTEERING;
+      const data = watch();
 
       const startDate = new Date(data.startDate ?? defaultTaskValues.startDate);
       const endDate = new Date(data.endDate ?? defaultTaskValues.endDate);
@@ -165,9 +146,7 @@ export const BackNextButtons = ({
         lat: payload.location?.lat ?? 0,
         lng: payload.location?.lng ?? 0,
         distance: '0 km',
-        actionType,
-        userParticipationStatus: UserParticipationStatus.NONE,
-        status: TaskStatus.CREATED,
+        status: TaskStatus.PENDING,
         host:
           data.isOrganization && selectedOrg
             ? {
@@ -196,11 +175,9 @@ export const BackNextButtons = ({
         .getState()
         .setTasksByKey('local', [...existingLocal, newTask]);
 
-      if (
-        actionType === TaskActionType.VOLUNTEERING &&
-        payload.location &&
-        payload.category.length > 0
-      ) {
+      const isDonationTask = isDonationCategory(payload.category);
+
+      if (!isDonationTask && payload.location && payload.category.length > 0) {
         addMarker({
           id,
           lat: payload.location.lat,

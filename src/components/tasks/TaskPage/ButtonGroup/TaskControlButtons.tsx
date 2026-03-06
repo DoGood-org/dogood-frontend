@@ -3,18 +3,14 @@ import { useTaskStore } from '@/zustand/stores/taskStore';
 import { Button } from '@/components/ui/Button';
 import { DonationModal } from '@/components/ui/modals/DonationModal/DonationModal';
 import { useMenuToggle } from '@/hooks/useMenuToggle';
-import {
-  TaskActionType,
-  TaskStatus,
-  UserParticipationStatus,
-} from '@/types/tasks.type';
+import { TaskStatus } from '@/types/tasks.type';
 import { useTranslations } from 'next-intl';
 import { FinishTaskModal } from '@/components/tasks/taskPage/FinishTaskModal/FinishTaskModal';
+import { TaskCategoryEnum } from '@/types/createTask.type';
 
 interface TaskControlButtonsProps {
   taskId: string;
-  actionType: TaskActionType;
-  userParticipationStatus: UserParticipationStatus;
+  categories: TaskCategoryEnum[];
   taskStatus: TaskStatus;
   isHost: boolean;
   className?: string;
@@ -22,9 +18,9 @@ interface TaskControlButtonsProps {
 
 export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
   taskId,
-  actionType,
   taskStatus,
   isHost,
+  categories,
   className = '',
 }) => {
   const t = useTranslations('map');
@@ -33,7 +29,8 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
   const finishModal = useMenuToggle();
   const donateModal = useMenuToggle();
 
-  const isFundraising = actionType === TaskActionType.FUNDRAISING;
+  const isFundraising = categories.includes(TaskCategoryEnum.Donation);
+
   const isActive =
     taskStatus !== TaskStatus.COMPLETED && taskStatus !== TaskStatus.CLOSED;
 

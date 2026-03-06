@@ -4,28 +4,22 @@ import { Button } from '@/components/ui/Button';
 import { DonationModal } from '@/components/ui/modals/DonationModal/DonationModal';
 import { useMenuToggle } from '@/hooks/useMenuToggle';
 import { useTranslations } from 'next-intl';
-import {
-  TaskActionType,
-  TaskStatus,
-  UserParticipationStatus,
-} from '@/types/tasks.type';
+import { TaskStatus } from '@/types/tasks.type';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { JSX } from 'react';
 import { TaskCategoryEnum } from '@/types/createTask.type';
+import { isDonationCategory } from '@/utils/isDonationCategory';
 
 interface TaskActionButtonsProps {
   taskId: string;
-  actionType: TaskActionType;
   isHost: boolean;
   taskStatus: TaskStatus;
-  userParticipationStatus: UserParticipationStatus;
   className?: string;
   category: TaskCategoryEnum | TaskCategoryEnum[];
 }
 
 export const TaskActionButtons = ({
   taskId,
-  actionType,
   category,
   isHost,
   className = '',
@@ -39,11 +33,7 @@ export const TaskActionButtons = ({
     closeMenu: closeModal,
   } = useMenuToggle();
 
-  const isDonation =
-    actionType === TaskActionType.FUNDRAISING ||
-    (Array.isArray(category)
-      ? category.includes(TaskCategoryEnum.Donation)
-      : category === TaskCategoryEnum.Donation);
+  const isDonation = isDonationCategory(category);
 
   const baseButtonClass = `leading-[32px] ${className}`;
 

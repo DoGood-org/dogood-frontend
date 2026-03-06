@@ -1,11 +1,12 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { ITaskDetails, TaskActionType } from '@/types/tasks.type';
+import { ITaskDetails } from '@/types/tasks.type';
 import { ImagePlaceholder } from './ImagePlaceholder';
 import { Clock, DateIcon, Location } from '@/components/icons';
 import { DonationProgressBar } from './DonationProgressBar';
 import { formatISOTimeTo12h } from '@/utils/taskTransform';
+import { isDonationCategory } from '@/utils/isDonationCategory';
 
 interface TaskCardProps {
   task: ITaskDetails;
@@ -16,10 +17,10 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const t = useTranslations('tasks');
 
   const donation = 10000;
-  const donationGoal = (task as any).goalAmount ?? 0;
-  const collected = task.amount ?? 0;
+  const donationGoal = (task as any)?.goalAmount ?? 0;
+  const collected = (task as any)?.amount ?? 0;
 
-  const isFundraising = task.actionType === TaskActionType.FUNDRAISING;
+  const isFundraising = isDonationCategory(task.category);
 
   const taskInfo = [
     {

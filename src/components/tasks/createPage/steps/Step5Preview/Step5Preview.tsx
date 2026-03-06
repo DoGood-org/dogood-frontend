@@ -12,17 +12,13 @@ import { StepIndicator } from '@/components/tasks/createPage/StepIndicator';
 import {
   ITaskDetails,
   TaskStatus,
-  UserParticipationStatus,
-  TaskActionType,
   OrganizationFromBack,
   TaskHost,
 } from '@/types/tasks.type';
-import {
-  BasicInfoFormValuesExtended,
-  TaskCategoryEnum,
-} from '@/types/createTask.type';
+import { TaskCategoryEnum } from '@/types/createTask.type';
 import { formatTime, TaskPreviewProps } from '@/utils/taskTransform';
 import { useTaskDistance } from '@/hooks/useTaskDistance';
+import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 
 interface ExtendedTaskPreviewProps extends TaskPreviewProps {
   organizations?: OrganizationFromBack[];
@@ -36,7 +32,7 @@ export const Step5Preview = ({
   currentUserId,
   currentUserName,
 }: ExtendedTaskPreviewProps): JSX.Element => {
-  const { watch } = useFormContext<BasicInfoFormValuesExtended>();
+  const { watch } = useFormContext<BasicInfoFormValues>();
   const formValues = watch();
 
   const previewDistance = useTaskDistance(formValues.location, '0.1 km');
@@ -48,9 +44,6 @@ export const Step5Preview = ({
   const previewStep = isDonation ? 5 : 4;
 
   const liveTask: ITaskDetails = useMemo(() => {
-    const finalIsDonation =
-      (formValues.category ?? []).includes(TaskCategoryEnum.Donation) ||
-      Number(formValues.amount) > 0;
     const displayDistance =
       !previewDistance || previewDistance === '0 km'
         ? '0.1 km'
@@ -98,10 +91,6 @@ export const Step5Preview = ({
           ? formValues.endDate.toISOString().slice(0, 10)
           : '',
       startTime: formatTime(formValues.startTime || ''),
-      actionType: finalIsDonation
-        ? TaskActionType.FUNDRAISING
-        : TaskActionType.VOLUNTEERING,
-      userParticipationStatus: UserParticipationStatus.NONE,
       requirements: formValues.requirements ?? '',
       amount: formValues.amount ?? 0,
       currency: formValues.currency ?? 'USD',

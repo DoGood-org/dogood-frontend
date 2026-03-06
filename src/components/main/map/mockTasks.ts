@@ -6,9 +6,7 @@ import {
   IExtendedITaskProps,
   ITask,
   ITaskDetails,
-  TaskActionType,
   TaskStatus,
-  UserParticipationStatus,
 } from '@/types/tasks.type';
 
 const TITLES = [
@@ -125,8 +123,6 @@ export function generateTasks(
       lng,
       description: DESCRIPTIONS[i],
       isSelected: false,
-      actionType: TaskActionType.VOLUNTEERING,
-      userParticipationStatus: UserParticipationStatus.NONE,
       organization: {
         id: `org-${i}`,
         name: `Organization ${i}`,
@@ -164,9 +160,6 @@ export function extendTaskToDetails(
         'Reliability and responsibility',
         'Ability to dedicate at least 2–3 hours per week.',
       ].join(' '),
-    actionType: overrides?.actionType ?? TaskActionType.VOLUNTEERING,
-    userParticipationStatus:
-      overrides?.userParticipationStatus ?? UserParticipationStatus.NONE,
     ...overrides,
   };
 }

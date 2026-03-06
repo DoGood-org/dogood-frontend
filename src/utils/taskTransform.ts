@@ -1,9 +1,4 @@
-import {
-  ITaskDetails,
-  TaskStatus,
-  UserParticipationStatus,
-  TaskActionType,
-} from '@/types/tasks.type';
+import { ITaskDetails, TaskStatus } from '@/types/tasks.type';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 
 export interface TaskPreviewProps {
@@ -54,12 +49,6 @@ export function transformBackendTaskToITaskDetails({
       )
     : [];
 
-  const isActuallyFundraising =
-    category.includes(TaskCategoryEnum.Donation) || Number(task.amount) > 0;
-  const actionType = isActuallyFundraising
-    ? TaskActionType.FUNDRAISING
-    : task.actionType || TaskActionType.VOLUNTEERING;
-
   return {
     id: task.id ?? `task-${Date.now()}`,
     title: task.title || '',
@@ -80,9 +69,6 @@ export function transformBackendTaskToITaskDetails({
     startDate: parseDate(task.startDate),
     endDate: parseDate(task.endDate),
     startTime: formatTime(task.startTime || ''),
-    actionType,
-    userParticipationStatus:
-      task.userParticipationStatus || UserParticipationStatus.NONE,
     requirements: task.requirements || '',
     amount: task.amount ?? 0,
     currency: task.currency || 'USD',

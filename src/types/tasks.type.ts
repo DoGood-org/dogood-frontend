@@ -33,17 +33,6 @@ export interface ITask {
   id: string;
 }
 
-export enum TaskActionType {
-  FUNDRAISING = 'FUNDRAISING',
-  VOLUNTEERING = 'VOLUNTEERING',
-}
-
-export enum UserParticipationStatus {
-  NONE = 'NONE',
-  JOINED = 'JOINED',
-  DONATED = 'DONATED',
-}
-
 export enum TaskStatus {
   PENDING = 'PENDING',
   CREATED = 'CREATED',
@@ -65,8 +54,6 @@ export interface ITaskDetails extends ITask {
   startTime?: string;
   endDate?: string;
   requirements?: string;
-  actionType: TaskActionType;
-  userParticipationStatus: UserParticipationStatus;
   host?: TaskHost;
   isFavorite?: boolean;
   relatedTasks?: ITask[];

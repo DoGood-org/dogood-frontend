@@ -44,12 +44,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
 
   if (!task) return <div>{t('task.notFound')}</div>;
 
-  const {
-    id: taskId,
-    category,
-    userParticipationStatus,
-    status: taskStatus,
-  } = task;
+  const { id: taskId, category, status: taskStatus } = task;
 
   const isHost =
     currentUser && task.host?.type === 'USER'
@@ -66,8 +61,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
       <div className="flex justify-between mt-5">
         <TaskControlButtons
           taskId={taskId}
-          actionType={task.actionType}
-          userParticipationStatus={userParticipationStatus}
+          categories={task.category}
           taskStatus={taskStatus}
           isHost={isHost}
         />

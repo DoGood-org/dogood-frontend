@@ -21,9 +21,4 @@ export type StepLayoutProps = {
   title?: string;
 };
 
-export type BasicInfoFormValuesExtended = BasicInfoFormValues & {
-  isOrganization: boolean;
-  organizationId: string | null;
-};
-
-export type CreateTaskDraft = Partial<BasicInfoFormValuesExtended>;
+export type CreateTaskDraft = Partial<BasicInfoFormValues>;

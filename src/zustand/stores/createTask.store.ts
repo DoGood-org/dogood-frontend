@@ -1,6 +1,6 @@
 import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
 import { CreateTaskDraft } from '@/types/createTask.type';
-import { TaskActionType } from '@/types/tasks.type';
+import { isDonationCategory } from '@/utils/isDonationCategory';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -21,9 +21,13 @@ interface CreateTaskActions {
   setHasHydrated: (value: boolean) => void;
 }
 
+export const DESCRIPTION_STEP = 3;
+export const PAYMENT_STEP = 4;
+export const PREVIEW_STEP = 5;
+
 export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       createStep: 0,
       createTaskDraft: {},
       isSuccess: false,
@@ -34,18 +38,27 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
       },
 
       nextCreateStep: (): void => {
-        set((state) => ({
-          createStep: Math.min(
-            state.createStep + 1,
-            CREATE_TASK_STEPS.length - 1
-          ),
-        }));
+        const { createStep, createTaskDraft } = get();
+        const isDonation = isDonationCategory(createTaskDraft.category);
+
+        if (createStep === DESCRIPTION_STEP && !isDonation) {
+          set({ createStep: PREVIEW_STEP });
+        } else {
+          set({
+            createStep: Math.min(createStep + 1, CREATE_TASK_STEPS.length - 1),
+          });
+        }
       },
 
       prevCreateStep: (): void => {
-        set((state) => ({
-          createStep: Math.max(state.createStep - 1, 0),
-        }));
+        const { createStep, createTaskDraft } = get();
+        const isDonation = isDonationCategory(createTaskDraft.category);
+
+        if (createStep === PREVIEW_STEP && !isDonation) {
+          set({ createStep: DESCRIPTION_STEP });
+        } else {
+          set({ createStep: Math.max(createStep - 1, 0) });
+        }
       },
 
       setCreateStep: (step): void => {
@@ -59,21 +72,14 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
       setCreateTaskDraft: (data): void => {
         set((state) => {
           const nextDraft = { ...state.createTaskDraft, ...data };
+          const isDonation = isDonationCategory(nextDraft.category);
 
-          if (nextDraft.actionType === TaskActionType.VOLUNTEERING) {
-            nextDraft.amount = 0;
+          if (!isDonation) {
+            nextDraft.amount = undefined as unknown as number;
             nextDraft.currency = undefined;
           }
 
-          const isDonation =
-            nextDraft.actionType === TaskActionType.FUNDRAISING;
-          const nextStep =
-            !isDonation && state.createStep > 4 ? 4 : state.createStep;
-
-          return {
-            createTaskDraft: nextDraft,
-            createStep: nextStep,
-          };
+          return { createTaskDraft: nextDraft };
         });
       },
 

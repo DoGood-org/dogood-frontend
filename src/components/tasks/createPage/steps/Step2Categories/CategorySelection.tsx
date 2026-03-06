@@ -5,7 +5,6 @@ import { CategoryButton } from '@/components/tasks/createPage/Buttons/CategoryBu
 import { JSX } from 'react';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import { useFormContext } from 'react-hook-form';
-import { TaskActionType } from '@/types/tasks.type';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 
 export const CategorySelection = (): JSX.Element => {
@@ -21,10 +20,6 @@ export const CategorySelection = (): JSX.Element => {
       ? selectedCategories.filter((catId) => catId !== id)
       : [...selectedCategories, id];
 
-    const nextActionType = next.includes(TaskCategoryEnum.Donation)
-      ? TaskActionType.FUNDRAISING
-      : TaskActionType.VOLUNTEERING;
-
     setValue('category', next, { shouldValidate: true });
 
     if (isRemovingDonation) {
@@ -34,7 +29,6 @@ export const CategorySelection = (): JSX.Element => {
 
     useCreateTaskStore.getState().setCreateTaskDraft({
       category: next,
-      actionType: nextActionType,
       amount: isRemovingDonation ? 0 : undefined,
       currency: isRemovingDonation ? undefined : undefined,
     });
