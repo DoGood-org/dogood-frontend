@@ -9,7 +9,8 @@ import { OrgMemberSection } from '@/components/organization/memberSection/OrgMem
 import { OrgJoinRequestSection } from '@/components/organization/requestSection/OrgJoinRequestSection';
 import { OrgReviewSection } from '@/components/organization/reviewSection/OrgReviewSection';
 import { OrgMoreSection } from '@/components/organization/moreSection/OrgMoreSection';
-import { OrganizationContentPanel } from '@/components/organization/OrganizationContantPanel';
+import { OrganizationContentPanel } from './OrganizationContentPanel';
+import { useOrganizationPermissions } from '@/hooks/useOrganizationPermissions';
 
 export const OrganizationContent = ({
   organization,
@@ -19,6 +20,7 @@ export const OrganizationContent = ({
   const t = useTranslations('organization');
   const views = t.raw('contentViews') as ContentProps[];
   const userRole = getUserRole(organization.members);
+  const { canViewRequests } = useOrganizationPermissions(userRole);
 
   const userViews = views.filter((view) => view.id !== 'requests');
   const visibleViews: ContentProps[] =
@@ -33,7 +35,9 @@ export const OrganizationContent = ({
         orgId={organization.id}
       />
     ),
-    requests: <OrgJoinRequestSection members={organization.members} />,
+    requests: canViewRequests && (
+      <OrgJoinRequestSection members={organization.members} />
+    ),
     reviews: (
       <OrgReviewSection reviews={organization.reviews} role={userRole} />
     ),
