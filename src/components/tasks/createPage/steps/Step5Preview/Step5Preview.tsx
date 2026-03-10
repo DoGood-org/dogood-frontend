@@ -17,7 +17,6 @@ import {
 } from '@/types/tasks.type';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import { formatTime, TaskPreviewProps } from '@/utils/taskTransform';
-import { useTaskDistance } from '@/hooks/useTaskDistance';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 
 interface ExtendedTaskPreviewProps extends TaskPreviewProps {
@@ -35,8 +34,6 @@ export const Step5Preview = ({
   const { watch } = useFormContext<BasicInfoFormValues>();
   const formValues = watch();
 
-  const previewDistance = useTaskDistance(formValues.location, '0.1 km');
-
   const isDonation =
     (formValues.category ?? []).includes(TaskCategoryEnum.Donation) ||
     Number(formValues.amount) > 0;
@@ -45,10 +42,9 @@ export const Step5Preview = ({
 
   const liveTask: ITaskDetails = useMemo(() => {
     const displayDistance =
-      !previewDistance || previewDistance === '0 km'
-        ? '0.1 km'
-        : previewDistance;
-
+      formValues.location?.lat != null && formValues.location?.lng != null
+        ? `${formValues.location.lat}, ${formValues.location.lng}`
+        : '-- km';
     const selectedOrg = organizations.find(
       (org) =>
         org.id.toString() === (formValues.organizationId ?? '').toString()
@@ -100,13 +96,7 @@ export const Step5Preview = ({
           ? { id: selectedOrg.id, name: selectedOrg.name }
           : null,
     };
-  }, [
-    formValues,
-    previewDistance,
-    organizations,
-    currentUserId,
-    currentUserName,
-  ]);
+  }, [formValues, organizations, currentUserId, currentUserName]);
   console.log('LIVE TASK OBJECT:', liveTask);
 
   const currentTask = task ?? liveTask;

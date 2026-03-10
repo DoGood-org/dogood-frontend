@@ -180,33 +180,9 @@ export function generateMockTasks(tasks: ITask[]): ITaskDetails[] {
 // Mock createSerch
 export const MOCK_LOCATIONS_SEARCH: NominatimResult[] = [
   {
-    place_id: '1',
-    display_name: 'Kyiv, Ukraine',
-    lat: '50.4501',
-    lon: '30.5234',
-  },
-  {
     place_id: '2',
     display_name: 'Paris, France',
     lat: '48.8566',
     lon: '2.3522',
-  },
-  {
-    place_id: '3',
-    display_name: 'London, Greater London',
-    lat: '51.5072',
-    lon: '0.1276',
-  },
-  {
-    place_id: '4',
-    display_name: 'New York, NY, United States',
-    lat: '40.7128',
-    lon: '-74.0060',
-  },
-  {
-    place_id: '5',
-    display_name: 'Berlin, Germany',
-    lat: '52.5200',
-    lon: '13.4050',
   },
 ];

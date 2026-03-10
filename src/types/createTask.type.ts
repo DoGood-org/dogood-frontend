@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
+import { OrganizationFromBack } from './tasks.type';
 
 export enum TaskCategoryEnum {
   Nature = 'nature',
@@ -7,6 +8,12 @@ export enum TaskCategoryEnum {
   Food = 'food',
   Medicine = 'medicine',
   Donation = 'donation',
+}
+
+export interface CreateTaskProp {
+  organizations: OrganizationFromBack[];
+  currentUserName: string;
+  currentUserId: string;
 }
 
 export type UploadResultInfo = {

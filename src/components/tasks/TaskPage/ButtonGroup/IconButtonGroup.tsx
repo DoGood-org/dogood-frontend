@@ -4,7 +4,7 @@ import { FavoriteToggleButton } from '@/components/tasks/taskPage/ButtonGroup/Fa
 import { MapDotButton } from '@/components/tasks/taskPage/ButtonGroup/MapDotButton';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import { TaskCategoryList } from '../../createPage/TaskCategoryList/TaskCategoryList';
-import { useTaskDistance } from '@/hooks/useTaskDistance';
+import { getDistanceStr } from '@/utils/taskTransform';
 
 interface IconButtonGroupProps {
   categories: TaskCategoryEnum[];
@@ -19,10 +19,14 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
   taskId,
   distance: fallbackDistance,
 }) => {
-  const distanceStr = useTaskDistance(location, fallbackDistance);
-
   const lat = location?.lat;
   const lng = location?.lng;
+  const userLat = 48.8566;
+  const userLng = 2.3522;
+  const distanceStr =
+    lat != null && lng != null && userLat != null && userLng != null
+      ? getDistanceStr(userLat, userLng, lat, lng)
+      : fallbackDistance || '-- km';
 
   return (
     <div className="relative flex items-center justify-between py-2 md:py-5">

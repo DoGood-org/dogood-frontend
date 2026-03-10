@@ -4,7 +4,7 @@ import { IExtendedITaskProps } from '@/types/tasks.type';
 import { Link } from '@/i18n/navigation';
 import { TaskActionButtons } from '@/components/tasks/taskPage/ButtonGroup/TaskActionButtons';
 import { TaskCategoryList } from '../../createPage/TaskCategoryList/TaskCategoryList';
-import { useTaskDistance } from '@/hooks/useTaskDistance';
+import { getDistanceStr } from '@/utils/taskTransform';
 
 export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
   id,
@@ -15,8 +15,8 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
   isHost,
   status,
 }) => {
-  const distance = useTaskDistance(location);
-
+  const userLat = 48.8566;
+  const userLng = 2.3522;
   return (
     <div className="border p-4 rounded-lg bg-card flex flex-col min-h-[270px]">
       <div className="relative min-h-[100px]">
@@ -40,13 +40,9 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
         <div className="flex justify-between items-center">
           <TaskCategoryList categories={category} hideDonation />
           <div className="flex-shrink-0">
-            {distance ? (
-              <span className="text-sm font-semibold text-text-gray whitespace-nowrap">
-                {distance}
-              </span>
-            ) : (
-              <span className="text-xs text-gray-400 italic"> -- km</span>
-            )}
+            <span className="text-sm font-semibold text-text-gray whitespace-nowrap">
+              {getDistanceStr(userLat, userLng, location?.lat, location?.lng)}
+            </span>
           </div>
         </div>
       </div>
