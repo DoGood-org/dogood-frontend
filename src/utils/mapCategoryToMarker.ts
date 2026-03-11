@@ -9,7 +9,7 @@ export const mapCategoryToMarker = (
     [TaskCategoryEnum.Nature]: MarkerCategoryEnum.Nature,
     [TaskCategoryEnum.Animal]: MarkerCategoryEnum.Animal,
     [TaskCategoryEnum.Food]: MarkerCategoryEnum.Food,
-    [TaskCategoryEnum.Donation]: MarkerCategoryEnum.Default,
+    [TaskCategoryEnum.Donation]: MarkerCategoryEnum.Donation,
   };
 
   return mapping[category] || MarkerCategoryEnum.Default;

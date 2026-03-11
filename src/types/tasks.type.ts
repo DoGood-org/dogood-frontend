@@ -17,7 +17,6 @@ export type TaskHost =
 export interface OrganizationFromBack {
   id: string;
   name: string;
-  userRole: 'admin' | 'moderator' | 'member';
 }
 
 export interface ITask {

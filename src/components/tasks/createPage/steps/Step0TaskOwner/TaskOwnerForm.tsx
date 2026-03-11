@@ -27,17 +27,13 @@ export const TaskOwnerForm = ({
   organizations,
   userName,
 }: TaskOwnerFormProps): JSX.Element => {
-  const adminOrModeratorOrgs = organizations.filter(
-    (org) => org.userRole === 'admin' || org.userRole === 'moderator'
-  );
-
   const options: Option[] = useMemo(() => {
     const userOption = {
       id: 'user',
       label: `${userName || 'User name'} (private)`,
     };
 
-    if (adminOrModeratorOrgs.length === 0) {
+    if (organizations.length === 0) {
       return [
         userOption,
         {
@@ -48,13 +44,13 @@ export const TaskOwnerForm = ({
       ];
     }
 
-    const orgOptions: Option[] = adminOrModeratorOrgs.map((org) => ({
+    const orgOptions: Option[] = organizations.map((org) => ({
       id: org.id,
       label: org.name,
     }));
 
     return [userOption, ...orgOptions];
-  }, [adminOrModeratorOrgs, userName]);
+  }, [organizations, userName]);
 
   const isChecked = (optId: string): boolean => {
     if (!value) return false;

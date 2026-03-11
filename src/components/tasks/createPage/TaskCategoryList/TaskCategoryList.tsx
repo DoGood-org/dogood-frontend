@@ -7,19 +7,13 @@ import { TaskCategoryEnum } from '@/types/createTask.type';
 
 interface TaskCategoryListProps {
   categories?: TaskCategoryEnum[];
-  hideDonation?: boolean;
 }
 
 export const TaskCategoryList = ({
   categories = [],
-  hideDonation = false,
 }: TaskCategoryListProps): JSX.Element => {
-  const filteredCategories = hideDonation
-    ? categories.filter((cat) => cat !== TaskCategoryEnum.Donation)
-    : categories;
-
   const selectedCategories = CATEGORIES.filter((cat) =>
-    filteredCategories.includes(cat.id as TaskCategoryEnum)
+    categories.includes(cat.id as TaskCategoryEnum)
   );
   return (
     <ul>

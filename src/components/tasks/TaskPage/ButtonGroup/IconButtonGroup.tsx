@@ -5,6 +5,7 @@ import { MapDotButton } from '@/components/tasks/taskPage/ButtonGroup/MapDotButt
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import { TaskCategoryList } from '../../createPage/TaskCategoryList/TaskCategoryList';
 import { getDistanceStr } from '@/utils/taskTransform';
+import { useMapStore } from '@/zustand/stores/mapStore';
 
 interface IconButtonGroupProps {
   categories: TaskCategoryEnum[];
@@ -19,13 +20,17 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
   taskId,
   distance: fallbackDistance,
 }) => {
+  const userLocation = useMapStore((state) => state.userLocation);
+  const defaultLocation = useMapStore((state) => state.defaultLocation);
+
   const lat = location?.lat;
   const lng = location?.lng;
-  const userLat = 48.8566;
-  const userLng = 2.3522;
+
+  const currentLat = userLocation?.lat ?? defaultLocation.lat;
+  const currentLng = userLocation?.lng ?? defaultLocation.lng;
   const distanceStr =
-    lat != null && lng != null && userLat != null && userLng != null
-      ? getDistanceStr(userLat, userLng, lat, lng)
+    lat != null && lng != null
+      ? getDistanceStr(currentLat, currentLng, lat, lng)
       : fallbackDistance || '-- km';
 
   return (

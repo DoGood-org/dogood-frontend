@@ -4,6 +4,7 @@ import FoodMarker from '@/assets/images/map/food-marker.png';
 import MedicineMarker from '@/assets/images/map/medicine-marker.png';
 import MyPin from '@/assets/images/map/my-pin.png';
 import MyPositionMarker from '@/assets/images/map/my-position.png';
+import DonationMarker from '@/assets/images/map/donation-marker.png';
 import NatureMarker from '@/assets/images/map/nature-marker.png';
 import { IExtendedCategoryFilter } from '@/types/filter.type';
 import { LeafletType, MapIcons, MarkerCategoryEnum } from '@/types/mapType';
@@ -50,6 +51,7 @@ export const initializeMapIcons = (L: LeafletType): MapIcons => {
     myPosition: createIcon(L, MyPositionMarker.src),
     default: createIcon(L, DefaultMarker.src),
     myPin: createIcon(L, MyPin.src),
+    donation: createIcon(L, DonationMarker.src),
   };
 };
 
@@ -71,6 +73,7 @@ export const getMarkerIcon = (
     'animal',
     'food',
     'myPosition',
+    'donation',
     'default',
   ];
 
@@ -95,6 +98,7 @@ export const getMarkerIcon = (
     [MarkerCategoryEnum.MyPosition]: icons.myPosition!,
     [MarkerCategoryEnum.Default]: icons.default!,
     [MarkerCategoryEnum.MyPin]: icons.myPin!,
+    [MarkerCategoryEnum.Donation]: icons.donation!,
   };
 
   return iconMap[title];

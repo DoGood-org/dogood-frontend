@@ -198,8 +198,6 @@ export const mapFormToCreateTask = (
       data.isOrganization && selectedOrg
         ? { id: selectedOrg.id, name: selectedOrg.name }
         : null,
-    isFavorite: false,
-    isSelected: false,
     amount: data.amount ?? 0,
     currency: data.currency ?? 'USD',
     requirements: data.requirements ?? '',

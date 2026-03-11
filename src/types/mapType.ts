@@ -9,6 +9,7 @@ export const enum MarkerCategoryEnum {
   MyPosition = 'myPosition',
   Default = 'default',
   MyPin = 'myPin',
+  Donation = 'donation',
 }
 
 export const enum EnumMapLayers {
@@ -91,7 +92,7 @@ export type MapIcons = {
   myPosition: Icon | null;
   default: Icon | null;
   myPin: Icon | null;
-  // donation: Icon | null;
+  donation: Icon | null;
 };
 
 export type LeafletModule = {

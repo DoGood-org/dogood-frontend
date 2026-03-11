@@ -185,4 +185,10 @@ export const MOCK_LOCATIONS_SEARCH: NominatimResult[] = [
     lat: '48.8566',
     lon: '2.3522',
   },
+  {
+    place_id: '3',
+    display_name: 'Berlin, Germany',
+    lat: '52.5200',
+    lon: '13.4050',
+  },
 ];

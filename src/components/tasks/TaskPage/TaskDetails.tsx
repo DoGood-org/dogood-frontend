@@ -40,30 +40,25 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
 
   const { host } = task;
 
-  const organizerName = task.organization?.name ?? task.host?.name ?? '';
+  const organizerName = host?.name || '';
 
-  const organizerLink = task.organization
-    ? `/organizations/${task.organization.id}`
-    : task.host?.type === 'USER'
-      ? `/users/${task.host.userId}`
-      : task.host?.type === 'ORGANIZATION'
-        ? `/organizations/${task.host.organizationId}`
+  const organizerLink =
+    host?.type === 'USER' && host.userId
+      ? `/users/${host.userId}`
+      : host?.type === 'ORGANIZATION' && host.organizationId
+        ? `/organizations/${host.organizationId}`
         : '#';
   const parsedRequirements = parseRequirements(task.requirements);
   const parsedDescription = parseDescription(task.description);
+
+  const hostId = host?.type === 'USER' ? host.userId : host?.organizationId;
+  const isHost =
+    !!user && hostId !== undefined && String(user.id) === String(hostId);
 
   const handleEdit = (): void => {
     console.log('Editing task now!');
   };
 
-  const hostId =
-    host?.type === 'USER'
-      ? host.userId
-      : host?.type === 'ORGANIZATION'
-        ? host.organizationId
-        : undefined;
-
-  const isHost = !!user && hostId != null && String(user.id) === String(hostId);
   const isDonationTask = isDonationCategory(task.category);
 
   return (
@@ -156,7 +151,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
         <h3 className="text-[20px] leading-[20px] mb-2">
           {t('taskDetails.howYouCanHelp')}:
         </h3>
-        {isDonationTask && (task.amount ?? 0) > 0 && (
+        {isDonationTask && task.amount && (
           <div className="mb-3">
             <h4 className="text-base font-medium mb-2">
               {t('taskDetails.donationNeeds')}:
