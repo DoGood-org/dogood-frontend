@@ -3,23 +3,14 @@
 import { JSX } from 'react';
 import { Section } from '@/components/ui/Section';
 import { TaskOwnerForm } from './TaskOwnerForm';
-import { OrganizationFromBack, TaskOwnerValue } from '@/types/tasks.type';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import { useFormContext } from 'react-hook-form';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
+import { TaskOwnerValue } from '@/types/tasks.type';
 
-export interface Step0TaskOwnerProps {
-  organizations: OrganizationFromBack[];
-  currentUserName: string;
-  currentUserId: string;
-}
-
-export const Step0TaskOwner = ({
-  organizations,
-  currentUserName,
-  currentUserId,
-}: Step0TaskOwnerProps): JSX.Element => {
-  const { createTaskDraft, setCreateTaskDraft } = useCreateTaskStore();
+export const Step0TaskOwner = (): JSX.Element => {
+  const { createTaskDraft, setCreateTaskDraft, currentUser, organizations } =
+    useCreateTaskStore();
   const { setValue } = useFormContext<BasicInfoFormValues>();
 
   const currentValue: TaskOwnerValue = createTaskDraft.organizationId
@@ -27,16 +18,19 @@ export const Step0TaskOwner = ({
     : { type: 'USER' };
 
   const handleOwnerChange = (value: TaskOwnerValue): void => {
-    if (value.type === 'USER') {
-      setCreateTaskDraft({ organizationId: null });
-      setValue('isOrganization', false);
-      setValue('organizationId', null);
-      return;
-    }
+    const isOrg = value.type === 'ORGANIZATION';
+    const orgId = isOrg ? (value.organizationId ?? null) : null;
 
-    setCreateTaskDraft({ organizationId: value.organizationId });
-    setValue('isOrganization', true);
-    setValue('organizationId', value.organizationId);
+    setCreateTaskDraft({ organizationId: orgId });
+
+    setValue('isOrganization', isOrg, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+
+    setValue('organizationId', orgId, {
+      shouldDirty: true,
+    });
   };
 
   return (
@@ -46,8 +40,8 @@ export const Step0TaskOwner = ({
         value={currentValue}
         onChange={handleOwnerChange}
         organizations={organizations || []}
-        userName={currentUserName}
-        userId={currentUserId}
+        userName={currentUser?.name || ''}
+        userId={currentUser?.id || ''}
       />
     </Section>
   );

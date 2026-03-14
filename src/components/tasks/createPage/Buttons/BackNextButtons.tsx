@@ -13,7 +13,6 @@ import {
 } from '@/lib/validation/createTask.schema';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
-import { OrganizationFromBack } from '@/types/tasks.type';
 import { isDonationCategory } from '@/utils/isDonationCategory';
 import { mapCategoryToMarker } from '@/utils/mapCategoryToMarker';
 import { mapFormToCreateTask } from '@/utils/taskTransform';
@@ -21,16 +20,9 @@ import { STEP_IDS } from '@/constants/stepIds';
 
 type Props = {
   showBack?: boolean;
-  organizations?: OrganizationFromBack[];
-  currentUserId?: string;
-  currentUserName?: string;
 };
-export const BackNextButtons = ({
-  showBack = true,
-  organizations,
-  currentUserId,
-  currentUserName,
-}: Props): JSX.Element => {
+
+export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   const {
     createStep,
     setIsSuccess,
@@ -40,6 +32,9 @@ export const BackNextButtons = ({
     setCreateTaskDraft,
     isNextStepPreview,
   } = useCreateTaskStore();
+
+  const organizations = useCreateTaskStore((s) => s.organizations);
+  const currentUser = useCreateTaskStore((s) => s.currentUser);
 
   const addMarker = useMapStore((s) => s.addMarker);
 
@@ -84,9 +79,9 @@ export const BackNextButtons = ({
     if (isLastStep) {
       const currentFormData = getValues();
       const newTask = mapFormToCreateTask(currentFormData, {
-        currentUserId,
-        currentUserName,
+        currentUser,
         organizations,
+        id: crypto.randomUUID(),
       });
 
       const existingLocal = useTaskStore.getState().tasksByKey['local'] || [];
@@ -94,11 +89,7 @@ export const BackNextButtons = ({
         .getState()
         .setTasksByKey('local', [...existingLocal, newTask]);
 
-      if (
-        !hasDonationCategory &&
-        newTask.location &&
-        newTask.category?.length
-      ) {
+      if (newTask.location && newTask.category?.length) {
         addMarker({
           id: newTask.id,
           lat: newTask.lat,

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
-import { OrganizationFromBack } from './tasks.type';
+import { HostUser, OrganizationFromBack } from './tasks.type';
 
 export enum TaskCategoryEnum {
   Nature = 'nature',
@@ -12,8 +12,7 @@ export enum TaskCategoryEnum {
 
 export interface CreateTaskProp {
   organizations: OrganizationFromBack[];
-  currentUserName: string;
-  currentUserId: string;
+  currentUser: HostUser | null;
 }
 
 export type UploadResultInfo = {

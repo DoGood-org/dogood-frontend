@@ -1,6 +1,7 @@
 import { CREATE_TASK_STEPS } from '@/constants/createTask.steps';
 import { STEP_IDS, StepId } from '@/constants/stepIds';
 import { CreateTaskDraft } from '@/types/createTask.type';
+import { HostUser, OrganizationFromBack } from '@/types/tasks.type';
 import { isDonationCategory } from '@/utils/isDonationCategory';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -11,6 +12,8 @@ interface CreateTaskState {
   createTaskDraft: CreateTaskDraft;
   isSuccess: boolean;
   hasHydrated: boolean;
+  currentUser: HostUser | null;
+  organizations: OrganizationFromBack[];
 }
 
 interface CreateTaskActions {
@@ -22,6 +25,8 @@ interface CreateTaskActions {
   setIsSuccess: (status: boolean) => void;
   setHasHydrated: (value: boolean) => void;
   isNextStepPreview: () => boolean;
+  setUserInfo: (user: HostUser | null) => void;
+  setOrganizations: (orgs: OrganizationFromBack[]) => void;
 }
 
 const getNextStepIndex = (
@@ -46,9 +51,18 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
       createTaskDraft: {},
       isSuccess: false,
       hasHydrated: false,
+      currentUser: null,
+      organizations: [],
 
       setHasHydrated: (value: boolean): void => {
         set({ hasHydrated: value });
+      },
+
+      setUserInfo: (user: HostUser | null): void => {
+        set({ currentUser: user });
+      },
+      setOrganizations: (orgs: OrganizationFromBack[]): void => {
+        set({ organizations: orgs });
       },
 
       isNextStepPreview: (): boolean => {
@@ -122,18 +136,21 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
       },
 
       resetCreateTask: (): void => {
-        set({
+        set((state) => ({
           createStep: STEP_IDS.OWNER,
+          stepHistory: state.stepHistory,
           createTaskDraft: {},
           isSuccess: false,
-        });
+        }));
       },
     }),
     {
       name: 'create-task-storage',
       partialize: (state) => ({
         createStep: state.createStep,
+        stepHistory: [],
         createTaskDraft: state.createTaskDraft,
+        currentUser: state.currentUser,
       }),
       onRehydrateStorage:
         () =>

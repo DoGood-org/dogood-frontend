@@ -40,20 +40,21 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
 
   const { host } = task;
 
-  const organizerName = host?.name || '';
+  const isUser = host?.type === 'USER';
+  const hostData = isUser ? host?.user : host?.organization;
 
-  const organizerLink =
-    host?.type === 'USER' && host.userId
-      ? `/users/${host.userId}`
-      : host?.type === 'ORGANIZATION' && host.organizationId
-        ? `/organizations/${host.organizationId}`
-        : '#';
-  const parsedRequirements = parseRequirements(task.requirements);
-  const parsedDescription = parseDescription(task.description);
+  const organizerName = hostData?.name || '';
+  const avatarSrc = hostData?.avatar || '/task/no-image.png';
 
-  const hostId = host?.type === 'USER' ? host.userId : host?.organizationId;
+  const organizerLink = isUser
+    ? `/users/${host?.user?.id || ''}`
+    : `/organizations/${host?.organization?.id || ''}`;
+
+  const hostId = isUser ? host?.user?.id : host?.organization?.id;
   const isHost =
     !!user && hostId !== undefined && String(user.id) === String(hostId);
+  const parsedRequirements = parseRequirements(task.requirements);
+  const parsedDescription = parseDescription(task.description);
 
   const handleEdit = (): void => {
     console.log('Editing task now!');
@@ -80,7 +81,15 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
       </h3>
       <div className="flex gap-3 mb-5 w-full">
         {/* !!!!add mini map !!!!*/}
-        <div className="w-[80px] h-[80px] bg-[#00c1ac]"></div>
+        <div className="w-[80px] h-[80px]">
+          <Image
+            src="https://res.cloudinary.com/dyamzitdn/image/upload/v1773335960/image_wkerwn.jpg"
+            alt="опис картинки"
+            width={80}
+            height={80}
+            className="object-cover"
+          />
+        </div>
 
         <div className="flex flex-col">
           <div className="flex items-start md:gap-7 lg:gap-5 ">
@@ -108,7 +117,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
           <ul className="flex gap-3 items-center">
             <li>
               <Image
-                src={task.picture || '/task/no-image.png'}
+                src={avatarSrc}
                 alt="Task image"
                 width={48}
                 height={48}

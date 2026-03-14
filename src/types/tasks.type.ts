@@ -5,18 +5,34 @@ export type TaskOwnerValue =
   | { type: 'USER' }
   | { type: 'ORGANIZATION'; organizationId: string };
 
+export interface HostUser {
+  id: string;
+  name: string;
+  email?: string;
+  avatar?: string;
+}
+
+export interface HostOrganization {
+  id: string;
+  name: string;
+  avatar?: string;
+}
+
 export type TaskHost =
-  | { type: 'USER'; userId?: number; name?: string; avatar?: string }
+  | {
+      type: 'USER';
+      user: HostUser;
+    }
   | {
       type: 'ORGANIZATION';
-      organizationId?: string;
-      name?: string;
-      avatar?: string;
+      organization: HostOrganization;
     };
 
 export interface OrganizationFromBack {
   id: string;
   name: string;
+  avatar?: string;
+  createdAt?: string;
 }
 
 export interface ITask {

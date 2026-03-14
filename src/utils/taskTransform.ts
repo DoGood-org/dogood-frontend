@@ -1,4 +1,5 @@
 import {
+  HostUser,
   IExtendedITaskProps,
   ITaskDetails,
   OrganizationFromBack,
@@ -9,6 +10,7 @@ import {
   BasicInfoFormValues,
   defaultTaskValues,
 } from '@/lib/validation/createTask.schema';
+import { hostMapping } from './hostMapping';
 
 export interface TaskPreviewProps {
   task?: ITaskDetails;
@@ -133,15 +135,22 @@ export function transformBackendTaskToITaskDetails({
   };
 }
 
+export const formatDateForPreview = (date?: Date | string): string => {
+  if (!date) return '';
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return '';
+  return d.toISOString().slice(0, 10);
+};
+
 export const mapFormToCreateTask = (
   data: BasicInfoFormValues,
   options: {
-    currentUserId?: string;
-    currentUserName?: string;
+    currentUser?: HostUser | null;
     organizations?: OrganizationFromBack[];
+    id?: string;
   }
 ): IExtendedITaskProps => {
-  const { currentUserId, currentUserName, organizations } = options;
+  const { currentUser, organizations, id } = options;
 
   const startDate = new Date(data.startDate ?? defaultTaskValues.startDate);
   const endDate = new Date(data.endDate ?? defaultTaskValues.endDate);
@@ -155,19 +164,8 @@ export const mapFormToCreateTask = (
       })()
     : startDate.toISOString();
 
-  const selectedOrg = organizations?.find(
-    (org) => String(org.id) === String(data.organizationId)
-  );
-
-  const hostName =
-    data.isOrganization && selectedOrg
-      ? selectedOrg.name
-      : !data.isOrganization && currentUserName
-        ? currentUserName
-        : '';
-
   return {
-    id: crypto.randomUUID(),
+    id: id ?? 'preview-task',
     title: data.title,
     subtitle: data.description.slice(0, 60),
     startDate: startDate.toISOString(),
@@ -182,22 +180,7 @@ export const mapFormToCreateTask = (
     lng: data.location?.lng ?? 0,
     distance: '0 km',
     status: TaskStatus.PENDING,
-    host:
-      data.isOrganization && selectedOrg
-        ? {
-            type: 'ORGANIZATION',
-            organizationId: selectedOrg.id,
-            name: selectedOrg.name,
-          }
-        : {
-            type: 'USER',
-            userId: Number(currentUserId ?? 0),
-            name: hostName,
-          },
-    organization:
-      data.isOrganization && selectedOrg
-        ? { id: selectedOrg.id, name: selectedOrg.name }
-        : null,
+    host: hostMapping(data, currentUser ?? null, organizations ?? []),
     amount: data.amount ?? 0,
     currency: data.currency ?? 'USD',
     requirements: data.requirements ?? '',
