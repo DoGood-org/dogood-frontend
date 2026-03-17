@@ -15,9 +15,9 @@ export const CreateTaskSuccess = (): JSX.Element => {
   };
 
   return (
-    <Section className="flex flex-col items-center justify-center my-container">
-      <UiSuccessMessage className="absolute top-0 z-50 flex justify-start max-none" />
-      <StepCard className="z-10">
+    <Section className="flex flex-col items-center justify-center">
+      <UiSuccessMessage className="relative top-[-80px] z-50 flex justify-start max-none" />
+      <StepCard className="z-10 relative top-[-180px] ">
         <h2 className="text-h1 mb-2 text-center w-full lg:max-w-full">
           You&apos;ve successfully created your task!
         </h2>

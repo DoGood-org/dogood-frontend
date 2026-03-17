@@ -125,13 +125,14 @@ export function transformBackendTaskToITaskDetails({
     locationName: task.locationName || '',
     location: { lat, lng },
     host: task.host,
-    organization: task.organization,
+    organizationId: task.organizationId,
     startDate: parseDate(task.startDate),
     endDate: parseDate(task.endDate),
     startTime: formatTime(task.startTime || ''),
     requirements: task.requirements || '',
     amount: task.amount ?? 0,
     currency: task.currency || 'USD',
+    isOrganization: task.isOrganization ?? false,
   };
 }
 
@@ -184,5 +185,7 @@ export const mapFormToCreateTask = (
     amount: data.amount ?? 0,
     currency: data.currency ?? 'USD',
     requirements: data.requirements ?? '',
+    organizationId: data.organizationId ?? '',
+    isOrganization: data.isOrganization,
   };
 };

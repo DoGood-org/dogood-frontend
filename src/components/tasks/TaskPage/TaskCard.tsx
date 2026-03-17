@@ -46,14 +46,14 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   return (
     <section className="mb-5 md:flex lg:flex lg:flex-col">
       <ImagePlaceholder
-        imageUrl={task.picture ?? undefined}
+        imageUrl={task.picture || undefined}
         className="md:w-[324px] lg:w-[400px] lg:h-[500px] lg:mb-2"
       />
       <div className="rounded-lg py-8 px-6 w-[354px] lg:w-[400px] bg-[#D2D5D5] dark:bg-[#2A2D2D]">
         <div className="py-6 px-5">
           <ul className="flex flex-col gap-5 text_tag text-base mb-5">
             <li>
-              <h2 className="text-[20px] font-bold leading-[20px] tracking-[0]">
+              <h2 className="text-[20px] font-bold leading-[20px] tracking-[0] break-words">
                 {task.title}
               </h2>
             </li>

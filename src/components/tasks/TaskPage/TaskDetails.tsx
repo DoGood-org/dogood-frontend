@@ -65,7 +65,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
   return (
     <section className="w-full max-w-[353px] md:max-w-[648px] lg:max-w-[800px]">
       <div className="flex flex-wrap md:flex-nowrap items-baseline">
-        <h1 className="w-full max-w-[500px] text-lg mb-2 md:mb-5 mr-5">
+        <h1 className="w-full max-w-[500px] text-lg mb-2 md:mb-5 mr-5 break-words">
           {task.title}
         </h1>
         <div className="ml-auto mr-11 md:ml-0">
@@ -84,7 +84,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
         <div className="w-[80px] h-[80px]">
           <Image
             src="https://res.cloudinary.com/dyamzitdn/image/upload/v1773335960/image_wkerwn.jpg"
-            alt="опис картинки"
+            alt="Avatar"
             width={80}
             height={80}
             className="object-cover"

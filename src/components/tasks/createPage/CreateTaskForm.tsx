@@ -10,6 +10,7 @@ import {
 import { JSX, useEffect, useMemo, useRef } from 'react';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import { CreateTaskDraft } from '@/types/createTask.type';
+import debounce from 'lodash/debounce';
 
 export const CreateTaskForm = ({
   children,
@@ -25,7 +26,7 @@ export const CreateTaskForm = ({
     return {
       ...defaultTaskValues,
       ...createTaskDraft,
-      amount: createTaskDraft.amount ?? (undefined as unknown as number),
+      amount: createTaskDraft.amount ?? null,
       startDate: createTaskDraft.startDate
         ? new Date(createTaskDraft.startDate)
         : undefined,
@@ -43,6 +44,12 @@ export const CreateTaskForm = ({
 
   const { reset, watch } = methods;
 
+  const debouncedSave = useRef(
+    debounce((values: BasicInfoFormValues) => {
+      setCreateTaskDraft(values as CreateTaskDraft);
+    }, 300)
+  ).current;
+
   useEffect(() => {
     if (hasHydrated && !isInitialized.current) {
       reset(initialValues);
@@ -56,13 +63,14 @@ export const CreateTaskForm = ({
     const subscription = watch((values, { type }) => {
       if (!type) return;
 
-      setCreateTaskDraft({
-        ...values,
-      } as CreateTaskDraft);
+      debouncedSave(values as BasicInfoFormValues);
     });
 
-    return (): void => subscription.unsubscribe();
-  }, [hasHydrated, watch, setCreateTaskDraft]);
+    return (): void => {
+      subscription.unsubscribe();
+      debouncedSave.cancel();
+    };
+  }, [hasHydrated, watch, debouncedSave]);
 
   if (!hasHydrated) return null;
 

@@ -48,12 +48,20 @@ export const basicInfoSchema = yup.object({
     .min(1, 'Category must have at least one item'),
   amount: yup
     .number()
-    .transform((value, originalValue) =>
-      originalValue === '' ? undefined : value
-    )
+    .transform((value, originalValue) => {
+      if (
+        originalValue === '' ||
+        originalValue === null ||
+        originalValue === undefined
+      ) {
+        return null;
+      }
+      return value;
+    })
     .typeError('Amount must be a number')
+    .min(0, 'Amount must be at least 0')
     .required('Amount is required')
-    .min(0, 'Amount must be at least 0'),
+    .nullable(),
   currency: yup
     .string()
     .oneOf(['USD', 'EUR'] as const)
@@ -83,7 +91,7 @@ export const defaultTaskValues: BasicInfoFormValues = {
   description: '',
   startTime: '',
   category: [],
-  amount: undefined as unknown as number,
+  amount: null,
   currency: 'USD',
   requirements: '',
   isOrganization: false,

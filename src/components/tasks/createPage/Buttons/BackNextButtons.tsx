@@ -71,7 +71,7 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
     }
 
     if (!hasDonationCategory) {
-      setValue('amount', undefined as unknown as number, { shouldDirty: true });
+      setValue('amount', null, { shouldDirty: true });
     }
 
     setCreateTaskDraft(getValues());

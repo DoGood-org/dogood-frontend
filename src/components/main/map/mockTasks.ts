@@ -3,9 +3,11 @@ import { calculateDistanceInMeters } from '@/lib/mapUtils';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 // import { MarkerCategoryEnum } from '@/types/mapType';
 import {
+  HostUser,
   IExtendedITaskProps,
   ITask,
   ITaskDetails,
+  OrganizationFromBack,
   TaskStatus,
 } from '@/types/tasks.type';
 
@@ -117,40 +119,63 @@ export function generateTasks(
       id: `task-${i}`,
       title,
       subtitle,
+      picture:
+        'https://res.cloudinary.com/dinpgnkhh/image/upload/v1760461912/dog_gc3uel.png',
       category: CATEGORIES[i],
       distance: distanceStr,
       lat,
       lng,
       description: DESCRIPTIONS[i],
-      isSelected: false,
-      organization: {
-        id: `org-${i}`,
-        name: `Organization ${i}`,
+      organizationId: `id: org-${i}`,
+      isOrganization: true,
+      host: {
+        type: 'ORGANIZATION',
+        organization: {
+          id: `id: org-${i}`,
+          name: `Organization ${i + 1}`,
+          avatar:
+            'https://res.cloudinary.com/dyamzitdn/image/upload/v1773335640/Ellipse_1_ls9irl.jpg',
+        },
       },
       onToggleDescription: (): void => {},
       status: TaskStatus.PENDING,
+      locationName: MOCK_LOCATIONS[i] || 'Unknown location',
+      startDate: new Date().toISOString().slice(0, 10),
+      startTime: '09:00',
+      endDate: new Date().toISOString().slice(0, 10),
+      amount: 100,
     };
   });
 }
 
 export function extendTaskToDetails(
   task: ITask,
+  i: number,
   overrides?: Partial<ITaskDetails>
 ): ITaskDetails {
   return {
     ...task,
+    ...overrides,
     picture:
       overrides?.picture ??
       'https://res.cloudinary.com/dinpgnkhh/image/upload/v1760461912/dog_gc3uel.png',
     status: overrides?.status ?? ('PENDING' as TaskStatus),
     locationName: overrides?.locationName ?? 'Unknown location',
-    organization: {
-      id: `org-${task.id}`,
-      name: `Organization ${task.id}`,
+    organizationId: overrides?.organizationId ?? `id: org-${i}`,
+    isOrganization: overrides?.isOrganization ?? true,
+    host: overrides?.host ?? {
+      type: 'ORGANIZATION',
+      organization: {
+        id: `id: org-${i}`,
+        name: 'Animal Rescue',
+        avatar:
+          'https://res.cloudinary.com/dyamzitdn/image/upload/v1773335640/Ellipse_1_ls9irl.jpg',
+      },
     },
     startDate: overrides?.startDate ?? new Date().toISOString().slice(0, 10),
     startTime: overrides?.startTime ?? '09:00 AM',
     endDate: overrides?.endDate ?? new Date().toISOString().slice(0, 10),
+    amount: overrides?.amount ?? 100,
     requirements:
       overrides?.requirements ??
       [
@@ -160,25 +185,27 @@ export function extendTaskToDetails(
         'Reliability and responsibility',
         'Ability to dedicate at least 2–3 hours per week.',
       ].join(' '),
-    ...overrides,
   };
 }
 
 export function generateMockTasks(tasks: ITask[]): ITaskDetails[] {
   return tasks.map((task, i) =>
-    extendTaskToDetails(task, {
+    extendTaskToDetails(task, i, {
       status: TaskStatus.IN_PROGRESS,
       locationName: MOCK_LOCATIONS[i] || `${i + 1}`,
-      organization: {
-        id: `org-${i}`,
-        name: `Organization ${i}`,
-      },
+      organizationId: `id: org-${i}`,
     })
   );
 }
 
 // Mock createSerch
 export const MOCK_LOCATIONS_SEARCH: NominatimResult[] = [
+  {
+    place_id: '1',
+    display_name: 'Kyiv, Ukraine',
+    lat: '50.4501',
+    lon: '30.5234',
+  },
   {
     place_id: '2',
     display_name: 'Paris, France',
@@ -191,4 +218,62 @@ export const MOCK_LOCATIONS_SEARCH: NominatimResult[] = [
     lat: '52.5200',
     lon: '13.4050',
   },
+  {
+    place_id: '4',
+    display_name: 'London, United Kingdom',
+    lat: '51.5074',
+    lon: '-0.1278',
+  },
+  {
+    place_id: '5',
+    display_name: 'New York, USA',
+    lat: '40.7128',
+    lon: '-74.0060',
+  },
+  {
+    place_id: '6',
+    display_name: 'Tokyo, Japan',
+    lat: '35.6895',
+    lon: '139.6917',
+  },
+  {
+    place_id: '7',
+    display_name: 'Warsaw, Poland',
+    lat: '52.2297',
+    lon: '21.0122',
+  },
+  {
+    place_id: '8',
+    display_name: 'Rome, Italy',
+    lat: '41.9028',
+    lon: '12.4964',
+  },
+  {
+    place_id: '9',
+    display_name: 'Barcelona, Spain',
+    lat: '41.3851',
+    lon: '2.1734',
+  },
 ];
+
+export const MOCK_ORGANIZATIONS: OrganizationFromBack[] = [
+  {
+    id: '1',
+    name: 'Help Ukraine',
+    avatar:
+      'https://res.cloudinary.com/dyamzitdn/image/upload/v1773335640/Ellipse_1_ls9irl.jpg',
+  },
+  {
+    id: '2',
+    name: 'Animal Rescue',
+    avatar:
+      'https://res.cloudinary.com/dyamzitdn/image/upload/v1773335640/Ellipse_1_ls9irl.jpg',
+  },
+];
+
+export const MOCK_CURRENT_USER: HostUser = {
+  id: 'user-123',
+  name: 'Test User',
+  avatar:
+    'https://res.cloudinary.com/dyamzitdn/image/upload/v1773335640/Ellipse_1_ls9irl.jpg',
+};

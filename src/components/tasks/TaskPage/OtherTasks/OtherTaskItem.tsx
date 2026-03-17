@@ -28,7 +28,7 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
           <Link href={`/tasks/${id}`}>
             <h3
               className="text-[20px] leading-[20px] tracking-[0]
-              underline decoration-1 line-clamp-2
+              underline decoration-1 line-clamp-2 break-words
               decoration-black/40 hover:decoration-black
               dark:decoration-white/50 dark:hover:decoration-white
               transition-colors duration-300"
@@ -37,7 +37,9 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
             </h3>
           </Link>
         </div>
-        <p className="text-base tracking-[0] line-clamp-2">{description}</p>
+        <p className="text-base tracking-[0] line-clamp-2 break-words">
+          {description}
+        </p>
       </div>
 
       <div className="mt-auto">

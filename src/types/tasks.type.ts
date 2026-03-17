@@ -60,25 +60,22 @@ export enum TaskStatus {
 export interface ITaskDetails extends ITask {
   picture?: string | null;
   status: TaskStatus;
-  locationName?: string;
-  organization?: {
-    id: string;
-    name: string;
-  } | null;
-  startDate?: string;
-  startTime?: string;
-  endDate?: string;
+  locationName: string;
+  organizationId: string;
+  organization?: HostOrganization | null;
+  isOrganization: boolean;
+  startDate: string;
+  startTime: string;
+  endDate: string;
   requirements?: string;
   host?: TaskHost;
-  isFavorite?: boolean;
   relatedTasks?: ITask[];
-  amount?: number;
+  amount: number;
   currency?: 'USD' | 'EUR';
 }
 
 export interface IExtendedITaskProps extends ITaskDetails {
-  isSelected?: boolean;
-  isFavorite?: boolean;
   onToggleDescription?: () => void;
+  isSelected?: boolean;
   isHost?: boolean;
 }
