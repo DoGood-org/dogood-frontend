@@ -9,9 +9,10 @@ import { TaskControlButtons } from './ButtonGroup/TaskControlButtons';
 import { OtherTasksSection } from './OtherTasks/OtherTasksSection';
 import { authStore } from '@/zustand/stores/authStore';
 import { Task } from './Task';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { transformBackendTaskToITaskDetails } from '@/utils/taskTransform';
+import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 
 interface TaskContentProps {
   slug: string;
@@ -23,8 +24,15 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   newsItems,
 }) => {
   const currentUser = authStore((state) => state.user);
-  const t = useTranslations('tasks');
+  const myOrganizations = useCreateTaskStore((state) => state.organizations);
   const storeTasks = useTaskStore((state) => state.tasks);
+
+  useEffect(() => {
+    if (currentUser && myOrganizations.length === 0) {
+    }
+  }, [currentUser, myOrganizations.length]);
+
+  const t = useTranslations('tasks');
 
   const allDetailedTasks = useMemo(
     () =>
@@ -42,27 +50,36 @@ export const TaskContent: React.FC<TaskContentProps> = ({
     [allDetailedTasks, slug]
   );
 
+  const isHost = useMemo(() => {
+    if (!task?.host) return false;
+
+    if (task.host.type === 'USER') {
+      if (!currentUser) return false;
+      return String(task.host.user?.id) === String(currentUser.id);
+    }
+    if (task.host.type === 'ORGANIZATION') {
+      const taskOrgId = String(task.host.organization?.id);
+      return myOrganizations.some((org) => String(org.id) === taskOrgId);
+    }
+
+    return false;
+  }, [currentUser, task, myOrganizations]);
+
   if (!task) return <div>{t('task.notFound')}</div>;
 
-  const { id: taskId, category, status: taskStatus } = task;
-
-  const isHost =
-    currentUser && task.host?.type === 'USER'
-      ? String(task.host.user.id) === String(currentUser.id)
-      : false;
   return (
     <Container className="py-10">
       <Task task={task} />
       <IconButtonGroup
-        categories={category}
+        categories={task.category}
         location={task.location}
-        taskId={taskId}
+        taskId={task.id}
       />
       <div className="flex justify-between mt-5">
         <TaskControlButtons
-          taskId={taskId}
+          taskId={task.id}
           categories={task.category}
-          taskStatus={taskStatus}
+          taskStatus={task.status}
           isHost={isHost}
         />
       </div>

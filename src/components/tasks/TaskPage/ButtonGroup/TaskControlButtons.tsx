@@ -1,4 +1,5 @@
 'use client';
+
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { Button } from '@/components/ui/Button';
 import { DonationModal } from '@/components/ui/modals/DonationModal/DonationModal';
@@ -29,15 +30,18 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
   const finishModal = useMenuToggle();
   const donateModal = useMenuToggle();
 
-  const isFundraising = categories.includes(TaskCategoryEnum.Donation);
-
   const isActive =
     taskStatus !== TaskStatus.COMPLETED && taskStatus !== TaskStatus.CLOSED;
 
   if (!isActive) return null;
 
-  const showHostFinishButtons = isHost && !isFundraising;
+  const isFundraising = categories.includes(TaskCategoryEnum.Donation);
+  const showHostFinishButtons =
+    isHost &&
+    (taskStatus === TaskStatus.IN_PROGRESS ||
+      taskStatus === TaskStatus.PENDING);
   const showDonateButton = isFundraising;
+  console.log('isHost', isHost);
 
   const handleFinishTask = (): void => {
     updateTaskStatus(taskId, TaskStatus.COMPLETED);

@@ -7,7 +7,7 @@ export const hostMapping = (
   organizations: OrganizationFromBack[]
 ): TaskHost => {
   if (draft.isOrganization && draft.organizationId) {
-    const org = organizations.find(
+    const org = organizations?.find(
       (o) => String(o.id) === String(draft.organizationId)
     );
 
@@ -21,13 +21,17 @@ export const hostMapping = (
     };
   }
 
+  if (!currentUser) {
+    throw new Error('currentUser is required for creating a task');
+  }
+
   return {
     type: 'USER',
     user: {
-      id: currentUser?.id ?? '',
-      name: currentUser?.name ?? '',
-      avatar: currentUser?.avatar ?? '',
-      email: currentUser?.email ?? '',
+      id: currentUser.id,
+      name: currentUser.name,
+      avatar: currentUser.avatar,
+      email: currentUser.email,
     },
   };
 };

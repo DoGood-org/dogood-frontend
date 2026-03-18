@@ -5,7 +5,7 @@ import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
 import { CreateTask } from '@/components/tasks/createPage/CreateTask';
 import { CreateTaskForm } from '@/components/tasks/createPage/CreateTaskForm';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
-import { JSX, useRef } from 'react';
+import { JSX, useEffect } from 'react';
 import { HostUser, OrganizationFromBack } from '@/types/tasks.type';
 
 interface Props {
@@ -19,16 +19,12 @@ const CreateTaskPage = ({
 }: Props): JSX.Element => {
   const hasHydrated = useCreateTaskStore((s) => s.hasHydrated);
 
-  const initializedRef = useRef(false);
-
-  if (!initializedRef.current) {
+  useEffect(() => {
     useCreateTaskStore.setState({
       currentUser: initialUser,
       organizations: initialOrganizations,
     });
-
-    initializedRef.current = true;
-  }
+  }, [initialOrganizations, initialUser]);
 
   if (!hasHydrated) {
     return (
