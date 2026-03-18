@@ -109,6 +109,13 @@ export function transformBackendTaskToITaskDetails({
       )
     : [];
 
+  const joinedUsers = Array.isArray(task.joinedUsers)
+    ? task.joinedUsers.map((u) => ({
+        id: u.id ?? '',
+        name: u.name ?? '',
+      }))
+    : [];
+
   return {
     id: task.id ?? `task-${Date.now()}`,
     title: task.title || '',
@@ -133,6 +140,7 @@ export function transformBackendTaskToITaskDetails({
     amount: task.amount ?? 0,
     currency: task.currency || 'USD',
     isOrganization: task.isOrganization ?? false,
+    joinedUsers,
   };
 }
 
@@ -187,5 +195,6 @@ export const mapFormToCreateTask = (
     requirements: data.requirements ?? '',
     organizationId: data.organizationId ?? '',
     isOrganization: data.isOrganization,
+    joinedUsers: [],
   };
 };

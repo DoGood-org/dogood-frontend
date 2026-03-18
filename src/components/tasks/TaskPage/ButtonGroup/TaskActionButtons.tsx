@@ -9,6 +9,7 @@ import { useTaskStore } from '@/zustand/stores/taskStore';
 import { JSX } from 'react';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import { isDonationCategory } from '@/utils/isDonationCategory';
+import { useRouter } from 'next/navigation';
 
 interface TaskActionButtonsProps {
   taskId: string;
@@ -25,7 +26,10 @@ export const TaskActionButtons = ({
   className = '',
 }: TaskActionButtonsProps): JSX.Element | null => {
   const t = useTranslations('map');
-  const { joinTask } = useTaskStore();
+  const { joinedTasks, joinTask } = useTaskStore();
+
+  const router = useRouter();
+  const isJoined = joinedTasks.some((task) => task.id === taskId);
 
   const {
     isOpen: isModalOpen,
@@ -55,11 +59,14 @@ export const TaskActionButtons = ({
       ) : (
         <Button
           variant="primary"
-          onClick={() => joinTask(taskId)}
+          onClick={() => {
+            if (!isJoined) joinTask(taskId);
+            router.push(`/tasks/${taskId}`);
+          }}
           className={`${baseButtonClass} text-white`}
           size="lg"
         >
-          {t('join')}
+          {isJoined ? t('joined') : t('join')}
         </Button>
       )}
 
@@ -67,7 +74,7 @@ export const TaskActionButtons = ({
         variant="secondary"
         className={baseButtonClass}
         size="lg"
-        onClick={() => {}} // Тут /tasks/[id]
+        onClick={() => router.push(`/tasks/${taskId}`)}
       >
         {t('seeMoreBtn')}
       </Button>

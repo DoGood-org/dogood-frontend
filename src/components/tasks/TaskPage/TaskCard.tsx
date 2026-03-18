@@ -58,7 +58,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
               </h2>
             </li>
             {taskInfo.map((item, index) => (
-              <li key={index} className="flex items-start gap-2">
+              <li key={index} className="flex items-center gap-2">
                 <div className="w-6 h-6 flex items-center justify-center flex-shrink-0">
                   {item.icon}
                 </div>

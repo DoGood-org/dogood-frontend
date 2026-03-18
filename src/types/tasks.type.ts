@@ -72,10 +72,12 @@ export interface ITaskDetails extends ITask {
   relatedTasks?: ITask[];
   amount: number;
   currency?: 'USD' | 'EUR';
+  joinedUsers?: { id: string; name: string }[];
 }
 
 export interface IExtendedITaskProps extends ITaskDetails {
   onToggleDescription?: () => void;
   isSelected?: boolean;
+  isFavorite?: boolean;
   isHost?: boolean;
 }

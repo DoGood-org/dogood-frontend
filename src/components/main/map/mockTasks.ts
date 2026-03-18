@@ -144,6 +144,13 @@ export function generateTasks(
       startTime: '09:00',
       endDate: new Date().toISOString().slice(0, 10),
       amount: 100,
+      requirements: [
+        'Stray, abandoned, and injured animals currently living in our shelter.',
+        'Requirements:',
+        'Love and compassion for animals',
+        'Reliability and responsibility',
+        'Ability to dedicate at least 2–3 hours per week.',
+      ].join(' '),
     };
   });
 }
