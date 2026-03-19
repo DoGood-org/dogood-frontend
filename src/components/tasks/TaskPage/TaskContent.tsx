@@ -13,6 +13,11 @@ import { useEffect, useMemo } from 'react';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { transformBackendTaskToITaskDetails } from '@/utils/taskTransform';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
+import {
+  MOCK_CURRENT_USER,
+  MOCK_ORGANIZATIONS,
+} from '@/components/main/map/mockTasks';
+import { Spinner } from '@/components/ui/Spinner';
 
 interface TaskContentProps {
   slug: string;
@@ -54,18 +59,35 @@ export const TaskContent: React.FC<TaskContentProps> = ({
     if (!task?.host) return false;
 
     if (task.host.type === 'USER') {
-      if (!currentUser) return false;
-      return String(task.host.user?.id) === String(currentUser.id);
+      return String(task.host.user?.id) === String(MOCK_CURRENT_USER.id);
     }
+
     if (task.host.type === 'ORGANIZATION') {
       const taskOrgId = String(task.host.organization?.id);
-      return myOrganizations.some((org) => String(org.id) === taskOrgId);
+      return (
+        myOrganizations.some((org) => String(org.id) === taskOrgId) ||
+        MOCK_ORGANIZATIONS.some((org) => String(org.id) === taskOrgId)
+      );
     }
 
     return false;
-  }, [currentUser, task, myOrganizations]);
+  }, [task, myOrganizations]);
 
-  if (!task) return <div>{t('task.notFound')}</div>;
+  if (storeTasks.length === 0) {
+    return (
+      <Container className="py-10 flex justify-center items-center">
+        <Spinner />
+      </Container>
+    );
+  }
+
+  if (!task) {
+    return (
+      <Container className="py-10 flex justify-center items-center">
+        <span>{t('task.notFound')}</span>
+      </Container>
+    );
+  }
 
   return (
     <Container className="py-10">

@@ -19,7 +19,7 @@ export const DonationProgressBar: React.FC<ProgressBarProps> = ({
         className="h-full bg-[#00c1ac] transition-all duration-500 ease-in-out"
         style={{ width: `${percentage}%` }}
       ></div>
-      <span className="absolute inset-0 flex items-center justify-center text-white">
+      <span className="absolute inset-0 flex items-center justify-center text-black font-semibold">
         {Math.round(percentage)}%
       </span>
     </div>

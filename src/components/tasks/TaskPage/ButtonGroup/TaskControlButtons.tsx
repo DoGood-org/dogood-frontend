@@ -40,8 +40,7 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
     isHost &&
     (taskStatus === TaskStatus.IN_PROGRESS ||
       taskStatus === TaskStatus.PENDING);
-  const showDonateButton = isFundraising;
-  console.log('isHost', isHost);
+  const showDonateButton = isFundraising && !isHost;
 
   const handleFinishTask = (): void => {
     updateTaskStatus(taskId, TaskStatus.COMPLETED);

@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { JSX } from 'react';

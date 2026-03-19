@@ -24,7 +24,7 @@ export const CategorySelection = (): JSX.Element => {
 
     if (isRemovingDonation) {
       setValue('amount', 0);
-      setValue('currency', undefined);
+      setValue('currency', undefined as 'USD' | 'EUR' | undefined);
     }
 
     useCreateTaskStore.getState().setCreateTaskDraft({

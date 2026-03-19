@@ -127,7 +127,7 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
           const isDonation = isDonationCategory(nextDraft.category);
 
           if (!isDonation) {
-            nextDraft.amount = undefined as unknown as number;
+            nextDraft.amount = null;
             nextDraft.currency = undefined;
           }
 
@@ -148,7 +148,7 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
       name: 'create-task-storage',
       partialize: (state) => ({
         createStep: state.createStep,
-        stepHistory: state.stepHistory,
+        stepHistory: [],
         createTaskDraft: state.createTaskDraft,
         currentUser: state.currentUser,
       }),
