@@ -59,7 +59,7 @@ export const basicInfoSchema = yup.object({
       return value;
     })
     .typeError('Amount must be a number')
-    .min(0, 'Amount must be at least 0')
+    .min(1, 'Amount must be at least 1')
     .required('Amount is required')
     .nullable(),
   currency: yup

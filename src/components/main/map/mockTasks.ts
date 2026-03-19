@@ -69,7 +69,7 @@ const CATEGORIES = [
   [TaskCategoryEnum.Animal],
   [TaskCategoryEnum.Food, TaskCategoryEnum.Nature],
   [TaskCategoryEnum.Nature],
-  [TaskCategoryEnum.Medicine],
+  [TaskCategoryEnum.Donation],
   [TaskCategoryEnum.Animal, TaskCategoryEnum.Medicine],
   [TaskCategoryEnum.Food, TaskCategoryEnum.Nature],
   [TaskCategoryEnum.Medicine, TaskCategoryEnum.Food],
