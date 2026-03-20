@@ -2,7 +2,7 @@ import {
   MOCK_CURRENT_USER,
   MOCK_ORGANIZATIONS,
 } from '@/components/main/map/mockTasks';
-import CreateTaskPage from '@/components/tasks/createPage/CreateTaskPage';
+import CreateTaskPage from '@/components/tasks/createTaskPage/CreateTaskPage';
 
 const TaskPage: React.FC = () => {
   return (
