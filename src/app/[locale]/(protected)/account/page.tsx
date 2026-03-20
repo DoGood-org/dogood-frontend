@@ -1,8 +1,9 @@
 import { Account } from '@/components/account/accountPage/Account';
-import React from 'react';
+import { JSX } from 'react';
+import { fetchCurrentUser } from '@/facades/accountFacade';
 
-const AccountPage: React.FC = () => {
-  return <Account />;
-};
+export default async function AccountPage(): Promise<JSX.Element> {
+  const user = await fetchCurrentUser();
 
-export default AccountPage;
+  return <Account user={user!} />;
+}

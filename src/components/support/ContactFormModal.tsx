@@ -16,7 +16,7 @@ export const ContactFormModal = ({
     <ModalWrapper
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
-      wrapperClassName="w-full max-w-[353px] px-4 pb-6 pt-20 md:pb-10 md:pt-4 md:max-w-[648px] lg:max-w-[976px] lg:translate-x-16 bg-card"
+      wrapperClassName="w-full max-w-[353px] px-4 pb-6 pt-20 md:pb-10 md:pt-4 md:max-w-[648px] lg:max-w-[976px] bg-card"
     >
       <motion.button
         className="absolute top-4 right-4 cursor-pointer text_tag hover:text-[#696969] z-10"

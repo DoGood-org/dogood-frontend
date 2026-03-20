@@ -1,27 +1,30 @@
-import { NextRequest, NextResponse } from 'next/server';
+// /app/api/create-customer/route.ts
 import { stripe } from '@/lib/stripe';
-import { mockUser } from '@/data/mockUser';
+import { getServerCurrentUser } from '@/lib/server/getCurrentUser';
+import { NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest): Promise<NextResponse> {
-  const { name, email } = await req.json();
+export async function POST(): Promise<NextResponse> {
+  const user = await getServerCurrentUser(); // читає cookie / токен
 
-  const { customerId } = mockUser;
-
-  try {
-    if (!customerId) {
-      const customer = await stripe.customers.create({
-        name,
-        email,
-      });
-      return NextResponse.json({ customerId: customer.id });
-    } else {
-      return NextResponse.json({ customerId });
-    }
-
-    // return NextResponse.json({ customerId: customer.id });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  // якщо вже є customerId, повертаємо його
+  if (user.stripeCustomerId) {
+    return NextResponse.json({ customerId: user.stripeCustomerId });
+  }
+
+  // створюємо Stripe customer
+  const customer = await stripe.customers.create({
+    email: user.email,
+    name: user.name,
+  });
+
+  // оновлюємо поточного користувача (в current-user / сесії)
+  user.stripeCustomerId = customer.id;
+
+  return NextResponse.json({ customerId: customer.id });
 }
 
 // ------ VARIANT WITH BACKEND ----- //
@@ -50,8 +53,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 // }
 
 // ------BACKEND EXAMPLE----- //
-
-// import { prisma } from './prisma'; // інстанс Prisma client
 
 // export async function getUserByEmail(email: string) {
 //   return prisma.user.findUnique({

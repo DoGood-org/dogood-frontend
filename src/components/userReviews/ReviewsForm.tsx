@@ -67,7 +67,7 @@ export const ReviewsForm: React.FC<IReviewsProps> = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="w-full bg-card p-10 rounded-[10px]">
-        <div className="flex gap-6 mb-8">
+        <div className="flex gap-6 mb-8 items-center">
           <Image
             src={user.avatar || '/account/avatar.png'}
             alt={t('imageAlt')}
@@ -75,7 +75,7 @@ export const ReviewsForm: React.FC<IReviewsProps> = ({
             height={80}
             className="w-[64px] h-[80px] object-cover"
           />
-          <h2 className="text-xl md:text-h2-m lg:text-h2 mb-4">
+          <h2 className="text-xl md:text-h2-m lg:text-h2">
             {t('title') + ' ' + user.name}
           </h2>
         </div>
