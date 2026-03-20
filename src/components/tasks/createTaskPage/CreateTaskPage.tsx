@@ -1,32 +1,11 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import { Spinner } from '@/components/ui/Spinner';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
-import { JSX, useEffect } from 'react';
+import { JSX, useRef } from 'react';
 import { HostUser, OrganizationFromBack } from '@/types/tasks.type';
-
-const StripeProviderLazy = dynamic(
-  () =>
-    import('@/components/providers/StripeProviderLazy').then(
-      (mod) => mod.StripeProviderLazy
-    ),
-  { ssr: false }
-);
-const CreateTaskForm = dynamic(
-  () =>
-    import('@/components/tasks/createTaskPage/CreateTaskForm').then(
-      (mod) => mod.CreateTaskForm
-    ),
-  { ssr: false }
-);
-const CreateTask = dynamic(
-  () =>
-    import('@/components/tasks/createTaskPage/CreateTask').then(
-      (mod) => mod.CreateTask
-    ),
-  { ssr: false }
-);
+import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
+import { CreateTaskForm } from './CreateTaskForm';
+import { CreateTask } from './CreateTask';
 
 interface Props {
   initialUser: HostUser;
@@ -37,21 +16,15 @@ const CreateTaskPage = ({
   initialUser,
   initialOrganizations,
 }: Props): JSX.Element => {
-  const hasHydrated = useCreateTaskStore((s) => s.hasHydrated);
+  const isInitialized = useRef(false);
 
-  useEffect(() => {
+  if (!isInitialized.current) {
     useCreateTaskStore.setState({
       currentUser: initialUser,
       organizations: initialOrganizations,
+      hasHydrated: true,
     });
-  }, [initialOrganizations, initialUser]);
-
-  if (!hasHydrated) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Spinner />
-      </div>
-    );
+    isInitialized.current = true;
   }
 
   return (
