@@ -6,8 +6,19 @@ import { JSX } from 'react';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import { useFormContext } from 'react-hook-form';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
+import { useTranslations } from 'next-intl';
 
 export const CategorySelection = (): JSX.Element => {
+  const t = useTranslations('tasks.createTask.categories');
+
+  const categoryLabels: Record<TaskCategoryEnum, string> = {
+    [TaskCategoryEnum.Nature]: t('items.nature'),
+    [TaskCategoryEnum.Animal]: t('items.animal'),
+    [TaskCategoryEnum.Food]: t('items.food'),
+    [TaskCategoryEnum.Medicine]: t('items.medicine'),
+    [TaskCategoryEnum.Donation]: t('items.donation'),
+  };
+
   const { setValue, watch } = useFormContext();
 
   const selectedCategories: TaskCategoryEnum[] = watch('category') || [];
@@ -36,13 +47,13 @@ export const CategorySelection = (): JSX.Element => {
 
   return (
     <section className="mb-[50px]">
-      <h2 className="text-base mb-4 text-foreground">Choose a category</h2>
-      <p className="text-[12px] mb-4">You can pick up a few categories</p>
+      <h2 className="text-base mb-4 text-foreground">{t('title')}</h2>
+      <p className="text-[12px] mb-4">{t('subtitle')}</p>
       <div className="grid grid-cols-2 gap-4 max-w-[320px] w-full">
         {CATEGORIES.map((category) => (
           <CategoryButton
             key={category.id}
-            label={category.label}
+            label={categoryLabels[category.id]}
             icon={category.icon}
             colorClass={category.colorClass}
             withWhiteCircle={category.withWhiteCircle}

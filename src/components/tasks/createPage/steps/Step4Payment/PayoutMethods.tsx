@@ -8,6 +8,8 @@ import { PaymentCardList } from '@/components/ui/modals/DonationModal/PaymentCar
 
 export const PayoutMethods = (): JSX.Element => {
   const t = useTranslations('card');
+  const tPayout = useTranslations('tasks.createTask.payout');
+
   const {
     formState: { errors },
   } = useFormContext();
@@ -22,9 +24,9 @@ export const PayoutMethods = (): JSX.Element => {
   return (
     <div className="flex flex-col mb-6">
       <div>
-        <h2 className="text-text-base mb-2">Donation needs</h2>
+        <h2 className="text-text-base mb-2">{tPayout('donationTitle')}</h2>
         <p className="text-[12px] leading-[16px] tracking-[0%] mb-2">
-          Fill gaps about your donation needs and financial information
+          {tPayout('donationDescription')}
         </p>
       </div>
 
@@ -43,9 +45,9 @@ export const PayoutMethods = (): JSX.Element => {
           currencyName="currency"
         />
         <div className="mt-2">
-          <h2 className="text-text-base mb-2">Financial information</h2>
+          <h2 className="text-text-base mb-2">{tPayout('financialTitle')}</h2>
           <p className="text-[12px] leading-[16px] tracking-[0%] mb-2">
-            Select the account to receive funds...
+            {tPayout('financialDescription')}
           </p>
         </div>
       </div>

@@ -9,8 +9,11 @@ import { FormInput } from '@/components/tasks/createPage/Form/FormInput';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 import { LocationSearchInput } from '@/components/tasks/createPage/Form/LocationAutocomplete';
 import { format } from 'date-fns';
+import { useTranslations } from 'next-intl';
 
 export const BasicInfoForm = (): JSX.Element => {
+  const t = useTranslations('tasks.createTask.form');
+
   const { control, setValue } = useFormContext<BasicInfoFormValues>();
   const startDate = useWatch({
     control,
@@ -22,11 +25,16 @@ export const BasicInfoForm = (): JSX.Element => {
 
   return (
     <div className="flex flex-col gap-2 mb-9 lg:mb-12">
-      <FormInput name="title" label="Title" placeholder="Title" required />
+      <FormInput
+        name="title"
+        label={t('title')}
+        placeholder={t('title')}
+        required
+      />
 
       <LocationSearchInput
         name="locationName"
-        label="Location"
+        label={t('location')}
         onSelect={(location) => {
           setValue('locationName', location.address, {
             shouldValidate: true,
@@ -49,7 +57,7 @@ export const BasicInfoForm = (): JSX.Element => {
         }}
       />
       <div className="flex flex-col gap-2 md:gap-6 md:flex-row">
-        <FormField name="startDate" label="Date from" required>
+        <FormField name="startDate" label={t('dateFrom')} required>
           {(field) => (
             <DatePicker
               value={field.value ?? undefined}
@@ -60,7 +68,7 @@ export const BasicInfoForm = (): JSX.Element => {
             />
           )}
         </FormField>
-        <FormField name="endDate" label="Date to" required>
+        <FormField name="endDate" label={t('dateTo')} required>
           {(field) => (
             <DatePicker
               value={field.value ?? undefined}
@@ -75,13 +83,13 @@ export const BasicInfoForm = (): JSX.Element => {
         </FormField>
       </div>
       <div className="md:w-[198px]">
-        <FormField name="startTime" label="Start time" required>
+        <FormField name="startTime" label={t('startTime')} required>
           {(field) => (
             <TimePicker
               value={field.value ?? ''}
               setValue={field.onChange}
               onBlur={field.onBlur}
-              placeholder="Start time"
+              placeholder={t('startTime')}
             />
           )}
         </FormField>

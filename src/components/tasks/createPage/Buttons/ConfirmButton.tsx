@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
+import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
 
 interface ConfirmButtonProps {
@@ -16,6 +17,8 @@ export const ConfirmButton = ({
   onConfirm,
   className,
 }: ConfirmButtonProps): JSX.Element => {
+  const t = useTranslations('tasks.createTask.buttons');
+
   const nextCreateStep = useCreateTaskStore((s) => s.nextCreateStep);
 
   const handleConfirm = (): void => {
@@ -32,7 +35,7 @@ export const ConfirmButton = ({
         onClick={handleConfirm}
         disabled={disabled}
       >
-        Confirm
+        {t('confirm')}
       </Button>
     </div>
   );

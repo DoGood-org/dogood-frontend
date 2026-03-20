@@ -74,7 +74,5 @@ export const CreateTaskForm = ({
 
   if (!hasHydrated) return null;
 
-  console.log(methods.watch());
-
   return <FormProvider {...methods}>{children}</FormProvider>;
 };

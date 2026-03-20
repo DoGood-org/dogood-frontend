@@ -22,7 +22,7 @@ export const RequiredFieldsModal = ({
       isOpen={isOpen}
       onClose={onClose}
       wrapperClassName={cn(
-        'max-w-[354px] md:max-w-[574px] lg:max-w-[878px] py-10 px-8 lg:py-20 lg:px-50 bg-[#696969] text-white',
+        'flex justify-center item-center px-8 py-10 max-w-[354px] md:max-w-[574px] lg:max-w-[878px] bg-[#696969] text-white',
         wrapperClassName
       )}
     >

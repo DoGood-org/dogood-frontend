@@ -1,23 +1,26 @@
 'use client';
 
 import { JSX } from 'react';
-import { FormInputTextarea } from '../../Form/FormInputTextarea';
+import { FormInputTextarea } from '@/components/tasks/createPage/Form/FormInputTextarea';
+import { useTranslations } from 'next-intl';
 
 export const DescriptionForm = (): JSX.Element => {
+  const t = useTranslations('tasks.createTask.form');
+
   return (
     <div className="flex flex-col gap-4 mb-[144px] w-[329px] md:w-[432px] lg:w-[421px]">
       <FormInputTextarea
         name="description"
-        label="Add a description"
+        label={t('descriptionLabel')}
         required
-        placeholder="Add a description"
+        placeholder={t('descriptionPlaceholder')}
       />
 
       <FormInputTextarea
         name="requirements"
-        label="What are the position requirements? (optional)"
+        label={t('requirementsLabel')}
         required={false}
-        placeholder="Add requirements"
+        placeholder={t('requirementsPlaceholder')}
       />
     </div>
   );

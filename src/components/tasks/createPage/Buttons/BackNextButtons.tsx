@@ -17,6 +17,7 @@ import { isDonationCategory } from '@/utils/isDonationCategory';
 import { mapCategoryToMarker } from '@/utils/mapCategoryToMarker';
 import { mapFormToCreateTask } from '@/utils/taskTransform';
 import { STEP_IDS } from '@/constants/stepIds';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   showBack?: boolean;
@@ -36,6 +37,8 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   const organizations = useCreateTaskStore((s) => s.organizations);
   const currentUser = useCreateTaskStore((s) => s.currentUser);
 
+  const t = useTranslations('tasks.createTask.buttons');
+
   const addMarker = useMapStore((s) => s.addMarker);
 
   const [isRequiredModalOpen, setIsRequiredModalOpen] = useState(false);
@@ -52,13 +55,13 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   const isLastStep = createStep === STEP_IDS.PREVIEW;
 
   const rightButtonText = isLastStep
-    ? 'Confirm'
+    ? t('confirm')
     : isNextPreview
-      ? 'Preview'
-      : 'Next step';
+      ? t('preview')
+      : t('next');
 
   const showLeftButton = showBack && stepIndex > 0;
-  const leftButtonText = isLastStep ? 'Edit' : 'Go back';
+  const leftButtonText = isLastStep ? t('edit') : t('back');
 
   const handleNextClick = async (): Promise<void> => {
     const currentStepFields = CREATE_TASK_STEPS[stepIndex]?.fields || [];
@@ -99,7 +102,6 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
           category: mapCategoryToMarker(newTask.category[0]),
         });
       }
-      console.log('New Task Created:', newTask);
       resetCreateTask();
       reset(defaultTaskValues);
       setIsSuccess(true);

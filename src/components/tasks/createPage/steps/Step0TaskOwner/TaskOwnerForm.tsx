@@ -6,6 +6,7 @@ import { StepCard } from '@/components/tasks/createPage/StepCard';
 import { ConfirmButton } from '@/components/tasks/createPage/Buttons/ConfirmButton';
 import { Check } from '@/components/icons/Check';
 import { Label } from '@/components/ui/Label';
+import { useTranslations } from 'next-intl';
 
 interface TaskOwnerFormProps {
   value: TaskOwnerValue | undefined;
@@ -27,10 +28,12 @@ export const TaskOwnerForm = ({
   organizations,
   userName,
 }: TaskOwnerFormProps): JSX.Element => {
+  const t = useTranslations('tasks.createTask');
+
   const options: Option[] = useMemo(() => {
     const userOption = {
       id: 'user',
-      label: `${userName || 'User name'} (private)`,
+      label: `${userName || t('defaultUserName')} ${t('privateLabel')}`,
     };
 
     if (organizations.length === 0) {
@@ -38,7 +41,7 @@ export const TaskOwnerForm = ({
         userOption,
         {
           id: 'org-placeholder',
-          label: 'Organization name',
+          label: t('organizationName'),
           disabled: true,
         },
       ];
@@ -50,7 +53,7 @@ export const TaskOwnerForm = ({
     }));
 
     return [userOption, ...orgOptions];
-  }, [organizations, userName]);
+  }, [organizations, userName, t]);
 
   const isChecked = (optId: string): boolean => {
     if (!value) return false;
@@ -76,7 +79,7 @@ export const TaskOwnerForm = ({
     <StepCard className="h-[456px] md:h-[504px] lg:h-[595px]">
       <div className="h-full flex flex-col justify-between">
         <h2 className="text-[20px] leading-[24px] mb-8 font-medium">
-          Create task as:
+          {t('createAs')}
         </h2>
 
         <div className="mb-auto flex flex-col gap-4">

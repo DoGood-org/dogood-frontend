@@ -11,6 +11,7 @@ import {
 import { Input } from '@/components/ui/Input';
 import { Calendar } from '@/components/ui/Calendar';
 import { CalendarIcon } from '@/components/icons';
+import { useTranslations } from 'next-intl';
 
 interface DatePickerProps {
   value?: Date;
@@ -25,11 +26,15 @@ export const DatePicker = ({
   value,
   onChange,
   onBlur,
-  placeholder = 'Select date',
+  placeholder,
   className,
   disabledDate,
 }: DatePickerProps): React.JSX.Element => {
+  const t = useTranslations('tasks.createTask.placeholders');
+
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
+
+  const currentPlaceholder = placeholder || t('selectDate');
 
   const handleSelect = (date?: Date): void => {
     onChange(date);
@@ -51,7 +56,7 @@ export const DatePicker = ({
           <Input
             readOnly
             value={value ? format(value, 'dd-MM-yyyy') : ''}
-            placeholder={placeholder}
+            placeholder={currentPlaceholder}
             className={cn(
               'w-full h-[48px] pr-10 cursor-pointer bg-white text-base text-black placeholder-[#010101] py-3 px-2',
               'focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0',

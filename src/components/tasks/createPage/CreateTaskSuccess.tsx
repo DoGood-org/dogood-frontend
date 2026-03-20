@@ -6,9 +6,12 @@ import { UiSuccessMessage } from '@/components/ui/UiSuccessMessage';
 import { useRouter } from 'next/navigation';
 import { JSX } from 'react';
 import { StepCard } from './StepCard';
+import { useTranslations } from 'next-intl';
 
 export const CreateTaskSuccess = (): JSX.Element => {
   const router = useRouter();
+
+  const t = useTranslations('tasks.createTask.success');
 
   const handleGoHome = (): void => {
     router.push('/');
@@ -19,21 +22,20 @@ export const CreateTaskSuccess = (): JSX.Element => {
       <UiSuccessMessage className="relative top-[-80px] z-50 flex justify-start max-none" />
       <StepCard className="z-10 relative top-[-180px] ">
         <h2 className="text-h1 mb-2 text-center w-full lg:max-w-full">
-          You&apos;ve successfully created your task!
+          {t('title')}
         </h2>
 
         <p className="text-base mb-8 md:text-start lg:text-center">
-          Your task will appear on the map after it has been verified by a
-          moderator.
+          {t('description')}
         </p>
 
         <div className="flex gap-4 justify-center">
           <Button variant="ghost" onClick={() => router.push('/support')}>
-            Contact us
+            {t('contactUs')}
           </Button>
 
           <Button variant="primary" onClick={handleGoHome}>
-            Go home
+            {t('goHome')}
           </Button>
         </div>
       </StepCard>

@@ -1,35 +1,16 @@
-// import { CreateTask } from '@/components/tasks/CreatePage/CreateTask';
+import {
+  MOCK_CURRENT_USER,
+  MOCK_ORGANIZATIONS,
+} from '@/components/main/map/mockTasks';
+import CreateTaskPage from '@/components/tasks/createPage/CreateTaskPage';
 
 const TaskPage: React.FC = () => {
   return (
-    <div
-      className=" 
-  bg-background
-      px-[4px]
-      pt-[168px]
-  pb-[64px]
-  my-container
-  w-full
-  min-h-[calc(100dvh-160px)]
-text-foreground  
-  flex
-  flex-col
-  items-center
-  justify-center
-  
-            // my-container 
-          // w-full
-          // max-w-[1440px]    
-          // mx-auto                  
-          // // md:pl-[60px]       
-          // // lg:pl-[100px] 
-  "
-    >
-      {/* <CreateTaskPage
-        organizations={organizations}
-        currentUserName={currentUserName}
-        currentUserId={currentUserId}
-      /> */}
+    <div>
+      <CreateTaskPage
+        initialUser={MOCK_CURRENT_USER}
+        initialOrganizations={MOCK_ORGANIZATIONS}
+      />
     </div>
   );
 };

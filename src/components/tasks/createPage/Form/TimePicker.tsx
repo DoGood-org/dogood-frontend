@@ -33,7 +33,7 @@ export const TimePicker = ({
   value,
   setValue,
   onBlur,
-  placeholder = 'Select time',
+  placeholder = '',
 }: TimePickerProps): React.JSX.Element => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedHour, setSelectedHour] = React.useState<string | null>(

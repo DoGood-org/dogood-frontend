@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { CldUploadWidget } from 'next-cloudinary';
 import { JSX } from 'react';
 import { UploadResultInfo } from '@/types/createTask.type';
+import { useTranslations } from 'next-intl';
 
 interface ImageUploadProps {
   image?: UploadResultInfo | null;
@@ -19,8 +20,11 @@ export const ImageUpload = ({
   image,
   setImage,
   defaultImage,
-  label = 'Change picture',
+  label,
 }: ImageUploadProps): JSX.Element => {
+  const t = useTranslations('tasks.createTask.buttons');
+  const displayLabel = label || t('uploadPicture');
+
   return (
     <div className={`relative inline-block ${className}`}>
       <div
@@ -58,7 +62,7 @@ export const ImageUpload = ({
                       text-black hover:text-[#696969] transition-colors duration-300 ease-out"
           >
             <span className="text-sm font-medium underline underline-offset-4">
-              {label}
+              {displayLabel}
             </span>
             <EditIcon className="w-4 h-4 transition-colors group-hover:text-[#696969]" />
           </button>

@@ -42,5 +42,64 @@
       "cancel": "Cancel",
       "confirm": "Confirm"
     }
+  },
+    "createTask": {
+    "title": "Create your next task",
+    "step": "Step",
+    "preview": "Preview",
+    "createAs": "Create task as:",
+    "userNameDefault": "User name",
+    "privateLabel": "(private)",
+    "organizationName": "Organization name",
+    "buttons": {
+        "confirm": "Confirm",
+        "preview": "Preview",
+        "next": "Next step",
+        "edit": "Edit",
+        "back": "Go back",
+        "uploadPicture": "Upload picture"
+      },
+      "stepTitles": {
+        "addPicture": "Add picture"
+      },
+      "form": {
+        "title": "Title",
+        "location": "Location",
+        "dateFrom": "Date from",
+        "dateTo": "Date to",
+        "startTime": "Start time",
+        "descriptionLabel": "Add a description",
+        "descriptionPlaceholder": "Add a description",
+        "requirementsLabel": "What are the position requirements? (optional)",
+        "requirementsPlaceholder": "Add requirements"
+      },
+      "categories": {
+        "title": "Choose a category",
+        "subtitle": "You can pick up a few categories",
+        "items": {
+          "medicine": "Medicine",
+          "nature": "Nature",
+          "animal": "Animal",
+          "food": "Food",
+          "donation": "Donation"
+        }
+      },
+      "payout": {
+        "donationTitle": "Donation needs",
+        "donationDescription": "Fill gaps about your donation needs and financial information",
+        "financialTitle": "Financial information",
+        "financialDescription": "Select the account to receive funds"
+      },
+      "success": {
+        "title": "You've successfully created your task!",
+        "description": "Your task will appear on the map after it has been verified by a moderator.",
+        "contactUs": "Contact us",
+        "goHome": "Go home"
+      },
+      "validation": {
+        "title": "Please fill in all required fields",
+        "message": "To proceed, please fill in all fields marked with an asterisk.",
+        "backButton": "Back to form"
+      }
   }
 }

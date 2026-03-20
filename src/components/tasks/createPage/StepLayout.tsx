@@ -6,20 +6,24 @@ import { BackNextButtons } from './Buttons/BackNextButtons';
 import { PictureField } from './PictureField';
 import { StepLayoutProps } from '@/types/createTask.type';
 import { StepIndicator } from './StepIndicator';
+import { useTranslations } from 'next-intl';
 
 export const StepLayout = ({
   children,
   showBack = true,
   className = '',
-  title = 'Add picture',
+  title,
 }: StepLayoutProps): JSX.Element => {
+  const t = useTranslations('tasks.createTask.stepTitles');
+  const displayTitle = title || t('addPicture');
+
   return (
     <div className={`lg:px-20 ${className}`}>
       <StepCard>
         <div className="flex gap-6 flex-col lg:flex-row md:px-[60px] lg:px-0">
           <div className="shrink-0">
             <h3 className="text-base text-foreground max-w-[353px] md:max-w-[432px] lg:max-w-[415px] truncate">
-              {title}
+              {displayTitle}
             </h3>
             <PictureField />
           </div>

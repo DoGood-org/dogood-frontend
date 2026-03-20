@@ -17,10 +17,13 @@ import {
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import { STEP_IDS } from '@/constants/stepIds';
+import { useTranslations } from 'next-intl';
 
 export const Step5Preview = (): JSX.Element => {
   const { watch } = useFormContext<BasicInfoFormValues>();
   const formValues = watch();
+
+  const t = useTranslations('tasks.createTask');
 
   const organizations = useCreateTaskStore((s) => s.organizations);
   const currentUser = useCreateTaskStore((s) => s.currentUser);
@@ -41,7 +44,6 @@ export const Step5Preview = (): JSX.Element => {
       endDate: formatDateForPreview(task.endDate),
     };
   }, [formValues, currentUser, organizations]);
-  console.log('LIVE TASK OBJECT:', liveTask);
 
   const currentTask = liveTask;
 
@@ -49,7 +51,7 @@ export const Step5Preview = (): JSX.Element => {
     <Section withContainer={true} className="mt-8 mb-8">
       <StepHeader
         stepId={isDonation ? STEP_IDS.PREVIEW : STEP_IDS.PAYMENT}
-        title="Preview"
+        title={t('preview')}
         titleClassName="text-lg mb-8 pl-0"
       />
       <Task task={currentTask} showEditButton={false} />

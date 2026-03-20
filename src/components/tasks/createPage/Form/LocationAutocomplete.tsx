@@ -6,6 +6,7 @@ import { FormField } from './FormField';
 import { Input } from '@/components/ui/Input';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { MOCK_LOCATIONS_SEARCH } from '@/components/main/map/mockTasks';
+import { useTranslations } from 'next-intl';
 
 interface LocationData {
   address: string;
@@ -37,6 +38,8 @@ export const LocationSearchInput = ({
   label,
   onSelect,
 }: LocationSearchInputProps): JSX.Element => {
+  const t = useTranslations('tasks.createTask.form');
+
   const { watch, setValue } = useFormContext();
   const value = watch(name) ?? '';
   const [isOpen, setIsOpen] = useState(false);
@@ -108,7 +111,7 @@ export const LocationSearchInput = ({
             onKeyDown={handleKeyDown}
             onBlur={field.onBlur}
             onFocus={() => suggestions.length > 0 && setIsOpen(true)}
-            placeholder="Location"
+            placeholder={t('location')}
             autoComplete="off"
             className={locationInputClasses}
           />
