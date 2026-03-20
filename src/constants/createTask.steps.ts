@@ -1,9 +1,9 @@
-import { Step0TaskOwner } from '@/components/tasks/createPage/steps/Step0TaskOwner/Step0TaskOwner';
-import { Step1BasicInfo } from '@/components/tasks/createPage/steps/Step1BasicInfo/Step1BasicInfo';
-import { Step2Category } from '@/components/tasks/createPage/steps/Step2Categories/Step2Category';
-import { Step3Description } from '@/components/tasks/createPage/steps/Step3Description/Step3Description';
-import { Step4Payment } from '@/components/tasks/createPage/steps/Step4Payment/Step4Payment';
-import { Step5Preview } from '@/components/tasks/createPage/steps/Step5Preview/Step5Preview';
+import { Step0TaskOwner } from '@/components/tasks/createTaskPage/steps/Step0TaskOwner/Step0TaskOwner';
+import { Step1BasicInfo } from '@/components/tasks/createTaskPage/steps/Step1BasicInfo/Step1BasicInfo';
+import { Step2Category } from '@/components/tasks/createTaskPage/steps/Step2Categories/Step2Category';
+import { Step3Description } from '@/components/tasks/createTaskPage/steps/Step3Description/Step3Description';
+import { Step4Payment } from '@/components/tasks/createTaskPage/steps/Step4Payment/Step4Payment';
+import { Step5Preview } from '@/components/tasks/createTaskPage/steps/Step5Preview/Step5Preview';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
 import { CreateTaskProp } from '@/types/createTask.type';
 import { JSX } from 'react';

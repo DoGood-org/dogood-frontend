@@ -2,8 +2,8 @@
 
 import { JSX, useMemo } from 'react';
 import { OrganizationFromBack, TaskOwnerValue } from '@/types/tasks.type';
-import { StepCard } from '@/components/tasks/createPage/StepCard';
-import { ConfirmButton } from '@/components/tasks/createPage/Buttons/ConfirmButton';
+import { StepCard } from '@/components/tasks/createTaskPage/StepCard';
+import { ConfirmButton } from '@/components/tasks/createTaskPage/Buttons/ConfirmButton';
 import { Check } from '@/components/icons/Check';
 import { Label } from '@/components/ui/Label';
 import { useTranslations } from 'next-intl';

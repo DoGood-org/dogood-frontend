@@ -1,13 +1,13 @@
 'use client';
 
 import { JSX } from 'react';
-import { DatePicker } from '@/components/tasks/createPage/Form/DatePicker';
-import { TimePicker } from '@/components/tasks/createPage/Form/TimePicker';
-import { FormField } from '@/components/tasks/createPage/Form/FormField';
+import { DatePicker } from '@/components/tasks/createTaskPage/Form/DatePicker';
+import { TimePicker } from '@/components/tasks/createTaskPage/Form/TimePicker';
+import { FormField } from '@/components/tasks/createTaskPage/Form/FormField';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { FormInput } from '@/components/tasks/createPage/Form/FormInput';
+import { FormInput } from '@/components/tasks/createTaskPage/Form/FormInput';
 import { BasicInfoFormValues } from '@/lib/validation/createTask.schema';
-import { LocationSearchInput } from '@/components/tasks/createPage/Form/LocationAutocomplete';
+import { LocationSearchInput } from '@/components/tasks/createTaskPage/Form/LocationAutocomplete';
 import { format } from 'date-fns';
 import { useTranslations } from 'next-intl';
 

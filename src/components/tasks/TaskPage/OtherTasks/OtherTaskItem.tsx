@@ -3,7 +3,7 @@
 import { IExtendedITaskProps } from '@/types/tasks.type';
 import { Link } from '@/i18n/navigation';
 import { TaskActionButtons } from '@/components/tasks/taskPage/ButtonGroup/TaskActionButtons';
-import { TaskCategoryList } from '../../createPage/TaskCategoryList/TaskCategoryList';
+import { TaskCategoryList } from '@/components/tasks/createTaskPage/TaskCategoryList/TaskCategoryList';
 import { getDistanceStr } from '@/utils/taskTransform';
 import { useMapStore } from '@/zustand/stores/mapStore';
 

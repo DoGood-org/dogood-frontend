@@ -2,12 +2,12 @@
 
 import { JSX, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { StepHeader } from '@/components/tasks/createPage/StepHeader';
+import { StepHeader } from '@/components/tasks/createTaskPage/StepHeader';
 import { Task } from '@/components/tasks/taskPage/Task';
 import { Section } from '@/components/ui/Section';
 import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
-import { BackNextButtons } from '@/components/tasks/createPage/Buttons/BackNextButtons';
-import { StepIndicator } from '@/components/tasks/createPage/StepIndicator';
+import { BackNextButtons } from '@/components/tasks/createTaskPage/Buttons/BackNextButtons';
+import { StepIndicator } from '@/components/tasks/createTaskPage/StepIndicator';
 
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import {

@@ -1,7 +1,7 @@
 'use client';
 
 import { JSX } from 'react';
-import { FormInputTextarea } from '@/components/tasks/createPage/Form/FormInputTextarea';
+import { FormInputTextarea } from '@/components/tasks/createTaskPage/Form/FormInputTextarea';
 import { useTranslations } from 'next-intl';
 
 export const DescriptionForm = (): JSX.Element => {

@@ -2,7 +2,7 @@
 
 import { JSX } from 'react';
 import { CategorySelection } from './CategorySelection';
-import { StepLayout } from '@/components/tasks/createPage/StepLayout';
+import { StepLayout } from '@/components/tasks/createTaskPage/StepLayout';
 
 export const Categories = (): JSX.Element => {
   return (

@@ -1,7 +1,7 @@
 'use client';
 
 import { JSX } from 'react';
-import { StepHeader } from '../../StepHeader';
+import { StepHeader } from '@/components/tasks/createTaskPage/StepHeader';
 import { Description } from './Description';
 import { Section } from '@/components/ui/Section';
 import { STEP_IDS } from '@/constants/stepIds';

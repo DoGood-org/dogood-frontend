@@ -2,8 +2,8 @@
 
 import { Spinner } from '@/components/ui/Spinner';
 import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
-import { CreateTask } from '@/components/tasks/createPage/CreateTask';
-import { CreateTaskForm } from '@/components/tasks/createPage/CreateTaskForm';
+import { CreateTask } from '@/components/tasks/createTaskPage/CreateTask';
+import { CreateTaskForm } from '@/components/tasks/createTaskPage/CreateTaskForm';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import { JSX, useEffect } from 'react';
 import { HostUser, OrganizationFromBack } from '@/types/tasks.type';

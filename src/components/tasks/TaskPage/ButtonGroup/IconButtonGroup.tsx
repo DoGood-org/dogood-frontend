@@ -3,7 +3,7 @@
 import { FavoriteToggleButton } from '@/components/tasks/taskPage/ButtonGroup/FavoriteToggleButton';
 import { MapDotButton } from '@/components/tasks/taskPage/ButtonGroup/MapDotButton';
 import { TaskCategoryEnum } from '@/types/createTask.type';
-import { TaskCategoryList } from '../../createPage/TaskCategoryList/TaskCategoryList';
+import { TaskCategoryList } from '@/components/tasks/createTaskPage/TaskCategoryList/TaskCategoryList';
 import { getDistanceStr } from '@/utils/taskTransform';
 import { useMapStore } from '@/zustand/stores/mapStore';
 
