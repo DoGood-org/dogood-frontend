@@ -1,12 +1,32 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { Spinner } from '@/components/ui/Spinner';
-import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
-import { CreateTask } from '@/components/tasks/createTaskPage/CreateTask';
-import { CreateTaskForm } from '@/components/tasks/createTaskPage/CreateTaskForm';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import { JSX, useEffect } from 'react';
 import { HostUser, OrganizationFromBack } from '@/types/tasks.type';
+
+const StripeProviderLazy = dynamic(
+  () =>
+    import('@/components/providers/StripeProviderLazy').then(
+      (mod) => mod.StripeProviderLazy
+    ),
+  { ssr: false }
+);
+const CreateTaskForm = dynamic(
+  () =>
+    import('@/components/tasks/createTaskPage/CreateTaskForm').then(
+      (mod) => mod.CreateTaskForm
+    ),
+  { ssr: false }
+);
+const CreateTask = dynamic(
+  () =>
+    import('@/components/tasks/createTaskPage/CreateTask').then(
+      (mod) => mod.CreateTask
+    ),
+  { ssr: false }
+);
 
 interface Props {
   initialUser: HostUser;
