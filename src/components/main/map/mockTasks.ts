@@ -1,4 +1,4 @@
-import { NominatimResult } from '@/components/tasks/createPage/Form/LocationAutocomplete';
+import { NominatimResult } from '@/components/tasks/createTaskPage/Form/LocationAutocomplete';
 import { calculateDistanceInMeters } from '@/lib/mapUtils';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 // import { MarkerCategoryEnum } from '@/types/mapType';
