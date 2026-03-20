@@ -48,9 +48,9 @@
     "step": "Step",
     "preview": "Preview",
     "createAs": "Create task as:",
-    "userNameDefault": "User name",
-    "privateLabel": "(private)",
-    "organizationName": "Organization name",
+      "userNameDefault": "User name",
+      "privateLabel": "(private)",
+      "organizationName": "Organization name",
     "buttons": {
         "confirm": "Confirm",
         "preview": "Preview",

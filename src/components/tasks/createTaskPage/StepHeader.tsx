@@ -33,7 +33,7 @@ export const StepHeader = ({
         <div
           className="absolute top-[20px] right-[0px] aspect-square 
           md:-top-[30px] md:-right-[40px] lg:-top-[70px] lg:-right-[130px] 
-          flex flex-shrink-0 w-[180px] md:w-[200px] lg:w-[280px] lg:h-[252px]
+          flex flex-shrink-0 w-[180px] md:w-[200px] lg:w-[280px] lg:h-[256px]
           mx-auto md:mx-0 rounded-full overflow-hidden"
         >
           <Image

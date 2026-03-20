@@ -33,7 +33,7 @@ export const TaskOwnerForm = ({
   const options: Option[] = useMemo(() => {
     const userOption = {
       id: 'user',
-      label: `${userName || t('defaultUserName')} ${t('privateLabel')}`,
+      label: `${userName || t('userNameDefault')} ${t('privateLabel')}`,
     };
 
     if (organizations.length === 0) {

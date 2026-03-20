@@ -48,9 +48,9 @@
     "preview": "Vorschau",
     "step": "Schritt",
     "createAs": "Aufgabe erstellen als:",
-    "userNameDefault": "Benutzername",
+    "userNameDefault": "Benutzer",
     "privateLabel": "(privat)",
-    "organizationName": "Organisationsname",
+    "organizationName": "Organisation",
     "buttons": {
         "confirm": "Bestätigen",
         "preview": "Vorschau",
