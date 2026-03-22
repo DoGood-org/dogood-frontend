@@ -1,4 +1,5 @@
 import { MarkerCategoryEnum } from '@/types/mapType';
+import { TaskCategoryEnum } from '@/types/createTask.type';
 
 export interface IPropsFilters {
   setIsSettingOpen: (isOpen: boolean) => void;
@@ -9,7 +10,11 @@ export interface IPropsFilterPanel {
   selectedCategoryButtons: React.ReactElement[];
   selectedDistanceButtons: React.ReactElement[];
 }
-export type IExtendedCategoryFilter = MarkerCategoryEnum | 'all' | null;
+export type IExtendedCategoryFilter =
+  | MarkerCategoryEnum
+  | TaskCategoryEnum
+  | 'all'
+  | null;
 export type IDistanceFilter = '1' | '3' | '5' | '10' | '20' | '50' | null;
 export interface IFilterStore {
   choosenCategories: IExtendedCategoryFilter[];

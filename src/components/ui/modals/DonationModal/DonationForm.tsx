@@ -1,6 +1,6 @@
 'use client';
 
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
 import { useCardInputs } from '@/hooks/useCardInputs';
@@ -26,12 +26,8 @@ export const DonationForm = ({
   const t = useTranslations('card');
   const stripe = useStripe();
   useCardInputs();
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors, touchedFields, submitCount, isSubmitting },
-  } = useForm<DonationFormValues>({
+
+  const methods = useForm<DonationFormValues>({
     resolver: yupResolver(donationSchema),
     defaultValues: {
       fullName: initialValues.fullName || '',
@@ -41,7 +37,14 @@ export const DonationForm = ({
       amount: initialValues.amount || undefined,
       donationType: initialValues.donationType || 'ORGANIZATION',
     },
+    mode: 'onTouched',
   });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = methods;
 
   const cardInputs = [
     {
@@ -90,44 +93,45 @@ export const DonationForm = ({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4 md:max-w-[500px] mx-auto"
-      autoComplete="off"
-    >
-      {cardInputs.map(({ name, placeholder, validation }) => (
-        <div key={name}>
-          <Input
-            {...register(name, validation)}
-            placeholder={placeholder}
-            className="placeholder:text-[#0D0D0D99] text-base text-[#0D0D0D] h-12 bg-[#ffffff] rounded-[4px] relative flex items-center p-3 border border-[#111113] focus-within:ring-1 focus-visible:ring-1 focus-within:ring-[#00c1ac] focus-within:border-transparent focus-visible:border-transparent"
-          />
-          {errors[name] && (
-            <p className="text-red-500 text-sm mt-1">{errors[name]?.message}</p>
-          )}
-        </div>
-      ))}
-
-      <CurrencyAndAmountInput
-        control={control}
-        register={register}
-        errors={errors}
-        touchedFields={touchedFields}
-        submitCount={submitCount}
-        currencies={currencies}
-      />
-      <div>
-        <PaymentCardList />
-      </div>
-      <Button
-        type="submit"
-        variant="primary"
-        className="w-full
-        text-[#ffffff]"
-        disabled={isSubmitting}
+    <FormProvider {...methods}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-4 md:max-w-[500px] mx-auto"
+        autoComplete="off"
       >
-        {isSubmitting ? t('processing') : t('donate')}
-      </Button>
-    </form>
+        {cardInputs.map(({ name, placeholder, validation }) => (
+          <div key={name}>
+            <Input
+              {...register(name, validation)}
+              placeholder={placeholder}
+              className="placeholder:text-[#0D0D0D99] text-base text-[#0D0D0D] h-12 bg-[#ffffff] rounded-[4px] relative flex items-center p-3 border border-[#111113] focus-within:ring-1 focus-visible:ring-1 focus-within:ring-[#00c1ac] focus-within:border-transparent focus-visible:border-transparent"
+            />
+            {errors[name] && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors[name]?.message}
+              </p>
+            )}
+          </div>
+        ))}
+
+        <CurrencyAndAmountInput
+          currencies={currencies}
+          amountName="amount"
+          currencyName="currency"
+        />
+        <div>
+          <PaymentCardList />
+        </div>
+        <Button
+          type="submit"
+          variant="primary"
+          className="w-full
+          text-[#ffffff]"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? t('processing') : t('donate')}
+        </Button>
+      </form>
+    </FormProvider>
   );
 };

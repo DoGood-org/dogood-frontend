@@ -2,20 +2,20 @@
 
 import { cn } from '@/lib/utils';
 import { SelectProps } from '@radix-ui/react-select';
-import { JSX } from 'react';
+import { JSX, useState } from 'react';
 import { Label } from '@/components/ui/Label';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/Select';
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@radix-ui/react-popover';
+import { CheckIcon } from '@/components/icons';
 
 interface CurrencyFieldProps extends Omit<SelectProps, 'onValueChange'> {
   options: Array<{ value: string; label: string }>;
   label?: string;
   placeholder?: string;
+  value?: string;
   onValueChange: (val: string) => void;
   className?: string;
 }
@@ -23,44 +23,54 @@ interface CurrencyFieldProps extends Omit<SelectProps, 'onValueChange'> {
 export const CurrencySelect = ({
   options,
   label,
+  value,
   placeholder,
   onValueChange,
   className = '',
-  ...props
 }: CurrencyFieldProps): JSX.Element => {
+  const [open, setOpen] = useState(false);
+
+  const selected = options.find((o) => o.value === value);
+
   return (
     <>
       {label && <Label className="block text-base text-white">{label}</Label>}
 
-      <Select onValueChange={onValueChange} {...props}>
-        <SelectTrigger
-          className={cn(
-            'text-[#111113] placeholder-[#010101]',
-            'w-[118px] h-12 bg-[#ffffff] rounded-[4px] relative flex items-center px-3 border border-[#111113] shadow-none outline-none',
-            '[&[data-size=default]]:h-12',
-            'border border-[#111113] shadow-none outline-none',
-            'data-[state=open]:border-[#00c1ac]',
-            'focus-visible:ring-1 focus-visible:ring-[#00c1ac] focus-visible:border-[#00c1ac]',
-            'focus-visible:ring-offset-0',
-            'focus-within:ring-offset-0',
-
-            className
-          )}
-        >
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-        <SelectContent className="bg-white border-none text-form-field text-base roundred-sm p-3">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <button
+            type="button"
+            className={cn(
+              'w-[118px] h-12 bg-[#ffffff] rounded-[4px] px-3 flex items-center justify-between cursor-pointer border border-[#111113]',
+              'text-[#111113]',
+              !selected && 'text-[#010101]',
+              className
+            )}
+          >
+            <span>{selected?.label || placeholder}</span>
+            <CheckIcon />
+          </button>
+        </PopoverTrigger>
+        <PopoverContent className="z-50 bg-white border-none text-form-field text-base roundred-sm p-3 w-[118px]">
           {options.map((option) => (
-            <SelectItem
+            <button
               key={option.value}
-              value={option.value}
-              className="hover:bg-text-gray"
+              type="button"
+              onClick={() => {
+                onValueChange(option.value);
+                setOpen(false);
+              }}
+              className={cn(
+                'w-full text-left px-2 py-1 rounded-sm',
+                'hover:bg-text-gray',
+                option.value === value && 'bg-text-gray'
+              )}
             >
               {option.label}
-            </SelectItem>
+            </button>
           ))}
-        </SelectContent>
-      </Select>
+        </PopoverContent>
+      </Popover>
     </>
   );
 };
