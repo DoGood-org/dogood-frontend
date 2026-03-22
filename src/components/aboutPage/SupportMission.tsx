@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
@@ -14,7 +13,6 @@ export const SupportMission: React.FC = () => {
   return (
     <Section withContainer={false}>
       <Container className=" items-stretch text-white  mt-20  relative  ">
-        {/* Content */}
         <div className=" bg-background-secondary p-6  rounded-lg grid   gap-6 lg:gap-12  md:grid-cols-[2fr_1fr] ">
           <div className="order-2 lg:order-1 flex flex-col justify-center md:p-8 ">
             <div className="flex flex-col gap-6">

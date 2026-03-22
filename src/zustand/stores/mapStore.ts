@@ -134,6 +134,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
         myPosition: null,
         default: null,
         myPin: null,
+        donation: null,
       },
       defaultLocation: { lat: 48.8566, lng: 2.3522 }, // Default to Paris
       userLocation: null,
@@ -181,6 +182,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
             myPosition: customIcons.myPosition,
             default: customIcons.default,
             myPin: customIcons.myPin,
+            donation: customIcons.donation,
           },
 
           leafletComponents: {

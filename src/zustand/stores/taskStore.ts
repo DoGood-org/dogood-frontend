@@ -51,10 +51,20 @@ export const useTaskStore = create<TTaskStore>()(
         });
       },
       setTasksByKey: (key, tasks): void => {
-        const updated = { ...get().tasksByKey, [key]: tasks };
-        set({ tasksByKey: updated });
-        const allTasks = Object.values(updated).flat();
-        set({ tasks: allTasks });
+        set((state) => {
+          const updated = { ...state.tasksByKey, [key]: tasks };
+
+          const allTasks = Object.values(updated).flat();
+
+          const uniqueTasks = Array.from(
+            new Map(allTasks.map((task) => [task.id, task])).values()
+          );
+
+          return {
+            tasksByKey: updated,
+            tasks: uniqueTasks,
+          };
+        });
       },
       updateTaskStatus: (taskId: string, status: TaskStatus): void => {
         set((prev) => {

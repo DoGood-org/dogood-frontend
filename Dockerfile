@@ -11,6 +11,5 @@ RUN apt update -y \
 
 RUN apt install -y cron lsof
 EXPOSE 5000
-EXPOSE 3000
 
 CMD ["/bin/bash"]

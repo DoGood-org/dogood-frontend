@@ -2,12 +2,14 @@ import { AccordionItemData, IAccordionDataProps } from '@/types/support';
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 import { Minus, Plus } from '../icons';
+import { HighlightText } from './HighlightText';
 
 export const AccordionData = ({
   activeCategory,
   categoryData,
   openItem,
   toggleItem,
+  appliedFilter,
 }: IAccordionDataProps): React.JSX.Element => {
   return (
     <AnimatePresence mode="wait">
@@ -37,7 +39,10 @@ export const AccordionData = ({
                 >
                   <span className="flex items-center justify-between w-full">
                     <h3 className="text-base text-foreground lg:text-h3">
-                      {item.question}
+                      <HighlightText
+                        text={item.question}
+                        highlight={appliedFilter || ''}
+                      />
                     </h3>
                     <div className="shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-muted hover:bg-muted/80 transition-colors">
                       <Plus
@@ -89,7 +94,12 @@ export const AccordionData = ({
                       className="bg-card rounded-xl"
                     >
                       <div className="p-6">
-                        <p className="whitespace-pre-line">{item.answer}</p>
+                        <p className="whitespace-pre-line">
+                          <HighlightText
+                            text={item.answer}
+                            highlight={appliedFilter || ''}
+                          />
+                        </p>
                       </div>
                     </motion.div>
                   </motion.div>

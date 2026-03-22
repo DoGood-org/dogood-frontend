@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import ourTeam from '@/assets/images/aboutPage/ourTeam.png';
 import { Rocket } from '@/components/icons';
@@ -8,6 +7,12 @@ import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { useTranslations } from 'next-intl';
 
+const ourTeamList = [
+  { icon: Lamp, text: 'item1' },
+  { icon: Rocket, text: 'item2' },
+  { icon: AboutHeart, text: 'item3' },
+];
+
 export const OurTeam: React.FC = () => {
   const t = useTranslations('aboutPage');
   const OurTeam = t.raw('ourTeam') as any;
@@ -15,7 +20,6 @@ export const OurTeam: React.FC = () => {
   return (
     <Section withContainer={false}>
       <Container className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-stretch ">
-        {/* Content */}
         <div>
           <h2 className="text-3xl md:text-3xl lg:text-3xl  mb-4">
             {OurTeam.title}
@@ -25,33 +29,17 @@ export const OurTeam: React.FC = () => {
           </p>
 
           <ul className="flex flex-col gap-4 leading-8">
-            <li className="flex items-center gap-4 ">
-              <Lamp className="size-6" />
-              <div>
-                <h3 className=" mb-1">{OurTeam.list.item1.itemTitle}</h3>
-                <p className="text-sm text-text-gray">
-                  {OurTeam.list.item1.itemDescription}
-                </p>
-              </div>
-            </li>
-            <li className="flex items-center gap-4 ">
-              <Rocket className="size-6" />
-              <div>
-                <h3 className=" mb-1">{OurTeam.list.item1.itemTitle}</h3>
-                <p className="text-sm text-text-gray">
-                  {OurTeam.list.item1.itemDescription}
-                </p>
-              </div>
-            </li>
-            <li className="flex items-center gap-4 ">
-              <AboutHeart className="size-6" />
-              <div>
-                <h3 className=" mb-1">{OurTeam.list.item1.itemTitle}</h3>
-                <p className="text-sm text-text-gray">
-                  {OurTeam.list.item1.itemDescription}
-                </p>
-              </div>
-            </li>
+            {ourTeamList.map((item) => (
+              <li key={item.text} className="flex items-center gap-4 ">
+                <item.icon className="size-6" />
+                <div>
+                  <h3 className=" mb-1">{OurTeam.list[item.text].itemTitle}</h3>
+                  <p className="text-sm text-text-gray">
+                    {OurTeam.list[item.text].itemDescription}
+                  </p>
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
 
