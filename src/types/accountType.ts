@@ -38,7 +38,7 @@ export interface UserDetailedProps {
   userSettings: UserSettingsProps;
   location?: Location | null;
   hostedTasks?: HostedTaskProps[];
-  joinedTasks?: TaskProps[];
+  tasks?: TaskProps[];
   reviewsWritten?: ReviewProps[];
   reviewsReceived?: ReviewProps[];
   organizations?: OrganizationProps[];
@@ -101,7 +101,7 @@ export interface TaskProps {
   id: number;
   title: string;
   description: string;
-  avatar?: string;
+  picture?: string;
   category: MarkerCategoryType;
   status?: string;
   startDate?: string;
@@ -124,3 +124,9 @@ export interface IUserApiResponse {
     user: UserDetailedProps;
   };
 }
+
+export type UserShort = {
+  id: string;
+  name: string;
+  avatar: string | null;
+};

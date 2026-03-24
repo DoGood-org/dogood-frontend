@@ -26,6 +26,8 @@
     "@sentry/nextjs": "^10.26.0",
     "@stripe/react-stripe-js": "^3.8.1",
     "@stripe/stripe-js": "^7.7.0",
+    "@tanstack/react-query": "^5.90.20",
+    "@tanstack/react-query-devtools": "^5.91.2",
     "@types/leaflet": "^1.9.18",
     "axios": "^1.11.0",
     "class-variance-authority": "^0.7.1",

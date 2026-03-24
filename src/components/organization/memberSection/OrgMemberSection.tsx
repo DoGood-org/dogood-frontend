@@ -11,9 +11,11 @@ import { OrgMemberList } from './OrgMemberList';
 export const OrgMemberSection = ({
   members,
   role,
+  orgId,
 }: {
   members: UserOrganization[];
   role: Role;
+  orgId: string;
 }): JSX.Element => {
   const t = useTranslations('organization');
 
@@ -39,7 +41,7 @@ export const OrgMemberSection = ({
         )}
       </div>
 
-      <OrgMemberList members={activeMembers} />
+      <OrgMemberList members={activeMembers} orgId={orgId} />
     </>
   );
 };

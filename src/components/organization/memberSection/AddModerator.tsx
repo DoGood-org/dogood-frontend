@@ -3,8 +3,14 @@ import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
 import { useTranslations } from 'next-intl';
 import { JSX, useState } from 'react';
+import { AddModeratorModal } from './AddModeratorModal';
+import { UserOrganization } from '@/types';
 
-export const AddModerator = (): JSX.Element => {
+export const AddModerator = ({
+  members,
+}: {
+  members: UserOrganization[];
+}): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations('organization');
 
@@ -32,6 +38,7 @@ export const AddModerator = (): JSX.Element => {
           <h3 className="text-[20px] leading-[24px] md:text-h3 text-center">
             {t('members.select')}
           </h3>
+          <AddModeratorModal members={members} />
         </Modal>
       )}
     </>
