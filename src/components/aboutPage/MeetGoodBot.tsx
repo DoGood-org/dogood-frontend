@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 
 import { Section } from '@/components/ui/Section';
@@ -11,6 +10,13 @@ import { VectorTop } from '@/components/icons';
 import { AboutStar } from '@/components/icons';
 
 import { useTranslations } from 'next-intl';
+
+const MeetGoodBotList = [
+  { icon: Connect, text: 'item1' },
+  { icon: Verify, text: 'item2' },
+  { icon: AboutStar, text: 'item3' },
+  { icon: VectorTop, text: 'item4' },
+];
 
 export const MeetGoodBot: React.FC = () => {
   const t = useTranslations('aboutPage');
@@ -41,22 +47,12 @@ export const MeetGoodBot: React.FC = () => {
             </p>
 
             <ul className="space-y-7">
-              <li className="flex  items-center gap-6">
-                <Connect className="size-6" />
-                <p>{meetGoodBot.list.item1}</p>
-              </li>
-              <li className="flex  items-center gap-6">
-                <Verify className="size-6" />
-                <p>{meetGoodBot.list.item2}</p>
-              </li>
-              <li className="flex  items-center gap-6">
-                <AboutStar className="size-6" />
-                <p>{meetGoodBot.list.item3}</p>
-              </li>
-              <li className="flex  items-center gap-6">
-                <VectorTop className="size-6" />
-                <p>{meetGoodBot.list.item4}</p>
-              </li>
+              {MeetGoodBotList.map((item) => (
+                <li key={item.text} className="flex  items-center gap-6">
+                  <item.icon className="size-6" />
+                  <p>{meetGoodBot.list[item.text]}</p>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

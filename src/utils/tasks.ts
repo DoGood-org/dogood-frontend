@@ -1,16 +1,3 @@
-import { ITaskDetails } from '@/types/tasks.type';
-
-export const getOrganizerInfo = (
-  task: ITaskDetails
-): { name: string; link: string } => ({
-  name: task.host?.name ?? `Organization ${task.organizationId ?? ''}`,
-  link: task.host?.id
-    ? `/profile/${task.host.id}`
-    : task.organizationId
-      ? `/profile/${task.organizationId}`
-      : '#',
-});
-
 export const parseRequirements = (requirements?: string): string[] => {
   if (!requirements) return [];
   return requirements

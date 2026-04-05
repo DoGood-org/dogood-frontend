@@ -13,7 +13,7 @@ export const PublicAccount = ({
 }: {
   user: UserDetailedProps;
 }): JSX.Element => {
-  const { joinedTasks, organizations, reviewsReceived } = user;
+  const { tasks, organizations, reviewsReceived } = user;
   return (
     <>
       <Section className="pt-15 md:pt-16 lg:pt-20">
@@ -22,7 +22,7 @@ export const PublicAccount = ({
           <UserDescription user={user} />
         </div>
       </Section>
-      <UserTaskSection tasks={joinedTasks} />
+      <UserTaskSection tasks={tasks} />
       <UserOrganizationSection organizations={organizations} />
       <UserReviewSection reviews={reviewsReceived} />
     </>
