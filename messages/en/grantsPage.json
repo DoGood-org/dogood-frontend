@@ -1,0 +1,157 @@
+{
+  "grantsData": {
+    "title": "Change the world — get support for good causes",
+    "description": "The DoGood grant program was created to support volunteer, social, environmental and innovative initiatives.",
+    "highlightText": "The DoGood grant program"
+  },
+  "applyBtn": "Apply for a Grant",
+  "becomeBtn": "Become a grantor",
+  "title": "What Are DoGood Grants? ",
+  "description": "DoGood Grants provide financial and resource support for people, organizations, and communities driving positive change. Our mission is to make kindness visible, scalable, and achievable for everyone.",
+  "description1": "Whether you're launching a local initiative, scaling environmental action, or building innovative solutions for good — we're here to fuel your impact.",
+  "forWho": {
+    "title": "For Who?",
+    "cat1": "Volunteers",
+    "cat2": "NGOs",
+    "cat3": "Communities",
+    "cat4": "Schools",
+    "cat5": "Startups",
+    "cat6": "Eco initiatives",
+    "cat7": "Creators"
+  },
+  "whatFinance": {
+    "title": "What do we finance?",
+    "cat1": "Events",
+    "cat2": "Projects",
+    "cat3": "Research",
+    "cat4": "Aid Programs",
+    "cat5": "Digital Tools",
+    "cat6": "Education"
+  },
+  "titleOfTypes": "Types of grants ",
+  "types": [
+    {
+      "type-1": "Micro Grants",
+      "desc-1": "Quick help for small good deeds"
+    },
+    {
+      "type-2": "Social grants",
+      "desc-2": "Support for initiatives for communities, schools, pensioners"
+    },
+    {
+      "type-3": "Animal grants",
+      "desc-3": "Support for shelters and independent activists"
+    },
+    {
+      "type-4": "Ecogrants",
+      "desc-4": "Protecting nature, the climate, recycling"
+    },
+    {
+      "type-5": "Techno grants",
+      "desc-5": "Startups, applications, research"
+    },
+    {
+      "type-6": "Young grants",
+      "desc-6": "For students and youth associations"
+    }
+  ],
+  "titleOfTransparency": "Transparency and trust ",
+  "transparency": [
+    {
+      "type-1": "Each application undergoes an ethical review",
+      "desc-1": "We carefully evaluate each project to ensure it aligns with our values, causes no harm to communities, and delivers meaningful social impact. Decisions are made transparently, with input from independent experts."
+    },
+    {
+      "type-2": "Each application undergoes an ethical review",
+      "desc-2": "Financial transparency is our priority. Donors can see exactly how funds are used — from materials and logistics to direct support for beneficiaries. Regular reports are available online."
+    },
+    {
+      "type-3": "Measurable Impact",
+      "desc-3": "Each project includes an impact assessment: how many people were helped, what changed in communities, and the stories behind the numbers. We believe trust is built through action — and we’re ready to show it."
+    }
+  ],
+  "whatPeopleSay": "What people say",
+  "howToApply": {
+    "title": "How to apply",
+    "step1": "Registration on the DoGood platform",
+    "step2": "Creating a brief description of the initiative",
+    "step3": "Filling out the grant application",
+    "step4": "Waiting for consideration (up to 14 days)",
+    "step5": "Receiving a response and recommendations",
+    "step6": "Obtaining funding / support from mentors"
+  },
+  "questions": {
+    "title": "Popular questions",
+    "items": [
+      {
+        "id": "quest-1",
+        "question": "What types of grants are available on the platform?",
+        "answer": "We operate under a hybrid grant model that includes:\nOpen applications (Open Grant Pool);\n• Individual grant programs from partners (Grant Programs);\n• Thematic and regional initiatives.\n• Grants can range from local projects to international initiatives depending on the donor."
+      },
+      {
+        "id": "quest-2",
+        "question": "Who can apply for a grant?",
+        "answer": "Who can apply:\n• Non-profit organizations;\n• Charitable foundations;\n• Social enterprises;\n• Initiative groups;\n• Individual participants (depending on the program).\nNote: Each program has its own criteria specified in the description."
+      },
+      {
+        "id": "quest-3",
+        "question": "Does DoGood provide funding directly?",
+        "answer": "At this stage of the platform's development, DoGood does not fund grants with its own funds. We act as a platform that:\n• Connects grantmakers and projects;\n• Ensures transparency of the process;\n• Simplifies the selection process and interaction.\nFunding is provided directly by partners or grantmakers."
+      },
+      {
+        "id": "quest-4",
+        "question": "Does the platform guarantee funding?",
+        "answer": "No. DoGood does not guarantee funding, but significantly increases the chances of projects through:\n• High visibility of the project to donors;\n• Direct access to the grantmakers' database;\n• Structured and professional application submission."
+      },
+      {
+        "id": "quest-5",
+        "question": "How do I apply for a grant?",
+        "answer": "1. Register on the platform.\n2. Select the \"Apply for a Grant\" section.\n3. Fill out the application form.\n4. Submit your application. After that, it will become available for review by grantmakers."
+      },
+      {
+        "id": "quest-6",
+        "question": "Can I apply for multiple grants?",
+        "answer": "Yes. You can submit one universal application or adapt it to the requirements of specific programs."
+      },
+      {
+        "id": "quest-7",
+        "question": "How are projects selected?",
+        "answer": "Selection is carried out by grantmakers based on:\n• Social impact (Impact);\n• Relevance to the program theme;\n• Quality of implementation and team;\n• Budget transparency.\nIn the future, an AI recommendation system will also be implemented on the platform to improve matching."
+      },
+      {
+        "id": "quest-8",
+        "question": "How long does the review process take?",
+        "answer": "Timelines depend on the specific program. Typically:\n• Fast grants: 1–3 weeks;\n• Large programs: 4–8 weeks.\nYou will be automatically notified of any changes to your application status."
+      },
+      {
+        "id": "quest-9",
+        "question": "How is the grant amount determined?",
+        "answer": "The amount depends on the scale of the project, the justified budget, and the grantmaker's capacity. Each program has its own funding limits."
+      },
+      {
+        "id": "quest-10",
+        "question": "Is reporting required?",
+        "answer": "Yes. Grantees are required to:\n• Provide reports on the targeted use of funds;\n• Demonstrate the social impact achieved.\nThe reporting format depends on the terms of the specific grantmaker."
+      },
+      {
+        "id": "quest-11",
+        "question": "How can I increase my chances of getting funded?",
+        "answer": "We recommend:\n• Clearly describe the problem the project solves;\n• Show real and measurable impact;\n• Provide a detailed and transparent budget;\n• Avoid vague and general wording."
+      },
+      {
+        "id": "quest-12",
+        "question": " Are there any platform fees?",
+        "answer": "In the early stages, most platform features are free. In the future, service fees or premium features may be introduced to expand user capabilities."
+      },
+      {
+        "id": "quest-13",
+        "question": "How can I contact support?",
+        "answer": "You can:\n• Write via the feedback form on the website;\n• Contact us by email: startup@dogood.ink"
+      }
+    ]
+  },
+  "becomeVolunteer": {
+    "title": "“Goodness requires resources. We empower those who change the world.”",
+    "volunteerBtn": "Become a volunteer"
+  }
+}

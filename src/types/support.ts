@@ -6,7 +6,7 @@ export interface AccordionItemData {
 }
 
 export interface MenuCategoryData {
-  title: string;
+  title?: string;
   items: AccordionItemData[];
 }
 
@@ -27,10 +27,10 @@ export interface IMenuCategoriesProps {
 }
 
 export interface IAccordionDataProps {
-  activeCategory: MenuCategoryKey;
+  activeCategory?: MenuCategoryKey;
   categoryData: MenuCategoryData;
-  openItem: string | null;
-  toggleItem: (itemId: string) => void;
+  openItem?: string | null;
+  toggleItem?: (itemId: string) => void;
   appliedFilter?: string;
 }
 export interface ICustomAccordionProps {
