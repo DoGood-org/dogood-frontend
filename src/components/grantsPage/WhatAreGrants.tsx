@@ -16,7 +16,7 @@ export const WhatAreGrants = (): React.JSX.Element => {
       </h2>
       <p className="text-sm text-center mb-4">{t('description')}</p>
       <p className="text-sm text-center mb-7">{t('description1')}</p>
-      <div className="flex flex-col gap-4 md:grid md:grid-cols-2">
+      <div className="flex flex-col gap-4 md:gap-5 lg:gap-8 md:flex-row md:justify-center">
         <UniversalList items={FORWHOGRANTS_LIST} title={t('forWho.title')} />
         <UniversalList
           items={TYPESOFGRANTS_LIST}
