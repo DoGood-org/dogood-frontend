@@ -10,7 +10,7 @@ export const UniversalList = ({
   title,
 }: UniversalListProps): React.JSX.Element => {
   return (
-    <div className="bg-background-grants border border-[#00BBA733] p-4 rounded-lg md:p-6 lg:w-129">
+    <div className="bg-background-grants border border-[#00BBA733] p-4 rounded-lg md:p-6 md:w-78.5 lg:w-129">
       <h3 className="text-base text-btn-hover text-start mb-3">{title}</h3>
       <ul className="w-full flex flex-wrap justify-start gap-2">
         {items.map((item, index) => (

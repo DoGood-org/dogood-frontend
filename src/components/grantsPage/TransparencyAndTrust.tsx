@@ -3,9 +3,9 @@ import { getTransparencyAndTrustGrants } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { Section } from '../ui/Section';
-import GrantsMob from '@/assets/images/grants/GrantsMob.jpg';
-import GrantsTabl from '@/assets/images/grants/GrantsTabl.jpg';
-import GrantsDesk from '@/assets/images/grants/GrantsDesk.jpg';
+import GrantsMob from '@/assets/images/grants/GrantsMob.webp';
+import GrantsTabl from '@/assets/images/grants/GrantsTabl.webp';
+import GrantsDesk from '@/assets/images/grants/GrantsDesk.webp';
 import Image from 'next/image';
 import { useResponsiveImage } from '@/hooks/useResponsiveImage';
 
