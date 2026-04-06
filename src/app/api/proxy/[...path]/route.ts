@@ -47,10 +47,20 @@ async function handler(
 
   console.log(`Proxy request method: ${init}`);
 
-  if (req.method !== 'GET' && req.method !== 'HEAD') {
-    init.body = req.body;
-  }
+  // if (req.method !== 'GET' && req.method !== 'HEAD') {
+  //   init.body = req.body;
+  // }
 
+  //----------------------delete after--------------------------
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    const contentType = req.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      init.body = JSON.stringify(await req.json());
+    } else {
+      init.body = await req.text();
+    }
+  }
+  //-------------------------------------------------------------
   const callBackend: () => Promise<any> = () => fetch(target.toString(), init);
 
   // ---- 1st attempt ----
