@@ -41,7 +41,7 @@ export interface UserOrganization {
   id: string;
   userId: string;
   organizationId: string;
-  role: OrganizationRole | Role;
+  role: OrganizationRole;
   status: MembershipStatus;
   user: UserDetailedProps;
 }

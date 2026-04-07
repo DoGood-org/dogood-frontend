@@ -6,8 +6,7 @@ import { CaretDown } from '@/components/icons';
 import { adminOptions, memberOptions } from '@/constants/taskFilterOptions';
 import { Check } from '../icons/Check';
 import { motion, AnimatePresence } from 'framer-motion';
-
-type Role = 'ADMIN' | 'MODERATOR' | 'MEMBER' | 'USER';
+import { Role } from '@/types';
 
 interface TaskFilterProps {
   role?: Role;
