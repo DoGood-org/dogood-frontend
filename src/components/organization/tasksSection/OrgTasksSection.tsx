@@ -1,8 +1,8 @@
 'use client';
 
 import { Plus } from '@/components/icons';
-import { isAdminOrModerator, Role } from '@/lib/getUserRole';
-import { TaskProps } from '@/types';
+import { isAdminOrModerator } from '@/lib/getUserRole';
+import { Role, TaskProps } from '@/types';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { JSX, useEffect, useState } from 'react';

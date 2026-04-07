@@ -1,4 +1,5 @@
-import { isAdminOrModerator, Role } from '@/lib/getUserRole';
+import { isAdminOrModerator } from '@/lib/getUserRole';
+import { Role } from '@/types';
 import { useTranslations } from 'next-intl';
 
 export const useOrgSectionTitle = (role: Role, section: string): string => {
