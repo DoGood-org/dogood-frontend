@@ -4,19 +4,19 @@
 
 export const apiRoutes = {
   auth: {
-    signup: '/signup',
-    login: '/login',
+    signup: '/auth/signup',
+    login: '/auth/login',
 
     verifyEmail: (verificationCode: string) =>
-      `/verify-email/${verificationCode}`,
+      `/auth/verify-email/${verificationCode}`,
 
-    refreshToken: '/refresh-token',
-    logout: '/logout',
-    resendVerification: '/resend-verification',
-    forgotPassword: '/forgot-password',
+    refreshToken: '/auth/refresh-token',
+    logout: '/auth/logout',
+    resendVerification: '/auth/resend-verification',
+    forgotPassword: '/auth/forgot-password',
     resetPassword: (resetPasswordToken: string) =>
-      `/reset-password/${resetPasswordToken}`,
-    resentForgotPassword: '/resent-forgot-password',
+      `/auth/reset-password/${resetPasswordToken}`,
+    resentForgotPassword: '/auth/resent-forgot-password',
   },
 
   // current user proxy

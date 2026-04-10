@@ -2,11 +2,10 @@
 
 import type { JSX } from 'react/jsx-runtime';
 import type { Tlocale } from '@/types/locale';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { authStore } from '@/zustand/stores/authStore';
 import { toast } from 'react-toastify';
-import { IAuthResponse } from '@/zustand/services/authService';
 
 type Props = {
   code: string;
@@ -19,34 +18,46 @@ export default function VerifyEmailClient({
 }: Props): JSX.Element {
   const router = useRouter();
   const { verify, status } = authStore();
+  const isMounted = useRef(false); // Защита от двойного вызова в dev-режиме
 
   useEffect(() => {
-    (async (): Promise<void> => {
+    // Если запрос уже был отправлен или код пустой — выходим
+    if (isMounted.current || !code) return;
+    isMounted.current = true;
+
+    const performVerification = async (): Promise<void> => {
       try {
-        const res: IAuthResponse = await verify(code);
-        console.log('Email verification result:', res);
-        if (res.ok) {
-          toast.success('Email verified successfully');
+        const res = await verify(code);
+        if (res?.user) {
+          toast.success('Email verified successfully!');
         } else {
-          toast.error('Failed to verify email');
+          toast.error('Verification failed or link expired');
         }
       } catch (e) {
-        console.error('Email verification failed:', e);
+        console.error('Email verification error:', e);
+        toast.error('Something went wrong');
       }
-    })();
-
-    return (): void => {
-      console.log('Cleanup after VerifyEmailClient');
     };
+
+    void performVerification();
   }, [code, verify]);
 
-  // 2) React to status changes (redirect / UI)
+  // Редирект при изменении статуса
   useEffect(() => {
-    if (status === 'authenticated') {
-      const t = setTimeout(() => {
-        router.replace(`/${locale}/login`);
+    // Если статус изменился на authorized (или как у вас в сторе)
+    if (status === 'authorized') {
+      const timer = setTimeout(() => {
+        router.replace(`/${locale}/account`); // Логичнее в аккаунт, если он уже вошел
       }, 2000);
-      return (): void => clearTimeout(t);
+      return (): void => clearTimeout(timer);
+    }
+
+    // Если статус 'forbidden' после попытки — можно отправить на логин
+    if (status === 'forbidden') {
+      const timer = setTimeout(() => {
+        router.replace(`/${locale}/login`);
+      }, 3000);
+      return (): void => clearTimeout(timer);
     }
   }, [status, router, locale]);
 
