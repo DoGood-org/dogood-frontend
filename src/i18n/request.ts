@@ -10,6 +10,7 @@ export async function loadMessages(locale: string): Promise<Messages> {
     'hero',
     'about',
     'aboutPage',
+    'donatePage',
     'map',
     'faq',
     'auth',
