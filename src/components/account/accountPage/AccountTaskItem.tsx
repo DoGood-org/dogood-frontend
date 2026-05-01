@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { JSX } from 'react';
 
 export const AccountTaskItem = ({ task }: TaskItemProps): JSX.Element => {
-  const { id, title, description, avatar, category } = task;
+  const { id, title, description, picture, category } = task;
   const t = useTranslations('account');
   const locale = useLocale();
 
@@ -21,7 +21,7 @@ export const AccountTaskItem = ({ task }: TaskItemProps): JSX.Element => {
     <div className="bg-card p-8 rounded-lg flex flex-col lg:flex-row md:gap-8 justify-between">
       <div className="flex flex-col md:flex-row gap-8">
         <Image
-          src={avatar ? avatar : '/account/NoTask.png'}
+          src={picture ? picture : '/account/NoTask.png'}
           alt={`${title} logo`}
           width={241}
           height={241}

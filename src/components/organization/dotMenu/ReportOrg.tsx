@@ -5,12 +5,12 @@ import { JSX, useCallback, useEffect, useRef, useState } from 'react';
 import { LinkCopied, More, Settings } from '@/components/icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Role } from '@/lib/getUserRole';
 import { ReportModal } from '@/components/publicAccount/ReportModal';
 import { ReportItem } from './ReportItem';
 import { CopyLink } from './CopyLink';
 import { LeaveOrg } from './LeaveOrg';
 import { LeaveModal } from './LeaveModal';
+import { Role } from '@/types';
 
 export const ReportOrg = ({
   role,
@@ -65,6 +65,8 @@ export const ReportOrg = ({
     </>
   );
 
+  const guestVersion = <CopyLink setIsOpen={setIsOpen} setCopied={setCopied} />;
+
   const memberVersion = (
     <ul>
       {baseList}
@@ -79,6 +81,7 @@ export const ReportOrg = ({
     MODERATOR: adminVersion,
     MEMBER: memberVersion,
     USER: userVersion,
+    GUEST: guestVersion,
   };
 
   return (

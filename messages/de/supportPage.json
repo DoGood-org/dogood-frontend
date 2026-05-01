@@ -1,0 +1,193 @@
+{
+  "supportData": {
+    "title": "Unterstützen Sie unsere Mission – DoGood Impact Inc.",
+    "description": "Erfahren Sie mehr über DoGood Impact Inc. und unsere Mission, Menschen, Anliegen und Unternehmen durch technologiegestützte Hilfsbereitschaft und soziale Wirkung miteinander zu verbinden."
+  },
+  "title": "Häufig gestellte Fragen ",
+  "filterPlaceholder": "Suche",
+  "filterLabel": "Ihre Frage",
+  "imageHeroAlt": "Hero-Bild",
+  "contactSupportText": "Sie finden keine Antwort auf Ihre Frage? Schreiben Sie uns",
+  "contactSupportBtn": "Kontaktieren Sie uns",
+  "noResultText": "Keine Ergebnisse gefunden",
+  "menu": {
+    "general": "Allgemeines",
+    "volunteer": "Freiwilliger",
+    "donor": "Spender",
+    "personInNeed": "Eine Person in Not",
+    "charitableOrg": "Wohltätigkeitsorganisation  /  NGOs ",
+    "business": "Geschäft"
+  },
+  "questions": {
+    "general": {
+      "title": "Allgemeine Fragen",
+      "items": [
+        {
+          "id": "gen-1",
+          "question": "Was ist DoGood Impact Inc.?",
+          "answer": "Es handelt sich um ein missionsorientiertes Technologieunternehmen, das eine globale Plattform für gegenseitige Hilfe der nächsten Generation aufbaut. Wir schaffen eine digitale Brücke, auf der Freundlichkeit, verstärkt durch künstliche Intelligenz (KI), sichtbar, messbar und ansteckend wird."
+        },
+        {
+          "id": "gen-2",
+          "question": "Welches Problem löst DoGood?",
+          "answer": "Wir lösen das Paradoxon, dass Millionen von Menschen bereit sind zu geben und Millionen dringend Hilfe benötigen, diese beiden Gruppen jedoch aufgrund von Fragmentierung, mangelndem Vertrauen und der Komplexität der Hilfeleistung allzu oft nicht zueinander finden."
+        },
+        {
+          "id": "gen-3",
+          "question": "Ist DoGood nur eine App oder ein soziales Netzwerk?",
+          "answer": "DoGood ist mehr als eine App oder ein soziales Netzwerk. Es ist ein umfassendes digitales Ökosystem, das gute Absichten in überprüfte Maßnahmen und reale Auswirkungen umsetzt."
+        },
+        {
+          "id": "gen-4",
+          "question": "Wer kann bei DoGood mitmachen?",
+          "answer": "eder kann sich bei DoGood anmelden – Einzelpersonen, Freiwillige, Spender, Menschen in Not, NGOs und Unternehmen."
+        },
+        {
+          "id": "gen-5",
+          "question": "Ist DoGood kostenlos nutzbar?",
+          "answer": "Die Basisnutzung von DoGood ist kostenlos. Optionale Premium-Funktionen für erweiterte Analysen, Organisationstools oder verbesserte Sichtbarkeit sind verfügbar."
+        },
+        {
+          "id": "gen-6",
+          "question": "In welchen Ländern ist DoGood tätig?",
+          "answer": "DoGood wurde mit Blick auf globale Skalierbarkeit entwickelt. Der erste Start erfolgt in den Vereinigten Staaten, danach wird die Plattform nach Europa expandieren, beginnend mit dem deutschen Markt."
+        }
+      ]
+    },
+    "volunteer": {
+      "title": "Freiwilliger",
+      "items": [
+        {
+          "id": "vol-1",
+          "question": "Wer kann sich bei DoGood als Freiwilliger engagieren?",
+          "answer": "Jeder, der Zeit, Fähigkeiten oder einfach nur die Bereitschaft hat, zu helfen, kann sich als Freiwilliger engagieren. DoGood richtet sich an Menschen, die etwas bewegen möchten – egal, ob sie fünf Minuten Zeit, Fachwissen oder langfristige Verfügbarkeit mitbringen. "
+        },
+        {
+          "id": "vol-2",
+          "question": "Wie hilft mir DoGood dabei, die richtigen Freiwilligenangebote zu finden? ",
+          "answer": "GoodBot AI analysiert Ihre Fähigkeiten, Interessen, Ihren Standort und Ihre Verfügbarkeit, um Sie mit geprüften Projekten zusammenzubringen, bei denen Ihr Beitrag die größte Wirkung erzielen kann."
+        },
+        {
+          "id": "vol-3",
+          "question": "Kann ich mich sowohl lokal als auch international ehrenamtlich engagieren? ",
+          "answer": "Ja. Über GoodMap können Sie je nach Ihren Vorlieben und Möglichkeiten Angebote in Ihrer Nähe entdecken oder globale Initiativen unterstützen."
+        },
+        {
+          "id": "vol-4",
+          "question": "Woher weiß ich, dass meine Hilfe tatsächlich etwas bewirkt hat?",
+          "answer": "Jede abgeschlossene Aktion wird nachverfolgt und in einen messbaren Wirkungsbericht umgewandelt. Ihr Beitrag wird sichtbar, überprüfbar und Teil Ihrer persönlichen Wirkungshistorie."
+        },
+        {
+          "id": "vol-5",
+          "question": " Was motiviert Freiwillige bei DoGood über Altruismus hinaus? ",
+          "answer": "Die Plattform umfasst Gamification-Elemente wie Erfolge, Levels und Reputationspunkte, die den Freiwilligen helfen, Fortschritte, Anerkennung und ein Gefühl der gemeinsamen Zielsetzung zu spüren."
+        }
+      ]
+    },
+    "donor": {
+      "title": "Spender",
+      "items": [
+        {
+          "id": "don-1",
+          "question": "Wie stellt DoGood sicher, dass meine Spende verantwortungsvoll verwendet wird?",
+          "answer": "Alle Anfragen werden mit Hilfe von GoodGuard AI überprüft, und die Transparenz wird durch den Karma-Index und die zukünftige Proof-of-Good-Blockchain-Verifizierung verstärkt."
+        },
+        {
+          "id": "don-2",
+          "question": "Kann ich kleine oder wiederkehrende Spenden tätigen?",
+          "answer": "Ja. GoodCoins sind für Kleinstspenden konzipiert, sodass Sie auch mit kleinen Beträgen flexibel und kontinuierlich gute Zwecke unterstützen können."
+        },
+        {
+          "id": "don-3",
+          "question": "Kann ich die Wirkung meiner Spende nachverfolgen?",
+          "answer": "Auf jeden Fall. Spender erhalten klare, nachvollziehbare Berichte, aus denen hervorgeht, wie ihre Spende verwendet wurde und welche konkreten Auswirkungen sie hatte."
+        },
+        {
+          "id": "don-4",
+          "question": "Kann ich spenden, ohne öffentlich sichtbar zu sein?",
+          "answer": "Ja. DoGood respektiert die Privatsphäre und gewährleistet gleichzeitig Transparenz und Verantwortlichkeit innerhalb des Systems."
+        }
+      ]
+    },
+    "personInNeed": {
+      "title": "Fragen zu Personen in Not",
+      "items": [
+        {
+          "id": "pin-1",
+          "question": "Wer kann auf DoGood um Hilfe bitten?",
+          "answer": "Einzelpersonen, Familien oder Gemeinschaften, die sich in einer Notlage befinden oder einen dauerhaften Bedarf haben, können über die Plattform einen Antrag auf Unterstützung stellen. "
+        },
+        {
+          "id": "pin-2",
+          "question": " Welche Arten von Hilfe kann ich beantragen?",
+          "answer": "Die Anfragen können von materieller und finanzieller Hilfe bis hin zu Wissen, Fähigkeiten, emotionaler Unterstützung oder ehrenamtlicher Arbeit reichen."
+        },
+        {
+          "id": "pin-3",
+          "question": " Wie schützt DoGood Menschen in Not vor Betrug oder Ausbeutung? ",
+          "answer": "Alle Anfragen durchlaufen einen ersten Überprüfungsprozess, der von GoodGuard AI unterstützt wird, um Sicherheit, Legitimität und Würde zu gewährleisten. "
+        },
+        {
+          "id": "pin-4",
+          "question": " Benötige ich technische Kenntnisse, um DoGood zu nutzen?",
+          "answer": "Nein. Die Plattform ist intuitiv und barrierefrei gestaltet, damit Menschen in Not problemlos Unterstützung finden können. "
+        },
+        {
+          "id": "pin-5",
+          "question": " Wie lange dauert es, bis ich Hilfe bekomme? ",
+          "answer": "Die Reaktionszeit hängt von der Dringlichkeit, dem Standort und den verfügbaren Helfern ab, aber das System priorisiert kritische Fälle."
+        }
+      ]
+    },
+    "charitableOrg": {
+      "title": "CWohltätigkeitsorganisationen / NGOs",
+      "items": [
+        {
+          "id": "char-1",
+          "question": "Wie können NGOs von einer Mitgliedschaft bei DoGood profitieren?",
+          "answer": "NGOs erhalten Zugang zu einem globalen Pool von geprüften Freiwilligen, Spendern und Partnern, die alle über ein einziges digitales Ökosystem koordiniert werden."
+        },
+        {
+          "id": "char-2",
+          "question": "Wie hilft DoGood NGOs dabei, Ressourcen effizienter zu verwalten?",
+          "answer": "Die Plattform reduziert Fragmentierung, indem sie die Koordination, Berichterstattung und das Freiwilligenmanagement in einer sicheren Umgebung zentralisiert."
+        },
+        {
+          "id": "char-3",
+          "question": "Können NGOs ihre Wirkung auf DoGood präsentieren?",
+          "answer": "Ja. Verifizierte Wirkungsberichte erhöhen die Sichtbarkeit, Glaubwürdigkeit und das Vertrauen bei Spendern und Freiwilligen."
+        },
+        {
+          "id": "char-4",
+          "question": "Ist DoGood sowohl für kleine lokale NGOs als auch für große internationale Organisationen geeignet?",
+          "answer": "Auf jeden Fall. Die Plattform ist auf Skalierbarkeit ausgelegt und unterstützt Unternehmen jeder Größe."
+        }
+      ]
+    },
+    "business": {
+      "title": "Geschäft",
+      "items": [
+        {
+          "id": "bus-1",
+          "question": "Wie können Unternehmen an DoGood teilnehmen? ",
+          "answer": "Unternehmen können sich über CSR-Partnerschaften engagieren und ihren Mitarbeitern ermöglichen, sich ehrenamtlich zu beteiligen, zu spenden und die sozialen Auswirkungen auf strukturierte Weise zu verfolgen."
+        },
+        {
+          "id": "bus-2",
+          "question": "Welchen Mehrwert bietet DoGood für CSR-Programme von Unternehmen?",
+          "answer": "DoGood bietet messbare Wirkungsanalysen, transparente Berichterstattung und sinnvolle Mitarbeiterbindung im Einklang mit sozialen Werten. "
+        },
+        {
+          "id": "bus-3",
+          "question": "Kann das ehrenamtliche Engagement von Mitarbeitern nachverfolgt und gemeldet werden?",
+          "answer": "Kann das ehrenamtliche Engagement von Mitarbeitern nachverfolgt und gemeldet werden?"
+        },
+        {
+          "id": "bus-4",
+          "question": "Warum ist DoGood für sozial verantwortliche Marken attraktiv?",
+          "answer": "DoGood kombiniert ethische KI, Transparenz und menschenzentriertes Design und hilft Marken dabei, Technologie, Vertrauen und reale Auswirkungen in Einklang zu bringen."
+        }
+      ]
+    }
+  }
+}

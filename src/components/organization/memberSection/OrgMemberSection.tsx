@@ -1,6 +1,6 @@
 import { useOrgSectionTitle } from '@/hooks/useOrgSectionTitle';
-import { isAdminOrModerator, Role } from '@/lib/getUserRole';
-import { UserOrganization } from '@/types';
+import { isAdminOrModerator } from '@/lib/getUserRole';
+import { Role, UserOrganization } from '@/types';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { JSX } from 'react';
@@ -11,9 +11,11 @@ import { OrgMemberList } from './OrgMemberList';
 export const OrgMemberSection = ({
   members,
   role,
+  orgId,
 }: {
   members: UserOrganization[];
   role: Role;
+  orgId: string;
 }): JSX.Element => {
   const t = useTranslations('organization');
 
@@ -39,7 +41,7 @@ export const OrgMemberSection = ({
         )}
       </div>
 
-      <OrgMemberList members={activeMembers} />
+      <OrgMemberList members={activeMembers} orgId={orgId} />
     </>
   );
 };

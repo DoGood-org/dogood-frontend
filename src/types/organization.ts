@@ -1,3 +1,4 @@
+// import { Role } from '@/lib/getUserRole';
 import {
   ContentPanelProps,
   ContentProps,
@@ -32,6 +33,7 @@ export interface OrganizationListProps {
 }
 
 export type OrganizationRole = 'ADMIN' | 'MODERATOR' | 'MEMBER';
+export type Role = OrganizationRole | 'USER' | 'GUEST';
 
 export type MembershipStatus = 'ACTIVE' | 'INVITED' | 'REMOVED' | 'PENDING';
 
@@ -67,6 +69,7 @@ export interface OrgMobileNavProps {
   onChange: (view: string) => void;
 }
 
+// api types
 export interface OrganizationApiResponse {
   status: string;
   code: string;
@@ -74,4 +77,52 @@ export interface OrganizationApiResponse {
   data: {
     organization: OrganizationDetailedProps;
   };
+}
+
+export interface IDeleteMemberOrgRequest {
+  userId: string;
+  organizationId: string;
+}
+
+export interface IMemberValue {
+  userId: string;
+  role: string;
+  status: string;
+}
+export interface IAddMemberOrgRequest extends IMemberValue {
+  organizationId: string;
+}
+
+export interface AddMemberResponse {
+  code: string;
+  message: string;
+  member: IMemberValue;
+}
+
+export interface DeleteMemberResponse {
+  code: string;
+  message: string;
+}
+
+export interface UpdateMemberRoleRequest {
+  organizationId: string;
+  userId: string;
+  role: string;
+}
+
+export enum Permission {
+  JOIN_ORGANIZATION = 'JOIN_ORGANIZATION',
+  LEAVE_ORGANIZATION = 'LEAVE_ORGANIZATION',
+  VIEW_MEMBERS = 'VIEW_MEMBERS',
+  ADD_MEMBER = 'ADD_MEMBER',
+  REMOVE_MEMBER = 'REMOVE_MEMBER',
+  ADD_MODERATOR = 'ADD_MODERATOR',
+  REMOVE_MODERATOR = 'REMOVE_MODERATOR',
+  DISMISS_MODERATOR = 'DISMISS_MODERATOR',
+  VIEW_REQUESTS = 'VIEW_REQUESTS',
+  APPROVE_REQUEST = 'APPROVE_REQUEST',
+  CHANGE_ROLES = 'CHANGE_ROLES',
+  SEND_MESSAGE = 'SEND_MESSAGE',
+  CHAT_TO_ORGANIZATION = 'CHAT_TO_ORGANIZATION',
+  DELETE_ORG = 'DELETE_ORG',
 }

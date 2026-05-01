@@ -1,27 +1,40 @@
 import type { SVGProps } from 'react';
+
 const List = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
     fill="none"
-    viewBox="0 0 24 24"
+    viewBox="0 0 48 48"
     {...props}
   >
+    <mask
+      id="prefix__list"
+      width={48}
+      height={48}
+      x={0}
+      y={0}
+      maskUnits="userSpaceOnUse"
+      style={{
+        maskType: 'luminance',
+      }}
+    >
+      <path
+        fill="#fff"
+        d="M40 0H8a8 8 0 0 0-8 8v32a8 8 0 0 0 8 8h32a8 8 0 0 0 8-8V8a8 8 0 0 0-8-8"
+      />
+    </mask>
     <g
-      stroke="#F1F1F1"
+      stroke="#00C1AC"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.5}
-      clipPath="url(#prefix__a)"
+      strokeWidth={2}
+      mask="url(#prefix__list)"
     >
-      <path d="M3.75 12h16.5M3.75 6h16.5M3.75 18h16.5" />
+      <path d="M14 14h20M14 24h20M14 34h20" />
     </g>
-    <defs>
-      <clipPath id="prefix__a">
-        <path fill="#fff" d="M0 0h24v24H0z" />
-      </clipPath>
-    </defs>
   </svg>
 );
+
 export default List;

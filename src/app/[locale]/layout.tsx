@@ -12,6 +12,7 @@ import { ThemeInitializer } from '@/components/layout/theme/ThemeInitializer';
 import { MainLayoutContent } from '@/components/layout/mainLayout/MainLayout';
 import { Header } from '@/components/layout/header/Header';
 import { Footer } from '@/components/layout/footer/Footer';
+import { ReactQueryProvider } from '@/components/providers/ReactQueryProvider';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -40,14 +41,16 @@ export default async function LocaleLayout({
         className={`${montserrat.variable} antialiased flex flex-col justify-between min-h-[100vh]`}
       >
         <MainLayoutContent user={me}>
-          <ThemeInitializer />
-          <NextIntlClientProvider locale={locale}>
-            <Header />
-            <main className="pt-[80px] lg:pt-[72px]">{children}</main>
-            <Footer />
-          </NextIntlClientProvider>
+          <ReactQueryProvider>
+            <ThemeInitializer />
+            <NextIntlClientProvider locale={locale}>
+              <Header />
+              <main className="pt-[80px] lg:pt-[72px]">{children}</main>
+              <Footer />
+            </NextIntlClientProvider>
+            <ToastProvider />
+          </ReactQueryProvider>
         </MainLayoutContent>
-        <ToastProvider />
       </body>
     </html>
   );

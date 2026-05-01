@@ -1,22 +1,16 @@
+import {
+  MOCK_CURRENT_USER,
+  MOCK_ORGANIZATIONS,
+} from '@/components/main/map/mockTasks';
+import CreateTaskPage from '@/components/tasks/createTaskPage/CreateTaskPage';
+
 const TaskPage: React.FC = () => {
   return (
-    <div
-      className=" 
-  bg-background
-      px-[4px]
-      pt-[168px]
-  pb-[64px]
-  my-container
-  w-full
-  min-h-[calc(100dvh-160px)]
-text-foreground  
-  flex
-  flex-col
-  items-center
-  justify-center
-  "
-    >
-      task Page
+    <div>
+      <CreateTaskPage
+        initialUser={MOCK_CURRENT_USER}
+        initialOrganizations={MOCK_ORGANIZATIONS}
+      />
     </div>
   );
 };

@@ -1,0 +1,157 @@
+{
+  "grantsData": {
+    "title": "Verändere die Welt – erhalte Unterstützung für gute Zwecke",
+    "description": "Das DoGood-Förderprogramm wurde ins Leben gerufen, um ehrenamtliche, soziale, ökologische und innovative Initiativen zu unterstützen.",
+    "highlightText": "Das DoGood-Förderprogramm wurde"
+  },
+  "applyBtn": "Beantragen Sie eine Förderung",
+  "becomeBtn": "Werden Sie Stifter",
+  "title": "Was sind DoGood-Zuschüsse? ",
+  "description": "DoGood Grants bietet Menschen, Organisationen und Gemeinschaften, die positive Veränderungen vorantreiben, finanzielle und materielle Unterstützung. Unsere Mission ist es, Freundlichkeit für alle sichtbar, skalierbar und erreichbar zu machen.",
+  "description1": "Ob Sie eine lokale Initiative starten, Umweltmaßnahmen ausweiten oder innovative Lösungen für das Gute entwickeln – wir sind hier, um Ihre Wirkung zu verstärken.",
+  "forWho": {
+    "title": "ür wen?",
+    "cat1": "Freiwillige",
+    "cat2": "Nichtregierungsorganisationen",
+    "cat3": "Gemeinden",
+    "cat4": "Schulen",
+    "cat5": "Startups",
+    "cat6": "Ökologische Initiativen",
+    "cat7": "Kreativpersonen"
+  },
+  "whatFinance": {
+    "title": "Was finanzieren wir?",
+    "cat1": "Veranstaltungen",
+    "cat2": "Projekte",
+    "cat3": "Forschung",
+    "cat4": "Hilfsprogramme",
+    "cat5": "Digitale Tools",
+    "cat6": "Bildung"
+  },
+  "titleOfTypes": "Arten von Zuschüssen ",
+  "types": [
+    {
+      "type-1": "Kleinstzuschüsse",
+      "desc-1": "Schnelle Hilfe für kleine gute Taten"
+    },
+    {
+      "type-2": "Sozialhilfeleistungen",
+      "desc-2": "Unterstützung für Initiativen für Gemeinden, Schulen, Rentner"
+    },
+    {
+      "type-3": "Tierzuschüsse",
+      "desc-3": "Unterstützung für Unterkünfte und unabhängige Aktivisten"
+    },
+    {
+      "type-4": "Ökobeihilfen",
+      "desc-4": "Naturschutz, Klimaschutz, Recycling"
+    },
+    {
+      "type-5": "Techno-Zuschüsse",
+      "desc-5": "Startups, Anwendungen, Forschung"
+    },
+    {
+      "type-6": "Stipendien für junge Menschen",
+      "desc-6": "Für Schüler und Jugendverbände"
+    }
+  ],
+  "titleOfTransparency": "Transparenz und Vertrauen",
+  "transparency": [
+    {
+      "type-1": "Jeder Antrag wird einer ethischen Prüfung unterzogen.",
+      "desc-1": "Wir prüfen jedes Projekt sorgfältig, um sicherzustellen, dass es mit unseren Werten übereinstimmt, den Gemeinschaften keinen Schaden zufügt und eine sinnvolle soziale Wirkung erzielt. Entscheidungen werden transparent und unter Einbeziehung unabhängiger Experten getroffen."
+    },
+    {
+      "type-2": "Jeder Antrag wird einer ethischen Prüfung unterzogen.",
+      "desc-2": "Finanzielle Transparenz hat für uns oberste Priorität. Spender können genau nachvollziehen, wie die Mittel verwendet werden – von Materialien und Logistik bis hin zur direkten Unterstützung der Begünstigten. Regelmäßige Berichte sind online verfügbar."
+    },
+    {
+      "type-3": "Messbare Wirkung",
+      "desc-3": "Jedes Projekt umfasst eine Wirkungsanalyse: Wie vielen Menschen wurde geholfen, was hat sich in den Gemeinden verändert und welche Geschichten stecken hinter den Zahlen? Wir glauben, dass Vertrauen durch Taten entsteht – und wir sind bereit, dies zu zeigen."
+    }
+  ],
+  "whatPeopleSay": "Was die Leute sagen",
+  "howToApply": {
+    "title": "Wie man sich bewirbt",
+    "step1": "Registrierung auf der DoGood-Plattform",
+    "step2": "Erstellen einer kurzen Beschreibung der Initiative",
+    "step3": "Ausfüllen des Förderantrags",
+    "step4": "Warten auf Prüfung (bis zu 14 Tage)",
+    "step5": "Erhalten einer Antwort und Empfehlungen",
+    "step6": "Erhalt von Finanzierung / Unterstützung durch Mentoren"
+  },
+  "questions": {
+    "title": "Beliebte Fragen",
+    "items": [
+      {
+        "id": "quest-1",
+        "question": "Welche Arten von Fördermitteln sind auf der Plattform verfügbar?",
+        "answer": "Wir arbeiten nach einem hybriden Fördermodell, das Folgendes umfasst:\nOffene Ausschreibungen (Open Grant Pool);\n• Individuelle Förderprogramme von Partnern (Grant Programs);\n• Thematische und regionale Initiativen.\n• Die Förderungen können je nach Geldgeber von lokalen Projekten bis hin zu internationalen Initiativen reichen."
+      },
+      {
+        "id": "quest-2",
+        "question": "Wer kann eine Förderung beantragen?",
+        "answer": "Antragsberechtigt sind:\n• Non-Profit-Organisationen;\n• Stiftungen;\n• Soziale Unternehmen;\n• Initiativgruppen;\n• Einzelpersonen (abhängig vom Programm).\nHinweis: Jedes Programm hat seine eigenen Kriterien, die in der Beschreibung angegeben sind."
+      },
+      {
+        "id": "quest-3",
+        "question": "Stellt DoGood direkt Fördermittel bereit?",
+        "answer": "In dieser Phase der Plattformentwicklung vergibt DoGood keine eigenen Fördermittel. Wir agieren als Plattform, die:\n• Geldgeber und Projekte miteinander verbindet;\n• Transparenz im Prozess gewährleistet;\n• Den Auswahlprozess und die Interaktion vereinfacht.\nDie Finanzierung erfolgt direkt durch Partner oder Geldgeber."
+      },
+      {
+        "id": "quest-4",
+        "question": "Garantiert die Plattform eine Finanzierung?",
+        "answer": "Nein. DoGood garantiert keine Finanzierung, erhöht jedoch die Chancen von Projekten erheblich durch:\n• Hohe Sichtbarkeit des Projekts bei Geldgebern;\n• Direkten Zugang zur Datenbank der Fördermittelgeber;\n• Strukturierte und professionelle Antragseinreichung."
+      },
+      {
+        "id": "quest-5",
+        "question": "Wie bewerbe ich mich um eine Förderung?",
+        "answer": "1. Registrieren Sie sich auf der Plattform.\n2. Wählen Sie den Bereich \"Apply for a Grant\" aus.\n3. Füllen Sie das Antragsformular aus.\n4. Senden Sie Ihren Antrag ab. Danach wird er für die Prüfung durch die Fördermittelgeber verfügbar sein."
+      },
+      {
+        "id": "quest-6",
+        "question": "Kann ich mich um mehrere Fördermittel bewerben?",
+        "answer": "Ja. Sie können einen universellen Antrag einreichen oder ihn an die Anforderungen bestimmter Programme anpassen."
+      },
+      {
+        "id": "quest-7",
+        "question": "Wie werden Projekte ausgewählt?",
+        "answer": "Die Auswahl erfolgt durch die Fördermittelgeber auf der Grundlage von:\n• Sozialer Wirkung (Impact);\n• Relevanz für das Programmthema;\n• Qualität der Umsetzung und des Teams;\n• Budgettransparenz.\nIn Zukunft wird auf der Plattform zudem ein KI-Empfehlungssystem implementiert, um das Matching zu verbessern."
+      },
+      {
+        "id": "quest-8",
+        "question": "Wie lange dauert der Prüfungsprozess?",
+        "answer": "Die Zeitrahmen hängen vom jeweiligen Programm ab. Typischerweise:\n• Schnelle Förderungen: 1–3 Wochen;\n• Große Programme: 4–8 Wochen.\nSie werden automatisch über Statusänderungen Ihres Antrags informiert."
+      },
+      {
+        "id": "quest-9",
+        "question": "Wie wird die Förderhöhe bestimmt?",
+        "answer": "Die Höhe hängt vom Umfang des Projekts, dem begründeten Budget und den Möglichkeiten des Fördermittelgebers ab. Jedes Programm hat eigene Fördergrenzen."
+      },
+      {
+        "id": "quest-10",
+        "question": "Ist eine Berichtspflicht erforderlich?",
+        "answer": "Ja. Fördermittelempfänger sind verpflichtet:\n• Berichte über die zweckgebundene Verwendung der Mittel vorzulegen;\n• Die erzielte soziale Wirkung nachzuweisen.\nDas Berichtsformat hängt von den Bedingungen des jeweiligen Fördermittelgebers ab."
+      },
+      {
+        "id": "quest-11",
+        "question": "Wie kann ich meine Chancen auf eine Förderung erhöhen?",
+        "answer": "Wir empfehlen:\n• Das Problem, das das Projekt löst, klar zu beschreiben;\n• Reale und messbare Wirkung aufzuzeigen;\n• Ein detailliertes und transparentes Budget vorzulegen;\n• Vage und allgemeine Formulierungen zu vermeiden."
+      },
+      {
+        "id": "quest-12",
+        "question": "Fallen Plattformgebühren an?",
+        "answer": "In der frühen Phase sind die meisten Funktionen der Plattform kostenlos. In Zukunft könnten Servicegebühren oder Premium-Funktionen eingeführt werden, um die Möglichkeiten der Nutzer zu erweitern."
+      },
+      {
+        "id": "quest-13",
+        "question": "Wie kann ich den Support kontaktieren?",
+        "answer": "Sie können:\n• Über das Feedback-Formular auf der Website schreiben;\n• Uns per E-Mail kontaktieren: startup@dogood.ink"
+      }
+    ]
+  },
+  "becomeVolunteer": {
+    "title": "“Gutes braucht Ressourcen. Wir stärken diejenigen, die die Welt verändern.“",
+    "volunteerBtn": "Werden Sie Freiwilliger"
+  }
+}
