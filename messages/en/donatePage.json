@@ -25,6 +25,10 @@
       "description": "Add your bank information, or invite your fundraiser beneficiary to add theirs, and start receiving funds."
     }
   },
+  "supportMission": {
+    "title": "Support Our Mission",
+    "description": "Your donation helps us keep the platform transparent and accessible to everyone who wants to change the world for the better. Every contribution makes a difference. 💚"
+  },
   "metrics": {
     "metricsOne": {
       "count": "12,500+",
