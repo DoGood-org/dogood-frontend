@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 const DonatePage: React.FC = () => {
-  const  t = useTranslations('donatePage');
+  const t = useTranslations('donatePage');
   return (
     <>
       <DonateHero />
