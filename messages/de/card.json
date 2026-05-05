@@ -1,24 +1,38 @@
 {
   "title": "Zahlung",
-  "fullName": "Vollständiger Name",
+  "yourInformation": "Ihre Informationen",
+  "firstName": "Vorname",
+  "lastName": "Nachname",
+  "email": "E-Mail-Adresse",
+  "postCode": "Postleitzahl",
   "country": "Land",
-  "city": "Stadt",
+  "streetAddress": "Straße und Hausnummer",
+  "requiredNote": "Felder mit * sind Pflichtfelder",
   "amountQuestion": "Wie viel muss gesammelt werden?",
   "add": "Hinzufügen",
   "validation": {
     "required": "Dieses Feld ist erforderlich",
     "nameTooShort": "Der Name ist zu kurz",
-    "countryTooShort": "Der Ländername ist zu kurz",
-    "cityTooShort": "Der Stadtname ist zu kurz",
-    "cardRequired": "Bitte geben Sie Ihre Kartendaten ein"
+    "emailInvalid": "Ungültige E-Mail-Adresse",
+    "cardRequired": "Bitte geben Sie Ihre Kartendaten ein",
+    "cardNumberIncomplete": "Kartennummer ist unvollständig",
+    "cardExpiryIncomplete": "Ablaufdatum ist unvollständig",
+    "cardCvcIncomplete": "CVC ist unvollständig"
   },
+  "cardDetails": {
+    "title": "Kartendaten",
+    "number": "Kartennummer",
+    "expiry": "Ablaufdatum",
+    "cvc": "CVV"
+  },
+  "paymentMethod": "Zahlungsmethode",
   "cardPeriod": "Karten­gültigkeits­dauer",
   "edit": "Bearbeiten",
   "delete": "Löschen",
   "confirmDelete": "Sind Sie sicher, dass Sie die Karte löschen möchten?",
   "processing": "Verarbeitung...",
   "donate": "Spenden",
-      "checkout": {
+  "checkout": {
     "errorCreateSession": "Es konnte keine Checkout-Sitzung erstellt werden. Bitte versuchen Sie es erneut.",
     "paymentUnavailable": "Das Zahlungssystem ist nicht verfügbar.",
     "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten."

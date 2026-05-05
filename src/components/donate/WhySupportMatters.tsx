@@ -16,7 +16,7 @@ export default function WhySupportMatters(): JSX.Element {
   return (
     <Section withContainer={true}>
       <Container className="flex  flex-col lg:flex-row gap-8 rounded-xl justify-between py-16 bg-[linear-gradient(45deg,#102024,#103738)] text-white">
-        <div className="flex flex-col not-lg:items-center not-lg:text-center gap-4">
+        <div className="flex flex-col gap-4 not-lg:items-center not-lg:text-center">
           <Logo className="" />
           <h2 className="text-h2">{supportText.title}</h2>
         </div>

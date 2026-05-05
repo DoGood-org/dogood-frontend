@@ -1,4 +1,6 @@
 import { CardData } from '@/types';
+import { InferType } from 'yup';
+import { donationSchema } from '@/lib/validation/donationSchema';
 
 export type DonationData = CardData & {
   amount: number;
@@ -6,14 +8,7 @@ export type DonationData = CardData & {
   donationType: DonationType;
 };
 
-export interface DonationFormValues {
-  fullName: string;
-  city: string;
-  country: string;
-  amount: number;
-  currency: 'USD' | 'EUR';
-  donationType: DonationType;
-}
+export type DonationFormValues = InferType<typeof donationSchema>;
 
 export interface DonationFormProps {
   onSuccess: (data: CardData) => void;
@@ -21,4 +16,4 @@ export interface DonationFormProps {
   setIsSubmitting: (value: boolean) => void;
 }
 
-export type DonationType = 'USER' | 'ORGANIZATION';
+export type DonationType = 'USER' | 'ORGANIZATION' | 'PROJECT' | 'LINE';

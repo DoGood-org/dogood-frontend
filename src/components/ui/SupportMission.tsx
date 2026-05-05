@@ -13,6 +13,7 @@ type SupportMissionProps = {
   image?: string;
   href: string;
   className?: string;
+  onClick?: () => void;
 };
 
 export const SupportMission: React.FC<SupportMissionProps> = ({
@@ -22,6 +23,7 @@ export const SupportMission: React.FC<SupportMissionProps> = ({
   image,
   href,
   className,
+  onClick,
 }) => {
   const t = useTranslations('aboutPage');
   const SupportMission = t.raw('supportMission') as any;
@@ -41,7 +43,7 @@ export const SupportMission: React.FC<SupportMissionProps> = ({
             </div>
 
             <div className="flex justify-end ">
-              <Button className="  w-fit flex items-end ">
+              <Button className="  w-fit flex items-end " onClick={onClick}>
                 <Link href={href}>
                   {buttonText || SupportMission.buttonText}
                 </Link>

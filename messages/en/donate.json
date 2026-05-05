@@ -1,4 +1,16 @@
 {
+  "donateTarget": {
+    "title": "Donate to what",
+    "user": "To a specific volunteer",
+    "organization": "On the platform",
+    "project": "On the project",
+    "line": "On the line"
+  },
+  "communityConsent": {
+    "hideNamePublicly": "Don't display my name publicly on the fundraiser.",
+    "marketingUpdates": "Get occasional marketing updates from GoFundMe. You may unsubscribe at any time.",
+    "contactByNonprofit": "I would like to be contacted by this nonprofit about other ways that I can help."
+  },
   "donate": [
     {
       "water": "Can provide clean water for one person for a year",

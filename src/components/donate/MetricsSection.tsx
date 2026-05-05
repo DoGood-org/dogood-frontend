@@ -30,13 +30,13 @@ export default function MetricsSection(): JSX.Element {
 
   return (
     <Section withContainer={false}>
-      <ul className="flex justify-center items-stretch  gap-8 flex-wrap max-w-xl md:max-w-2xl lg:max-w-7xl mx-auto">
+      <ul className="flex flex-wrap items-stretch justify-center max-w-xl gap-8 mx-auto md:max-w-2xl lg:max-w-7xl">
         {metrics.map((metric, index) => (
           <li
             key={index}
-            className="text-center flex flex-col h-full items-center max-w-xs   gap-4 "
+            className="flex flex-col items-center h-full max-w-xs gap-4 text-center "
           >
-            <div className="border  p-4 rounded-full w-fit">
+            <div className="p-4 border rounded-full w-fit">
               <metric.icon className="size-10" />
             </div>
             <h3 className="text-[#2C8C8C] font-bold">{metric.count}</h3>

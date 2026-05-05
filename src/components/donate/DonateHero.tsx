@@ -5,18 +5,24 @@ import { Container } from '../ui/Container';
 import { Button } from '../ui/Button';
 import { VectorRight } from '../icons';
 
-export default function DonateHero(): JSX.Element {
+type DonateHeroProps = {
+  onDonateClick?: () => void;
+};
+
+export default function DonateHero({
+  onDonateClick,
+}: DonateHeroProps): JSX.Element {
   const t = useTranslations('donatePage');
   const DonateHeroText = t.raw('hero') as any;
 
   return (
     <Section
       withContainer={false}
-      className="  bg-dots  min-h-[600px] lg:min-h-[700px] flex items-center "
+      className="  bg-dots  min-h-150 lg:min-h-175 flex items-center "
     >
-      <Container className="flex flex-col items-center gap-8 max-w-4xl text-center">
+      <Container className="flex flex-col items-center max-w-4xl gap-8 text-center">
         <h1 className="text-h1">{DonateHeroText.title}</h1>
-        <ul className="flex gap-8 flex-wrap justify-center">
+        <ul className="flex flex-wrap justify-center gap-8">
           <li className="list-disc marker:text-[#2C8C8C]">
             {DonateHeroText.subTitle.subOne}
           </li>
@@ -27,9 +33,9 @@ export default function DonateHero(): JSX.Element {
             {DonateHeroText.subTitle.subThree}
           </li>
         </ul>
-        <Button className="group">
+        <Button className="group" onClick={onDonateClick}>
           {DonateHeroText.heroButton}
-          <VectorRight className="size-3 group-hover:translate-x-2 transition" />
+          <VectorRight className="transition size-3 group-hover:translate-x-2" />
         </Button>
       </Container>
     </Section>
