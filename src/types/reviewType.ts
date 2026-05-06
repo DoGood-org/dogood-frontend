@@ -6,11 +6,10 @@ export interface UserProps {
   avatar?: string;
 }
 
-export interface RatingProps
-  extends DetailedHTMLProps<
-    HTMLAttributes<HTMLUListElement>,
-    HTMLUListElement
-  > {
+export interface RatingProps extends DetailedHTMLProps<
+  HTMLAttributes<HTMLUListElement>,
+  HTMLUListElement
+> {
   isEditable?: boolean;
   rating: number;
   setRating?: (rating: number) => void;

@@ -50,8 +50,8 @@ export const DonationCardPreview = ({
   return (
     <li
       key={card.paymentMethodId}
-      className="border-2 border-[#696969] p-3 rounded-lg bg-[#FFFCFC] text-base 
-        w-[288px] flex flex-col justify-between 
+      className="border-2 border-[#696969] p-3 rounded-lg bg-[#FFFCFC] text-base
+        w-full min-h-27.5 flex flex-col justify-between
         transition-all duration-200
         hover:border-[#00C1AC] focus:border-[#00C1AC] focus:outline-none"
     >

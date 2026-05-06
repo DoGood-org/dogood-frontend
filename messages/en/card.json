@@ -1,24 +1,38 @@
 {
   "title": "Payment",
-  "fullName": "Full name",
+  "yourInformation": "Your information",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "email": "Email Address",
+  "postCode": "Post Code",
   "country": "Country",
-  "city": "City",
+  "streetAddress": "Street Address",
+  "requiredNote": "Fields marked with * are required",
   "amountQuestion": "How much needs to be raised?",
   "add": "Add",
   "validation": {
     "required": "This field is required",
     "nameTooShort": "Name is too short",
-    "countryTooShort": "Country name is too short",
-    "cityTooShort": "City name is too short",
-    "cardRequired": "Please enter your card details"
+    "emailInvalid": "Invalid email address",
+    "cardRequired": "Please enter your card details",
+    "cardNumberIncomplete": "Card number is incomplete",
+    "cardExpiryIncomplete": "Card expiry is incomplete",
+    "cardCvcIncomplete": "Card CVC is incomplete"
   },
+  "cardDetails": {
+    "title": "Card details",
+    "number": "Number card",
+    "expiry": "Expiration Date",
+    "cvc": "CVV"
+  },
+  "paymentMethod": "Payment method",
   "cardPeriod": "Card validity period",
   "edit": "Edit",
   "delete": "Delete",
   "confirmDelete": "Are you sure you want to delete the card?",
   "processing": "Processing...",
   "donate": "Donate",
-    "checkout": {
+  "checkout": {
     "errorCreateSession": "Unable to create checkout session. Please try again.",
     "paymentUnavailable": "Payment system is unavailable.",
     "unexpectedError": "An unexpected error has occurred."
