@@ -1,6 +1,7 @@
 {
   "basic": {
     "titleSect": "Einstellungen",
+    "createSect": "Organisation erstellen",
     "title": "Grundlegende Informationen",
     "name": {
       "title": "Name",
@@ -70,5 +71,15 @@
   "cancelBtn": "Abbrechen",
   "deleteBtn": "Organisation löschen",
   "submitBtn": "Einreichen",
-  "resetBtn": "Zurücksetzen"
+  "createBtn": "Speichern",
+  "resetBtn": "Zurücksetzen",
+  "closeBtn": "Schließen",
+  "success": "Ihre Änderungen wurden erfolgreich gespeicherty",
+  "createSuccess": "Sie haben erfolgreich eine neue Organisation erstellt!",
+  "createError": "Fehler beim Erstellen der Organisation. Bitte versuche es später erneut.",
+  "delSuccess": "Sie haben eine Organisation erfolgreich gelöscht!",
+  "delError": "Fehler beim Löschen der Organisation. Bitte versuche es später erneut.",
+  "error": "Fehler beim Speichern der Änderungen. Bitte versuche es später erneut.",
+  "placeholder": "Organisationen suchen...",
+  "loading": "Wird geladen..."
 }

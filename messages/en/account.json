@@ -78,5 +78,7 @@
   "selfHarmReport": "Self-harm",
   "misinfoReport": "Misinformation",
   "reportError": "Please select a reason.",
-  "reportSendButton": "Send"
+  "reportSendButton": "Send",
+  "createOrgButton": "Create",
+  "searchOrgButton": "Search"
 }

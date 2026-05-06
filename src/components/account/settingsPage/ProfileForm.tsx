@@ -27,6 +27,8 @@ import { DatePicker } from './DatePicker';
 import { SelectField } from './SelectField';
 import { ImageUploadWithPreview } from './ImageUploadWithPreview';
 import { LocationSelect } from './LocationSelect';
+import { UserDetailedProps } from '@/types';
+import { useRouter } from 'next/navigation';
 
 const PaymentList = lazyImport(
   () => import('@/components/account/settingsPage/PaymentList'),
@@ -39,9 +41,14 @@ const genderOptions = [
   { value: 'OTHER', label: 'Other' },
 ];
 
-export const Settings = (): React.JSX.Element => {
+export const ProfileForm = ({
+  user,
+}: {
+  user: UserDetailedProps;
+}): React.JSX.Element => {
   const [image, setImage] = useState<any>(null);
   const t = useTranslations('settings');
+  const router = useRouter();
   const oldAvatarRef = useRef<string>('');
   const {
     register,
@@ -54,17 +61,20 @@ export const Settings = (): React.JSX.Element => {
   } = useForm<SettingsFormValues>({
     resolver: yupResolver(settingsSchema) as Resolver<SettingsFormValues>,
     defaultValues: {
-      name: undefined,
-      bio: undefined,
-      avatar: undefined,
+      name: user.name,
+      bio: user.profile?.bio || undefined,
+      avatar: user.profile?.avatar || undefined,
       location: {
-        country: undefined,
-        region: undefined,
-        city: undefined,
+        country: user.location?.country,
+        region: user.location?.region,
+        city: user.location?.city,
       },
-      gender: undefined,
-      birthDate: undefined,
-      phoneNumber: undefined,
+      gender:
+        (user.profile?.gender as 'MALE' | 'FEMALE' | 'OTHER') || undefined,
+      birthDate: user.profile?.birthDate
+        ? new Date(user.profile.birthDate)
+        : undefined,
+      phoneNumber: user.profile?.phoneNumber || undefined,
       paymentOptionIds: undefined,
     },
   });
@@ -121,7 +131,6 @@ export const Settings = (): React.JSX.Element => {
     if (oldAvatar && oldAvatar !== newAvatar) {
       await deleteFromCloudinary(oldAvatar);
     }
-    console.log(data);
     const response = await sendProfile({
       name: data.name,
       bio: data.bio,
@@ -144,6 +153,7 @@ export const Settings = (): React.JSX.Element => {
 
     if (response.ok) {
       toast.success(t('success'));
+      router.push('/account');
     } else {
       toast.error(t('error'));
     }
@@ -172,7 +182,7 @@ export const Settings = (): React.JSX.Element => {
       cardPreviewService.cleanupUnattachedCard();
     };
   }, []);
-
+  console.log(user);
   return (
     <Section withContainer={false} className="pt-15 md:pt-16 lg:pt-20">
       <form

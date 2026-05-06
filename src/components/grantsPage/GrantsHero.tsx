@@ -1,3 +1,4 @@
+'use client';
 import { useTranslations } from 'next-intl';
 import React, { JSX } from 'react';
 import { Section } from '../ui/Section';
@@ -6,7 +7,6 @@ import { Button } from '../ui/Button';
 
 export const GrantsHero = (): JSX.Element => {
   const t = useTranslations('grantsPage');
-
   return (
     <Section className="bg-[#6969690A] shadow-xl relative z-10">
       <div className="p-4 md:p-0 md:py-2.5 lg:py-16.75 lg:w-197 mx-auto ">

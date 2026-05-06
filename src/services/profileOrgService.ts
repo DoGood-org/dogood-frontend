@@ -5,8 +5,18 @@ export const sendOrgProfile = async (
   formData: ProfileOrgFormData,
   orgId: string
 ): Promise<FetchResult<ProfileOrgFormData>> => {
-  return fetchFromApi<ProfileOrgFormData>(`/organizations/${orgId}`, {
+  return fetchFromApi<ProfileOrgFormData>(`/organization/${orgId}`, {
     method: 'PATCH',
+    data: formData,
+    auth: true,
+  });
+};
+
+export const createOrg = async (
+  formData: ProfileOrgFormData
+): Promise<FetchResult<ProfileOrgFormData>> => {
+  return fetchFromApi<ProfileOrgFormData>('/organization/create', {
+    method: 'POST',
     data: formData,
     auth: true,
   });
@@ -15,7 +25,7 @@ export const sendOrgProfile = async (
 export const deleteOrgProfile = async (
   orgId: string
 ): Promise<FetchResult<DeleteOrgResponse>> => {
-  return fetchFromApi(`/organizations/${orgId}`, {
+  return fetchFromApi(`/organization/${orgId}`, {
     method: 'DELETE',
     auth: true,
   });

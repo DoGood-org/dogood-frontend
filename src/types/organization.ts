@@ -126,3 +126,9 @@ export enum Permission {
   CHAT_TO_ORGANIZATION = 'CHAT_TO_ORGANIZATION',
   DELETE_ORG = 'DELETE_ORG',
 }
+
+export interface OrganizationFormProps {
+  organization?: OrganizationDetailedProps;
+  mode: 'create' | 'update';
+  setIsOpen?: (arg0: boolean) => void;
+}
