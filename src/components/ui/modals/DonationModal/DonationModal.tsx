@@ -6,7 +6,6 @@ import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import { DonationForm } from './DonationForm';
 import { PaymentSuccessModal } from './PaymentSuccessModal/PaymentSuccessModal';
-import { Spinner } from '@/components/ui/Spinner';
 import { ModalCloseButton } from '@/components/ui/ModalCloseButton';
 
 interface DonationModalProps {
@@ -14,12 +13,14 @@ interface DonationModalProps {
   onClose: () => void;
   wrapperClassName?: string;
   isUpperModal?: boolean;
+  scrollable?: boolean;
 }
 
 export const DonationModal = ({
   isOpen,
   onClose,
   wrapperClassName = '',
+  scrollable = false,
 }: DonationModalProps): JSX.Element => {
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,28 +46,25 @@ export const DonationModal = ({
       <ModalWrapper
         isOpen={isOpen}
         onClose={handleCloseOnSubmitting}
+        backdropClassName={cn(
+          'bg-black/50 backdrop-blur-sm',
+          scrollable && 'items-start overflow-y-auto pt-20 md:pt-24 pb-4'
+        )}
         wrapperClassName={cn(
-          'max-w-[354px] md:max-w-[574px] lg:max-w-[994px] p-5 md:p-9',
+          'max-w-[354px] md:max-w-[574px] lg:max-w-[994px] p-5 md:p-9 ',
           wrapperClassName
         )}
         ignoreSelectors={['.upper-modal']}
       >
         <ModalCloseButton
           onClick={handleCloseOnSubmitting}
-          className="top-5 right-5 
-                md:top-9 md:right-9"
+          className="top-5 right-5 md:top-9 md:right-9"
         />
-        <h2 className="text-base mb-3 text-center">{t('title')}</h2>
-        {isSubmitting ? (
-          <div className="flex justify-center items-center h-40">
-            <Spinner />
-          </div>
-        ) : (
-          <DonationForm
-            onSuccess={handleDonationSuccess}
-            setIsSubmitting={setIsSubmitting}
-          />
-        )}
+        <h2 className="mb-3 text-base text-center">{t('title')}</h2>
+        <DonationForm
+          onSuccess={handleDonationSuccess}
+          setIsSubmitting={setIsSubmitting}
+        />
       </ModalWrapper>
       {isPaymentSuccessful && (
         <PaymentSuccessModal

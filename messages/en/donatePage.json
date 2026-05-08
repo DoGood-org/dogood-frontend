@@ -1,0 +1,70 @@
+{
+  "hero": {
+    "title": "Your Impact Matters. Find Verified Causes and Change the World with Us.",
+    "subTitle": {
+      "subOne": "1M+ USD Raised",
+      "subTwo": "100+ Successful Projects",
+      "subThree": "Officially Registered NGO"
+    },
+    "heroButton": "Support our mission"
+  },
+  "steps": {
+    "title": "Fundraising on DoGood is easy, powerful, and trusted",
+    "stepOne": {
+      "title": "Use our tools to create your fundraiser",
+      "description": "You’ll be guided by prompts to add fundraiser details and set your goal. Make updates anytime.",
+      "sub": "Get tips for ",
+      "subLink": "starting your fundraiser."
+    },
+    "stepTwo": {
+      "title": "Reach donors by sharing",
+      "description": "Share your fundraiser link and use the resources in your dashboard to gain momentum."
+    },
+    "stepThree": {
+      "title": "Securely receive funds",
+      "description": "Add your bank information, or invite your fundraiser beneficiary to add theirs, and start receiving funds."
+    }
+  },
+  "supportMission": {
+    "title": "Support Our Mission",
+    "description": "Your donation helps us keep the platform transparent and accessible to everyone who wants to change the world for the better. Every contribution makes a difference. 💚"
+  },
+  "metrics": {
+    "metricsOne": {
+      "count": "12,500+",
+      "title": "People Helped",
+      "description": "Individuals and families who received direct support through our verified projects."
+    },
+    "metricsTwo": {
+      "count": "2,000+",
+      "title": "Needs Fulfilled",
+      "description": "Specific community needs met, from clean water access to educational resources."
+    },
+    "metricsThree": {
+      "count": "15+",
+      "title": "Regions Supported",
+      "description": "Communities across multiple countries benefiting from our global network."
+    }
+  },
+  "whySupportMatters": {
+    "title": "Why your support matters",
+    "steps": {
+      "stepOne": {
+        "title": "See real Impact",
+        "description": "Full transparency — you see where every donation goes."
+      },
+      "stepTwo": {
+        "title": "Stay connected",
+        "description": "Regular updates about the animals you support."
+      },
+      "stepThree": {
+        "title": "Be recognized",
+        "description": "A personal donor badge and your name on our donor wall"
+      },
+      "stepFour": {
+        "title": "Change a life",
+        "description": "Be the reason another Barsik finds a home"
+      }
+    }
+  }
+}

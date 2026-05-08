@@ -1,4 +1,16 @@
 {
+  "donateTarget": {
+    "title": "Wofür spenden",
+    "user": "An einen bestimmten Freiwilligen",
+    "organization": "Auf der Plattform",
+    "project": "Für ein Projekt",
+    "line": "Für die Front"
+  },
+  "communityConsent": {
+    "hideNamePublicly": "Meinen Namen auf der Spendenseite nicht öffentlich anzeigen.",
+    "marketingUpdates": "Gelegentliche Marketing-Updates erhalten. Du kannst dich jederzeit abmelden.",
+    "contactByNonprofit": "Ich möchte von dieser gemeinnützigen Organisation über andere Möglichkeiten kontaktiert werden, wie ich helfen kann."
+  },
   "donate": [
     {
       "water": "Kann sauberes Trinkwasser für eine Person für ein Jahr bereitstellen",
