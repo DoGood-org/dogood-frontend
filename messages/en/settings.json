@@ -81,5 +81,6 @@
   "delError": "Error deleting organization. Please try again later",
   "error": "Error saving changes. Please try again later",
   "placeholder": "Search organizations...",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "refreshErr": "Failed to refresh organizations"
 }

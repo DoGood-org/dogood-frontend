@@ -3,10 +3,12 @@
 import { CloseIcon, Search } from '@/components/icons';
 import { Input } from '@/components/ui/Input';
 import React, { JSX, useEffect, useState } from 'react';
-import { OrgSearchList } from './OrgSearchList';
-import { useSearchStore } from '@/zustand/stores/searchStore';
-import { useDebounce } from '@/hooks/useDebounce';
 import { useTranslations } from 'next-intl';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useDebounce } from '@/hooks/useDebounce';
+import { OrgSearchList } from './OrgSearchList';
+import { fetchOrganizationsByName } from '@/facades/organizationFacade';
+import type { OrganizationDetailedProps } from '@/types';
 
 interface ISearchOrg {
   setIsSearchOpen: (arg0: boolean) => void;
@@ -15,29 +17,57 @@ interface ISearchOrg {
 export const SearchOrgClient = ({
   setIsSearchOpen,
 }: ISearchOrg): JSX.Element => {
-  const {
-    organizations,
-    isLoading,
-    searchOrganizations,
-    clearOrganizations,
-    setSearchQuery,
-  } = useSearchStore();
-
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [searchInput, setSearchInput] = useState<string>('');
+  const [organizations, setOrganizations] = useState<
+    OrganizationDetailedProps[]
+  >([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const t = useTranslations('settings');
+
   const debouncedSearchQuery: string = useDebounce(searchInput, 500);
 
   useEffect((): void => {
-    setSearchQuery(debouncedSearchQuery);
-  }, [debouncedSearchQuery, setSearchQuery]);
+    const queryFromUrl = searchParams.get('search') || '';
+    setSearchInput(queryFromUrl);
+  }, [searchParams]);
 
   useEffect((): void => {
+    const params = new URLSearchParams(searchParams.toString());
+
     if (debouncedSearchQuery && debouncedSearchQuery.trim()) {
-      searchOrganizations();
+      params.set('search', debouncedSearchQuery);
     } else {
-      clearOrganizations();
+      params.delete('search');
     }
-  }, [debouncedSearchQuery, searchOrganizations, clearOrganizations]);
+
+    router.push(`?${params.toString()}`, { scroll: false });
+  }, [debouncedSearchQuery, router, searchParams]);
+
+  useEffect((): void => {
+    const queryFromUrl = searchParams.get('search');
+
+    const fetchOrganizations = async (): Promise<void> => {
+      if (!queryFromUrl || !queryFromUrl.trim()) {
+        setOrganizations([]);
+        return;
+      }
+
+      setIsLoading(true);
+      try {
+        const results = await fetchOrganizationsByName(queryFromUrl);
+        setOrganizations(results || []);
+      } catch (error) {
+        console.error('Search failed:', error);
+        setOrganizations([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchOrganizations();
+  }, [searchParams]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchInput(e.target.value);
@@ -62,7 +92,7 @@ export const SearchOrgClient = ({
       {isLoading ? (
         <div className="text-center py-4">Loading...</div>
       ) : (
-        <OrgSearchList organizations={organizations || []} />
+        <OrgSearchList organizations={organizations} />
       )}
     </div>
   );

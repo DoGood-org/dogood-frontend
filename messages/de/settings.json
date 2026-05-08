@@ -81,5 +81,6 @@
   "delError": "Fehler beim Löschen der Organisation. Bitte versuche es später erneut.",
   "error": "Fehler beim Speichern der Änderungen. Bitte versuche es später erneut.",
   "placeholder": "Organisationen suchen...",
-  "loading": "Wird geladen..."
+  "loading": "Wird geladen...",
+  "refreshErr": "Die Aktualisierung der Organisationen ist fehlgeschlagen"
 }
