@@ -28,3 +28,7 @@ export type DeleteModalControls = {
   setIsOpen: (arg0: boolean) => void;
   orgId: string;
 };
+export type AddModalControls = {
+  isOpen: boolean;
+  setIsOpen: (arg0: boolean) => void;
+};

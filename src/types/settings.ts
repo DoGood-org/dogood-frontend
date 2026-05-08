@@ -15,12 +15,13 @@ export interface ProfileFormData {
   paymentOptionIds?: number[];
 }
 export interface ProfileOrgFormData {
-  name?: string;
+  organizationName?: string;
+  description?: string;
   avatar?: string;
   location?: FormLocation;
   phoneNumber?: string;
+  email?: string;
   paymentOptionIds?: number[];
-  description?: string;
   moreInfo?: string;
 }
 

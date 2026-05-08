@@ -1,7 +1,6 @@
 import * as yup from 'yup';
 
-export const settingsOrgSchema = yup.object().shape({
-  name: yup.string().optional(),
+const baseOrgSchema = {
   avatar: yup.string().url('Invalid image URL').optional(),
   location: yup
     .object()
@@ -13,15 +12,35 @@ export const settingsOrgSchema = yup.object().shape({
     .optional(),
   phoneNumber: yup
     .string()
-    .matches(/^\+?[0-9\s\-\(\)]{7,}$/, 'Invalid phone number')
     .optional()
+    .transform((value) => (value === '' ? undefined : value))
+    .matches(/^\+?[0-9\s\-\(\)]{7,}$/, 'Invalid phone number')
     .nullable(),
-  paymentOptionIds: yup
-    .array()
-    .of(yup.number().integer().positive('Invalid payment option'))
-    .optional(),
-  description: yup.string().optional(),
-  moreInfo: yup.string().optional(),
+  email: yup.string().email().optional(),
+  stripeCustomerId: yup.string().optional(),
+  description: yup
+    .string()
+    .optional()
+    .transform((value) => (value === '' ? undefined : value)),
+  moreInfo: yup
+    .string()
+    .optional()
+    .transform((value) => (value === '' ? undefined : value)),
+};
+
+// For creation - organizationName is required
+export const createOrgSchema = yup.object().shape({
+  name: yup.string().required('Organization name is required'),
+  ...baseOrgSchema,
 });
 
-export type SettingsOrgFormValues = yup.InferType<typeof settingsOrgSchema>;
+// For updates - organizationName is optional
+export const updateOrgSchema = yup.object().shape({
+  name: yup.string().optional(),
+  ...baseOrgSchema,
+});
+
+export type CreateOrgFormValues = yup.InferType<typeof createOrgSchema>;
+export type UpdateOrgFormValues = yup.InferType<typeof updateOrgSchema>;
+
+export type SettingsOrgFormValues = CreateOrgFormValues | UpdateOrgFormValues;

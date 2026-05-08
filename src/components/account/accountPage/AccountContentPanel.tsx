@@ -10,6 +10,8 @@ import { ContentPanelProps } from '@/types';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { JSX, useState } from 'react';
+import { AddOrgModal } from './AddOrgModal';
+import { SearchOrg } from './SearchOrg';
 
 export const AccountContentPanel = ({
   views,
@@ -19,6 +21,8 @@ export const AccountContentPanel = ({
   const locale = useLocale();
   const isMobile = useMediaQuery('(max-width: 767px)');
   const isPublicProfilePage = useRouteMatch('/profile');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const [activeView, setActiveView] = useState(views[0].view);
   const activeData = views.find(({ view }) => view === activeView);
@@ -51,9 +55,33 @@ export const AccountContentPanel = ({
                 </Link>
               </Button>
             )}
+            {activeData?.id === 'organization' && (
+              <div className="flex gap-4 juctify-end">
+                <Button
+                  variant="primary"
+                  className="gap-[10px] mt-11 md:mt-0 align-right self-end"
+                  onClick={() => setIsModalOpen(!isModalOpen)}
+                >
+                  {t('createOrgButton')}
+                </Button>
+                <Button
+                  variant="primary"
+                  className="gap-[10px] mt-11 md:mt-0 align-right self-end"
+                  onClick={() => setIsSearchOpen(!isSearchOpen)}
+                >
+                  {t('searchOrgButton')}
+                </Button>
+              </div>
+            )}
           </div>
+          {isSearchOpen && activeData?.id === 'organization' && (
+            <SearchOrg setIsSearchOpen={setIsSearchOpen} />
+          )}
           {viewComponents[activeData.id]}
         </div>
+      )}
+      {isModalOpen && (
+        <AddOrgModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
       )}
     </Section>
   );

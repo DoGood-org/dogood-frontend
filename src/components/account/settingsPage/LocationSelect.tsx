@@ -39,15 +39,33 @@ export const LocationSelect = ({
     setCountries(allCountries);
   }, []);
 
-  // Update states when country changes
+  // Find country by name and get its ISO code for state lookup
+  const getCountryCodeByName = (countryName?: string): string | undefined => {
+    if (!countryName) return undefined;
+    const country = countries.find(
+      (c) => c.name.toLowerCase() === countryName.toLowerCase()
+    );
+    return country?.isoCode;
+  };
+
+  // Update states when country changes (handle both ISO code and name)
   useEffect(() => {
     if (!selectedCountry) {
       setStates([]);
       return;
     }
-    const countryStates = csc.getStatesOfCountry(selectedCountry);
+    // Check if selectedCountry is an ISO code or a name
+    const isISOCode = selectedCountry.length === 2;
+    let countryCode = selectedCountry;
+
+    if (!isISOCode) {
+      // If it's a name, find the ISO code
+      countryCode = getCountryCodeByName(selectedCountry) || '';
+    }
+
+    const countryStates = csc.getStatesOfCountry(countryCode);
     setStates(countryStates);
-  }, [selectedCountry]);
+  }, [selectedCountry, countries]);
 
   // Update cities when state changes
   useEffect(() => {
@@ -55,9 +73,27 @@ export const LocationSelect = ({
       setCities([]);
       return;
     }
-    const stateCities = csc.getCitiesOfState(selectedCountry, selectedState);
+
+    // Get country ISO code
+    const isCountryISOCode = selectedCountry.length === 2;
+    let countryCode = selectedCountry;
+    if (!isCountryISOCode) {
+      countryCode = getCountryCodeByName(selectedCountry) || '';
+    }
+
+    // Get state ISO code or find by name
+    let stateCode = selectedState;
+    const isStateISOCode = selectedState.length === 2;
+    if (!isStateISOCode && countryCode) {
+      const state = states.find(
+        (s) => s.name.toLowerCase() === selectedState.toLowerCase()
+      );
+      stateCode = state?.isoCode || '';
+    }
+
+    const stateCities = csc.getCitiesOfState(countryCode, stateCode);
     setCities(stateCities);
-  }, [selectedState, selectedCountry]);
+  }, [selectedState, selectedCountry, states]);
 
   return (
     <div className={`space-y-4 ${className}`}>
@@ -66,7 +102,7 @@ export const LocationSelect = ({
           value={selectedCountry}
           onValueChange={onCountryChange}
           options={countries.map((country) => ({
-            value: country.isoCode,
+            value: country.name, // Use name instead of isoCode
             label: country.name,
           }))}
           label={t('location.country.title')}
@@ -82,7 +118,7 @@ export const LocationSelect = ({
           value={selectedState}
           onValueChange={onStateChange}
           options={states.map((state) => ({
-            value: state.isoCode,
+            value: state.name, // Use name instead of isoCode
             label: state.name,
           }))}
           label={t('location.region.title')}

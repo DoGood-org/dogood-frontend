@@ -866,3 +866,18 @@ html {
     height: 0;
   }
 }
+
+.upper-modal {
+  z-index: 1000;
+}
+
+.modal-backdrop {
+  z-index: 999;
+  pointer-events: auto;
+}
+
+[data-radix-select-content],
+[role='listbox'] {
+  z-index: 1001 !important;
+  position: relative;
+}

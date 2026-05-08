@@ -13,6 +13,8 @@ export const OrganizationList = ({
 
   return (
     <Slider
+      itemClassName="p-0"
+      listClassName="gap-6"
       items={organizations}
       itemsPerSlide={2}
       renderItem={(organization, idx) => (

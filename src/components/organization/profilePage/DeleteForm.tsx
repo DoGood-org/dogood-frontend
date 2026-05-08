@@ -1,8 +1,10 @@
 'use client';
+import { refreshUserData } from '@/app/actions/userActions';
 import { Button } from '@/components/ui/Button';
 import { deleteOrgProfile } from '@/services/profileOrgService';
 import { DeleteModalControls } from '@/types/userReviewsType';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -13,15 +15,19 @@ export const DeleteForm: React.FC<DeleteModalControls> = ({
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const t = useTranslations('settings');
+  const router = useRouter();
 
   const handleDelOrg = async (orgId: string): Promise<void> => {
     setIsDeleting(true);
 
     const response = await deleteOrgProfile(orgId);
     if (response.ok) {
-      toast.success(t('successDel'));
+      toast.success(t('delSuccess'));
+      await refreshUserData();
+      router.refresh();
+      router.push('/account');
     } else {
-      toast.error(t('errorDel'));
+      toast.error(t('delError'));
     }
   };
   return (

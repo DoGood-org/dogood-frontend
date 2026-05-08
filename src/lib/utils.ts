@@ -41,8 +41,6 @@ import {
 import { TranslationFunction } from '@/types/mapType';
 import { IHowItWorksItem } from '@/types/howItWorksItem';
 import { ICategoryItem, IDistanceItem } from '@/types/filter.type';
-import csc from 'country-state-city';
-import { FormLocation } from '@/types/settings';
 import { MenuCategoryData, MenuCategoryKey } from '@/types/support';
 import { IGrantsItem } from '@/types/grantsType';
 
@@ -74,43 +72,6 @@ export const getHowItWorks = (t: TranslationFunction): IHowItWorksItem[] => [
   { icon: MakeBetter, title: t('block3') },
 ];
 
-export const getCountryIsoCode = (countryName: string | undefined): string => {
-  const country = csc.getAllCountries().find((c) => c.name === countryName);
-  return country?.isoCode || '';
-};
-
-export const getStateIsoCode = (
-  countryCode: string | undefined,
-  stateName: string | undefined
-): string => {
-  const state = csc
-    .getStatesOfCountry(countryCode!)
-    .find((s) => s.name === stateName);
-  return state?.isoCode || '';
-};
-
-export const getInitialLocation = (
-  location: FormLocation | undefined
-): {
-  country: string;
-  region: string;
-  city: string | undefined;
-} => {
-  if (!location) {
-    return { country: '', region: '', city: '' };
-  }
-
-  const countryCode = getCountryIsoCode(location.country);
-  const stateCode = countryCode
-    ? getStateIsoCode(countryCode, location.region)
-    : '';
-
-  return {
-    country: countryCode,
-    region: stateCode,
-    city: location.city,
-  };
-};
 //---------------------------------utils for Support Page----------------------------------
 
 export const menuCategories: MenuCategoryKey[] = [
