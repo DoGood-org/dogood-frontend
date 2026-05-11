@@ -21,30 +21,34 @@ type UseCardInputsReturn = {
 };
 
 export const useCardInputs = (): UseCardInputsReturn => {
-  const t = useTranslations('card');
+  const tCard = useTranslations('card');
+  const tSettings = useTranslations('settings');
 
   const createValidation = (field: Field): RegisterOptions<CardFormData> => ({
-    required: t('validation.required'),
+    required: tCard('validation.required'),
     minLength: {
       value: 2,
-      message: t(`validation.${field}TooShort`),
+      message:
+        field === 'name'
+          ? tCard('validation.nameTooShort')
+          : tCard('validation.nameTooShort'),
     },
   });
 
   const inputData = [
     {
       name: 'fullName',
-      placeholder: t('fullName'),
+      placeholder: tSettings('basic.name.title'),
       validation: createValidation('name'),
     },
     {
       name: 'country',
-      placeholder: t('country'),
+      placeholder: tSettings('location.country.title'),
       validation: createValidation('country'),
     },
     {
       name: 'city',
-      placeholder: t('city'),
+      placeholder: tSettings('location.city.title'),
       validation: createValidation('city'),
     },
   ] as const;

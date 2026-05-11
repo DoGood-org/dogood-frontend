@@ -31,15 +31,20 @@ export const useDonationSubmit = ({
   const elements = useElements();
 
   const onSubmit: SubmitHandler<DonationFormValues> = async (data) => {
-    if (!stripe || !elements) {
+    // Temporary debug log to inspect form payload while backend is unavailable.
+    console.log('[DonationForm] submit payload:', data);
+
+    const selectedPaymentMethodId = data.selectedPaymentMethodId?.trim();
+    const hasSelectedPaymentMethod = Boolean(selectedPaymentMethodId);
+
+    if (!stripe || (!elements && !hasSelectedPaymentMethod)) {
       toast.error(t('checkout.paymentUnavailable'));
       return;
     }
 
     if (
-      !cardCompletion.number ||
-      !cardCompletion.expiry ||
-      !cardCompletion.cvc
+      !hasSelectedPaymentMethod &&
+      (!cardCompletion.number || !cardCompletion.expiry || !cardCompletion.cvc)
     ) {
       setCardErrors((prev) => ({
         number: cardCompletion.number
@@ -55,39 +60,53 @@ export const useDonationSubmit = ({
 
     try {
       setIsSubmitting(true);
-      const cardElement = elements.getElement(CardNumberElement);
+      let paymentMethodId = selectedPaymentMethodId || '';
+      let paymentMethodCard: CardData['brand'] | null = null;
+      let paymentMethodLast4 = '';
+      let paymentMethodExpMonth = 0;
+      let paymentMethodExpYear = 0;
 
-      if (!cardElement) {
-        toast.error(t('checkout.unexpectedError'));
-        return;
-      }
+      if (!hasSelectedPaymentMethod) {
+        const cardElement = elements?.getElement(CardNumberElement);
 
-      const { paymentMethod, error: stripeError } =
-        await stripe.createPaymentMethod({
-          type: 'card',
-          card: cardElement,
-          billing_details: {
-            name: `${data.firstName} ${data.lastName}`.trim(),
-            email: data.email,
-            address: {
-              line1: data.streetAddress || undefined,
-              postal_code: data.postCode || undefined,
-              country: data.country || undefined,
+        if (!cardElement) {
+          toast.error(t('checkout.unexpectedError'));
+          return;
+        }
+
+        const { paymentMethod, error: stripeError } =
+          await stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+            billing_details: {
+              name: `${data.firstName} ${data.lastName}`.trim(),
+              email: data.email,
+              address: {
+                line1: data.streetAddress || undefined,
+                postal_code: data.postCode || undefined,
+                country: data.country || undefined,
+              },
             },
-          },
-        });
+          });
 
-      if (stripeError) {
-        setCardErrors((prev) => ({
-          ...prev,
-          number: stripeError.message ?? t('checkout.unexpectedError'),
-        }));
-        return;
-      }
+        if (stripeError) {
+          setCardErrors((prev) => ({
+            ...prev,
+            number: stripeError.message ?? t('checkout.unexpectedError'),
+          }));
+          return;
+        }
 
-      if (!paymentMethod?.card) {
-        toast.error(t('checkout.unexpectedError'));
-        return;
+        if (!paymentMethod?.card) {
+          toast.error(t('checkout.unexpectedError'));
+          return;
+        }
+
+        paymentMethodId = paymentMethod.id;
+        paymentMethodCard = paymentMethod.card.brand ?? '';
+        paymentMethodLast4 = paymentMethod.card.last4 ?? '';
+        paymentMethodExpMonth = paymentMethod.card.exp_month ?? 0;
+        paymentMethodExpYear = paymentMethod.card.exp_year ?? 0;
       }
 
       const response = await createCheckoutSession(data);
@@ -103,11 +122,11 @@ export const useDonationSubmit = ({
       }
 
       onSuccess({
-        paymentMethodId: paymentMethod.id,
-        brand: paymentMethod.card.brand ?? '',
-        last4: paymentMethod.card.last4 ?? '',
-        exp_month: paymentMethod.card.exp_month ?? 0,
-        exp_year: paymentMethod.card.exp_year ?? 0,
+        paymentMethodId,
+        brand: paymentMethodCard ?? '',
+        last4: paymentMethodLast4,
+        exp_month: paymentMethodExpMonth,
+        exp_year: paymentMethodExpYear,
         fullName: `${data.firstName} ${data.lastName}`.trim(),
         city: '',
         country: data.country || '',

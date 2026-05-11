@@ -9,6 +9,9 @@ import { DonationCardPreview } from './DonationCardPreview';
 import { PaymentMethodModal } from './PaymentMethodModal/PaymentMethodModal';
 import { CardData } from '@/types';
 import { Spinner } from '@/components/ui/Spinner';
+import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
+import { useFormContext } from 'react-hook-form';
+import { DonationFormValues } from '@/types/donationType';
 
 export const PaymentCardList = (): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -39,10 +42,13 @@ export const PaymentCardList = (): JSX.Element => {
   ]);
   const [isLoading, setIsLoading] = useState(true);
   const { tempCards } = cardPreviewStore();
+  const { watch, setValue } = useFormContext<DonationFormValues>();
+  const selectedPaymentMethodId = watch('selectedPaymentMethodId');
 
   const handleAddCard = (): void => {
     setOpen(true);
     setEditingId(null);
+    setValue('selectedPaymentMethodId', '', { shouldDirty: true });
   };
 
   useEffect(() => {
@@ -76,6 +82,12 @@ export const PaymentCardList = (): JSX.Element => {
     ? mergedCards.find((c) => c.paymentMethodId === editingId) || null
     : null;
 
+  const handleCardSelect = (paymentMethodId: string): void => {
+    const nextValue =
+      selectedPaymentMethodId === paymentMethodId ? '' : paymentMethodId;
+    setValue('selectedPaymentMethodId', nextValue, { shouldDirty: true });
+  };
+
   return (
     <div className="space-y-3">
       <h3 className="text-base">{tCard('paymentMethod')}</h3>
@@ -103,18 +115,29 @@ export const PaymentCardList = (): JSX.Element => {
               card={card}
               cardsFromDB={cardsFromDB}
               setCardsFromDB={setCardsFromDB}
+              isSelected={selectedPaymentMethodId === card.paymentMethodId}
+              onSelect={handleCardSelect}
+              onDeleteSuccess={(cardId) => {
+                if (selectedPaymentMethodId === cardId) {
+                  setValue('selectedPaymentMethodId', '', {
+                    shouldDirty: true,
+                  });
+                }
+              }}
             />
           ))}
         </div>
       )}
 
       {open && (
-        <PaymentMethodModal
-          wrapperClassName="upper-modal"
-          isOpen={open}
-          onClose={() => setOpen(false)}
-          editingCard={editingCard}
-        />
+        <StripeProviderLazy>
+          <PaymentMethodModal
+            wrapperClassName="upper-modal"
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            editingCard={editingCard}
+          />
+        </StripeProviderLazy>
       )}
     </div>
   );
