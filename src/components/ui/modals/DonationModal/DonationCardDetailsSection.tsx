@@ -23,6 +23,7 @@ export type DonationCardErrors = {
 };
 
 type DonationCardDetailsSectionProps = {
+  disabled?: boolean;
   cardErrors: DonationCardErrors;
   focusedElement: DonationCardField | null;
   onFocusChange: (field: DonationCardField | null) => void;
@@ -49,6 +50,7 @@ const stripeInputOptions = {
 };
 
 export const DonationCardDetailsSection = ({
+  disabled = false,
   cardErrors,
   focusedElement,
   onFocusChange,
@@ -68,16 +70,18 @@ export const DonationCardDetailsSection = ({
         <div
           className={cn(
             'h-12 rounded-lg bg-white text-[#0D0D0D] border p-3 flex items-center',
-            focusedElement === 'number'
-              ? 'border-transparent ring-1 ring-[#00c1ac]'
-              : 'border-[#111113]'
+            disabled
+              ? 'opacity-60 pointer-events-none border-[#11111366]'
+              : focusedElement === 'number'
+                ? 'border-transparent ring-1 ring-[#00c1ac]'
+                : 'border-[#111113]'
           )}
         >
           <CardNumberElement
-            options={stripeInputOptions}
+            options={{ ...stripeInputOptions, disabled }}
             onChange={onNumberChange}
-            onFocus={() => onFocusChange('number')}
-            onBlur={() => onFocusChange(null)}
+            onFocus={() => !disabled && onFocusChange('number')}
+            onBlur={() => !disabled && onFocusChange(null)}
             className="w-full"
           />
         </div>
@@ -95,16 +99,18 @@ export const DonationCardDetailsSection = ({
           <div
             className={cn(
               'h-12 rounded-lg bg-white text-[#0D0D0D] border p-3 flex items-center',
-              focusedElement === 'expiry'
-                ? 'border-transparent ring-1 ring-[#00c1ac]'
-                : 'border-[#111113]'
+              disabled
+                ? 'opacity-60 pointer-events-none border-[#11111366]'
+                : focusedElement === 'expiry'
+                  ? 'border-transparent ring-1 ring-[#00c1ac]'
+                  : 'border-[#111113]'
             )}
           >
             <CardExpiryElement
-              options={stripeInputOptions}
+              options={{ ...stripeInputOptions, disabled }}
               onChange={onExpiryChange}
-              onFocus={() => onFocusChange('expiry')}
-              onBlur={() => onFocusChange(null)}
+              onFocus={() => !disabled && onFocusChange('expiry')}
+              onBlur={() => !disabled && onFocusChange(null)}
               className="w-full"
             />
           </div>
@@ -121,16 +127,18 @@ export const DonationCardDetailsSection = ({
           <div
             className={cn(
               'h-12 rounded-lg bg-white text-[#0D0D0D] border p-3 flex items-center',
-              focusedElement === 'cvc'
-                ? 'border-transparent ring-1 ring-[#00c1ac]'
-                : 'border-[#111113]'
+              disabled
+                ? 'opacity-60 pointer-events-none border-[#11111366]'
+                : focusedElement === 'cvc'
+                  ? 'border-transparent ring-1 ring-[#00c1ac]'
+                  : 'border-[#111113]'
             )}
           >
             <CardCvcElement
-              options={stripeInputOptions}
+              options={{ ...stripeInputOptions, disabled }}
               onChange={onCvcChange}
-              onFocus={() => onFocusChange('cvc')}
-              onBlur={() => onFocusChange(null)}
+              onFocus={() => !disabled && onFocusChange('cvc')}
+              onBlur={() => !disabled && onFocusChange(null)}
               className="w-full"
             />
           </div>

@@ -11,6 +11,17 @@
     "marketingUpdates": "Gelegentliche Marketing-Updates erhalten. Du kannst dich jederzeit abmelden.",
     "contactByNonprofit": "Ich möchte von dieser gemeinnützigen Organisation über andere Möglichkeiten kontaktiert werden, wie ich helfen kann."
   },
+  "communityPrompt": {
+    "title": "Werde Teil unserer Community",
+    "description": "Wir senden dir Updates zur Wirkung deiner Spende und dazu, wie du die Natur durch Aktivismus, Spenden, Events und mehr schuetzen kannst. Du kannst dich jederzeit abmelden.",
+    "emailQuestion": "Ich moechte E-Mail-Updates erhalten (oder weiterhin erhalten):",
+    "smsQuestion": "Ich moechte WWF-SMS-Nachrichten erhalten:",
+    "yes": "Ja",
+    "no": "Nein",
+    "privacyPrefix": "Wir halten deine Informationen sicher. Sieh dir unsere",
+    "privacyLink": "Datenschutzrichtlinie",
+    "privacySuffix": "an, um zu erfahren, wie wir deine Daten verwenden."
+  },
   "donate": [
     {
       "water": "Kann sauberes Trinkwasser für eine Person für ein Jahr bereitstellen",

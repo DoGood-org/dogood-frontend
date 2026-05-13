@@ -43,9 +43,15 @@ export const donationSchema = yup.object().shape({
     .oneOf(['USER', 'ORGANIZATION', 'PROJECT', 'LINE'])
     .required('Donation type is required'),
 
+  selectedPaymentMethodId: yup.string().trim().nullable().optional(),
+
   emailUpdates: yup.boolean().required(),
 
   textMessages: yup.boolean().required(),
+
+  communityEmailUpdates: yup.boolean().required(),
+
+  communityTextMessages: yup.boolean().required(),
 
   hideNamePublicly: yup.boolean().required(),
 });

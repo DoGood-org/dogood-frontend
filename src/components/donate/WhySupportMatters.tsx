@@ -7,12 +7,7 @@ import { Container } from '../ui/Container';
 export default function WhySupportMatters(): JSX.Element {
   const t = useTranslations('donatePage');
   const supportText = t.raw('whySupportMatters') as any;
-  const steps = [
-    supportText.steps.stepOne,
-    supportText.steps.stepTwo,
-    supportText.steps.stepThree,
-    supportText.steps.stepFour,
-  ];
+
   return (
     <Section withContainer={true}>
       <Container className="flex  flex-col lg:flex-row gap-8 rounded-xl justify-between py-16 bg-[linear-gradient(45deg,#102024,#103738)] text-white">
@@ -21,12 +16,12 @@ export default function WhySupportMatters(): JSX.Element {
           <h2 className="text-h2">{supportText.title}</h2>
         </div>
         <ul className="flex flex-col gap-6">
-          {steps.map((step, index) => (
+          {supportText.steps.map((step: any, index: number) => (
             <li
               key={step.title}
-              className="flex items-center py-3 px-6 bg-[#2C8C8C] rounded-full gap-4 "
+              className="flex items-center gap-4 px-6 py-3 rounded-full bg-border "
             >
-              <p className=" flex h-15 min-w-15  items-center justify-center text-2xl  rounded-full bg-white text-[#2C8C8C]">
+              <p className="flex items-center justify-center text-2xl bg-white rounded-full h-15 min-w-15 text-border">
                 {index + 1}
               </p>
               <div className="flex flex-col gap-2">

@@ -19,6 +19,7 @@ import { PaymentCardList } from './PaymentCardList';
 import { PaymentsType } from './PaymentsType';
 import { DonateTarget } from './DonateTarget';
 import { CommunityConsent } from './CommunityConsent';
+import { CommunityEngagementBlock } from './CommunityEngagementBlock';
 import { DonationPersonalInfoSection } from './DonationPersonalInfoSection';
 import {
   DonationCardDetailsSection,
@@ -65,8 +66,11 @@ export const DonationForm = ({
       currency: initialValues.currency || 'USD',
       amount: initialValues.amount || undefined,
       donationType: initialValues.donationType || 'ORGANIZATION',
+      selectedPaymentMethodId: initialValues.selectedPaymentMethodId || '',
       emailUpdates: initialValues.emailUpdates ?? false,
       textMessages: initialValues.textMessages ?? false,
+      communityEmailUpdates: initialValues.communityEmailUpdates ?? true,
+      communityTextMessages: initialValues.communityTextMessages ?? true,
       hideNamePublicly: initialValues.hideNamePublicly ?? true,
     },
     mode: 'onTouched',
@@ -80,6 +84,8 @@ export const DonationForm = ({
 
   const amount = watch('amount');
   const currency = watch('currency');
+  const selectedPaymentMethodId = watch('selectedPaymentMethodId');
+  const hasSelectedCard = Boolean(selectedPaymentMethodId);
 
   const handleNumberChange = (
     event: StripeCardNumberElementChangeEvent
@@ -125,6 +131,8 @@ export const DonationForm = ({
 
         <DonationPersonalInfoSection />
 
+        <CommunityEngagementBlock />
+
         <CurrencyAndAmountInput
           currencies={currencies}
           amountName="amount"
@@ -134,6 +142,7 @@ export const DonationForm = ({
         <PaymentCardList />
 
         <DonationCardDetailsSection
+          disabled={hasSelectedCard}
           cardErrors={cardErrors}
           focusedElement={focusedElement}
           onFocusChange={setFocusedElement}
@@ -147,7 +156,7 @@ export const DonationForm = ({
           type="submit"
           variant="primary"
           className="w-full text-white"
-          disabled={isSubmitting || !stripe || !elements}
+          disabled={isSubmitting || !stripe || (!hasSelectedCard && !elements)}
         >
           {isSubmitting
             ? t('processing')
