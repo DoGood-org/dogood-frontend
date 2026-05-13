@@ -31,8 +31,6 @@ export const useDonationSubmit = ({
   const elements = useElements();
 
   const onSubmit: SubmitHandler<DonationFormValues> = async (data) => {
-    // Temporary debug log to inspect form payload while backend is unavailable.
-    console.log('[DonationForm] submit payload:', data);
 
     const selectedPaymentMethodId = data.selectedPaymentMethodId?.trim();
     const hasSelectedPaymentMethod = Boolean(selectedPaymentMethodId);
