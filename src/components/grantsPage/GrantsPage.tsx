@@ -5,7 +5,7 @@ import { TransparencyAndTrust } from './TransparencyAndTrust';
 import { TypesOfGrants } from './TypesOfGrants';
 import { HowToApply } from './HowToApply';
 import { FAQSection } from './FAQSection';
-import { WhatPeopleSay } from './WhatPeopleSay';
+import { WhatPeopleSay } from '../ui/globalReviews/WhatPeopleSay';
 import { BecameAVolunteer } from './BecameAVolunteer';
 
 export const GrantsPage = (): JSX.Element => {

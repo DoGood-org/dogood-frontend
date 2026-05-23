@@ -1,6 +1,6 @@
 import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
-import { IReviewsListApiResponse } from '@/types/grantsType';
-import { ReviewsFormData } from '@/types/reviews';
+import { IReviewsListApiResponse } from '@/types/globalReviews';
+import { ReviewsFormData } from '@/types/globalReviews';
 
 export const sendReview = async (
   formData: ReviewsFormData

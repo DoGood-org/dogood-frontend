@@ -1,6 +1,6 @@
 import React from 'react';
-import { Rating } from '../ui/Rating';
-import { IReview } from '@/types/grantsType';
+import { Rating } from '../Rating';
+import { IReview } from '@/types/globalReviews';
 
 export const ReviewItem = ({
   review,
