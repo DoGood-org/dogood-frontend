@@ -1,6 +1,6 @@
 'use client';
 
-import { IReview } from '@/types/grantsType';
+import { IReview } from '@/types/globalReviews';
 import React from 'react';
 import { ReviewItem } from './ReviewItem';
 

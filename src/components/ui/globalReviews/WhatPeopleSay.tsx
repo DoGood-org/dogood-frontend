@@ -2,11 +2,11 @@
 
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
-import { Section } from '../ui/Section';
+import { Section } from '../Section';
 import { ReviewsList } from './ReviewsList';
 import { getPlatformReviews } from '@/services/reviewsService';
 import mockData from './mock.json';
-import { IReview } from '@/types/grantsType';
+import { IReview } from '@/types/globalReviews';
 import ContentLoader from '@/components/ui/ContentLoader'; // Import directly
 
 export const WhatPeopleSay = (): React.JSX.Element => {
