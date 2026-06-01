@@ -13,9 +13,15 @@ export const OrganizationContentPanel = ({
 }: OrganizationContelPanelProps): JSX.Element => {
   const locale = useLocale();
   const isMobile = useMediaQuery('(max-width: 767px)');
+  // const isMobile = useMediaQuery('(max-width: 767px)');
+  // const [mounted, setMounted] = useState(false);
+  // const { matches: isMobile, isReady } = useMediaQuery('(max-width: 767px)');
 
-  const [activeView, setActiveView] = useState(views[0].view);
+  // const [activeView, setActiveView] = useState(views[0].view);
+  const [activeView, setActiveView] = useState(() => views[0]?.view);
   const activeData = views.find(({ view }) => view === activeView);
+
+  // console.log('VIEWS:', views);
 
   return (
     <Section className="pt-[26px] md:pt-[38px]">

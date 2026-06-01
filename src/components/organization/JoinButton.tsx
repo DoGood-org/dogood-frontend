@@ -4,6 +4,8 @@ import { JSX, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
 import { Modal } from '@/components/ui/Modal';
+import { createJoinRequest } from '@/services/joinRequestService';
+import { IJoinRequestApiData } from '@/types/joinRequest.type';
 // import { removeMemberFromOrganization } from '@/services/organizationService';
 
 export const JoinButton = ({ orgId }: { orgId: string }): JSX.Element => {
@@ -12,12 +14,21 @@ export const JoinButton = ({ orgId }: { orgId: string }): JSX.Element => {
   const [removeResponse, setRemoveResponse] = useState('');
   const [isUndoModalOpen, setIsUndoModalOpen] = useState(false);
 
+  const data: IJoinRequestApiData = {
+    receiverOrganizationId: orgId,
+    direction: 'FROM_USER',
+  };
   const handleOnClose = (): void => {
     setIsOpen(false);
   };
 
-  const handleOnClick = (): void => {
-    setIsOpen(true);
+  const handleOnClick = async (): Promise<void> => {
+    const result = await createJoinRequest(data);
+    console.log(result);
+
+    if (result.ok) {
+      setIsOpen(true);
+    }
   };
 
   const handleUndoRequest = async (): Promise<void> => {

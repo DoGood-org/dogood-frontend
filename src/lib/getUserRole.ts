@@ -1,4 +1,4 @@
-import { Role, UserOrganization } from '@/types';
+import { ICurrentUser, Role, UserOrganization } from '@/types';
 import { authStore } from '@/zustand/stores/authStore';
 
 // export const getUserRole = (members: UserOrganization[]): Role => {
@@ -32,4 +32,15 @@ export const getUserRole = (members: UserOrganization[]): Role => {
 export const isAdminOrModerator = (role: Role): boolean => {
   const adminRole = role === 'ADMIN' || role === 'MODERATOR';
   return adminRole;
+};
+
+export const getUserRoleFromMembers = (
+  members: UserOrganization[],
+  user: ICurrentUser | null
+): Role => {
+  if (!user) return 'GUEST';
+
+  const member = members.find(({ userId }) => userId === user.id);
+
+  return member?.role ?? 'USER';
 };
