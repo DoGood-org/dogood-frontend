@@ -1,9 +1,9 @@
-# 📚 Components API
+# 📚 Components API <!-- omit in toc -->
 
 Each component has its own API. You can find it in the component's folder. This
 is a list of more common components and their API.
 
-## Menu
+## Menu <!-- omit in toc -->
 
 - [Section](#section)
 - [Container](#container)
@@ -12,7 +12,7 @@ is a list of more common components and their API.
 - [Accordion](#accordion)
 - [Rating](#rating)
 - [StarItem](#staritem)
-- [Animation Tabs](#animationtabs)
+- [AnimationTabs](#animationtabs)
 - [Slider](#slider)
 
 ## Section

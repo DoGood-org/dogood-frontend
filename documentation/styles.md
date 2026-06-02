@@ -1,4 +1,4 @@
-# Styles documentation
+# Styles documentation <!-- omit in toc -->
 
 - [Breakpoints](#breakpoints)
 - [Text](#text)
@@ -313,26 +313,31 @@
 
 ```css
 /* colors */
---color-background: var(--background);
---color-background-secondary: var(--background-secondary);
---color-post: var(--post);
---color-post_gray: var(--post_gray);
---color-foreground: var(--foreground);
---color-text-help: var(--text-help);
---color-text-gray: var(--text-gray);
---color-white: var(--white);
---color-black: var(--black);
---color-text_tag: var(--text_tag);
---color-header-bg: var(--header-bg);
---color-footer-bg: var(--footer-bg);
---color-layout-background: var(--layout-background);
---color-card: var(--card);
---color-toggle: var(--toggle);
---color-gradient: var(--gradient);
---color-bg-icon: var(--bg-icon);
---color-icon-color: var(--icon-color);
---color-image-bg: var(--image-bg);
---color-form-field: var(--form-field);
+  --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-background-grants: var(--background-grants);
+  --color-post: var(--post);
+  --color-post_gray: var(--post_gray);
+  --color-foreground: var(--foreground);
+  --color-text-help: var(--text-help);
+  --color-text-gray: var(--text-gray);
+  --color-white: var(--white);
+  --color-black: var(--black);
+  --color-text_tag: var(--text_tag);
+  --color-header-bg: var(--header-bg);
+  --color-footer-bg: var(--footer-bg);
+  --color-layout-background: var(--layout-background);
+  --color-card: var(--card);
+  --color-toggle: var(--toggle);
+  --color-grant-card: var(--grant-card);
+  --color-gradient: var(--gradient);
+  --color-bg-icon: var(--bg-icon);
+  --color-icon-color: var(--icon-color);
+  --color-image-bg: var(--image-bg);
+  --color-form-field: var(--form-field);
+  --color-modal: var(--modal);
+  --color-admin-background: var(--admin-background);
+  --color-admin-card-bg: var(--admin-card-bg);
 
 /* buttons */
 --color-border: var(--border);
@@ -350,6 +355,7 @@
 --color-attention: var(--attention);
 
 --color-star: var(--star);
+--color-star-empty: var(--star-empty);
 --color-medicine: var(--medicine);
 --color-animal: var(--animal);
 --color-nature: var(--nature);
@@ -367,6 +373,7 @@ Light theme variables
 ```css
 --background: #f1f1f1;
 --background-secondary: #696969;
+--background-grants: #f3f3f3;
 --foreground: #1b1b1b;
 --header-bg: #171b19;
 --footer-bg: #111215;
@@ -379,9 +386,14 @@ Light theme variables
 --tag: #696969;
 --post: #696969;
 --post_gray: #f1f1f1;
+--form-field: #0d0d0d;
+--modal: #fffcfc;
+--admin-background: #99999926;
+--admin-card-bg: #9999994d;
 
 --card: #e6e6e6;
 --toggle: #303030;
+--grant-card: #fffcfc;
 
 --border: #2c8c8c;
 --btn: #2c8c8c;
@@ -408,6 +420,7 @@ Light theme variables
 --success: #17814b;
 
 --star: #ffee00;
+--star-empty: #747474;
 --medicine: #1f5eff;
 --animal: #ff7d57;
 --nature: #4caf50;
@@ -420,12 +433,25 @@ Dark theme variables
 .dark {
   --background: #171b19;
   --background-secondary: #303030;
+  --background-grants: #2a2d2d;
   --foreground: #f1f1f1;
   --card: #303030;
+  --grant-card: #1d2020;
+  --modal: #303030;
   --btn-secondary: #010101;
+  --admin-background: #282828;
+  --admin-card-bg: #303030;
   --post: #171b19;
   --text_tag: #f1f1f1;
   --post_gray: #696969;
+  --bg-icon: #f1f1f1;
+  --icon-color: #000000;
+  --image-bg: #e9e9e9;
+  --map-btn-bg: #303030;
+  --map-btn-icon: #f1f1f1;
+  --review-bg: #696969;
+  --accent-bg: #01425c;
+  --star-empty: #959595;
   --gradient:
     linear-gradient(
       238.09deg,
@@ -436,14 +462,6 @@ Dark theme variables
     ),
     radial-gradient(circle, rgba(26, 211, 170, 0.1) 2px, transparent 2px),
     linear-gradient(0deg, #01425c, #01425c);
-  --bg-icon: #f1f1f1;
-  --icon-color: #000000;
-  --image-bg: #e9e9e9;
-  --map-btn-bg: #303030;
-  --map-btn-icon: #f1f1f1;
-  --review-bg: #696969;
-  --accent-bg: #01425c;
-  --star-empty: #959595;
 }
 ```
 
@@ -457,6 +475,8 @@ Dark theme variables
 | header-bg            | #171B19     |            | header-background                                            |
 | footer-bg            | #111215     |            | footer-background                                            |
 | layout-background    | #111215     |            | layout-background                                            |
+| admin-background     | #99999926   | #282828    | background for admin-panel                                   |
+| admin-card-bg        | #9999994d   | #303030    | background for cards in admin-panel                          |
 | text-help            | #696969     |            | form-placeholders, filter-background                         |
 | text-gray            | #999999     |            | gray-text, lable-color                                       |
 | white                | #f1f1f1     |            | for text and bg that doesn't change in dark theme            |
