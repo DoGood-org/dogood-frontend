@@ -3,16 +3,17 @@
 import React from 'react';
 import { PageNavigation } from '@/components/account/navigation/PageNavigation';
 import { useTranslations } from 'next-intl';
-import { navigationPages } from '@/constants/navigationPages';
+import { adminPages } from '@/constants/adminPages';
+// import { navigationPages } from '@/constants/navigationPages';
 
-export const SidebarNavigation: React.FC = () => {
-  const t = useTranslations('navigation');
+export const AdminNavigation: React.FC = () => {
+  const t = useTranslations('adminNav');
 
   return (
-    <div className="lg:block lg:min-w-[136px] bg-background pt-20">
+    <div className="lg:block lg:min-w-[136px]">
       <nav className="hidden lg:flex flex-col gap-6">
         <PageNavigation
-          items={navigationPages}
+          items={adminPages}
           t={t}
           showLabels={true}
           className="flex flex-col gap-6 "

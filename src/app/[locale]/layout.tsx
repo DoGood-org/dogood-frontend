@@ -4,7 +4,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import { routing } from '@/i18n/routing';
-import './globals.css';
+import '@/app/globals.css';
 import { meta } from '@/data/metadata';
 import { getServerCurrentUser } from '@/lib/server/getCurrentUser';
 import ToastProvider from '@/components/ToastProvider';
