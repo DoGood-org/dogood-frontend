@@ -1,12 +1,7 @@
-// pages/api/proxy.ts (Next.js API Route)
 import { NextRequest, NextResponse } from 'next/server';
 
-const BACKEND = (
-  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
-).replace(/\/+$/, '');
-let refreshPromise: Promise<string | null> | null = null;
+const BACKEND = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
-// Список маршрутів, де **не робимо refresh**
 const NO_REFRESH_PATHS = [
   'auth/login',
   'auth/signup',
@@ -14,79 +9,150 @@ const NO_REFRESH_PATHS = [
   'auth/logout',
 ];
 
+interface ExtendedRequestInit extends RequestInit {
+  duplex?: 'half';
+}
+
+type RefreshResult = {
+  accessToken: string | null;
+  setCookies: string[];
+};
+
+const refreshPromises = new Map<string, Promise<RefreshResult>>();
+
 export async function proxy(req: NextRequest): Promise<NextResponse> {
   const { pathname, search } = req.nextUrl;
+
   const targetPath = pathname.replace('/api/proxy/', '').replace(/^\/+/, '');
+
   const targetUrl = new URL(`${targetPath}${search}`, BACKEND);
 
-  const refreshToken = req.cookies.get('refreshToken')?.value;
-  const accessToken = req.cookies.get('accessToken')?.value;
+  const cookieHeader = req.headers.get('cookie') || '';
 
-  const headers = new Headers(req.headers);
-  headers.delete('host');
+  const getCookie = (name: string): string | undefined =>
+    req.cookies.get(name)?.value ||
+    cookieHeader
+      .split(';')
+      .map((c) => c.trim())
+      .find((c) => c.startsWith(`${name}=`))
+      ?.split('=')[1];
 
-  const body =
+  let accessToken = getCookie('accessToken');
+  const refreshToken = getCookie('refreshToken');
+
+  const baseHeaders = new Headers(req.headers);
+  baseHeaders.delete('host');
+
+  const bodyBuffer =
     req.method !== 'GET' && req.method !== 'HEAD'
       ? await req.arrayBuffer()
       : null;
 
-  const executeFetch = async (token?: string): Promise<Response> => {
-    const newHeaders = new Headers(headers);
+  const buildCookie = (newAccess?: string): string => {
+    const cookies = cookieHeader
+      ? cookieHeader.split(';').map((c) => c.trim())
+      : [];
 
-    if (token) {
-      newHeaders.set('Authorization', `Bearer ${token}`);
+    const filtered = cookies.filter((c) => !c.startsWith('accessToken='));
+
+    if (newAccess) {
+      filtered.push(`accessToken=${newAccess}`);
+    } else if (accessToken) {
+      filtered.push(`accessToken=${accessToken}`);
     }
+
+    return filtered.join('; ');
+  };
+
+  const executeFetch = async (token?: string): Promise<Response> => {
+    const headers = new Headers(baseHeaders);
+
+    const cookie = buildCookie(token);
+    if (cookie) headers.set('cookie', cookie);
 
     return fetch(targetUrl.toString(), {
       method: req.method,
-      headers: newHeaders,
-      body,
+      headers,
+      body: bodyBuffer,
       duplex: 'half',
-    } as RequestInit & { duplex: 'half' });
+    } as ExtendedRequestInit);
   };
+
+  const doRefresh = async (): Promise<RefreshResult> => {
+    const key = refreshToken ?? '__none__';
+    if (refreshPromises.has(key)) return refreshPromises.get(key)!;
+
+    const promise = (async (): Promise<RefreshResult> => {
+      try {
+        const cleanCookies = (cookieHeader || '')
+          .split(';')
+          .map((c) => c.trim())
+          .filter((c) => !c.startsWith('accessToken='))
+          .join('; ');
+
+        const res = await fetch(`${BACKEND}/auth/refresh-token`, {
+          method: 'POST',
+          headers: {
+            ...(cleanCookies ? { cookie: cleanCookies } : {}),
+          },
+        });
+        console.log('🔄 Proxy: refresh status', res.status);
+        if (!res.ok) return { accessToken: null, setCookies: [] };
+        const setCookies =
+          res.headers.getSetCookie?.() ??
+          (res.headers.get('set-cookie')
+            ? [res.headers.get('set-cookie')!]
+            : []);
+        console.log('🍪 Proxy: отримані Set-Cookie від бекенду', setCookies);
+        const newAT =
+          setCookies
+            .find((c) => c.startsWith('accessToken='))
+            ?.split(';')[0]
+            ?.split('=')[1] ?? null;
+
+        return { accessToken: newAT, setCookies };
+      } catch {
+        return { accessToken: null, setCookies: [] };
+      } finally {
+        refreshPromises.delete(key);
+      }
+    })();
+
+    refreshPromises.set(key, promise);
+    return promise;
+  };
+
   try {
     let backendRes = await executeFetch(accessToken);
 
-    if (
+    const shouldRefresh =
       backendRes.status === 401 &&
       refreshToken &&
-      !NO_REFRESH_PATHS.some((p) => targetPath.startsWith(p))
-    ) {
-      if (!refreshPromise) {
-        refreshPromise = (async (): Promise<string | null> => {
-          try {
-            const res = await fetch(`${BACKEND}/auth/refresh-token`, {
-              method: 'POST',
-              headers: { Cookie: `refreshToken=${refreshToken}` },
-            });
-            if (!res.ok) return null;
-            const data: { accessToken?: string } = await res.json();
-            return data.accessToken || null;
-          } catch {
-            return null;
-          } finally {
-            refreshPromise = null;
-          }
-        })();
-      }
+      !NO_REFRESH_PATHS.some((p) => targetPath.startsWith(p));
 
-      const newAT = await refreshPromise;
+    if (shouldRefresh) {
+      const { accessToken: newAT, setCookies } = await doRefresh();
+      console.log('🍪 Proxy: setCookies після рефрешу', setCookies);
       if (newAT) {
+        accessToken = newAT;
+
         backendRes = await executeFetch(newAT);
+
         const response = new NextResponse(backendRes.body, backendRes);
-        response.cookies.set('accessToken', newAT, {
-          httpOnly: true,
-          path: '/',
-          maxAge: 900,
-          sameSite: 'lax',
-          secure: process.env.NODE_ENV === 'production',
-        });
+
+        for (const c of setCookies) {
+          console.log('🍪 Proxy: додаю Set-Cookie до відповіді клієнту', c);
+          response.headers.append('set-cookie', c);
+        }
+
         return response;
       }
     }
 
     return new NextResponse(backendRes.body, backendRes);
-  } catch {
+  } catch (error) {
+    console.error('Proxy error:', error);
+
     return NextResponse.json(
       { error: 'Backend Bridge Error' },
       { status: 502 }

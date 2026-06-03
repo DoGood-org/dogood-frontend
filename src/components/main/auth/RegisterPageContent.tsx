@@ -1,140 +1,136 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
-import { AuthChoice } from './AuthChoice';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'react-toastify';
+
 import { AuthForm } from './AuthForm';
-import { FormRegisterCompany, FormRegisterPerson } from '@/types/authType';
-import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
+import { FormRegister } from '@/types/authType';
 import { VerifyViaEmail } from '@/components/main/auth/VerififyViaEmail';
+import { authStore } from '@/zustand/stores/authStore';
 import { IAuthResponse } from '@/zustand/services/authService';
 
 export const RegisterPageContent = (): React.ReactElement => {
-  const { step, setStep } = useAuthFlow();
+  const router = useRouter();
+  const params = useSearchParams();
+
+  const step = params.get('step');
+  const emailFromUrl = params.get('email') ?? '';
+
+  const setStep = (step: string | null, email?: string): void => {
+    const query = new URLSearchParams(params.toString());
+    if (step) {
+      query.set('step', step);
+    } else {
+      query.delete('step');
+    }
+
+    if (email) {
+      query.set('email', email);
+    } else {
+      query.delete('email');
+    }
+
+    const queryString = query.toString();
+    router.replace(queryString ? `/register?${queryString}` : '/register', {
+      scroll: false,
+    });
+  };
 
   const {
     register,
-    registerCompany,
     status,
     isEmailVerified,
     resendVerificationEmail,
     nextResendAt,
   } = authStore();
 
-  const [choice, setChoice] = useState<'human' | 'company' | null>(null);
+  const [formPersonData, setPersonFormData] = useState<FormRegister>({
+    name: '',
+    email: '',
+    password: '',
+    repeatPassword: '',
+  });
 
-  const [formPersonData, setPersonFormData] = useState<FormRegisterPerson>({
-    name: '',
-    email: '',
-    password: '',
-    repeatPassword: '',
-  });
-  const [formCompanyData, setCompanyFormData] = useState<FormRegisterCompany>({
-    name: '',
-    email: '',
-    password: '',
-    repeatPassword: '',
-    companyName: '',
-  });
   useEffect(() => {
-    if (status === 'authenticated') setStep('verification');
-    if (status === 'apiError') setStep('mistakeApi');
-  }, [status, setStep]);
+    if (status === 'apiError') {
+      router.replace('/');
+    }
+  }, [status, router]);
 
   return (
-    <div className=" flex flex-col items-center justify-center  text-foreground w-full">
-      {!choice && <AuthChoice onChoice={setChoice} />}
-      {choice === 'human' && !step && (
+    <div className="flex flex-col items-center justify-center text-foreground w-full">
+      {!step && (
         <AuthForm
           type="registerPerson"
-          onFormSubmit={async (type, data) => {
-            setPersonFormData({
-              name: (data as FormRegisterPerson).name,
-              email: (data as FormRegisterPerson).email,
-              password: '',
-              repeatPassword: '',
-            });
+          onFormSubmit={async (_, data) => {
+            const personData = data as FormRegister;
+            setPersonFormData(personData);
+
             const response: IAuthResponse = await register(
-              (data as FormRegisterPerson).email,
-              (data as FormRegisterPerson).password,
-              (data as FormRegisterPerson).name
+              personData.email,
+              personData.password,
+              personData.name
+            );
+
+            if (response.ok) {
+              setStep('verification', personData.email);
+            }
+          }}
+        />
+      )}
+
+      {step === 'verification' && (
+        <VerifyViaEmail
+          email={emailFromUrl}
+          nextResendAt={nextResendAt}
+          onResend={async () => {
+            if (emailFromUrl) {
+              await resendVerificationEmail(emailFromUrl);
+            } else {
+              toast.error('Email not found. Please register again.');
+              setStep(null);
+            }
+          }}
+          onWrongEmail={() => {
+            setStep('mistakeInEmail', emailFromUrl);
+          }}
+        />
+      )}
+
+      {step === 'mistakeInEmail' && (
+        <AuthForm
+          type="registerPerson"
+          defaultValues={{
+            ...formPersonData,
+            password: '',
+            repeatPassword: '',
+          }}
+          onFormSubmit={async (_, data) => {
+            const personData = data as FormRegister;
+            const response = await register(
+              personData.email,
+              personData.password,
+              personData.name
             );
             if (response.ok) {
-              setStep('verification');
+              setStep('verification', personData.email);
             }
           }}
         />
       )}
-      {choice === 'company' && !step && (
-        <AuthForm
-          type="registerCompany"
-          onFormSubmit={async (type, data) => {
-            setCompanyFormData({
-              name: (data as FormRegisterCompany).name,
-              email: (data as FormRegisterCompany).email,
-              password: '',
-              repeatPassword: '',
-              companyName: (data as FormRegisterCompany).companyName,
-            });
-            await registerCompany(
-              (data as FormRegisterCompany).name,
-              (data as FormRegisterCompany).email,
 
-              (data as FormRegisterCompany).password,
-              (data as FormRegisterCompany).companyName
-            );
-          }}
-        />
-      )}
-      {step === 'verification' && choice && (
-        <VerifyViaEmail
-          onResend={async () => {
-            await resendVerificationEmail(
-              choice === 'human' ? formPersonData.email : formCompanyData.email
-            );
-          }}
-          onWrongEmail={() => setStep('mistakeInEmail')}
-          email={
-            choice === 'human' ? formPersonData.email : formCompanyData.email
-          }
-          nextResendAt={nextResendAt}
-        />
-      )}
-      {step === 'mistakeInEmail' && choice === 'human' && (
-        <AuthForm
-          defaultValues={formPersonData}
-          type="registerPerson"
-          onFormSubmit={(type, data) => {
-            console.log('Register person:', type, data);
-            setStep('verification');
-          }}
-        />
-      )}
-      {step === 'mistakeInEmail' && choice === 'company' && (
-        <AuthForm
-          defaultValues={formCompanyData}
-          type="registerCompany"
-          onFormSubmit={(type, data) => {
-            console.log('Register company:', type, data);
-            setStep('verification');
-          }}
-        />
-      )}
       {step === 'resendLink' && (
-        <>
-          <VerifyViaEmail
-            onResend={async () => {
-              await resendVerificationEmail(
-                choice === 'human'
-                  ? formPersonData.email
-                  : formCompanyData.email
-              );
-            }}
-            onWrongEmail={() => setStep(null)}
-            email={
-              choice === 'human' ? formPersonData.email : formCompanyData.email
+        <VerifyViaEmail
+          email={emailFromUrl}
+          nextResendAt={nextResendAt}
+          onResend={async () => {
+            if (emailFromUrl) {
+              await resendVerificationEmail(emailFromUrl);
             }
-            nextResendAt={nextResendAt}
-          />
-        </>
+          }}
+          onWrongEmail={() => setStep(null)}
+        />
       )}
 
       {step === 'proceedToLogin' && isEmailVerified && (

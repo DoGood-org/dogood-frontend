@@ -11,8 +11,8 @@ type DonationCardPreviewProps = {
   setEditingId: (paymentMethodId: string) => void;
   setOpen: (arg0: boolean) => void;
   card: CardData;
-  cardsFromDB: any[];
-  setCardsFromDB: Dispatch<SetStateAction<any[]>>;
+  cardsFromDB: CardData[];
+  setCardsFromDB: Dispatch<SetStateAction<CardData[]>>;
 };
 
 export const DonationCardPreview = ({
@@ -43,9 +43,11 @@ export const DonationCardPreview = ({
 
   const Icon = cardIcons[card?.brand ?? ''] ?? cardIcons.default;
   const formattedExpiry = `${String(card.exp_month).padStart(2, '0')}/${String(card.exp_year).slice(-2)}`;
-  const isStripeCard = cardsFromDB.some(
-    (dbCard) => dbCard.paymentMethodId === card.paymentMethodId
-  );
+  const isStripeCard = Array.isArray(cardsFromDB)
+    ? cardsFromDB.some(
+        (dbCard) => dbCard.paymentMethodId === card.paymentMethodId
+      )
+    : false;
 
   return (
     <li

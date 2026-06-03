@@ -1,16 +1,20 @@
 'use client';
+
 import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
 import { Button } from '@/components/ui/Button';
 import { LinkWithArrow } from '@/components/ui/LinkWithArrow';
-import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
+import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
+
 type Props = {
   onResend: () => void;
   onWrongEmail: () => void;
   email?: string;
   nextResendAt?: number | null;
 };
+
 export const VerifyViaEmail: React.FC<Props> = ({
   onResend,
   email,
@@ -18,9 +22,14 @@ export const VerifyViaEmail: React.FC<Props> = ({
   nextResendAt = null,
 }) => {
   const t = useTranslations('auth');
+
   const [now, setNow] = useState(() => Date.now());
+
   useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 1000);
+    const id = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+
     return (): void => clearInterval(id);
   }, []);
 
@@ -30,24 +39,24 @@ export const VerifyViaEmail: React.FC<Props> = ({
 
   return (
     <div
-      className="bg-background-secondary flex flex-col gap-[16px] p-10
-    w-full
-    md:p-8  md:w-[446px] justify-center items-center text-white rounded-[10px]  shadow-md"
+      className="bg-background-secondary flex w-full flex-col items-center
+      justify-center gap-4 rounded-[10px] p-10 text-white shadow-md
+      md:w-[446px] md:p-8"
     >
-      <div
-        className="flex flex-col w-full justify-start
-      "
-      >
+      <div className="flex w-full flex-col justify-start">
         <AuthTitleSubtitle title={t('verificationRequired')} />
 
-        <div className="flex flex-col gap-6 mb-2 justify-center items-start w-full md:w-auto">
-          {' '}
+        <div
+          className="mb-2 flex w-full flex-col items-start
+          justify-center gap-6 md:w-auto"
+        >
           <span>{email}</span>
-          <p className="text-base">{t('verificationGoToEmail')}</p>{' '}
+
+          <p className="text-base">{t('verificationGoToEmail')}</p>
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 md:text-[16px] font-normal w-full">
+      <div className="w-full text-[16px] font-normal">
         <Button
           variant="default"
           className="py-0"
@@ -57,19 +66,31 @@ export const VerifyViaEmail: React.FC<Props> = ({
           {isDisabled ? (
             <p>{`Resend in ${secondsLeft} seconds`}</p>
           ) : (
-            <p>{t('didntGetEmail')} </p>
+            <p>{t('didntGetEmail')}</p>
           )}
         </Button>
       </div>
-      <div className="flex flex-col gap-3 md:text-[16px] font-normal w-full">
+
+      <div className="flex w-full flex-col gap-3 text-[16px] font-normal">
         <LinkWithArrow
           href="#"
           text={t('wrongEmailAddress')}
           onClick={(e): void => {
             e.preventDefault();
+
             onWrongEmail();
           }}
         />
+
+        <Link
+          href="/login"
+          className="flex cursor-pointer items-center gap-1
+          self-start text-base text-[#00c1ac]
+          transition-all hover:brightness-110"
+        >
+          Already verified?
+          <span className="ml-1 font-bold underline">Log in</span>
+        </Link>
       </div>
     </div>
   );

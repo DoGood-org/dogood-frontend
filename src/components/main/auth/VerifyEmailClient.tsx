@@ -17,18 +17,19 @@ export default function VerifyEmailClient({
   locale,
 }: Props): JSX.Element {
   const router = useRouter();
-  const { verify, status } = authStore();
-  const isMounted = useRef(false); // Защита от двойного вызова в dev-режиме
+  const { verify, status, user } = authStore();
+  const isMounted = useRef(false);
 
   useEffect(() => {
-    // Если запрос уже был отправлен или код пустой — выходим
-    if (isMounted.current || !code) return;
+    if (isMounted.current || !code || user?.isEmailVerified) return;
+
     isMounted.current = true;
 
     const performVerification = async (): Promise<void> => {
       try {
         const res = await verify(code);
-        if (res?.user) {
+
+        if (res) {
           toast.success('Email verified successfully!');
         } else {
           toast.error('Verification failed or link expired');
@@ -40,20 +41,17 @@ export default function VerifyEmailClient({
     };
 
     void performVerification();
-  }, [code, verify]);
+  }, [code, verify, user?.isEmailVerified]);
 
-  // Редирект при изменении статуса
   useEffect(() => {
-    // Если статус изменился на authorized (или как у вас в сторе)
     if (status === 'authorized') {
       const timer = setTimeout(() => {
-        router.replace(`/${locale}/account`); // Логичнее в аккаунт, если он уже вошел
+        router.replace(`/${locale}/account`);
       }, 2000);
       return (): void => clearTimeout(timer);
     }
 
-    // Если статус 'forbidden' после попытки — можно отправить на логин
-    if (status === 'forbidden') {
+    if (status === 'forbidden' || status === 'apiError') {
       const timer = setTimeout(() => {
         router.replace(`/${locale}/login`);
       }, 3000);

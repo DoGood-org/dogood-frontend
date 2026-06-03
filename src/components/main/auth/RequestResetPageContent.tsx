@@ -1,13 +1,15 @@
 'use client';
+
 import { AnimatePresence, motion } from 'framer-motion';
-import { ForgotEnterEmail } from './ForgotEnterEmail';
-import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
 import { JSX, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'react-toastify';
+
+import { authStore } from '@/zustand/stores/authStore';
 import { IAuthResponse } from '@/zustand/services/authService';
+
+import { ForgotEnterEmail } from './ForgotEnterEmail';
 import { VerifyViaEmail } from './VerififyViaEmail';
-import { toast, ToastOptions } from 'react-toastify';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/Button';
 
 export const variants = {
   initial: { opacity: 0, y: 12 },
@@ -16,120 +18,105 @@ export const variants = {
 };
 
 export const RequestToResetPageContent = (): JSX.Element => {
-  const { requestToResetPassword } = authStore();
-  const { step, setStep } = useAuthFlow();
-  const [email, setEmail] = useState<string>('');
-  const [attempts, setAttempts] = useState(0);
-  const MAX_ATTEMPTS = 4;
-  const RESEND_COOLDOWN = 60_000;
-
-  const [nextResendAt, setNextResendAt] = useState<number | null>(null);
   const router = useRouter();
+  const params = useSearchParams();
+
+  const { requestToResetPassword } = authStore();
+
+  const step = params.get('step') ?? 'enterEmail';
+  const email = params.get('email') ?? '';
+
+  const [attempts, setAttempts] = useState(0);
+  const [nextResendAt, setNextResendAt] = useState<number | null>(null);
+
+  const MAX_ATTEMPTS = 4;
+  const COOLDOWN = 60_000;
+
+  const setFlow = (nextStep: string, nextEmail?: string): void => {
+    const query = new URLSearchParams(params.toString());
+
+    query.set('step', nextStep);
+
+    if (nextEmail) {
+      query.set('email', nextEmail);
+    } else {
+      query.delete('email');
+    }
+
+    router.replace(`?${query.toString()}`, { scroll: false });
+  };
+
   useEffect(() => {
     if (attempts >= MAX_ATTEMPTS) {
-      toast('Maximum attempts reached. Redirecting to main page.');
+      toast('Maximum attempts reached.');
       router.replace('/');
     }
   }, [attempts, router]);
+
   return (
-    <div>
-      <AnimatePresence mode="wait">
-        {(step === 'forgotPasswordEnterEmail' || step === null) && (
-          <motion.div
-            key="forgotPasswordEnterEmail"
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.18, ease: 'easeOut' }}
-            layout
-            className="mt-4 w-full flex justify-center"
-          >
-            <ForgotEnterEmail
-              onSubmit={async (data: { email: string }) => {
-                setEmail(data.email);
-                console.log('Forgot email submitted:', data);
-                const res: IAuthResponse = await requestToResetPassword(
-                  data.email
+    <AnimatePresence mode="wait">
+      {step === 'enterEmail' && (
+        <motion.div
+          key="email"
+          variants={variants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
+          <ForgotEnterEmail
+            onSubmit={async (data) => {
+              const res: IAuthResponse = await requestToResetPassword(
+                data.email
+              );
+
+              if (res.ok) {
+                toast.success('Reset email sent');
+                setFlow('verify', data.email);
+                return;
+              }
+
+              toast.error('Failed to send reset email. Check the address.');
+            }}
+          />
+        </motion.div>
+      )}
+
+      {step === 'verify' && (
+        <motion.div
+          key="verify"
+          variants={variants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
+          <VerifyViaEmail
+            email={email}
+            nextResendAt={nextResendAt}
+            onWrongEmail={() => setFlow('enterEmail')}
+            onResend={async () => {
+              const now = Date.now();
+
+              if (nextResendAt && now < nextResendAt) {
+                const secondsLeft = Math.ceil((nextResendAt - now) / 1000);
+                toast.error(
+                  `Please wait ${secondsLeft} seconds before resending.`
                 );
-                if (res.ok) {
-                  toast.success('Password reset email sent');
-                  setStep('resetPassword');
-                  toast.dismiss();
-                } else {
-                  const options: ToastOptions = {
-                    autoClose: false,
-                  };
+                return;
+              }
 
-                  toast(
-                    <div>
-                      <p>Failed to email! Check address.</p>
-                      <div className="flex gap-2 text-white items-center">
-                        <Button
-                          className="px-2 py-1"
-                          onClick={async () => {
-                            toast.dismiss();
-                            setAttempts((x) => x + 1);
-                          }}
-                          disabled={attempts === MAX_ATTEMPTS - 1}
-                        >
-                          {attempts === MAX_ATTEMPTS - 1
-                            ? 'No attempts left'
-                            : 'Try again'}
-                        </Button>
+              setNextResendAt(now + COOLDOWN);
+              const res: IAuthResponse = await requestToResetPassword(email);
 
-                        <Button
-                          onClick={() => {
-                            router.replace('/');
-                          }}
-                        >
-                          Go to main
-                        </Button>
-                      </div>
-                    </div>,
-                    options
-                  );
-                }
-              }}
-            />
-          </motion.div>
-        )}
-        {step === 'resetPassword' && (
-          <motion.div
-            key="resetPasswordMessage"
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.18, ease: 'easeOut' }}
-            layout
-            className="mt-4 w-full flex justify-center"
-          >
-            <VerifyViaEmail
-              onResend={async () => {
-                const now = Date.now();
-
-                if (nextResendAt && now < nextResendAt) {
-                  const secondsLeft = Math.ceil((nextResendAt - now) / 1000);
-                  toast.error(`You can resend in ${secondsLeft}s`);
-                  return;
-                }
-
-                setNextResendAt(now + RESEND_COOLDOWN);
-                const res: IAuthResponse = await requestToResetPassword(email);
-                if (res.ok) {
-                  toast.success('Password reset email resent');
-                } else {
-                  toast.error('Failed to resend password reset email');
-                }
-              }}
-              onWrongEmail={() => setStep('forgotPasswordEnterEmail')}
-              email={email}
-              nextResendAt={nextResendAt}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+              if (!res.ok) {
+                setAttempts((x) => x + 1);
+                toast.error('Failed to resend password reset email.');
+              } else {
+                toast.success('Reset email resent successfully.');
+              }
+            }}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

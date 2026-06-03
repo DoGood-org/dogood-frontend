@@ -1,6 +1,6 @@
 'use client';
 
-import { JSX, useEffect, useState } from 'react';
+import { JSX, useEffect, useMemo, useState } from 'react';
 import { cardPreviewStore } from '@/zustand/stores/cardPreviewStore';
 import { SetPlus } from '@/components/icons';
 import { useTranslations } from 'next-intl';
@@ -21,27 +21,54 @@ export const PaymentList = (): JSX.Element => {
     setEditingId(null);
   };
 
+  // useEffect(() => {
+  //   async function load(): Promise<void> {
+  //     try {
+  //       const data = await stripeService.fetchUserCards();
+  //       setCardsFromDB(data);
+  //     } catch (err) {
+  //       console.error('Failed to fetch cards from DB', err);
+  //     }
+  //   }
+  //   load();
+  // }, [setCardsFromDB]);
+
+  // const mergedCards = [
+  //   ...cardsFromDB,
+  //   ...tempCards.filter(
+  //     (tempCard) =>
+  //       !cardsFromDB.some(
+  //         (dbCard) => dbCard.paymentMethodId === tempCard.paymentMethodId
+  //       )
+  //   ),
+  // ];
+
   useEffect(() => {
     async function load(): Promise<void> {
       try {
         const data = await stripeService.fetchUserCards();
-        setCardsFromDB(data);
+        setCardsFromDB(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error('Failed to fetch cards from DB', err);
+        setCardsFromDB([]);
       }
     }
     load();
-  }, [setCardsFromDB]);
+  }, []);
 
-  const mergedCards = [
-    ...cardsFromDB,
-    ...tempCards.filter(
-      (tempCard) =>
-        !cardsFromDB.some(
-          (dbCard) => dbCard.paymentMethodId === tempCard.paymentMethodId
-        )
-    ),
-  ];
+  const mergedCards = useMemo(() => {
+    const safeDbCards = Array.isArray(cardsFromDB) ? cardsFromDB : [];
+    const safeTempCards = Array.isArray(tempCards) ? tempCards : [];
+
+    const dbIds = new Set(safeDbCards.map((c) => c.paymentMethodId));
+
+    return [
+      ...safeDbCards,
+      ...safeTempCards.filter(
+        (tempCard) => !dbIds.has(tempCard.paymentMethodId)
+      ),
+    ];
+  }, [cardsFromDB, tempCards]);
 
   return (
     <div className="space-y-4 bg-text-help p-8 rounded-xl">

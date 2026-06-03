@@ -33,17 +33,19 @@ export const PaymentCardList = ({
   useEffect(() => {
     async function load(): Promise<void> {
       setIsLoading(true);
+
       try {
         const data = await stripeService.fetchUserCards();
-        setCardsFromDB(data);
-      } catch (err) {
-        console.error('Failed to fetch cards from DB', err);
+
+        setCardsFromDB(Array.isArray(data) ? data : []);
+      } catch (_err) {
       } finally {
         setIsLoading(false);
       }
     }
+
     load();
-  }, [setCardsFromDB]);
+  }, []);
 
   const mergedCards = [
     ...cardsFromDB,
@@ -61,9 +63,9 @@ export const PaymentCardList = ({
 
   const CardsList = (): JSX.Element => (
     <ul className="flex flex-col gap-3">
-      {mergedCards.map((card) => (
+      {mergedCards.map((card, index) => (
         <DonationCardPreview
-          key={card.paymentMethodId}
+          key={card.paymentMethodId ?? `temp-${index}`}
           setEditingId={setEditingId}
           setOpen={setOpen}
           card={card}
