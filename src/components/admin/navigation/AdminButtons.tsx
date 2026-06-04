@@ -24,11 +24,11 @@ export const AdminButtons = (): JSX.Element => {
   };
 
   return (
-    <div className="flex justify-between lg:block">
+    <div className="flex justify-between lg:block mb-[30px] lg:mb-0">
       <Button
         asChild
         variant="ghost"
-        className="flex justify-start gap-2 px-3 border-0 cursor-pointer text-foregroud hover:text-btn-hover"
+        className="flex justify-start gap-2 px-4 py-0 border-0 cursor-pointer lg:px-6 h-7 lg:h-12 lg:py-3 text-foregroud hover:text-btn-hover"
       >
         <Link href={`/${locale}/account`}>
           <UserAvatar
@@ -42,7 +42,7 @@ export const AdminButtons = (): JSX.Element => {
       <Button
         variant="ghost"
         onClick={handleLogOut}
-        className="flex justify-start gap-2 px-3 border-0 cursor-pointer text-foregroud hover:text-btn-hover"
+        className="flex justify-start gap-2 px-4 py-0 border-0 cursor-pointer lg:px-6 h-7 lg:h-12 lg:py-3 text-foregroud hover:text-btn-hover"
       >
         <SignIn className="size-6" />
         <p className="hidden md:block">{t('logout')}</p>

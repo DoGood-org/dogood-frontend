@@ -11,14 +11,14 @@ export const AdminNavigation: React.FC = () => {
 
   return (
     <div className="lg:block lg:min-w-[136px]">
-      <nav className="hidden lg:flex flex-col gap-6">
+      <nav className="flex-col hidden gap-6 lg:flex">
         <PageNavigation
           items={adminPages}
           t={t}
           showLabels={true}
-          className="flex flex-col gap-6 "
+          className="flex flex-col gap-2 "
           navLabels="text-base text-foreground"
-          linkClassName="flex gap-5 p-3"
+          linkClassName="flex gap-2 lg:py-3 lg:px-6"
           iconClassName="w-6 h-6"
         />
       </nav>
