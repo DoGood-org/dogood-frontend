@@ -11,6 +11,9 @@ type SliderProps<T> = {
   renderItem: (item: T, index: number) => JSX.Element;
   listClassName?: string;
   itemClassName?: string;
+  containerClassName?: string;
+  sliderClassName?: string;
+  buttonsClassName?: string;
 };
 
 export const Slider = <T,>({
@@ -19,6 +22,9 @@ export const Slider = <T,>({
   renderItem,
   listClassName = '',
   itemClassName = '',
+  containerClassName = '',
+  sliderClassName = '',
+  buttonsClassName = '',
 }: SliderProps<T>): JSX.Element => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalPages = Math.ceil(items.length / itemsPerSlide);
@@ -54,8 +60,11 @@ export const Slider = <T,>({
   };
 
   return (
-    <div className="w-full mx-auto">
-      <div ref={containerRef} className="overflow-hidden">
+    <div className={cn('w-full mx-auto', containerClassName)}>
+      <div
+        ref={containerRef}
+        className={cn('overflow-hidden', sliderClassName)}
+      >
         <div
           className="flex transition-transform duration-500"
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -76,7 +85,12 @@ export const Slider = <T,>({
       </div>
 
       {grouped.length > 1 && (
-        <div className="flex justify-center items-center gap-4 mt-6">
+        <div
+          className={cn(
+            'flex items-center justify-center gap-4 mt-6',
+            buttonsClassName
+          )}
+        >
           {/* LEFT ARROW */}
           <button
             onClick={prevSlide}
