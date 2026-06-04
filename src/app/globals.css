@@ -48,6 +48,8 @@
   --color-modal: var(--modal);
   --color-admin-background: var(--admin-background);
   --color-admin-card-bg: var(--admin-card-bg);
+  --color-admin-more: var(--admin-more);
+  --shadow-admin: var(--admin-shadow);
 
   /* buttons */
   --color-border: var(--border);
@@ -149,6 +151,8 @@
   --modal: #fffcfc;
   --admin-background: #99999926;
   --admin-card-bg: #9999994d;
+  --admin-shadow: 0px 2px 2px 0px rgba(0, 187, 167, 0.2);
+  --admin-more: #d6d6d6;
 
   --card: #cfcfcf;
   --toggle: #303030;
@@ -244,6 +248,7 @@ html {
   --btn-secondary: #010101;
   --admin-background: #282828;
   --admin-card-bg: #303030;
+  --admin-more: #696969;
   --post: #171b19;
   --text_tag: #f1f1f1;
   --post_gray: #696969;
@@ -265,6 +270,12 @@ html {
     ),
     radial-gradient(circle, rgba(26, 211, 170, 0.1) 2px, transparent 2px),
     linear-gradient(0deg, #01425c, #01425c);
+}
+
+@media (min-width: 1440px) {
+  .lg\:shadow-admin {
+    box-shadow: 0px 2px 2px 0px rgba(0, 187, 167, 0.2);
+  }
 }
 
 .bg-dots {
@@ -491,6 +502,7 @@ html {
   .reviews-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #059669 !important;
   }
+
   /*----------------- Font-size utilites -------------------------------*/
   .text-sm {
     font-size: var(--text-sm);
