@@ -15,6 +15,7 @@ export interface OrganizationProps {
   id: string;
   name: string;
   description: string;
+  email?: string;
   // members: IUserAccount[];
   avatar: string;
   membersCount: number;
