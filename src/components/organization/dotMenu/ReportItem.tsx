@@ -4,31 +4,21 @@ import { Report } from '@/components/icons';
 import { useTranslations } from 'next-intl';
 
 type ReportItemProps = {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onClick: () => void;
 };
 
-export const ReportItem = ({
-  setIsOpen,
-  setIsModalOpen,
-}: ReportItemProps): JSX.Element => {
+export const ReportItem = ({ onClick }: ReportItemProps): JSX.Element => {
   const t = useTranslations('organization');
-
-  const handleOnClick = (): void => {
-    setIsOpen(false);
-    setIsModalOpen(true);
-  };
 
   return (
     <li className="text-nowrap">
       <Button
-        // asChild
         variant="ghost"
-        onClick={handleOnClick}
+        onClick={onClick}
         className="p-3 h-[48px] border-0 flex items-center justify-between w-full 
                 hover:text-btn-hover active:text-btn-active cursor-pointer text-foreground transition"
       >
-        <span className="flex gap-4 justify-start whitespace-nowrap">
+        <span className="flex justify-start gap-4 whitespace-nowrap">
           <Report className="size-5 transition-stroke transition-fill" />
           {t('dotMenu.report')}
         </span>
