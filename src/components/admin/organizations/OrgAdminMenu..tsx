@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { MoreMenu } from '@/components/ui/MoreMenu';
 import { DeleteFormModal } from '@/components/organization/profilePage/DeleteFormModal';
 import { ChatCircle, Gear, TrashBinChat } from '@/components/icons';
-import { MenuAction } from './MenuAction';
+import { MenuAction } from '@/components/ui/MenuAction';
 import { useMediaQuery } from '@/hooks';
 
 type OrganizationAdminMenuProps = {
