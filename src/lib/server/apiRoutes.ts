@@ -1,7 +1,3 @@
-// lib/apiRoutes.ts
-// - `/auth/*` → rewrites to `/api/auth/*`
-// - `/proxy/*` → rewrites to `/api/proxy/*` → backend
-
 export const apiRoutes = {
   auth: {
     signup: '/auth/signup',

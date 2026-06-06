@@ -117,7 +117,6 @@ export const AuthForm: React.FC<Props> = (props) => {
             )}
           />
         )}
-
         <Controller
           name="email"
           control={control}
@@ -135,7 +134,6 @@ export const AuthForm: React.FC<Props> = (props) => {
             />
           )}
         />
-
         <Controller
           name="password"
           control={control}
@@ -162,7 +160,6 @@ export const AuthForm: React.FC<Props> = (props) => {
             />
           )}
         />
-
         {isRegister && (
           <Controller
             name="repeatPassword"
@@ -192,7 +189,6 @@ export const AuthForm: React.FC<Props> = (props) => {
             )}
           />
         )}
-
         <Button
           type="submit"
           variant="default"
@@ -200,13 +196,12 @@ export const AuthForm: React.FC<Props> = (props) => {
           className="btn-auth btn-expand-hover text-foreground h-[48px]"
           disabled={props.isLoading}
         >
-          {t('nextStep')}
+          {isRegister ? t('registerSubmit') : t('loginSubmit')}
         </Button>
-
+        {/* TODO: Enable social login integration */}
         {/* <RegisterLoginSocial
           onSocialLogin={(provider) => console.log(provider)}
         /> */}
-
         {type === 'login' && (
           <Button
             type="button"

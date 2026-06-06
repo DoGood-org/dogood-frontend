@@ -96,14 +96,12 @@ export async function proxy(req: NextRequest): Promise<NextResponse> {
             ...(cleanCookies ? { cookie: cleanCookies } : {}),
           },
         });
-        console.log('🔄 Proxy: refresh status', res.status);
         if (!res.ok) return { accessToken: null, setCookies: [] };
         const setCookies =
           res.headers.getSetCookie?.() ??
           (res.headers.get('set-cookie')
             ? [res.headers.get('set-cookie')!]
             : []);
-        console.log('🍪 Proxy: отримані Set-Cookie від бекенду', setCookies);
         const newAT =
           setCookies
             .find((c) => c.startsWith('accessToken='))
@@ -132,7 +130,6 @@ export async function proxy(req: NextRequest): Promise<NextResponse> {
 
     if (shouldRefresh) {
       const { accessToken: newAT, setCookies } = await doRefresh();
-      console.log('🍪 Proxy: setCookies після рефрешу', setCookies);
       if (newAT) {
         accessToken = newAT;
 
@@ -141,7 +138,6 @@ export async function proxy(req: NextRequest): Promise<NextResponse> {
         const response = new NextResponse(backendRes.body, backendRes);
 
         for (const c of setCookies) {
-          console.log('🍪 Proxy: додаю Set-Cookie до відповіді клієнту', c);
           response.headers.append('set-cookie', c);
         }
 

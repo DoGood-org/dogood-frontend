@@ -13,6 +13,7 @@ type Props = {
   onWrongEmail: () => void;
   email?: string;
   nextResendAt?: number | null;
+  type?: 'register' | 'reset';
 };
 
 export const VerifyViaEmail: React.FC<Props> = ({
@@ -20,6 +21,7 @@ export const VerifyViaEmail: React.FC<Props> = ({
   email,
   onWrongEmail,
   nextResendAt = null,
+  type = 'reset',
 }) => {
   const t = useTranslations('auth');
 
@@ -37,6 +39,14 @@ export const VerifyViaEmail: React.FC<Props> = ({
 
   const secondsLeft = isDisabled ? Math.ceil((nextResendAt! - now) / 1000) : 0;
 
+  const titleKey =
+    type === 'register' ? 'registerEmailSentTitle' : 'emailSentTitle';
+
+  const descriptionKey =
+    type === 'register'
+      ? 'registerEmailSentDescription'
+      : 'emailSentDescription';
+
   return (
     <div
       className="bg-background-secondary flex w-full flex-col items-center
@@ -44,22 +54,22 @@ export const VerifyViaEmail: React.FC<Props> = ({
       md:w-[446px] md:p-8"
     >
       <div className="flex w-full flex-col justify-start">
-        <AuthTitleSubtitle title={t('verificationRequired')} />
+        <AuthTitleSubtitle title={t(titleKey)} />
 
         <div
           className="mb-2 flex w-full flex-col items-start
           justify-center gap-6 md:w-auto"
         >
-          <span>{email}</span>
+          {type === 'register' && <span>{email}</span>}
 
-          <p className="text-base">{t('verificationGoToEmail')}</p>
+          <p className="text-base">{t(descriptionKey)}</p>
         </div>
       </div>
 
-      <div className="w-full text-[16px] font-normal">
+      <div className="text-[16px] w-full font-normal">
         <Button
           variant="default"
-          className="py-0"
+          className="py-0 w-full"
           onClick={onResend}
           disabled={isDisabled}
         >
@@ -70,28 +80,29 @@ export const VerifyViaEmail: React.FC<Props> = ({
           )}
         </Button>
       </div>
+      {type === 'register' && (
+        <div className="flex w-full flex-col gap-3 text-[16px] font-normal">
+          <LinkWithArrow
+            href="#"
+            text={t('wrongEmailAddress')}
+            onClick={(e): void => {
+              e.preventDefault();
 
-      <div className="flex w-full flex-col gap-3 text-[16px] font-normal">
-        <LinkWithArrow
-          href="#"
-          text={t('wrongEmailAddress')}
-          onClick={(e): void => {
-            e.preventDefault();
+              onWrongEmail();
+            }}
+          />
 
-            onWrongEmail();
-          }}
-        />
-
-        <Link
-          href="/login"
-          className="flex cursor-pointer items-center gap-1
-          self-start text-base text-[#00c1ac]
-          transition-all hover:brightness-110"
-        >
-          Already verified?
-          <span className="ml-1 font-bold underline">Log in</span>
-        </Link>
-      </div>
+          <Link
+            href="/login"
+            className="flex cursor-pointer items-center gap-1
+            self-start text-base text-[#00c1ac]
+            transition-all hover:brightness-110"
+          >
+            {t('alreadyVerified')}
+            <span className="ml-1 font-bold underline">{t('loginLink')}</span>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

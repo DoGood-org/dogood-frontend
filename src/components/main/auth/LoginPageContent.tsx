@@ -4,17 +4,27 @@ import { IAuthResponse } from '@/zustand/services/authService';
 import { authStore } from '@/zustand/stores/authStore';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { useTranslations } from 'next-intl';
 import { AuthForm } from './AuthForm';
 import { VerifyViaEmail } from './VerififyViaEmail';
+import { Spinner } from '@/components/ui/Spinner';
 
 export const LoginPageContent: React.FC = () => {
   const router = useRouter();
   const params = useSearchParams();
+  const t = useTranslations('auth');
 
   const step = params.get('step');
   const emailFromUrl = params.get('email') ?? '';
+
+  useEffect(() => {
+    if (step === 'mistakeApi') {
+      toast.error(t('toast.unexpectedError'));
+      router.replace('/login');
+    }
+  }, [step, router, t]);
 
   const setStep = (newStep: string | null, email?: string): void => {
     const query = new URLSearchParams(params.toString());
@@ -54,13 +64,12 @@ export const LoginPageContent: React.FC = () => {
   };
 
   if (step === 'mistakeApi') {
-    toast.error('An unexpected error occurred. Please try again later.');
-    router.replace('/');
     return null;
   }
 
   return (
     <div className="login text-foreground flex flex-col items-center justify-center w-full">
+      {status === 'loading' && <Spinner />}
       <AnimatePresence mode="wait">
         {!step && (
           <motion.div
@@ -83,6 +92,7 @@ export const LoginPageContent: React.FC = () => {
                 );
 
                 if (res?.ok || res?.status === 200) {
+                  toast.success(t('toast.loginSuccess'));
                   router.replace('/account');
                   return;
                 }
@@ -128,9 +138,7 @@ export const LoginPageContent: React.FC = () => {
                 if (emailFromUrl) {
                   await resendVerificationEmail(emailFromUrl);
                 } else {
-                  toast.error(
-                    'Email address not found. Please try logging in again.'
-                  );
+                  toast.error(t('toast.emailLoginNotFound'));
                   setStep(null);
                 }
               }}

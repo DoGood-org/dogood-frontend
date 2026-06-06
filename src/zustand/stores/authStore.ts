@@ -2,7 +2,6 @@
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { toast } from 'react-toastify';
 
 import type { ICurrentUser } from '@/types';
 import {
@@ -83,8 +82,6 @@ export const authStore = create<TAuthState>()(
           const res = await service.login({ email, password });
 
           if (res.ok) {
-            toast.success('Login successful');
-
             set({
               status: 'authorized',
               isLoggedIn: true,
@@ -129,17 +126,12 @@ export const authStore = create<TAuthState>()(
           const res = await service.register({ email, password, name });
 
           if (res.ok) {
-            toast.success('Registration successful');
-
             set({
               status: 'verifying',
               error: null,
               beMessage: res.message ?? '',
             });
-          } else {
-            toast.error(res.errorMessage || 'Registration failed');
           }
-
           return res;
         } catch {
           set({
@@ -158,8 +150,6 @@ export const authStore = create<TAuthState>()(
           const res = await service.verify(token);
 
           if (res.ok) {
-            toast.success('Email verification successful');
-
             set({
               isEmailVerified: true,
               status: 'authenticated',
@@ -211,22 +201,25 @@ export const authStore = create<TAuthState>()(
         const COOLDOWN_MS = 60_000;
 
         const next = get().nextResendAt;
-        if (next && Date.now() < next) return;
+        if (next && Date.now() < next) {
+          set({ error: 'Please wait before resending again' });
+          return;
+        }
 
         try {
           const res = await service.resendVerificationEmail(email);
 
-          if (res.ok) {
-            toast.success('Verification email resent');
-
-            set({
-              nextResendAt: Date.now() + COOLDOWN_MS,
-            });
-          } else {
-            toast.error(res.errorMessage || 'Failed to resend email');
+          if (!res.ok) {
+            set({ error: res.errorMessage ?? 'Unknown error' });
+            return;
           }
-        } catch {
-          toast.error('Resend verification failed');
+
+          set({
+            nextResendAt: Date.now() + COOLDOWN_MS,
+            error: null,
+          });
+        } catch (_e) {
+          set({ error: 'Resend verification failed' });
         }
       },
 
@@ -250,15 +243,8 @@ export const authStore = create<TAuthState>()(
             token: resetToken,
             password: newPassword,
           });
-
-          if (res.ok) {
-            toast.success('Password reset successful');
-          }
-
           return res;
         } catch {
-          toast.error('Reset password failed');
-
           return {
             ok: false,
             errorMessage: 'Reset password failed',

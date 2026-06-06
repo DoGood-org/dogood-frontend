@@ -20,8 +20,15 @@ const PUBLIC_PAGES = new Set([
   '/tasks',
   '/donate',
   '/about',
-  '/posts',
   '/verify',
+  '/reset-password',
+  '/cookies',
+  '/grants',
+  '/news',
+  '/organization',
+  '/privacy',
+  '/reviews',
+  '/support',
 ]);
 
 function isTokenExpired(token: string): boolean {

@@ -9,10 +9,13 @@ import { FormRegister } from '@/types/authType';
 import { VerifyViaEmail } from '@/components/main/auth/VerififyViaEmail';
 import { authStore } from '@/zustand/stores/authStore';
 import { IAuthResponse } from '@/zustand/services/authService';
+import { useTranslations } from 'next-intl';
+import { Spinner } from '@/components/ui/Spinner';
 
 export const RegisterPageContent = (): React.ReactElement => {
   const router = useRouter();
   const params = useSearchParams();
+  const t = useTranslations('auth');
 
   const step = params.get('step');
   const emailFromUrl = params.get('email') ?? '';
@@ -37,13 +40,8 @@ export const RegisterPageContent = (): React.ReactElement => {
     });
   };
 
-  const {
-    register,
-    status,
-    isEmailVerified,
-    resendVerificationEmail,
-    nextResendAt,
-  } = authStore();
+  const { register, status, resendVerificationEmail, nextResendAt } =
+    authStore();
 
   const [formPersonData, setPersonFormData] = useState<FormRegister>({
     name: '',
@@ -58,24 +56,39 @@ export const RegisterPageContent = (): React.ReactElement => {
     }
   }, [status, router]);
 
+  const handleRegisterSubmit = async (data: FormRegister): Promise<void> => {
+    setPersonFormData(data);
+
+    try {
+      const response: IAuthResponse = await register(
+        data.email,
+        data.password,
+        data.name
+      );
+
+      if (response.ok) {
+        toast.success(t('toast.registerSuccess'));
+        setStep('verification', data.email);
+        return;
+      }
+
+      if (response.errorMessage?.toLowerCase().includes('exists')) {
+        toast.error(t('toast.emailAlreadyExists'));
+      } else {
+        toast.error(response.errorMessage || t('toast.unknownError'));
+      }
+    } catch (_error) {
+      toast.error(t('toast.unknownError'));
+    }
+  };
   return (
     <div className="flex flex-col items-center justify-center text-foreground w-full">
+      {status === 'loading' && <Spinner />}
       {!step && (
         <AuthForm
           type="registerPerson"
           onFormSubmit={async (_, data) => {
-            const personData = data as FormRegister;
-            setPersonFormData(personData);
-
-            const response: IAuthResponse = await register(
-              personData.email,
-              personData.password,
-              personData.name
-            );
-
-            if (response.ok) {
-              setStep('verification', personData.email);
-            }
+            await handleRegisterSubmit(data as FormRegister);
           }}
         />
       )}
@@ -83,12 +96,13 @@ export const RegisterPageContent = (): React.ReactElement => {
       {step === 'verification' && (
         <VerifyViaEmail
           email={emailFromUrl}
+          type="register"
           nextResendAt={nextResendAt}
           onResend={async () => {
             if (emailFromUrl) {
               await resendVerificationEmail(emailFromUrl);
             } else {
-              toast.error('Email not found. Please register again.');
+              toast.error(t('toast.emailRegisterNotFound'));
               setStep(null);
             }
           }}
@@ -107,15 +121,7 @@ export const RegisterPageContent = (): React.ReactElement => {
             repeatPassword: '',
           }}
           onFormSubmit={async (_, data) => {
-            const personData = data as FormRegister;
-            const response = await register(
-              personData.email,
-              personData.password,
-              personData.name
-            );
-            if (response.ok) {
-              setStep('verification', personData.email);
-            }
+            await handleRegisterSubmit(data as FormRegister);
           }}
         />
       )}
@@ -123,6 +129,7 @@ export const RegisterPageContent = (): React.ReactElement => {
       {step === 'resendLink' && (
         <VerifyViaEmail
           email={emailFromUrl}
+          type="register"
           nextResendAt={nextResendAt}
           onResend={async () => {
             if (emailFromUrl) {
@@ -131,13 +138,6 @@ export const RegisterPageContent = (): React.ReactElement => {
           }}
           onWrongEmail={() => setStep(null)}
         />
-      )}
-
-      {step === 'proceedToLogin' && isEmailVerified && (
-        <div>
-          <p>Registration successful!</p>
-          <p>Redirecting to login...</p>
-        </div>
       )}
     </div>
   );

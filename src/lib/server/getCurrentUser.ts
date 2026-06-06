@@ -14,15 +14,6 @@ export const getServerCurrentUser = cache(async () => {
     cache: 'no-store',
   });
 
-  console.log('📡 auth response status:', res.status);
-
-  console.log('📦 auth raw:', await res.clone().text());
-
-  console.log('🔥 SSR auth fetch START');
-
-  console.log('🍪 cookies:', cookie);
-
-  console.log('🌍 backend:', res);
   if (!res.ok) return null;
   const data = await res.json();
   return data.user ?? null;
