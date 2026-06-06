@@ -58,3 +58,25 @@ export const updateMemberRole = async (
     auth: true,
   });
 };
+
+export const getOrganizationsByName = async (
+  name: string
+): Promise<FetchResult<OrganizationDetailedProps[]>> => {
+  const result = await fetchFromApi<{ data: OrganizationDetailedProps[] }>(
+    apiRoutes.organizations.getByName,
+    {
+      method: 'GET',
+      params: { name },
+      auth: true,
+    }
+  );
+
+  if (!result.ok) {
+    return result;
+  }
+
+  return {
+    ok: true,
+    data: result.data.data,
+  };
+};

@@ -1,0 +1,68 @@
+{
+  "hero": {
+    "title": "Dein Einfluss zählt. Finde verifizierte Projekte und verändere die Welt mit uns.",
+    "subTitle": [
+      "1M+ USD gesammelt",
+      "100+ erfolgreiche Projekte",
+      "Offiziell registrierte NGO"
+    ],
+    "heroButton": "Unterstütze unsere Mission"
+  },
+  "steps": {
+    "title": "Fundraising auf DoGood ist einfach, leistungsstark und vertrauenswürdig",
+    "items": [
+      {
+        "title": "Verwende unsere Tools, um deine Spendenaktion zu erstellen",
+        "description": "Du wirst durch Eingabeaufforderungen geführt, um die Details deiner Spendenaktion hinzuzufügen und dein Ziel festzulegen. Aktualisierungen sind jederzeit möglich.",
+        "sub": "Erhalte Tipps zum ",
+        "subLink": "Start deiner Spendenaktion."
+      },
+      {
+        "title": "Erreiche Spender durch Teilen",
+        "description": "Teile deinen Spendenaktionslink und nutze die Ressourcen in deinem Dashboard, um Schwung zu gewinnen."
+      },
+      {
+        "title": "Erhalte Gelder sicher",
+        "description": "Füge deine Bankinformationen hinzu oder lade den Begünstigten deiner Spendenaktion ein, seine hinzuzufügen, und beginne mit dem Empfang von Geldern."
+      }
+    ]
+  },
+  "metrics": [
+    {
+      "count": "12.500+",
+      "title": "Menschen geholfen",
+      "description": "Einzelpersonen und Familien, die direkte Unterstützung durch unsere verifizierten Projekte erhalten haben."
+    },
+    {
+      "count": "2.000+",
+      "title": "Bedürfnisse erfüllt",
+      "description": "Spezifische Gemeinschaftsbedürfnisse erfüllt, von Zugang zu sauberem Wasser bis zu Bildungsressourcen."
+    },
+    {
+      "count": "15+",
+      "title": "Regionen unterstützt",
+      "description": "Gemeinschaften in mehreren Ländern, die von unserem globalen Netzwerk profitieren."
+    }
+  ],
+  "whySupportMatters": {
+    "title": "Warum deine Unterstützung wichtig ist",
+    "steps": [
+      {
+        "title": "Sieh den echten Einfluss",
+        "description": "Volle Transparenz — du siehst, wohin jede Spende geht."
+      },
+      {
+        "title": "Bleib verbunden",
+        "description": "Regelmäßige Updates über die Tiere, die du unterstützt."
+      },
+      {
+        "title": "Werde anerkannt",
+        "description": "Ein persönliches Spenderabzeichen und dein Name auf unserer Spenderwand"
+      },
+      {
+        "title": "Verändere ein Leben",
+        "description": "Sei der Grund, warum ein weiteres Barsik ein Zuhause findet"
+      }
+    ]
+  }
+}

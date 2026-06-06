@@ -37,9 +37,9 @@ export const apiRoutes = {
     getById: (id: string | number) => `/organization/${id}`,
     update: (id: string | number) => `/organization/${id}`,
     delete: (id: string | number) => `/organization/${id}`,
-
     membersByOrg: (id: string | number) => `/organization/${id}/members`,
 
+    getByName: '/organization',
     addMember: '/organization/members',
     deleteMember: '/organization/members',
     updateMemberRole: '/organization/members/role',

@@ -25,6 +25,7 @@
   /* colors */
   --color-background: var(--background);
   --color-background-secondary: var(--background-secondary);
+  --color-background-grants: var(--background-grants);
   --color-post: var(--post);
   --color-post_gray: var(--post_gray);
   --color-foreground: var(--foreground);
@@ -38,6 +39,7 @@
   --color-layout-background: var(--layout-background);
   --color-card: var(--card);
   --color-toggle: var(--toggle);
+  --color-grant-card: var(--grant-card);
   --color-gradient: var(--gradient);
   --color-bg-icon: var(--bg-icon);
   --color-icon-color: var(--icon-color);
@@ -128,6 +130,7 @@
 
   --background: #f1f1f1;
   --background-secondary: #696969;
+  --background-grants: #f3f3f3;
   --foreground: #1b1b1b;
   --header-bg: #171b19;
   --footer-bg: #111215;
@@ -145,6 +148,7 @@
 
   --card: #cfcfcf;
   --toggle: #303030;
+  --grant-card: #fffcfc;
 
   --border: #2c8c8c;
   --btn: #2c8c8c;
@@ -228,8 +232,10 @@ html {
 .dark {
   --background: #171b19;
   --background-secondary: #303030;
+  --background-grants: #2a2d2d;
   --foreground: #f1f1f1;
   --card: #303030;
+  --grant-card: #1d2020;
   --modal: #303030;
   --btn-secondary: #010101;
   --post: #171b19;
@@ -859,4 +865,19 @@ html {
   to {
     height: 0;
   }
+}
+
+.upper-modal {
+  z-index: 1000;
+}
+
+.modal-backdrop {
+  z-index: 999;
+  pointer-events: auto;
+}
+
+[data-radix-select-content],
+[role='listbox'] {
+  z-index: 1001 !important;
+  position: relative;
 }

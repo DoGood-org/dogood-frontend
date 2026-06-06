@@ -6,7 +6,7 @@ import NotFoundTabl from '@/assets/images/notFound/notFoundTabl.png';
 import NotFoundMob from '@/assets/images/notFound/notFoundmob.png';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { ContactFormModal } from '@/components/support/ContactFormModal';
+import { ContactFormModal } from '@/components/supportPage/ContactFormModal';
 import { Section } from '@/components/ui/Section';
 import { NotFoundComponent } from '@/components/layout/not-found/NotFoundComponent';
 

@@ -41,7 +41,7 @@ export interface UserOrganization {
   id: string;
   userId: string;
   organizationId: string;
-  role: OrganizationRole | Role;
+  role: OrganizationRole;
   status: MembershipStatus;
   user: UserDetailedProps;
 }
@@ -125,4 +125,10 @@ export enum Permission {
   SEND_MESSAGE = 'SEND_MESSAGE',
   CHAT_TO_ORGANIZATION = 'CHAT_TO_ORGANIZATION',
   DELETE_ORG = 'DELETE_ORG',
+}
+
+export interface OrganizationFormProps {
+  organization?: OrganizationDetailedProps;
+  mode: 'create' | 'update';
+  setIsOpen?: (arg0: boolean) => void;
 }

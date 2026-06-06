@@ -12,7 +12,7 @@ import {
 } from '@/lib/utils';
 
 export const FAQSection = (): React.JSX.Element => {
-  const t = useTranslations('support');
+  const t = useTranslations('supportPage');
   const [activeCategory, setActiveCategory] =
     useState<MenuCategoryKey>('general');
   const [openItem, setOpenItem] = useState<string | null>(null);

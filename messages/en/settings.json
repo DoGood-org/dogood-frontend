@@ -1,6 +1,7 @@
 {
   "basic": {
     "titleSect": "Settings",
+    "createSect": "Create Organization",
     "title": "Basic Information",
     "name": {
       "title": "Name",
@@ -70,7 +71,16 @@
   "cancelBtn": "Cancel",
   "deleteBtn": "Delete organization",
   "submitBtn": "Submit",
+  "createBtn": "Save",
   "resetBtn": "Reset",
+  "closeBtn": "Close",
   "success": "Your changes have been saved successfully",
-  "error": "Error saving changes. Please try again later"
+  "createSuccess": "You have successfully created a new organization!",
+  "createError": "Error creating organization. Please try again later",
+  "delSuccess": "You have successfully deleted the organization!",
+  "delError": "Error deleting organization. Please try again later",
+  "error": "Error saving changes. Please try again later",
+  "placeholder": "Search organizations...",
+  "loading": "Loading...",
+  "refreshErr": "Failed to refresh organizations"
 }

@@ -2,20 +2,34 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { HeroPlanetLayerProps } from '@/types/heroTypes';
-import { useMediaQuery } from '@/hooks';
 import PlanetMob from '@/assets/images/hero/PlanetMob.png';
 import PlanetTabl from '@/assets/images/hero/PlanetTabl.png';
 import PlanetDesk from '@/assets/images/hero/PlanetDesck.png';
+import { useResponsiveImage } from '@/hooks/useResponsiveImage';
 
 export const HeroPlanetLayer: React.FC<HeroPlanetLayerProps> = ({
   yPlanet,
   opacity,
 }) => {
-  const isMobile = useMediaQuery('(max-width: 767px)');
-  const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1440px)');
+  const {
+    image: heroImage,
+    isMobile,
+    isTablet,
+  } = useResponsiveImage({
+    mobile: PlanetMob,
+    tablet: PlanetTabl,
+    desktop: PlanetDesk,
+  });
+  const getDimensions = (): {
+    width: number;
+    height: number;
+  } => {
+    if (isMobile) return { width: 393, height: 397 };
+    if (isTablet) return { width: 398, height: 397 };
+    return { width: 991, height: 990 };
+  };
 
-  const heroImage = isMobile ? PlanetMob : isTablet ? PlanetTabl : PlanetDesk;
-
+  const { width, height } = getDimensions();
   return (
     <div className="absolute md:bottom-[-450px] lg:bottom-[-500px] w-full pointer-events-none z-25">
       <div className="sticky top-0 h-screen flex items-end justify-center ">
@@ -29,8 +43,8 @@ export const HeroPlanetLayer: React.FC<HeroPlanetLayerProps> = ({
           <Image
             src={heroImage}
             alt="Planet"
-            width={990}
-            height={990}
+            width={width}
+            height={height}
             className="drop-shadow-2xl"
             priority
           />

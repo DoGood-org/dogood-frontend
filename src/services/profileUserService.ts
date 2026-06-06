@@ -5,7 +5,7 @@ export const sendProfile = async (
   formData: ProfileFormData
 ): Promise<FetchResult<ProfileFormData>> => {
   return fetchFromApi<ProfileFormData>('/user/profile', {
-    method: 'PUT',
+    method: 'PATCH',
     data: formData,
     auth: true,
   });

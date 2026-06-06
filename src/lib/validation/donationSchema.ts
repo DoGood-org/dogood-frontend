@@ -1,24 +1,31 @@
 import * as yup from 'yup';
 
 export const donationSchema = yup.object().shape({
-  fullName: yup
+  firstName: yup
     .string()
     .trim()
-    .required('Full name is required')
-    .min(2, 'Full name is too short')
-    .max(100, 'Full name must be at most 100 characters'),
+    .required('First name is required')
+    .min(2, 'First name is too short')
+    .max(100, 'First name must be at most 100 characters'),
 
-  country: yup
+  lastName: yup
     .string()
     .trim()
-    .required('Country is required')
-    .max(56, 'Country name is too long'),
+    .required('Last name is required')
+    .min(2, 'Last name is too short')
+    .max(100, 'Last name must be at most 100 characters'),
 
-  city: yup
+  email: yup
     .string()
     .trim()
-    .required('City is required')
-    .max(100, 'City name must be at most 100 characters'),
+    .required('Email is required')
+    .email('Invalid email address'),
+
+  postCode: yup.string().trim().max(20, 'Post code is too long'),
+
+  country: yup.string().trim().max(56, 'Country name is too long'),
+
+  streetAddress: yup.string().trim().max(200, 'Street address is too long'),
 
   amount: yup
     .number()
@@ -33,8 +40,20 @@ export const donationSchema = yup.object().shape({
 
   donationType: yup
     .string()
-    .oneOf(['USER', 'ORGANIZATION'])
+    .oneOf(['USER', 'ORGANIZATION', 'PROJECT', 'LINE'])
     .required('Donation type is required'),
+
+  selectedPaymentMethodId: yup.string().trim().nullable().optional(),
+
+  emailUpdates: yup.boolean().required(),
+
+  textMessages: yup.boolean().required(),
+
+  communityEmailUpdates: yup.boolean().required(),
+
+  communityTextMessages: yup.boolean().required(),
+
+  hideNamePublicly: yup.boolean().required(),
 });
 
 export type DonationFormValues = yup.InferType<typeof donationSchema>;

@@ -1,0 +1,92 @@
+{
+  "status": "success",
+  "code": "REVIEWS_RETRIEVED",
+  "data": {
+    "reviews": [
+      {
+        "id": 1,
+        "rating": 5,
+        "comment": "Fun for all Ages :) Donating here is easy and trustworthy. I like receiving updates and seeing how even small contributions make a difference.",
+        "authorType": "USER",
+        "targetType": "USER",
+        "status": "APPROVED",
+        "createdAt": "2026-04-01T10:30:00.000Z",
+        "author": {
+          "id": "user_001",
+          "name": "Brittany Lucas",
+          "avatar": ""
+        }
+      },
+      {
+        "id": 2,
+        "rating": 4,
+        "comment": "Pretty cool app. What impressed me most is how clearly this charity communicates its mission and results. From the donation process to detailed reports, everything feels honest and well-organized.",
+        "authorType": "USER",
+        "targetType": "USER",
+        "status": "APPROVED",
+        "createdAt": "2026-04-02T14:20:00.000Z",
+        "author": {
+          "id": "user_002",
+          "name": "Brittany Lucas",
+          "avatar": ""
+        }
+      },
+      {
+        "id": 3,
+        "rating": 5,
+        "comment": "Sooooo cool! Supporting this organization has been an incredibly meaningful experience. I truly appreciate their transparency, regular updates, and the real impact they create. It’s reassuring to know that donations are used responsibly and reach people who genuinely need help.",
+        "authorType": "USER",
+        "targetType": "USER",
+        "status": "APPROVED",
+        "createdAt": "2026-04-03T09:15:00.000Z",
+        "author": {
+          "id": "user_003",
+          "name": "Kenneth Harrell",
+          "avatar": ""
+        }
+      },
+      {
+        "id": 4,
+        "rating": 3,
+        "comment": "Fun app. Providing sustainable water infrastructure to villages in need.",
+        "authorType": "USER",
+        "targetType": "USER",
+        "status": "APPROVED",
+        "createdAt": "2026-04-03T16:45:00.000Z",
+        "author": {
+          "id": "user_004",
+          "name": "Brittany Lucas",
+          "avatar": ""
+        }
+      },
+      {
+        "id": 5,
+        "rating": 5,
+        "comment": "Fun for all Ages :) Donating here is easy and trustworthy. I like receiving updates and seeing how even small contributions make a difference.",
+        "authorType": "USER",
+        "targetType": "USER",
+        "status": "PENDING",
+        "createdAt": "2026-04-04T11:00:00.000Z",
+        "author": {
+          "id": "user_005",
+          "name": "Brittany Lucas",
+          "avatar": ""
+        }
+      },
+      {
+        "id": 6,
+        "rating": 4,
+        "comment": "Pretty cool app. What impressed me most is how clearly this charity communicates its mission and results. From the donation process to detailed reports, everything feels honest and well-organized.",
+        "authorType": "USER",
+        "targetType": "USER",
+        "status": "APPROVED",
+        "createdAt": "2026-04-04T13:30:00.000Z",
+        "author": {
+          "id": "user_006",
+          "name": "Brittany Lucas",
+          "avatar": ""
+        }
+      }
+    ]
+  }
+}

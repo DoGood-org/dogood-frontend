@@ -1,5 +1,4 @@
 'use client';
-import { useMediaQuery } from '@/hooks';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 import HeroSupportDesck from '@/assets/images/support/supportImgDesk.webp';
@@ -9,18 +8,29 @@ import { Section } from '../ui/Section';
 import Image from 'next/image';
 import { Button } from '../ui/Button';
 import { ContactFormModal } from './ContactFormModal';
+import { useResponsiveImage } from '@/hooks/useResponsiveImage';
 
 export const ContactSupportSection = (): React.JSX.Element => {
-  const isMobile = useMediaQuery('(max-width: 767px)');
-  const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1439px)');
-  const t = useTranslations('support');
+  const t = useTranslations('supportPage');
   const [isOpen, setIsOpen] = useState(false);
-  const heroImage = isMobile
-    ? HeroSupportMob
-    : isTablet
-      ? HeroSupportTabl
-      : HeroSupportDesck;
-
+  const {
+    image: heroImage,
+    isMobile,
+    isTablet,
+  } = useResponsiveImage({
+    mobile: HeroSupportMob,
+    tablet: HeroSupportTabl,
+    desktop: HeroSupportDesck,
+  });
+  const getDimensions = (): {
+    width: number;
+    height: number;
+  } => {
+    if (isMobile) return { width: 262, height: 215 };
+    if (isTablet) return { width: 311, height: 256 };
+    return { width: 402, height: 331 };
+  };
+  const { width, height } = getDimensions();
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add('overflow-hidden');
@@ -35,8 +45,8 @@ export const ContactSupportSection = (): React.JSX.Element => {
         <Image
           src={heroImage}
           alt={t('imageHeroAlt')}
-          width={isMobile ? 262 : isTablet ? 312 : 402}
-          height={isMobile ? 215 : isTablet ? 256 : 331}
+          width={width}
+          height={height}
           className="rounded-xl object-fill mb-4 mx-auto md:mb-0 md:absolute md:-top-28 md:-right-4 lg:-top-5 lg:right-6"
         />
         <div className="bg-btn-active p-12 rounded-lg ">

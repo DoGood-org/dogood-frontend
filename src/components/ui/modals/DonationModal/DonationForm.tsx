@@ -1,19 +1,31 @@
 'use client';
 
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useElements, useStripe } from '@stripe/react-stripe-js';
+import {
+  StripeCardCvcElementChangeEvent,
+  StripeCardExpiryElementChangeEvent,
+  StripeCardNumberElementChangeEvent,
+} from '@stripe/stripe-js';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
-import { JSX } from 'react';
-import { useCardInputs } from '@/hooks/useCardInputs';
+import { JSX, useState } from 'react';
 import { DonationFormProps, DonationFormValues } from '@/types/donationType';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { toast } from 'react-toastify';
 import { donationSchema } from '@/lib/validation/donationSchema';
-import { createCheckoutSession } from '@/services/donationService';
-import { useStripe } from '@stripe/react-stripe-js';
-import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
+import { useDonationSubmit } from '@/hooks/useDonationSubmit';
 import { CurrencyAndAmountInput } from './CurrencyAndAmountInput';
 import { PaymentCardList } from './PaymentCardList';
+import { PaymentsType } from './PaymentsType';
+import { DonateTarget } from './DonateTarget';
+import { CommunityConsent } from './CommunityConsent';
+import { CommunityEngagementBlock } from './CommunityEngagementBlock';
+import { DonationPersonalInfoSection } from './DonationPersonalInfoSection';
+import {
+  DonationCardDetailsSection,
+  DonationCardErrors,
+  DonationCardField,
+} from './DonationCardDetailsSection';
 
 const currencies = [
   { value: 'USD', label: 'USD' },
@@ -22,114 +34,135 @@ const currencies = [
 
 export const DonationForm = ({
   initialValues = {},
+  onSuccess,
+  setIsSubmitting,
 }: DonationFormProps): JSX.Element => {
   const t = useTranslations('card');
   const stripe = useStripe();
-  useCardInputs();
+  const elements = useElements();
+
+  const [cardErrors, setCardErrors] = useState<DonationCardErrors>({
+    number: null,
+    expiry: null,
+    cvc: null,
+  });
+  const [cardCompletion, setCardCompletion] = useState({
+    number: false,
+    expiry: false,
+    cvc: false,
+  });
+  const [focusedElement, setFocusedElement] =
+    useState<DonationCardField | null>(null);
 
   const methods = useForm<DonationFormValues>({
-    resolver: yupResolver(donationSchema),
+    resolver: yupResolver(donationSchema) as any,
     defaultValues: {
-      fullName: initialValues.fullName || '',
-      city: initialValues.city || '',
+      firstName: initialValues.firstName || '',
+      lastName: initialValues.lastName || '',
+      email: initialValues.email || '',
+      postCode: initialValues.postCode || '',
       country: initialValues.country || '',
+      streetAddress: initialValues.streetAddress || '',
       currency: initialValues.currency || 'USD',
       amount: initialValues.amount || undefined,
       donationType: initialValues.donationType || 'ORGANIZATION',
+      selectedPaymentMethodId: initialValues.selectedPaymentMethodId || '',
+      emailUpdates: initialValues.emailUpdates ?? false,
+      textMessages: initialValues.textMessages ?? false,
+      communityEmailUpdates: initialValues.communityEmailUpdates ?? true,
+      communityTextMessages: initialValues.communityTextMessages ?? true,
+      hideNamePublicly: initialValues.hideNamePublicly ?? true,
     },
     mode: 'onTouched',
   });
 
   const {
-    register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    watch,
+    formState: { isSubmitting },
   } = methods;
 
-  const cardInputs = [
-    {
-      name: 'fullName',
-      placeholder: t('fullName'),
-      validation: { required: t('validation.required') },
-    },
-    {
-      name: 'country',
-      placeholder: t('country'),
-      validation: { required: t('validation.required') },
-    },
-    {
-      name: 'city',
-      placeholder: t('city'),
-      validation: { required: t('validation.required') },
-    },
-  ] as const;
+  const amount = watch('amount');
+  const currency = watch('currency');
+  const selectedPaymentMethodId = watch('selectedPaymentMethodId');
+  const hasSelectedCard = Boolean(selectedPaymentMethodId);
 
-  const onSubmit: SubmitHandler<DonationFormValues> = async (
-    data
-  ): Promise<void> => {
-    try {
-      const response = await createCheckoutSession(data);
-
-      if (!response.ok) {
-        toast.error(t('checkout.errorCreateSession'));
-        return;
-      }
-
-      if (!stripe) {
-        toast.error(t('checkout.paymentUnavailable'));
-        return;
-      }
-
-      if (!response.data?.sessionId) {
-        toast.error(t('checkout.unexpectedError'));
-        return;
-      }
-
-      await stripe.redirectToCheckout({ sessionId: response.data.sessionId });
-    } catch (err) {
-      console.error('Unexpected error in checkout handler:', err);
-      toast.error(t('checkout.unexpectedError'));
-    }
+  const handleNumberChange = (
+    event: StripeCardNumberElementChangeEvent
+  ): void => {
+    setCardErrors((prev) => ({
+      ...prev,
+      number: event.error?.message ?? null,
+    }));
+    setCardCompletion((prev) => ({ ...prev, number: event.complete }));
   };
+
+  const handleExpiryChange = (
+    event: StripeCardExpiryElementChangeEvent
+  ): void => {
+    setCardErrors((prev) => ({
+      ...prev,
+      expiry: event.error?.message ?? null,
+    }));
+    setCardCompletion((prev) => ({ ...prev, expiry: event.complete }));
+  };
+
+  const handleCvcChange = (event: StripeCardCvcElementChangeEvent): void => {
+    setCardErrors((prev) => ({ ...prev, cvc: event.error?.message ?? null }));
+    setCardCompletion((prev) => ({ ...prev, cvc: event.complete }));
+  };
+
+  const onSubmit = useDonationSubmit({
+    cardCompletion,
+    setCardErrors,
+    onSuccess,
+    setIsSubmitting,
+  });
 
   return (
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-4 md:max-w-[500px] mx-auto"
+        className="space-y-6"
         autoComplete="off"
       >
-        {cardInputs.map(({ name, placeholder, validation }) => (
-          <div key={name}>
-            <Input
-              {...register(name, validation)}
-              placeholder={placeholder}
-              className="placeholder:text-[#0D0D0D99] text-base text-[#0D0D0D] h-12 bg-[#ffffff] rounded-[4px] relative flex items-center p-3 border border-[#111113] focus-within:ring-1 focus-visible:ring-1 focus-within:ring-[#00c1ac] focus-within:border-transparent focus-visible:border-transparent"
-            />
-            {errors[name] && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors[name]?.message}
-              </p>
-            )}
-          </div>
-        ))}
+        <PaymentsType />
+        <DonateTarget />
+
+        <DonationPersonalInfoSection />
+
+        <CommunityEngagementBlock />
 
         <CurrencyAndAmountInput
           currencies={currencies}
           amountName="amount"
           currencyName="currency"
         />
-        <div>
-          <PaymentCardList />
-        </div>
+
+        <PaymentCardList />
+
+        <DonationCardDetailsSection
+          disabled={hasSelectedCard}
+          cardErrors={cardErrors}
+          focusedElement={focusedElement}
+          onFocusChange={setFocusedElement}
+          onNumberChange={handleNumberChange}
+          onExpiryChange={handleExpiryChange}
+          onCvcChange={handleCvcChange}
+        />
+        <CommunityConsent />
+
         <Button
           type="submit"
           variant="primary"
-          className="w-full
-          text-[#ffffff]"
-          disabled={isSubmitting}
+          className="w-full text-white"
+          disabled={isSubmitting || !stripe || (!hasSelectedCard && !elements)}
         >
-          {isSubmitting ? t('processing') : t('donate')}
+          {isSubmitting
+            ? t('processing')
+            : amount
+              ? `${t('donate')} ${amount}${currency === 'USD' ? '$' : '€'}`
+              : t('donate')}
         </Button>
       </form>
     </FormProvider>

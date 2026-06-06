@@ -1,20 +1,37 @@
 import { AccordionItemData, IAccordionDataProps } from '@/types/support';
 import { AnimatePresence, motion } from 'framer-motion';
-import React from 'react';
+import React, { useState } from 'react';
 import { Minus, Plus } from '../icons';
 import { HighlightText } from './HighlightText';
 
 export const AccordionData = ({
   activeCategory,
   categoryData,
-  openItem,
-  toggleItem,
+  openItem: externalOpenItem,
+  toggleItem: externalToggleItem,
   appliedFilter,
 }: IAccordionDataProps): React.JSX.Element => {
+  const [internalOpenItem, setInternalOpenItem] = useState<string | null>(null);
+
+  const openItem =
+    externalOpenItem !== undefined ? externalOpenItem : internalOpenItem;
+
+  const toggleItem = (itemId: string): void => {
+    if (externalToggleItem) {
+      externalToggleItem(itemId);
+    } else {
+      setInternalOpenItem((prevOpenItem) =>
+        prevOpenItem === itemId ? null : itemId
+      );
+    }
+  };
+
+  const displayCategory = activeCategory || 'general';
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
-        key={activeCategory}
+        key={displayCategory}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
@@ -38,7 +55,7 @@ export const AccordionData = ({
                   className="w-full text-left px-6 py-4 md:p-6 hover:bg-card/80 transition-colors rounded-xl"
                 >
                   <span className="flex items-center justify-between w-full">
-                    <h3 className="text-base text-foreground lg:text-h3">
+                    <h3 className="text-md text-foreground lg:text-h3">
                       <HighlightText
                         text={item.question}
                         highlight={appliedFilter || ''}
@@ -94,7 +111,7 @@ export const AccordionData = ({
                       className="bg-card rounded-xl"
                     >
                       <div className="p-6">
-                        <p className="whitespace-pre-line">
+                        <p className="text-sm md:text-base leading-5 whitespace-pre-line">
                           <HighlightText
                             text={item.answer}
                             highlight={appliedFilter || ''}

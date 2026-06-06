@@ -1,4 +1,27 @@
 {
+  "donateTarget": {
+    "title": "Donate to what",
+    "user": "To a specific volunteer",
+    "organization": "On the platform",
+    "project": "On the project",
+    "line": "On the line"
+  },
+  "communityConsent": {
+    "hideNamePublicly": "Don't display my name publicly on the fundraiser.",
+    "marketingUpdates": "Get occasional marketing updates from GoFundMe. You may unsubscribe at any time.",
+    "contactByNonprofit": "I would like to be contacted by this nonprofit about other ways that I can help."
+  },
+  "communityPrompt": {
+    "title": "Be a party of our community",
+    "description": "We'll send you update on the impact of your donation - and how you can protect nature through activism, donating, events, and more. You can unsubscribe at any time.",
+    "emailQuestion": "I would like to get (or continue to get) email updates:",
+    "smsQuestion": "I would like to get WWF text messages:",
+    "yes": "Yes",
+    "no": "No",
+    "privacyPrefix": "We will keep your information safe and secure. Please see our",
+    "privacyLink": "Privacy Policy",
+    "privacySuffix": "for details of how we use your information."
+  },
   "donate": [
     {
       "water": "Can provide clean water for one person for a year",
