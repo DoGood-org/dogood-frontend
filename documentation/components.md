@@ -14,6 +14,8 @@ is a list of more common components and their API.
 - [StarItem](#staritem)
 - [AnimationTabs](#animationtabs)
 - [Slider](#slider)
+- [MoreMenu](#moremenu)
+- [MenuAction](#menuaction)
 
 ## Section
 
@@ -633,6 +635,301 @@ class names.
       )}
       listClassName="flex-row"
     />
+```
+
+</details>
+
+[Back to Menu](#menu)
+
+
+## MoreMenu
+
+This component renders a dropdown menu triggered by a three-dots (`More`)
+button. It is built on top of Radix UI Dropdown Menu and allows rendering
+custom actions through a flexible render function API.
+
+The menu automatically handles positioning, closing behavior, and event
+propagation control, making it suitable for cards, list items, tables, and
+other interactive containers.
+
+| Prop                   | Default value | Description                                                      |
+| ---------------------- | ------------- | ---------------------------------------------------------------- |
+| `items`*               | —             | Required. Array of menu items to render.                         |
+| `className`            | `""`          | Optional. Additional classes for the root wrapper.               |
+| `triggerClassName`     | `""`          | Optional. Additional classes for the trigger button.             |
+| `menuWrapperClassName` | `""`          | Optional. Additional classes for the dropdown content container. |
+| `side`                 | `bottom`      | Optional. Side of the trigger where the menu will appear.        |
+| `align`                | `end`         | Optional. Alignment of the menu relative to the trigger.         |
+
+
+<details> <summary><b>Details</b></summary>
+
+**MoreMenuItem**
+
+Each menu item is represented by the following structure:
+```ts
+type MoreMenuItem = {
+  id: string;
+  content: (close: () => void) => ReactNode;
+};
+```
+
+| Property   | Type                               | Description                                            |
+| ---------- | ---------------------------------- | ------------------------------------------------------ |
+| `id`*      | string                             | Required. Unique identifier used as React key.         |
+| `content`* | `(close: () => void) => ReactNode` | Required. Function that returns the menu item content. |
+
+**close function**
+
+The `content` callback receives a close function that can be used to
+programmatically close the dropdown menu.
+```ts
+{
+  id: 'edit',
+  content: (close) => (
+    <button
+      onClick={() => {
+        handleEdit();
+        close();
+      }}
+    >
+      Edit
+    </button>
+  ),
+}
+```
+
+**Features**
+- Built on top of Radix UI Dropdown Menu.
+- Supports automatic collision detection (avoidCollisions).
+- Prevents click propagation to parent elements.
+- Supports custom menu item rendering.
+- Supports programmatic menu closing.
+- Renders menu content inside a React Portal.
+
+**Positioning**
+
+The menu position can be customized using the side and align props.
+
+- side
+    | Value    | Description                     |
+    | -------- | ------------------------------- |
+    | `top`    | Menu appears above the trigger. |
+    | `right`  | Menu appears to the right.      |
+    | `bottom` | Menu appears below the trigger. |
+    | `left`   | Menu appears to the left.       |
+
+- align
+    | Value    | Description                      |
+    | -------- | -------------------------------- |
+    | `start`  | Align menu to the start edge.    |
+    | `center` | Center menu relative to trigger. |
+    | `end`    | Align menu to the end edge.      |
+
+**Styling**
+
+Default dropdown content styles:
+```ts
+rounded-lg bg-admin-more p-4 shadow-lg translate-y-3
+```
+Default trigger styles:
+```ts
+px-2
+```
+You can extend or override these styles via:
+
+- className
+- triggerClassName
+- menuWrapperClassName
+
+**Example Usage**
+```tsx
+<MoreMenu
+  items={[
+    {
+      id: 'edit',
+      content: (close) => (
+        <button
+          onClick={() => {
+            handleEdit();
+            close();
+          }}
+        >
+          Edit
+        </button>
+      ),
+    },
+    {
+      id: 'delete',
+      content: (close) => (
+        <button
+          onClick={() => {
+            handleDelete();
+            close();
+          }}
+        >
+          Delete
+        </button>
+      ),
+    },
+  ]}
+/>
+```
+
+**Example with Custom Positioning**
+```tsx
+<MoreMenu
+  side="right"
+  align="start"
+  menuWrapperClassName="w-56"
+  items={[
+    {
+      id: 'share',
+      content: (close) => (
+        <button
+          onClick={() => {
+            handleShare();
+            close();
+          }}
+        >
+          Share
+        </button>
+      ),
+    },
+  ]}
+/>
+```
+
+</details>
+
+[Back to Menu](#menu)
+
+## MenuAction
+
+This component renders a menu action with an icon and label. Depending on the
+provided props, it can render either:
+
+- a Next.js Link for navigation actions;
+- a Button for executing callbacks.
+
+The component provides a consistent visual appearance for action items used
+inside dropdowns, menus, and contextual action panels.
+
+| Prop        | Default value | Description                                                  |
+| ----------- | ------------- | ------------------------------------------------------------ |
+| `icon`*     | —             | Required. React component used as the action icon.           |
+| `label`*    | —             | Required. Text displayed next to the icon.                   |
+| `href`      | `undefined`   | Optional. URL for navigation. When provided, renders a Link. |
+| `onClick`   | `undefined`   | Optional. Callback executed when the action is clicked.      |
+| `className` | `""`          | Optional. Additional classes to customize the appearance.    |
+
+<details> <summary><b>Details</b></summary>
+
+**Rendering Behavior**
+
+The component automatically chooses which element to render:
+
+| Condition       | Rendered element |
+| --------------- | ---------------- |
+| `href` provided | `Link`           |
+| `href` omitted  | `Button`         |
+
+**Styling**
+
+Default styles applied to both rendering modes:
+```tsx
+flex gap-3 p-3 text-foreground hover:text-btn-hover active:text-btn-active
+```
+
+**Icon**
+
+The icon is rendered using the component passed through the icon prop.
+
+Default icon styling:
+
+```tsx
+<Icon className="size-5" />
+```
+
+This means any icon component that accepts a className prop can be used.
+
+**Integration with Button**
+
+When href is not provided, the component renders the shared Button
+component using the ghost variant.
+```tsx
+<Button variant="ghost">
+  ...
+</Button>
+```
+
+This ensures visual consistency with other action buttons across the
+application.
+
+**Features**
+- Supports navigation and action handlers with a single API.
+- Consistent styling for menu items.
+- Works with any icon component.
+- Supports custom styling via className.
+- Uses Next.js Link for client-side navigation.
+- Reuses the project's Button component for non-navigation actions.
+
+**Example Usage**
+- Navigation Action
+    ```tsx
+    import { PencilSimple } from '@/components/icons';
+
+    <MenuAction
+      icon={PencilSimple}
+      label="Edit profile"
+      href="/profile/edit"
+    />
+    ```
+
+- Action Button
+    ```tsx
+    import { Trash } from '@/components/icons';
+
+    <MenuAction
+      icon={Trash}
+      label="Delete"
+      onClick={handleDelete}
+    />
+    ```
+
+- Action with Custom Styling
+    ```tsx
+    <MenuAction
+      icon={Archive}
+      label="Archive"
+      onClick={handleArchive}
+      className="text-warning"
+    />
+    ```
+
+**Notes**
+If both href and onClick are provided, the click handler will be executed
+before navigation.
+The component is commonly used together with MoreMenu to create dropdown
+action lists.
+```tsx
+<MoreMenu
+  items={[
+    {
+      id: 'edit',
+      content: (close) => (
+        <MenuAction
+          icon={PencilSimple}
+          label="Edit"
+          onClick={() => {
+            handleEdit();
+            close();
+          }}
+        />
+      ),
+    },
+  ]}
+/>
 ```
 
 </details>
