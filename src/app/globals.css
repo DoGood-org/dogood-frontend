@@ -50,6 +50,7 @@
   --color-admin-card-bg: var(--admin-card-bg);
   --color-admin-more: var(--admin-more);
   --shadow-admin: var(--admin-shadow);
+  --admin-card-shadow: var(--admin-card-shadow);
 
   /* buttons */
   --color-border: var(--border);
@@ -75,6 +76,7 @@
   --color-map-btn: var(--map-btn-bg);
   --color-map-btn-icon: var(--map-btn-icon);
   --color-news-item-hover: var(--btn-hover);
+  --color-admin-border: var(--admin-border);
 
   --color-review-bg: var(--review-bg);
   --color-review-reverse: var(--review-reverse);
@@ -152,6 +154,8 @@
   --admin-background: #99999926;
   --admin-card-bg: #9999994d;
   --admin-shadow: 0px 2px 2px 0px rgba(0, 187, 167, 0.2);
+  --admin-card-shadow: 0px 2px 2px 0px rgba(0, 188, 125, 0.1);
+
   --admin-more: #d6d6d6;
 
   --card: #cfcfcf;
@@ -171,6 +175,7 @@
   --map-btn-bg: #999999;
   --map-btn-icon: #171b19;
   --news-item-hover: #1ad3aa;
+  --admin-border: #00bc7d4d;
 
   --bg-icon: #171b19;
   --icon-color: #f1f1f1;
@@ -273,7 +278,7 @@ html {
 }
 
 @media (min-width: 1440px) {
-  .lg\:shadow-admin {
+  :root:not(.dark) .lg\:shadow-admin {
     box-shadow: 0px 2px 2px 0px rgba(0, 187, 167, 0.2);
   }
 }

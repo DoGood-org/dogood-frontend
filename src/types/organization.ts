@@ -18,8 +18,13 @@ export interface OrganizationProps {
   email?: string;
   // members: IUserAccount[];
   avatar: string;
-  membersCount: number;
+  // membersCount: number;
+  _count: MembersCount;
 }
+
+type MembersCount = {
+  members: number;
+};
 
 export interface OrganizationContelPanelProps extends ContentPanelProps {
   organization: OrganizationDetailedProps;

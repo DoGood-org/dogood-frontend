@@ -15,7 +15,7 @@ export const OrgPage = ({
   return (
     <Section
       withContainer={false}
-      className="w-full p-4 rounded-lg bg-admin-background lg:p-6 pb-[42px] lg:shadow-admin dark:shadow-none"
+      className="w-full p-4 rounded-lg bg-admin-background lg:p-6 pb-[42px] dark:shadow-none  lg:shadow-admin"
     >
       <div className="flex w-full h-12 gap-2 px-2 py-3 mb-6 rounded-lg bg-admin-card-bg">
         <ChatSearch className="rotate-90 stroke-current size-6" />
@@ -28,10 +28,10 @@ export const OrgPage = ({
         />
       </div>
       <Slider
-        containerClassName="h-[837px]"
+        containerClassName="min-h-[837px] flex flex-col justify-between"
         sliderClassName=""
-        itemClassName="p-0 bg-admin-card-bg rounded-md"
-        listClassName="gap-3"
+        itemClassName="p-0 bg-admin-card-bg rounded-md border-1 border-transparent hover:shadow-admin hover:border-admin-border focus-within:border-admin-border focus-within:shadow-admin outline-none focus:outline-hidden active:outline-hidden active:border-btn-hover"
+        listClassName="gap-3 pb-1"
         buttonsClassName="lg:mt-[7px]"
         items={organizations}
         itemsPerSlide={6}

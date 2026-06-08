@@ -20,15 +20,13 @@ export const CopyLink = ({ onCopied }: CopyLinkProps): JSX.Element => {
   };
 
   return (
-    <li>
-      <Button
-        variant="ghost"
-        onClick={handleCopy}
-        className="flex justify-start gap-4 p-3 hover:text-btn-hover active:text-btn-active text-foreground"
-      >
-        <Link className="fill-current stroke-current size-5" />
-        {t('dotMenu.copyLink')}
-      </Button>
-    </li>
+    <Button
+      variant="ghost"
+      onClick={handleCopy}
+      className="flex justify-start gap-4 p-3 hover:text-btn-hover active:text-btn-active text-foreground"
+    >
+      <Link className="fill-current stroke-current size-5" />
+      {t('dotMenu.copyLink')}
+    </Button>
   );
 };
