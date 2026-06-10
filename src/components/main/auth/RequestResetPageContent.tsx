@@ -5,10 +5,8 @@ import { JSX, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
-
 import { authStore } from '@/zustand/stores/authStore';
 import { IAuthResponse } from '@/zustand/services/authService';
-
 import { ForgotEnterEmail } from './ForgotEnterEmail';
 import { VerifyViaEmail } from './VerififyViaEmail';
 import { Spinner } from '@/components/ui/Spinner';
