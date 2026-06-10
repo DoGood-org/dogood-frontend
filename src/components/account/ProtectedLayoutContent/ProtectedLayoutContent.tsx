@@ -12,7 +12,6 @@ export const ProtectedLayoutContent = ({
   children: React.ReactNode;
 }): React.JSX.Element => {
   useEffect(() => {
-    console.log('🔥 HYDRATION USER:', user);
     authStore.setState({
       user,
       isLoggedIn: true,
