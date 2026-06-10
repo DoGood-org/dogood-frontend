@@ -1,21 +1,14 @@
 'use client';
-// export const authStore = create<AuthState>((set) => ({
-//   isLoggedIn: true,
-//   // user: null,
-//   user: userExample,
-//   login: (userData): void => set({ user: userData, isLoggedIn: true }),
-//   logout: (): void => set({ user: null, isLoggedIn: false }),
-// }));
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+
 import type { ICurrentUser } from '@/types';
 import {
   AuthService,
   IAuthResponse,
   ICurrentUserResponse,
 } from '@/zustand/services/authService';
-import { toast } from 'react-toastify';
 
 type Status =
   | 'idle'
@@ -25,7 +18,7 @@ type Status =
   | 'apiError'
   | 'refreshing'
   | 'authorized'
-  | 'forbidden'; // 403 from API;
+  | 'forbidden';
 
 type TAuthState = {
   user: ICurrentUser | null;
@@ -33,52 +26,38 @@ type TAuthState = {
   isEmailVerified: boolean;
 
   status: Status;
-  beMessage: string;
   error: string | null;
+  beMessage: string;
+
+  nextResendAt: number | null;
+  setNextResendAt: (ts: number | null) => void;
+
   login: (email: string, password: string) => Promise<IAuthResponse>;
   logout: () => Promise<void>;
+
   register: (
     email: string,
     password: string,
     name: string
   ) => Promise<IAuthResponse>;
+
   verify: (token: string) => Promise<IAuthResponse>;
-  registerCompany: (
-    name: string,
-    email: string,
-    password: string,
-    organizationName: string
-  ) => Promise<void>;
+
   currentUser: (options?: {
     silent?: boolean;
   }) => Promise<ICurrentUserResponse | null>;
+
   refresh: () => Promise<void>;
+
   resendVerificationEmail: (email: string) => Promise<void>;
+
   requestToResetPassword: (email: string) => Promise<IAuthResponse>;
+
   resetPassword: (
     resetToken: string,
     newPassword: string
   ) => Promise<IAuthResponse>;
-
-  nextResendAt: number | null;
-  setNextResendAt: (ts: number | null) => void;
 };
-type Step =
-  | null
-  | 'proceedToUserSpace'
-  | 'proceedToLogin'
-  | 'resetPassword'
-  | 'forgotPasswordEnterEmail'
-  | 'verification'
-  | 'resendLink'
-  | 'mistakeInEmail'
-  | 'mistakeApi';
-export const useAuthFlow = create<{ step: Step; setStep: (s: Step) => void }>(
-  (set) => ({
-    step: null,
-    setStep: (s): void => set({ step: s }),
-  })
-);
 
 const service = new AuthService();
 
@@ -88,37 +67,40 @@ export const authStore = create<TAuthState>()(
       user: null,
       isLoggedIn: false,
       isEmailVerified: false,
+
       status: 'idle',
       error: null,
       beMessage: '',
+
       nextResendAt: null,
-      setNextResendAt: (ts): any => set({ nextResendAt: ts }),
+      setNextResendAt: (ts: number | null): void => {
+        set({ nextResendAt: ts });
+      },
 
       login: async (email, password): Promise<IAuthResponse> => {
         try {
-          const res = await service.login(email, password);
+          const res = await service.login({ email, password });
 
           if (res.ok) {
-            toast.success('Login successful');
             set({
               status: 'authorized',
-              error: null,
               isLoggedIn: true,
+              error: null,
+              user: res.user ?? null,
             });
-            return res;
           }
+
           return res;
-        } catch (error) {
-          console.error('Login failed:', error);
+        } catch {
           set({
             status: 'apiError',
             error: 'Login failed',
-            user: null,
             isLoggedIn: false,
+            user: null,
           });
+
           return {
             ok: false,
-            status: 500,
             errorMessage: 'Login failed',
           };
         }
@@ -130,6 +112,7 @@ export const authStore = create<TAuthState>()(
         } catch (e) {
           console.error('Logout failed:', e);
         }
+
         set({
           user: null,
           isLoggedIn: false,
@@ -140,200 +123,130 @@ export const authStore = create<TAuthState>()(
 
       register: async (email, password, name): Promise<IAuthResponse> => {
         try {
-          const res = await service.register(email, password, name);
-          if (!res.ok) {
-            toast.error(
-              'Sign up failed: ' + (res.errorMessage || 'Something went wrong')
-            );
-          }
+          const res = await service.register({ email, password, name });
+
           if (res.ok) {
-            toast.success('Registration successful');
-            set({ status: 'verifying', error: null, beMessage: res.message });
-            return res;
+            set({
+              status: 'verifying',
+              error: null,
+              beMessage: res.message ?? '',
+            });
           }
           return res;
-        } catch (error) {
-          const { message } = (error as any) || {};
-          toast.error('Registration failed');
+        } catch {
           set({
             status: 'apiError',
             error: 'Register failed',
-            beMessage: message,
           });
+
           return {
             ok: false,
-            status: 500,
             errorMessage: 'Register failed',
           };
-        }
-      },
-
-      registerCompany: async (
-        name,
-        email,
-        password,
-        organizationName
-      ): Promise<void> => {
-        try {
-          const res = await service.registerCompany(
-            name,
-            email,
-            password,
-            organizationName
-          );
-          if (!res.ok) {
-            toast.error(
-              'Login failed: ' + (res.errorMessage || 'Something went wrong')
-            );
-          }
-          if (res.ok) {
-            toast.success('Organization registration successful');
-            set({ status: 'verifying', error: null });
-            return;
-          }
-        } catch (error) {
-          const { message } = (error as any) || {};
-          toast.error('Organization registration failed');
-          set({
-            status: 'apiError',
-            error: 'Register company failed',
-            beMessage: message,
-          });
-          return;
         }
       },
       verify: async (token): Promise<IAuthResponse> => {
         try {
           const res = await service.verify(token);
+
           if (res.ok) {
-            toast.success('Email verification successful');
             set({
               isEmailVerified: true,
               status: 'authenticated',
               error: null,
             });
           }
-        } catch (error) {
-          const { message } = (error as any) || {};
-          toast.error('Verification failed');
+
+          return res;
+        } catch {
           set({
             status: 'apiError',
             error: 'Verification failed',
             isEmailVerified: false,
-            beMessage: message,
           });
+
           return {
             ok: false,
-            status: 500,
             errorMessage: 'Verification failed',
           };
         }
-        return { ok: true, errorMessage: 'Verification succeeded' };
       },
-      currentUser: async (): Promise<ICurrentUserResponse | null> => {
-        set({ status: 'loading', error: null });
+
+      currentUser: async (
+        options = {}
+      ): Promise<ICurrentUserResponse | null> => {
+        set({ status: options.silent ? get().status : 'loading', error: null });
         try {
           const res = await service.currentUser();
-          if (!res.ok) {
-            throw new Error('Failed to fetch current user');
+          if (res.ok) {
+            set({
+              status: 'authorized',
+              isLoggedIn: true,
+              user: res.user ?? null,
+            });
+            return res;
           }
-
-          const { user, status, message } = res;
-          set({
-            user: user as ICurrentUser,
-            status: 'authorized',
-            error: null,
-            isLoggedIn: true,
-            beMessage: message,
-          });
-          return { user, status, message };
-        } catch (error) {
-          console.error('Fetching current user failed:', error);
-          set({
-            status: 'forbidden',
-            error: 'Fetching current user failed proceed to login',
-            user: null,
-            isLoggedIn: false,
-            isEmailVerified: false,
-          });
+          return null;
+        } catch {
+          // set({ status: 'idle' });
           return null;
         }
       },
-      refresh: async (): Promise<void> => {
-        try {
-          const res: any = await get().currentUser();
-          if (res && res.user) {
-            set({
-              status: 'authorized',
-              error: null,
-              isLoggedIn: true,
-            });
-            return;
-          }
-        } catch (e: any) {
-          console.error('Token refresh failed:', e);
-          set({
-            status: 'apiError',
-            error: e?.message ?? 'Refresh failed',
-            user: null,
-            isLoggedIn: false,
-          });
-          // fallback: force logout if refresh fails
 
-          await get().logout();
-        }
+      refresh: async (): Promise<void> => {
+        await get().currentUser();
       },
+
       resendVerificationEmail: async (email: string): Promise<void> => {
         const COOLDOWN_MS = 60_000;
 
         const next = get().nextResendAt;
-        if (next && Date.now() < next) return;
+        if (next && Date.now() < next) {
+          set({ error: 'Please wait before resending again' });
+          return;
+        }
 
         try {
           const res = await service.resendVerificationEmail(email);
 
-          if (res.ok) {
-            toast.success('Verification email resent successfully');
-
-            set({ nextResendAt: Date.now() + COOLDOWN_MS });
+          if (!res.ok) {
+            set({ error: res.errorMessage ?? 'Unknown error' });
             return;
           }
 
-          toast.error(res.errorMessage || 'Resend verification email failed');
-        } catch (e) {
-          console.error('Resend verification email failed:', e);
-          toast.error('Resend verification email failed');
+          set({
+            nextResendAt: Date.now() + COOLDOWN_MS,
+            error: null,
+          });
+        } catch (_e) {
+          set({ error: 'Resend verification failed' });
         }
       },
+
       requestToResetPassword: async (email: string): Promise<IAuthResponse> => {
         try {
-          const res = await service.forgotPassword(email);
-          if (res.ok) {
-            return res;
-          }
-          return res;
-        } catch (e) {
-          console.error('Request to reset password failed:', e);
-          throw e;
+          return await service.forgotPassword(email);
+        } catch {
+          return {
+            ok: false,
+            errorMessage: 'Request failed',
+          };
         }
       },
+
       resetPassword: async (
         resetToken: string,
         newPassword: string
       ): Promise<IAuthResponse> => {
         try {
-          const res = await service.resetPassword(resetToken, newPassword);
-          if (res.ok) {
-            toast.success('Password reset successful');
-            return res;
-          }
+          const res = await service.resetPassword({
+            token: resetToken,
+            password: newPassword,
+          });
           return res;
-        } catch (e) {
-          toast.error('Reset password failed');
-          console.error('Reset password failed:', e);
+        } catch {
           return {
             ok: false,
-            status: 500,
             errorMessage: 'Reset password failed',
           };
         }
@@ -343,11 +256,11 @@ export const authStore = create<TAuthState>()(
       name: 'auth',
       storage: createJSONStorage(() =>
         typeof window !== 'undefined'
-          ? localStorage
+          ? window.localStorage
           : {
-              getItem: (): string | null => null,
-              setItem: (): void => {},
-              removeItem: (): void => {},
+              getItem: (_name: string): string | null => null,
+              setItem: (_name: string, _value: string): void => {},
+              removeItem: (_name: string): void => {},
             }
       ),
       partialize: (s) => ({

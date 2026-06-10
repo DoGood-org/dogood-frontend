@@ -6,10 +6,8 @@ import React from 'react';
 import { routing } from '@/i18n/routing';
 import './globals.css';
 import { meta } from '@/data/metadata';
-import { getServerCurrentUser } from '@/lib/server/getCurrentUser';
 import ToastProvider from '@/components/ToastProvider';
 import { ThemeInitializer } from '@/components/layout/theme/ThemeInitializer';
-import { MainLayoutContent } from '@/components/layout/mainLayout/MainLayout';
 import { Header } from '@/components/layout/header/Header';
 import { Footer } from '@/components/layout/footer/Footer';
 import { ReactQueryProvider } from '@/components/providers/ReactQueryProvider';
@@ -30,7 +28,6 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }>): Promise<React.JSX.Element> {
   const { locale } = await params;
-  const me = await getServerCurrentUser();
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();
@@ -40,17 +37,15 @@ export default async function LocaleLayout({
       <body
         className={`${montserrat.variable} antialiased flex flex-col justify-between min-h-[100vh]`}
       >
-        <MainLayoutContent user={me}>
-          <ReactQueryProvider>
-            <ThemeInitializer />
-            <NextIntlClientProvider locale={locale}>
-              <Header />
-              <main className="pt-[80px] lg:pt-[72px]">{children}</main>
-              <Footer />
-            </NextIntlClientProvider>
-            <ToastProvider />
-          </ReactQueryProvider>
-        </MainLayoutContent>
+        <ReactQueryProvider>
+          <ThemeInitializer />
+          <NextIntlClientProvider locale={locale}>
+            <Header />
+            <main className="pt-[80px] lg:pt-[72px]">{children}</main>
+            <Footer />
+          </NextIntlClientProvider>
+          <ToastProvider />
+        </ReactQueryProvider>
       </body>
     </html>
   );

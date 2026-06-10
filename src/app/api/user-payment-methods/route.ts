@@ -13,7 +13,7 @@ export async function GET(): Promise<NextResponse> {
   if (!paymentOptions?.length) return NextResponse.json([]);
 
   const cards = await Promise.all(
-    paymentOptions.map(async (option) => {
+    paymentOptions.map(async (option: any) => {
       try {
         const method = await stripe.paymentMethods.retrieve(option.name);
         return {
