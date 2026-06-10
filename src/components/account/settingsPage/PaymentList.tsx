@@ -21,28 +21,6 @@ export const PaymentList = (): JSX.Element => {
     setEditingId(null);
   };
 
-  // useEffect(() => {
-  //   async function load(): Promise<void> {
-  //     try {
-  //       const data = await stripeService.fetchUserCards();
-  //       setCardsFromDB(data);
-  //     } catch (err) {
-  //       console.error('Failed to fetch cards from DB', err);
-  //     }
-  //   }
-  //   load();
-  // }, [setCardsFromDB]);
-
-  // const mergedCards = [
-  //   ...cardsFromDB,
-  //   ...tempCards.filter(
-  //     (tempCard) =>
-  //       !cardsFromDB.some(
-  //         (dbCard) => dbCard.paymentMethodId === tempCard.paymentMethodId
-  //       )
-  //   ),
-  // ];
-
   useEffect(() => {
     async function load(): Promise<void> {
       try {
