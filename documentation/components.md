@@ -14,6 +14,8 @@ is a list of more common components and their API.
 - [StarItem](#staritem)
 - [AnimationTabs](#animationtabs)
 - [Slider](#slider)
+- [Modal](#modal)
+- [TaskFilter](#taskfilter)
 - [MoreMenu](#moremenu)
 - [MenuAction](#menuaction)
 
@@ -637,6 +639,350 @@ class names.
     />
 ```
 
+</details>
+
+[Back to Menu](#menu)
+
+## Modal
+
+This component renders a modal dialog with animated appearance and backdrop
+overlay. It is displayed through a Portal, supports closing by clicking outside
+the modal or pressing the Escape key, and automatically locks page scrolling
+while open.
+
+The component uses Framer Motion for enter/exit animations and provides an
+optional back button in the top-right corner.
+
+| Prop               | Default value | Description                                                  |
+| ------------------ | ------------- | ------------------------------------------------------------ |
+| `isOpen`*          | —             | Required. Controls whether the modal is visible.             |
+| `onClose`*         | —             | Required. Callback executed when the modal should be closed. |
+| `children`*        | —             | Required. Content rendered inside the modal.                 |
+| `wrapperClassName` | `""`          | Optional. Additional classes applied to the modal container. |
+| `buttonClassName`  | `""`          | Optional. Additional classes applied to the back button.     |
+| `withBackButton`   | `true`        | Optional. Shows or hides the default back button.            |
+
+<details> <summary><b>Details</b></summary>
+
+**Features**
+- Renders through a Portal to avoid parent stacking context issues.
+- Animated opening and closing using Framer Motion.
+- Closes when clicking outside the modal.
+- Closes when pressing the Escape key.
+- Prevents page scrolling while the modal is open.
+- Supports custom content through the children prop.
+- Optional built-in back button.
+- Supports custom styling through className props.
+
+**Backdrop**
+
+The modal renders a full-screen backdrop behind the content.
+
+Default backdrop styles:
+```ts
+fixed inset-0 z-[9999] flex items-center justify-center
+overflow-auto bg-text-gray/70
+```
+
+**Modal Container**
+
+Default container styles:
+```ts
+bg-map-btn p-6 w-[353px] md:w-[500px]
+max-w-[500px] rounded-lg w-full relative
+```
+
+Responsive behavior:
+
+| Breakpoint | Width |
+| ---------- | ----- |
+| Mobile     | 353px |
+| md+        | 500px |
+
+
+You can override or extend these styles using `wrapperClassName`.
+
+**Back Button**
+
+By default, the modal displays a back button in the top-right corner.
+```ts
+withBackButton={true}
+```
+
+The button:
+
+- Calls `onClose` when clicked.
+- Uses localized text from `settings.payment.back`.
+- Displays the `Back` icon.
+- Can be styled via `buttonClassName`.
+
+To hide the button:
+```tsx
+<Modal
+  isOpen={isOpen}
+  onClose={handleClose}
+  withBackButton={false}
+>
+  ...
+</Modal>
+```
+
+**Accessibility**
+
+The component supports the following closing mechanisms:
+
+| Action              | Result       |
+| ------------------- | ------------ |
+| Click outside modal | Closes modal |
+| Press Escape        | Closes modal |
+| Click back button   | Closes modal |
+
+
+**Animation**
+
+The backdrop fades in and out using Framer Motion.
+```ts
+initial={{ opacity: 0 }}
+animate={{ opacity: 1 }}
+exit={{ opacity: 0 }}
+transition={{ duration: 0.3 }}
+```
+
+**Scroll Locking**
+
+When the modal is open, page scrolling is disabled:
+```ts
+document.body.style.overflow = 'hidden';
+```
+
+Scrolling is automatically restored when the modal closes or unmounts.
+
+**Example Usage**
+```tsx
+const [isOpen, setIsOpen] = useState(false);
+
+<Modal
+  isOpen={isOpen}
+  onClose={() => setIsOpen(false)}
+>
+  <h2 className="mb-4 text-xl">Delete Item</h2>
+
+  <p className="mb-6">
+    Are you sure you want to delete this item?
+  </p>
+
+  <Button onClick={() => setIsOpen(false)}>
+    Confirm
+  </Button>
+</Modal>
+```
+
+Example Without Back Button
+```tsx
+<Modal
+  isOpen={isOpen}
+  onClose={handleClose}
+  withBackButton={false}
+  wrapperClassName="max-w-2xl"
+>
+  <CustomForm />
+</Modal>
+```
+
+**Common Use Cases**
+- Confirmation dialogs
+- Forms
+- Settings panels
+- Payment dialogs
+- Image previews
+- Mobile overlays
+- Action sheets
+
+**Dependencies**
+
+The component relies on:
+
+- `Portal` — renders modal outside the normal DOM hierarchy.
+- `useClickOutside` — handles outside click and Escape key detection.
+- `AnimatePresence` and `motion` from Framer Motion — animation handling.
+- `next-intl` — localization of the back button label.
+</details>
+
+[Back to Menu](#menu)
+
+## TaskFilter
+
+This component renders a dropdown filter used for task lists. It allows users to
+select a task filter from a predefined set of options and notifies the parent
+component when the selection changes.
+
+Available filter options depend on the user's role. Administrators and
+moderators have access to a different set of filters than regular members.
+
+| Prop        | Default value | Description                                                     |
+| ----------- | ------------- | --------------------------------------------------------------- |
+| `role`      | `undefined`   | Optional. User role used to determine available filter options. |
+| `onChange`* | —             | Required. Callback executed when a filter is selected.          |
+
+<details> <summary><b>Details</b></summary>
+
+**Behavior**
+
+The component:
+
+- Displays the currently selected filter.
+- Opens a dropdown menu when clicked.
+- Shows available filter options based on the user's role.
+- Calls onChange() when a new filter is selected.
+- Closes the dropdown automatically after selection.
+- Highlights the active filter with a checkmark icon.
+
+**Default State**
+
+The component initially selects:
+```
+ALL
+```
+
+**Role-Based Options**
+
+The available filters are determined by the user's role.
+```tsx
+const options =
+  role === 'ADMIN' || role === 'MODERATOR'
+    ? adminOptions
+    : memberOptions;
+```
+
+**Administrator / Moderator**
+
+Uses:
+```
+adminOptions
+```
+
+**Member**
+
+Uses:
+```
+memberOptions
+```
+
+The exact values are defined in:
+```
+@/constants/taskFilterOptions
+```
+
+**Selected Value**
+
+The selected option is displayed inside the trigger button:
+```tsx
+t(`tasks.filter.${selected}`)
+```
+
+This allows filter labels to be fully localized using next-intl.
+
+**Styling**
+Trigger Button
+
+Default styles:
+```tsx
+flex items-center gap-4 justify-between
+p-4 bg-card rounded-lg shadow transition
+```
+
+Dropdown Menu
+
+Default styles:
+```tsx
+absolute z-100 mt-2
+w-[200px]
+bg-card
+rounded-xl
+shadow-lg
+```
+
+Option Button
+
+Default styles:
+```tsx
+flex justify-between
+w-full
+text-left
+p-3
+```
+
+**Checkmark Indicator**
+
+The currently selected filter is marked with a check icon.
+```tsx
+{selected === option && <Check className="size-4" />}
+```
+
+**Animation**
+
+The dropdown uses Framer Motion for enter and exit animations.
+```tsx
+initial={{ opacity: 0 }}
+animate={{ opacity: 1 }}
+exit={{ opacity: 0 }}
+transition={{ duration: 0.2, ease: 'easeOut' }}
+```
+
+**Localization**
+
+The component uses translations from:
+```
+account
+```
+Translation keys:
+```
+tasks.sortBy
+tasks.filter.ALL
+tasks.filter.*
+```
+
+**Example Usage**
+```tsx
+<TaskFilter
+  role="MEMBER"
+  onChange={(filter) => {
+    setFilter(filter);
+  }}
+/>
+```
+
+Example for 
+```tsx
+<TaskFilter
+  role="ADMIN"
+  onChange={(filter) => {
+    loadTasks(filter);
+  }}
+/>
+```
+
+**Common Use Cases**
+- Task lists
+- User dashboards
+- Organization management pages
+- Volunteer activity filtering
+- Administrative task management
+
+**Dependencies**
+
+The component relies on:
+
+- `next-intl` — localization support.
+- `framer-motion` — dropdown animations.
+- `CaretDown` — dropdown indicator icon.
+- `Check` — selected option indicator.
+- `adminOptions` and `memberOptions` — available filter values.
+
+**Notes**
+- The component manages its own open/closed state internally.
+- The selected filter state is managed internally and only communicated to the parent through onChange.
+- If the parent component needs to control the selected filter externally, the component should be refactored into a controlled - component.
 </details>
 
 [Back to Menu](#menu)

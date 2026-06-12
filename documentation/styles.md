@@ -33,8 +33,10 @@
 
 | Class      | Font-size | Line-height | Description (usage)                        |
 | ---------- | --------- | ----------- | ------------------------------------------ |
+| .text-xs   | 12px      | 20px        | very small paragraph                       |
 | .text-sm   | 14px      | 16px        | small paragraph                            |
 | .text-base | 16px      | 24px        | base text, paragraph, buttons              |
+| .text-reg  | 20px      | 24px        | paragraph                                  |
 | .text-md   | 18px      | 26px        | paragraph                                  |
 | .text-lg   | 32px      | 48px        | big paragraph                              |
 | .text-h1   | 32px      | 48px        | h1 - mobile and tablet (only one to page)  |
@@ -53,6 +55,8 @@
 ```css
 @theme {
   /* font sizes and line-height desktop */
+  --text-xs: 12px;
+  --leading-xs: 20px;
   --text-sm: 14px;
   --leading-sm: 16px;
   --text-base: 16px;
@@ -81,6 +85,24 @@
 }
 
 @layer utilities {
+  .text-xs {
+    font-size: var(--text-xs);
+    line-height: var(--leading-xs);
+  }
+
+  @media (min-width: 48rem) {
+    .md\:text-xs {
+      font-size: var(--text-xs);
+      line-height: var(--leading-xs);
+    }
+  }
+
+  @media (min-width: 90rem) {
+    .lg\:text-xs {
+      font-size: var(--text-xs);
+      line-height: var(--leading-xs);
+    }
+  }
   .text-sm {
     font-size: var(--text-sm);
     line-height: var(--leading-sm);
@@ -118,6 +140,26 @@
       line-height: var(--leading-base);
     }
   }
+
+  .text-reg {
+    font-size: var(--text-reg);
+    line-height: var(--leading-reg);
+  }
+
+  @media (min-width: 48rem) {
+    .md\:text-reg {
+      font-size: var(--text-reg);
+      line-height: var(--leading-reg);
+    }
+  }
+
+  @media (min-width: 90rem) {
+    .lg\:text-reg {
+      font-size: var(--text-reg);
+      line-height: var(--leading-reg);
+    }
+  }
+
 
   .text-md {
     font-size: var(--text-md);
@@ -338,6 +380,7 @@
   --color-modal: var(--modal);
   --color-admin-background: var(--admin-background);
   --color-admin-card-bg: var(--admin-card-bg);
+  --color-placeholder: var(--text-placeholder);
 
 /* buttons */
 --color-border: var(--border);
@@ -390,6 +433,7 @@ Light theme variables
 --modal: #fffcfc;
 --admin-background: #99999926;
 --admin-card-bg: #9999994d;
+--text-placeholder: #737373;
 
 --card: #e6e6e6;
 --toggle: #303030;
@@ -479,6 +523,7 @@ Dark theme variables
 | admin-card-bg        | #9999994d   | #303030    | background for cards in admin-panel                          |
 | text-help            | #696969     |            | form-placeholders, filter-background                         |
 | text-gray            | #999999     |            | gray-text, lable-color                                       |
+| text-placeholder     | #737373     |            | gray-text (for example: organization-email in admin-panel)   |
 | white                | #f1f1f1     |            | for text and bg that doesn't change in dark theme            |
 | black                | #010101     |            | for text that doesn't change in dark theme                   |
 | text_tag             | #010101     | #f1f1f1    |                                                              |
