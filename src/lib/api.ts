@@ -1,34 +1,79 @@
 'use client';
-import axios from 'axios';
 
-// const NEXT_API = '/api/'; // Next.js API routes
+import axios, { AxiosInstance } from 'axios';
 
-// const BASE_URL = process.env.BASE_URL;
-// const PROXY = () => {
-//   if (process.env.NODE_ENV === 'development') {
-//     return 'http://localhost:3000/';
-//   } else if (process.env.NODE_ENV === 'production') {
-//     return BASE_URL;
-//   }
-//   return null;
-// };
-// const BACKEND = process.env.NEXT_PUBLIC_API_URL;
-// const guestBase = BASE_URL ?? `${BASE_URL}api/`; // public routes (login/logout/refresh/signup)
-// const authBase = PROXY() ?? `${PROXY()}api/proxy`; // protected routes via server proxy
+export const apiGuest = axios.create({
+  baseURL: '/api/proxy',
+});
 
-const apiAuth = axios.create({
+export const apiAuth = axios.create({
   baseURL: '/api/proxy',
   withCredentials: true,
 });
 
-const apiGuest = axios.create({
-  baseURL: '/api/auth',
-  withCredentials: true,
-});
+type QueueItem = {
+  resolve: () => void;
+  reject: (err: unknown) => void;
+};
 
-const api = {
+let isRefreshing = false;
+let failedQueue: QueueItem[] = [];
+
+function processQueue(error: unknown): void {
+  failedQueue.forEach((item) => {
+    if (error) {
+      item.reject(error);
+    } else {
+      item.resolve();
+    }
+  });
+  failedQueue = [];
+}
+
+function addRefreshInterceptor(instance: AxiosInstance): void {
+  instance.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      const originalRequest = error.config;
+
+      if (error.response?.status !== 401 || originalRequest._retry) {
+        return Promise.reject(error);
+      }
+
+      if (isRefreshing) {
+        return new Promise<void>((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then(() => instance(originalRequest))
+          .catch((err) => Promise.reject(err));
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      try {
+        await apiGuest.post('/auth/refresh-token');
+        isRefreshing = false;
+        processQueue(null);
+        return instance(originalRequest);
+      } catch (refreshError) {
+        isRefreshing = false;
+        processQueue(refreshError);
+        if (typeof window !== 'undefined') {
+          const currentPath = window.location.pathname + window.location.search;
+          if (!currentPath.includes('/login')) {
+            window.location.href = `/login?next=${encodeURIComponent(currentPath)}`;
+          }
+        }
+        return Promise.reject(refreshError);
+      }
+    }
+  );
+}
+
+addRefreshInterceptor(apiAuth);
+
+export const api = {
   auth: apiAuth,
   guest: apiGuest,
 };
-
-export default api;
