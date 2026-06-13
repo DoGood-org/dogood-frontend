@@ -1,6 +1,8 @@
 import { ShieldSlash } from '@/components/icons';
 import { BlockedLogo } from '@/components/ui/BlockedLogo';
+import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 import React, { JSX } from 'react';
 
 export const BlockedUser = (): JSX.Element => {
@@ -35,10 +37,15 @@ export const BlockedUser = (): JSX.Element => {
       </p>
       <a
         href="mailto:startup.dogood@gmail.com"
-        className="flex w-full justify-center font-normal text-md text-btn-hover hover:text-[#999] duration-300"
+        className="flex w-full justify-center font-normal text-md text-btn-hover hover:text-[#999] duration-300 mb-6"
       >
         startup.dogood@gmail.com
       </a>
+      <Link href="/" className="flex justify-center">
+        <Button variant="primary" className="w-full md:w-51.5">
+          {t('blockedUser.homeBtn')}
+        </Button>
+      </Link>
     </div>
   );
 };

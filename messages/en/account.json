@@ -88,6 +88,7 @@
     "accountId": "Account ID",
     "date": "Suspended on",
     "type": "Suspension type",
-    "description": "lf you believe this suspension was made in error, you can submit an appeal or reach out to our support team directly."
+    "description": "lf you believe this suspension was made in error, you can submit an appeal or reach out to our support team directly.",
+    "homeBtn": "Back to home page"
   }
 }

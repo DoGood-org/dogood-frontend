@@ -12,7 +12,6 @@ import Link from 'next/link';
 import { JSX, useState } from 'react';
 import { AddOrgModal } from './AddOrgModal';
 import { SearchOrg } from './SearchOrg';
-import { BlockedUserModal } from './BlockedUserModal';
 
 export const AccountContentPanel = ({
   views,
@@ -24,12 +23,6 @@ export const AccountContentPanel = ({
   const isPublicProfilePage = useRouteMatch('/profile');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-
-  {
-    /* After delete */
-  }
-  const [isBlockedOpen, setIsBlockedOpen] = useState(false);
-
   const [activeView, setActiveView] = useState(views[0].view);
   const activeData = views.find(({ view }) => view === activeView);
 
@@ -50,26 +43,16 @@ export const AccountContentPanel = ({
               buttonClass="p-[10px]"
             />
             {activeData?.id === 'task' && (
-              <>
-                {/* After delete */}
-                <Button
-                  variant="secondary"
-                  className="gap-[10px] mt-11 md:mt-0 align-right self-end"
-                  onClick={() => setIsBlockedOpen(!isBlockedOpen)}
-                >
-                  Block user
-                </Button>
-                <Button
-                  asChild
-                  variant="secondary"
-                  className="gap-[10px] mt-11 md:mt-0 align-right self-end"
-                >
-                  <Link href="/tasks">
-                    <Plus className="size-6 fill-current" />
-                    {t('task.add')}
-                  </Link>
-                </Button>
-              </>
+              <Button
+                asChild
+                variant="secondary"
+                className="gap-[10px] mt-11 md:mt-0 align-right self-end"
+              >
+                <Link href="/tasks">
+                  <Plus className="size-6 fill-current" />
+                  {t('task.add')}
+                </Link>
+              </Button>
             )}
             {activeData?.id === 'organization' && (
               <div className="flex gap-4 juctify-end">
@@ -98,11 +81,6 @@ export const AccountContentPanel = ({
       )}
       {isModalOpen && (
         <AddOrgModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
-      )}
-
-      {/* After delete */}
-      {isBlockedOpen && (
-        <BlockedUserModal isOpen={isBlockedOpen} setIsOpen={setIsBlockedOpen} />
       )}
     </Section>
   );

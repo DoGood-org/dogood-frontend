@@ -88,6 +88,7 @@
     "accountId": "Konto-ID",
     "date": "Aufgehängt an",
     "type": "Aufhängungsart",
-    "description": "Wenn Sie der Meinung sind, dass diese Sperre zu Unrecht verhängt wurde, können Sie Widerspruch einlegen oder sich direkt an unseren Kundendienst wenden."
+    "description": "Wenn Sie der Meinung sind, dass diese Sperre zu Unrecht verhängt wurde, können Sie Widerspruch einlegen oder sich direkt an unseren Kundendienst wenden.",
+    "homeBtn": "Zurück zur Startseite"
   }
 }
