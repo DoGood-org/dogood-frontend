@@ -8,28 +8,16 @@ export const ProtectedLayoutContent = ({
   user,
   children,
 }: {
-  user: ICurrentUser | null;
+  user: ICurrentUser;
   children: React.ReactNode;
 }): React.JSX.Element => {
   useEffect(() => {
-    if (user) {
-      authStore.setState({
-        user,
-        isLoggedIn: true,
-        isEmailVerified: user.isEmailVerified,
-        status: 'authorized',
-      });
-    } else {
-      authStore.setState({
-        user: null,
-        isLoggedIn: false,
-        isEmailVerified: false,
-        status: 'forbidden',
-      });
-    }
+    authStore.setState({
+      user,
+      isLoggedIn: true,
+      isEmailVerified: user.isEmailVerified,
+      status: 'authorized',
+    });
   }, [user]);
-  if (!user) {
-    return <div>Access Denied</div>;
-  }
   return <>{children}</>;
 };

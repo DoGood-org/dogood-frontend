@@ -51,7 +51,7 @@ export const PayoutMethods = (): JSX.Element => {
           </p>
         </div>
       </div>
-      <PaymentCardList scrollable={false} />
+      <PaymentCardList />
     </div>
   );
 };

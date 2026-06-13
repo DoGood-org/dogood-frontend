@@ -75,10 +75,24 @@ export interface FormRegister {
   repeatPassword: string;
 }
 export type FormRegisterPerson = FormRegister;
-export type FormRegisterCompany = FormRegister & {
-  companyName: string;
-};
+
 export type FormLogin = {
   email: string;
+  password: string;
+};
+
+export type LoginDTO = {
+  email: string;
+  password: string;
+};
+
+export type RegisterDTO = {
+  email: string;
+  password: string;
+  name: string;
+};
+
+export type ResetPasswordDTO = {
+  token: string;
   password: string;
 };

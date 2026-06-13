@@ -1,7 +1,6 @@
 // app/[locale]/(protected)/layout.tsx
 import { ProtectedLayoutContent } from '@/components/account/ProtectedLayoutContent/ProtectedLayoutContent';
 import { getServerCurrentUser } from '@/lib/server/getCurrentUser';
-import { ICurrentUser } from '@/types';
 import { redirect } from 'next/navigation';
 
 export default async function ProtectedLayout({
@@ -13,11 +12,11 @@ export default async function ProtectedLayout({
 }): Promise<React.JSX.Element> {
   const { locale } = await params;
 
-  const me: ICurrentUser | null = await getServerCurrentUser(); // server
+  const me = await getServerCurrentUser();
+
   if (!me) {
-    // no user, redirect to login
-    const localePrefix = locale === 'en' ? '' : `/${locale}`;
-    redirect(`${localePrefix}/login?next=/account`);
+    const prefix = locale === 'en' ? '' : `/${locale}`;
+    redirect(`${prefix}/login?next=/account`);
   }
 
   return (

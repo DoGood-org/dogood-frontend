@@ -43,7 +43,7 @@ export const UserDescription = ({
           {isPublicProfilePage && <ReportUser />}
         </div>
         <p className="text-base lg:text-h3 mt-3 font-semibold lg:font-normal capitalize">
-          {siteRole.toLowerCase()}
+          {(siteRole ?? '').toLowerCase()}
         </p>
         {location && (
           <p className="flex gap-2 text-text-help mt-6">
