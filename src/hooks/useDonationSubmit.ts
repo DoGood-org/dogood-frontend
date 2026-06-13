@@ -31,7 +31,6 @@ export const useDonationSubmit = ({
   const elements = useElements();
 
   const onSubmit: SubmitHandler<DonationFormValues> = async (data) => {
-
     const selectedPaymentMethodId = data.selectedPaymentMethodId?.trim();
     const hasSelectedPaymentMethod = Boolean(selectedPaymentMethodId);
 

@@ -80,5 +80,14 @@
   "reportError": "Please select a reason.",
   "reportSendButton": "Send",
   "createOrgButton": "Create",
-  "searchOrgButton": "Search"
+  "searchOrgButton": "Search",
+  "blockedUser": {
+    "title": "Your account has been suspended",
+    "subtitle": "Access to the platform has been restricted due to a community guidelines violation",
+    "reason": "REASON FOR SUSPENSION",
+    "accountId": "Account ID",
+    "date": "Suspended on",
+    "type": "Suspension type",
+    "description": "lf you believe this suspension was made in error, you can submit an appeal or reach out to our support team directly."
+  }
 }

@@ -80,5 +80,14 @@
   "reportError": "Bitte wählen Sie einen Grund.",
   "reportSendButton": "Senden",
   "createOrgButton": "Erstellen",
-  "searchOrgButton": "Suchen"
+  "searchOrgButton": "Suchen",
+  "blockedUser": {
+    "title": "Ihr Konto wurde gesperrt",
+    "subtitle": "Der Zugriff auf die Plattform wurde aufgrund eines Verstoßes gegen die Community-Richtlinien eingeschränkt",
+    "reason": "GRUND FÜR DIE SUSPENDIERUNG",
+    "accountId": "Konto-ID",
+    "date": "Aufgehängt an",
+    "type": "Aufhängungsart",
+    "description": "Wenn Sie der Meinung sind, dass diese Sperre zu Unrecht verhängt wurde, können Sie Widerspruch einlegen oder sich direkt an unseren Kundendienst wenden."
+  }
 }
