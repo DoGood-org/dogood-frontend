@@ -92,7 +92,6 @@ export const LoginPageContent: React.FC = () => {
                 );
 
                 if (res?.ok || res?.status === 200) {
-                  toast.success(t('toast.loginSuccess'));
                   router.replace('/account');
                   return;
                 }
