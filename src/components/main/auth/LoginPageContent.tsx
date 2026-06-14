@@ -3,21 +3,20 @@
 import { IAuthResponse } from '@/zustand/services/authService';
 import { authStore } from '@/zustand/stores/authStore';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
 import { AuthForm } from './AuthForm';
 import { VerifyViaEmail } from './VerififyViaEmail';
 import { Spinner } from '@/components/ui/Spinner';
+import { useAuthStep } from '@/hooks/useAuthStep';
 
 export const LoginPageContent: React.FC = () => {
   const router = useRouter();
-  const params = useSearchParams();
   const t = useTranslations('auth');
 
-  const step = params.get('step');
-  const emailFromUrl = params.get('email') ?? '';
+  const { step, emailFromUrl, setStep } = useAuthStep('/login');
 
   useEffect(() => {
     if (step === 'mistakeApi') {
@@ -25,27 +24,6 @@ export const LoginPageContent: React.FC = () => {
       router.replace('/login');
     }
   }, [step, router, t]);
-
-  const setStep = (newStep: string | null, email?: string): void => {
-    const query = new URLSearchParams(params.toString());
-
-    if (newStep) {
-      query.set('step', newStep);
-    } else {
-      query.delete('step');
-    }
-
-    if (email) {
-      query.set('email', email);
-    } else {
-      query.delete('email');
-    }
-
-    const queryString = query.toString();
-    router.replace(queryString ? `?${queryString}` : '/login', {
-      scroll: false,
-    });
-  };
 
   const { login, status, error, resendVerificationEmail, nextResendAt } =
     authStore();

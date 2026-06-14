@@ -1,10 +1,17 @@
 import { fetchFromApi } from '@/lib/api/apiFetcher';
 import { apiRoutes } from '@/lib/server/apiRoutes';
-import { ICurrentUser, LoginDTO, RegisterDTO, ResetPasswordDTO } from '@/types';
+import {
+  IBannedUser,
+  ICurrentUser,
+  LoginDTO,
+  RegisterDTO,
+  ResetPasswordDTO,
+} from '@/types';
 
 export interface IAuthResponse {
   ok: boolean;
   user?: ICurrentUser | null;
+  bannedUser?: IBannedUser;
   message?: string;
   status?: number;
   errorMessage?: string;

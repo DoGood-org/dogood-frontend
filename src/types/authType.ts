@@ -109,3 +109,5 @@ export interface IBannedCurrentUser {
   isBanned: true;
   bannedUser: IBannedUser;
 }
+
+export type CurrentUserResult = ICurrentUser | IBannedCurrentUser | null;

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 import { AuthForm } from './AuthForm';
@@ -11,34 +11,13 @@ import { authStore } from '@/zustand/stores/authStore';
 import { IAuthResponse } from '@/zustand/services/authService';
 import { useTranslations } from 'next-intl';
 import { Spinner } from '@/components/ui/Spinner';
+import { useAuthStep } from '@/hooks/useAuthStep';
 
 export const RegisterPageContent = (): React.ReactElement => {
   const router = useRouter();
-  const params = useSearchParams();
   const t = useTranslations('auth');
 
-  const step = params.get('step');
-  const emailFromUrl = params.get('email') ?? '';
-
-  const setStep = (step: string | null, email?: string): void => {
-    const query = new URLSearchParams(params.toString());
-    if (step) {
-      query.set('step', step);
-    } else {
-      query.delete('step');
-    }
-
-    if (email) {
-      query.set('email', email);
-    } else {
-      query.delete('email');
-    }
-
-    const queryString = query.toString();
-    router.replace(queryString ? `/register?${queryString}` : '/register', {
-      scroll: false,
-    });
-  };
+  const { step, emailFromUrl, setStep } = useAuthStep('/register');
 
   const { register, status, resendVerificationEmail, nextResendAt } =
     authStore();
