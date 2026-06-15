@@ -69,7 +69,14 @@ export const LoginPageContent: React.FC = () => {
                   data.password
                 );
 
+                if (res?.status === 403 && res?.bannedUser) {
+                  toast.error(t('toast.banned'));
+                  router.replace('/account');
+                  return;
+                }
+
                 if (res?.ok || res?.status === 200) {
+                  toast.success(t('toast.loginSuccess'));
                   router.replace('/account');
                   return;
                 }
