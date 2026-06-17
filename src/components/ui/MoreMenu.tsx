@@ -33,7 +33,10 @@ export const MoreMenu = ({
         <DropdownMenu.Trigger asChild>
           <button
             type="button"
-            className={cn('px-2', triggerClassName)}
+            className={cn(
+              'px-2 w-10 h-10 flex justify-center align-center',
+              triggerClassName
+            )}
             onPointerDown={(e) => e.stopPropagation()}
             onClick={stopEvent}
           >
@@ -47,11 +50,11 @@ export const MoreMenu = ({
             avoidCollisions
             onClick={(e) => e.stopPropagation()}
             className={cn(
-              'rounded-lg bg-admin-more p-4 shadow-lg translate-y-3',
+              'rounded-lg bg-admin-more p-4 shadow-lg translate-y-3 z-[999] relative',
               menuWrapperClassName
             )}
           >
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-3 text-white">
               {items.map((item) => (
                 <li key={item.id}>
                   {item.content(() => {

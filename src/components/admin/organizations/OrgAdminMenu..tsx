@@ -1,7 +1,7 @@
 'use client';
 
 import { JSX, useState } from 'react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 import { MoreMenu } from '@/components/ui/MoreMenu';
 import { DeleteFormModal } from '@/components/organization/profilePage/DeleteFormModal';
@@ -26,7 +26,6 @@ export const OrganizationAdminMenu = ({
 }: OrganizationAdminMenuProps): JSX.Element => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const t = useTranslations('adminOrg');
-  const locale = useLocale();
   const isMobile = useMediaQuery('(max-width: 767px)');
 
   const actions: ActionConfig[] = [
@@ -48,7 +47,7 @@ export const OrganizationAdminMenu = ({
       id: 'contact',
       icon: ChatCircle,
       label: t('contact'),
-      href: `${locale}/account/chat`,
+      href: '/account/chat',
     },
   ];
 
@@ -68,7 +67,7 @@ export const OrganizationAdminMenu = ({
   }));
 
   return (
-    <>
+    <div className="absolute top-3 right-3 lg:top-6 lg:right-8">
       <MoreMenu
         items={items}
         side={isMobile ? 'bottom' : 'left'}
@@ -85,6 +84,6 @@ export const OrganizationAdminMenu = ({
         isOpen={isDeleteModalOpen}
         setIsOpen={setIsDeleteModalOpen}
       />
-    </>
+    </div>
   );
 };
