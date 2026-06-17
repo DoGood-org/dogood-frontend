@@ -1,7 +1,6 @@
 'use client';
 
 import { BottomNavigation } from '@/components/account/navigation/BottomNavigation';
-import { AdminButtons } from '@/components/admin/navigation/AdminButtons';
 import { AdminNavigation } from '@/components/admin/navigation/AdminNavigation';
 import { Container } from '@/components/ui/Container';
 import { adminPages } from '@/constants/adminPages';
@@ -20,11 +19,15 @@ export default function AdminLayout({
       <div className="justify-between gap-6 lg:flex">
         <aside className="lg:flex lg:w-[302px] shrink-0 lg:p-6 lg:bg-admin-background rounded-lg lg:min-h-[727px]  flex-col justify-between shadow-none lg:shadow-admin dark:shadow-none">
           <AdminNavigation />
-          <AdminButtons />
         </aside>
         {children}
       </div>
-      <BottomNavigation items={adminPages} translation={t} />
+      <BottomNavigation
+        items={adminPages}
+        translation={t}
+        navClassName="bg-text-help bg-admin-more"
+        menuWrapperClassName="bg-text-help bg-admin-more"
+      />
     </Container>
   );
 }
