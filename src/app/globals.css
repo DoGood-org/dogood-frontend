@@ -49,6 +49,8 @@
   --color-admin-background: var(--admin-background);
   --color-admin-card-bg: var(--admin-card-bg);
   --color-admin-more: var(--admin-more);
+  --color-placeholder: var(--text-placeholder);
+
   --shadow-admin: var(--admin-shadow);
   --admin-card-shadow: var(--admin-card-shadow);
 
@@ -82,10 +84,14 @@
   --color-review-reverse: var(--review-reverse);
 
   /* font sizes and line-height desktop */
+  --text-xs: 12px;
+  --leading-xs: 20px;
   --text-sm: 14px;
   --leading-sm: 16px;
   --text-base: 16px;
   --leading-base: 24px;
+  --text-reg: 20px;
+  --leading-reg: 24px;
   --text-md: 18px;
   --leading-md: 26px;
   --text-lg: 32px;
@@ -155,6 +161,7 @@
   --admin-card-bg: #9999994d;
   --admin-shadow: 0px 2px 2px 0px rgba(0, 187, 167, 0.2);
   --admin-card-shadow: 0px 2px 2px 0px rgba(0, 188, 125, 0.1);
+  --text-placeholder: #737373;
 
   --admin-more: #d6d6d6;
 
@@ -509,6 +516,25 @@ html {
   }
 
   /*----------------- Font-size utilites -------------------------------*/
+  .text-xs {
+    font-size: var(--text-xs);
+    line-height: var(--leading-xs);
+  }
+
+  @media (min-width: 48rem) {
+    .md\:text-xs {
+      font-size: var(--text-xs);
+      line-height: var(--leading-xs);
+    }
+  }
+
+  @media (min-width: 90rem) {
+    .lg\:text-xs {
+      font-size: var(--text-xs);
+      line-height: var(--leading-xs);
+    }
+  }
+
   .text-sm {
     font-size: var(--text-sm);
     line-height: var(--leading-sm);
@@ -544,6 +570,25 @@ html {
     .lg\:text-base {
       font-size: var(--text-base);
       line-height: var(--leading-base);
+    }
+  }
+
+  .text-reg {
+    font-size: var(--text-reg);
+    line-height: var(--leading-reg);
+  }
+
+  @media (min-width: 48rem) {
+    .md\:text-reg {
+      font-size: var(--text-reg);
+      line-height: var(--leading-reg);
+    }
+  }
+
+  @media (min-width: 90rem) {
+    .lg\:text-reg {
+      font-size: var(--text-reg);
+      line-height: var(--leading-reg);
     }
   }
 
@@ -903,4 +948,8 @@ html {
 [role='listbox'] {
   z-index: 1001 !important;
   position: relative;
+}
+
+[data-radix-popper-content-wrapper] {
+  z-index: 9999 !important;
 }

@@ -1,47 +1,62 @@
 'use client';
 
 import { Section } from '@/components/ui/Section';
-import { Slider } from '@/components/ui/Slider';
+import { OrgListSkeleton } from './OrgListSkeleton';
+import { OrgList } from './OrgList';
+import { OrgNoFound } from './OrgNoFound';
+import { useOrganizations } from '@/hooks/useOrganizations';
+import { useDebouncedSearch } from '@/hooks/useDebouncedSearch';
+import { useMediaQuery } from '@/hooks';
 import { JSX } from 'react';
-import { OrgItem } from './OrgItem';
-import { OrganizationProps } from '@/types';
-import { ChatSearch } from '@/components/icons';
+import { OrganizationSearch } from './OrganizationSearch';
 
-export const OrgPage = ({
-  organizations,
-}: {
-  organizations: OrganizationProps[];
-}): JSX.Element => {
+export const OrgPage = (): JSX.Element => {
+  const isDesktop = useMediaQuery('(min-width: 1440px)');
+  const isMobile = useMediaQuery('(max-width: 767px)');
+
+  const limit = isMobile ? 4 : 6;
+
+  const {
+    input: searchInput,
+    search,
+    setInput: setSearchInput,
+  } = useDebouncedSearch();
+
+  const {
+    organizations,
+    pagination,
+    page,
+    isLoading,
+    isFetchingMore,
+    loadMoreRef,
+    setPage,
+  } = useOrganizations({
+    search,
+    limit,
+    isDesktop,
+  });
+
   return (
     <Section
       withContainer={false}
       className="w-full p-4 rounded-lg bg-admin-background lg:p-6 pb-[42px] dark:shadow-none  lg:shadow-admin"
     >
-      <div className="flex w-full h-12 gap-2 px-2 py-3 mb-6 rounded-lg bg-admin-card-bg">
-        <ChatSearch className="rotate-90 stroke-current size-6" />
-        <input
-          name="userName"
-          // value={query}
-          // onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search..."
-          className="w-full outline-none "
+      <OrganizationSearch value={searchInput} onChange={setSearchInput} />
+      {isLoading ? (
+        <OrgListSkeleton count={limit} />
+      ) : organizations.length === 0 ? (
+        <OrgNoFound />
+      ) : (
+        <OrgList
+          organizations={organizations}
+          pagination={pagination}
+          page={page}
+          isDesktop={isDesktop}
+          isFetchingMore={isFetchingMore}
+          loadMoreRef={loadMoreRef}
+          onPageChange={setPage}
         />
-      </div>
-      <Slider
-        containerClassName="min-h-[837px] flex flex-col justify-between"
-        sliderClassName=""
-        itemClassName="p-0 bg-admin-card-bg rounded-md border-1 border-transparent hover:shadow-admin hover:border-admin-border focus-within:border-admin-border focus-within:shadow-admin outline-none focus:outline-hidden active:outline-hidden active:border-btn-hover"
-        listClassName="gap-3 pb-1"
-        buttonsClassName="lg:mt-[7px]"
-        items={organizations}
-        itemsPerSlide={6}
-        renderItem={(organization, idx) => (
-          <OrgItem
-            key={`${idx}-${organization.name}`}
-            organization={organization}
-          />
-        )}
-      />
+      )}
     </Section>
   );
 };
