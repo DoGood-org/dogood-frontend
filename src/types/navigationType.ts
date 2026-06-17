@@ -18,6 +18,8 @@ export interface NavigationPageProps {
 export interface SidebarNavigationProps {
   items: NavigationItem[];
   translation: (key: string) => string;
+  navClassName?: string;
+  menuWrapperClassName?: string;
 }
 
 export type Page = 'Account' | 'Chat' | 'Map' | 'Goals' | 'Settings';
