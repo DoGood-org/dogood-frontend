@@ -7,6 +7,7 @@ import {
   TaskProps,
   UserDetailedProps,
 } from './accountType';
+import { IAdminOrganizations } from './admin';
 import { ReviewProps } from './reviewType';
 import { FormLocation } from './settings';
 // import { ITaskDetails } from './tasks.type';
@@ -31,7 +32,7 @@ export interface OrganizationContelPanelProps extends ContentPanelProps {
 }
 
 export interface OrganizationItemProps {
-  organization: OrganizationProps;
+  organization: IAdminOrganizations;
 }
 
 export interface OrganizationListProps {

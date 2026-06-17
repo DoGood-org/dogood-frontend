@@ -1,7 +1,6 @@
 import {
+  Buildings,
   Dashboard,
-  ReportSheet,
-  // Star,
   StarOrg,
   Support,
   UserList,
@@ -23,7 +22,7 @@ export const adminPages = [
   {
     label: 'Organization list',
     translationKey: 'organizations',
-    Icon: ReportSheet,
+    Icon: Buildings,
     path: '/admin/organizations',
   },
   {

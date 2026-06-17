@@ -8,6 +8,7 @@ export { default as ArrowRight } from './ArrowRight';
 export { default as Back } from './Back';
 export { default as Bell } from './Bell';
 export { default as Binoculars } from './Binoculars';
+export { default as Buildings } from './Buildings';
 export { default as Burger } from './Burger';
 export { default as Businesses } from './Businesses';
 export { default as CalendarDots } from './CalendarDots';
