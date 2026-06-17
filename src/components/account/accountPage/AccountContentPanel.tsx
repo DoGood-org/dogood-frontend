@@ -23,7 +23,6 @@ export const AccountContentPanel = ({
   const isPublicProfilePage = useRouteMatch('/profile');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-
   const [activeView, setActiveView] = useState(views[0].view);
   const activeData = views.find(({ view }) => view === activeView);
 

@@ -129,6 +129,7 @@ export { default as Settings } from './Settings';
 export { default as SettingsIcon } from './SettingsIcon';
 export { default as Shield } from './Shield';
 export { default as ShieldCheck } from './ShieldCheck';
+export { default as ShieldSlash } from './ShieldSlash';
 export { default as ShootingStar } from './ShootingStar';
 export { default as SidebarUserIcon } from './SidebarUserIcon';
 export { default as SignIn } from './SignIn';
