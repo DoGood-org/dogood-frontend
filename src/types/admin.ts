@@ -43,4 +43,6 @@ export type OrganizationListProps = {
   isFetchingMore: boolean;
   loadMoreRef: RefObject<HTMLLIElement | null>;
   onPageChange: (page: number) => void;
+  // isPageLoading: boolean;
+  // limit: number;
 };

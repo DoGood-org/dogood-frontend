@@ -22,6 +22,8 @@ export const UserDescription = ({
   const { profile, name, email, siteRole, location } = user;
   const isPublicProfilePage = useRouteMatch('/profile');
   const locale = useLocale();
+  const roleStyles =
+    'text-base lg:text-h3 mt-3 font-semibold lg:font-normal capitalize';
 
   return (
     <div className="flex flex-col md:flex-row gap-11 lg:gap-20">
@@ -42,9 +44,16 @@ export const UserDescription = ({
           <h2 className="text-h2-m md:text-h2 lg:text-h2-d">{name}</h2>
           {isPublicProfilePage && <ReportUser />}
         </div>
-        <p className="text-base lg:text-h3 mt-3 font-semibold lg:font-normal capitalize">
-          {(siteRole ?? '').toLowerCase()}
-        </p>
+        {siteRole == 'ADMIN' ? (
+          <Link
+            href={`/${locale}/admin`}
+            className={`${roleStyles} hover:text-btn-hover focus:text-btn-hover block`}
+          >
+            {(siteRole ?? '').toLowerCase()}
+          </Link>
+        ) : (
+          <p className={roleStyles}>{(siteRole ?? '').toLowerCase()}</p>
+        )}
         {location && (
           <p className="flex gap-2 text-text-help mt-6">
             <UserLocate />

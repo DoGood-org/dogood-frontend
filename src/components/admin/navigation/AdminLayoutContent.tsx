@@ -7,11 +7,11 @@ import { adminPages } from '@/constants/adminPages';
 import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
 
-export default function AdminLayout({
+export const AdminLayoutContent = ({
   children,
 }: {
   children: React.ReactNode;
-}): JSX.Element {
+}): JSX.Element => {
   const t = useTranslations('adminNav');
 
   return (
@@ -30,4 +30,4 @@ export default function AdminLayout({
       />
     </Container>
   );
-}
+};

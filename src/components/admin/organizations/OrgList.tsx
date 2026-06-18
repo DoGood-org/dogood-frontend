@@ -13,29 +13,40 @@ export const OrgList = ({
   isFetchingMore,
   loadMoreRef,
   onPageChange,
+  // isPageLoading,
+  // limit,
 }: OrganizationListProps): JSX.Element => {
   return (
     <>
       {isDesktop && (
         <>
-          <Slider
-            containerClassName="min-h-[830px] md:min-h-[686px] lg:min-h-[837px] flex flex-col justify-between"
-            showPagination={false}
-            items={organizations}
-            itemsPerSlide={6}
-            renderItem={(organization, idx) => (
-              <OrgItem
-                key={`${idx}-${organization.name}`}
-                organization={organization}
-              />
-            )}
-          />
+          {/* <Spinner /> */}
+          <div className="relative">
+            {/* {isPageLoading && (
+              // <div className="absolute inset-0 z-10 flex items-center justify-center bg-admin-background/50 rounded-lg">
+              <OrgListSkeleton count={limit} />
+              // </div>
+            )} */}
+            <Slider
+              containerClassName="min-h-[830px] md:min-h-[686px] lg:min-h-[837px] flex flex-col justify-between"
+              showPagination={false}
+              items={organizations}
+              itemsPerSlide={6}
+              renderItem={(organization, idx) => (
+                <OrgItem
+                  key={`${idx}-${organization.name}`}
+                  organization={organization}
+                />
+              )}
+            />
+          </div>
 
           {pagination && (
             <Pagination
               currentPage={page - 1}
               totalPages={pagination.totalPages}
               onPageChange={(newPage) => onPageChange(newPage + 1)}
+              // disabled={isPageLoading}
             />
           )}
         </>
@@ -60,14 +71,21 @@ export const OrgList = ({
               <Spinner />
             </div>
           )}
-
-          {/* <div ref={loadMoreRef} className="h-20" /> */}
-
-          {/* {isFetchingMore && <p>Loading...</p>} */}
         </>
       )}
+    </>
+  );
+};
 
-      {/* <Slider
+{
+  /* <div ref={loadMoreRef} className="h-20" /> */
+}
+
+{
+  /* {isFetchingMore && <p>Loading...</p>} */
+}
+{
+  /* <Slider
         containerClassName="min-h-[830px] md:min-h-[686px] lg:min-h-[837px] flex flex-col justify-between"
         sliderClassName=""
         itemClassName="p-0 bg-admin-card-bg rounded-md border-1 border-transparent hover:shadow-admin hover:border-admin-border focus-within:border-admin-border focus-within:shadow-admin outline-none focus:outline-hidden active:outline-hidden active:border-btn-hover"
@@ -82,7 +100,5 @@ export const OrgList = ({
             organization={organization}
           />
         )}
-      /> */}
-    </>
-  );
-};
+      /> */
+}

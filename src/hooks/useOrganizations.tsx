@@ -15,6 +15,7 @@ type UseOrganizationsReturn = {
   pagination: IAdminPagination | null;
   page: number;
   isLoading: boolean;
+  isInitialLoading: boolean;
   isFetchingMore: boolean;
   loadMoreRef: React.RefObject<HTMLLIElement | null>;
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -29,7 +30,9 @@ export const useOrganizations = ({
   const [pagination, setPagination] = useState<IAdminPagination | null>(null);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  // const [isPageLoading, setIsPageLoading] = useState(false);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   const loadMoreRef = useRef<HTMLLIElement>(null);
 
@@ -40,23 +43,42 @@ export const useOrganizations = ({
   const loadPage = useCallback(
     async (pageNumber: number): Promise<void> => {
       try {
-        setIsLoading(true);
-
         const result = await getAllOrganizations(pageNumber, limit, search);
 
         if (!result.ok) {
-          console.error(result);
           return;
         }
 
         setOrganizations(result.data.data);
         setPagination(result.data.pagination);
       } finally {
-        setIsLoading(false);
+        setIsInitialLoading(false);
       }
     },
     [limit, search]
   );
+  // const loadPage = useCallback(
+  //   async (pageNumber: number): Promise<void> => {
+  //     try {
+  //       // setIsLoading(true);
+  //       setIsPageLoading(true);
+
+  //       const result = await getAllOrganizations(pageNumber, limit, search);
+
+  //       if (!result.ok) {
+  //         console.error(result);
+  //         return;
+  //       }
+
+  //       setOrganizations(result.data.data);
+  //       setPagination(result.data.pagination);
+  //     } finally {
+  //       setIsLoading(false);
+  //       setIsPageLoading(false);
+  //     }
+  //   },
+  //   [limit, search]
+  // );
 
   /**
    * Підвантажує наступну сторінку організацій.
@@ -93,8 +115,9 @@ export const useOrganizations = ({
    */
   useEffect(() => {
     setPage(1);
-    setOrganizations([]);
+    // setOrganizations([]);
     setIsLoading(true);
+    // setIsPageLoading(true);
   }, [search]);
 
   /**
@@ -141,7 +164,7 @@ export const useOrganizations = ({
         }
       },
       {
-        rootMargin: '0px 0px 500px 0px',
+        rootMargin: '0px 0px -30% 0px',
         threshold: 0,
       }
     );
@@ -164,8 +187,10 @@ export const useOrganizations = ({
     pagination,
     page,
     isLoading,
+    // isPageLoading,
     isFetchingMore,
     loadMoreRef,
     setPage,
+    isInitialLoading,
   };
 };

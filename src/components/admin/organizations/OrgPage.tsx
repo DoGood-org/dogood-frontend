@@ -26,9 +26,11 @@ export const OrgPage = (): JSX.Element => {
     organizations,
     pagination,
     page,
-    isLoading,
+    // isLoading,
     isFetchingMore,
     loadMoreRef,
+    isInitialLoading,
+    // isPageLoading,
     setPage,
   } = useOrganizations({
     search,
@@ -39,10 +41,10 @@ export const OrgPage = (): JSX.Element => {
   return (
     <Section
       withContainer={false}
-      className="w-full p-4 rounded-lg bg-admin-background lg:p-6 pb-[42px] dark:shadow-none  lg:shadow-admin"
+      className="w-full p-4 min-h-[627px] md:min-h-[756px] mb-[63px] md:mb-8 rounded-lg bg-admin-background lg:p-6 pb-[42px] dark:shadow-none  lg:shadow-admin"
     >
       <OrganizationSearch value={searchInput} onChange={setSearchInput} />
-      {isLoading ? (
+      {isInitialLoading ? (
         <OrgListSkeleton count={limit} />
       ) : organizations.length === 0 ? (
         <OrgNoFound />
@@ -53,8 +55,10 @@ export const OrgPage = (): JSX.Element => {
           page={page}
           isDesktop={isDesktop}
           isFetchingMore={isFetchingMore}
+          // isPageLoading={isPageLoading}
           loadMoreRef={loadMoreRef}
           onPageChange={setPage}
+          // limit={limit}
         />
       )}
     </Section>
