@@ -25,8 +25,8 @@ export const AdminLayoutContent = ({
       <BottomNavigation
         items={adminPages}
         translation={t}
-        navClassName="bg-text-help bg-admin-more"
-        menuWrapperClassName="bg-text-help bg-admin-more"
+        navClassName="bg-text-help bg-admin-more w-[393px] md:w-full justify-between mb-12 md:mb-6 md:px-[60px] -mr-5 -ml-5 md:mx-0"
+        menuWrapperClassName="bg-text-help bg-admin-more max-w-full w-full"
       />
     </Container>
   );
