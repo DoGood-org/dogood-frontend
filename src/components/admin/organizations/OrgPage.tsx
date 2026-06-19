@@ -1,14 +1,17 @@
 'use client';
 
+import { JSX, useEffect } from 'react';
+
 import { Section } from '@/components/ui/Section';
-import { OrgListSkeleton } from './OrgListSkeleton';
 import { OrgList } from './OrgList';
+import { OrgListSkeleton } from './OrgListSkeleton';
 import { OrgNoFound } from './OrgNoFound';
+import { OrganizationSearch } from './OrganizationSearch';
+
+import { useMediaQuery } from '@/hooks';
 import { useOrganizations } from '@/hooks/useOrganizations';
 import { useDebouncedSearch } from '@/hooks/useDebouncedSearch';
-import { useMediaQuery } from '@/hooks';
-import { JSX } from 'react';
-import { OrganizationSearch } from './OrganizationSearch';
+import { useOrganizationFilters } from '@/zustand/selectors/organizationSelectors';
 
 export const OrgPage = (): JSX.Element => {
   const isDesktop = useMediaQuery('(min-width: 1440px)');
@@ -17,23 +20,34 @@ export const OrgPage = (): JSX.Element => {
   const limit = isMobile ? 4 : 6;
 
   const {
+    search: storedSearch,
+    page,
+    setSearch,
+    setPage,
+  } = useOrganizationFilters();
+
+  const {
     input: searchInput,
-    search,
+    search: debouncedSearch,
     setInput: setSearchInput,
-  } = useDebouncedSearch();
+  } = useDebouncedSearch({
+    initialValue: storedSearch,
+  });
+
+  useEffect((): void => {
+    setSearch(debouncedSearch);
+  }, [debouncedSearch, setSearch]);
 
   const {
     organizations,
     pagination,
-    page,
-    // isLoading,
     isFetchingMore,
     loadMoreRef,
     isInitialLoading,
-    // isPageLoading,
-    setPage,
   } = useOrganizations({
-    search,
+    search: storedSearch,
+    page,
+    setPage,
     limit,
     isDesktop,
   });
@@ -41,12 +55,13 @@ export const OrgPage = (): JSX.Element => {
   return (
     <Section
       withContainer={false}
-      className="w-full p-4 min-h-[627px] md:min-h-[756px] mb-[63px] md:mb-8 rounded-lg bg-admin-background lg:p-6 pb-[42px] dark:shadow-none  lg:shadow-admin"
+      className="w-full p-4 min-h-[627px] md:min-h-[756px] mb-[63px] md:mb-8 lg:mb-0 rounded-lg bg-admin-background lg:p-6 pb-[42px] dark:shadow-none lg:shadow-admin"
     >
       <OrganizationSearch value={searchInput} onChange={setSearchInput} />
+
       {isInitialLoading ? (
         <OrgListSkeleton count={limit} />
-      ) : organizations.length === 0 ? (
+      ) : organizations.length === 0 && pagination !== null ? (
         <OrgNoFound />
       ) : (
         <OrgList
@@ -55,10 +70,8 @@ export const OrgPage = (): JSX.Element => {
           page={page}
           isDesktop={isDesktop}
           isFetchingMore={isFetchingMore}
-          // isPageLoading={isPageLoading}
           loadMoreRef={loadMoreRef}
           onPageChange={setPage}
-          // limit={limit}
         />
       )}
     </Section>

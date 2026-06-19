@@ -14,11 +14,11 @@ export const OrgItem = ({
   const locale = useLocale();
 
   return (
-    <Link
-      href={`/${locale}/organization/${organization.id}`}
-      className="relative flex justify-between w-full px-3 py-5 rounded-lg outline-none md:p-3 lg:p-6 bg-card md:gap-8 focus:outline-hidden active:outline-hidden"
-    >
-      <div className="flex gap-4">
+    <div className="relative flex justify-between w-full px-3 py-5 rounded-lg outline-none md:p-3 lg:p-6 bg-card md:gap-8 focus:outline-hidden active:outline-hidden border-1 border-transparent hover:shadow-admin hover:border-[#00BC7D1A] focus:shadow-admin outline-none active:border-border">
+      <Link
+        href={`/${locale}/organization/${organization.id}`}
+        className="flex gap-4 min-w-[90%]"
+      >
         <Image
           src={avatar ? avatar : '/account/avatar.png'}
           alt={`${name} logo`}
@@ -30,8 +30,8 @@ export const OrgItem = ({
           <h3 className="text-reg lg:text-h3">{name}</h3>
           <p className="text-xs text-placeholder">{email}</p>
         </div>
-      </div>
+      </Link>
       <OrganizationAdminMenu orgId={organization.id} />
-    </Link>
+    </div>
   );
 };

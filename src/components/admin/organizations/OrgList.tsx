@@ -13,20 +13,12 @@ export const OrgList = ({
   isFetchingMore,
   loadMoreRef,
   onPageChange,
-  // isPageLoading,
-  // limit,
 }: OrganizationListProps): JSX.Element => {
   return (
     <>
       {isDesktop && (
         <>
-          {/* <Spinner /> */}
           <div className="relative">
-            {/* {isPageLoading && (
-              // <div className="absolute inset-0 z-10 flex items-center justify-center bg-admin-background/50 rounded-lg">
-              <OrgListSkeleton count={limit} />
-              // </div>
-            )} */}
             <Slider
               containerClassName="min-h-[830px] md:min-h-[686px] lg:min-h-[837px] flex flex-col justify-between"
               showPagination={false}
@@ -46,7 +38,6 @@ export const OrgList = ({
               currentPage={page - 1}
               totalPages={pagination.totalPages}
               onPageChange={(newPage) => onPageChange(newPage + 1)}
-              // disabled={isPageLoading}
             />
           )}
         </>
@@ -55,12 +46,10 @@ export const OrgList = ({
       {!isDesktop && (
         <>
           <ul className="flex flex-col gap-[18px] md:gap-3 pb-1">
-            {organizations.map((organization, index) => (
+            {organizations.map((organization, idx) => (
               <li
-                key={organization.id}
-                ref={
-                  index === organizations.length - 1 ? loadMoreRef : undefined
-                }
+                key={`${idx}-${organization.name}`}
+                ref={idx === organizations.length - 1 ? loadMoreRef : undefined}
               >
                 <OrgItem organization={organization} />
               </li>
@@ -68,7 +57,7 @@ export const OrgList = ({
           </ul>
           {isFetchingMore && (
             <div className="flex justify-center py-4">
-              <Spinner />
+              <Spinner color="var(--foreground)" />
             </div>
           )}
         </>
@@ -76,29 +65,3 @@ export const OrgList = ({
     </>
   );
 };
-
-{
-  /* <div ref={loadMoreRef} className="h-20" /> */
-}
-
-{
-  /* {isFetchingMore && <p>Loading...</p>} */
-}
-{
-  /* <Slider
-        containerClassName="min-h-[830px] md:min-h-[686px] lg:min-h-[837px] flex flex-col justify-between"
-        sliderClassName=""
-        itemClassName="p-0 bg-admin-card-bg rounded-md border-1 border-transparent hover:shadow-admin hover:border-admin-border focus-within:border-admin-border focus-within:shadow-admin outline-none focus:outline-hidden active:outline-hidden active:border-btn-hover"
-        listClassName=" gap-[18px] md:gap-3 pb-1"
-        buttonsClassName="lg:mt-[7px]"
-        items={organizations}
-        itemsPerSlide={6}
-        // itemsPerSlide={organizations.length}
-        renderItem={(organization, idx) => (
-          <OrgItem
-            key={`${idx}-${organization.name}`}
-            organization={organization}
-          />
-        )}
-      /> */
-}

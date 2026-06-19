@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 type UseDebouncedSearchProps = {
+  initialValue?: string;
   minLength?: number;
   delay?: number;
 };
@@ -14,11 +15,12 @@ export type UseDebouncedSearchReturn = {
 };
 
 export const useDebouncedSearch = ({
+  initialValue = '',
   minLength = 3,
   delay = 500,
 }: UseDebouncedSearchProps = {}): UseDebouncedSearchReturn => {
-  const [input, setInput] = useState('');
-  const [search, setSearch] = useState('');
+  const [input, setInput] = useState(initialValue);
+  const [search, setSearch] = useState(initialValue);
 
   useEffect(() => {
     const timeout = setTimeout(() => {

@@ -6,6 +6,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 type UseOrganizationsProps = {
   search: string;
+  page: number;
+  setPage(page: number): void;
   limit: number;
   isDesktop: boolean;
 };
@@ -13,24 +15,20 @@ type UseOrganizationsProps = {
 type UseOrganizationsReturn = {
   organizations: IAdminOrganizations[];
   pagination: IAdminPagination | null;
-  page: number;
-  isLoading: boolean;
   isInitialLoading: boolean;
   isFetchingMore: boolean;
   loadMoreRef: React.RefObject<HTMLLIElement | null>;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export const useOrganizations = ({
   search,
+  page,
+  setPage,
   limit,
   isDesktop,
 }: UseOrganizationsProps): UseOrganizationsReturn => {
   const [organizations, setOrganizations] = useState<IAdminOrganizations[]>([]);
   const [pagination, setPagination] = useState<IAdminPagination | null>(null);
-  const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
-  // const [isPageLoading, setIsPageLoading] = useState(false);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 
@@ -57,28 +55,6 @@ export const useOrganizations = ({
     },
     [limit, search]
   );
-  // const loadPage = useCallback(
-  //   async (pageNumber: number): Promise<void> => {
-  //     try {
-  //       // setIsLoading(true);
-  //       setIsPageLoading(true);
-
-  //       const result = await getAllOrganizations(pageNumber, limit, search);
-
-  //       if (!result.ok) {
-  //         console.error(result);
-  //         return;
-  //       }
-
-  //       setOrganizations(result.data.data);
-  //       setPagination(result.data.pagination);
-  //     } finally {
-  //       setIsLoading(false);
-  //       setIsPageLoading(false);
-  //     }
-  //   },
-  //   [limit, search]
-  // );
 
   /**
    * Підвантажує наступну сторінку організацій.
@@ -107,18 +83,7 @@ export const useOrganizations = ({
     } finally {
       setIsFetchingMore(false);
     }
-  }, [page, limit, search, pagination?.hasNextPage, isFetchingMore]);
-
-  /**
-   * Скидає список та повертає користувача
-   * на першу сторінку при зміні пошукового запиту.
-   */
-  useEffect(() => {
-    setPage(1);
-    // setOrganizations([]);
-    setIsLoading(true);
-    // setIsPageLoading(true);
-  }, [search]);
+  }, [page, limit, search, pagination?.hasNextPage, isFetchingMore, setPage]);
 
   /**
    * Завантажує потрібну сторінку організацій
@@ -180,17 +145,19 @@ export const useOrganizations = ({
         observer.unobserve(current);
       }
     };
-  }, [isDesktop, pagination?.hasNextPage, isFetchingMore, loadMore]);
+  }, [
+    isDesktop,
+    pagination?.hasNextPage,
+    isFetchingMore,
+    loadMore,
+    organizations.length,
+  ]);
 
   return {
     organizations,
     pagination,
-    page,
-    isLoading,
-    // isPageLoading,
     isFetchingMore,
     loadMoreRef,
-    setPage,
     isInitialLoading,
   };
 };
