@@ -7,7 +7,7 @@ export const OrgNoFound = (): JSX.Element => {
   const t = useTranslations('adminOrg');
 
   return (
-    <div className="flex flex-col items-center justify-center text-center">
+    <div className="flex flex-col items-center justify-center text-center pt-5 lg:pt-[44px]">
       <Image
         src={NotFound}
         alt="Error image"
@@ -16,7 +16,7 @@ export const OrgNoFound = (): JSX.Element => {
         className="lg:flex-1/2 lg:w-[254px] lg:h-[259px]"
         priority
       />
-      <p className="text-h2-m align-center">{t('noFound')}</p>
+      <p className="text-h2-m lg:text-lg align-center mt-7">{t('noFound')}</p>
     </div>
   );
 };
