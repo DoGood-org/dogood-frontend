@@ -19,7 +19,7 @@ export const MenuAction = ({
   className = '',
 }: MenuActionProps): JSX.Element => {
   const defaultclassName =
-    'flex gap-3 p-3 text-foreground hover:text-btn-hover active:text-btn-active';
+    'flex gap-3 text-white hover:text-btn-hover active:text-btn-active';
 
   if (href) {
     return (
@@ -28,7 +28,7 @@ export const MenuAction = ({
         onClick={onClick}
         className={cn(defaultclassName, className)}
       >
-        <Icon className="stroke-current" />
+        <Icon className="stroke-current size-5" />
         {label}
       </Link>
     );
@@ -38,7 +38,7 @@ export const MenuAction = ({
     <Button
       variant="ghost"
       onClick={onClick}
-      className={cn(defaultclassName, className)}
+      className={cn(defaultclassName, className, 'h-10 px-0')}
     >
       <Icon className="size-5" />
       {label}

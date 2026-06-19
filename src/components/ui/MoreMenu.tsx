@@ -1,4 +1,4 @@
-import { JSX, ReactNode } from 'react';
+import { JSX, ReactNode, useRef } from 'react';
 import { More } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
@@ -27,6 +27,8 @@ export const MoreMenu = ({
   side = 'bottom',
   align = 'end',
 }: MoreMenuProps): JSX.Element => {
+  const movedRef = useRef(false);
+
   return (
     <div className={cn('relative', className)}>
       <DropdownMenu.Root modal={false}>
@@ -34,11 +36,24 @@ export const MoreMenu = ({
           <button
             type="button"
             className={cn(
-              'px-2 w-10 h-10 flex justify-center align-center',
+              'px-2 w-10 h-10 flex justify-center align-center touch-pan-y',
               triggerClassName
             )}
             onPointerDown={(e) => e.stopPropagation()}
-            onClick={stopEvent}
+            onTouchStart={() => {
+              movedRef.current = false;
+            }}
+            onTouchMove={() => {
+              movedRef.current = true;
+            }}
+            onClick={(e) => {
+              if (movedRef.current) {
+                e.preventDefault();
+                return;
+              }
+
+              stopEvent(e);
+            }}
           >
             <More className="cursor-pointer size-5 text-foreground hover:text-btn-hover active:text-btn-active" />
           </button>
@@ -50,11 +65,11 @@ export const MoreMenu = ({
             avoidCollisions
             onClick={(e) => e.stopPropagation()}
             className={cn(
-              'rounded-lg bg-admin-more p-4 shadow-lg translate-y-3 z-[999] relative',
+              'rounded-lg bg-review-bg p-4 shadow-lg translate-y-3 z-[999] relative',
               menuWrapperClassName
             )}
           >
-            <ul className="flex flex-col gap-3 text-white">
+            <ul className="flex flex-col gap-3 text-white items-start justify-between">
               {items.map((item) => (
                 <li key={item.id}>
                   {item.content(() => {

@@ -76,6 +76,7 @@ export const OrganizationAdminMenu = ({
           translate-y-2
           md:translate-y-3
           md:-translate-x-[14px]
+          px-[30px] py-7
         "
       />
 
