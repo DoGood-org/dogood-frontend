@@ -21,6 +21,7 @@ export const UserDescription = ({
   const t = useTranslations('account');
   const { profile, name, email, siteRole, location } = user;
   const isPublicProfilePage = useRouteMatch('/profile');
+  const isPrivatePage = useRouteMatch('/account');
   const locale = useLocale();
   const roleStyles =
     'text-base lg:text-h3 mt-3 font-semibold lg:font-normal capitalize';
@@ -44,7 +45,7 @@ export const UserDescription = ({
           <h2 className="text-h2-m md:text-h2 lg:text-h2-d">{name}</h2>
           {isPublicProfilePage && <ReportUser />}
         </div>
-        {siteRole == 'ADMIN' ? (
+        {isPrivatePage && siteRole == 'ADMIN' ? (
           <Link
             href={`/${locale}/admin`}
             className={`${roleStyles} hover:text-btn-hover focus:text-btn-hover block`}
