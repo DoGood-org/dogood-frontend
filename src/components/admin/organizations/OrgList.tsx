@@ -21,6 +21,8 @@ export const OrgList = ({
           <div className="relative">
             <Slider
               containerClassName="min-h-[830px] md:min-h-[686px] lg:min-h-[837px] flex flex-col justify-between"
+              itemClassName="p-0"
+              listClassName="gap-4"
               showPagination={false}
               items={organizations}
               itemsPerSlide={6}

@@ -5,7 +5,12 @@ import {
 
 type UseOrganizationFiltersReturn = Pick<
   OrganizationStore,
-  'search' | 'page' | 'setSearch' | 'setPage'
+  | 'search'
+  | 'page'
+  | 'setSearch'
+  | 'setPage'
+  | 'restoreFilters'
+  | 'resetFilters'
 >;
 
 export const useOrganizationFilters = (): UseOrganizationFiltersReturn => {
@@ -16,10 +21,16 @@ export const useOrganizationFilters = (): UseOrganizationFiltersReturn => {
 
   const setPage = useOrganizationsStore((state) => state.setPage);
 
+  const restoreFilters = useOrganizationsStore((state) => state.restoreFilters);
+
+  const resetFilters = useOrganizationsStore((state) => state.resetFilters);
+
   return {
     search,
     page,
     setSearch,
     setPage,
+    restoreFilters,
+    resetFilters,
   };
 };

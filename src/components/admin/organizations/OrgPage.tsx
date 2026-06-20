@@ -12,6 +12,7 @@ import { useMediaQuery } from '@/hooks';
 import { useOrganizations } from '@/hooks/useOrganizations';
 import { useDebouncedSearch } from '@/hooks/useDebouncedSearch';
 import { useOrganizationFilters } from '@/zustand/selectors/organizationSelectors';
+import { useOrganizationFiltersPersistence } from '@/hooks/useOrganizationFilterPersistence';
 
 export const OrgPage = (): JSX.Element => {
   const isDesktop = useMediaQuery('(min-width: 1440px)');
@@ -26,6 +27,10 @@ export const OrgPage = (): JSX.Element => {
     setPage,
   } = useOrganizationFilters();
 
+  const { resetFilters } = useOrganizationFilters();
+
+  const { restoreFromStorage } = useOrganizationFiltersPersistence();
+
   const {
     input: searchInput,
     search: debouncedSearch,
@@ -37,6 +42,14 @@ export const OrgPage = (): JSX.Element => {
   useEffect((): void => {
     setSearch(debouncedSearch);
   }, [debouncedSearch, setSearch]);
+
+  useEffect(() => {
+    const restored = restoreFromStorage();
+
+    if (!restored) {
+      resetFilters();
+    }
+  }, [resetFilters, restoreFromStorage]);
 
   const {
     organizations,

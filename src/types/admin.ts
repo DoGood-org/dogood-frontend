@@ -12,13 +12,14 @@ export interface IAdminOrganizations {
   email?: string;
   phoneNumber?: string;
   location?: FormLocation;
-  locationId: number;
+  locationId?: number;
   stripeCustomerId?: string;
-  tasks: TaskProps[] | [];
+  tasks?: TaskProps[] | [];
   reviews?: ReviewProps[];
   reviewsWrittenOrg?: ReviewProps[];
-  members: UserOrganization[];
+  members?: UserOrganization[];
   moreInfo?: string;
+  _count: { members: number };
 }
 
 export interface IAdminPagination {
@@ -43,6 +44,4 @@ export type OrganizationListProps = {
   isFetchingMore: boolean;
   loadMoreRef: RefObject<HTMLLIElement | null>;
   onPageChange: (page: number) => void;
-  // isPageLoading: boolean;
-  // limit: number;
 };
