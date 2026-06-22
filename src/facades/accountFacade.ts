@@ -4,6 +4,12 @@ import { cache } from 'react';
 
 export const fetchCurrentUser = cache(
   async (): Promise<ICurrentUser | null> => {
-    return await getServerCurrentUser();
+    const user = await getServerCurrentUser();
+
+    if (!user) return null;
+
+    if ('isBanned' in user) return null;
+
+    return user;
   }
 );

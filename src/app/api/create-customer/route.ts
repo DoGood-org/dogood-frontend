@@ -10,7 +10,10 @@ export async function POST(): Promise<NextResponse> {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // якщо вже є customerId, повертаємо його
+  if ('isBanned' in user) {
+    return NextResponse.json({ error: 'User is banned' }, { status: 403 });
+  }
+
   if (user.stripeCustomerId) {
     return NextResponse.json({ customerId: user.stripeCustomerId });
   }

@@ -4,26 +4,17 @@ import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
 
 type LeaveOrgProps = {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onClick: () => void;
 };
 
-export const LeaveOrg = ({
-  setIsModalOpen,
-  setIsOpen,
-}: LeaveOrgProps): JSX.Element => {
+export const LeaveOrg = ({ onClick }: LeaveOrgProps): JSX.Element => {
   const t = useTranslations('organization');
-
-  const handleOnClick = (): void => {
-    setIsOpen(false);
-    setIsModalOpen(true);
-  };
 
   return (
     <li className="text-nowrap">
       <Button
         variant="ghost"
-        onClick={handleOnClick}
+        onClick={onClick}
         className="p-3 h-[48px] border-0 flex items-center justify-between w-full 
                 hover:text-btn-hover active:text-btn-active cursor-pointer text-foreground transition flex gap-4 justify-start"
       >

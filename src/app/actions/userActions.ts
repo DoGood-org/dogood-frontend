@@ -9,5 +9,9 @@ export async function refreshUserData(): Promise<ICurrentUser | null> {
 
   const user = await getServerCurrentUser();
 
+  if (!user) return null;
+
+  if ('isBanned' in user) return null;
+
   return user;
 }

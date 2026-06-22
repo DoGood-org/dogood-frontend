@@ -31,7 +31,7 @@ export const ForgotEnterEmail = ({ onSubmit }: Props): JSX.Element => {
     <div
       className="flex flex-col rounded-[10px] bg-background-secondary text-white shadow-md
  p-4 w-[353px]
- md:w-[486px] md:p-10"
+ md:w-[486px] md:p-10 mx-auto my-auto"
     >
       <div className="text-start font-normal">
         <AuthTitleSubtitle

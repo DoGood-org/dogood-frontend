@@ -1,32 +1,37 @@
 'use client';
+
 import { useState, useRef, useEffect } from 'react';
-import { Controller, useForm, FieldErrors } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslations } from 'next-intl';
+
 import { AuthInput } from './AuthInput';
 import { Button } from '@/components/ui/Button';
-import { yupResolver } from '@hookform/resolvers/yup';
-import {
-  loginSchema,
-  registerCompanySchema,
-  registerPersonSchema,
-} from '@/lib/validation/authSchemas';
-import { useTranslations } from 'next-intl';
-import { RegisterLoginSocial } from '@/components/main/auth/RegisterLoginSocial';
+// import { RegisterLoginSocial } from '@/components/main/auth/RegisterLoginSocial';
 import { AuthTitleSubtitle } from '@/components/main/auth/AuthTitleSubtitle';
-import {
-  FormLogin,
-  FormRegisterCompany,
-  FormRegisterPerson,
-} from '@/types/authType';
 import { Eye } from '@/components/icons/Eye';
 import { EyeOff } from '@/components/icons/EyeOff';
 
+import { FormLogin, FormRegisterPerson } from '@/types/authType';
+import {
+  loginSchema,
+  registerPersonSchema,
+} from '@/lib/validation/authSchemas';
+
+type AuthFormValues = {
+  email: string;
+  password: string;
+  name?: string;
+  repeatPassword?: string;
+};
+
 type Props = {
-  type: 'registerCompany' | 'registerPerson' | 'login';
+  type: 'registerPerson' | 'login';
   onForgotPassword?: () => void;
-  defaultValues?: FormRegisterCompany | FormRegisterPerson | FormLogin;
+  defaultValues?: FormRegisterPerson | FormLogin;
   onFormSubmit: (
-    type: 'registerCompany' | 'registerPerson' | 'login',
-    data: FormRegisterCompany | FormRegisterPerson | FormLogin
+    type: 'registerPerson' | 'login',
+    data: FormRegisterPerson | FormLogin
   ) => void;
   isLoading?: boolean;
   errorMessage?: string;
@@ -34,136 +39,81 @@ type Props = {
 };
 
 export const AuthForm: React.FC<Props> = (props) => {
-  const [showPassword, setShowPassword] = useState(false);
-
   const { type, onFormSubmit } = props;
   const t = useTranslations('auth');
-  const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const isRegister = type === 'registerPerson';
+
+  const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
+  const passwordRef = useRef<HTMLInputElement | null>(null);
   const nameRef = useRef<HTMLInputElement | null>(null);
   const emailRef = useRef<HTMLInputElement | null>(null);
   const repeatPasswordRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
-    if (props.type === 'login') {
-      emailRef.current?.focus();
-    } else {
-      nameRef.current?.focus();
-    }
-  }, [props.type]);
+  const schema = isRegister ? registerPersonSchema : loginSchema;
 
-  const schema =
-    type === 'registerCompany'
-      ? registerCompanySchema
-      : type === 'registerPerson'
-        ? registerPersonSchema
-        : loginSchema;
-  const { control, handleSubmit, reset, formState } = useForm<
-    FormRegisterCompany | FormRegisterPerson | FormLogin
-  >({
+  const { control, handleSubmit, formState } = useForm<AuthFormValues>({
     resolver: yupResolver(schema),
-    defaultValues: props.defaultValues || {
-      name: '',
-      email: '',
-      password: '',
-      repeatPassword: '',
-      companyName: '',
-    },
+    defaultValues:
+      (props.defaultValues as AuthFormValues) ??
+      (isRegister
+        ? {
+            name: '',
+            email: '',
+            password: '',
+            repeatPassword: '',
+          }
+        : {
+            email: '',
+            password: '',
+          }),
   });
-  const { errors } = formState;
-  const submitHandler = (
-    data: FormRegisterCompany | FormRegisterPerson | FormLogin
-  ): void => {
-    onFormSubmit(type, data);
-    reset();
+
+  const { errors, touchedFields } = formState;
+
+  useEffect(() => {
+    if (isRegister) {
+      nameRef.current?.focus();
+    } else {
+      emailRef.current?.focus();
+    }
+  }, [isRegister]);
+
+  const submitHandler = (data: AuthFormValues): void => {
+    onFormSubmit(type, data as FormRegisterPerson | FormLogin);
   };
 
   return (
-    <div
-      className="flex flex-col items-center justify-center  rounded-[10px] bg-background-secondary text-white shadow-md
-     p-4 w-full
-     md:p-8 md:w-[446px]
-     lg:w-[462px]  lg:p-10
-     "
-    >
-      {/* Title and Subtitle */}
-
-      {type === 'login' && (
-        <AuthTitleSubtitle
-          title={t('loginFormTitle')}
-          subtitle={t('loginFormSubtitle')}
-        />
-      )}
-
-      {(type === 'registerCompany' || type === 'registerPerson') && (
-        <AuthTitleSubtitle
-          title={t('registerFormTitle')}
-          subtitle={t('registerFormSubtitle')}
-        />
-      )}
+    <div className="flex flex-col items-center justify-center rounded-[10px] bg-background-secondary text-white shadow-md p-4 w-full md:p-8 md:w-[446px] lg:w-[462px] lg:p-10">
+      <AuthTitleSubtitle
+        title={isRegister ? t('registerFormTitle') : t('loginFormTitle')}
+        subtitle={
+          isRegister ? t('registerFormSubtitle') : t('loginFormSubtitle')
+        }
+      />
 
       <form
         onSubmit={handleSubmit(submitHandler)}
         className="w-full flex flex-col"
       >
-        {(type === 'registerCompany' || type === 'registerPerson') && (
+        {isRegister && (
           <Controller
             name="name"
             control={control}
             render={({ field }) => (
-              <>
-                <AuthInput
-                  {...field}
-                  ref={nameRef}
-                  label={t('name')}
-                  htmlFor="name"
-                  type="text"
-                  id={'name'}
-                  placeholder={t('name')}
-                  errorMessage={
-                    (
-                      errors as FieldErrors<
-                        FormRegisterCompany | FormRegisterPerson
-                      >
-                    ).name?.message as string
-                  }
-                  touched={
-                    !!(
-                      'name' in formState.touchedFields &&
-                      formState.touchedFields.name
-                    )
-                  }
-                />
-              </>
-            )}
-          />
-        )}
-        {type === 'registerCompany' && (
-          <Controller
-            name="companyName"
-            control={control}
-            render={({ field }) => (
-              <>
-                <AuthInput
-                  {...field}
-                  label={t('companyName')}
-                  htmlFor="companyName"
-                  type="text"
-                  id="companyName"
-                  placeholder={t('companyName')}
-                  errorMessage={
-                    (errors as FieldErrors<FormRegisterCompany>).companyName
-                      ?.message as string
-                  }
-                  touched={
-                    !!(
-                      'companyName' in formState.touchedFields &&
-                      formState.touchedFields.companyName
-                    )
-                  }
-                />
-              </>
+              <AuthInput
+                {...field}
+                ref={nameRef}
+                label={t('name')}
+                htmlFor="name"
+                type="text"
+                id="name"
+                placeholder={t('name')}
+                errorMessage={errors.name?.message}
+                touched={!!touchedFields.name}
+              />
             )}
           />
         )}
@@ -171,133 +121,99 @@ export const AuthForm: React.FC<Props> = (props) => {
           name="email"
           control={control}
           render={({ field }) => (
-            <>
-              <AuthInput
-                {...field}
-                ref={emailRef}
-                label={t('email')}
-                htmlFor="email"
-                type="text"
-                id="email"
-                placeholder={t('email')}
-                errorMessage={errors.email?.message as string}
-                touched={
-                  !!(
-                    'email' in formState.touchedFields &&
-                    formState.touchedFields.email
-                  )
-                }
-              />
-            </>
+            <AuthInput
+              {...field}
+              ref={emailRef}
+              label={t('email')}
+              htmlFor="email"
+              type="text"
+              id="email"
+              placeholder={t('email')}
+              errorMessage={errors.email?.message}
+              touched={!!touchedFields.email}
+            />
           )}
         />
         <Controller
           name="password"
           control={control}
           render={({ field }) => (
-            <>
-              <AuthInput
-                {...field}
-                ref={passwordRef}
-                label={t('password')}
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                placeholder={t('password')}
-                onBlur={() => {
-                  field.onBlur();
-                  setTimeout(() => {
-                    if (showPassword) {
-                      setShowPassword(false);
-                    }
-                  }, 0);
-                }}
-                icon={showPassword ? <EyeOff /> : <Eye />}
-                iconRight
-                onIconClick={() => {
-                  setShowPassword((prev) => !prev);
-                  passwordRef.current?.focus();
-                }}
-                errorMessage={errors.password?.message}
-                touched={
-                  !!(
-                    'password' in formState.touchedFields &&
-                    formState.touchedFields.password
-                  )
-                }
-              />
-            </>
+            <AuthInput
+              {...field}
+              ref={passwordRef}
+              label={t('password')}
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              placeholder={t('password')}
+              onBlur={() => {
+                field.onBlur();
+                setTimeout(() => setShowPassword(false), 0);
+              }}
+              icon={showPassword ? <EyeOff /> : <Eye />}
+              iconRight
+              onIconClick={() => {
+                setShowPassword((prev) => !prev);
+                passwordRef.current?.focus();
+              }}
+              errorMessage={errors.password?.message}
+              touched={!!touchedFields.password}
+            />
           )}
         />
-        {(type === 'registerCompany' || type === 'registerPerson') && (
+        {isRegister && (
           <Controller
             name="repeatPassword"
             control={control}
             render={({ field }) => (
-              <>
-                <AuthInput
-                  {...field}
-                  ref={repeatPasswordRef}
-                  label={t('repeatPassword')}
-                  htmlFor="repeatPassword"
-                  type={showRepeatPassword ? 'text' : 'password'}
-                  id="repeatPassword"
-                  placeholder={t('repeatPassword')}
-                  errorMessage={
-                    (
-                      errors as FieldErrors<
-                        FormRegisterCompany | FormRegisterPerson
-                      >
-                    ).repeatPassword?.message as string
-                  }
-                  onBlur={() => {
-                    field.onBlur();
-                    setTimeout(() => {
-                      if (showRepeatPassword) setShowRepeatPassword(false);
-                    }, 0);
-                  }}
-                  icon={showRepeatPassword ? <EyeOff /> : <Eye />}
-                  iconRight
-                  onIconClick={() => {
-                    setShowRepeatPassword((prev) => !prev);
-                    repeatPasswordRef.current?.focus();
-                  }}
-                  touched={
-                    !!(
-                      'repeatPassword' in formState.touchedFields &&
-                      formState.touchedFields.repeatPassword
-                    )
-                  }
-                />
-              </>
+              <AuthInput
+                {...field}
+                ref={repeatPasswordRef}
+                label={t('repeatPassword')}
+                htmlFor="repeatPassword"
+                type={showRepeatPassword ? 'text' : 'password'}
+                id="repeatPassword"
+                placeholder={t('repeatPassword')}
+                onBlur={() => {
+                  field.onBlur();
+                  setTimeout(() => setShowRepeatPassword(false), 0);
+                }}
+                icon={showRepeatPassword ? <EyeOff /> : <Eye />}
+                iconRight
+                onIconClick={() => {
+                  setShowRepeatPassword((prev) => !prev);
+                  repeatPasswordRef.current?.focus();
+                }}
+                errorMessage={errors.repeatPassword?.message}
+                touched={!!touchedFields.repeatPassword}
+              />
             )}
           />
         )}
-
         <Button
           type="submit"
-          variant={'default'}
-          size={'md'}
+          variant="default"
+          size="md"
           className="btn-auth btn-expand-hover text-foreground h-[48px]"
+          disabled={props.isLoading}
         >
-          {t('nextStep')}
+          {isRegister ? t('registerSubmit') : t('loginSubmit')}
         </Button>
-        <RegisterLoginSocial
+        {/* TODO: Enable social login integration */}
+        {/* <RegisterLoginSocial
           onSocialLogin={(provider) => console.log(provider)}
-        />
+        /> */}
         {type === 'login' && (
           <Button
             type="button"
             variant="ghost"
             className="py-0 mt-6"
             onClick={(e) => {
-              e.stopPropagation();
               e.preventDefault();
+              e.stopPropagation();
               props.onForgotPassword?.();
             }}
           >
-            <a href="#" className="text-[var(--text-gray)] ">
-              <p>{t('forgotPass')} </p>
-            </a>
+            <span className="text-[var(--text-gray)]">{t('forgotPass')}</span>
           </Button>
         )}
       </form>

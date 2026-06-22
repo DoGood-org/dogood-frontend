@@ -8,12 +8,16 @@ export async function GET(): Promise<NextResponse> {
   if (!user)
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
+  if ('isBanned' in user) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  }
+
   // const paymentOptions = await getUserPaymentOptions(user.id); // [{ id, name: paymentMethodId }]
   const { paymentOptions } = user;
   if (!paymentOptions?.length) return NextResponse.json([]);
 
   const cards = await Promise.all(
-    paymentOptions.map(async (option) => {
+    paymentOptions.map(async (option: any) => {
       try {
         const method = await stripe.paymentMethods.retrieve(option.name);
         return {

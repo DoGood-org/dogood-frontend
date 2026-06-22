@@ -31,7 +31,6 @@ export const ForgotPassword = ({ onSubmit }: Props): JSX.Element => {
     if (onSubmit) {
       onSubmit(data);
     }
-    console.log('New password submitted:', data);
     reset();
   };
 
@@ -39,7 +38,7 @@ export const ForgotPassword = ({ onSubmit }: Props): JSX.Element => {
     <div
       className="flex flex-col items-center justify-center  rounded-[10px] bg-background-secondary text-white shadow-md
    p-4 w-[353px]
-   md:w-[486px] md:p-10"
+   md:w-[486px] md:p-10 mx-auto my-auto"
     >
       <div className="text-start font-normal">
         <AuthTitleSubtitle

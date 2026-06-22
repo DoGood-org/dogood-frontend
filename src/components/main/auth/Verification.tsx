@@ -101,7 +101,6 @@ export const Verification: React.FC<Props> = ({
           return;
         }
         // all inputs are filled, reset the input
-        console.log('Verification code submitted:', inputValues.join(''));
 
         setInputValues(Array(6).fill(''));
         setFocusedIndex(0);

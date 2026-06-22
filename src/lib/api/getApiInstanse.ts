@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { apiClientAuth, apiClientGuest } from './api.client';
+import { apiAuth, apiGuest } from '../api';
 import { apiServerAuth, apiServerGuest } from '../server/api.server';
 
 export const getApiInstance = (auth: boolean): AxiosInstance => {
@@ -9,5 +9,5 @@ export const getApiInstance = (auth: boolean): AxiosInstance => {
     return auth ? apiServerAuth : apiServerGuest;
   }
 
-  return auth ? apiClientAuth : apiClientGuest;
+  return auth ? apiAuth : apiGuest;
 };

@@ -7,6 +7,7 @@ import {
   TaskProps,
   UserDetailedProps,
 } from './accountType';
+import { IAdminOrganizations } from './admin';
 import { ReviewProps } from './reviewType';
 import { FormLocation } from './settings';
 // import { ITaskDetails } from './tasks.type';
@@ -15,17 +16,23 @@ export interface OrganizationProps {
   id: string;
   name: string;
   description: string;
+  email?: string;
   // members: IUserAccount[];
   avatar: string;
-  membersCount: number;
+  // membersCount: number;
+  _count: MembersCount;
 }
+
+type MembersCount = {
+  members: number;
+};
 
 export interface OrganizationContelPanelProps extends ContentPanelProps {
   organization: OrganizationDetailedProps;
 }
 
 export interface OrganizationItemProps {
-  organization: OrganizationProps;
+  organization: IAdminOrganizations;
 }
 
 export interface OrganizationListProps {

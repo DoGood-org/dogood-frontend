@@ -1,31 +1,37 @@
-// lib/server/getServerCurrentUser.ts
-import { ICurrentUser } from '@/types';
-import { cookies, headers } from 'next/headers';
+import { CurrentUserResult } from '@/types';
+import { headers } from 'next/headers';
 
-export async function getServerCurrentUser(): Promise<ICurrentUser | null> {
+export const getServerCurrentUser = async (): Promise<CurrentUserResult> => {
   const h = await headers();
-  const proto = h.get('x-forwarded-proto');
-  const host = h.get('x-forwarded-host') ?? h.get('host') ?? 'localhost:3000';
+  const cookie = h.get('cookie') ?? '';
 
-  const url = `${proto}://${host}/api/proxy/auth/current-user`;
-  const jar = await cookies();
-  if (!jar) return null;
+  const cleanBackend = process.env.NEXT_PUBLIC_API_URL!.replace(/\/+$/, '');
 
-  const access = jar.get('accessToken')?.value;
-  const refresh = jar.get('refreshToken')?.value;
-  if (!access && !refresh) return null;
-  const res = await fetch(url, {
-    cache: 'no-store',
-    // кукі тут автоматично а у нас костиль
+  const res = await fetch(`${cleanBackend}/auth/current-user`, {
     headers: {
-      cookie: jar.toString(),
+      Cookie: cookie,
     },
+    cache: 'no-store',
   });
 
-  if (!res.ok) return null;
-  // return res.json();
-  const data = await res.json();
+  if (res.status === 403) {
+    try {
+      const errorData = await res.json();
+      if (errorData?.bannedUser) {
+        return {
+          isBanned: true,
+          bannedUser: errorData.bannedUser,
+        };
+      }
+    } catch {
+      return null;
+    }
 
-  // ⬇️ ВАЖЛИВО
-  return data?.user ?? null;
-}
+    return null;
+  }
+
+  if (!res.ok) return null;
+
+  const data = await res.json();
+  return data.user ?? null;
+};

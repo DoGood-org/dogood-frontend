@@ -7,6 +7,8 @@ import { SidebarNavigation } from '@/components/account/navigation/SidebarNaviga
 import { AccountContent } from '@/components/account/accountPage/AccountContent';
 import { BottomNavigation } from '@/components/account/navigation/BottomNavigation';
 import { useAuth } from '@/hooks';
+import { navigationPages } from '@/constants/navigationPages';
+import { useTranslations } from 'next-intl';
 
 export default function AccountLayout({
   children,
@@ -14,6 +16,7 @@ export default function AccountLayout({
   children: React.ReactNode;
 }): JSX.Element {
   const { user } = useAuth();
+  const t = useTranslations('navigation');
 
   const isChatMessageOpen = navigationStore((state) => state.isChatMessageOpen);
 
@@ -27,7 +30,9 @@ export default function AccountLayout({
         {children}
       </div>
       {user && <AccountContent user={user} />}
-      {showBottomNavigation && <BottomNavigation />}
+      {showBottomNavigation && (
+        <BottomNavigation items={navigationPages} translation={t} />
+      )}
     </Container>
   );
 }
