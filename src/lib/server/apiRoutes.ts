@@ -1,22 +1,18 @@
-// lib/apiRoutes.ts
-// - `/auth/*` → rewrites to `/api/auth/*`
-// - `/proxy/*` → rewrites to `/api/proxy/*` → backend
-
 export const apiRoutes = {
   auth: {
-    signup: '/signup',
-    login: '/login',
+    signup: '/auth/signup',
+    login: '/auth/login',
 
     verifyEmail: (verificationCode: string) =>
-      `/verify-email/${verificationCode}`,
+      `/auth/verify-email/${verificationCode}`,
 
-    refreshToken: '/refresh-token',
-    logout: '/logout',
-    resendVerification: '/resend-verification',
-    forgotPassword: '/forgot-password',
+    refreshToken: '/auth/refresh-token',
+    logout: '/auth/logout',
+    resendVerification: '/auth/resend-verification',
+    forgotPassword: '/auth/forgot-password',
     resetPassword: (resetPasswordToken: string) =>
-      `/reset-password/${resetPasswordToken}`,
-    resentForgotPassword: '/resent-forgot-password',
+      `/auth/reset-password/${resetPasswordToken}`,
+    resentForgotPassword: '/auth/resent-forgot-password',
   },
 
   // current user proxy
@@ -89,5 +85,9 @@ export const apiRoutes = {
     delete: (id: string | number) => `/task/${id}`,
     updateStatus: (id: string | number) => `/task/${id}/status`,
     search: '/task/search',
+  },
+
+  admin: {
+    getAllOrg: '/admin/organizations',
   },
 } as const;

@@ -6,6 +6,7 @@ export const getNews = async (
 ): Promise<FetchResult<INewsListApiResponse>> => {
   return fetchFromApi<INewsListApiResponse>(`/posts/${locale}`, {
     method: 'GET',
+    auth: false,
   });
 };
 
@@ -15,5 +16,6 @@ export const getNewsById = async (
 ): Promise<FetchResult<INewsItemApiResponse>> => {
   return fetchFromApi<INewsItemApiResponse>(`/posts/${id}/${locale}`, {
     method: 'GET',
+    auth: false,
   });
 };

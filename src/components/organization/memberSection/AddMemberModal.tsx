@@ -83,14 +83,14 @@ export const AddMemberModal = ({
 
   return (
     <div>
-      <div className="border-b border-solid border-white w-full py-3 px-2 mb-6 flex gap-2">
-        <ChatSearch className="size-6 stroke-current rotate-90" />
+      <div className="flex w-full gap-2 px-2 py-3 mb-6 border-b border-white border-solid">
+        <ChatSearch className="rotate-90 stroke-current size-6" />
         <input
           name="userName"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search user by name"
-          className=" w-full outline-none"
+          className="w-full outline-none "
         />
       </div>
 
@@ -108,7 +108,7 @@ export const AddMemberModal = ({
             <button
               disabled={addMemberMutation.isPending}
               onClick={() => handleAdd(user)}
-              className="flex gap-4 items-center cursor-pointer"
+              className="flex items-center gap-4 cursor-pointer"
             >
               <Image
                 src={user?.avatar || '/account/avatar.png'}

@@ -29,6 +29,8 @@ export async function loadMessages(locale: string): Promise<Messages> {
     'supportPage',
     'privacy',
     'grantsPage',
+    'adminNav',
+    'adminOrg',
   ];
 
   const messages = Object.fromEntries(

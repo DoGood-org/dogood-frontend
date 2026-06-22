@@ -75,10 +75,39 @@ export interface FormRegister {
   repeatPassword: string;
 }
 export type FormRegisterPerson = FormRegister;
-export type FormRegisterCompany = FormRegister & {
-  companyName: string;
-};
+
 export type FormLogin = {
   email: string;
   password: string;
 };
+
+export type LoginDTO = {
+  email: string;
+  password: string;
+};
+
+export type RegisterDTO = {
+  email: string;
+  password: string;
+  name: string;
+};
+
+export type ResetPasswordDTO = {
+  token: string;
+  password: string;
+};
+
+export interface IBannedUser {
+  accountId: string;
+  suspendedOn: string;
+  suspensionType: string;
+  reason: string;
+  banExpiresAt: string | null;
+}
+
+export interface IBannedCurrentUser {
+  isBanned: true;
+  bannedUser: IBannedUser;
+}
+
+export type CurrentUserResult = ICurrentUser | IBannedCurrentUser | null;

@@ -44,6 +44,10 @@
       "description": "Gemeinschaften in mehreren Ländern, die von unserem globalen Netzwerk profitieren."
     }
   ],
+  "supportMission": {
+    "title": "Unterstützen Sie unsere Mission",
+    "description": "Ihre Spende hilft uns, die Plattform transparent und für jeden zugänglich zu halten, der die Welt zum Besseren verändern möchte. Jeder Beitrag counts. 💚"
+  },
   "whySupportMatters": {
     "title": "Warum deine Unterstützung wichtig ist",
     "steps": [

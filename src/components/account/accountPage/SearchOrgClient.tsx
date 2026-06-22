@@ -74,13 +74,13 @@ export const SearchOrgClient = ({
   };
 
   return (
-    <div className="w-full bg-card rounded-xl p-6">
+    <div className="w-full p-6 bg-card rounded-xl">
       <div className="flex justify-between mb-10">
         <h2>Search</h2>
         <CloseIcon className="w-6 h-6" onClick={() => setIsSearchOpen(false)} />
       </div>
-      <div className="flex gap-2 items-center justify-center border-b-2 border-foreground mb-6">
-        <Search className="rotate-90 w-6 h-6 fill-foreground" />
+      <div className="flex items-center justify-center gap-2 mb-6 border-b-2 border-foreground">
+        <Search className="w-6 h-6 rotate-90 fill-foreground" />
         <Input
           value={searchInput}
           onChange={handleInputChange}
@@ -90,7 +90,7 @@ export const SearchOrgClient = ({
       </div>
 
       {isLoading ? (
-        <div className="text-center py-4">Loading...</div>
+        <div className="py-4 text-center">Loading...</div>
       ) : (
         <OrgSearchList organizations={organizations} />
       )}

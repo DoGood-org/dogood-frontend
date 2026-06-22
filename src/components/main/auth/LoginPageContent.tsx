@@ -1,37 +1,38 @@
 'use client';
-import { FormLogin } from '@/types';
+
 import { IAuthResponse } from '@/zustand/services/authService';
-import { authStore, useAuthFlow } from '@/zustand/stores/authStore';
+import { authStore } from '@/zustand/stores/authStore';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
-import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { safeNext } from './safeNextPath';
+import { useTranslations } from 'next-intl';
 import { AuthForm } from './AuthForm';
 import { VerifyViaEmail } from './VerififyViaEmail';
+import { Spinner } from '@/components/ui/Spinner';
+import { useAuthStep } from '@/hooks/useAuthStep';
 
 export const LoginPageContent: React.FC = () => {
   const router = useRouter();
-  const params = useSearchParams();
-  const next = useMemo(() => safeNext(params.get('next')), [params]);
-  const { step, setStep } = useAuthFlow();
-  const {
-    login,
-    status,
-    error,
-    currentUser,
+  const t = useTranslations('auth');
 
-    resendVerificationEmail,
-    nextResendAt,
-  } = authStore();
-  const [formLogin, setFormLogin] = useState<FormLogin>({
-    email: '',
-    password: '',
-  });
+  const { step, emailFromUrl, setStep } = useAuthStep('/login');
 
-  const handleRequestToResetPassword = (): void => {
-    setStep('forgotPasswordEnterEmail');
-    router.replace('/reset-password');
+  useEffect(() => {
+    if (step === 'mistakeApi') {
+      toast.error(t('toast.unexpectedError'));
+      router.replace('/login');
+    }
+  }, [step, router, t]);
+
+  const { login, status, error, resendVerificationEmail, nextResendAt } =
+    authStore();
+
+  const handleRequestToResetPassword = (email?: string): void => {
+    const url = email
+      ? `/reset-password?email=${encodeURIComponent(email)}`
+      : '/reset-password';
+    router.replace(url);
   };
 
   const variants: Variants = {
@@ -39,8 +40,14 @@ export const LoginPageContent: React.FC = () => {
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -12 },
   };
+
+  if (step === 'mistakeApi') {
+    return null;
+  }
+
   return (
-    <div className=" login text-foreground flex flex-col items-center justify-center w-full">
+    <div className="login text-foreground flex flex-col items-center justify-center w-full">
+      {status === 'loading' && <Spinner />}
       <AnimatePresence mode="wait">
         {!step && (
           <motion.div
@@ -56,26 +63,37 @@ export const LoginPageContent: React.FC = () => {
             <AuthForm
               type="login"
               onForgotPassword={() => handleRequestToResetPassword()}
-              onFormSubmit={async (type, data) => {
+              onFormSubmit={async (_, data) => {
                 const res: IAuthResponse = await login(
                   data.email,
                   data.password
                 );
-                setFormLogin({ email: data.email, password: '' });
-                if (res?.ok || res.status === 200) {
-                  await currentUser({ silent: true });
-                  return router.replace(next || '/');
-                }
-                if (res?.status === 400) {
-                  toast.error(res.errorMessage);
-                }
-                if (res?.status === 403) {
-                  setStep('verification');
-                  toast.warn(res.errorMessage);
+
+                if (res?.status === 403 && res?.bannedUser) {
+                  toast.error(t('toast.banned'));
+                  router.replace('/account');
                   return;
                 }
+
+                if (res?.ok || res?.status === 200) {
+                  toast.success(t('toast.loginSuccess'));
+                  router.replace('/account');
+                  return;
+                }
+
+                if (res?.status === 400) {
+                  toast.error(res.errorMessage);
+                  return;
+                }
+
+                if (res?.status === 403) {
+                  toast.warn(res.errorMessage);
+                  setStep('verification', data.email);
+                  return;
+                }
+
                 if (res?.status === 401) {
-                  setStep('forgotPasswordEnterEmail');
+                  handleRequestToResetPassword(data.email);
                   return;
                 }
               }}
@@ -85,6 +103,7 @@ export const LoginPageContent: React.FC = () => {
             />
           </motion.div>
         )}
+
         {step === 'verification' && (
           <motion.div
             key="verification"
@@ -97,19 +116,22 @@ export const LoginPageContent: React.FC = () => {
             className="mt-4 w-full flex justify-center"
           >
             <VerifyViaEmail
-              onResend={async () => {
-                await resendVerificationEmail(formLogin.email);
-              }}
-              onWrongEmail={() => setStep(null)}
-              email={formLogin.email}
+              email={emailFromUrl}
               nextResendAt={nextResendAt}
+              onResend={async () => {
+                if (emailFromUrl) {
+                  await resendVerificationEmail(emailFromUrl);
+                } else {
+                  toast.error(t('toast.emailLoginNotFound'));
+                  setStep(null);
+                }
+              }}
+              onWrongEmail={() => {
+                setStep(null);
+              }}
             />
           </motion.div>
         )}
-        {step === 'mistakeApi' &&
-          (toast.error('An unexpected error occurred. Please try again later.'),
-          router.replace('/'),
-          null)}
       </AnimatePresence>
     </div>
   );

@@ -9,7 +9,7 @@ const Gear = (props: SVGProps<SVGSVGElement>) => (
     {...props}
   >
     <g
-      stroke="#F1F1F1"
+      stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
       clipPath="url(#prefix__a)"
@@ -19,7 +19,7 @@ const Gear = (props: SVGProps<SVGSVGElement>) => (
     </g>
     <defs>
       <clipPath id="prefix__a">
-        <path fill="#fff" d="M.5 0h24v24H.5z" />
+        <path fill="currentColor" d="M.5 0h24v24H.5z" />
       </clipPath>
     </defs>
   </svg>
