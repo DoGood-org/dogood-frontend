@@ -60,6 +60,7 @@ export { default as GoToTask } from './GoToTask';
 export { default as GoalsIcon } from './GoalsIcon';
 export { default as GroupAuthIcon } from './GroupAuthIcon';
 export { default as HandHeart } from './HandHeart';
+export { default as HeaderBell } from './HeaderBell';
 export { default as Heart } from './Heart';
 export { default as Hipercard } from './Hipercard';
 export { default as House } from './House';
