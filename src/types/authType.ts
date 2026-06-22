@@ -96,3 +96,18 @@ export type ResetPasswordDTO = {
   token: string;
   password: string;
 };
+
+export interface IBannedUser {
+  accountId: string;
+  suspendedOn: string;
+  suspensionType: string;
+  reason: string;
+  banExpiresAt: string | null;
+}
+
+export interface IBannedCurrentUser {
+  isBanned: true;
+  bannedUser: IBannedUser;
+}
+
+export type CurrentUserResult = ICurrentUser | IBannedCurrentUser | null;

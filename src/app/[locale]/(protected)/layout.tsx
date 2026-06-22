@@ -12,16 +12,27 @@ export default async function ProtectedLayout({
 }): Promise<React.JSX.Element> {
   const { locale } = await params;
 
-  const me = await getServerCurrentUser();
+  const currentUserData = await getServerCurrentUser();
 
-  if (!me) {
+  if (!currentUserData) {
     const prefix = locale === 'en' ? '' : `/${locale}`;
     redirect(`${prefix}/login?next=/account`);
   }
 
+  if ('isBanned' in currentUserData) {
+    return (
+      <ProtectedLayoutContent
+        user={null}
+        bannedUser={currentUserData.bannedUser}
+      >
+        {children}
+      </ProtectedLayoutContent>
+    );
+  }
+
   return (
-    <>
-      <ProtectedLayoutContent user={me}>{children}</ProtectedLayoutContent>
-    </>
+    <ProtectedLayoutContent user={currentUserData}>
+      {children}
+    </ProtectedLayoutContent>
   );
 }

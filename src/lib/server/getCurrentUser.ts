@@ -1,7 +1,7 @@
+import { CurrentUserResult } from '@/types';
 import { headers } from 'next/headers';
-import { cache } from 'react';
 
-export const getServerCurrentUser = cache(async () => {
+export const getServerCurrentUser = async (): Promise<CurrentUserResult> => {
   const h = await headers();
   const cookie = h.get('cookie') ?? '';
 
@@ -14,7 +14,24 @@ export const getServerCurrentUser = cache(async () => {
     cache: 'no-store',
   });
 
+  if (res.status === 403) {
+    try {
+      const errorData = await res.json();
+      if (errorData?.bannedUser) {
+        return {
+          isBanned: true,
+          bannedUser: errorData.bannedUser,
+        };
+      }
+    } catch {
+      return null;
+    }
+
+    return null;
+  }
+
   if (!res.ok) return null;
+
   const data = await res.json();
   return data.user ?? null;
-});
+};
