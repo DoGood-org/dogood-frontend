@@ -86,4 +86,8 @@ export const apiRoutes = {
     updateStatus: (id: string | number) => `/task/${id}/status`,
     search: '/task/search',
   },
+
+  admin: {
+    getAllOrg: '/admin/organizations',
+  },
 } as const;

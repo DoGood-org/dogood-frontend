@@ -1,16 +1,20 @@
 'use client';
 
+import { JSX, ReactNode, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { JSX, useCallback, useEffect, useRef, useState } from 'react';
-import { LinkCopied, More, Settings } from '@/components/icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
+import { LinkCopied, Settings } from '@/components/icons';
+
 import { ReportModal } from '@/components/publicAccount/ReportModal';
 import { ReportItem } from './ReportItem';
 import { CopyLink } from './CopyLink';
 import { LeaveOrg } from './LeaveOrg';
 import { LeaveModal } from './LeaveModal';
+
 import { Role } from '@/types';
+import { MoreMenu, MoreMenuItem } from '@/components/ui/MoreMenu';
 
 export const ReportOrg = ({
   role,
@@ -19,97 +23,119 @@ export const ReportOrg = ({
   role: Role;
   orgId: string;
 }): JSX.Element => {
-  const buttonRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const t = useTranslations('organization');
+
   const pathname = usePathname();
+  const t = useTranslations('organization');
 
-  const handleClickOutside = useCallback(
-    (e: MouseEvent): void => {
-      if (buttonRef.current && !buttonRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    },
-    [setIsOpen]
-  );
+  const items = useMemo<MoreMenuItem[]>(() => {
+    const adminItems: MoreMenuItem[] = [
+      {
+        id: 'settings',
+        content: (close) => (
+          <Link
+            href={`${pathname}/profile`}
+            onClick={close}
+            className="flex gap-3 hover:text-btn-hover active:text-btn-active"
+          >
+            <Settings className="stroke-current size-5" />
+            {t('settings')}
+          </Link>
+        ),
+      },
+    ];
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return (): void => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [handleClickOutside]);
+    const commonItems: MoreMenuItem[] = [
+      {
+        id: 'report',
+        content: (close): JSX.Element => (
+          <ReportItem
+            onClick={() => {
+              close();
+              setIsReportModalOpen(true);
+            }}
+          />
+        ),
+      },
+      {
+        id: 'copy',
+        content: (close) => (
+          <CopyLink
+            onCopied={() => {
+              setCopied(true);
+              close();
+            }}
+          />
+        ),
+      },
+    ];
 
-  const handleToggleMenu = (e: React.MouseEvent<SVGSVGElement>): void => {
-    e.stopPropagation();
-    setIsOpen(!isOpen);
-  };
+    const memberItems: MoreMenuItem[] = [
+      ...commonItems,
+      {
+        id: 'leave',
+        content: (close): JSX.Element => (
+          <LeaveOrg
+            onClick={() => {
+              close();
+              setIsLeaveModalOpen(true);
+            }}
+          />
+        ),
+      },
+    ];
 
-  const adminVersion = (
-    <Link
-      href={`${pathname}/profile`}
-      className="flex gap-3 hover:text-btn-hover active:text-btn-active"
-    >
-      <Settings className="size-5 stroke-current" />
-      {t('settings')}
-    </Link>
-  );
+    switch (role) {
+      case 'ADMIN':
+      case 'MODERATOR':
+        return adminItems;
 
-  const baseList = (
-    <>
-      <ReportItem setIsOpen={setIsOpen} setIsModalOpen={setIsModalOpen} />
-      <CopyLink setIsOpen={setIsOpen} setCopied={setCopied} />
-    </>
-  );
+      case 'MEMBER':
+        return memberItems;
 
-  const guestVersion = <CopyLink setIsOpen={setIsOpen} setCopied={setCopied} />;
+      case 'USER':
+        return commonItems;
 
-  const memberVersion = (
-    <ul>
-      {baseList}
-      <LeaveOrg setIsOpen={setIsOpen} setIsModalOpen={setIsLeaveModalOpen} />
-    </ul>
-  );
+      case 'GUEST':
+        return [
+          {
+            id: 'copy',
+            content: (close): ReactNode => (
+              <CopyLink
+                onCopied={() => {
+                  setCopied(true);
+                  close();
+                }}
+              />
+            ),
+          },
+        ];
 
-  const userVersion = <ul>{baseList}</ul>;
-
-  const reportVersions = {
-    ADMIN: adminVersion,
-    MODERATOR: adminVersion,
-    MEMBER: memberVersion,
-    USER: userVersion,
-    GUEST: guestVersion,
-  };
+      default:
+        return [];
+    }
+  }, [pathname, role, t]);
 
   return (
     <>
-      <div ref={buttonRef} className="relative">
-        <More
-          className="absolute top-0 right-2 w-5 h-5 text-foreground cursor-pointer 
-              hover:text-btn-hover active:text-btn-active"
-          onClick={handleToggleMenu}
-        />
-        {isOpen && (
-          <div className="absolute top-[25px] right-2  rounded-lg bg-card p-4">
-            {reportVersions[role]}
-          </div>
-        )}
-        {copied && (
-          <div className="absolute top-[25px] right-2 rounded-lg bg-card p-4 p-3 text-nowrap flex gap-4 justify-start items-center text-foreground">
-            <LinkCopied className="size-5 fill-current" />
-            {t('linkCopied')}
-          </div>
-        )}
-      </div>
-      {isModalOpen && (
+      <MoreMenu items={items} />
+
+      {copied && (
+        <div className="absolute top-[25px] right-2 rounded-lg bg-card p-3 text-nowrap flex gap-4 items-center text-foreground">
+          <LinkCopied className="fill-current size-5" />
+          {t('linkCopied')}
+        </div>
+      )}
+
+      {isReportModalOpen && (
         <ReportModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          isOpen={isReportModalOpen}
+          onClose={() => setIsReportModalOpen(false)}
         />
       )}
+
       {isLeaveModalOpen && (
         <LeaveModal
           isOpen={isLeaveModalOpen}

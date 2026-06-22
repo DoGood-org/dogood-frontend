@@ -1,9 +1,9 @@
 'use client';
 
-import { ChevronLeft, ChevronRight } from '@/components/icons';
 import { useSwipe } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { useState, JSX, useRef } from 'react';
+import { Pagination } from './Pagination';
 
 type SliderProps<T> = {
   items: T[];
@@ -11,6 +11,10 @@ type SliderProps<T> = {
   renderItem: (item: T, index: number) => JSX.Element;
   listClassName?: string;
   itemClassName?: string;
+  containerClassName?: string;
+  sliderClassName?: string;
+  buttonsClassName?: string;
+  showPagination?: boolean;
 };
 
 export const Slider = <T,>({
@@ -19,6 +23,10 @@ export const Slider = <T,>({
   renderItem,
   listClassName = '',
   itemClassName = '',
+  containerClassName = '',
+  sliderClassName = '',
+  buttonsClassName = '',
+  showPagination = true,
 }: SliderProps<T>): JSX.Element => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalPages = Math.ceil(items.length / itemsPerSlide);
@@ -45,17 +53,20 @@ export const Slider = <T,>({
     (_, i) => items.slice(i * itemsPerSlide, i * itemsPerSlide + itemsPerSlide)
   );
 
-  const prevSlide = (): void => {
-    setCurrentSlide((prev) => (prev > 0 ? prev - 1 : prev));
-  };
+  // const prevSlide = (): void => {
+  //   setCurrentSlide((prev) => (prev > 0 ? prev - 1 : prev));
+  // };
 
-  const nextSlide = (): void => {
-    setCurrentSlide((prev) => (prev < grouped.length - 1 ? prev + 1 : prev));
-  };
+  // const nextSlide = (): void => {
+  //   setCurrentSlide((prev) => (prev < grouped.length - 1 ? prev + 1 : prev));
+  // };
 
   return (
-    <div className="w-full mx-auto">
-      <div ref={containerRef} className="overflow-hidden">
+    <div className={cn('w-full mx-auto', containerClassName)}>
+      <div
+        ref={containerRef}
+        className={cn('overflow-hidden', sliderClassName)}
+      >
         <div
           className="flex transition-transform duration-500"
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -75,51 +86,13 @@ export const Slider = <T,>({
         </div>
       </div>
 
-      {grouped.length > 1 && (
-        <div className="flex justify-center items-center gap-4 mt-6">
-          {/* LEFT ARROW */}
-          <button
-            onClick={prevSlide}
-            disabled={currentSlide === 0}
-            className={`transition p-1 ${
-              currentSlide === 0
-                ? 'opacity-30 cursor-auto'
-                : 'hover:scale-110 cursor-pointer'
-            }`}
-          >
-            <ChevronLeft className="w-5 h-5 text-foreground" />
-          </button>
-
-          {/* PAGINATION DOTS */}
-          <div className="flex items-center gap-[18px]">
-            {grouped.map((_, idx) => (
-              <button
-                key={idx}
-                className="p-[7px]"
-                onClick={() => setCurrentSlide(idx)}
-              >
-                <span
-                  className={`w-[10px] h-[10px] block rounded-full border border-foreground transition cursor-pointer ${
-                    currentSlide === idx ? 'bg-foreground' : 'border-foreground'
-                  }`}
-                />
-              </button>
-            ))}
-          </div>
-
-          {/* RIGHT ARROW */}
-          <button
-            onClick={nextSlide}
-            disabled={currentSlide === grouped.length - 1}
-            className={`transition p-1  ${
-              currentSlide === grouped.length - 1
-                ? 'opacity-30 cursor-auto'
-                : 'hover:scale-110 cursor-pointer'
-            }`}
-          >
-            <ChevronRight className="w-5 h-5 text-foreground" />
-          </button>
-        </div>
+      {showPagination && (
+        <Pagination
+          currentPage={currentSlide}
+          totalPages={grouped.length}
+          onPageChange={setCurrentSlide}
+          className={buttonsClassName}
+        />
       )}
     </div>
   );

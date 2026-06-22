@@ -39,9 +39,9 @@ export const OrgMemberItem = ({
   return (
     <div
       key={member.id}
-      className="bg-card p-4 gap-6 flex justify-between items-center rounded-lg"
+      className="flex items-center justify-between gap-6 p-4 rounded-lg bg-card"
     >
-      <div className=" flex items-center md:gap-8">
+      <div className="flex items-center md:gap-8">
         {user.profile?.avatar ? (
           <Image
             src={user.profile?.avatar}

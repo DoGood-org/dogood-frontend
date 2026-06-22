@@ -3,8 +3,6 @@
 import React from 'react';
 import { NavigationPageProps } from '@/types/navigationType';
 import { Link, usePathname } from '@/i18n/navigation';
-import { useTranslations } from 'next-intl';
-import { navigationPages } from '@/constants/navigationPages';
 
 export const PageNavigation: React.FC<NavigationPageProps> = ({
   showLabels = true,
@@ -12,13 +10,14 @@ export const PageNavigation: React.FC<NavigationPageProps> = ({
   iconClassName = '',
   className = '',
   navLabels = '',
+  items,
+  t,
 }) => {
-  const t = useTranslations('navigation');
   const pathname = usePathname();
 
   return (
     <ul className={className}>
-      {navigationPages.map(({ label, translationKey, Icon, path }) => {
+      {items.map(({ label, translationKey, Icon, path }) => {
         const isActive = pathname === path;
 
         return (
