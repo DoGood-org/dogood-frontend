@@ -12,11 +12,19 @@ const BoldText: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <strong className="text-foreground font-semibold">{children}</strong>
 );
 
-const NotificationModalContent: React.FC<{
+interface NotificationModalContentProps {
   notification: Notification;
-}> = ({ notification }) => {
+  markAsRead: (id: string) => void;
+  deleteNotification: (id: string) => void;
+}
+
+const NotificationModalContent: React.FC<NotificationModalContentProps> = ({
+  notification,
+  markAsRead,
+  deleteNotification,
+}) => {
   const t = useTranslations('notifications');
-  const { deleteNotification, markAsRead, closeModal } = useNotificationStore();
+  const { closeModal } = useNotificationStore();
   const router = useRouter();
   const locale = useLocale();
 
@@ -39,8 +47,9 @@ const NotificationModalContent: React.FC<{
   const taskName = notification.meta?.taskName ?? 'Task';
   const revieweeName = notification.meta?.revieweeName ?? 'User';
   const senderName = notification.meta?.senderName ?? 'User';
-  const reviewId = notification.meta?.reviewId ?? '';
-  const orgId = notification.meta?.organizationId ?? '';
+  const reviewId = notification.meta?.reviewId;
+  const orgId = notification.meta?.organizationId;
+  const taskId = notification.meta?.taskId;
 
   const boldTag = (chunks: React.ReactNode): React.ReactNode => (
     <BoldText>{chunks}</BoldText>
@@ -58,13 +67,15 @@ const NotificationModalContent: React.FC<{
       }),
       actions: (
         <>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => navigateTo(`/organization/${orgId}`)}
-          >
-            {t('modal.actions.viewProfile')}
-          </Button>
+          {orgId && (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => navigateTo(`/organization/${orgId}`)}
+            >
+              {t('modal.actions.viewProfile')}
+            </Button>
+          )}
           <Button variant="primary" size="sm" onClick={handleMarkRead}>
             {t('modal.actions.accept')}
           </Button>
@@ -80,13 +91,15 @@ const NotificationModalContent: React.FC<{
       }),
       actions: (
         <>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => navigateTo(`/tasks/${notification.meta?.taskId}`)}
-          >
-            {t('modal.actions.provideFeedback')}
-          </Button>
+          {taskId && (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => navigateTo(`/tasks/${taskId}`)}
+            >
+              {t('modal.actions.provideFeedback')}
+            </Button>
+          )}
           <Button variant="primary" size="sm" onClick={handleMarkRead}>
             {t('modal.actions.markAsRead')}
           </Button>
@@ -100,13 +113,17 @@ const NotificationModalContent: React.FC<{
         revieweeName,
         b: boldTag,
       }),
-      actions: (
+      actions: reviewId ? (
         <Button
           variant="primary"
           size="sm"
           onClick={() => navigateTo(`/reviews/${reviewId}`)}
         >
           {t('modal.actions.viewReviews')}
+        </Button>
+      ) : (
+        <Button variant="primary" size="sm" onClick={handleMarkRead}>
+          {t('modal.actions.markAsRead')}
         </Button>
       ),
     },
@@ -117,13 +134,17 @@ const NotificationModalContent: React.FC<{
         revieweeName,
         b: boldTag,
       }),
-      actions: (
+      actions: reviewId ? (
         <Button
           variant="primary"
           size="sm"
           onClick={() => navigateTo(`/reviews/${reviewId}`)}
         >
           {t('modal.actions.viewReviews')}
+        </Button>
+      ) : (
+        <Button variant="primary" size="sm" onClick={handleMarkRead}>
+          {t('modal.actions.markAsRead')}
         </Button>
       ),
     },
@@ -181,7 +202,15 @@ const NotificationModalContent: React.FC<{
   );
 };
 
-export const NotificationModal: React.FC = () => {
+interface NotificationModalProps {
+  markAsRead: (id: string) => void;
+  deleteNotification: (id: string) => void;
+}
+
+export const NotificationModal: React.FC<NotificationModalProps> = ({
+  markAsRead,
+  deleteNotification,
+}) => {
   const { selectedNotification, closeModal } = useNotificationStore();
 
   return (
@@ -192,7 +221,11 @@ export const NotificationModal: React.FC = () => {
       wrapperClassName="max-w-[460px]"
     >
       {selectedNotification && (
-        <NotificationModalContent notification={selectedNotification} />
+        <NotificationModalContent
+          notification={selectedNotification}
+          markAsRead={markAsRead}
+          deleteNotification={deleteNotification}
+        />
       )}
     </ModalWrapper>
   );

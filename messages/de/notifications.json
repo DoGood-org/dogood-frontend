@@ -6,6 +6,10 @@
       "unread": "Ungelesen"
     },
     "unreadCount": "Ungelesen ({count})",
+    "loading": "Benachrichtigungen werden geladen...",
+    "markAllAsRead": "Alle als gelesen markieren",
+    "loadMore": "Mehr laden",
+    "error": "Benachrichtigungen konnten nicht geladen werden",
     "empty": {
       "all": "Noch keine Benachrichtigungen",
       "unread": "Keine ungelesenen Benachrichtigungen"

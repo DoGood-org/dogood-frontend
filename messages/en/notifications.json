@@ -6,6 +6,10 @@
       "unread": "Unread"
     },
     "unreadCount": "Unread ({count})",
+    "loading": "Loading notifications...",
+    "markAllAsRead": "Mark all as read",
+    "loadMore": "Load more",
+    "error": "Failed to load notifications",
     "empty": {
       "all": "No notifications yet",
       "unread": "No unread notifications"

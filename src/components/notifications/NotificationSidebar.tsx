@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useNotificationStore } from '@/zustand/stores/notificationStore';
+import { useNotifications } from '@/hooks/useNotifications';
 import { cn } from '@/lib/utils';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { Button } from '@/components/ui/Button';
@@ -22,6 +23,17 @@ export const NotificationSidebar: React.FC = () => {
     selectedNotification,
   } = useNotificationStore();
 
+  const {
+    isLoading,
+    isError,
+    isFetchingMore,
+    hasMore,
+    loadMore,
+    markAsRead,
+    markAllAsRead,
+    deleteNotification,
+  } = useNotifications();
+
   const sidebarRef = useRef<HTMLElement>(null);
 
   useClickOutside({
@@ -33,10 +45,15 @@ export const NotificationSidebar: React.FC = () => {
     },
   });
 
-  const displayed =
-    activeTab === 'unread'
-      ? notifications.filter((n) => !n.isRead)
-      : [...notifications].sort((a, b) => Number(a.isRead) - Number(b.isRead));
+  const displayed = useMemo(
+    () =>
+      activeTab === 'unread'
+        ? notifications.filter((n) => !n.isRead)
+        : [...notifications].sort(
+            (a, b) => Number(a.isRead) - Number(b.isRead)
+          ),
+    [notifications, activeTab]
+  );
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
@@ -68,10 +85,21 @@ export const NotificationSidebar: React.FC = () => {
                 <h2 className="text-foreground font-semibold text-lg">
                   {t('sidebar.title')}
                 </h2>
-                <ModalCloseButton
-                  onClick={close}
-                  className="relative top-0 right-0"
-                />
+                <div className="flex items-center gap-2">
+                  {unreadCount > 0 && (
+                    <Button
+                      variant="ghost"
+                      className="text-xs text-text-help"
+                      onClick={() => markAllAsRead()}
+                    >
+                      {t('sidebar.markAllAsRead')}
+                    </Button>
+                  )}
+                  <ModalCloseButton
+                    onClick={close}
+                    className="relative top-0 right-0"
+                  />
+                </div>
               </div>
 
               {/* Tabs */}
@@ -97,7 +125,15 @@ export const NotificationSidebar: React.FC = () => {
 
               {/* List */}
               <ul className="flex-1 overflow-y-auto px-4 flex flex-col gap-2 custom-scrollbar">
-                {displayed.length === 0 ? (
+                {isLoading ? (
+                  <div className="flex items-center justify-center h-full text-text-help">
+                    <p className="text-sm">{t('sidebar.loading')}</p>
+                  </div>
+                ) : isError ? (
+                  <div className="flex items-center justify-center h-full text-text-help">
+                    <p className="text-sm">{t('sidebar.error')}</p>
+                  </div>
+                ) : displayed.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full gap-3 text-text-help py-12">
                     <p className="text-sm">
                       {activeTab === 'unread'
@@ -106,12 +142,30 @@ export const NotificationSidebar: React.FC = () => {
                     </p>
                   </div>
                 ) : (
-                  displayed.map((notification) => (
-                    <NotificationItem
-                      key={notification.id}
-                      notification={notification}
-                    />
-                  ))
+                  <>
+                    {displayed.map((notification) => (
+                      <NotificationItem
+                        key={notification.id}
+                        notification={notification}
+                        onMarkAsRead={markAsRead}
+                      />
+                    ))}
+
+                    {hasMore && activeTab === 'all' && (
+                      <li className="flex justify-center py-3">
+                        <Button
+                          variant="ghost"
+                          className="text-sm text-text-help"
+                          onClick={loadMore}
+                          disabled={isFetchingMore}
+                        >
+                          {isFetchingMore
+                            ? t('sidebar.loading')
+                            : t('sidebar.loadMore')}
+                        </Button>
+                      </li>
+                    )}
+                  </>
                 )}
               </ul>
             </motion.aside>
@@ -119,7 +173,10 @@ export const NotificationSidebar: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <NotificationModal />
+      <NotificationModal
+        markAsRead={markAsRead}
+        deleteNotification={deleteNotification}
+      />
     </>
   );
 };

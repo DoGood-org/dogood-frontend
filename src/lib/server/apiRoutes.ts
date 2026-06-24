@@ -90,4 +90,11 @@ export const apiRoutes = {
   admin: {
     getAllOrg: '/admin/organizations',
   },
+
+  notifications: {
+    getAll: '/notifications',
+    readAll: '/notifications/read-all',
+    readOne: (id: string) => `/notifications/${id}/read`,
+    delete: (id: string) => `/notifications/${id}`,
+  },
 } as const;

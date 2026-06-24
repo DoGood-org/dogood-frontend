@@ -1,26 +1,34 @@
 'use client';
 
+import { useLocale } from 'next-intl';
+import { enUS, de } from 'date-fns/locale';
 import { Notification } from '@/types/notificationType';
 import { useNotificationStore } from '@/zustand/stores/notificationStore';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
 
+const DATE_LOCALES = { en: enUS, de } as const;
+
 interface NotificationItemProps {
   notification: Notification;
+  onMarkAsRead: (id: string) => void;
 }
 
 export const NotificationItem: React.FC<NotificationItemProps> = ({
   notification,
+  onMarkAsRead,
 }) => {
-  const { selectNotification, markAsRead } = useNotificationStore();
+  const { selectNotification } = useNotificationStore();
+  const locale = useLocale();
 
   const handleClick = (): void => {
     selectNotification(notification);
-    if (!notification.isRead) markAsRead(notification.id);
+    if (!notification.isRead) onMarkAsRead(notification.id);
   };
 
   const timeAgo = formatDistanceToNow(new Date(notification.createdAt), {
     addSuffix: true,
+    locale: DATE_LOCALES[locale as keyof typeof DATE_LOCALES] ?? enUS,
   });
 
   return (
