@@ -1,6 +1,7 @@
 import {
   Buildings,
   Dashboard,
+  Notebook,
   StarOrg,
   Support,
   UserList,
@@ -12,6 +13,12 @@ export const adminPages = [
     translationKey: 'dashboard',
     Icon: Dashboard,
     path: '/admin',
+  },
+  {
+    label: 'Report list',
+    translationKey: 'reportList',
+    Icon: Notebook,
+    path: '/admin/reports',
   },
   {
     label: 'User list',
