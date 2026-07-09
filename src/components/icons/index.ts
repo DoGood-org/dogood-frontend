@@ -106,6 +106,7 @@ export { default as More } from './More';
 export { default as NameIcon } from './NameIcon';
 export { default as Nature } from './Nature';
 export { default as Ngos } from './Ngos';
+export { default as Notebook } from './Notebook';
 export { default as NotePencil } from './NotePencil';
 export { default as Phone } from './Phone';
 export { default as Photo } from './Photo';

@@ -4,7 +4,6 @@ import React from 'react';
 import { PageNavigation } from '@/components/account/navigation/PageNavigation';
 import { useTranslations } from 'next-intl';
 import { adminPages } from '@/constants/adminPages';
-// import { navigationPages } from '@/constants/navigationPages';
 
 export const AdminNavigation: React.FC = () => {
   const t = useTranslations('adminNav');
