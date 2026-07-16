@@ -38,13 +38,14 @@ export interface IJoinRequests {
   id: string;
   status?: JoinRequestStatus;
   direction: DirectionRequest;
-  sender?: ISender;
-  senderOrganization: ISenderOrg;
+  sender: ISender;
+  senderOrganization?: ISenderOrg;
 }
 
 export interface ISender {
   id: string;
   email: string;
+  name: string;
   profile?: UserProfileProps;
 }
 

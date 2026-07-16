@@ -1,3 +1,4 @@
+import { JoinRequestStatus } from '@/constants/joinRequests';
 import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
 import { apiRoutes } from '@/lib/server/apiRoutes';
 import {
@@ -42,5 +43,29 @@ export const getJoinRequests = async (
   return {
     ok: true,
     data: result.data?.data?.joinRequests ?? [],
+  };
+};
+
+export const updateJoinRequestStatus = async (
+  id: string,
+  status: JoinRequestStatus
+): Promise<FetchResult<IJoinRequests>> => {
+  const result = await fetchFromApi<ICreateJoinRequestResponse>(
+    apiRoutes.joinRequests.updateStatus,
+    {
+      method: 'PATCH',
+      auth: true,
+      data: {
+        id,
+        status,
+      },
+    }
+  );
+
+  if (!result.ok) return result;
+
+  return {
+    ok: true,
+    data: result.data.data.joinRequest,
   };
 };
