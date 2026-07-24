@@ -1,7 +1,7 @@
 {
   "back": "Zurück",
   "input": {
-    "yourMessage": "Deine Nachricht",
+    "yourMessage": "Deine Nachricht...",
     "wasOnNetworkAt": "war zuletzt online um {time}"
   },
     "menu": {
@@ -14,5 +14,10 @@
     "emptyState": {
     "emptyChatMessage1": "Du hast noch keine Chats.",
     "emptyChatMessage2": "Wähle aus, mit wem du schreiben möchtest"
-    }
+    },
+    "chatTabs": {
+    "allChats": "Alle Chats",
+    "unread": "Ungelesen",
+    "search": "Suche..."
+  }
 }

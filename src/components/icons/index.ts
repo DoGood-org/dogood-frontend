@@ -74,6 +74,7 @@ export { default as Info } from './Info';
 export { default as Jcb } from './Jcb';
 export { default as Lamp } from './Lamp';
 export { default as LearnIcon } from './LearnIcon';
+export { default as LeftArrow } from './LeftArrow';
 export { default as LeftLine } from './LeftLine';
 export { default as Line } from './Line';
 export { default as Line6 } from './Line6';

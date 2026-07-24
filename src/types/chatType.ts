@@ -2,17 +2,23 @@ export interface ChatType {
   id: string;
   name: string;
   avatar: string;
-  content: string;
   createdAt: string;
   pinned?: boolean;
+  unreadCount?: number;
+}
+
+export interface ChatPreviewType extends ChatType {
+  content?: string;
+  createdAt: string;
 }
 
 export interface ChatCardProps {
-  chat: ChatType;
+  chat: ChatPreviewType;
   isSelected: boolean;
   onSelect: (id: string) => void;
   onChatDeleted: (chatId: string) => void;
   onPinToggle: (chatId: string, pinned: boolean) => void;
+  unreadCount?: number;
 }
 
 export interface ChatCardsListProps {
@@ -32,6 +38,7 @@ export interface MessageType {
   roomId: string;
   senderId: number;
   isCurrentUser: boolean;
+  isRead: boolean;
 }
 
 export interface MessagesListProps {

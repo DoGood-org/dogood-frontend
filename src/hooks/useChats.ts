@@ -1,5 +1,5 @@
-import { ChatType } from '@/types/chatType';
-import { useState, useEffect, useCallback } from 'react';
+import { ChatPreviewType, ChatType, MessageType } from '@/types/chatType';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 
 const sortChats = (chatList: ChatType[]): ChatType[] =>
   [...chatList].sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1));
@@ -15,7 +15,7 @@ const getPinnedFromStorage = (): string[] => {
 };
 
 interface UseChatsReturn {
-  chats: ChatType[];
+  chats: ChatPreviewType[];
   selectedChatId: string | null;
   setSelectedChatId: React.Dispatch<React.SetStateAction<string | null>>;
   handleChatDeleted: (chatId: string) => void;
@@ -24,6 +24,7 @@ interface UseChatsReturn {
 
 export const useChats = (
   initialChats: ChatType[],
+  messages: MessageType[],
   isMobileOrTablet: boolean
 ): UseChatsReturn => {
   const [chats, setChats] = useState<ChatType[]>(() => {
@@ -111,8 +112,41 @@ export const useChats = (
     []
   );
 
+  const chatsWithMessages: ChatPreviewType[] = useMemo(() => {
+    if (!Array.isArray(messages)) {
+      return chats.map((chat) => ({
+        ...chat,
+        content: '',
+      }));
+    }
+
+    return chats.map((chat) => {
+      const roomMsgs = messages.filter((m) => m?.roomId === chat.id);
+
+      if (roomMsgs.length === 0) {
+        return {
+          ...chat,
+          content: '',
+        };
+      }
+
+      const sortedRoomMsgs = [...roomMsgs].sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
+
+      const lastMsg = sortedRoomMsgs[sortedRoomMsgs.length - 1];
+
+      return {
+        ...chat,
+        content: lastMsg.content,
+        createdAt: lastMsg.createdAt,
+      };
+    });
+  }, [chats, messages]);
+
   return {
-    chats,
+    chats: chatsWithMessages,
     selectedChatId,
     setSelectedChatId,
     handleChatDeleted,

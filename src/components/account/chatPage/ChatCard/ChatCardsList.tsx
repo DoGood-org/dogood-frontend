@@ -21,11 +21,15 @@ export const ChatCardsList: React.FC<ChatCardsListProps> = ({
   };
 
   return (
-    <ul ref={listRef} className="flex flex-col gap-6 md:gap-4">
+    <ul
+      ref={listRef}
+      className="flex flex-col gap-2 overflow-y-auto custom-scrollbar-hide min-h-0"
+    >
       {chats.map((chat) => (
         <ChatCardItem
           key={chat.id}
           chat={chat}
+          unreadCount={chat.unreadCount}
           isSelected={selectedChatId === chat.id}
           onSelect={onSelectChat}
           onChatDeleted={onChatDeleted}

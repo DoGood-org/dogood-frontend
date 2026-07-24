@@ -1,12 +1,12 @@
 'use client';
 
-import Back from '@/components/icons/Back';
 import ChatSearch from '@/components/icons/ChatSearch';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { formatChatTime } from '@/utils/chatDateUtils';
+import { LeftArrow } from '@/components/icons';
 
 interface ChatSearchInputProps {
   selectedName: string;
@@ -41,7 +41,9 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
     }
   };
 
-  const formattedTime = lastMessageTime ? formatChatTime(lastMessageTime) : '';
+  const formattedTime = lastMessageTime
+    ? formatChatTime(lastMessageTime, true)
+    : '';
 
   const placeholderText = formattedTime
     ? t('input.wasOnNetworkAt', { time: formattedTime })
@@ -59,17 +61,14 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
             aria-label="Back"
             type="button"
           >
-            <Back className="w-5 h-5 text-bg-icon group-hover:text-btn-hover group-active:text-btn-active" />
-            <span className="text-base text-foreground group-hover:text-btn-hover group-active:text-btn-active">
-              {t('back')}
-            </span>
+            <LeftArrow className="size-6" />
           </Button>
         </div>
       )}
       <div className="flex items-center">
         <div className="flex flex-col">
           {selectedName && (
-            <p className="text-center mb-2 break-words font-semibold text-foreground md:font-bold lg:text-left">
+            <p className="text-center break-words font-semibold text-foreground md:font-bold lg:text-left">
               {selectedName}
             </p>
           )}
@@ -82,12 +81,10 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
             className="
             w-[240px]
             h-[24px]
-            py-0
-            pl-2
-            pr-0
             md:pl-0
             bg-transparent
             text-current
+            text-xs
             placeholder:text-foreground
             hover:placeholder:text-btn-hover
             focus:placeholder:text-btn-active

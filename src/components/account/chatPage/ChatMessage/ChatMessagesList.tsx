@@ -32,7 +32,7 @@ export const ChatMessageList: React.FC<MessagesListProps> = ({ messages }) => {
             <EmptyChatMessage />
           </div>
         ) : (
-          <ul className="flex flex-col gap-6 mt-6 w-full">
+          <ul className="flex flex-col gap-6 mt-4 w-full">
             {messages.map((message) => (
               <ChatMessageItem key={message.id} message={message} />
             ))}
