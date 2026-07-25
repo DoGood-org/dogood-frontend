@@ -63,7 +63,7 @@ export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
       <ChatMessageInput onSend={onSend} />
     </div>
   ) : (
-    <div className="bg-admin-background w-full max-w-[354px] md:max-w-[648px] flex justify-center py-2 px-4 rounded-xl">
+    <div className="bg-admin-background w-full h-full max-w-[354px] md:max-w-[648px] min-h-[680px] md:min-h-[856px] flex justify-center py-2 px-4 rounded-xl">
       <div className="flex-1 w-full h-full max-w-[320px] md:max-w-[616px]">
         <ChatListSearch value={searchQuery} onSearch={setSearchQuery} />
         <ChatTabs

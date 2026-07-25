@@ -20,48 +20,6 @@
       "createdAt": "2025-07-14T12:06:00Z",
       "unreadCount": 22,
       "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&auto=format&fit=crop&q=80"
-    },
-    {
-      "id": "5",
-      "name": "Petro",
-      "createdAt": "2026-07-07T10:10:00Z",
-      "unreadCount": 100,
-      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80"
-    },
-    {
-      "id": "6",
-      "name": "Sofiia",
-      "createdAt": "2026-06-21T14:10:00Z",
-      "unreadCount": 0,
-      "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80"
-    },
-    {
-      "id": "7",
-      "name": "Maksym",
-      "createdAt": "2026-05-21T09:05:00Z",
-      "unreadCount": 5,
-      "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80"
-    },
-    {
-      "id": "8",
-      "name": "Kateryna",
-      "createdAt": "2026-07-21T19:15:00Z",
-      "unreadCount": 1,
-      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
-    },
-    {
-      "id": "9",
-      "name": "Dmytro",
-      "createdAt": "2026-07-20T16:20:00Z",
-      "unreadCount": 0,
-      "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80"
-    },
-    {
-      "id": "10",
-      "name": "Olena",
-      "createdAt": "2026-04-10T11:30:00Z",
-      "unreadCount": 3,
-      "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80"
     }
   ],
   "messages": [

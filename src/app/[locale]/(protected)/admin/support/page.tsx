@@ -1,10 +1,6 @@
-import { Section } from '@/components/ui/Section';
+import { Chat } from '@/components/account/chatPage/Chat';
 import { JSX } from 'react';
 
 export default async function AdminSupportPage(): Promise<JSX.Element> {
-  return (
-    <Section className="bg-admin-background min-h-[300px] rounded-lg mb-4 lg:mb-0 flex justify-center text-center w-full">
-      <h1>AdminSupportPage</h1>
-    </Section>
-  );
+  return <Chat className="!py-0 w-full h-full flex flex-col" />;
 }

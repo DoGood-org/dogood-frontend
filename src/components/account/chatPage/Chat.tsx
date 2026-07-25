@@ -13,7 +13,11 @@ import { ChatMobileLayout } from './ChatMobileLayout';
 import { ChatDesktopLayout } from './ChatDesktopLayout';
 import { EmptyState } from './EmptyState';
 
-export const Chat: React.FC = () => {
+interface ChatProps {
+  className?: string;
+}
+
+export const Chat: React.FC<ChatProps> = ({ className }) => {
   const { chats: initialChats, messages: initialMessages } = mocks;
 
   const isMobileOrTablet = useMediaQuery('(max-width: 1439px)');
@@ -34,6 +38,7 @@ export const Chat: React.FC = () => {
   const messagesWithReadStatus: MessageType[] = initialMessages.map(
     (message) => ({
       ...message,
+
       isRead: false,
     })
   );
@@ -81,8 +86,11 @@ export const Chat: React.FC = () => {
   };
 
   return (
-    <Section withContainer={false} className="pt-9 md:pt-15 lg:pt-20">
-      <div className="bg-background flex justify-center text-foreground lg:min-h-0">
+    <Section
+      withContainer={false}
+      className={className || 'pt-9 md:pt-15 lg:pt-20'}
+    >
+      <div className="bg-background flex text-foreground">
         {chats.length === 0 ? (
           <EmptyState />
         ) : isMobileOrTablet ? (

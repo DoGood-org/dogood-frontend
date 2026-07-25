@@ -47,8 +47,8 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
   });
 
   return (
-    <div className="flex h-[856px] max-h-screen min-h-[600px] gap-2">
-      <div className="bg-admin-background max-w-[354px] w-full flex justify-center pt-2 rounded-xl">
+    <div className="flex min-h-[856px] max-h-screen gap-2">
+      <div className="bg-admin-background min-w-[354px] w-full flex justify-center pt-2 rounded-xl">
         <div className="w-[320px] flex flex-col text-foreground overflow-y-auto custom-scrollbar-hide">
           <ChatListSearch value={searchQuery} onSearch={setSearchQuery} />
           <ChatTabs
@@ -66,7 +66,7 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
         </div>
       </div>
 
-      <div className="w-[704px] bg-admin-background h-full flex-1 flex flex-col text-foreground rounded-lg p-2 lg:p-6">
+      <div className="bg-admin-background h-full flex-1 flex flex-col text-foreground rounded-lg p-2 md:min-w-[608px] lg:p-6">
         {selectedChatId && (
           <>
             <ChatSearchInput
