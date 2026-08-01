@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react';
 type ChatModalProps = {
   chat: ChatType;
   onClose: () => void;
-  menuRef: React.RefObject<HTMLDivElement | null>;
   onChatDeleted: (chatId: string) => void;
   onPinToggle: (chatId: string, pinned: boolean) => void;
 };
@@ -20,7 +19,6 @@ type ChatModalProps = {
 export const ChatModal: React.FC<ChatModalProps> = ({
   chat,
   onClose,
-  menuRef,
   onPinToggle,
 }) => {
   const t = useTranslations('chat');
@@ -95,28 +93,23 @@ export const ChatModal: React.FC<ChatModalProps> = ({
       ];
 
   return (
-    <div
-      ref={menuRef}
-      className="absolute top-4 right-0 bg-background py-6 px-5 rounded-lg shadow-lg z-50 min-w-[178px]"
-    >
-      <ul className="flex flex-col gap-4">
-        {buttons.map(({ key, label, onClick, Icon }) => (
-          <li key={key}>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onClick}
-              className="group flex items-center justify-between w-full 
+    <ul className="flex flex-col gap-3 min-w-[178px]">
+      {buttons.map(({ key, label, onClick, Icon }) => (
+        <li key={key}>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onClick}
+            className="group flex items-center justify-between w-full 
                 hover:text-btn-hover active:text-btn-active cursor-pointer"
-            >
-              <span className="whitespace-nowrap text-foreground group-hover:text-btn-hover group-active:text-btn-active">
-                {label}
-              </span>
-              <Icon className="size-6 text-foreground group-hover:text-btn-hover group-active:text-btn-active" />
-            </Button>
-          </li>
-        ))}
-      </ul>
-    </div>
+          >
+            <span className="whitespace-nowrap text-foreground group-hover:text-btn-hover group-active:text-btn-active">
+              {label}
+            </span>
+            <Icon className="size-6 text-foreground group-hover:text-btn-hover group-active:text-btn-active" />
+          </Button>
+        </li>
+      ))}
+    </ul>
   );
 };

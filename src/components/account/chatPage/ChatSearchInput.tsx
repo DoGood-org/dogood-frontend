@@ -15,6 +15,8 @@ interface ChatSearchInputProps {
   showBackButton: boolean;
   onBack: () => void;
   onSearch: (query: string) => void;
+  variant?: 'chat' | 'admin';
+  rightElement?: React.ReactNode;
 }
 
 export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
@@ -23,6 +25,7 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
   showBackButton,
   onBack,
   onSearch,
+  rightElement,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const t = useTranslations('chat');
@@ -107,16 +110,18 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
           />
         </div>
       </div>
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon"
-        className="text-current cursor-pointer w-6 h-6"
-        aria-label="Search"
-        onClick={handleSearch}
-      >
-        <ChatSearch className="size-6 text-bg-icon hover:text-btn-hover active:text-btn-active" />
-      </Button>
+      {rightElement ?? (
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="text-current cursor-pointer w-6 h-6"
+          aria-label="Search"
+          onClick={handleSearch}
+        >
+          <ChatSearch className="size-6 text-bg-icon hover:text-btn-hover active:text-btn-active" />
+        </Button>
+      )}
     </div>
   );
 };

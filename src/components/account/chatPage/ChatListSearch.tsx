@@ -17,7 +17,7 @@ export const ChatListSearch: React.FC<ChatListSearchProps> = ({
 
   return (
     <div className="relative flex items-center mb-2">
-      <ChatSearch className="absolute left-2 size-6 stroke-[#999999]" />
+      <ChatSearch className="absolute rotate-90 left-2 size-6 stroke-[#999999]" />
 
       <Input
         type="text"

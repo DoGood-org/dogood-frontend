@@ -12,12 +12,14 @@ import { Section } from '@/components/ui/Section';
 import { ChatMobileLayout } from './ChatMobileLayout';
 import { ChatDesktopLayout } from './ChatDesktopLayout';
 import { EmptyState } from './EmptyState';
+import { AdminEllipsisMenu } from '@/components/admin/actions/AdminEllipsisMenu';
 
 interface ChatProps {
   className?: string;
+  isAdmin?: boolean;
 }
 
-export const Chat: React.FC<ChatProps> = ({ className }) => {
+export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
   const { chats: initialChats, messages: initialMessages } = mocks;
 
   const isMobileOrTablet = useMediaQuery('(max-width: 1439px)');
@@ -106,6 +108,16 @@ export const Chat: React.FC<ChatProps> = ({ className }) => {
             onChatDeleted={handleChatDeleted}
             selectedChat={selectedChat || null}
             onPinToggle={handlePinToggle}
+            showEllipsisMenu={!isAdmin}
+            rightElement={
+              isAdmin && selectedChat ? (
+                <AdminEllipsisMenu
+                  chat={selectedChat}
+                  onChatDeleted={handleChatDeleted}
+                  onPinToggle={handlePinToggle}
+                />
+              ) : undefined
+            }
           />
         ) : (
           <ChatDesktopLayout
@@ -120,6 +132,16 @@ export const Chat: React.FC<ChatProps> = ({ className }) => {
             onChatDeleted={handleChatDeleted}
             selectedChat={selectedChat || null}
             onPinToggle={handlePinToggle}
+            showEllipsisMenu={!isAdmin}
+            rightElement={
+              isAdmin && selectedChat ? (
+                <AdminEllipsisMenu
+                  chat={selectedChat}
+                  onChatDeleted={handleChatDeleted}
+                  onPinToggle={handlePinToggle}
+                />
+              ) : undefined
+            }
           />
         )}
       </div>

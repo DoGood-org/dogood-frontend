@@ -20,6 +20,8 @@ interface ChatDesktopLayoutProps {
   activeTab: 'all' | 'unread';
   unreadCount: number;
   onTabChange: (tab: 'all' | 'unread') => void;
+  rightElement?: React.ReactNode;
+  showEllipsisMenu?: boolean;
 }
 
 export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
@@ -34,6 +36,8 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
   activeTab,
   unreadCount,
   onTabChange,
+  rightElement,
+  showEllipsisMenu,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const lastMessageTime = selectedChatId
@@ -62,6 +66,7 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
             onSelectChat={setSelectedChatId}
             onChatDeleted={onChatDeleted}
             onPinToggle={onPinToggle}
+            showEllipsisMenu={showEllipsisMenu}
           />
         </div>
       </div>
@@ -76,6 +81,7 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
               showBackButton={false}
               onBack={() => setSelectedChatId(null)}
               onSearch={(query) => console.log('Шукати:', query)}
+              rightElement={rightElement}
             />
             <div className="border border-foreground mt-4" />
           </>

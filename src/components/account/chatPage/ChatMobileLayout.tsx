@@ -20,6 +20,8 @@ interface ChatMobileLayoutProps {
   activeTab: 'all' | 'unread';
   unreadCount: number;
   onTabChange: (tab: 'all' | 'unread') => void;
+  rightElement?: React.ReactNode;
+  showEllipsisMenu?: boolean;
 }
 
 export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
@@ -34,6 +36,8 @@ export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
   activeTab,
   unreadCount,
   onTabChange,
+  rightElement,
+  showEllipsisMenu,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const lastMessageTime = selectedChatId
@@ -55,6 +59,7 @@ export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
         showBackButton={true}
         onBack={() => setSelectedChatId(null)}
         onSearch={(query) => console.log('Пошук:', query)}
+        rightElement={rightElement}
       />
       <div className="border border-foreground mt-4" />
       <div className="flex-1 overflow-y-auto custom-scrollbar-hide min-h-0">
@@ -77,6 +82,7 @@ export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
           onSelectChat={setSelectedChatId}
           onChatDeleted={onChatDeleted}
           onPinToggle={onPinToggle}
+          showEllipsisMenu={showEllipsisMenu}
         />
       </div>
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { ChatType } from '@/types/chatType';
-import { ChatModal } from './ChatModal';
+import { AdminChatModal } from './AdminChatModal';
 import { MoreMenu } from '@/components/ui/MoreMenu';
 
 type Props = {
@@ -10,8 +10,8 @@ type Props = {
   onPinToggle: (chatId: string, pinned: boolean) => void;
 };
 
-export const ChatEllipsisMenu: React.FC<Props> = ({
-  chat,
+export const AdminEllipsisMenu: React.FC<Props> = ({
+  // chat,
   onChatDeleted,
   onPinToggle,
 }) => {
@@ -19,10 +19,10 @@ export const ChatEllipsisMenu: React.FC<Props> = ({
     <MoreMenu
       items={[
         {
-          id: 'chat-menu',
+          id: 'admin-modal-content',
           content: (close) => (
-            <ChatModal
-              chat={chat}
+            <AdminChatModal
+              // chat={chat}
               onClose={close}
               onChatDeleted={onChatDeleted}
               onPinToggle={onPinToggle}
