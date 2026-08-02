@@ -2,15 +2,12 @@
 
 import { useState, useMemo, JSX } from 'react';
 import { useQuery } from '@tanstack/react-query';
-// import { searchUsersByName, UserShort } from '@/api/users';
 import { UserShort } from '@/types';
 import { searchUsersByName } from '@/services/publicUserService';
-// import { addMemberToOrganization } from '@/services/organizationService';
 import { useAddMemberToOrganization } from '@/hooks/useAddMemberToOrganization';
 import { useDebounce } from '@/hooks/useDebounce';
 import Image from 'next/image';
 import { ChatSearch } from '@/components/icons';
-// import { addUserToOrganization } from '@/api/organizations';
 
 export type AddMemberModalProps = {
   organizationId: string;
@@ -34,41 +31,13 @@ export const AddMemberModal = ({
     enabled: debouncedQuery.length >= 2,
   });
 
-  // console.log('Members ', existingMemberIds);
-
   // ⬇️ ФІЛЬТРУЄМО ВЖЕ ДОДАНИХ
   const filteredUsers = useMemo(
     () => users.filter((user) => !existingMemberIds.includes(user.id)),
     [users, existingMemberIds]
   );
 
-  // const filteredUsers = useMemo(() => users, [users]);
-
-  // console.log(filteredUsers);
-
-  // const filteredUsers = useMemo(
-  //   () =>
-  //     debouncedQuery.length >= 2
-  //       ? users.filter((user) => !existingMemberIds.includes(user.id))
-  //       : [],
-  //   [users, existingMemberIds, debouncedQuery]
-  // );
-
-  // const addMemberOnClick = async (user: UserShort): Promise<void> => {
-  //   const data = {
-  //     userId: user.id,
-  //     organizationId,
-  //     role: 'MEMBER',
-  //     status: 'PENDING',
-  //   };
-
-  //   await addMemberToOrganization(data);
-  // };
-
-  const addMemberMutation = useAddMemberToOrganization(
-    organizationId,
-    debouncedQuery
-  );
+  const addMemberMutation = useAddMemberToOrganization(debouncedQuery);
 
   const handleAdd = (user: UserShort): void => {
     addMemberMutation.mutate({
@@ -104,7 +73,6 @@ export const AddMemberModal = ({
       <ul className="flex flex-col gap-2">
         {filteredUsers.map((user) => (
           <li key={user.id} className="bg-[#252525] p-2 rounded-lg">
-            {/* <button onClick={() => addMemberOnClick(user)}>Add</button> */}
             <button
               disabled={addMemberMutation.isPending}
               onClick={() => handleAdd(user)}

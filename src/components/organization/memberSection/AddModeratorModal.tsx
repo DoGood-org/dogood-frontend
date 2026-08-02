@@ -1,4 +1,5 @@
 import { ChatSearch } from '@/components/icons';
+import { useUpdateMemberRole } from '@/hooks/useUpdateMemberRole';
 import { UserOrganization } from '@/types';
 import Image from 'next/image';
 import { JSX, useState } from 'react';
@@ -10,6 +11,16 @@ export const AddModeratorModal = ({
 }): JSX.Element => {
   const [query, setQuery] = useState('');
   const filteredUsers = members.filter((member) => member.role === 'MEMBER');
+  const updateRoleMutation = useUpdateMemberRole();
+
+  const handleAddModerator = (userId: string): void => {
+    updateRoleMutation.mutate({
+      organizationId: members[0].organizationId,
+      userId,
+      role: 'MODERATOR',
+    });
+  };
+
   return (
     <div>
       <div className="border-b border-solid border-white w-full py-3 px-2 mb-6 flex gap-2">
@@ -33,10 +44,9 @@ export const AddModeratorModal = ({
       <ul className="flex flex-col gap-2 max-h-[296px]">
         {filteredUsers.map(({ user }) => (
           <li key={user.id} className="bg-[#252525] p-2 rounded-lg">
-            {/* <button onClick={() => addMemberOnClick(user)}>Add</button> */}
             <button
-              // disabled={addMemberMutation.isPending}
-              // onClick={() => handleAdd(user)}
+              disabled={updateRoleMutation.isPending}
+              onClick={() => handleAddModerator(user.id)}
               className="flex gap-4 items-center cursor-pointer"
             >
               <Image
@@ -47,9 +57,9 @@ export const AddModeratorModal = ({
                 className="object-cover rounded-[10px]"
               />
               {user.name}
-              {/* {addMemberMutation.isPending ? 'Adding...' : 'Add'} */}
+              {updateRoleMutation.isPending ? 'Adding...' : 'Add'}
             </button>
-            {/* {addMemberMutation.isError && <p>Error adding member</p>} */}
+            {updateRoleMutation.isError && <p>Error adding moderator</p>}
           </li>
         ))}
       </ul>

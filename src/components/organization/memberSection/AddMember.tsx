@@ -9,11 +9,15 @@ import { UserOrganization } from '@/types';
 type AddMemberProps = {
   organizationId: string;
   existingMembers: UserOrganization[];
+  className?: string;
+  variant?: 'default' | 'ghost' | 'primary' | 'secondary';
 };
 
 export const AddMember = ({
   organizationId,
   existingMembers,
+  className = '',
+  variant = 'secondary',
 }: AddMemberProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations('organization');
@@ -27,25 +31,13 @@ export const AddMember = ({
   return (
     <>
       <Button
-        variant="secondary"
+        variant={variant}
         onClick={handleOnClick}
-        className="align-right"
+        className={`align-right ${className}`}
       >
         <Plus className="size-5 fill-current" />
         {t('members.addMemberButton')}
       </Button>
-      {/* {isOpen && (
-        <Modal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          withBackButton={false}
-          wrapperClassName="w-[353px] md:w-[500px] max-w-[500px] "
-        >
-          <h3 className="text-[20px] leading-[24px] md:text-h3">
-            {t('members.addMember')}
-          </h3>
-        </Modal>
-      )} */}
 
       {isOpen && (
         <Modal

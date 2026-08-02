@@ -1,9 +1,7 @@
-// import { getUserRole } from '@/lib/getUserRole';
 import { hasPermission } from '@/lib/hasPermission';
 import { Permission, Role } from '@/types';
 
 export type OrgPermissionProps = {
-  // role: Role;
   has: (permission: Permission) => boolean;
   isAdmin: boolean;
   isModerator: boolean;
@@ -23,12 +21,7 @@ export type OrgPermissionProps = {
   canChangeRoles: boolean;
 };
 
-export const useOrganizationPermissions = (
-  // members: UserOrganization[]
-  role: Role
-): OrgPermissionProps => {
-  // const role = getUserRole(members);
-
+export const useOrganizationPermissions = (role: Role): OrgPermissionProps => {
   const has = (permission: Permission): boolean =>
     hasPermission(role, permission);
 
@@ -51,7 +44,6 @@ export const useOrganizationPermissions = (
   const canChangeRoles = has(Permission.CHANGE_ROLES);
 
   return {
-    // role,
     has,
     isAdmin,
     isModerator,

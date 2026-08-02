@@ -8,6 +8,7 @@ import {
   UseMutationResult,
   useQueryClient,
 } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 // type AddMemberResponse = {
 //   id: string;
@@ -16,7 +17,7 @@ import {
 // : UseMutationResult<AddMemberResponse, ApiError, AddMemberPayload>
 
 export const useAddMemberToOrganization = (
-  organizationId: string,
+  // organizationId: string,
   debouncedQuery: string
 ): UseMutationResult<
   FetchResult<AddMemberResponse>,
@@ -25,6 +26,7 @@ export const useAddMemberToOrganization = (
   unknown
 > => {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   return useMutation({
     mutationFn: addMemberToOrganization,
@@ -36,9 +38,10 @@ export const useAddMemberToOrganization = (
       );
 
       // інвалідовуємо мемберів організації
-      queryClient.invalidateQueries({
-        queryKey: ['organization-members', organizationId],
-      });
+      router.refresh();
+      // queryClient.invalidateQueries({
+      //   queryKey: ['organization-members', organizationId],
+      // });
     },
   });
 };

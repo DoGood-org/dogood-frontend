@@ -1,7 +1,9 @@
 import { UserNoAvatar } from '@/components/account/accountPage/UserNoAvatar';
-import { ChatCircle } from '@/components/icons';
+import { ChatCircle, CloseIcon, Dismiss } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
+import { useDeleteMemberFromOrganization } from '@/hooks/useDeleteMemberFromOrganization';
 import { useOrganizationPermissions } from '@/hooks/useOrganizationPermissions';
+import { useUpdateMemberRole } from '@/hooks/useUpdateMemberRole';
 import { OrganizationRole, Role, UserOrganization } from '@/types';
 import { authStore } from '@/zustand/stores/authStore';
 import { useLocale, useTranslations } from 'next-intl';
@@ -13,16 +15,20 @@ export const OrgMemberItem = ({
   member,
   role,
   currentRole,
+  organizationId,
 }: {
   member: UserOrganization;
   role: OrganizationRole;
   currentRole: Role;
+  organizationId: string;
 }): JSX.Element => {
-  const { user } = member;
+  const { user, userId } = member;
   const locale = useLocale();
   const t = useTranslations('organization');
   const imageStyles =
     'shrink-0 w-[100px] h-[100px] md:w-[100px] md:h-[100px] lg:h-[100px] lg:w-[100px] object-cover rounded-lg self-center md:self-start';
+  const buttonStyles =
+    'text-text-gray hover:text-btn-hover focus:text-btn-hover active:text-btn-active flex gap-2';
 
   const currentUser = authStore((s) => s.user);
   const {
@@ -31,6 +37,24 @@ export const OrgMemberItem = ({
     canRemoveModerator,
     canSendMessage,
   } = useOrganizationPermissions(currentRole);
+
+  const deleteMemberMutation = useDeleteMemberFromOrganization();
+  const updateRoleMutation = useUpdateMemberRole();
+
+  const handleDelete = (): void => {
+    deleteMemberMutation.mutate({
+      userId,
+      organizationId,
+    });
+  };
+
+  const handleDismiss = (): void => {
+    updateRoleMutation.mutate({
+      organizationId,
+      userId,
+      role: 'MEMBER',
+    });
+  };
 
   const isModeratorSection = role === 'MODERATOR';
   const isMemberSection = role === 'MEMBER';
@@ -61,12 +85,19 @@ export const OrgMemberItem = ({
           {user.name}
         </Link>
       </div>
-      <div>
+      <div className="flex">
         {isModeratorSection && canDismissModerator && (
-          <Button variant="ghost">{t('members.dismiss')}</Button>
+          <Button
+            variant="ghost"
+            onClick={handleDismiss}
+            className={buttonStyles}
+          >
+            <Dismiss className="size-5" />
+            {t('members.dismiss')}
+          </Button>
         )}
         {canSendMessage && notCurrentUser && (
-          <Button asChild variant="ghost" className="px-6">
+          <Button asChild variant="ghost" className={`px-6 ${buttonStyles}`}>
             <Link href={`/${locale}/account/chat`}>
               <ChatCircle className="size-[18px]" />
               {t('members.send')}
@@ -74,10 +105,24 @@ export const OrgMemberItem = ({
           </Button>
         )}
         {isModeratorSection && canRemoveModerator && (
-          <Button variant="ghost">{t('members.remove')}</Button>
+          <Button
+            variant="ghost"
+            onClick={handleDelete}
+            className={buttonStyles}
+          >
+            <CloseIcon className="size-5" />
+            {t('members.remove')}
+          </Button>
         )}
         {isMemberSection && canRemoveMember && (
-          <Button variant="ghost">{t('members.remove')}</Button>
+          <Button
+            variant="ghost"
+            onClick={handleDelete}
+            className={buttonStyles}
+          >
+            <CloseIcon className="size-5" />
+            {t('members.remove')}
+          </Button>
         )}
       </div>
     </div>

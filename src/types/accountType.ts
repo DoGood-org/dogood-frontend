@@ -28,7 +28,7 @@ export interface ContentPanelProps {
   role?: OrganizationRole | 'USER';
 }
 export interface UserDetailedProps {
-  id: string | number;
+  id: string;
   name: string;
   customerId?: string;
   paymentOptions: PaymentProps[] | [];
@@ -51,27 +51,6 @@ export type UserProfileProps = {
   birthDate: string | null;
   phoneNumber: string | null;
 };
-
-// export interface UserDetailedProps {
-//   id: string | number;
-//   name: string;
-//   avatar?: string;
-//   customerId?: string;
-//   paymentOptions: PaymentProps[];
-//   email: string;
-//   siteRole: string;
-//   bio?: string;
-//   gender: string;
-//   birthDate?: string;
-//   phoneNumber?: string;
-//   userSettings: UserSettingsProps;
-//   location?: Location;
-//   hostedTasks?: HostedTaskProps[];
-//   joinedTasks?: TaskProps[];
-//   reviewsWritten?: ReviewProps[];
-//   reviewsReceived?: ReviewProps[];
-//   organizations?: OrganizationProps[];
-// }
 
 export type PaymentProps = {
   id: number;

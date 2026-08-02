@@ -6,11 +6,10 @@ import { Slider } from '@/components/ui/Slider';
 import { OrgMemberItem } from './OrgMemberItem';
 import { EmptyContent } from '../EmptyContent';
 import { useTranslations } from 'next-intl';
-// import { getUserRole, isAdminOrModerator } from '@/lib/getUserRole';
 import { AddModerator } from './AddModerator';
 import { AddMember } from './AddMember';
 import { useOrganizationPermissions } from '@/hooks/useOrganizationPermissions';
-import { getUserRole } from '@/lib/getUserRole';
+import { useOrganizationRole } from '@/hooks/useOrganizationRole';
 
 export const OrgMemberList = ({
   members,
@@ -21,8 +20,7 @@ export const OrgMemberList = ({
 }): JSX.Element => {
   const grouped = groupMembersByRole(members);
   const t = useTranslations('organization');
-  // const adminRole = isAdminOrModerator(getUserRole(members));
-  const currentRole = getUserRole(members);
+  const currentRole = useOrganizationRole(members);
 
   const { canAddMember, canAddModerator } =
     useOrganizationPermissions(currentRole);
@@ -31,7 +29,6 @@ export const OrgMemberList = ({
     <div className="space-y-8">
       {ROLE_CONFIG.map(({ role, title }) => {
         const roleMembers = grouped[role];
-        // const noEmptyMemberList = adminRole && roleMembers.length;.
         const noEmptyMemberList = grouped['MEMBER'].length;
 
         return (
@@ -53,12 +50,14 @@ export const OrgMemberList = ({
                 items={roleMembers}
                 itemsPerSlide={4}
                 itemClassName="p-0"
+                listClassName="gap-4"
                 renderItem={(member, id) => (
                   <OrgMemberItem
                     key={`${id}-${member.userId}`}
                     member={member}
                     role={role}
                     currentRole={currentRole}
+                    organizationId={orgId}
                   />
                 )}
               />
