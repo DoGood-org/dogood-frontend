@@ -1,37 +1,23 @@
-// // import { UserOrganization } from '@/types';
-// import { JSX } from 'react';
-// // import { useTranslations } from 'next-intl';
-// import { EmptyContent } from '@/components/organization/EmptyContent';
-// import { getJoinRequests } from '@/services/joinRequestService';
-// // import { getTranslations } from 'next-intl/server';
-// import { OrgJoinRequestClient } from './OrgJoinRequestClient';
-
-// export const OrgJoinRequestSection = async ({
-//   orgId,
-// }: {
-//   orgId: string;
-// }): Promise<JSX.Element> => {
-//   const result = await getJoinRequests(orgId);
-
-//   if (!result.ok) {
-//     return <EmptyContent>Something went wrong</EmptyContent>;
-//   }
-
-//   return <OrgJoinRequestClient data={result.data ?? []} />;
-// };
-
 'use client';
 
 import { JSX } from 'react';
 import { EmptyContent } from '../EmptyContent';
 import { IJoinRequests } from '@/types/joinRequest.type';
 import { useTranslations } from 'next-intl';
+import { OrgJoinRequestCard } from './OrgJoinRequestCard';
+import { Slider } from '@/components/ui/Slider';
+
+type Props = {
+  data: IJoinRequests[];
+  onApprove: (id: string) => Promise<void>;
+  onReject: (id: string) => Promise<void>;
+};
 
 export const OrgJoinRequestSection = ({
   data,
-}: {
-  data: IJoinRequests[];
-}): JSX.Element => {
+  onApprove,
+  onReject,
+}: Props): JSX.Element => {
   const t = useTranslations('organization');
 
   console.log(data);
@@ -39,14 +25,23 @@ export const OrgJoinRequestSection = ({
   return (
     <>
       <h2 className="text-h2-m lg:text-h2">{t('request.title')}</h2>
-      {data.length === 0 ? (
+      {!data || !data.length ? (
         <EmptyContent>{t('noRequest')}</EmptyContent>
       ) : (
-        <ul>
-          {data.map((req) => (
-            <li key={req.id}>{req.sender?.email}</li>
-          ))}
-        </ul>
+        <Slider
+          items={data}
+          itemsPerSlide={3}
+          listClassName="gap-5"
+          itemClassName="p-0"
+          renderItem={(request, idx) => (
+            <OrgJoinRequestCard
+              key={`${idx}-${request.id}`}
+              request={request}
+              onApprove={onApprove}
+              onReject={onReject}
+            />
+          )}
+        />
       )}
     </>
   );

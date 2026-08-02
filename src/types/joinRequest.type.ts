@@ -1,10 +1,17 @@
 import { UserProfileProps } from './accountType';
 
-export type JoinRequestStatus =
-  | 'PENDING'
-  | 'ACCEPTED'
-  | 'REJECTED'
-  | 'CANCELLED';
+// export type JoinRequestStatus =
+//   | 'PENDING'
+//   | 'ACCEPTED'
+//   | 'REJECTED'
+//   | 'CANCELLED';
+
+export enum JoinRequestStatus {
+  PENDING = 'PENDING',
+  ACCEPTED = 'ACCEPTED',
+  REJECTED = 'REJECTED',
+  CANCELLED = 'CANCELLED',
+}
 
 export type DirectionRequest = 'FROM_USER' | 'FROM_ORGANIZATION';
 
