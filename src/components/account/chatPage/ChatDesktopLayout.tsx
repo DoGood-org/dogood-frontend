@@ -20,8 +20,10 @@ interface ChatDesktopLayoutProps {
   activeTab: 'all' | 'unread';
   unreadCount: number;
   onTabChange: (tab: 'all' | 'unread') => void;
+  onMessageSearch: (query: string) => void;
   rightElement?: React.ReactNode;
   showEllipsisMenu?: boolean;
+  isAdmin?: boolean;
 }
 
 export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
@@ -38,6 +40,8 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
   onTabChange,
   rightElement,
   showEllipsisMenu,
+  onMessageSearch,
+  isAdmin,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const lastMessageTime = selectedChatId
@@ -47,7 +51,7 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
   const filteredChats = chats.filter((chat) => {
     const query = searchQuery.toLowerCase();
 
-    return chat.name.toLowerCase().startsWith(query);
+    return chat.name.toLowerCase().includes(query);
   });
 
   return (
@@ -80,8 +84,9 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
               lastOnline={selectedChat?.createdAt || ''}
               showBackButton={false}
               onBack={() => setSelectedChatId(null)}
-              onSearch={(query) => console.log('Шукати:', query)}
+              onSearch={onMessageSearch}
               rightElement={rightElement}
+              variant={isAdmin ? 'admin' : 'chat'}
             />
             <div className="border border-foreground mt-4" />
           </>

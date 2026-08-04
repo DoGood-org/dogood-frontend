@@ -19,5 +19,10 @@
     "allChats": "All chats",
     "unread": "Unread",
     "search": "Search..."
+  },
+    "adminMenu": {
+    "reviewAccount": "Review account",
+    "blockAccount": "Block account",
+    "deleteHistory": "Delete history"
   }
 }

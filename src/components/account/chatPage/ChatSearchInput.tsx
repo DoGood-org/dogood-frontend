@@ -26,22 +26,14 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
   onBack,
   onSearch,
   rightElement,
+  variant = 'chat',
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const t = useTranslations('chat');
 
-  const handleSearch = (): void => {
-    const trimmed = searchQuery.trim();
-    if (trimmed) {
-      onSearch(trimmed);
-      setSearchQuery('');
-    }
-  };
-
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
+  const handleChange = (value: string): void => {
+    setSearchQuery(value);
+    onSearch(value);
   };
 
   const formattedTime = lastMessageTime
@@ -75,13 +67,17 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
               {selectedName}
             </p>
           )}
-          <Input
-            type="text"
-            placeholder={placeholderText}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={onKeyDown}
-            className="
+          {variant === 'admin' ? (
+            <p className="text-xs text-foreground select-none cursor-default">
+              {placeholderText}
+            </p>
+          ) : (
+            <Input
+              type="text"
+              placeholder={placeholderText}
+              value={searchQuery}
+              onChange={(e) => handleChange(e.target.value)}
+              className="
             w-[240px]
             h-[24px]
             md:pl-0
@@ -107,7 +103,8 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
             appearance-none
             shadow-none
             transition-none"
-          />
+            />
+          )}
         </div>
       </div>
       {rightElement ?? (
@@ -117,7 +114,6 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
           size="icon"
           className="text-current cursor-pointer w-6 h-6"
           aria-label="Search"
-          onClick={handleSearch}
         >
           <ChatSearch className="size-6 text-bg-icon hover:text-btn-hover active:text-btn-active" />
         </Button>

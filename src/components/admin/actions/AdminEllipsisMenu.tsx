@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const AdminEllipsisMenu: React.FC<Props> = ({
-  // chat,
+  chat,
   onChatDeleted,
   onPinToggle,
 }) => {
@@ -22,7 +22,7 @@ export const AdminEllipsisMenu: React.FC<Props> = ({
           id: 'admin-modal-content',
           content: (close) => (
             <AdminChatModal
-              // chat={chat}
+              chat={chat}
               onClose={close}
               onChatDeleted={onChatDeleted}
               onPinToggle={onPinToggle}

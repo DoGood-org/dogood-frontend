@@ -2,22 +2,18 @@
 
 import { AdminUser, TrashBinChat, UnlockIcon } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
-
-// import { useTranslations } from "next-intl";
+import { ChatType } from '@/types/chatType';
+import { useTranslations } from 'next-intl';
 
 type ChatModalProps = {
-  // chat: ChatType;
+  chat: ChatType;
   onClose: () => void;
-  // menuRef: React.RefObject<HTMLDivElement | null>;
   onChatDeleted: (chatId: string) => void;
   onPinToggle: (chatId: string, pinned: boolean) => void;
 };
 
-export const AdminChatModal: React.FC<ChatModalProps> = ({
-  onClose,
-  // menuRef,
-}) => {
-  // const t = useTranslations('chat');
+export const AdminChatModal: React.FC<ChatModalProps> = ({ onClose }) => {
+  const t = useTranslations('chat.adminMenu');
 
   const handleDelete = async (): Promise<void> => {
     onClose();
@@ -34,26 +30,26 @@ export const AdminChatModal: React.FC<ChatModalProps> = ({
   const buttons = [
     {
       key: 'reviews',
-      label: 'Review account',
+      label: t('reviewAccount'),
       onClick: handleReview,
       Icon: AdminUser,
     },
     {
       key: 'block',
-      label: 'Block account',
+      label: t('blockAccount'),
       onClick: handleBlock,
       Icon: UnlockIcon,
     },
     {
       key: 'delete',
-      label: 'Delete history',
+      label: t('deleteHistory'),
       onClick: handleDelete,
       Icon: TrashBinChat,
     },
   ];
 
   return (
-    <ul className="flex flex-col gap-3 min-w-[228px]">
+    <ul className="flex flex-col gap-3 min-w-[228px] w-full">
       {buttons.map(({ key, label, onClick, Icon: Icon }) => (
         <li key={key}>
           <Button

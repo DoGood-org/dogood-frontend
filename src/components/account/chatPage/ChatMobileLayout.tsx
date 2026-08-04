@@ -20,8 +20,10 @@ interface ChatMobileLayoutProps {
   activeTab: 'all' | 'unread';
   unreadCount: number;
   onTabChange: (tab: 'all' | 'unread') => void;
+  onMessageSearch: (query: string) => void;
   rightElement?: React.ReactNode;
   showEllipsisMenu?: boolean;
+  isAdmin?: boolean;
 }
 
 export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
@@ -38,6 +40,8 @@ export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
   onTabChange,
   rightElement,
   showEllipsisMenu,
+  onMessageSearch,
+  isAdmin,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const lastMessageTime = selectedChatId
@@ -47,7 +51,7 @@ export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
   const filteredChats = chats.filter((chat) => {
     const query = searchQuery.toLowerCase();
 
-    return chat.name.toLowerCase().startsWith(query);
+    return chat.name.toLowerCase().includes(query);
   });
 
   return selectedChatId ? (
@@ -58,8 +62,9 @@ export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
         lastOnline={selectedChat?.createdAt || ''}
         showBackButton={true}
         onBack={() => setSelectedChatId(null)}
-        onSearch={(query) => console.log('Пошук:', query)}
+        onSearch={onMessageSearch}
         rightElement={rightElement}
+        variant={isAdmin ? 'admin' : 'chat'}
       />
       <div className="border border-foreground mt-4" />
       <div className="flex-1 overflow-y-auto custom-scrollbar-hide min-h-0">

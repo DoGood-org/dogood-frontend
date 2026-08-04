@@ -29,6 +29,7 @@ export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
   );
 
   const [activeTab, setActiveTab] = useState<'all' | 'unread'>('all');
+  const [messageSearch, setMessageSearch] = useState('');
 
   const currentUser = {
     id: 1,
@@ -51,7 +52,7 @@ export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
     setSelectedChatId,
     handleChatDeleted,
     handlePinToggle,
-  } = useChats(initialChats, messagesWithReadStatus, isMobileOrTablet);
+  } = useChats(initialChats, messagesWithReadStatus, isMobileOrTablet, false);
 
   const { preparedMessages, addMessage } = useChatMessages(
     messagesWithReadStatus,
@@ -68,6 +69,10 @@ export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
   const unreadChats = chats.filter((chat) => (chat.unreadCount ?? 0) > 0);
 
   const filteredChats = activeTab === 'unread' ? unreadChats : chats;
+
+  const filteredMessages = preparedMessages.filter((message) =>
+    message.content.toLowerCase().includes(messageSearch.toLowerCase())
+  );
 
   const handleSend = async (message: string): Promise<void> => {
     if (!selectedChatId || !message.trim()) return;
@@ -103,11 +108,13 @@ export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
             onTabChange={setActiveTab}
             selectedChatId={selectedChatId}
             setSelectedChatId={setSelectedChatId}
-            messages={preparedMessages}
+            messages={filteredMessages}
+            onMessageSearch={setMessageSearch}
             onSend={handleSend}
             onChatDeleted={handleChatDeleted}
             selectedChat={selectedChat || null}
             onPinToggle={handlePinToggle}
+            isAdmin={isAdmin}
             showEllipsisMenu={!isAdmin}
             rightElement={
               isAdmin && selectedChat ? (
@@ -127,12 +134,14 @@ export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
             onTabChange={setActiveTab}
             selectedChatId={selectedChatId}
             setSelectedChatId={setSelectedChatId}
-            messages={preparedMessages}
+            messages={filteredMessages}
+            onMessageSearch={setMessageSearch}
             onSend={handleSend}
             onChatDeleted={handleChatDeleted}
             selectedChat={selectedChat || null}
             onPinToggle={handlePinToggle}
             showEllipsisMenu={!isAdmin}
+            isAdmin={isAdmin}
             rightElement={
               isAdmin && selectedChat ? (
                 <AdminEllipsisMenu

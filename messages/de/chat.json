@@ -19,5 +19,10 @@
     "allChats": "Alle Chats",
     "unread": "Ungelesen",
     "search": "Suche..."
+  },
+    "adminMenu": {
+    "reviewAccount": "Konto prüfen",
+    "blockAccount": "Konto sperren",
+    "deleteHistory": "Verlauf löschen"
   }
 }

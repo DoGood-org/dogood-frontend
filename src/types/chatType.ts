@@ -5,6 +5,7 @@ export interface ChatType {
   createdAt: string;
   pinned?: boolean;
   unreadCount?: number;
+  messages?: MessageType[];
 }
 
 export interface ChatPreviewType extends ChatType {
