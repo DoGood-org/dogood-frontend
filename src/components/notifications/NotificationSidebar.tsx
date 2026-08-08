@@ -62,7 +62,6 @@ export const NotificationSidebar: React.FC = () => {
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
@@ -123,24 +122,23 @@ export const NotificationSidebar: React.FC = () => {
                 ))}
               </div>
 
-              {/* List */}
               <ul className="flex-1 overflow-y-auto px-4 flex flex-col gap-2 custom-scrollbar">
                 {isLoading ? (
-                  <div className="flex items-center justify-center h-full text-text-help">
+                  <li className="flex items-center justify-center h-full text-text-help">
                     <p className="text-sm">{t('sidebar.loading')}</p>
-                  </div>
+                  </li>
                 ) : isError ? (
-                  <div className="flex items-center justify-center h-full text-text-help">
+                  <li className="flex items-center justify-center h-full text-text-help">
                     <p className="text-sm">{t('sidebar.error')}</p>
-                  </div>
+                  </li>
                 ) : displayed.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center h-full gap-3 text-text-help py-12">
+                  <li className="flex flex-col items-center justify-center h-full gap-3 text-text-help py-12">
                     <p className="text-sm">
                       {activeTab === 'unread'
                         ? t('sidebar.empty.unread')
                         : t('sidebar.empty.all')}
                     </p>
-                  </div>
+                  </li>
                 ) : (
                   <>
                     {displayed.map((notification) => (
