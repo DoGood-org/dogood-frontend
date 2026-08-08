@@ -7,42 +7,36 @@ import UnpinChat from '@/components/icons/UnpinChat';
 import { Button } from '@/components/ui/Button';
 import { ChatType } from '@/types/chatType';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
 
 type ChatModalProps = {
   chat: ChatType;
   onClose: () => void;
   onChatDeleted: (chatId: string) => void;
-  onPinToggle: (chatId: string, pinned: boolean) => void;
+  onPinToggle?: (chatId: string, pinned: boolean) => void;
+  showPinActions?: boolean;
 };
 
 export const ChatModal: React.FC<ChatModalProps> = ({
   chat,
   onClose,
   onPinToggle,
+  onChatDeleted,
+  showPinActions = true,
 }) => {
   const t = useTranslations('chat');
+  const pinned = chat.pinned ?? false;
 
-  const handleDelete = async (): Promise<void> => {
+  const handleDelete = (e: React.MouseEvent): void => {
+    e.stopPropagation();
+    onChatDeleted(chat.id);
     onClose();
   };
 
-  const [pinned, setPinned] = useState(() => {
-    return localStorage.getItem(`chatPinned-${chat.id}`) === 'true';
-  });
-
-  useEffect(() => {
-    setPinned(
-      chat.pinned ?? localStorage.getItem(`chatPinned-${chat.id}`) === 'true'
-    );
-  }, [chat.pinned, chat.id]);
-
   const handlePinToggle = (e: React.MouseEvent): void => {
     e.stopPropagation();
-    const newPinned = !pinned;
-    setPinned(newPinned);
-    localStorage.setItem(`chatPinned-${chat.id}`, newPinned.toString());
-    onPinToggle(chat.id, newPinned);
+
+    onPinToggle?.(chat.id, !pinned);
+    onClose();
   };
 
   const handleMarkAsSpam = (): void => {
@@ -50,47 +44,30 @@ export const ChatModal: React.FC<ChatModalProps> = ({
     onClose();
   };
 
-  const buttons = pinned
-    ? [
-        {
-          key: 'unpin',
-          label: t('menu.unpin'),
-          onClick: handlePinToggle,
-          Icon: UnpinChat,
-        },
-        {
-          key: 'delete',
-          label: t('menu.delete'),
-          onClick: handleDelete,
-          Icon: TrashBinChat,
-        },
-        {
-          key: 'spam',
-          label: t('menu.mark as spam'),
-          onClick: handleMarkAsSpam,
-          Icon: MarkChat,
-        },
-      ]
-    : [
-        {
-          key: 'delete',
-          label: t('menu.delete'),
-          onClick: handleDelete,
-          Icon: TrashBinChat,
-        },
-        {
-          key: 'pin',
-          label: t('menu.pin the chat'),
-          onClick: handlePinToggle,
-          Icon: PinChat,
-        },
-        {
-          key: 'spam',
-          label: t('menu.mark as spam'),
-          onClick: handleMarkAsSpam,
-          Icon: MarkChat,
-        },
-      ];
+  const buttons = [
+    {
+      key: 'delete',
+      label: t('menu.delete'),
+      onClick: handleDelete,
+      Icon: TrashBinChat,
+    },
+  ];
+
+  if (showPinActions && onPinToggle) {
+    buttons.splice(1, 0, {
+      key: pinned ? 'unpin' : 'pin',
+      label: pinned ? t('menu.unpin') : t('menu.pin the chat'),
+      onClick: handlePinToggle,
+      Icon: pinned ? UnpinChat : PinChat,
+    });
+  }
+
+  buttons.push({
+    key: 'spam',
+    label: t('menu.mark as spam'),
+    onClick: handleMarkAsSpam,
+    Icon: MarkChat,
+  });
 
   return (
     <ul className="flex flex-col gap-3 min-w-[178px]">

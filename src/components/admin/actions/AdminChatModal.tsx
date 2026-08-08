@@ -2,14 +2,10 @@
 
 import { AdminUser, TrashBinChat, UnlockIcon } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
-import { ChatType } from '@/types/chatType';
 import { useTranslations } from 'next-intl';
 
 type ChatModalProps = {
-  chat: ChatType;
   onClose: () => void;
-  onChatDeleted: (chatId: string) => void;
-  onPinToggle: (chatId: string, pinned: boolean) => void;
 };
 
 export const AdminChatModal: React.FC<ChatModalProps> = ({ onClose }) => {

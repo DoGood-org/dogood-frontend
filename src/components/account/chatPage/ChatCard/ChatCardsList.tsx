@@ -11,6 +11,7 @@ export const ChatCardsList: React.FC<ChatCardsListProps> = ({
   onChatDeleted,
   onPinToggle,
   showEllipsisMenu = true,
+  isAdmin = false,
 }) => {
   const listRef = useRef<HTMLUListElement>(null);
 
@@ -36,6 +37,7 @@ export const ChatCardsList: React.FC<ChatCardsListProps> = ({
           onChatDeleted={onChatDeleted}
           onPinToggle={handlePinToggle}
           showEllipsisMenu={showEllipsisMenu}
+          isAdmin={isAdmin}
         />
       ))}
     </ul>

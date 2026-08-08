@@ -13,6 +13,7 @@ import { ChatMobileLayout } from './ChatMobileLayout';
 import { ChatDesktopLayout } from './ChatDesktopLayout';
 import { EmptyState } from './EmptyState';
 import { AdminEllipsisMenu } from '@/components/admin/actions/AdminEllipsisMenu';
+import { usePinnedChats } from '@/hooks/usePinnedChats';
 
 interface ChatProps {
   className?: string;
@@ -46,13 +47,11 @@ export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
     })
   );
 
-  const {
-    chats,
-    selectedChatId,
-    setSelectedChatId,
-    handleChatDeleted,
-    handlePinToggle,
-  } = useChats(initialChats, messagesWithReadStatus, isMobileOrTablet, false);
+  const { chats, selectedChatId, setSelectedChatId, handleChatDeleted } =
+    useChats(initialChats, messagesWithReadStatus, isMobileOrTablet, false);
+
+  const { chats: pinnedChats, handlePinToggle } = usePinnedChats(chats);
+  const displayChats = isAdmin ? chats : pinnedChats;
 
   const { preparedMessages, addMessage } = useChatMessages(
     messagesWithReadStatus,
@@ -64,11 +63,14 @@ export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
     setIsChatMessageOpen(!!selectedChatId);
   }, [selectedChatId, setIsChatMessageOpen]);
 
-  const selectedChat = chats.find((chat) => chat.id === selectedChatId) || null;
+  const selectedChat =
+    displayChats.find((chat) => chat.id === selectedChatId) || null;
 
-  const unreadChats = chats.filter((chat) => (chat.unreadCount ?? 0) > 0);
+  const unreadChats = displayChats.filter(
+    (chat) => (chat.unreadCount ?? 0) > 0
+  );
 
-  const filteredChats = activeTab === 'unread' ? unreadChats : chats;
+  const filteredChats = activeTab === 'unread' ? unreadChats : displayChats;
 
   const filteredMessages = preparedMessages.filter((message) =>
     message.content.toLowerCase().includes(messageSearch.toLowerCase())
@@ -113,17 +115,11 @@ export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
             onSend={handleSend}
             onChatDeleted={handleChatDeleted}
             selectedChat={selectedChat || null}
-            onPinToggle={handlePinToggle}
+            onPinToggle={isAdmin ? undefined : handlePinToggle}
             isAdmin={isAdmin}
             showEllipsisMenu={!isAdmin}
             rightElement={
-              isAdmin && selectedChat ? (
-                <AdminEllipsisMenu
-                  chat={selectedChat}
-                  onChatDeleted={handleChatDeleted}
-                  onPinToggle={handlePinToggle}
-                />
-              ) : undefined
+              isAdmin && selectedChat ? <AdminEllipsisMenu /> : undefined
             }
           />
         ) : (
@@ -139,17 +135,11 @@ export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
             onSend={handleSend}
             onChatDeleted={handleChatDeleted}
             selectedChat={selectedChat || null}
-            onPinToggle={handlePinToggle}
+            onPinToggle={isAdmin ? undefined : handlePinToggle}
             showEllipsisMenu={!isAdmin}
             isAdmin={isAdmin}
             rightElement={
-              isAdmin && selectedChat ? (
-                <AdminEllipsisMenu
-                  chat={selectedChat}
-                  onChatDeleted={handleChatDeleted}
-                  onPinToggle={handlePinToggle}
-                />
-              ) : undefined
+              isAdmin && selectedChat ? <AdminEllipsisMenu /> : undefined
             }
           />
         )}

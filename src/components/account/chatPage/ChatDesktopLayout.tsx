@@ -14,7 +14,7 @@ interface ChatDesktopLayoutProps {
   setSelectedChatId: (id: string | null) => void;
   messages: MessageType[];
   onSend: (message: string) => void;
-  onPinToggle: (chatId: string, pinned: boolean) => void;
+  onPinToggle?: (chatId: string, pinned: boolean) => void;
   onChatDeleted: (chatId: string) => void;
   selectedChat: ChatType | null;
   activeTab: 'all' | 'unread';
@@ -71,6 +71,7 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
             onChatDeleted={onChatDeleted}
             onPinToggle={onPinToggle}
             showEllipsisMenu={showEllipsisMenu}
+            isAdmin={isAdmin}
           />
         </div>
       </div>

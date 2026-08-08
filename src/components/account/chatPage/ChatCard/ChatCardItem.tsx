@@ -13,7 +13,9 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
   onChatDeleted,
   onPinToggle,
   showEllipsisMenu = true,
+  isAdmin = false,
 }) => {
+  console.log(chat.id, chat.pinned);
   const handleDelete = (): void => {
     onChatDeleted(chat.id);
   };
@@ -40,6 +42,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
             chat={chat}
             onChatDeleted={handleDelete}
             onPinToggle={onPinToggle}
+            showPinActions={!isAdmin}
           />
         </div>
       )}

@@ -21,6 +21,7 @@ export interface ChatCardProps {
   onPinToggle: (chatId: string, pinned: boolean) => void;
   unreadCount?: number;
   showEllipsisMenu?: boolean;
+  isAdmin?: boolean;
 }
 
 export interface ChatCardsListProps {
@@ -28,8 +29,9 @@ export interface ChatCardsListProps {
   selectedChatId: string | null;
   onSelectChat: (id: string) => void;
   onChatDeleted: (chatId: string) => void;
-  onPinToggle: (chatId: string, pinned: boolean) => void;
+  onPinToggle?: (chatId: string, pinned: boolean) => void;
   showEllipsisMenu?: boolean;
+  isAdmin?: boolean;
 }
 
 export interface MessageType {

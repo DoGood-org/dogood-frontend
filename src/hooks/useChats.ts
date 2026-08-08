@@ -1,26 +1,6 @@
 import { ChatPreviewType, ChatType, MessageType } from '@/types/chatType';
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 
-const sortChats = (chatList: ChatType[]): ChatType[] =>
-  [...chatList].sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1));
-
-const getPinnedFromStorage = (): string[] => {
-  try {
-    const pinnedIdsStr = localStorage.getItem('pinnedChats');
-    if (!pinnedIdsStr) return [];
-    return JSON.parse(pinnedIdsStr);
-  } catch {
-    return [];
-  }
-};
-
-const applyPinned = (chatList: ChatType[]): ChatType[] => {
-  const pinnedIds = getPinnedFromStorage();
-  return sortChats(
-    chatList.map((chat) => ({ ...chat, pinned: pinnedIds.includes(chat.id) }))
-  );
-};
-
 const getLastMessage = (
   chat: ChatType,
   localMessages: MessageType[]
@@ -45,7 +25,6 @@ interface UseChatsReturn {
   selectedChatId: string | null;
   setSelectedChatId: React.Dispatch<React.SetStateAction<string | null>>;
   handleChatDeleted: (chatId: string) => void;
-  handlePinToggle: (chatId: string, pinned: boolean) => void;
 }
 
 export const useChats = (
@@ -55,34 +34,14 @@ export const useChats = (
   isLoading: boolean,
   urlChatId?: string | null
 ): UseChatsReturn => {
-  const [chats, setChats] = useState<ChatType[]>(() =>
-    applyPinned(initialChats)
-  );
+  const [chats, setChats] = useState<ChatType[]>(initialChats);
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
   const didInitSelectionRef = useRef(false);
 
   useEffect(() => {
-    setChats(applyPinned(initialChats));
+    console.log('useChats initialChats', initialChats);
+    setChats(initialChats);
   }, [initialChats]);
-
-  useEffect(() => {
-    if (isLoading) return;
-
-    const pinnedIds = chats
-      .filter((chat) => chat.pinned)
-      .map((chat) => chat.id);
-    const stored = localStorage.getItem('pinnedChats');
-
-    if (stored !== JSON.stringify(pinnedIds)) {
-      localStorage.setItem('pinnedChats', JSON.stringify(pinnedIds));
-    }
-  }, [chats, isLoading]);
-
-  useEffect(() => {
-    if (!isMobileOrTablet) {
-      setChats((prev) => sortChats(prev));
-    }
-  }, [isMobileOrTablet]);
 
   useEffect(() => {
     if (isMobileOrTablet) {
@@ -96,12 +55,11 @@ export const useChats = (
     didInitSelectionRef.current = true;
 
     const targetChatId = urlChatId || localStorage.getItem('lastChatId');
-    const sorted = sortChats(chats);
 
     setSelectedChatId(
-      targetChatId && sorted.some((chat) => chat.id === targetChatId)
+      targetChatId && chats.some((chat) => chat.id === targetChatId)
         ? targetChatId
-        : sorted[0].id
+        : chats[0].id
     );
   }, [chats, isMobileOrTablet, isLoading, urlChatId]);
 
@@ -125,25 +83,6 @@ export const useChats = (
     [selectedChatId]
   );
 
-  const handlePinToggle = useCallback(
-    (chatId: string, pinned: boolean): void => {
-      const updated = sortChats(
-        chats.map((chat) => (chat.id === chatId ? { ...chat, pinned } : chat))
-      );
-
-      setChats(updated);
-
-      if (pinned) {
-        setSelectedChatId(chatId);
-        return;
-      }
-
-      const firstPinned = updated.find((chat) => chat.pinned);
-      setSelectedChatId(firstPinned?.id ?? updated[0]?.id ?? null);
-    },
-    [chats]
-  );
-
   const chatsWithMessages: ChatPreviewType[] = useMemo(
     () =>
       chats.map((chat) => {
@@ -165,6 +104,5 @@ export const useChats = (
     selectedChatId,
     setSelectedChatId,
     handleChatDeleted,
-    handlePinToggle,
   };
 };

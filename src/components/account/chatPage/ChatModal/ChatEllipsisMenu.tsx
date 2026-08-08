@@ -8,12 +8,14 @@ type Props = {
   chat: ChatType;
   onChatDeleted: (chatId: string) => void;
   onPinToggle: (chatId: string, pinned: boolean) => void;
+  showPinActions?: boolean;
 };
 
 export const ChatEllipsisMenu: React.FC<Props> = ({
   chat,
   onChatDeleted,
   onPinToggle,
+  showPinActions = true,
 }) => {
   return (
     <MoreMenu
@@ -26,6 +28,7 @@ export const ChatEllipsisMenu: React.FC<Props> = ({
               onClose={close}
               onChatDeleted={onChatDeleted}
               onPinToggle={onPinToggle}
+              showPinActions={showPinActions}
             />
           ),
         },
