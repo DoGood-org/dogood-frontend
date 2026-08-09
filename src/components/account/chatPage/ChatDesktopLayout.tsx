@@ -7,6 +7,7 @@ import { ChatMessageInput } from '@/components/account/chatPage/ChatMessageInput
 import ChatTabs from './ChatTabs';
 import { ChatListSearch } from './ChatListSearch';
 import { useState } from 'react';
+import { useFilteredChats } from '@/hooks/useFilteredChats';
 
 interface ChatDesktopLayoutProps {
   chats: ChatType[];
@@ -48,11 +49,7 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
     ? getLastMessageTime(messages, selectedChatId)
     : null;
 
-  const filteredChats = chats.filter((chat) => {
-    const query = searchQuery.toLowerCase();
-
-    return chat.name.toLowerCase().includes(query);
-  });
+  const filteredChats = useFilteredChats(chats, searchQuery);
 
   return (
     <div className="flex min-h-[856px] max-h-screen gap-2">

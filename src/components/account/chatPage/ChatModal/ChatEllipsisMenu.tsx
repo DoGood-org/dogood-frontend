@@ -7,7 +7,7 @@ import { MoreMenu } from '@/components/ui/MoreMenu';
 type Props = {
   chat: ChatType;
   onChatDeleted: (chatId: string) => void;
-  onPinToggle: (chatId: string, pinned: boolean) => void;
+  onPinToggle?: (chatId: string, pinned: boolean) => void;
   showPinActions?: boolean;
 };
 

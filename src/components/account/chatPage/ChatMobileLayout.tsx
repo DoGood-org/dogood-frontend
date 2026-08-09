@@ -7,6 +7,7 @@ import { ChatMessageInput } from '@/components/account/chatPage/ChatMessageInput
 import { ChatCardsList } from '@/components/account/chatPage/ChatCard/ChatCardsList';
 import ChatTabs from './ChatTabs';
 import { ChatListSearch } from './ChatListSearch';
+import { useFilteredChats } from '@/hooks/useFilteredChats';
 
 interface ChatMobileLayoutProps {
   chats: ChatType[];
@@ -48,11 +49,7 @@ export const ChatMobileLayout: React.FC<ChatMobileLayoutProps> = ({
     ? getLastMessageTime(messages, selectedChatId)
     : null;
 
-  const filteredChats = chats.filter((chat) => {
-    const query = searchQuery.toLowerCase();
-
-    return chat.name.toLowerCase().includes(query);
-  });
+  const filteredChats = useFilteredChats(chats, searchQuery);
 
   return selectedChatId ? (
     <div className="flex flex-col rounded-lg p-4 pb-5 bg-admin-background h-[1216px] w-[353px] md:h-[856px] max-h-screen md:w-[648px] lg:w-[608px]">

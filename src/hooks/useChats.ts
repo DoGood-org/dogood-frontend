@@ -1,16 +1,19 @@
 import { ChatPreviewType, ChatType, MessageType } from '@/types/chatType';
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 
+interface UseChatsReturn {
+  chats: ChatPreviewType[];
+  selectedChatId: string | null;
+  setSelectedChatId: React.Dispatch<React.SetStateAction<string | null>>;
+  handleChatDeleted: (chatId: string) => void;
+}
+
 const getLastMessage = (
   chat: ChatType,
   localMessages: MessageType[]
 ): MessageType | null => {
-  const candidates: MessageType[] = [];
+  const candidates = localMessages.filter((m) => m?.roomId === chat.id);
 
-  if (chat.messages?.length) candidates.push(...chat.messages);
-  if (Array.isArray(localMessages)) {
-    candidates.push(...localMessages.filter((m) => m?.roomId === chat.id));
-  }
   if (candidates.length === 0) return null;
 
   return candidates.reduce((latest, msg) =>
@@ -19,13 +22,6 @@ const getLastMessage = (
       : latest
   );
 };
-
-interface UseChatsReturn {
-  chats: ChatPreviewType[];
-  selectedChatId: string | null;
-  setSelectedChatId: React.Dispatch<React.SetStateAction<string | null>>;
-  handleChatDeleted: (chatId: string) => void;
-}
 
 export const useChats = (
   initialChats: ChatType[],
@@ -39,7 +35,6 @@ export const useChats = (
   const didInitSelectionRef = useRef(false);
 
   useEffect(() => {
-    console.log('useChats initialChats', initialChats);
     setChats(initialChats);
   }, [initialChats]);
 

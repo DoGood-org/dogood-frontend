@@ -49,7 +49,6 @@ export { default as EcoGrants } from './EcoGrants';
 export { default as Edit } from './Edit';
 export { default as EditIcon } from './EditIcon';
 export { default as Education } from './Education';
-export { default as EllipsisIcon } from './EllipsisIcon';
 export { default as Elo } from './Elo';
 export { default as Email } from './Email';
 export { default as Event } from './Event';

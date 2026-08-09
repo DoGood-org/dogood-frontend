@@ -15,7 +15,6 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
   showEllipsisMenu = true,
   isAdmin = false,
 }) => {
-  console.log(chat.id, chat.pinned);
   const handleDelete = (): void => {
     onChatDeleted(chat.id);
   };
