@@ -1,18 +1,13 @@
 import { cn } from '@/lib/utils';
+import { ChatTabsProps } from '@/types/chatType';
 import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
-
-type Props = {
-  activeTab: 'all' | 'unread';
-  unreadCount: number;
-  onChange: (tab: 'all' | 'unread') => void;
-};
 
 export default function ChatTabs({
   activeTab,
   unreadCount,
   onChange,
-}: Props): JSX.Element {
+}: ChatTabsProps): JSX.Element {
   const t = useTranslations('chat.chatTabs');
   return (
     <div className="flex gap-4 bg-[#00BBA7]/50 mb-2 py-[14px] px-[16px] rounded-md">

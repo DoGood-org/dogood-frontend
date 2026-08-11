@@ -16,7 +16,7 @@ export const ChatCardsList: React.FC<ChatCardsListProps> = ({
   const listRef = useRef<HTMLUListElement>(null);
 
   const handlePinToggle = (chatId: string, pinned: boolean): void => {
-    onPinToggle(chatId, pinned);
+    onPinToggle?.(chatId, pinned);
     setTimeout(() => {
       listRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
     }, 0);

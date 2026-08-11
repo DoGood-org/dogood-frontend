@@ -26,13 +26,13 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
     <li
       onClick={() => onSelect(chat.id)}
       className={cn(
-        'relative flex items-center gap-4 py-5 px-6 rounded-md cursor-pointer border transition-colors',
+        'relative h-[88px] flex items-center gap-4 py-5 px-6 rounded-md cursor-pointer border transition-colors',
 
         isSelected
-          ? 'border-border bg-[#999999]/30 dark:bg-[#393939]'
+          ? 'border-border bg-card'
           : hasUnread
-            ? 'border-transparent bg-[#999999]/50 hover:border-border'
-            : 'border-transparent bg-[#999999]/30 dark:bg-[#393939] hover:border-border'
+            ? 'border-transparent bg-card hover:border-border dark:bg-text-gray/50'
+            : 'border-transparent bg-modal hover:border-border'
       )}
     >
       {showEllipsisMenu && (

@@ -70,3 +70,18 @@ export type ChatModalProps = {
   onPinToggle?: (chatId: string, pinned: boolean) => void;
   showPinActions?: boolean;
 };
+
+export type ChatEllipsisMenuProps = {
+  chat: ChatType;
+  onChatDeleted: (chatId: string) => void;
+  onPinToggle?: (chatId: string, pinned: boolean) => void;
+  showPinActions?: boolean;
+};
+
+export type ChatTab = 'all' | 'unread';
+
+export type ChatTabsProps = {
+  activeTab: ChatTab;
+  unreadCount: number;
+  onChange: (tab: ChatTab) => void;
+};

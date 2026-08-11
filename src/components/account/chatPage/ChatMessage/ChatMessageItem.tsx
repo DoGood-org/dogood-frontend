@@ -34,7 +34,7 @@ export const ChatMessageItem: React.FC<MessageItemProps> = ({ message }) => {
       </Avatar>
 
       <div className="flex flex-col md:flex-row items-start md:items-end gap-1 md:gap-2">
-        <div className="md:max-w-[358px] lg:max-w-[382px] rounded-md text-text-tag bg-[#999999]/30 p-3 md:p-4">
+        <div className="md:max-w-[358px] lg:max-w-[382px] rounded-md text-text-tag bg-modal dark:bg-text-gray p-3 md:p-4">
           <p className="break-words">{message.content}</p>
         </div>
 

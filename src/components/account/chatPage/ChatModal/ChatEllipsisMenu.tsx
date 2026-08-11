@@ -1,17 +1,10 @@
 'use client';
 
-import { ChatType } from '@/types/chatType';
+import { ChatEllipsisMenuProps } from '@/types/chatType';
 import { ChatModal } from './ChatModal';
 import { MoreMenu } from '@/components/ui/MoreMenu';
 
-type Props = {
-  chat: ChatType;
-  onChatDeleted: (chatId: string) => void;
-  onPinToggle?: (chatId: string, pinned: boolean) => void;
-  showPinActions?: boolean;
-};
-
-export const ChatEllipsisMenu: React.FC<Props> = ({
+export const ChatEllipsisMenu: React.FC<ChatEllipsisMenuProps> = ({
   chat,
   onChatDeleted,
   onPinToggle,
