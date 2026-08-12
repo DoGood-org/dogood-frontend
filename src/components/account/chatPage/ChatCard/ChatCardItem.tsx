@@ -26,7 +26,7 @@ export const ChatCardItem: React.FC<ChatCardProps> = ({
     <li
       onClick={() => onSelect(chat.id)}
       className={cn(
-        'relative h-[88px] flex items-center gap-4 py-5 px-6 rounded-md cursor-pointer border transition-colors',
+        'relative flex items-center gap-4 py-5 px-6 rounded-md cursor-pointer border transition-colors',
         isAdmin ? 'h-[88px]' : 'h-[104px]',
 
         isSelected
