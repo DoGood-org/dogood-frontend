@@ -2,17 +2,12 @@
 
 import { useState, useMemo, JSX } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { UserShort } from '@/types';
+import { AddMemberModalProps, UserShort } from '@/types';
 import { searchUsersByName } from '@/services/publicUserService';
 import { useAddMemberToOrganization } from '@/hooks/useAddMemberToOrganization';
 import { useDebounce } from '@/hooks/useDebounce';
 import Image from 'next/image';
 import { ChatSearch } from '@/components/icons';
-
-export type AddMemberModalProps = {
-  organizationId: string;
-  existingMemberIds: string[];
-};
 
 export const AddMemberModal = ({
   organizationId,
@@ -46,8 +41,6 @@ export const AddMemberModal = ({
       role: 'MEMBER',
       status: 'PENDING',
     });
-
-    console.log(addMemberMutation);
   };
 
   return (

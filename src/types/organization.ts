@@ -1,4 +1,5 @@
 // import { Role } from '@/lib/getUserRole';
+import { ElementType } from 'react';
 import {
   ContentPanelProps,
   ContentProps,
@@ -139,3 +140,40 @@ export interface OrganizationFormProps {
   mode: 'create' | 'update';
   setIsOpen?: (arg0: boolean) => void;
 }
+
+// members-types
+export type AddMemberProps = {
+  organizationId: string;
+  existingMembers: UserOrganization[];
+  className?: string;
+  variant?: 'default' | 'ghost' | 'primary' | 'secondary';
+};
+
+export type AddMemberModalProps = {
+  organizationId: string;
+  existingMemberIds: string[];
+};
+
+export type OrgMmberItemProps = {
+  member: UserOrganization;
+  role: OrganizationRole; // ролі інших членів організації
+  currentRole: Role; // роль поточного юзера в організації
+  organizationId: string;
+};
+
+export type ActionButtonProps = {
+  currentRole: Role;
+  member: UserOrganization;
+  organizationId: string;
+  role: OrganizationRole;
+};
+
+export type Action = {
+  id: string;
+  visible: boolean;
+  icon: ElementType;
+  label: string;
+  href?: string;
+  onClick?: () => void;
+  className?: string;
+};

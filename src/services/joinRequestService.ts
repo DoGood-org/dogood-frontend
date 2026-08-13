@@ -1,4 +1,3 @@
-import { JoinRequestStatus } from '@/constants/joinRequests';
 import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
 import { apiRoutes } from '@/lib/server/apiRoutes';
 import {
@@ -6,7 +5,8 @@ import {
   IJoinRequestResponse,
   IJoinRequests,
   IJoinRequestApiData,
-} from '@/types/joinRequest.type';
+  JoinRequestStatus,
+} from '@/types';
 
 export const createJoinRequest = async (
   data: IJoinRequestApiData
@@ -35,8 +35,6 @@ export const getJoinRequests = async (
     apiRoutes.joinRequests.getJoinRequests(id),
     { method: 'GET', auth: true }
   );
-
-  console.log('JOIN REQUESTS RESULT:', result);
 
   if (!result.ok) return result;
 

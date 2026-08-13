@@ -4,14 +4,7 @@ import { Modal } from '@/components/ui/Modal';
 import { useTranslations } from 'next-intl';
 import { JSX, useState } from 'react';
 import { AddMemberModal } from './AddMemberModal';
-import { UserOrganization } from '@/types';
-
-type AddMemberProps = {
-  organizationId: string;
-  existingMembers: UserOrganization[];
-  className?: string;
-  variant?: 'default' | 'ghost' | 'primary' | 'secondary';
-};
+import { AddMemberProps } from '@/types';
 
 export const AddMember = ({
   organizationId,
