@@ -152,6 +152,8 @@ export type AddMemberProps = {
 export type AddMemberModalProps = {
   organizationId: string;
   existingMemberIds: string[];
+  isOpen: boolean;
+  onClose: () => void;
 };
 
 export type OrgMmberItemProps = {
@@ -176,4 +178,26 @@ export type Action = {
   href?: string;
   onClick?: () => void;
   className?: string;
+};
+
+export type AddModeratorModalProps = {
+  members: UserOrganization[];
+  orgId: string;
+  orgName: string;
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+export type UserSearchListProps<T> = {
+  query: string;
+  onQueryChange: (query: string) => void;
+  users: T[];
+  isLoading?: boolean;
+  isError?: boolean;
+  onSelect: (user: T) => void;
+  getId: (user: T) => string;
+  getName: (user: T) => string;
+  getAvatar: (user: T) => string | null | undefined;
+  disabled?: boolean;
+  minSearchLength?: number;
 };
