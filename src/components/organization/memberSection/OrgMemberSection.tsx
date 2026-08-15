@@ -4,14 +4,16 @@ import { JSX } from 'react';
 import { OrgMemberList } from './OrgMemberList';
 import { useOrganizationPermissions } from '@/hooks/useOrganizationPermissions';
 import { useUserRole } from '@/components/providers/UserRoleProvider';
-import { AddMember } from './AddMember';
+import { AddMember } from './member/AddMember';
 
 export const OrgMemberSection = ({
   members,
   orgId,
+  orgName,
 }: {
   members: UserOrganization[];
   orgId: string;
+  orgName: string;
 }): JSX.Element => {
   const role = useUserRole();
 
@@ -35,7 +37,7 @@ export const OrgMemberSection = ({
         )}
       </div>
 
-      <OrgMemberList members={activeMembers} orgId={orgId} />
+      <OrgMemberList members={activeMembers} orgId={orgId} orgName={orgName} />
     </>
   );
 };

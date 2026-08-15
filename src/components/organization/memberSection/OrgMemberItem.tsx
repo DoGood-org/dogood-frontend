@@ -12,6 +12,7 @@ export const OrgMemberItem = ({
   role,
   currentRole,
   organizationId,
+  orgName,
 }: OrgMmberItemProps): JSX.Element => {
   const { user } = member;
   const locale = useLocale();
@@ -53,6 +54,7 @@ export const OrgMemberItem = ({
             member={member}
             role={role}
             organizationId={organizationId}
+            orgName={orgName}
           />
         </div>
       )}

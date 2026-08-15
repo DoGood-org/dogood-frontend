@@ -42,10 +42,10 @@ export const UserSearchList = <T,>({
 
       {/* {isLoading && <p>Loading...</p>} */}
 
-      {isError && <p>Error</p>}
+      {isError && <p className="text-error">{t('memberModals.error')}</p>}
 
       {query.length >= minSearchLength && !isLoading && !users.length && (
-        <p className="mt-2">No users found</p>
+        <p className="mt-2">{t('memberModals.noFound')}</p>
       )}
 
       <ul className="flex flex-col gap-2 max-h-[296px] overflow-y-auto">

@@ -6,21 +6,23 @@ import { Slider } from '@/components/ui/Slider';
 import { OrgMemberItem } from './OrgMemberItem';
 import { EmptyContent } from '../EmptyContent';
 import { useTranslations } from 'next-intl';
-import { AddModerator } from './AddModerator';
-import { AddMember } from './AddMember';
+import { AddModerator } from './moderator/AddModerator';
+import { AddMember } from './member/AddMember';
 import { useOrganizationPermissions } from '@/hooks/useOrganizationPermissions';
 import { useOrganizationRole } from '@/hooks/useOrganizationRole';
 
 export const OrgMemberList = ({
   members,
   orgId,
+  orgName,
 }: {
   members: UserOrganization[];
   orgId: string;
+  orgName: string;
 }): JSX.Element => {
   const grouped = groupMembersByRole(members);
   const t = useTranslations('organization');
-  const currentRole = useOrganizationRole(members);
+  const currentRole = useOrganizationRole(members); // роль в організації юзера, який залогінений на сайті
 
   const { canAddMember, canAddModerator } =
     useOrganizationPermissions(currentRole);
@@ -39,7 +41,13 @@ export const OrgMemberList = ({
               </h3>
               {canAddModerator &&
                 !!noEmptyMemberList &&
-                role === 'MODERATOR' && <AddModerator members={members} />}
+                role === 'MODERATOR' && (
+                  <AddModerator
+                    members={members}
+                    orgName={orgName}
+                    orgId={orgId}
+                  />
+                )}
               {canAddMember && role === 'MEMBER' && (
                 <AddMember organizationId={orgId} existingMembers={members} />
               )}
@@ -58,6 +66,7 @@ export const OrgMemberList = ({
                     role={role}
                     currentRole={currentRole}
                     organizationId={orgId}
+                    orgName={orgName}
                   />
                 )}
               />
