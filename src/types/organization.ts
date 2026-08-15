@@ -161,6 +161,7 @@ export type OrgMmberItemProps = {
   role: OrganizationRole; // ролі інших членів організації
   currentRole: Role; // роль поточного юзера в організації
   organizationId: string;
+  orgName: string;
 };
 
 export type ActionButtonProps = {
@@ -168,6 +169,7 @@ export type ActionButtonProps = {
   member: UserOrganization;
   organizationId: string;
   role: OrganizationRole;
+  orgName: string;
 };
 
 export type Action = {

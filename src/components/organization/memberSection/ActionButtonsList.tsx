@@ -1,6 +1,9 @@
+'use client';
+
 import { ChatCircle, CloseIcon, Dismiss } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
 import { MenuAction } from '@/components/ui/MenuAction';
+import { Modal } from '@/components/ui/Modal';
 import { MoreMenu } from '@/components/ui/MoreMenu';
 import { useDeleteMemberFromOrganization } from '@/hooks/useDeleteMemberFromOrganization';
 import { useOrganizationPermissions } from '@/hooks/useOrganizationPermissions';
@@ -10,16 +13,19 @@ import { Action, ActionButtonProps } from '@/types';
 import { authStore } from '@/zustand/stores/authStore';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { JSX } from 'react';
+import { JSX, useState } from 'react';
+import { MemberRemoveConfirmation } from './MemberRemoveConfirmation';
 
 export const ActionButtonsList = ({
   currentRole,
   member,
   organizationId,
   role,
+  orgName,
 }: ActionButtonProps): JSX.Element => {
   const t = useTranslations('organization');
   const locale = useLocale();
+  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
   const buttonStyles =
     'text-text-gray hover:text-btn-hover focus:text-btn-hover active:text-btn-active flex gap-2';
 
@@ -36,10 +42,21 @@ export const ActionButtonsList = ({
   const updateRoleMutation = useUpdateMemberRole();
 
   const handleDelete = (): void => {
-    deleteMemberMutation.mutate({
-      userId,
-      organizationId,
-    });
+    setIsRemoveModalOpen(true);
+  };
+
+  const confirmDelete = (): void => {
+    deleteMemberMutation.mutate(
+      {
+        userId,
+        organizationId,
+      },
+      {
+        onSuccess: () => {
+          setIsRemoveModalOpen(false);
+        },
+      }
+    );
   };
 
   const handleDismiss = (): void => {
@@ -126,6 +143,7 @@ export const ActionButtonsList = ({
       <div className="lg:hidden">
         <MoreMenu
           triggerClassName="items-center"
+          menuListClassName="gap-0"
           items={actions.map((action) => ({
             id: action.id,
             content: (close) => (
@@ -143,6 +161,21 @@ export const ActionButtonsList = ({
           }))}
         />
       </div>
+      <Modal
+        isOpen={isRemoveModalOpen}
+        onClose={() => setIsRemoveModalOpen(false)}
+        withBackButton={false}
+        withCloseButton
+        wrapperClassName="bg-modal w-[353px] md:w-[514px] max-w-[700px] lg:w-[700px] p-6 md:p-12"
+      >
+        <MemberRemoveConfirmation
+          userName={user.name}
+          organizationName={orgName}
+          onConfirm={confirmDelete}
+          onCancel={() => setIsRemoveModalOpen(false)}
+          isLoading={deleteMemberMutation.isPending}
+        />
+      </Modal>
     </>
   );
 };

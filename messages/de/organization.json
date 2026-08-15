@@ -38,6 +38,10 @@
   "joinButton": "Organisation beitreten",
   "joinRequest": "Beitrittsanfrage erfolgreich gesendet!",
   "undoRequest": "Anfrage zurückziehen",
+
+  "requestAccepted": "Die Beitrittsanfrage wurde angenommen.",
+  "requestRejected": "Die Beitrittsanfrage wurde abgelehnt.",
+  "requestError": "Die Beitrittsanfrage konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
   "successRequestCancel": "Du hast die Anfrage zum Beitritt zur Organisation storniert.",
   "errorRequestCancel": "Die Anfrage konnte nicht storniert werden. Bitte versuche es erneut.",
   "errorCreateJoinRequest": "Die Anfrage konnte nicht gesendet werden. Bitte versuche es erneut.",
@@ -105,10 +109,16 @@
     "sendInvation": "Einladung senden",
     "addMemberSuccessTitle": "Mitglied erfolgreich eingeladen",
     "addMemberSuccessText": "<strong>{userName}</strong> wurde zu deiner Organisation eingeladen. Du kannst weitere Mitglieder einladen oder Rollen und Berechtigungen jederzeit verwalten.",
+    "memberInviteError": "Die Einladung konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
     "inviteMoreMember": "Weiteres Mitglied einladen",
     "done": "Fertig",
     "noFound": "Keine Benutzer gefunden",
-    "error": "Suchfehler"
+    "error": "Suchfehler",
+    "removeMemberTitle": "Mitglied entfernen",
+    "removeMemberText": "Möchtest du <strong>{userName}</strong> wirklich aus <strong>{organizationName}</strong> entfernen?",
+    "confirmRemove": "Entfernen",
+    "memberRemoved": "Das Mitglied wurde aus der Organisation entfernt.",
+    "memberRemoveError": "Das Mitglied konnte nicht entfernt werden. Bitte versuchen Sie es erneut."
   },
   "reviews": {
     "title": "Unsere Bewertungen",

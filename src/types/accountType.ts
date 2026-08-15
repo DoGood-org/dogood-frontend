@@ -26,6 +26,7 @@ export interface ContentPanelProps {
   views: ContentProps[];
   viewComponents: Record<string, React.ReactNode>;
   role?: OrganizationRole | 'USER';
+  onViewChange?: (view: string) => void;
 }
 export interface UserDetailedProps {
   id: string;
