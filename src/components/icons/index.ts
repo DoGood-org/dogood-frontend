@@ -24,6 +24,7 @@ export { default as Check1 } from './Check1';
 export { default as Check2 } from './Check2';
 export { default as Check3 } from './Check3';
 export { default as CheckIcon } from './CheckIcon';
+export { default as CheckSquare } from './CheckSquare';
 export { default as ChevronDown } from './ChevronDown';
 export { default as ChevronLeft } from './ChevronLeft';
 export { default as ChevronRight } from './ChevronRight';
