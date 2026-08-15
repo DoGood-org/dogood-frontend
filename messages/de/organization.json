@@ -38,6 +38,9 @@
   "joinButton": "Organisation beitreten",
   "joinRequest": "Beitrittsanfrage erfolgreich gesendet!",
   "undoRequest": "Anfrage zurückziehen",
+  "successRequestCancel": "Du hast die Anfrage zum Beitritt zur Organisation storniert.",
+  "errorRequestCancel": "Die Anfrage konnte nicht storniert werden. Bitte versuche es erneut.",
+  "errorCreateJoinRequest": "Die Anfrage konnte nicht gesendet werden. Bitte versuche es erneut.",
   "done": "Fertig",
   "dotMenu": {
     "report": "Melden",
@@ -83,7 +86,29 @@
     "reject": "Ablehnen",
     "select": "Wählen Sie ein Mitglied, um Moderator zu werden",
     "search": "Nach Name suchen...",
+    "leastSearch": "Gib mindestens {minSearchLength} Zeichen ein",
     "addMember": "Neues Mitglied hinzufügen"
+  },
+  "memberModals": {
+    "addModeratorTitle": "Als Moderator zuweisen?",
+    "addModeratorText": "Du bist dabei, <strong>{userName}</strong> Moderatorenrechte für die Organisation <strong>{organizationName}</strong> zu erteilen. Dadurch kann der Benutzer Inhalte verwalten und im Namen deiner Organisation mit der Community interagieren.",
+    "privilegesTitle": "Übersicht der Berechtigungen",
+    "privileges": [
+      "Beiträge oder Bedarfe verwalten und entfernen.",
+      "Kommentare und Aktivitäten der Mitglieder moderieren.",
+      "Auf Projektanalysen und Berichte zugreifen"
+    ],
+    "assignModerator": "Moderator zuweisen",
+    "cancel": "Abbrechen",
+    "addMemberTitle": "Einladung senden?",
+    "addMemberText": "Eine Einladung wird an <strong>{userName}</strong> gesendet, deiner Organisation als <strong>Member</strong> beizutreten. Nach Annahme der Einladung erhält die Person Zugriff.",
+    "sendInvation": "Einladung senden",
+    "addMemberSuccessTitle": "Mitglied erfolgreich eingeladen",
+    "addMemberSuccessText": "<strong>{userName}</strong> wurde zu deiner Organisation eingeladen. Du kannst weitere Mitglieder einladen oder Rollen und Berechtigungen jederzeit verwalten.",
+    "inviteMoreMember": "Weiteres Mitglied einladen",
+    "done": "Fertig",
+    "noFound": "Keine Benutzer gefunden",
+    "error": "Suchfehler"
   },
   "reviews": {
     "title": "Unsere Bewertungen",

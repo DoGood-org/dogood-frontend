@@ -38,6 +38,9 @@
   "joinButton": "Join organization",
   "joinRequest": "Join request sent successfully!",
   "undoRequest": "Undo request",
+  "successRequestCancel": "You canceled the request to join the organization",
+  "errorRequestCancel": "Failed to cancel the request. Please try again.",
+  "errorCreateJoinRequest": "Failed to send the request. Please try again.",
   "done": "Done",
   "dotMenu": {
     "report": "Report",
@@ -103,7 +106,9 @@
     "addMemberSuccessTitle": "Member Invited Successfully",
     "addMemberSuccessText": "<strong>{userName}</strong> has been Invited to your organization. You can continue inviting more members or manage roles and permissions at any time.",
     "inviteMoreMember": "Invite More Member",
-    "done": "Done"
+    "done": "Done",
+    "noFound": "No users found",
+    "error": "Search error"
   },
 
   "reviews": {
