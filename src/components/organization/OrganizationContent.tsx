@@ -11,7 +11,6 @@ import { OrganizationContentPanel } from './OrganizationContentPanel';
 import { useOrganizationPermissions } from '@/hooks/useOrganizationPermissions';
 import { useUserRole } from '../providers/UserRoleProvider';
 import { OrgJoinRequestSection } from './requestSection/OrgJoinRequestSection';
-import { useJoinRequests } from '@/hooks/useJoinRequests';
 
 export const OrganizationContent = ({
   organization,
@@ -23,8 +22,6 @@ export const OrganizationContent = ({
   const userRole = useUserRole();
   const { canViewRequests } = useOrganizationPermissions(userRole);
 
-  const { joinRequests, approve, reject } = useJoinRequests(organization.id);
-
   const userViews = views.filter((view) => view.id !== 'requests');
   const visibleViews: ContentProps[] = canViewRequests ? views : userViews;
 
@@ -34,14 +31,11 @@ export const OrganizationContent = ({
       <OrgMemberSection
         members={organization.members}
         orgId={organization.id}
+        orgName={organization.name}
       />
     ),
     requests: canViewRequests && (
-      <OrgJoinRequestSection
-        onApprove={approve}
-        onReject={reject}
-        data={joinRequests}
-      />
+      <OrgJoinRequestSection organizationId={organization.id} />
     ),
     reviews: (
       <OrgReviewSection reviews={organization.reviews} role={userRole} />

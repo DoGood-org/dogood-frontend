@@ -8,6 +8,8 @@ import {
 } from '@/services/joinRequestService';
 import { IJoinRequests, JoinRequestStatus } from '@/types/joinRequest.type';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { toast } from 'react-toastify';
 
 type UseJoinRequestsResult = {
   joinRequests: IJoinRequests[];
@@ -25,6 +27,7 @@ export const useJoinRequests = (
   const [joinRequests, setJoinRequests] = useState<IJoinRequests[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('organization');
 
   const router = useRouter();
 
@@ -53,7 +56,10 @@ export const useJoinRequests = (
 
     if (result.ok) {
       await loadJoinRequests();
+      toast.success(t('requestAccepted'));
       router.refresh();
+    } else {
+      toast.error(t('requestError'));
     }
   };
 
@@ -65,7 +71,10 @@ export const useJoinRequests = (
 
     if (result.ok) {
       await loadJoinRequests();
+      toast.info(t('requestRejected'));
       router.refresh();
+    } else {
+      toast.error(t('requestError'));
     }
   };
 

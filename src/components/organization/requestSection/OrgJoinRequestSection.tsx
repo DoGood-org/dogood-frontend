@@ -2,34 +2,28 @@
 
 import { JSX } from 'react';
 import { EmptyContent } from '../EmptyContent';
-import { IJoinRequests } from '@/types/joinRequest.type';
 import { useTranslations } from 'next-intl';
 import { OrgJoinRequestCard } from './OrgJoinRequestCard';
 import { Slider } from '@/components/ui/Slider';
-
-type Props = {
-  data: IJoinRequests[];
-  onApprove: (id: string) => Promise<void>;
-  onReject: (id: string) => Promise<void>;
-};
+import { useJoinRequests } from '@/hooks/useJoinRequests';
 
 export const OrgJoinRequestSection = ({
-  data,
-  onApprove,
-  onReject,
-}: Props): JSX.Element => {
+  organizationId,
+}: {
+  organizationId: string;
+}): JSX.Element => {
   const t = useTranslations('organization');
 
-  console.log(data);
+  const { joinRequests, approve, reject } = useJoinRequests(organizationId);
 
   return (
     <>
       <h2 className="text-h2-m lg:text-h2">{t('request.title')}</h2>
-      {!data || !data.length ? (
+      {!joinRequests || !joinRequests.length ? (
         <EmptyContent>{t('noRequest')}</EmptyContent>
       ) : (
         <Slider
-          items={data}
+          items={joinRequests}
           itemsPerSlide={3}
           listClassName="gap-5"
           itemClassName="p-0"
@@ -37,8 +31,8 @@ export const OrgJoinRequestSection = ({
             <OrgJoinRequestCard
               key={`${idx}-${request.id}`}
               request={request}
-              onApprove={onApprove}
-              onReject={onReject}
+              onApprove={approve}
+              onReject={reject}
             />
           )}
         />
