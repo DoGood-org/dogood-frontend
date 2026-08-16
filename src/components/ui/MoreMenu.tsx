@@ -15,6 +15,7 @@ type MoreMenuProps = {
   className?: string;
   triggerClassName?: string;
   menuWrapperClassName?: string;
+  menuListClassName?: string;
   side?: 'top' | 'right' | 'bottom' | 'left';
   align?: 'start' | 'center' | 'end';
 };
@@ -24,6 +25,7 @@ export const MoreMenu = ({
   className = '',
   triggerClassName = '',
   menuWrapperClassName = '',
+  menuListClassName = '',
   side = 'bottom',
   align = 'end',
 }: MoreMenuProps): JSX.Element => {
@@ -69,7 +71,12 @@ export const MoreMenu = ({
               menuWrapperClassName
             )}
           >
-            <ul className="flex flex-col gap-3 text-white items-start justify-between">
+            <ul
+              className={cn(
+                'flex flex-col gap-3 text-white items-start justify-between',
+                menuListClassName
+              )}
+            >
               {items.map((item) => (
                 <li key={item.id}>
                   {item.content(() => {
