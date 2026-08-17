@@ -77,13 +77,12 @@ export const ChatModal: React.FC<ChatModalProps> = ({
             variant="ghost"
             size="icon"
             onClick={onClick}
-            className="group flex items-center justify-between w-full 
-                hover:text-btn-hover active:text-btn-active cursor-pointer"
+            className="group flex items-center justify-between w-full cursor-pointer"
           >
-            <span className="whitespace-nowrap text-foreground group-hover:text-btn-hover group-active:text-btn-active">
+            <span className="whitespace-nowrap text-foreground group-hover:text-btn-outline dark:group-hover:text-btn-hover dark:group-active:text-btn-hover">
               {label}
             </span>
-            <Icon className="size-6 text-foreground group-hover:text-btn-hover group-active:text-btn-active" />
+            <Icon className="size-6 text-foreground group-hover:text-btn-outline dark:group-hover:text-btn-hover dark:group-active:text-btn-hover" />
           </Button>
         </li>
       ))}

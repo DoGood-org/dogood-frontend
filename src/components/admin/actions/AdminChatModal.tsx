@@ -52,13 +52,12 @@ export const AdminChatModal: React.FC<ChatModalProps> = ({ onClose }) => {
             variant="ghost"
             size="icon"
             onClick={onClick}
-            className="group flex justify-start gap-3 w-full 
-                hover:text-btn-hover active:text-btn-active cursor-pointer"
+            className="group flex justify-start gap-3 w-full cursor-pointer"
           >
             {Icon && (
-              <Icon className="size-6 text-foreground group-hover:text-btn-hover group-active:text-btn-active" />
+              <Icon className="size-6 text-foreground group-hover:text-btn-outline dark:group-hover:text-btn-hover dark:group-active:text-btn-hover" />
             )}
-            <span className="whitespace-nowrap text-foreground group-hover:text-btn-hover group-active:text-btn-active">
+            <span className="whitespace-nowrap text-foreground group-hover:text-btn-outline dark:group-hover:text-btn-hover dark:group-active:text-btn-hover">
               {label}
             </span>
           </Button>
