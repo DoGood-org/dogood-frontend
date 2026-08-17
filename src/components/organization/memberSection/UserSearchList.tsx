@@ -48,7 +48,7 @@ export const UserSearchList = <T,>({
         <p className="mt-2">{t('memberModals.noFound')}</p>
       )}
 
-      <ul className="flex flex-col gap-2 max-h-[296px] overflow-y-auto">
+      <ul className="flex flex-col gap-2 max-h-[296px] overflow-y-auto custom-scrollbar review-scrollbar">
         {users.map((user) => (
           <li
             key={getId(user)}
