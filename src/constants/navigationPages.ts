@@ -3,6 +3,7 @@ import ChatIcon from '@/components/icons/ChatIcon';
 import MapIcon from '@/components/icons/MapIcon';
 import GoalsIcon from '@/components/icons/GoalsIcon';
 import SettingsIcon from '@/components/icons/SettingsIcon';
+import { UsersThree } from '@/components/icons';
 
 export const navigationPages = [
   {
@@ -34,5 +35,12 @@ export const navigationPages = [
     translationKey: 'settings',
     Icon: SettingsIcon,
     path: '/account/settings',
+  },
+  {
+    label: 'Admin',
+    translationKey: 'admin',
+    Icon: UsersThree,
+    path: '/admin',
+    isProtected: true,
   },
 ];
