@@ -1,0 +1,13 @@
+{
+  "id": "ID",
+  "reportedUser": "Reported User",
+  "reportedBy": "Reported By",
+  "reason": "Reason",
+  "status": "Status",
+  "date": "Date",
+  "searchPlaceholder": "Enter ID of report",
+  "selectStatus": "Select status",
+  "pending": "Pending",
+  "reviewed": "Reviewed",
+  "resolved": "Resolved"
+}

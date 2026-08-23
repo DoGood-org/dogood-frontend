@@ -1,0 +1,13 @@
+{
+  "id": "ID",
+  "reportedUser": "Gemeldeter Nutzer",
+  "reportedBy": "Berichtet von",
+  "reason": "Grund",
+  "status": "Status",
+  "date": "Datum",
+  "searchPlaceholder": "Berichts-ID eingeben",
+  "selectStatus": "Status auswählen",
+  "pending": "Ausstehend",
+  "reviewed": "Überprüft",
+  "resolved": "Beschlossen"
+}
