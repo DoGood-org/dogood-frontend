@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/Select';
-import { Button } from '@/components/ui/Button';
+import { ButtonControls } from './ButtonControls';
 
 export const ReportDetailsDesk: React.FC<IReportDetailsMob> = ({
   setIsOpen,
@@ -29,6 +29,16 @@ export const ReportDetailsDesk: React.FC<IReportDetailsMob> = ({
 
   const handleStatusChange = (value: string): void => {
     setSelectedStatus(value);
+  };
+
+  const handleReject = (): void => {
+    //TODO: Add Reject Logic
+    console.log('Rejected report:', report.id);
+  };
+
+  const handleApprove = (): void => {
+    //TODO: Add Approve Logic
+    console.log('Approved report:', report.id);
   };
 
   return (
@@ -104,14 +114,11 @@ export const ReportDetailsDesk: React.FC<IReportDetailsMob> = ({
               </Select>
             }
           />
-          <div className="flex justify-between">
-            <Button variant="secondary" className="w-[112px]">
-              Reject
-            </Button>
-            <Button variant="primary" className="w-[112px]">
-              Approve
-            </Button>
-          </div>
+          <ButtonControls
+            onReject={handleReject}
+            onApprove={handleApprove}
+            buttonClassName="w-[112px]"
+          />
         </div>
       </div>
     </div>

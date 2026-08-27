@@ -76,7 +76,7 @@ export const SearchOrgClient = ({
   return (
     <div className="w-full p-6 bg-card rounded-xl">
       <div className="flex justify-between mb-10">
-        <h2>Search</h2>
+        <h2>{t('titleSectOrg')}</h2>
         <CloseIcon className="w-6 h-6" onClick={() => setIsSearchOpen(false)} />
       </div>
       <div className="flex items-center justify-center gap-2 mb-6 border-b-2 border-foreground">
@@ -90,7 +90,7 @@ export const SearchOrgClient = ({
       </div>
 
       {isLoading ? (
-        <div className="py-4 text-center">Loading...</div>
+        <div className="py-4 text-center">{t('loading')}</div>
       ) : (
         <OrgSearchList organizations={organizations} />
       )}

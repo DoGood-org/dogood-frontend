@@ -28,7 +28,6 @@ export const ReportListDesk = ({
     { label: t('date') },
   ];
 
-  // Use useCallback to memoize the handleSearch function
   const handleSearch = useCallback(
     (query: string): void => {
       if (!query || !query.trim()) {

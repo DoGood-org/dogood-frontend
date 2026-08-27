@@ -54,3 +54,13 @@ export interface SearchInputProps {
   className?: string;
   debounceDelay?: number;
 }
+
+export interface ButtonControlsProps {
+  onReject?: () => void;
+  onApprove?: () => void;
+  className?: string;
+  buttonClassName?: string;
+  rejectLabel?: string;
+  approveLabel?: string;
+  variant?: 'primary' | 'secondary';
+}

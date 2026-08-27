@@ -9,5 +9,7 @@
   "selectStatus": "Status auswählen",
   "pending": "Ausstehend",
   "reviewed": "Überprüft",
-  "resolved": "Beschlossen"
+  "resolved": "Beschlossen",
+  "reject": "Ablehnen",
+  "approve": "Genehmigen"
 }

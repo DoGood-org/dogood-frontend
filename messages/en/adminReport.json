@@ -9,5 +9,7 @@
   "selectStatus": "Select status",
   "pending": "Pending",
   "reviewed": "Reviewed",
-  "resolved": "Resolved"
+  "resolved": "Resolved",
+  "reject": "Reject",
+  "approve": "Approve"
 }
