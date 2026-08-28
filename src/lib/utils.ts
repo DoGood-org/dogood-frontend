@@ -237,7 +237,7 @@ export const getStatusStyles = (
   status: string
 ): { className: string; style: React.CSSProperties } => {
   const baseStyles =
-    'px-2 py-1 rounded-sm font-medium capitalize border-0 text-xs w-[80px] md:w-[70px] lg:w-[90px] lg:text-base ';
+    'px-2 py-1 rounded-sm font-medium capitalize border-0 text-xs w-[80px] md:w-[70px] lg:w-[90px] lg:text-base cursor-pointer';
 
   const statusConfig: Record<
     string,

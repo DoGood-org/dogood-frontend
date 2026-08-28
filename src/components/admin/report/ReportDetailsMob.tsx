@@ -56,7 +56,6 @@ export const ReportDetailsMob: React.FC<IReportDetailsMob> = ({
           onClick={() => setIsOpen(false)}
         />
       </RenderRow>
-
       <RenderRow className="flex-col gap-3">
         <RenderField
           label={t('reportedUser')}
@@ -67,9 +66,7 @@ export const ReportDetailsMob: React.FC<IReportDetailsMob> = ({
           value={<RenderUser user={report.reportedBy} />}
         />
       </RenderRow>
-
       <div className="border-t border-text-gray w-full"></div>
-
       <RenderRow className="flex justify-between">
         <RenderField
           label={t('reason')}
@@ -86,9 +83,7 @@ export const ReportDetailsMob: React.FC<IReportDetailsMob> = ({
           className="flex-1"
         />
       </RenderRow>
-
       <div className="border-t border-text-gray w-full"></div>
-
       <RenderField
         label={t('status')}
         labelClassName="mb-2"

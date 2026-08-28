@@ -42,7 +42,7 @@ export const ReportDetailsDesk: React.FC<IReportDetailsMob> = ({
   };
 
   return (
-    <div className="flex flex-col gap-3 rounded-sm p-10 pb-20 w-full">
+    <div className="flex flex-col gap-3 rounded-sm md:p-10 lg:p-12 pb-20 w-full">
       <RenderRow className="justify-between items-center mb-7">
         <RenderField
           label={t('id')}
@@ -73,7 +73,7 @@ export const ReportDetailsDesk: React.FC<IReportDetailsMob> = ({
         />
       </RenderRow>
       <div className="flex gap-7 justify-between">
-        <div className="border border-text-gray w-full p-[20px] flex-1">
+        <div className="border border-text-gray w-[233px] p-[20px]">
           <RenderRow className="flex-col gap-10">
             <RenderField
               label={t('reportedUser')}
@@ -85,14 +85,14 @@ export const ReportDetailsDesk: React.FC<IReportDetailsMob> = ({
             />
           </RenderRow>
         </div>
-        <div className="border border-text-gray w-full p-[10px] flex-1">
+        <div className="border border-text-gray w-[260px] p-[10px]">
           <RenderField
             label={t('status')}
             labelClassName="mb-2"
             value={
               <Select value={selectedStatus} onValueChange={handleStatusChange}>
                 <SelectTrigger
-                  className="w-full"
+                  className="w-full cursor-pointer"
                   style={{
                     height: '48px',
                     borderRadius: '4px',
@@ -114,11 +114,7 @@ export const ReportDetailsDesk: React.FC<IReportDetailsMob> = ({
               </Select>
             }
           />
-          <ButtonControls
-            onReject={handleReject}
-            onApprove={handleApprove}
-            buttonClassName="w-[112px]"
-          />
+          <ButtonControls onReject={handleReject} onApprove={handleApprove} />
         </div>
       </div>
     </div>
