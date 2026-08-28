@@ -5,19 +5,16 @@ export interface UserProps {
   name: string;
   avatar?: string;
 }
-
-export interface RatingProps
-  extends DetailedHTMLProps<
-    HTMLAttributes<HTMLUListElement>,
-    HTMLUListElement
-  > {
+export interface RatingProps extends DetailedHTMLProps<
+  HTMLAttributes<HTMLUListElement>,
+  HTMLUListElement
+> {
   isEditable?: boolean;
   rating: number;
   setRating?: (rating: number) => void;
   error?: FieldError;
   className?: string;
 }
-
 export interface StarItemProps {
   index: number;
   isFilled: boolean;
@@ -30,7 +27,6 @@ export interface StarItemProps {
   computeFocus: (rating: number, index: number) => number;
   className?: string;
 }
-
 export interface ReviewProps {
   id: number;
   rating: number;
@@ -38,11 +34,9 @@ export interface ReviewProps {
   createdAt: string;
   owner?: UserProps;
 }
-
 export interface ReviewItemProps {
   review: ReviewProps;
 }
-
 export interface ReviewListProps {
   reviews?: ReviewProps[];
 }

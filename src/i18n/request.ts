@@ -31,6 +31,7 @@ export async function loadMessages(locale: string): Promise<Messages> {
     'grantsPage',
     'adminNav',
     'adminOrg',
+    'adminReport',
   ];
 
   const messages = Object.fromEntries(

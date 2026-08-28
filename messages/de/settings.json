@@ -66,6 +66,7 @@
     "successDel": "Organisation erfolgreich gelöscht",
     "errorDel": "Fehler beim Löschen der Organisation. Bitte versuchen Sie es später erneut"
   },
+  "titleSectOrg": "Suche",
   "titleDelModal": "Sind Sie sicher, dass Sie diese Organisation löschen möchten?",
   "descrDelModal": "Durch das Löschen dieser Organisation werden alle Mitglieder, Aufgaben und Daten dauerhaft entfernt.",
   "cancelBtn": "Abbrechen",
