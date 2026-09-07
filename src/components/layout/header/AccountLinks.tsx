@@ -2,7 +2,7 @@
 
 import { authStore } from '@/zustand/stores/authStore';
 import { useLocale } from 'next-intl';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { AccountContentProps } from '@/types';
 
 import { useIconComponents } from '@/hooks';
@@ -15,7 +15,7 @@ export const AccountLinks: React.FC<AccountContentProps> = ({
 }) => {
   const { logged = [], noLogged = [] } = accountItem.content || {};
   const locale = useLocale();
-  const router = useRouter();
+  // const router = useRouter();
   const { logout } = authStore();
   const isLoggedIn = authStore((state) => state.isLoggedIn);
   const icons = useIconComponents();
@@ -28,7 +28,7 @@ export const AccountLinks: React.FC<AccountContentProps> = ({
     await logout();
     toast.success('Logout successful');
     onClose?.();
-    router.refresh();
+    // router.refresh();
   };
 
   return (
