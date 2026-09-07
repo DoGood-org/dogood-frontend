@@ -231,3 +231,44 @@ export const getApplyingSteps = (t: TranslationFunction): IGrantsItem[] =>
     titlePattern: 'step{index}',
     useArrayFormat: false,
   });
+
+//---------------------------------utils for Admin Panel (ReportList)----------------------------------
+export const getStatusStyles = (
+  status: string
+): { className: string; style: React.CSSProperties } => {
+  const baseStyles =
+    'px-2 py-1 rounded-sm font-medium capitalize border-0 text-xs w-[80px] md:w-[70px] lg:w-[90px] lg:text-base cursor-pointer';
+
+  const statusConfig: Record<
+    string,
+    { bg: string; text: string; border: string }
+  > = {
+    pending: {
+      bg: '#FFB94D33',
+      text: '#FFB94D',
+      border: '#FFB94D80',
+    },
+    reviewed: {
+      bg: '#D2EDFF80',
+      text: '#4A9EFF',
+      border: '#D2EDFF80',
+    },
+    resolved: {
+      bg: '#00BBA733',
+      text: '#00C1AC',
+      border: '#00C1AC80',
+    },
+  };
+
+  const normalizedStatus = status?.toLowerCase()?.trim() || 'pending';
+  const config = statusConfig[normalizedStatus] || statusConfig.pending;
+
+  return {
+    className: baseStyles,
+    style: {
+      backgroundColor: config.bg,
+      color: config.text,
+      border: `1px solid ${config.border}`,
+    },
+  };
+};

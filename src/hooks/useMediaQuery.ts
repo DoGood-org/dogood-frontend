@@ -1,19 +1,27 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useIsMounted } from './useIsMounted';
 
 export function useMediaQuery(query: string): boolean {
+  const isMounted = useIsMounted();
   const [matches, setMatches] = useState(false);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
+    if (!isMounted) return;
+
     const media = window.matchMedia(query);
-    if (media.matches !== matches) {
-      setMatches(media.matches);
-    }
-    const listener = (): void => setMatches(media.matches);
-    media.addEventListener('change', listener);
-    return () => media.removeEventListener('change', listener);
-  }, [matches, query]);
+
+    const update = (): void => setMatches(media.matches);
+
+    update();
+
+    media.addEventListener('change', update);
+    return (): void => media.removeEventListener('change', update);
+  }, [query, isMounted]);
+
+  // ❗ ДО mount завжди повертаємо стабільне значення
+  if (!isMounted) return false;
 
   return matches;
 }

@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useState } from 'react';
 
-type UseClickOutsideOptions = {
+export type UseClickOutsideOptions = {
   enabled?: boolean;
   eventTypes?: ('mousedown' | 'click' | 'touchstart')[];
   detectEscapeKey?: boolean;
@@ -38,18 +38,34 @@ export const useClickOutside = ({
   useEffect(() => {
     if (!enabled || !delayGuard) return;
 
-    const handleEvent = (e: Event): void => {
-      requestAnimationFrame(() => {
-        const target = e.target as Node;
-        const isInsideIgnored =
-          target instanceof HTMLElement &&
-          ignoreSelectors?.some((selector) => target.closest(selector));
+    // const handleEvent = (e: Event): void => {
+    //   requestAnimationFrame(() => {
+    //     const target = e.target as Node;
+    //     const isInsideIgnored =
+    //       target instanceof HTMLElement &&
+    //       ignoreSelectors?.some((selector) => target.closest(selector));
 
-        if (ref.current && !ref.current.contains(target) && !isInsideIgnored) {
-          callback();
-          if (once) cleanup();
-        }
-      });
+    //     if (ref.current && !ref.current.contains(target) && !isInsideIgnored) {
+    //       callback();
+    //       if (once) cleanup();
+    //     }
+    //   });
+    // };
+
+    const handleEvent = (e: Event): void => {
+      const target = e.target;
+
+      if (!(target instanceof Node)) return;
+
+      const isInsideIgnored =
+        target instanceof HTMLElement &&
+        ignoreSelectors.some((selector) => target.closest(selector));
+
+      if (ref.current && !ref.current.contains(target) && !isInsideIgnored) {
+        callback();
+
+        if (once) cleanup();
+      }
     };
 
     const handleEscape = (e: KeyboardEvent): void => {

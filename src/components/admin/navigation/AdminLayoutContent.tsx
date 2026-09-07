@@ -15,7 +15,7 @@ export const AdminLayoutContent = ({
   const t = useTranslations('adminNav');
 
   return (
-    <Container className="flex flex-col pt-[34px] md:pt-[64px] lg:py-[80px] ">
+    <Container className="flex flex-col pt-[34px] md:pt-[64px] lg:py-[80px] lg:px-6 ">
       <div className="justify-between gap-6 lg:flex">
         <aside className="lg:flex lg:w-[302px] shrink-0 lg:p-6 lg:bg-admin-background rounded-lg lg:min-h-[727px]  flex-col justify-between shadow-none lg:shadow-admin dark:shadow-none">
           <AdminNavigation />

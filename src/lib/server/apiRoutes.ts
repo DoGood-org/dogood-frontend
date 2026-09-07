@@ -73,6 +73,7 @@ export const apiRoutes = {
 
   joinRequests: {
     create: '/organization/join-request',
+    getJoinRequests: (id: string) => `/organization/${id}/join-requests`,
     updateStatus: '/organization/join-request/status',
   },
 
