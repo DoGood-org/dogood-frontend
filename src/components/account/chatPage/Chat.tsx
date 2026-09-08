@@ -35,8 +35,7 @@ export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
   const currentUser = {
     id: 1,
     name: 'Ivan',
-    avatar:
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    avatar: '/avatars/ivan.png',
   };
 
   const messagesWithReadStatus: MessageType[] = initialMessages.map(
@@ -70,7 +69,11 @@ export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
     (chat) => (chat.unreadCount ?? 0) > 0
   );
 
-  const filteredChats = activeTab === 'unread' ? unreadChats : displayChats;
+  const filteredChats = [
+    ...(activeTab === 'unread' ? unreadChats : displayChats),
+  ].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
 
   const filteredMessages = preparedMessages.filter((message) =>
     message.content.toLowerCase().includes(messageSearch.toLowerCase())
