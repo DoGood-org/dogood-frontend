@@ -38,6 +38,12 @@
   "joinButton": "Join organization",
   "joinRequest": "Join request sent successfully!",
   "undoRequest": "Undo request",
+  "requestAccepted": "The join request has been accepted.",
+  "requestRejected": "The join request has been rejected.",
+  "requestError": "Failed to update the join request. Please try again.",
+  "successRequestCancel": "You canceled the request to join the organization",
+  "errorRequestCancel": "Failed to cancel the request. Please try again.",
+  "errorCreateJoinRequest": "Failed to send the request. Please try again.",
   "done": "Done",
   "dotMenu": {
     "report": "Report",
@@ -83,8 +89,37 @@
     "reject": "Reject",
     "select": "Select a member to make a moderator",
     "search": "Search by name...",
+    "leastSearch": "Enter at least {minSearchLength} characters to search",
     "addMember": "Add a new member"
   },
+  "memberModals": {
+    "addModeratorTitle": "Assign as Moderator?",
+    "addModeratorText": "You are about to grant <strong>{userName}</strong> moderator privileges for the organization <strong>{organizationName}</strong>. This action will allow the user to manage content and interact with the community on behalf of your organization.",
+    "privilegesTitle": "Privileges Overview",
+    "privileges": [
+      "Manage and remove posts or needs.",
+      "Moderate comments and member activity.",
+      "Access project analytics and reports"
+    ],
+    "assignModerator": "Assign Moderator",
+    "cancel": "Cancel",
+    "addMemberTitle": "Send Invitation?",
+    "addMemberText": "An invitation will be sent to <strong>{userName}</strong> to join your organization as <strong>Member</strong>. They will gain access after accepting the invitation.",
+    "sendInvation": "Send Invitation",
+    "addMemberSuccessTitle": "Member Invited Successfully",
+    "addMemberSuccessText": "<strong>{userName}</strong> has been Invited to your organization. You can continue inviting more members or manage roles and permissions at any time.",
+    "memberInviteError": "Failed to send the invitation. Please try again.",
+    "inviteMoreMember": "Invite More Member",
+    "done": "Done",
+    "noFound": "No users found",
+    "error": "Search error",
+    "removeMemberTitle": "Remove member",
+    "removeMemberText": "Are you sure you want to remove <strong>{userName}</strong> from <strong>{organizationName}</strong>?",
+    "confirmRemove": "Remove",
+    "memberRemoved": "Member has been removed from the organization.",
+    "memberRemoveError": "Failed to remove the member. Please try again."
+  },
+
   "reviews": {
     "title": "Our reviews",
     "userTitle": "Reviews"

@@ -1,0 +1,148 @@
+{
+  "data": [
+    {
+      "id": "#AT46781291",
+      "reportedUser": {
+        "id": "1",
+        "name": "Anna Smith",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "rating": 4
+      },
+      "reportedBy": {
+        "id": "#AT46781291",
+        "name": "John Carter",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "rating": 5
+      },
+      "reason": "Spam",
+      "status": "resolved",
+      "date": "May 24"
+    },
+    {
+      "id": "#ST46781300",
+      "reportedUser": {
+        "id": "1",
+        "name": "Anna Smith",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "rating": 4
+      },
+      "reportedBy": {
+        "id": "#ST46781300",
+        "name": "John Carter",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "rating": 5
+      },
+      "reason": "Fake information",
+      "status": "reviewed",
+      "date": "May 27"
+    },
+    {
+      "id": "#AC76783333",
+      "reportedUser": {
+        "id": "1",
+        "name": "Anna Smith",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "rating": 4
+      },
+      "reportedBy": {
+        "id": "#AC76783345",
+        "name": "John Carter",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "rating": 5
+      },
+      "reason": "Fake information",
+      "status": "resolved",
+      "date": "May 27"
+    },
+    {
+      "id": "#AT46781292",
+      "reportedUser": {
+        "id": "1",
+        "name": "Anna Smith",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "rating": 4
+      },
+      "reportedBy": {
+        "id": "#AT46781292",
+        "name": "John Carter",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "rating": 5
+      },
+      "reason": "Inappropriate content",
+      "status": "pending",
+      "date": "May 29"
+    },
+    {
+      "id": "#AT46781291",
+      "reportedUser": {
+        "id": "1",
+        "name": "Anna Smith",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "rating": 4
+      },
+      "reportedBy": {
+        "id": "#AT46781291",
+        "name": "John Carter",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "rating": 5
+      },
+      "reason": "Inappropriate content",
+      "status": "pending",
+      "date": "May 29"
+    },
+    {
+      "id": "#AT46781292",
+      "reportedUser": {
+        "id": "1",
+        "name": "Anna Smith",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "rating": 4
+      },
+      "reportedBy": {
+        "id": "#AT46781292",
+        "name": "John Carter",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "rating": 5
+      },
+      "reason": "Spam",
+      "status": "pending",
+      "date": "May 24"
+    },
+    {
+      "id": "#AT46781291",
+      "reportedUser": {
+        "id": "1",
+        "name": "Anna Smith",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "rating": 4
+      },
+      "reportedBy": {
+        "id": "#AT46781291",
+        "name": "John Carter",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "rating": 5
+      },
+      "reason": "Inappropriate content",
+      "status": "pending",
+      "date": "May 29"
+    },
+    {
+      "id": "#AT46781292",
+      "reportedUser": {
+        "id": "1",
+        "name": "Anna Smith",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "rating": 4
+      },
+      "reportedBy": {
+        "id": "#AT46781292",
+        "name": "John Carter",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "rating": 5
+      },
+      "reason": "Spam",
+      "status": "pending",
+      "date": "May 24"
+    }
+  ]
+}

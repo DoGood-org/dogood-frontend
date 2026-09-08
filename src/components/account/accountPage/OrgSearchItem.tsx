@@ -12,7 +12,9 @@ export const OrgSearchItem = ({
       <div className="relative w-[60px] h-[60px] flex-shrink-0">
         <Image
           alt={organization.name}
-          src={organization.avatar}
+          src={
+            organization.avatar ? organization.avatar : '/account/avatar.png'
+          }
           fill
           sizes="60px"
           className="object-cover rounded-md"

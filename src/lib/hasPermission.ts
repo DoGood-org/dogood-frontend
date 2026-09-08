@@ -1,6 +1,3 @@
-// import { ROLE_PERMISSIONS } from './rolePermissions';
-// import { Permission } from './permissions';
-
 import { ROLE_PERMISSIONS } from '@/constants/roleConfig';
 import { Permission, Role } from '@/types';
 
