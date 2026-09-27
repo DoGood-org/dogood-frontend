@@ -181,11 +181,7 @@ export const authStore = create<TAuthState>()(
         });
 
         try {
-          console.log('[store.currentUser] calling service...');
-
           const res = await service.currentUser();
-
-          console.log('[store.currentUser] service returned:', res);
 
           if (res.user) {
             set({
@@ -195,8 +191,6 @@ export const authStore = create<TAuthState>()(
               user: res.user,
               error: null,
             });
-
-            console.log('[store.currentUser] user saved:', get().user);
 
             return res;
           }

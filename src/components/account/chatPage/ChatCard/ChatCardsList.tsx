@@ -15,14 +15,6 @@ export const ChatCardsList: React.FC<ChatCardsListProps> = ({
 }) => {
   const listRef = useRef<HTMLUListElement>(null);
 
-  console.log(
-    'CHAT ORDER:',
-    chats.map((chat) => ({
-      id: chat.id,
-      pinned: chat.pinned,
-    }))
-  );
-
   const handlePinToggle = (chatId: string, pinned: boolean): void => {
     onPinToggle?.(chatId, pinned);
     setTimeout(() => {

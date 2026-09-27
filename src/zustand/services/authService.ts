@@ -82,8 +82,6 @@ export class AuthService {
       }
     );
 
-    console.log('[AuthService.currentUser] raw:', res);
-
     if (!res.ok) {
       throw new Error(res.errorMessage ?? 'Failed to fetch current user');
     }

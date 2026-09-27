@@ -69,11 +69,7 @@ export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
     (chat) => (chat.unreadCount ?? 0) > 0
   );
 
-  const filteredChats = [
-    ...(activeTab === 'unread' ? unreadChats : displayChats),
-  ].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
+  const filteredChats = activeTab === 'unread' ? unreadChats : displayChats;
 
   const filteredMessages = preparedMessages.filter((message) =>
     message.content.toLowerCase().includes(messageSearch.toLowerCase())
