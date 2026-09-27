@@ -73,11 +73,22 @@ export class AuthService {
     });
   };
 
-  public currentUser = (): Promise<ICurrentUserResponse> => {
-    return fetchFromApi<ICurrentUserResponse>(apiRoutes.user.current, {
-      method: 'GET',
-      auth: true,
-    });
+  public currentUser = async (): Promise<ICurrentUserResponse> => {
+    const res = await fetchFromApi<ICurrentUserResponse>(
+      apiRoutes.user.current,
+      {
+        method: 'GET',
+        auth: true,
+      }
+    );
+
+    console.log('[AuthService.currentUser] raw:', res);
+
+    if (!res.ok) {
+      throw new Error(res.errorMessage ?? 'Failed to fetch current user');
+    }
+
+    return res.data;
   };
 
   public logout = (): Promise<IAuthResponse> => {

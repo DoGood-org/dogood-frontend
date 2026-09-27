@@ -1,5 +1,6 @@
 'use client';
 
+import { authStore } from '@/zustand/stores/authStore';
 import axios, { AxiosInstance } from 'axios';
 
 export const apiGuest = axios.create({
@@ -53,12 +54,23 @@ function addRefreshInterceptor(instance: AxiosInstance): void {
 
       try {
         await apiGuest.post('/auth/refresh-token');
+
+        await authStore.getState().currentUser({ silent: true });
+
         isRefreshing = false;
         processQueue(null);
+
         return instance(originalRequest);
       } catch (refreshError) {
         isRefreshing = false;
         processQueue(refreshError);
+
+        authStore.setState({
+          user: null,
+          isLoggedIn: false,
+          status: 'idle',
+        });
+
         if (typeof window !== 'undefined') {
           const currentPath = window.location.pathname + window.location.search;
           if (!currentPath.includes('/login')) {

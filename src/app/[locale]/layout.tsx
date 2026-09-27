@@ -11,6 +11,7 @@ import { ThemeInitializer } from '@/components/layout/theme/ThemeInitializer';
 import { Header } from '@/components/layout/header/Header';
 import { Footer } from '@/components/layout/footer/Footer';
 import { ReactQueryProvider } from '@/components/providers/ReactQueryProvider';
+import { AuthBootstrap } from '@/components/providers/AuthBootstrap';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -39,6 +40,7 @@ export default async function LocaleLayout({
       >
         <ReactQueryProvider>
           <ThemeInitializer />
+          <AuthBootstrap />
           <NextIntlClientProvider locale={locale}>
             <Header />
             <main className="pt-[80px] lg:pt-[72px]">{children}</main>
