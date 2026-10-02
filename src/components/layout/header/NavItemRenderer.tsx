@@ -5,7 +5,9 @@ import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { NavItem, NavItemRendererProps } from '@/types';
 import { useAuth, useIconComponents } from '@/hooks';
+import { HeaderBell } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
+import { useNotificationStore } from '@/zustand/stores/notificationStore';
 import { ListDropdown } from './ListDropdown';
 import { SettingsList } from './SettingList';
 import { UserAvatar } from './UserAvatar';
@@ -26,6 +28,10 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   const { isLoggedIn, user } = useAuth();
   const safeUser = user ?? undefined;
   const icons = useIconComponents();
+  const toggleNotifications = useNotificationStore((s) => s.toggle);
+  const unreadCount = useNotificationStore(
+    (s) => s.notifications.filter((n) => !n.isRead).length
+  );
 
   const handleLinkOnClick = (): void => {
     setIsOpen(false);
@@ -117,15 +123,31 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({
   return (
     <>
       {variant === 'desktop' && (
-        <NavDropdown
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          trigger={config.trigger}
-          className={config.className}
-          isIcon={config.isIcon}
-        >
-          {config.content}
-        </NavDropdown>
+        <>
+          {navItem.type === 'icon' && (
+            <li className="h-[72px] flex items-center">
+              <button
+                onClick={toggleNotifications}
+                aria-label="Open notifications"
+                className="relative flex items-center cursor-pointer text-white hover:opacity-70 transition-opacity"
+              >
+                <HeaderBell className="size-6" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 size-2 rounded-full bg-btn" />
+                )}
+              </button>
+            </li>
+          )}
+          <NavDropdown
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            trigger={config.trigger}
+            className={config.className}
+            isIcon={config.isIcon}
+          >
+            {config.content}
+          </NavDropdown>
+        </>
       )}
       {variant === 'mobile' && (
         <MobileDropdown

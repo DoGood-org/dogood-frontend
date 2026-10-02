@@ -6,3 +6,4 @@ export * from './useScrollToActive';
 export * from './useSwipe';
 export * from './useTheme';
 export * from './useSortedMobileNav';
+export * from './useNotifications';

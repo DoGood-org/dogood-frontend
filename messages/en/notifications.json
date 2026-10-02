@@ -1,0 +1,53 @@
+{
+  "sidebar": {
+    "title": "Notifications",
+    "tabs": {
+      "all": "All",
+      "unread": "Unread"
+    },
+    "unreadCount": "Unread ({count})",
+    "loading": "Loading notifications...",
+    "markAllAsRead": "Mark all as read",
+    "loadMore": "Load more",
+    "error": "Failed to load notifications",
+    "empty": {
+      "all": "No notifications yet",
+      "unread": "No unread notifications"
+    }
+  },
+  "modal": {
+    "delete": "Delete",
+    "types": {
+      "join_organization": {
+        "title": "Request to join the organization",
+        "description": "You're going to join <b>{orgName}</b>"
+      },
+      "task_completion": {
+        "title": "Task completion",
+        "description": "Your task <b>\"{taskName}\"</b> has been completed"
+      },
+      "review_confirmation": {
+        "title": "Confirmation of review",
+        "description": "You have left a review for <b>{revieweeName}</b>"
+      },
+      "review_canceling": {
+        "title": "Canceling a review",
+        "description": "Your review has been cancelled for <b>{revieweeName}</b>"
+      },
+      "private": {
+        "title": "Private notification",
+        "description": "<b>{senderName}</b> has sent you a private message"
+      },
+      "info": {
+        "title": "Info"
+      }
+    },
+    "actions": {
+      "viewProfile": "View profile",
+      "accept": "Accept",
+      "provideFeedback": "Provide feedback",
+      "markAsRead": "Mark as read",
+      "viewReviews": "View reviews"
+    }
+  }
+}
