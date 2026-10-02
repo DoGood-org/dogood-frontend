@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { navigationStore } from '@/zustand/stores/navigationStore';
 import { MessageType } from '@/types/chatType';
 import mocks from './mocks.json';
@@ -12,81 +12,134 @@ import { Section } from '@/components/ui/Section';
 import { ChatMobileLayout } from './ChatMobileLayout';
 import { ChatDesktopLayout } from './ChatDesktopLayout';
 import { EmptyState } from './EmptyState';
+import { AdminEllipsisMenu } from '@/components/admin/actions/AdminEllipsisMenu';
+import { usePinnedChats } from '@/hooks/usePinnedChats';
 
-export const Chat: React.FC = () => {
+interface ChatProps {
+  className?: string;
+  isAdmin?: boolean;
+}
+
+export const Chat: React.FC<ChatProps> = ({ className, isAdmin = false }) => {
   const { chats: initialChats, messages: initialMessages } = mocks;
+
   const isMobileOrTablet = useMediaQuery('(max-width: 1439px)');
+
   const setIsChatMessageOpen = navigationStore(
     (state) => state.setIsChatMessageOpen
   );
 
-  const userId = 1;
-  const userName = 'Name';
-  const userAvatar = '/default-avatar.png';
+  const [activeTab, setActiveTab] = useState<'all' | 'unread'>('all');
+  const [messageSearch, setMessageSearch] = useState('');
 
-  const {
-    chats,
-    selectedChatId,
-    setSelectedChatId,
-    handleChatDeleted,
-    handlePinToggle,
-  } = useChats(initialChats, isMobileOrTablet);
+  const currentUser = {
+    id: 1,
+    name: 'Ivan',
+    avatar: '/avatars/ivan.png',
+  };
+
+  const messagesWithReadStatus: MessageType[] = initialMessages.map(
+    (message) => ({
+      ...message,
+
+      isRead: false,
+    })
+  );
+
+  const { chats, selectedChatId, setSelectedChatId, handleChatDeleted } =
+    useChats(initialChats, messagesWithReadStatus, isMobileOrTablet, false);
+
+  const { chats: pinnedChats, handlePinToggle } = usePinnedChats(chats);
+  const displayChats = isAdmin ? chats : pinnedChats;
 
   const { preparedMessages, addMessage } = useChatMessages(
-    initialMessages,
+    messagesWithReadStatus,
     selectedChatId,
-    userId
+    currentUser.id
   );
 
   useEffect(() => {
     setIsChatMessageOpen(!!selectedChatId);
   }, [selectedChatId, setIsChatMessageOpen]);
 
-  const selectedChat = chats.find((chat) => chat.id === selectedChatId) || null;
+  const selectedChat =
+    displayChats.find((chat) => chat.id === selectedChatId) || null;
+
+  const unreadChats = displayChats.filter(
+    (chat) => (chat.unreadCount ?? 0) > 0
+  );
+
+  const filteredChats = activeTab === 'unread' ? unreadChats : displayChats;
+
+  const filteredMessages = preparedMessages.filter((message) =>
+    message.content.toLowerCase().includes(messageSearch.toLowerCase())
+  );
 
   const handleSend = async (message: string): Promise<void> => {
     if (!selectedChatId || !message.trim()) return;
 
     const newMessage: MessageType = {
-      id: (preparedMessages.length + 1).toString(),
-      name: userName,
-      avatar: userAvatar,
+      id: Date.now().toString(),
+      name: currentUser.name,
+      avatar: currentUser.avatar,
       content: message.trim(),
       createdAt: new Date().toISOString(),
       roomId: selectedChatId,
-      senderId: userId,
+      senderId: currentUser.id,
       isCurrentUser: true,
+      isRead: true,
     };
 
     addMessage(newMessage);
   };
 
   return (
-    <Section withContainer={false} className="lg:pt-20 md:pt-20 sm:pt-20">
-      <div className="bg-background text-foreground lg:flex lg:min-h-0">
+    <Section
+      withContainer={false}
+      className={className || 'pt-9 md:pt-15 lg:pt-20'}
+    >
+      <div className="bg-background flex text-foreground">
         {chats.length === 0 ? (
           <EmptyState />
         ) : isMobileOrTablet ? (
           <ChatMobileLayout
-            chats={chats}
+            chats={filteredChats}
+            unreadCount={unreadChats.length}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
             selectedChatId={selectedChatId}
             setSelectedChatId={setSelectedChatId}
-            messages={preparedMessages}
+            messages={filteredMessages}
+            onMessageSearch={setMessageSearch}
             onSend={handleSend}
             onChatDeleted={handleChatDeleted}
             selectedChat={selectedChat || null}
-            onPinToggle={handlePinToggle}
+            onPinToggle={isAdmin ? undefined : handlePinToggle}
+            isAdmin={isAdmin}
+            showEllipsisMenu={!isAdmin}
+            rightElement={
+              isAdmin && selectedChat ? <AdminEllipsisMenu /> : undefined
+            }
           />
         ) : (
           <ChatDesktopLayout
-            chats={chats}
+            chats={filteredChats}
+            unreadCount={unreadChats.length}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
             selectedChatId={selectedChatId}
             setSelectedChatId={setSelectedChatId}
-            messages={preparedMessages}
+            messages={filteredMessages}
+            onMessageSearch={setMessageSearch}
             onSend={handleSend}
             onChatDeleted={handleChatDeleted}
             selectedChat={selectedChat || null}
-            onPinToggle={handlePinToggle}
+            onPinToggle={isAdmin ? undefined : handlePinToggle}
+            showEllipsisMenu={!isAdmin}
+            isAdmin={isAdmin}
+            rightElement={
+              isAdmin && selectedChat ? <AdminEllipsisMenu /> : undefined
+            }
           />
         )}
       </div>

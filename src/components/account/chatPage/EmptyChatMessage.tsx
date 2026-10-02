@@ -5,10 +5,10 @@ export const EmptyChatMessage: React.FC = () => {
   const t = useTranslations('chat');
 
   return (
-    <section>
+    <div>
       <h3 className="text-foreground text-base">
         {t('emptyState.emptyChatMessage2')}
       </h3>
-    </section>
+    </div>
   );
 };

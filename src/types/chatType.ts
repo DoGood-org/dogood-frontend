@@ -2,17 +2,25 @@ export interface ChatType {
   id: string;
   name: string;
   avatar: string;
-  content: string;
   createdAt: string;
   pinned?: boolean;
+  unreadCount?: number;
+}
+
+export interface ChatPreviewType extends ChatType {
+  content?: string;
+  createdAt: string;
 }
 
 export interface ChatCardProps {
-  chat: ChatType;
+  chat: ChatPreviewType;
   isSelected: boolean;
   onSelect: (id: string) => void;
   onChatDeleted: (chatId: string) => void;
-  onPinToggle: (chatId: string, pinned: boolean) => void;
+  onPinToggle?: (chatId: string, pinned: boolean) => void;
+  unreadCount?: number;
+  showEllipsisMenu?: boolean;
+  isAdmin?: boolean;
 }
 
 export interface ChatCardsListProps {
@@ -20,7 +28,9 @@ export interface ChatCardsListProps {
   selectedChatId: string | null;
   onSelectChat: (id: string) => void;
   onChatDeleted: (chatId: string) => void;
-  onPinToggle: (chatId: string, pinned: boolean) => void;
+  onPinToggle?: (chatId: string, pinned: boolean) => void;
+  showEllipsisMenu?: boolean;
+  isAdmin?: boolean;
 }
 
 export interface MessageType {
@@ -32,6 +42,7 @@ export interface MessageType {
   roomId: string;
   senderId: number;
   isCurrentUser: boolean;
+  isRead: boolean;
 }
 
 export interface MessagesListProps {
@@ -50,4 +61,27 @@ export type ChatInputProps = {
   onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   className?: string;
+};
+
+export type ChatModalProps = {
+  chat: ChatType;
+  onClose: () => void;
+  onChatDeleted?: (chatId: string) => void;
+  onPinToggle?: (chatId: string, pinned: boolean) => void;
+  showPinActions?: boolean;
+};
+
+export type ChatEllipsisMenuProps = {
+  chat: ChatType;
+  onChatDeleted: (chatId: string) => void;
+  onPinToggle?: (chatId: string, pinned: boolean) => void;
+  showPinActions?: boolean;
+};
+
+export type ChatTab = 'all' | 'unread';
+
+export type ChatTabsProps = {
+  activeTab: ChatTab;
+  unreadCount: number;
+  onChange: (tab: ChatTab) => void;
 };

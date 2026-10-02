@@ -1,12 +1,12 @@
 'use client';
 
-import Back from '@/components/icons/Back';
 import ChatSearch from '@/components/icons/ChatSearch';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { formatChatTime } from '@/utils/chatDateUtils';
+import { LeftArrow } from '@/components/icons';
 
 interface ChatSearchInputProps {
   selectedName: string;
@@ -15,6 +15,8 @@ interface ChatSearchInputProps {
   showBackButton: boolean;
   onBack: () => void;
   onSearch: (query: string) => void;
+  variant?: 'chat' | 'admin';
+  rightElement?: React.ReactNode;
 }
 
 export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
@@ -23,25 +25,20 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
   showBackButton,
   onBack,
   onSearch,
+  rightElement,
+  variant = 'chat',
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const t = useTranslations('chat');
 
-  const handleSearch = (): void => {
-    const trimmed = searchQuery.trim();
-    if (trimmed) {
-      onSearch(trimmed);
-      setSearchQuery('');
-    }
+  const handleChange = (value: string): void => {
+    setSearchQuery(value);
+    onSearch(value);
   };
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
-  const formattedTime = lastMessageTime ? formatChatTime(lastMessageTime) : '';
+  const formattedTime = lastMessageTime
+    ? formatChatTime(lastMessageTime, true)
+    : '';
 
   const placeholderText = formattedTime
     ? t('input.wasOnNetworkAt', { time: formattedTime })
@@ -59,35 +56,34 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
             aria-label="Back"
             type="button"
           >
-            <Back className="w-5 h-5 text-bg-icon group-hover:text-btn-hover group-active:text-btn-active" />
-            <span className="text-base text-foreground group-hover:text-btn-hover group-active:text-btn-active">
-              {t('back')}
-            </span>
+            <LeftArrow className="size-6" />
           </Button>
         </div>
       )}
       <div className="flex items-center">
         <div className="flex flex-col">
           {selectedName && (
-            <p className="text-center mb-2 break-words font-semibold text-foreground md:font-bold lg:text-left">
+            <p className="text-center break-words font-semibold text-foreground md:font-bold lg:text-left">
               {selectedName}
             </p>
           )}
-          <Input
-            type="text"
-            placeholder={placeholderText}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={onKeyDown}
-            className="
+          {variant === 'admin' ? (
+            <p className="text-xs text-foreground select-none cursor-default">
+              {placeholderText}
+            </p>
+          ) : (
+            <Input
+              type="text"
+              placeholder={placeholderText}
+              value={searchQuery}
+              onChange={(e) => handleChange(e.target.value)}
+              className="
             w-[240px]
             h-[24px]
-            py-0
-            pl-2
-            pr-0
             md:pl-0
             bg-transparent
             text-current
+            text-xs
             placeholder:text-foreground
             hover:placeholder:text-btn-hover
             focus:placeholder:text-btn-active
@@ -107,19 +103,21 @@ export const ChatSearchInput: React.FC<ChatSearchInputProps> = ({
             appearance-none
             shadow-none
             transition-none"
-          />
+            />
+          )}
         </div>
       </div>
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon"
-        className="text-current cursor-pointer w-6 h-6"
-        aria-label="Search"
-        onClick={handleSearch}
-      >
-        <ChatSearch className="size-6 text-bg-icon hover:text-btn-hover active:text-btn-active" />
-      </Button>
+      {rightElement ?? (
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="text-current cursor-pointer w-6 h-6"
+          aria-label="Search"
+        >
+          <ChatSearch className="size-6 text-bg-icon hover:text-btn-hover active:text-btn-active" />
+        </Button>
+      )}
     </div>
   );
 };

@@ -4,6 +4,10 @@ import { ChatCardsList } from '@/components/account/chatPage/ChatCard/ChatCardsL
 import { ChatSearchInput } from '@/components/account/chatPage/ChatSearchInput';
 import { ChatMessageList } from '@/components/account/chatPage/ChatMessage/ChatMessagesList';
 import { ChatMessageInput } from '@/components/account/chatPage/ChatMessageInput';
+import ChatTabs from './ChatTabs';
+import { ChatListSearch } from './ChatListSearch';
+import { useState } from 'react';
+import { useFilteredChats } from '@/hooks/useFilteredChats';
 
 interface ChatDesktopLayoutProps {
   chats: ChatType[];
@@ -11,9 +15,16 @@ interface ChatDesktopLayoutProps {
   setSelectedChatId: (id: string | null) => void;
   messages: MessageType[];
   onSend: (message: string) => void;
-  onPinToggle: (chatId: string, pinned: boolean) => void;
+  onPinToggle?: (chatId: string, pinned: boolean) => void;
   onChatDeleted: (chatId: string) => void;
   selectedChat: ChatType | null;
+  activeTab: 'all' | 'unread';
+  unreadCount: number;
+  onTabChange: (tab: 'all' | 'unread') => void;
+  onMessageSearch: (query: string) => void;
+  rightElement?: React.ReactNode;
+  showEllipsisMenu?: boolean;
+  isAdmin?: boolean;
 }
 
 export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
@@ -25,24 +36,44 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
   onChatDeleted,
   selectedChat,
   onPinToggle,
+  activeTab,
+  unreadCount,
+  onTabChange,
+  rightElement,
+  showEllipsisMenu,
+  onMessageSearch,
+  isAdmin,
 }) => {
+  const [searchQuery, setSearchQuery] = useState('');
   const lastMessageTime = selectedChatId
     ? getLastMessageTime(messages, selectedChatId)
     : null;
 
+  const filteredChats = useFilteredChats(chats, searchQuery);
+
   return (
-    <div className="flex h-[856px] max-h-screen min-h-[600px] gap-9">
-      <div className="w-[320px] flex flex-col bg-background text-foreground overflow-y-auto custom-scrollbar-hide">
-        <ChatCardsList
-          chats={chats}
-          selectedChatId={selectedChatId}
-          onSelectChat={setSelectedChatId}
-          onChatDeleted={onChatDeleted}
-          onPinToggle={onPinToggle}
-        />
+    <div className="flex min-h-[856px] max-h-screen gap-2">
+      <div className="bg-admin-background min-w-[354px] w-full flex justify-center pt-2 rounded-xl">
+        <div className="w-[320px] flex flex-col text-foreground overflow-y-auto custom-scrollbar-hide">
+          <ChatListSearch value={searchQuery} onSearch={setSearchQuery} />
+          <ChatTabs
+            activeTab={activeTab}
+            unreadCount={unreadCount}
+            onChange={onTabChange}
+          />
+          <ChatCardsList
+            chats={filteredChats}
+            selectedChatId={selectedChatId}
+            onSelectChat={setSelectedChatId}
+            onChatDeleted={onChatDeleted}
+            onPinToggle={onPinToggle}
+            showEllipsisMenu={showEllipsisMenu}
+            isAdmin={isAdmin}
+          />
+        </div>
       </div>
 
-      <div className="w-[704px] h-full flex-1 flex flex-col text-foreground rounded-sm p-2 lg:bg-[#CFCFCF] dark:bg-[#5D5A5A] lg:p-6">
+      <div className="bg-admin-background h-full flex-1 flex flex-col text-foreground rounded-lg p-2 md:min-w-[608px] lg:p-6">
         {selectedChatId && (
           <>
             <ChatSearchInput
@@ -51,9 +82,11 @@ export const ChatDesktopLayout: React.FC<ChatDesktopLayoutProps> = ({
               lastOnline={selectedChat?.createdAt || ''}
               showBackButton={false}
               onBack={() => setSelectedChatId(null)}
-              onSearch={(query) => console.log('Шукати:', query)}
+              onSearch={onMessageSearch}
+              rightElement={rightElement}
+              variant={isAdmin ? 'admin' : 'chat'}
             />
-            <div className="border border-foreground mt-5 mb-12" />
+            <div className="border border-foreground mt-4" />
           </>
         )}
 

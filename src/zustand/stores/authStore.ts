@@ -173,22 +173,46 @@ export const authStore = create<TAuthState>()(
       },
 
       currentUser: async (
-        options = {}
+        options: { silent?: boolean } = {}
       ): Promise<ICurrentUserResponse | null> => {
-        set({ status: options.silent ? get().status : 'loading', error: null });
+        set({
+          status: options.silent ? get().status : 'loading',
+          error: null,
+        });
+
         try {
           const res = await service.currentUser();
-          if (res.ok) {
+
+          if (res.user) {
             set({
               status: 'authorized',
               isLoggedIn: true,
-              user: res.user ?? null,
+              isEmailVerified: res.user.isEmailVerified,
+              user: res.user,
+              error: null,
             });
+
             return res;
           }
+
+          set({
+            status: 'idle',
+            isLoggedIn: false,
+            isEmailVerified: false,
+            user: null,
+          });
+
           return null;
-        } catch {
-          // set({ status: 'idle' });
+        } catch (e) {
+          console.error('[store.currentUser] threw:', e);
+
+          set({
+            status: 'idle',
+            isLoggedIn: false,
+            isEmailVerified: false,
+            user: null,
+          });
+
           return null;
         }
       },
@@ -265,9 +289,15 @@ export const authStore = create<TAuthState>()(
       ),
       partialize: (s) => ({
         user: s.user,
-        isLoggedIn: s.isLoggedIn,
         nextResendAt: s.nextResendAt,
       }),
+      onRehydrateStorage:
+        () =>
+        (state: TAuthState | undefined): void => {
+          if (!state) return;
+          state.isLoggedIn = !!state.user;
+          state.status = state.user ? 'authorized' : 'idle';
+        },
     }
   )
 );
