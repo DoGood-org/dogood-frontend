@@ -125,22 +125,19 @@ export async function proxy(req: NextRequest): Promise<NextResponse> {
 
     const shouldRefresh =
       backendRes.status === 401 &&
-      refreshToken &&
+      !!refreshToken &&
       !NO_REFRESH_PATHS.some((p) => targetPath.startsWith(p));
 
     if (shouldRefresh) {
       const { accessToken: newAT, setCookies } = await doRefresh();
       if (newAT) {
         accessToken = newAT;
-
         backendRes = await executeFetch(newAT);
 
         const response = new NextResponse(backendRes.body, backendRes);
-
         for (const c of setCookies) {
           response.headers.append('set-cookie', c);
         }
-
         return response;
       }
     }

@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { ITaskDetails } from '@/types/tasks.type';
 import { ImagePlaceholder } from './ImagePlaceholder';
-import { Clock, DateIcon, Location } from '@/components/icons';
+import { ClockIcon, DateIcon, Location } from '@/components/icons';
 import { DonationProgressBar } from './DonationProgressBar';
 import { formatISOTimeTo12h } from '@/utils/taskTransform';
 import { isDonationCategory } from '@/utils/isDonationCategory';
@@ -13,7 +13,6 @@ interface TaskCardProps {
 }
 
 export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
-  console.log(task);
   const t = useTranslations('tasks');
 
   const donation = 10000;
@@ -32,7 +31,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
       label: `${t('taskCard.finish')}: ${task.endDate ?? 'N/A'}`,
     },
     {
-      icon: <Clock />,
+      icon: <ClockIcon className="size-6 fill-foreground" />,
       label: `${t('taskCard.time')}: ${
         formatISOTimeTo12h(task.startTime) || 'N/A'
       } ${t('taskCard.localTime')}`,

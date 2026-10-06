@@ -1,8 +1,9 @@
 'use client';
 
-import { Burger, CloseMenu } from '@/components/icons';
+import { Burger, CloseMenu, HeaderBell } from '@/components/icons';
 import Portal from '@/components/ui/portal/Portal';
 import { useMobileMenu, useSortedMobileNav } from '@/hooks';
+import { useNotificationStore } from '@/zustand/stores/notificationStore';
 import { NavItem } from '@/types';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
@@ -35,20 +36,37 @@ export const MobileMenu = (): React.JSX.Element => {
     };
   }, [isOpen, toggleMenu]);
 
+  const toggleNotifications = useNotificationStore((s) => s.toggle);
+  const unreadCount = useNotificationStore(
+    (s) => s.notifications.filter((n) => !n.isRead).length
+  );
+
   const mobileNav = useSortedMobileNav(nav);
 
   return (
     <>
-      <button
-        onClick={toggleMenu}
-        className="relative z-50 p-2 text-white cursor-pointer"
-      >
-        {isOpen ? (
-          <CloseMenu className="size-6" />
-        ) : (
-          <Burger className="size-6" />
-        )}
-      </button>
+      <div className="flex items-center gap-1">
+        <button
+          onClick={toggleNotifications}
+          aria-label="Open notifications"
+          className="relative p-2 text-white cursor-pointer"
+        >
+          <HeaderBell className="size-6" />
+          {unreadCount > 0 && (
+            <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-btn" />
+          )}
+        </button>
+        <button
+          onClick={toggleMenu}
+          className="relative z-50 p-2 text-white cursor-pointer"
+        >
+          {isOpen ? (
+            <CloseMenu className="size-6" />
+          ) : (
+            <Burger className="size-6" />
+          )}
+        </button>
+      </div>
       <Portal>
         <div
           className={`fixed inset-0 md:inset-y-auto w-full mx-auto md:max-w-[768px]  md:flex md:px-15 md:justify-end md:top-[80px] top-[80px] z-[9000] transition-transform duration-500 ease-in-out transform ${

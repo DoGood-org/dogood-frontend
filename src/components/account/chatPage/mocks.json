@@ -3,82 +3,65 @@
     {
       "id": "1",
       "name": "Ivan",
-      "lastMessage": "Will you have time to talk?",
-      "createdAt": "2025-07-17",
-      "avatar": "/avatars/ivan.png",
-      "content": "Chat with Ivan"
-    },
-    {
-      "id": "2",
-      "name": "Oksana",
-      "lastMessage": "When are we meeting?",
-      "createdAt": "2025-07-16",
-      "avatar": "/avatars/oksana.png",
-      "content": "Chat with Oksana"
+      "createdAt": "2026-07-21T18:00:00Z",
+      "unreadCount": 4,
+       "avatar": "/avatars/ivan.png"
     },
     {
       "id": "3",
       "name": "Andriy",
-      "lastMessage": "Waiting for your reply!",
-      "createdAt": "2025-07-15",
-      "avatar": "/avatars/andrii.png",
-      "content": "Chat with Andriy"
+      "createdAt": "2026-07-18T14:50:00Z",
+      "unreadCount": 0,
+      "avatar": "/avatars/andrii.png"
     },
     {
       "id": "4",
       "name": "Maria",
-      "lastMessage": "I sent the documents",
-      "createdAt": "2025-07-14",
-      "avatar": "/avatars/maria.png",
-      "content": "Chat with Maria"
+      "createdAt": "2025-07-14T12:06:00Z",
+      "unreadCount": 22,
+      "avatar": "/avatars/maria.png"
     },
-    {
+        {
       "id": "5",
       "name": "Petro",
-      "lastMessage": "Hi, how are you?",
-      "createdAt": "2025-07-13",
-      "avatar": "/avatars/petro.png",
-      "content": "Chat with Petro"
+      "createdAt": "2026-07-07T10:10:00Z",
+      "unreadCount": 100,
+      "avatar": "/avatars/petro.png"
     },
     {
       "id": "6",
       "name": "Sofiia",
-      "lastMessage": "I sent the files.",
-      "createdAt": "2025-07-12",
-      "avatar": "/avatars/sofiia.png",
-      "content": "Chat with Sofiia"
+      "createdAt": "2026-06-21T14:10:00Z",
+      "unreadCount": 0,
+      "avatar": "/avatars/sofiia.png"
     },
     {
       "id": "7",
       "name": "Maksym",
-      "lastMessage": "When shall we call?",
-      "createdAt": "2025-07-11",
-      "avatar": "/avatars/maksym.png",
-      "content": "Chat with Maksym"
+      "createdAt": "2026-05-21T09:05:00Z",
+      "unreadCount": 5,
+      "avatar": "/avatars/maksym.png"
     },
     {
       "id": "8",
       "name": "Kateryna",
-      "lastMessage": "Ok, thanks!",
-      "createdAt": "2025-07-10",
-      "avatar": "/avatars/kateryna.png",
-      "content": "Chat with Kateryna"
+      "createdAt": "2026-07-21T19:15:00Z",
+      "unreadCount": 1,
+      "avatar": "/avatars/kateryna.png"
     },
     {
       "id": "9",
       "name": "Dmytro",
-      "lastMessage": "Confirming the meeting.",
-      "createdAt": "2025-07-09",
-      "avatar": "/avatars/dmytro.png",
-      "content": "Chat with Dmytro"
+      "createdAt": "2026-07-20T16:20:00Z",
+      "unreadCount": 0,
+      "avatar": "/avatars/dmytro.png"
     },
     {
       "id": "10",
       "name": "Olena",
-      "lastMessage": "I sent the report.",
-      "createdAt": "2025-07-08",
-      "avatar": "/avatars/olena.png",
-      "content": "Chat with Olena"
+      "createdAt": "2026-04-10T11:30:00Z",
+      "unreadCount": 3,
+     "avatar": "/avatars/olena.png"
     }
   ],
   "messages": [
@@ -86,9 +69,10 @@
       "id": "m1",
       "senderId": 1,
       "name": "Ivan",
+      "isRead": false,
       "avatar": "/avatars/ivan.png",
-      "content": "Hi, how are you?",
-      "createdAt": "2025-07-17T09:00:00Z",
+      "content": "Hi, how are you? Hi, how are you? Hi, how are you? Hi, how are you? Hi, how are you? Hi, how are you? Hi, how are you? Hi, how are you?",
+      "createdAt": "2026-07-21T17:30:00Z",
       "roomId": "1",
       "isCurrentUser": true
     },
@@ -97,8 +81,8 @@
       "senderId": 2,
       "name": "Oksana",
       "avatar": "/avatars/oksana.png",
-      "content": "I'm good, thanks!",
-      "createdAt": "2025-07-17T09:05:00Z",
+      "content": "I'm good, thanks! I'm good, thanks! I'm good, thanks! I'm good, thanks! I'm good, thanks! I'm good, thanks!",
+      "createdAt": "2026-07-21T17:35:00Z",
       "roomId": "1",
       "isCurrentUser": false
     },
@@ -108,7 +92,7 @@
       "name": "Ivan",
       "avatar": "/avatars/ivan.png",
       "content": "Will you have time to talk?",
-      "createdAt": "2025-07-17T19:50:00Z",
+      "createdAt": "2026-07-21T18:00:00Z",
       "roomId": "1",
       "isCurrentUser": true
     },
@@ -118,7 +102,7 @@
       "name": "Oksana",
       "avatar": "/avatars/oksana.png",
       "content": "Sure!",
-      "createdAt": "2025-07-17T19:51:00Z",
+      "createdAt": "2025-07-20T11:51:00Z",
       "roomId": "1",
       "isCurrentUser": false
     },
@@ -128,7 +112,7 @@
       "name": "Oksana",
       "avatar": "/avatars/oksana.png",
       "content": "When would be convenient for you?",
-      "createdAt": "2025-07-17T19:52:00Z",
+      "createdAt": "2026-07-20T11:52:00Z",
       "roomId": "1",
       "isCurrentUser": false
     },
@@ -138,7 +122,7 @@
       "name": "Ivan",
       "avatar": "/avatars/ivan.png",
       "content": "Maybe after lunch, around 2 PM?",
-      "createdAt": "2025-07-17T19:53:00Z",
+      "createdAt": "2026-07-20T11:53:00Z",
       "roomId": "1",
       "isCurrentUser": true
     },
@@ -148,47 +132,7 @@
       "name": "Oksana",
       "avatar": "/avatars/oksana.png",
       "content": "Alright, agreed!",
-      "createdAt": "2025-07-17T19:54:00Z",
-      "roomId": "1",
-      "isCurrentUser": false
-    },
-    {
-      "id": "m21",
-      "senderId": 1,
-      "name": "Ivan",
-      "avatar": "/avatars/ivan.png",
-      "content": "By the way, did you check the new project updates?",
-      "createdAt": "2025-07-17T20:30:00Z",
-      "roomId": "1",
-      "isCurrentUser": true
-    },
-    {
-      "id": "m22",
-      "senderId": 2,
-      "name": "Oksana",
-      "avatar": "/avatars/oksana.png",
-      "content": "Not yet, planning to review them tomorrow.",
-      "createdAt": "2025-07-17T20:32:00Z",
-      "roomId": "1",
-      "isCurrentUser": false
-    },
-    {
-      "id": "m23",
-      "senderId": 1,
-      "name": "Ivan",
-      "avatar": "/avatars/ivan.png",
-      "content": "Great! Let me know if you need any help.",
-      "createdAt": "2025-07-17T20:35:00Z",
-      "roomId": "1",
-      "isCurrentUser": true
-    },
-    {
-      "id": "m24",
-      "senderId": 2,
-      "name": "Oksana",
-      "avatar": "/avatars/oksana.png",
-      "content": "Will do, thanks!",
-      "createdAt": "2025-07-17T20:37:00Z",
+      "createdAt": "2026-07-20T11:54:00Z",
       "roomId": "1",
       "isCurrentUser": false
     },
@@ -196,7 +140,7 @@
       "id": "m8",
       "senderId": 4,
       "name": "Maria",
-      "avatar": "/avatars/maria.png",
+      "avatar": "/avatars/mariya.png",
       "content": "Have you checked the files yet?",
       "createdAt": "2025-07-14T12:00:00Z",
       "roomId": "4",
@@ -216,7 +160,7 @@
       "id": "m10",
       "senderId": 4,
       "name": "Maria",
-      "avatar": "/avatars/maria.png",
+      "avatar": "/avatars/mariya.png",
       "content": "Alright, I'll be waiting :)",
       "createdAt": "2025-07-14T12:06:00Z",
       "roomId": "4",
@@ -226,9 +170,9 @@
       "id": "m11",
       "senderId": 3,
       "name": "Andriy",
-      "avatar": "/avatars/andrii.png",
+      "avatar": "/avatars/andriy.png",
       "content": "Did you get my email?",
-      "createdAt": "2025-07-15T08:30:00Z",
+      "createdAt": "2026-07-18T14:30:00Z",
       "roomId": "3",
       "isCurrentUser": false
     },
@@ -238,7 +182,7 @@
       "name": "Ivan",
       "avatar": "/avatars/ivan.png",
       "content": "Yes, I'll reply by the end of the day.",
-      "createdAt": "2025-07-15T08:45:00Z",
+      "createdAt": "2026-07-18T14:45:00Z",
       "roomId": "3",
       "isCurrentUser": true
     },
@@ -246,9 +190,9 @@
       "id": "m13",
       "senderId": 3,
       "name": "Andriy",
-      "avatar": "/avatars/andrii.png",
+      "avatar": "/avatars/andriy.png",
       "content": "Thanks, looking forward!",
-      "createdAt": "2025-07-15T08:50:00Z",
+      "createdAt": "2026-07-18T14:50:00Z",
       "roomId": "3",
       "isCurrentUser": false
     },
@@ -258,7 +202,7 @@
       "name": "Petro",
       "avatar": "/avatars/petro.png",
       "content": "Hey, how have you been?",
-      "createdAt": "2025-07-13T10:00:00Z",
+      "createdAt": "2026-07-07T10:00:00Z",
       "roomId": "5",
       "isCurrentUser": false
     },
@@ -268,7 +212,7 @@
       "name": "Ivan",
       "avatar": "/avatars/ivan.png",
       "content": "Doing well, thanks! What about you?",
-      "createdAt": "2025-07-13T10:05:00Z",
+      "createdAt": "2026-07-07T10:05:00Z",
       "roomId": "5",
       "isCurrentUser": true
     },
@@ -278,7 +222,7 @@
       "name": "Petro",
       "avatar": "/avatars/petro.png",
       "content": "Pretty good! We should catch up soon.",
-      "createdAt": "2025-07-13T10:10:00Z",
+      "createdAt": "2026-07-07T10:10:00Z",
       "roomId": "5",
       "isCurrentUser": false
     },
@@ -288,7 +232,7 @@
       "name": "Sofiia",
       "avatar": "/avatars/sofiia.png",
       "content": "I just sent you the files you requested.",
-      "createdAt": "2025-07-12T14:00:00Z",
+      "createdAt": "2026-06-21T14:00:00Z",
       "roomId": "6",
       "isCurrentUser": false
     },
@@ -297,8 +241,8 @@
       "senderId": 1,
       "name": "Ivan",
       "avatar": "/avatars/ivan.png",
-      "content": "Thanks, I will check them shortly.",
-      "createdAt": "2025-07-12T14:10:00Z",
+      "content": "Thanks, I will check them shortly. Thanks, I will check them shortly. Thanks, I will check them shortly. Thanks, I will check them shortly.",
+      "createdAt": "2026-06-21T14:10:00Z",
       "roomId": "6",
       "isCurrentUser": true
     },
@@ -307,8 +251,8 @@
       "senderId": 7,
       "name": "Maksym",
       "avatar": "/avatars/maksym.png",
-      "content": "When shall we have a call?",
-      "createdAt": "2025-07-11T09:00:00Z",
+      "content": "When shall we have a call? When shall we have a call? When shall we have a call? When shall we have a call? When shall we have a call?",
+      "createdAt": "2026-05-21T09:00:00Z",
       "roomId": "7",
       "isCurrentUser": false
     },
@@ -318,9 +262,39 @@
       "name": "Ivan",
       "avatar": "/avatars/ivan.png",
       "content": "How about tomorrow at 11 AM?",
-      "createdAt": "2025-07-11T09:05:00Z",
+      "createdAt": "2026-05-21T09:05:00Z",
       "roomId": "7",
       "isCurrentUser": true
+    },
+    {
+      "id": "m21",
+      "senderId": 8,
+      "name": "Kateryna",
+      "avatar": "/avatars/kateryna.png",
+      "content": "Don't forget about our meeting today! Don't forget about our meeting today! Don't forget about our meeting today!",
+      "createdAt": "2026-07-21T19:15:00Z",
+      "roomId": "8",
+      "isCurrentUser": false
+    },
+    {
+      "id": "m22",
+      "senderId": 9,
+      "name": "Dmytro",
+      "avatar": "/avatars/dmytro.png",
+      "content": "See you yesterday's report.",
+      "createdAt": "2026-07-20T16:20:00Z",
+      "roomId": "9",
+      "isCurrentUser": false
+    },
+    {
+      "id": "m23",
+      "senderId": 10,
+      "name": "Olena",
+      "avatar": "/avatars/olena.png",
+      "content": "Please review the contract draft.",
+      "createdAt": "2026-04-10T11:30:00Z",
+      "roomId": "10",
+      "isCurrentUser": false
     }
   ]
 }

@@ -40,9 +40,7 @@ export interface ReviewItemProps {
 export interface ReviewListProps {
   reviews?: ReviewProps[];
 }
-
 /** -------------------admin reviews ------------------- */
-
 export type TargetType = 'PLATFORM' | 'USER' | 'ORGANIZATION';
 export type ReviewStatus = 'Under consideration' | 'Confirmed' | 'Rejected';
 export type AuthorType = 'user' | 'system';
@@ -57,25 +55,21 @@ export interface IReviewsItem {
   createdAt: string;
   author: UserProps;
 }
-
 export interface FilterValues {
   status?: string;
   rating?: string;
   date?: string;
 }
-
 export interface ActiveFiltersBarProps {
   activeFilters: string[];
   onReset: () => void;
   className?: string;
   allLabel?: string;
 }
-
 export interface ButtonsPanelProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
 }
-
 export interface FilterPanelProps {
   onFilterChange?: (filters: {
     status?: string;
@@ -83,12 +77,10 @@ export interface FilterPanelProps {
     date?: string;
   }) => void;
 }
-
 export interface FilterOption {
   value: string;
   label: string | JSX.Element;
 }
-
 export interface FilterSelectProps {
   value: string;
   onValueChange: (value: string) => void;
@@ -99,7 +91,6 @@ export interface FilterSelectProps {
   contentClassName?: string;
   triggerStyle?: React.CSSProperties;
 }
-
 export type ActionConfig = {
   id: string;
   icon: React.ElementType;

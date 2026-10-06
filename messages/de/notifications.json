@@ -1,0 +1,53 @@
+{
+  "sidebar": {
+    "title": "Benachrichtigungen",
+    "tabs": {
+      "all": "Alle",
+      "unread": "Ungelesen"
+    },
+    "unreadCount": "Ungelesen ({count})",
+    "loading": "Benachrichtigungen werden geladen...",
+    "markAllAsRead": "Alle als gelesen markieren",
+    "loadMore": "Mehr laden",
+    "error": "Benachrichtigungen konnten nicht geladen werden",
+    "empty": {
+      "all": "Noch keine Benachrichtigungen",
+      "unread": "Keine ungelesenen Benachrichtigungen"
+    }
+  },
+  "modal": {
+    "delete": "Löschen",
+    "types": {
+      "join_organization": {
+        "title": "Anfrage zum Beitritt der Organisation",
+        "description": "Sie werden <b>{orgName}</b> beitreten"
+      },
+      "task_completion": {
+        "title": "Aufgabe abgeschlossen",
+        "description": "Ihre Aufgabe <b>\"{taskName}\"</b> wurde abgeschlossen"
+      },
+      "review_confirmation": {
+        "title": "Bewertung bestätigt",
+        "description": "Sie haben eine Bewertung für <b>{revieweeName}</b> hinterlassen"
+      },
+      "review_canceling": {
+        "title": "Bewertung storniert",
+        "description": "Ihre Bewertung für <b>{revieweeName}</b> wurde storniert"
+      },
+      "private": {
+        "title": "Private Benachrichtigung",
+        "description": "<b>{senderName}</b> hat Ihnen eine private Nachricht gesendet"
+      },
+      "info": {
+        "title": "Info"
+      }
+    },
+    "actions": {
+      "viewProfile": "Profil ansehen",
+      "accept": "Akzeptieren",
+      "provideFeedback": "Feedback geben",
+      "markAsRead": "Als gelesen markieren",
+      "viewReviews": "Bewertungen ansehen"
+    }
+  }
+}

@@ -11,7 +11,7 @@ export const EmptyState: React.FC = () => {
 
   if (isMobileOrTablet) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center dark:bg-[#5D5A5A] bg-[#CFCFCF] p-4 gap-4">
+      <div className="w-full h-[calc(100vh-100px)] flex flex-col items-center justify-center dark:bg-[#5D5A5A] bg-[#CFCFCF] gap-4 rounded-md">
         <h3 className="text-foreground text-base text-center">
           {t('emptyState.emptyChatMessage1')}
         </h3>
@@ -20,17 +20,17 @@ export const EmptyState: React.FC = () => {
   }
 
   return (
-    <div className="flex h-full gap-9 px-0 py-0">
+    <div className="flex w-full h-[calc(100vh-120px)] gap-2 min-h-[856px] max-h-screen">
       <ul className="w-[320px] flex flex-col space-y-4 h-full">
         {dummyCards.map((_, index) => (
           <li
             key={index}
-            className="flex-1 rounded-md bg-[#696969] dark:bg-[#393939] animate-[pulse_4.5s_ease-in-out_infinite]"
+            className="flex-1 rounded-md bg-card animate-[pulse_4.5s_ease-in-out_infinite]"
           />
         ))}
       </ul>
 
-      <div className="w-[704px] flex-1 flex items-center justify-center text-center bg-[#CFCFCF] dark:bg-[#5D5A5A] rounded-md p-6 h-full">
+      <div className="flex-1 flex items-center justify-center min-w-[608px] text-center bg-[#CFCFCF] dark:bg-[#5D5A5A] rounded-md p-6">
         <h3 className="text-foreground text-base max-w-lg">
           {t('emptyState.emptyChatMessage1')}
         </h3>

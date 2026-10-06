@@ -22,7 +22,7 @@ export const useChatMessages = (
       .filter((msg) => msg.roomId === selectedChatId)
       .map((msg) => ({
         ...msg,
-        isCurrentUser: msg.senderId === userId,
+        isCurrentUser: msg.isCurrentUser ?? msg.senderId === userId,
       }));
   }, [messages, selectedChatId, userId]);
 
