@@ -1,25 +1,24 @@
 import { useOrgSectionTitle } from '@/hooks/useOrgSectionTitle';
-import { isAdminOrModerator } from '@/lib/getUserRole';
-import { Role, UserOrganization } from '@/types';
-import { useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { UserOrganization } from '@/types';
 import { JSX } from 'react';
-import { Plus } from '@/components/icons';
-import { Button } from '@/components/ui/Button';
 import { OrgMemberList } from './OrgMemberList';
+import { useOrganizationPermissions } from '@/hooks/useOrganizationPermissions';
+import { useUserRole } from '@/components/providers/UserRoleProvider';
+import { AddMember } from './member/AddMember';
 
 export const OrgMemberSection = ({
   members,
-  role,
   orgId,
+  orgName,
 }: {
   members: UserOrganization[];
-  role: Role;
   orgId: string;
+  orgName: string;
 }): JSX.Element => {
-  const t = useTranslations('organization');
+  const role = useUserRole();
 
-  const adminRole = isAdminOrModerator(role);
+  const { canAddMember } = useOrganizationPermissions(role);
+
   const title = useOrgSectionTitle(role, 'members');
 
   const activeMembers = members.filter((member) => member.status === 'ACTIVE');
@@ -28,20 +27,17 @@ export const OrgMemberSection = ({
     <>
       <div className="flex flex-col md:flex-row justify-between items-start">
         <h2 className="text-h2-m lg:text-h2">{title}</h2>
-        {adminRole && members.length <= 1 && (
-          <Button
-            asChild
-            className="gap-[10px] mt-6 md:mt-0 align-right md:self-end"
-          >
-            <Link href="/tasks" className="text-white">
-              <Plus className="size-5 fill-current" />
-              {t('members.addMemberButton')}
-            </Link>
-          </Button>
+        {canAddMember && members.length <= 1 && (
+          <AddMember
+            organizationId={orgId}
+            existingMembers={members}
+            variant="default"
+            className="text-white"
+          />
         )}
       </div>
 
-      <OrgMemberList members={activeMembers} orgId={orgId} />
+      <OrgMemberList members={activeMembers} orgId={orgId} orgName={orgName} />
     </>
   );
 };

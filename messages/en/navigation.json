@@ -3,5 +3,6 @@
   "chat": "Chat",
   "map": "Map",
   "goals": "Goals",
-  "settings": "Settings"
+  "settings": "Settings",
+  "admin": "Admin"
 }

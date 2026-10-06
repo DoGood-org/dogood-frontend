@@ -2,7 +2,8 @@ import type { JSX } from 'react/jsx-runtime';
 import type { Tlocale } from '@/types/locale';
 import { Metadata } from 'next';
 import { fetchOrganizationById } from '@/facades/organizationFacade';
-import { OrganizationLayout } from '@/components/organization/OrganizationLayout';
+// import { OrganizationLayout } from '@/components/organization/OrganizationLayout';
+import { OrganizationLayoutServer } from '@/components/organization/OrganizationLayoutServer';
 
 interface Props {
   params: Promise<{ id: string; locale: Tlocale }>;
@@ -25,5 +26,5 @@ export default async function OrganizationPage({
 
   const organization = await fetchOrganizationById(id);
 
-  return <OrganizationLayout organization={organization} />;
+  return <OrganizationLayoutServer organization={organization} />;
 }

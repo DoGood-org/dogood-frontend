@@ -6,11 +6,12 @@ import { JSX } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { OrganizationDetailedProps } from '@/types';
 import { formatLocation } from '@/lib/formatLocation';
-import { getUserRole, isAdminOrModerator } from '@/lib/getUserRole';
+import { isAdminOrModerator } from '@/lib/getUserRole';
 import { ChatCircle, Email, Phone, UserLocate } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
 import { ReportOrg } from './dotMenu/ReportOrg';
 import { JoinButton } from './JoinButton';
+import { useUserRole } from '../providers/UserRoleProvider';
 
 export const OrganizationDesc = ({
   organization,
@@ -18,19 +19,11 @@ export const OrganizationDesc = ({
   organization: OrganizationDetailedProps;
 }): JSX.Element => {
   const t = useTranslations('organization');
-  const {
-    id,
-    avatar,
-    name,
-    email,
-    location,
-    phoneNumber,
-    description,
-    members,
-  } = organization;
+  const { id, avatar, name, email, location, phoneNumber, description } =
+    organization;
 
   const locale = useLocale();
-  const userRole = getUserRole(members);
+  const userRole = useUserRole();
   const adminRole = isAdminOrModerator(userRole);
 
   return (
@@ -44,7 +37,7 @@ export const OrganizationDesc = ({
           alt={`${name} avatar`}
           width={424}
           height={424}
-          className={`w-[336px] h-[336px] object-cover md:w-[192px] md:h-[192px] rounded-[10px] ${adminRole ? 'lg:w-[336px] lg:h-[336px]' : 'lg:w-[424px] lg:h-[424px]'}`}
+          className={`w-[353px] h-[353px] object-cover md:w-[192px] md:h-[192px] rounded-[10px] ${adminRole ? 'lg:w-[336px] lg:h-[336px]' : 'lg:w-[424px] lg:h-[424px]'}`}
         />
       </div>
 

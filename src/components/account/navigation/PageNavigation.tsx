@@ -3,6 +3,7 @@
 import React from 'react';
 import { NavigationPageProps } from '@/types/navigationType';
 import { Link, usePathname } from '@/i18n/navigation';
+import { useAuth } from '@/hooks';
 
 export const PageNavigation: React.FC<NavigationPageProps> = ({
   showLabels = true,
@@ -14,40 +15,43 @@ export const PageNavigation: React.FC<NavigationPageProps> = ({
   t,
 }) => {
   const pathname = usePathname();
+  const { user } = useAuth();
 
   return (
     <ul className={className}>
-      {items.map(({ label, translationKey, Icon, path }) => {
-        const isActive = pathname === path;
+      {items
+        .filter(({ isProtected }) => !isProtected || user?.siteRole === 'ADMIN')
+        .map(({ label, translationKey, Icon, path }) => {
+          const isActive = pathname === path;
 
-        return (
-          <li key={label}>
-            <Link
-              href={path}
-              className={`
+          return (
+            <li key={label}>
+              <Link
+                href={path}
+                className={`
               flex items-center gap-3 lg:p-3 rounded-xl border-[1px] border-transparent transition duration-300 text-bg-icon
               lg:border cursor-pointer ${isActive ? 'lg:border-border' : 'lg:border-transparent hover:lg:border-border'}
               ${linkClassName}
               w-full
               justify-start
             `}
-            >
-              <Icon
-                className={`
+              >
+                <Icon
+                  className={`
                   w-6 h-6 transition-colors duration-300
                   ${isActive ? 'text-btn-outline' : 'text-foreground'}
                   lg:text-bg-icon
                   md:hover:text-btn-outline-active
                   ${iconClassName}
                 `}
-              />
-              {showLabels && (
-                <span className={navLabels}>{t(translationKey)}</span>
-              )}
-            </Link>
-          </li>
-        );
-      })}
+                />
+                {showLabels && (
+                  <span className={navLabels}>{t(translationKey)}</span>
+                )}
+              </Link>
+            </li>
+          );
+        })}
     </ul>
   );
 };

@@ -11,10 +11,7 @@ export default async function AdminLayout({
 }): Promise<JSX.Element> {
   const me = await getServerCurrentUser();
 
-  // if (me.siteRole !== 'ADMIN') {
-  //   redirect('/');
-  // }
-  if (me.siteRole !== 'ADMIN') {
+  if (!me || 'isBanned' in me || me.siteRole !== 'ADMIN') {
     notFound();
   }
 

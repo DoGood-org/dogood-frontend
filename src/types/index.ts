@@ -5,6 +5,7 @@ export * from './card';
 export * from './errorType';
 export * from './heroTypes';
 export * from './howItWorksItem';
+export * from './joinRequest.type';
 export * from './locale';
 export * from './mainReviews';
 export * from './mapType';

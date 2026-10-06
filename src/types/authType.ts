@@ -20,7 +20,7 @@ export interface IUserSettings {
 }
 
 export interface User {
-  id: number | string;
+  id: string;
   name: string;
   email: string;
   avatarUrl?: string;

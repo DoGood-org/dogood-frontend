@@ -1,29 +1,41 @@
-import { UserOrganization } from '@/types';
+'use client';
+
 import { JSX } from 'react';
+import { EmptyContent } from '../EmptyContent';
 import { useTranslations } from 'next-intl';
-import { EmptyContent } from '@/components/organization/EmptyContent';
+import { OrgJoinRequestCard } from './OrgJoinRequestCard';
+import { Slider } from '@/components/ui/Slider';
+import { useJoinRequests } from '@/hooks/useJoinRequests';
 
 export const OrgJoinRequestSection = ({
-  members,
+  organizationId,
 }: {
-  members: UserOrganization[];
+  organizationId: string;
 }): JSX.Element => {
   const t = useTranslations('organization');
 
-  const pendingMembers = members.filter(
-    (member) => member.status === 'PENDING'
-  );
+  const { joinRequests, approve, reject } = useJoinRequests(organizationId);
 
   return (
     <>
       <h2 className="text-h2-m lg:text-h2">{t('request.title')}</h2>
-
-      {!!pendingMembers.length ? (
+      {!joinRequests || !joinRequests.length ? (
         <EmptyContent>{t('noRequest')}</EmptyContent>
       ) : (
-        //TODO -------------------
-        <p>Count of members - {pendingMembers.length}</p>
-        // ----------------------
+        <Slider
+          items={joinRequests}
+          itemsPerSlide={3}
+          listClassName="gap-5"
+          itemClassName="p-0"
+          renderItem={(request, idx) => (
+            <OrgJoinRequestCard
+              key={`${idx}-${request.id}`}
+              request={request}
+              onApprove={approve}
+              onReject={reject}
+            />
+          )}
+        />
       )}
     </>
   );

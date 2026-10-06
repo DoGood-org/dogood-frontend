@@ -10,12 +10,17 @@ import { Section } from '@/components/ui/Section';
 export const OrganizationContentPanel = ({
   views,
   viewComponents,
+  onViewChange,
 }: OrganizationContelPanelProps): JSX.Element => {
   const locale = useLocale();
   const isMobile = useMediaQuery('(max-width: 767px)');
-
-  const [activeView, setActiveView] = useState(views[0].view);
+  const [activeView, setActiveView] = useState(() => views[0]?.view);
   const activeData = views.find(({ view }) => view === activeView);
+
+  const handleViewChange = (view: string): void => {
+    setActiveView(view);
+    onViewChange?.(view);
+  };
 
   return (
     <Section className="pt-[26px] md:pt-[38px]">
@@ -24,7 +29,7 @@ export const OrganizationContentPanel = ({
           <AnimationTabs
             views={views}
             activeView={activeView}
-            onChange={setActiveView}
+            onChange={handleViewChange}
             headClass="flex-wrap md:justify-start"
             refClass={locale === 'de' && isMobile ? 'gap-1' : 'gap-4'}
             buttonClass="p-[10px]"

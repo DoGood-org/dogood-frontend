@@ -9,7 +9,7 @@ const UsersThree = (props: SVGProps<SVGSVGElement>) => (
     {...props}
   >
     <g
-      stroke="#F1F1F1"
+      stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
       clipPath="url(#prefix__a)"

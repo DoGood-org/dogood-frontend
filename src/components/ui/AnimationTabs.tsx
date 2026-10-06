@@ -99,7 +99,6 @@ export const AnimationTabs = ({
             onClick={() => onChange(view)}
             className={`relative z-10 text-p2-d px-4 py-2 rounded-md transition-color text-foreground duration-500 ${buttonClass} 
             `}
-            // ${ activeView === view ? 'text-foregr' : 'text-muted'}
           >
             {!isDesktop && isOrganizationPage
               ? icons[icon as keyof typeof icons]

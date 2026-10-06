@@ -1,14 +1,13 @@
-import { isAdminOrModerator } from '@/lib/getUserRole';
+import { SECTION_TITLES } from '@/constants/orgSectionTitles';
 import { Role } from '@/types';
 import { useTranslations } from 'next-intl';
 
-export const useOrgSectionTitle = (role: Role, section: string): string => {
-  const t = useTranslations('organization');
-  const adminRole = isAdminOrModerator(role);
+type OrgSection = keyof (typeof SECTION_TITLES)['ADMIN'];
 
-  const title = adminRole
-    ? `${t(`${section}.title`)}`
-    : `${t(`${section}.userTitle`)}`;
+export const useOrgSectionTitle = (role: Role, section: OrgSection): string => {
+  const t = useTranslations('organization');
+
+  const title = t(SECTION_TITLES[role][section]);
 
   return title;
 };

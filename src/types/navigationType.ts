@@ -3,6 +3,7 @@ type NavigationItem = {
   translationKey: string;
   Icon: React.ComponentType<{ className?: string }>;
   path: string;
+  isProtected?: boolean;
 };
 
 export interface NavigationPageProps {

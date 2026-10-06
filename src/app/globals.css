@@ -952,11 +952,11 @@ html body[data-scroll-locked]:has([role='dialog']) {
 }
 
 .upper-modal {
-  z-index: 1000;
+  z-index: 9992;
 }
 
 .modal-backdrop {
-  z-index: 999;
+  z-index: 9991;
   pointer-events: auto;
 }
 
