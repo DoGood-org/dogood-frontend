@@ -33,7 +33,7 @@ export default async function LocaleLayout({
     notFound();
   }
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${montserrat.variable} antialiased flex flex-col justify-between min-h-[100vh]`}
       >

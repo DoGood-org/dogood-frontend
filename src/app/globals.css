@@ -245,6 +245,23 @@ html {
   overflow: visible;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
+html body[data-scroll-locked]:not(:has([role='dialog'])) {
+  overflow: visible !important;
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+  --removed-body-scroll-bar-size: 0 !important;
+}
+
+html body[data-scroll-locked]:has([role='dialog']) {
+  overflow: hidden !important;
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+  --removed-body-scroll-bar-size: 0 !important;
+}
 .montserrat {
   font-family: var(--font-montserrat);
 }

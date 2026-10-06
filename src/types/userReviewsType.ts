@@ -1,3 +1,5 @@
+import { IReviewsItem } from './reviewType';
+
 export type IUser = {
   id: string;
   name: string;
@@ -26,9 +28,15 @@ export type IReviewsProps = Pick<ModalControls, 'setIsOpen'> & {
 export type DeleteModalControls = {
   isOpen: boolean;
   setIsOpen: (arg0: boolean) => void;
-  orgId: string;
+  orgId?: string;
+  revId?: string;
 };
 export type AddModalControls = {
   isOpen: boolean;
   setIsOpen: (arg0: boolean) => void;
+};
+export type EditModalControls = {
+  isOpen: boolean;
+  setIsOpen: (arg0: boolean) => void;
+  review: IReviewsItem;
 };

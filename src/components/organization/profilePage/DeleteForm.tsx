@@ -15,6 +15,7 @@ export const DeleteForm: React.FC<DeleteModalControls> = ({
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const t = useTranslations('settings');
+
   const router = useRouter();
 
   const handleDelOrg = async (orgId: string): Promise<void> => {
@@ -44,14 +45,16 @@ export const DeleteForm: React.FC<DeleteModalControls> = ({
         >
           {t('cancelBtn')}
         </Button>
-        <Button
-          variant="primary"
-          onClick={() => handleDelOrg(orgId)}
-          disabled={isDeleting}
-          className="px-6"
-        >
-          {t('deleteBtn')}
-        </Button>
+        {orgId && (
+          <Button
+            variant="primary"
+            onClick={() => handleDelOrg(orgId)}
+            disabled={isDeleting}
+            className="px-6"
+          >
+            {t('deleteBtn')}
+          </Button>
+        )}
       </div>
     </div>
   );

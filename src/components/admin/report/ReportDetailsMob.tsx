@@ -5,14 +5,8 @@ import { RenderUser } from './RenderUser';
 import { RenderField } from './RenderField';
 import { RenderRow } from './RenderRow';
 import { CloseIcon } from '@/components/icons';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/Select';
 import { ButtonControls } from './ButtonControls';
+import { FilterSelect } from '../reviews/FilterSelect';
 
 export const ReportDetailsMob: React.FC<IReportDetailsMob> = ({
   setIsOpen,
@@ -88,25 +82,12 @@ export const ReportDetailsMob: React.FC<IReportDetailsMob> = ({
         label={t('status')}
         labelClassName="mb-2"
         value={
-          <Select value={selectedStatus} onValueChange={handleStatusChange}>
-            <SelectTrigger
-              className="w-full"
-              style={{
-                height: '48px',
-                borderRadius: '4px',
-                borderColor: 'var(--text-help)',
-              }}
-            >
-              <SelectValue placeholder={t('selectStatus') || 'Select status'} />
-            </SelectTrigger>
-            <SelectContent className="bg-card">
-              {statusOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <FilterSelect
+            value={selectedStatus}
+            onValueChange={handleStatusChange}
+            options={statusOptions}
+            placeholder={t('selectStatus') || 'Select status'}
+          />
         }
       />
       <ButtonControls
