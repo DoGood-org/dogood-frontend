@@ -1,4 +1,5 @@
 'use client';
+
 import { EditModalControls } from '@/types/userReviewsType';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
@@ -10,7 +11,8 @@ import { FilterSelect } from './FilterSelect';
 import { RenderUser } from '../report/RenderUser';
 import { Rating } from '@/components/ui/Rating';
 import { ButtonControls } from '../report/ButtonControls';
-import { getStatusOptions } from './StatusOptions';
+import { getStatusOptions } from '@/utils/getStatusOptions';
+import Link from 'next/link';
 
 export const EditReviewFormDesk: React.FC<EditModalControls> = ({
   review,
@@ -19,17 +21,14 @@ export const EditReviewFormDesk: React.FC<EditModalControls> = ({
   const t = useTranslations('adminReviews');
   const statusOptions = getStatusOptions(t);
   const [selectedStatus, setSelectedStatus] = useState<string>(review.status);
-
   const handleStatusChange = (value: string): void => {
     setSelectedStatus(value);
   };
-
   const handleReject = (): void => {
     //TODO: Add Reject Logic
     console.log('Rejected report:', review.id);
     setIsOpen(false);
   };
-
   const handleApprove = (): void => {
     // TODO: Add Approve Logic
     console.log('Approved report:', review.id);
@@ -102,9 +101,17 @@ export const EditReviewFormDesk: React.FC<EditModalControls> = ({
                 <RenderUser
                   user={review.targetName || 'N/A'}
                   imgClassName="w-[20px] h-[20px]"
+                  isRenderNameOnly={false}
                 />
               )}
-              {review.targetType} | {review.targetName?.name || 'N/A'}
+              {review.targetType === 'ORGANIZATION' && (
+                <Link href={`/organization/${review.targetName?.id}/profile`}>
+                  {review.targetName?.name || 'N/A'}
+                </Link>
+              )}
+              {review.targetType === 'PLATFORM' && (
+                <Link href="/about">{review.targetName?.name || 'N/A'}</Link>
+              )}
             </span>
           }
           className="flex-none items-start gap-2 w-[230px]"
@@ -120,7 +127,7 @@ export const EditReviewFormDesk: React.FC<EditModalControls> = ({
               {review.comment}
             </span>
           }
-          className="flex-col items-start gap-2"
+          className="flex-col items-start gap-2 pr-4 md:max-h-[176px] overflow-y-auto"
           labelClassName="font-medium"
           valueClassName="min-w-0"
         />

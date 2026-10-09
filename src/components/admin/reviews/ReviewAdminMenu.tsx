@@ -2,7 +2,6 @@
 
 import { JSX, useState } from 'react';
 import { useTranslations } from 'next-intl';
-
 import { MoreMenu } from '@/components/ui/MoreMenu';
 import { Gear, TrashBinChat } from '@/components/icons';
 import { MenuAction } from '@/components/ui/MenuAction';
@@ -18,10 +17,8 @@ export const ReviewAdminMenu = ({
 }): JSX.Element => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
   const t = useTranslations('adminReviews');
   const isMobile = useMediaQuery('(max-width: 767px)');
-
   const actions: ActionConfig[] = [
     {
       id: 'edit',
@@ -34,7 +31,6 @@ export const ReviewAdminMenu = ({
     {
       id: 'delete',
       icon: TrashBinChat,
-
       label: t('delete'),
       action: (): void => {
         setIsDeleteModalOpen(true);
@@ -70,7 +66,6 @@ export const ReviewAdminMenu = ({
           px-[30px] py-7
         "
       />
-
       <DeleteReviewFormModal
         revId={review.id}
         isOpen={isDeleteModalOpen}

@@ -3,12 +3,15 @@ import { Approved, Pending, Star, Rejected } from '@/components/icons';
 import { IReviewsItem } from '@/types/reviewType';
 import { TargetTypeBadge } from './TargetTypeBadge';
 import { ReviewAdminMenu } from './ReviewAdminMenu';
+import { EditFormModal } from './EditFormModal';
 
 export const ReviewItemDesk = ({
   review,
 }: {
   review: IReviewsItem;
 }): JSX.Element => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const columns = [
     {
       key: 'id',
@@ -79,29 +82,53 @@ export const ReviewItemDesk = ({
             day: 'numeric',
             month: 'short',
           })}
-          <ReviewAdminMenu review={review} />
+          <span className="w-10 h-10 shrink-0" aria-hidden="true" />
         </span>
       ),
     },
   ];
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleRowClick = (): void => {
-    setIsModalOpen(!isModalOpen);
+
+  const handleRowClick = (e: React.MouseEvent<HTMLLIElement>): void => {
+    const target = e.target as HTMLElement;
+
+    if (target.closest('[data-radix-dropdown-menu-trigger]')) {
+      return;
+    }
+
+    setIsModalOpen(true);
   };
+
   return (
-    <ul
-      key={review.id}
-      className="lg:w-[1018px] overflow-hidden grid grid-cols-7 gap-2 lg:gap-4 bg-modal px-6 py-3 rounded-sm list-none w-full md:grid-cols-[60px_80px_80px_110px_60px_60px_80px] lg:grid-cols-[100px_150px_150px_250px_80px_80px_80px]"
-    >
-      {columns.map((column) => (
-        <li
-          key={column.key}
-          className="text-left overflow-hidden flex items-center lg:justify-start"
-          onClick={handleRowClick}
+    <>
+      <div className="relative">
+        <ul
+          tabIndex={0}
+          className="lg:w-[1018px] overflow-hidden grid grid-cols-7 gap-2 lg:gap-4 bg-modal px-6 py-3 rounded-sm list-none w-full md:grid-cols-[60px_80px_80px_110px_60px_60px_80px] lg:grid-cols-[100px_150px_150px_250px_80px_80px_80px] hover:shadow-admin hover:border-[#00BC7D1A] focus:shadow-admin focus:border-[#00BC7D1A] cursor-pointer"
         >
-          {column.content}
-        </li>
-      ))}
-    </ul>
+          {columns.map((column) => (
+            <li
+              key={column.key}
+              className="text-left overflow-hidden flex items-center lg:justify-start"
+              onClick={handleRowClick}
+            >
+              {column.content}
+            </li>
+          ))}
+        </ul>
+        <div
+          className="absolute right-6 top-1/2 -translate-y-1/2"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <ReviewAdminMenu review={review} />
+        </div>
+      </div>
+      {isModalOpen && (
+        <EditFormModal
+          review={review}
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+        />
+      )}
+    </>
   );
 };

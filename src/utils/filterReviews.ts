@@ -1,4 +1,6 @@
-import { FilterValues, IReviewsItem } from '@/types/reviewType';
+// utils/filterReviews.ts
+import { isWithinInterval, startOfDay, endOfDay } from 'date-fns';
+import { IReviewsItem, FilterValues } from '@/types/reviewType';
 
 export const applyFilters = (
   reviews: IReviewsItem[],
@@ -18,7 +20,10 @@ export const applyFilters = (
       if (!matchesSearch) return false;
     }
 
-    if (currentFilters.status?.toUpperCase() === review.status.toUpperCase()) {
+    if (
+      currentFilters.status &&
+      currentFilters.status.toUpperCase() !== review.status.toUpperCase()
+    ) {
       return false;
     }
 
@@ -29,12 +34,16 @@ export const applyFilters = (
       return false;
     }
 
-    if (currentFilters.date) {
-      const reviewDate = new Date(review.createdAt).toLocaleDateString(
-        'en-GB',
-        { day: 'numeric', month: 'long' }
-      );
-      if (reviewDate !== currentFilters.date) return false;
+    if (currentFilters.dateRange?.from) {
+      const reviewDate = new Date(review.createdAt);
+      const from = startOfDay(currentFilters.dateRange.from);
+      const to = currentFilters.dateRange.to
+        ? endOfDay(currentFilters.dateRange.to)
+        : endOfDay(currentFilters.dateRange.from);
+
+      if (!isWithinInterval(reviewDate, { start: from, end: to })) {
+        return false;
+      }
     }
 
     return true;

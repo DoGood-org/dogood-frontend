@@ -37,14 +37,18 @@ export const FilterSelect = ({
         <SelectValue placeholder={resolvedPlaceholder} />
       </SelectTrigger>
       <SelectContent
-        className={`bg-card ${contentClassName}`}
+        className={`bg-card p-3 ${contentClassName}`}
         position="popper"
         sideOffset={4}
         align="start"
         data-ignore-click-outside="true"
       >
         {options.map((option) => (
-          <SelectItem key={option.value} value={option.value}>
+          <SelectItem
+            key={option.value}
+            value={option.value}
+            className="mb-3 last:mb-0 cursor-pointer hover:text-btn "
+          >
             {option.label}
           </SelectItem>
         ))}

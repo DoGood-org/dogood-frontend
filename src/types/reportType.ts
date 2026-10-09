@@ -40,6 +40,7 @@ export interface RenderUserProps {
   };
   className?: string;
   imgClassName?: string;
+  isRenderNameOnly?: boolean;
 }
 
 export interface HeaderItem {

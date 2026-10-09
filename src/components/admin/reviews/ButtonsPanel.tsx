@@ -1,3 +1,5 @@
+'use client';
+
 import React, { JSX } from 'react';
 import { useTranslations } from 'next-intl';
 import { UserReview, Organizations, AboutUs } from '@/components/icons';
@@ -8,7 +10,6 @@ export const ButtonsPanel = ({
   onTabChange,
 }: ButtonsPanelProps): JSX.Element => {
   const t = useTranslations('adminReviews');
-
   const tabs = [
     {
       key: 'USER',
@@ -21,18 +22,20 @@ export const ButtonsPanel = ({
       icon: <Organizations className="w-5 h-5" />,
     },
     {
-      key: 'ABOUT_US',
+      key: 'PLATFORM',
       label: t('aboutUs'),
       icon: <AboutUs className="w-5 h-5" />,
     },
   ];
-
+  const handleTabClick = (key: string): void => {
+    onTabChange(activeTab === key ? '' : key);
+  };
   return (
     <ul className="flex gap-2 md:justify-between shrink-0 mb-3 md:mb-6 lg:gap-14">
       {tabs.map(({ key, label, icon }) => (
         <li key={key}>
           <button
-            onClick={() => onTabChange(key)}
+            onClick={() => handleTabClick(key)}
             className={`flex items-center justify-center gap-2 px-4 py-3 rounded-sm h-12 w-[99px] md:w-[180px] lg:w-[302px] cursor-pointer ${
               activeTab === key ? 'border border' : 'bg-card'
             }`}

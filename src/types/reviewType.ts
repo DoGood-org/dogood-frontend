@@ -1,4 +1,5 @@
 import { DetailedHTMLProps, HTMLAttributes, JSX, KeyboardEvent } from 'react';
+import { DateRange } from 'react-day-picker';
 import { FieldError } from 'react-hook-form';
 export interface UserProps {
   id: string;
@@ -58,11 +59,12 @@ export interface IReviewsItem {
 export interface FilterValues {
   status?: string;
   rating?: string;
-  date?: string;
+  dateRange?: { from?: Date; to?: Date };
 }
 export interface ActiveFiltersBarProps {
   activeFilters: string[];
   onReset: () => void;
+  onRemoveFilter?: (value: string) => void;
   className?: string;
   allLabel?: string;
 }
@@ -71,11 +73,7 @@ export interface ButtonsPanelProps {
   onTabChange: (tab: string) => void;
 }
 export interface FilterPanelProps {
-  onFilterChange?: (filters: {
-    status?: string;
-    rating?: string;
-    date?: string;
-  }) => void;
+  onFilterChange?: (filters: FilterValues) => void;
 }
 export interface FilterOption {
   value: string;
@@ -98,3 +96,13 @@ export type ActionConfig = {
   href?: string;
   action?: () => void;
 };
+export interface ReviewsListProps {
+  reviews: IReviewsItem[];
+  itemsPerSlide?: number;
+}
+export interface DateRangePickerProps {
+  value?: DateRange;
+  onChange: (range: DateRange | undefined) => void;
+  placeholder?: string;
+  className?: string;
+}

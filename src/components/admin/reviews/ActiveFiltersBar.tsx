@@ -8,6 +8,7 @@ import { ActiveFiltersBarProps } from '@/types/reviewType';
 export const ActiveFiltersBar: React.FC<ActiveFiltersBarProps> = ({
   activeFilters,
   onReset,
+  onRemoveFilter,
   className = '',
   allLabel,
 }) => {
@@ -19,12 +20,10 @@ export const ActiveFiltersBar: React.FC<ActiveFiltersBarProps> = ({
     Confirmed: t('approved'),
     Rejected: t('rejected'),
   };
-
   const renderFilter = (value: string): React.ReactNode => {
     if (STATUS_LABEL_MAP[value]) {
       return STATUS_LABEL_MAP[value];
     }
-
     if (/^\d+$/.test(value)) {
       return (
         <>
@@ -33,10 +32,8 @@ export const ActiveFiltersBar: React.FC<ActiveFiltersBarProps> = ({
         </>
       );
     }
-
     return value;
   };
-
   return (
     <div
       className={`flex flex-wrap justify-start items-center w-full mb-6 ${className}`}
@@ -50,12 +47,14 @@ export const ActiveFiltersBar: React.FC<ActiveFiltersBarProps> = ({
       </button>
 
       {activeFilters.map((value, idx) => (
-        <span
+        <button
           key={`${value}-${idx}`}
-          className="px-1 py-1.5 rounded-sm text-foreground font-medium flex items-center gap-1"
+          type="button"
+          onClick={() => onRemoveFilter?.(value)}
+          className="px-1 py-1.5 rounded-sm text-foreground font-medium flex items-center gap-1 cursor-pointer hover:opacity-70 transition-opacity"
         >
           | {renderFilter(value)}
-        </span>
+        </button>
       ))}
     </div>
   );

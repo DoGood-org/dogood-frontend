@@ -10,7 +10,7 @@ import { FilterSelect } from './FilterSelect';
 import { RenderUser } from '../report/RenderUser';
 import { Rating } from '@/components/ui/Rating';
 import { ButtonControls } from '../report/ButtonControls';
-import { getStatusOptions } from './StatusOptions';
+import { getStatusOptions } from '@/utils/getStatusOptions';
 
 export const EditReviewFormMob: React.FC<EditModalControls> = ({
   review,
@@ -107,6 +107,7 @@ export const EditReviewFormMob: React.FC<EditModalControls> = ({
                 <RenderUser
                   user={review.targetName || 'N/A'}
                   imgClassName="w-[20px] h-[20px]"
+                  isRenderNameOnly={false}
                 />
               )}
               {review.targetType} | {review.targetName?.name || 'N/A'}
@@ -127,7 +128,7 @@ export const EditReviewFormMob: React.FC<EditModalControls> = ({
               {review.comment}
             </span>
           }
-          className="flex-col items-start gap-2"
+          className="flex-col items-start gap-2 pr-4 max-h-[144px] overflow-y-auto"
           labelClassName="font-medium"
           valueClassName="min-w-0"
         />

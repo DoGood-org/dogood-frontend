@@ -1,11 +1,13 @@
 import { RenderUserProps } from '@/types/reportType';
 import Image from 'next/image';
 import React, { JSX } from 'react';
+import Link from 'next/link';
 
 export const RenderUser = ({
   user,
   className = '',
   imgClassName = '',
+  isRenderNameOnly = true,
 }: RenderUserProps): JSX.Element => (
   <div className={`flex items-center gap-2 min-w-0 ${className}`}>
     {user.avatar && (
@@ -17,8 +19,6 @@ export const RenderUser = ({
         height={40}
       />
     )}
-    <span className="truncate" title={user.name}>
-      {user.name}
-    </span>
+    {isRenderNameOnly && <Link href={`/profile/${user.id}`}>{user.name}</Link>}
   </div>
 );

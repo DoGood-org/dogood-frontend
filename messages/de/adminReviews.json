@@ -25,5 +25,7 @@
   "titleDelModal": "Sind Sie sicher, dass Sie diese Rezension löschen möchten?",
   "descrDelModal": "Diese Aktion kann nicht rückgängig gemacht werden. Dies wird die Rezension dauerhaft löschen.",
   "cancelBtn": "Abbrechen",
-  "deleteBtn": "Löschen"
+  "deleteBtn": "Löschen",
+  "selectPeriod": "Zeitraum auswählen",
+  "applyBtn": "Anwenden"
 }

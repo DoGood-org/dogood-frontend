@@ -4,7 +4,6 @@ import UserReview from '@/components/icons/UserReview';
 import { JSX } from 'react';
 
 type TargetType = 'USER' | 'ORGANIZATION' | 'PLATFORM';
-
 const TARGET_TYPE_COMPONENTS: Record<
   TargetType,
   React.ComponentType<{ className?: string }>
@@ -13,14 +12,12 @@ const TARGET_TYPE_COMPONENTS: Record<
   ORGANIZATION: Organizations,
   PLATFORM: AboutUs,
 };
-
 interface TargetTypeBadgeProps {
   targetType: string;
   className?: string;
   iconClassName?: string;
   isTargetType?: boolean;
 }
-
 export const TargetTypeBadge = ({
   targetType,
   className = 'flex gap-1 items-center capitalize',
