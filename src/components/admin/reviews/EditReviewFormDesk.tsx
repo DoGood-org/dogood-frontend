@@ -99,18 +99,26 @@ export const EditReviewFormDesk: React.FC<EditModalControls> = ({
             <span>
               {review.targetType === 'USER' && (
                 <RenderUser
-                  user={review.targetName || 'N/A'}
+                  user={review.targetName}
                   imgClassName="w-[20px] h-[20px]"
                   isRenderNameOnly={false}
                 />
               )}
               {review.targetType === 'ORGANIZATION' && (
-                <Link href={`/organization/${review.targetName?.id}/profile`}>
-                  {review.targetName?.name || 'N/A'}
+                <Link
+                  href={`/organization/${review.targetName?.id}/profile`}
+                  className="block hover:text-btn-hover focus:text-btn-hover active:text-btn-active"
+                >
+                  {review.targetName?.name}
                 </Link>
               )}
               {review.targetType === 'PLATFORM' && (
-                <Link href="/about">{review.targetName?.name || 'N/A'}</Link>
+                <Link
+                  href="/about"
+                  className="block hover:text-btn-hover focus:text-btn-hover active:text-btn-active"
+                >
+                  {review.targetName?.name}
+                </Link>
               )}
             </span>
           }

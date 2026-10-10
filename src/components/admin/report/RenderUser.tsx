@@ -19,6 +19,13 @@ export const RenderUser = ({
         height={40}
       />
     )}
-    {isRenderNameOnly && <Link href={`/profile/${user.id}`}>{user.name}</Link>}
+    {isRenderNameOnly && (
+      <Link
+        href={`/profile/${user.id}`}
+        className="block hover:text-btn-hover focus:text-btn-hover active:text-btn-active"
+      >
+        {user.name}
+      </Link>
+    )}
   </div>
 );
