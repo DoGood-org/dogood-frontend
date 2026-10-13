@@ -101,7 +101,6 @@ export const EditReviewFormDesk: React.FC<EditModalControls> = ({
                 <RenderUser
                   user={review.targetName}
                   imgClassName="w-[20px] h-[20px]"
-                  isRenderNameOnly={false}
                 />
               )}
               {review.targetType === 'ORGANIZATION' && (

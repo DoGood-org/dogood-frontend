@@ -63,6 +63,8 @@ export const ReviewsList = ({
 
   const handleResetFilters = (): void => {
     setFilters({});
+    setActiveTab('');
+    setSearchQuery('');
     setResetKey((prev) => prev + 1);
   };
 
