@@ -11,7 +11,7 @@ export const ScrollAfterDelay = lazyImport(
 );
 
 export const StoreMapInstance = lazyImport(
-  () => import('@/components/main/map/StoreMapInstance'),
+  () => import('@/components/main/map/markers/StoreMapInstance'),
   'StoreMapInstance'
 );
 

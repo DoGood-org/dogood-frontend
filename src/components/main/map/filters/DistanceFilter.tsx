@@ -9,14 +9,41 @@ import React, { JSX } from 'react';
 
 export const DistanceFilter = (): JSX.Element => {
   const t = useTranslations('map');
-  const { setDistanceFilter, distanceFilter } = useFilterStore();
+  const { setDistanceFilter, distanceFilter, distanceUnit, setDistanceUnit } =
+    useFilterStore();
 
   return (
     <>
-      <h4 className="text-base">{t('distance')}</h4>
+      <div className="flex">
+        <h4 className="text-base">{t('distance')}</h4>
+        <div className="flex ml-auto gap-4">
+          <button
+            type="button"
+            onClick={() => setDistanceUnit('mi')}
+            className={`px-4 py-2 text-base rounded-lg transition-all ${
+              distanceUnit === 'mi'
+                ? 'border border-text-gray text-black dark:text-white'
+                : 'text-gray dark:white'
+            }`}
+          >
+            mi
+          </button>
+          <button
+            type="button"
+            onClick={() => setDistanceUnit('km')}
+            className={`px-4 py-2 text-base rounded-lg transition-all ${
+              distanceUnit === 'km'
+                ? 'border border-text-gray text-black dark:text-white'
+                : 'text-gray dark:white'
+            }`}
+          >
+            km
+          </button>
+        </div>
+      </div>
       <LineDivider className="flex w-full mb-4 bg-text-gray h-[1px]" />
-      <ul className="flex gap-2 flex-wrap w-full mb-[80px]">
-        {getDistancesList(t).map((item) => {
+      <ul className="flex gap-2 flex-wrap mb-[80px] w-[315px] md:w-[608px] lg:w-[393px]">
+        {getDistancesList(t, distanceUnit).map((item) => {
           const isActive = distanceFilter === item.value;
 
           return (
@@ -24,7 +51,7 @@ export const DistanceFilter = (): JSX.Element => {
               <Button
                 variant="tag"
                 size="xl"
-                className={`flex gap-[10px] text-sm w-[140px] md:w-[167px] lg:w-[136px] ${
+                className={`flex gap-[10px] text-sm w-full p-4 ${
                   isActive ? 'clickedBtn' : ''
                 }`}
                 onClick={() => setDistanceFilter(item.value as IDistanceFilter)}

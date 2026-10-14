@@ -43,9 +43,7 @@ export const ButtonOpenTasks = ({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.2, ease: 'easeInOut' }}
-                >
-                  Tasks
-                </motion.p>
+                ></motion.p>
               )}
             </AnimatePresence>
 

@@ -87,28 +87,34 @@ export const TasksOnMap = (props: Props): JSX.Element => {
             }
           }}
         >
-          <div className="flex flex-col bg-card w-full rounded-sm lg:w-[487px]">
-            <ButtonOpenTasks className="dragToggle mx-auto bg-card h-10 lg:hidden" />
+          <div className="flex flex-col bg-card rounded-sm">
             <FormSearch
-              className="p-0 bg-card border-t border-t-foreground lg:border-t-0  lg:border-b lg:border-b-foreground lg:rounded-t-none"
-              inputClassName="h-10 overflow-hidden"
+              className="p-0 bg-card border-0 lg:border-b lg:border-b-foreground lg:rounded-t-none"
+              inputClassName="h-10 overflow-hidden py-0 lg:h-12 lg:py-3"
               leftSVGClassName="left-0"
               rightSVGClassName="right-0"
             />
-            <ButtonOpenTasks
-              className="hidden md:hidden lg:inline-flex lg:bg-card lg:h-10 lg:mb-0 lg:z-500 lg:w-full"
-              onClick={() => togglePanel('tasks')}
-            />
+            <ButtonOpenTasks className="dragToggle mx-auto bg-card h-5 lg:hidden" />
+            {activePanel !== 'filters' && (
+              <ButtonOpenTasks
+                className="hidden md:hidden lg:inline-flex lg:bg-card lg:h-10 lg:mb-0 lg:z-500 lg:w-full"
+                onClick={() => togglePanel('tasks')}
+              />
+            )}
           </div>
 
           <motion.div
             animate={{
-              height:
-                isDesktop && activePanel
-                  ? 745 // or whatever your fixed height is
+              height: isDesktop
+                ? activePanel
+                  ? 'auto'
+                  : 0
+                : activePanel
+                  ? '70vh'
                   : dragHeight,
             }}
             transition={{ duration: 0.3 }}
+            className="min-h-0 overflow-y-auto"
           >
             <AnimatePresence mode="wait">
               {activePanel === 'filters' && (

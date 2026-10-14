@@ -2,7 +2,7 @@
 
 import SvgPlus from '@/components/icons/Plus';
 import { SvgMinus } from '@/components/icons/SvgMinus';
-import { ButtonMap } from '@/components/main/map/ButtonMap';
+import { ButtonMap } from '@/components/main/map/controls/ButtonMap';
 import { JSX } from 'react';
 import { useMap } from 'react-leaflet';
 

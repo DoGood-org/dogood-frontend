@@ -1,5 +1,5 @@
 'use client';
-import CustomLayerController from '@/components/main/map/CustomLayerController';
+import CustomLayerController from '@/components/main/map/controls/CustomLayerController';
 import { ButtonFullScreen } from '@/components/main/map/profileMap/ButtonFullScreen';
 import { ProfileButtonLocation } from '@/components/main/map/profileMap/ProfileButtonLocation';
 import { ProfileCustomControlZoom } from '@/components/main/map/profileMap/ProfileCustomControlZoom';

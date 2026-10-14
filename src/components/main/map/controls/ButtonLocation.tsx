@@ -1,6 +1,6 @@
 'use client';
 import { GpsIcon } from '@/components/icons/GPSicon';
-import { ButtonMap } from '@/components/main/map/ButtonMap';
+import { ButtonMap } from '@/components/main/map/controls/ButtonMap';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { JSX } from 'react';
 

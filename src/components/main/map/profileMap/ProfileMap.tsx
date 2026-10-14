@@ -8,9 +8,9 @@ import { ProfileMultiControlPanel } from '@/components/main/map/profileMap/Profi
 import { ResponsiveMapWrpr } from '@/components/main/map/profileMap/ResponsiveMapWrpr';
 import { RadiusWatcher } from '@/components/main/map/RadiusWatcher';
 import { ScrollAfterDelay } from '@/components/main/map/ScrollAfterDelay';
-import { StoreMapInstance } from '@/components/main/map/StoreMapInstance';
+import { StoreMapInstance } from '@/components/main/map/markers/StoreMapInstance';
 
-import { UserLocation } from '@/components/main/map/UserLocation';
+import { UserLocation } from '@/components/main/map/markers/UserLocation';
 import { AnimatedModalWrapper } from '@/components/ui/portal/AnimatedModalWrapper';
 import Portal from '@/components/ui/portal/Portal';
 import { getMarkerIcon, resolveTaskCategory } from '@/lib/mapUtils';

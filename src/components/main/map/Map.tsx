@@ -19,11 +19,11 @@ import {
   StoreMapInstance,
 } from './LazyImports';
 import { generateTasks } from './mockTasks';
-import { Container } from '@/components/ui/Container';
-import { UserLocation } from './UserLocation';
-import { MultiControlPanel } from './MultiControlPanel';
-import { CustomControlContent } from './CustomControlContent';
+import { UserLocation } from './markers/UserLocation';
+import { MultiControlPanel } from './controls/MultiControlPanel';
+import { CustomControlContent } from './controls/CustomControlContent';
 import { TasksOnMap } from './tasksPanel/TasksOnMap';
+import { MapAutoResize } from './profileMap/MapAutoResize';
 
 export const Map: React.FC = (): JSX.Element => {
   const router = useRouter();
@@ -120,7 +120,7 @@ export const Map: React.FC = (): JSX.Element => {
   const { MapContainer, TileLayer, Marker, Popup } = leafletComponents;
 
   return (
-    <Container
+    <div
       className={`w-full h-full relative transition-transform-y overflow-hidden 
        ${activePanel ? 'pb-45 md:pb-60 lg:pb-20 ' : 'pb-20'}`}
     >
@@ -153,6 +153,7 @@ export const Map: React.FC = (): JSX.Element => {
           >
             <ScrollAfterDelay delay={2000} />
             <StoreMapInstance mapKey="main" />
+            <MapAutoResize />
             <UserLocation />
             <RadiusWatcher />
             <AutoZoomOnDistanceFilter />
@@ -301,9 +302,9 @@ export const Map: React.FC = (): JSX.Element => {
         mapHeight={547}
         mapOnMain={true}
         tasks={noPaginatedTasks}
-        className="absolute z-[1000] w-[calc(100%-40px)] md:w-[calc(100%-120px)] lg:w-[487px] lg:top-16 lg:left-24"
+        className="absolute z-[1000] lg:top-16 lg:left-24 w-[353px] md:w-[648px] lg:w-[487px]"
       />
-    </Container>
+    </div>
   );
 };
 

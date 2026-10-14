@@ -49,7 +49,7 @@ export const CategoryLabel: React.FC<CategoryLabelProps> = ({
       <Button
         variant="tag"
         size="xl"
-        className={` ${icons[category].color} flex gap-[10px] w-[140px] md:[167px] lg:[136px] text-sm ${
+        className={` ${icons[category].color} flex gap-[10px] w-[136px] text-sm ${
           selected ? 'clickedBtn text-sm' : ''
         }`}
         onClick={() => onCategoryToggle && onCategoryToggle(category)}

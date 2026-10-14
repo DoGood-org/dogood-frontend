@@ -9,7 +9,12 @@ export const MapAutoResize = (): JSX.Element | null => {
   useEffect(() => {
     const container = map.getContainer();
     const resizeObserver = new ResizeObserver((): void => {
-      map.invalidateSize();
+      if (container.clientWidth > 0 && container.clientHeight > 0) {
+        map.invalidateSize({
+          pan: false,
+          debounceMoveend: true,
+        });
+      }
     });
     resizeObserver.observe(container);
 

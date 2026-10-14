@@ -62,7 +62,7 @@ export const FormSearch = ({
         <div className={` flex items-center justify-center ${className}`}>
           <button
             id="searchButton"
-            className={`absolute inline-flex items-center justify-center p-2  z-25 cursor-pointer text-foreground ${leftSVGClassName}`}
+            className={`absolute inline-flex items-center justify-center p-2 z-25 cursor-pointer text-foreground ${leftSVGClassName}`}
             onClick={onSearchButtonClick}
           >
             <Search className={'text-foreground stroke-foreground w-6 h-6'} />
@@ -107,7 +107,7 @@ export const FormSearch = ({
       </form>
       <button
         id="filtersButton"
-        className={`inline-flex items-center justify-center p-2 absolute top-0 z-25 cursor-pointer text-foreground ${rightSVGClassName}`}
+        className={`inline-flex items-center justify-center p-2 absolute top-1 z-25 cursor-pointer text-foreground ${rightSVGClassName}`}
         onClick={onFilterButtonClick}
       >
         <SlidersVertical className="w-6 h-6 stroke-foreground text-foreground" />

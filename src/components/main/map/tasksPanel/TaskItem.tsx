@@ -6,7 +6,7 @@ import { TaskCategoryIconsList } from '@/components/main/map/tasksPanel/TaskCate
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { IExtendedITaskProps } from '@/types/tasks.type';
 import { GpsIcon } from '@/components/icons/GPSicon';
-import { ButtonMap } from '@/components/main/map/ButtonMap';
+import { ButtonMap } from '@/components/main/map/controls/ButtonMap';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useRouter } from 'next/navigation';
 

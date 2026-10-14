@@ -55,15 +55,30 @@ export const getCategoryList = (t: TranslationFunction): ICategoryItem[] => [
   { icon: FoodSvg, title: t('foodBtn'), color: 'bg-food' },
 ];
 
-export const getDistancesList = (t: TranslationFunction): IDistanceItem[] => [
-  { value: '1', title: t('1km') },
-  { value: '3', title: t('3km') },
-  { value: '5', title: t('5km') },
-  { value: '10', title: t('10km') },
-  { value: '20', title: t('20km') },
-  { value: '50', title: t('50km') },
-  { value: 'all', title: t('neutroBtn') },
-];
+export const getDistancesList = (
+  t: TranslationFunction,
+  unit: 'km' | 'mi' = 'km'
+): IDistanceItem[] => {
+  if (unit === 'mi') {
+    return [
+      { value: '1', title: t('1mi') },
+      { value: '3', title: t('3mi') },
+      { value: '5', title: t('5mi') },
+      { value: '10', title: t('10mi') },
+      { value: '30', title: t('30mi') },
+      { value: 'all', title: t('neutroBtn') },
+    ];
+  }
+
+  return [
+    { value: '1', title: t('1km') },
+    { value: '3', title: t('3km') },
+    { value: '5', title: t('5km') },
+    { value: '10', title: t('10km') },
+    { value: '30', title: t('30km') },
+    { value: 'all', title: t('neutroBtn') },
+  ];
+};
 //---------------------------------utils for Profile Forms----------------------------------
 
 export const getHowItWorks = (t: TranslationFunction): IHowItWorksItem[] => [

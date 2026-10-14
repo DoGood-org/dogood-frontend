@@ -2,7 +2,7 @@ import { useMapStore } from '@/zustand/stores/mapStore';
 
 import { FullscreenIcon } from 'lucide-react';
 import { JSX } from 'react';
-import { ButtonMap } from '../ButtonMap';
+import { ButtonMap } from '../controls/ButtonMap';
 
 export const ButtonFullScreen = (): JSX.Element => {
   const { fullscreenMap, toggleFullscreenMap } = useMapStore();
