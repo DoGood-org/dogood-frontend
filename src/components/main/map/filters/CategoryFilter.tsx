@@ -15,7 +15,7 @@ export const CategoryFilter = ({ categories }: Props): JSX.Element | null => {
     <div className="mb-6 flex flex-col w-full">
       <h4 className="text-base">{t('category')}</h4>
       <LineDivider className={'flex w-full mb-4 bg-text-gray h-[1px]'} />
-      <ul className="flex gap-4 flex-wrap w-full mb-6">
+      <ul className="flex gap-4 flex-wrap w-[288px] mb-6">
         {categories.map((category): JSX.Element => {
           return (
             <CategoryLabel

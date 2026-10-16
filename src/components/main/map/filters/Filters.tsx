@@ -36,7 +36,7 @@ export const Filters: FC<Props> = ({ tasks, className }): JSX.Element => {
           onClick={() => setActivePanel(null)}
         />
       </div>
-      <div className="flex-1 pl-3 h-full overflow-y-auto overflow-x-hidden custom-scrollbar-hide">
+      <div className="flex-1 pl-3 h-full overflow-x-hidden">
         <div className="flex flex-col pr-2">
           <CategoryFilter categories={categories as string[]} />
           <DistanceFilter />

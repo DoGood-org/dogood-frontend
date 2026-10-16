@@ -20,7 +20,7 @@ export const DistanceFilter = (): JSX.Element => {
           <button
             type="button"
             onClick={() => setDistanceUnit('mi')}
-            className={`px-4 py-2 text-base rounded-lg transition-all ${
+            className={`px-4 py-2 text-base rounded-lg transition-all cursor-pointer ${
               distanceUnit === 'mi'
                 ? 'border border-text-gray text-black dark:text-white'
                 : 'text-gray dark:white'
@@ -31,7 +31,7 @@ export const DistanceFilter = (): JSX.Element => {
           <button
             type="button"
             onClick={() => setDistanceUnit('km')}
-            className={`px-4 py-2 text-base rounded-lg transition-all ${
+            className={`px-4 py-2 text-base rounded-lg transition-all cursor-pointer ${
               distanceUnit === 'km'
                 ? 'border border-text-gray text-black dark:text-white'
                 : 'text-gray dark:white'

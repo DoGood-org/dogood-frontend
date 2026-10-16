@@ -76,10 +76,10 @@ export const FormSearch = ({
             placeholder="Search.."
             className={`${searchIsActive ? 'cursor-default' : 'cursor-grab'}
             px-10
-            w-full text-base italic bg-card text-foreground rounded-sm
+            w-full text-base italic bg-background text-foreground rounded-sm
         placeholder:font-normal placeholder:text-muted-foreground
         border-none outline-none focus:ring-0 focus:outline-none shadow-none
-        disabled:pointer-events-none disabled:opacity-50 ${inputClassName}`}
+        disabled:pointer-events-none disabled:opacity-50 lg:bg-card ${inputClassName}`}
             onBlur={(e) => {
               if (!e.target.value.trim()) {
                 console.log('blurr');
@@ -107,7 +107,7 @@ export const FormSearch = ({
       </form>
       <button
         id="filtersButton"
-        className={`inline-flex items-center justify-center p-2 absolute top-1 z-25 cursor-pointer text-foreground ${rightSVGClassName}`}
+        className={`inline-flex items-center justify-center p-2 absolute top-0 z-25 cursor-pointer text-foreground ${rightSVGClassName}`}
         onClick={onFilterButtonClick}
       >
         <SlidersVertical className="w-6 h-6 stroke-foreground text-foreground" />

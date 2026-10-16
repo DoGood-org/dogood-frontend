@@ -8,7 +8,7 @@ export const MapAutoResize = (): JSX.Element | null => {
 
   useEffect(() => {
     const container = map.getContainer();
-    const resizeObserver = new ResizeObserver((): void => {
+    const resizeObserver = new ResizeObserver(() => {
       if (container.clientWidth > 0 && container.clientHeight > 0) {
         map.invalidateSize({
           pan: false,

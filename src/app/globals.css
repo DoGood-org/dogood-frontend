@@ -198,7 +198,7 @@
   --star-empty: #747474;
   --medicine: #1f5eff;
   --animal: #ff7d57;
-  --nature: #4caf50;
+  --nature: #00c1ac;
   --food: #e4a23c;
 
   /* --radius: 0.625rem; */
@@ -878,6 +878,17 @@ html {
   padding: 10px;
   border-radius: var(--radius-lg);
 }
+
+/* map: tiles (prevent Tailwind Preflight from breaking tile sizing) */
+.leaflet-container img.leaflet-tile {
+  max-width: none;
+  max-height: none;
+}
+/* map: dark theme background (hides gaps between tiles) */
+.dark .leaflet-container {
+  background: #1a1a1a;
+}
+
 @keyframes orbit {
   0% {
     transform: rotate(0deg);

@@ -42,7 +42,7 @@ export const Map: React.FC = (): JSX.Element => {
     userLocation,
     setUserLocation,
     defaultLocation,
-    activePanel,
+    // activePanel,
 
     declineLocationSharing,
     showGeolocationPopup,
@@ -120,14 +120,11 @@ export const Map: React.FC = (): JSX.Element => {
   const { MapContainer, TileLayer, Marker, Popup } = leafletComponents;
 
   return (
-    <div
-      className={`w-full h-full relative transition-transform-y overflow-hidden 
-       ${activePanel ? 'pb-45 md:pb-60 lg:pb-20 ' : 'pb-20'}`}
-    >
-      <div className="flex flex-col rounded-[12px] overflow-hidden bg-card h-[547px] lg:h-[919px]">
+    <div className="w-full relative transition-transform-y overflow-hidden pb-0 lg:h-full lg:pb-20">
+      <div className="flex flex-col rounded-[12px] rounded-b-none md:rounded-b-[12px] overflow-hidden bg-card h-[547px] lg:h-[919px]">
         <div
           ref={mapContainerRef}
-          className="block overflow-hidden border-background text-foreground rounded-t-[10px] w-full h-full "
+          className="block overflow-hidden border-background text-foreground rounded-t-[10px] md:rounded-b-[10px] w-full h-full"
         >
           <Portal>
             <AnimatedModalWrapper
@@ -302,7 +299,7 @@ export const Map: React.FC = (): JSX.Element => {
         mapHeight={547}
         mapOnMain={true}
         tasks={noPaginatedTasks}
-        className="absolute z-[1000] lg:top-16 lg:left-24 w-[353px] md:w-[648px] lg:w-[487px]"
+        className="relative z-[1000] w-full mt-0 md:mt-4 lg:mt-0 lg:absolute lg:top-16 lg:left-24 lg:w-[487px]"
       />
     </div>
   );

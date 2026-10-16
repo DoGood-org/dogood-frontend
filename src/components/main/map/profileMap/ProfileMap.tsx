@@ -46,7 +46,7 @@ export const ProfileMap = (): JSX.Element => {
     checkLocationPermission,
     clickedCoords,
     showOptionsMenu,
-    activePanel,
+    // activePanel,
   } = useMapStore();
 
   useEffect(() => {
@@ -159,9 +159,7 @@ export const ProfileMap = (): JSX.Element => {
   };
 
   return (
-    <div
-      className={`profile-map-wrapper w-full h-full relative ${activePanel ? 'pb-40' : ' pb-20'}`}
-    >
+    <div className="profile-map-wrapper w-full relative lg:h-full pb-5 lg:pb-20">
       <AnimatePresence mode="wait">
         <ResponsiveMapWrpr key={fullscreenMap ? 'fullscreen' : 'default'}>
           <div className="w-full h-full">
@@ -342,7 +340,7 @@ export const ProfileMap = (): JSX.Element => {
         mapHeight={400}
         tasks={noPaginatedTasks}
         mapOnMain={false}
-        className={' absolute z-[1000] w-full lg:w-[487px] lg:top-16 lg:left-5'}
+        className="relative z-[1000] w-full mt-0 md:mt-0 lg:absolute lg:top-16 lg:left-24 lg:w-[487px]"
       />
     </div>
   );
