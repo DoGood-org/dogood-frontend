@@ -38,6 +38,7 @@ export const OrganizationAdminMenu = ({
     {
       id: 'delete',
       icon: TrashBinChat,
+
       label: t('delete'),
       action: (): void => {
         setIsDeleteModalOpen(true);

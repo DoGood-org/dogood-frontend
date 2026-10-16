@@ -34,10 +34,13 @@ export interface RenderRowProps {
 
 export interface RenderUserProps {
   user: {
-    avatar: string;
+    id: string;
+    avatar?: string;
     name: string;
   };
   className?: string;
+  imgClassName?: string;
+  isRenderNameOnly?: boolean;
 }
 
 export interface HeaderItem {

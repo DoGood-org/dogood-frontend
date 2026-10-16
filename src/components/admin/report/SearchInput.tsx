@@ -35,13 +35,13 @@ export const SearchInput = ({
   };
 
   return (
-    <div className={`relative flex-1 ${className}`}>
+    <div className={`relative ${className}`}>
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 fill-foreground rotate-90" />
       <Input
         value={searchInput}
         onChange={handleInputChange}
         placeholder={placeholder || t('searchPlaceholder') || 'Search...'}
-        className="pl-10 py-2 w-full border border-none focus:ring-card bg-card rounded-sm placeholder:text-foreground"
+        className="pl-10 py-3 w-full border border-none focus:ring-card bg-card rounded-sm placeholder:text-foreground h-12"
       />
     </div>
   );
