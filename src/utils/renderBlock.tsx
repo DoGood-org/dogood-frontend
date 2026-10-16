@@ -12,7 +12,7 @@ export function renderBlock(block: any, key?: React.Key): React.ReactNode {
     return (
       <div key={key} className="mb-2 space-y-2">
         {block.map((item, idx) =>
-          renderBlock(item, key ? `${key}-${idx}` : idx)
+          renderBlock(item, key ? `${String(key)}-${idx}` : idx)
         )}
       </div>
     );
@@ -51,7 +51,10 @@ export function renderBlock(block: any, key?: React.Key): React.ReactNode {
       {block.description && Array.isArray(block.description) && (
         <div className="mb-2 space-y-2">
           {block.description.map((desc: any, idx: number) =>
-            renderBlock(desc, key ? `${key}-desc-${idx}` : `desc-${idx}`)
+            renderBlock(
+              desc,
+              key ? `${String(key)}-desc-${idx}` : `desc-${idx}`
+            )
           )}
         </div>
       )}
@@ -70,7 +73,10 @@ export function renderBlock(block: any, key?: React.Key): React.ReactNode {
       {block.items && Array.isArray(block.items) && (
         <ul className="ml-4 pl-4 mt-2">
           {block.items.map((item: any, idx: number) =>
-            renderBlock(item, key ? `${key}-item-${idx}` : `item-${idx}`)
+            renderBlock(
+              item,
+              key ? `${String(key)}-item-${idx}` : `item-${idx}`
+            )
           )}
         </ul>
       )}
