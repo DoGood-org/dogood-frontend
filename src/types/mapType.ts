@@ -76,7 +76,7 @@ export interface IMapClickHandlerProps {
 export type TranslationFunction = (key: string) => string;
 
 export interface IIconData {
-  icon: ReactElement;
+  icon: ReactElement | null;
   color: string;
 }
 

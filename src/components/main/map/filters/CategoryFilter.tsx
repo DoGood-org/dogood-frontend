@@ -1,6 +1,8 @@
 import { CategoryLabel } from '@/components/main/map/filters/CategoryLabel';
 import { LineDivider } from '@/components/main/map/filters/LineDivider';
 import { IExtendedCategoryFilter } from '@/types/filter.type';
+import { isFilterCategory } from '@/utils/filterCategories';
+import { authStore } from '@/zustand/stores/authStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useTranslations } from 'next-intl';
 import React, { JSX } from 'react';
@@ -11,12 +13,16 @@ type Props = {
 export const CategoryFilter = ({ categories }: Props): JSX.Element | null => {
   const t = useTranslations('map');
   const { toggleCategory, choosenCategories } = useFilterStore();
+
+  const isLoggedIn = authStore((s) => s.isLoggedIn);
+  const visibleCategories = categories.filter(isFilterCategory);
+
   return (
     <div className="mb-6 flex flex-col w-full">
       <h4 className="text-base">{t('category')}</h4>
       <LineDivider className={'flex w-full mb-4 bg-text-gray h-[1px]'} />
       <ul className="flex gap-4 flex-wrap w-[288px] mb-6">
-        {categories.map((category): JSX.Element => {
+        {visibleCategories.map((category): JSX.Element => {
           return (
             <CategoryLabel
               key={category}
@@ -31,7 +37,19 @@ export const CategoryFilter = ({ categories }: Props): JSX.Element | null => {
           );
         })}
 
-        {categories.length > 0 &&
+        {isLoggedIn && (
+          <CategoryLabel
+            category="favorite"
+            selected={choosenCategories.includes(
+              'favorite' as IExtendedCategoryFilter
+            )}
+            onCategoryToggle={() =>
+              toggleCategory('favorite' as IExtendedCategoryFilter)
+            }
+          />
+        )}
+
+        {isFilterCategory.length > 0 &&
           ((): JSX.Element => {
             return (
               <CategoryLabel

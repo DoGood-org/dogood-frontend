@@ -3,7 +3,7 @@
 import { useMediaQuery } from '@/hooks';
 import { Container } from '@/components/ui/Container';
 import { Logo } from '@/components/ui/Logo';
-import { NotificationSidebar } from '@/components/notifications/NotificationSidebar';
+// import { NotificationSidebar } from '@/components/notifications/NotificationSidebar';
 import { Navigation } from './Navigation';
 import { MobileMenu } from '../mobileMenu/MobileMenu';
 
@@ -19,7 +19,7 @@ export const Header: React.FC = () => {
           </div>
         </Container>
       </header>
-      <NotificationSidebar />
+      {/* <NotificationSidebar /> */}
     </>
   );
 };

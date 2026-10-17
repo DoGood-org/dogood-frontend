@@ -44,7 +44,7 @@ export const Filters: FC<Props> = ({ tasks, className }): JSX.Element => {
         <div className="flex gap-10">
           <Button
             variant="primary"
-            className="w-[104px]"
+            className="w-full max-w-[128px]"
             size="lg"
             onClick={() => setActivePanel(null)}
           >

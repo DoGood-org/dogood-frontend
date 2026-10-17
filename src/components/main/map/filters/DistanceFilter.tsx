@@ -51,7 +51,7 @@ export const DistanceFilter = (): JSX.Element => {
               <Button
                 variant="tag"
                 size="xl"
-                className={`flex gap-[10px] text-sm w-full p-4 ${
+                className={`flex gap-[10px] text-sm w-full p-4 text-white ${
                   isActive ? 'clickedBtn' : ''
                 }`}
                 onClick={() => setDistanceFilter(item.value as IDistanceFilter)}

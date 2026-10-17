@@ -24,6 +24,7 @@ import { MultiControlPanel } from './controls/MultiControlPanel';
 import { CustomControlContent } from './controls/CustomControlContent';
 import { TasksOnMap } from './tasksPanel/TasksOnMap';
 import { MapAutoResize } from './profileMap/MapAutoResize';
+import { isFilterCategory } from '@/utils/filterCategories';
 
 export const Map: React.FC = (): JSX.Element => {
   const router = useRouter();
@@ -81,14 +82,18 @@ export const Map: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     if (!userLocation) return;
-    if (tasksByKey[key]) return;
 
-    const newTasks = generateTasks(userLocation.lat, userLocation.lng, radius);
-    setTasksByKey(key, newTasks);
-    const categories = Array.from(
-      new Set(newTasks.flatMap((task) => task.category))
+    let tasks = tasksByKey[key];
+    if (!tasks) {
+      tasks = generateTasks(userLocation.lat, userLocation.lng, radius);
+      setTasksByKey(key, tasks);
+    }
+
+    setCategories(
+      Array.from(new Set(tasks.flatMap((task) => task.category))).filter((c) =>
+        isFilterCategory(c)
+      )
     );
-    setCategories(categories);
   }, [userLocation, radius, key, tasksByKey, setTasksByKey, setCategories]);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();

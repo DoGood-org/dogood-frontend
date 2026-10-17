@@ -1,27 +1,32 @@
 import { IIconMap } from '@/types/mapType';
-import { Animal, Food, Medicine, Nature } from '@/components/icons';
+import { Animal, Favorite, Food, Medicine, Nature } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
+import { useTranslations } from 'next-intl';
 
 export const icons: IIconMap = {
   medicine: {
-    icon: <Medicine className="fill-icon-color stroke-icon-color" />,
+    icon: <Medicine className="stroke-white" />,
     color: 'bg-medicine',
   },
   animal: {
-    icon: <Animal className="fill-icon-color stroke-icon-color" />,
+    icon: <Animal className="stroke-white" />,
     color: 'bg-animal',
   },
   nature: {
-    icon: <Nature className="fill-icon-color stroke-icon-color" />,
+    icon: <Nature className="stroke-white" />,
     color: 'bg-nature',
   },
   food: {
-    icon: <Food className="fill-icon-color stroke-icon-color" />,
-    color: 'bg-star',
+    icon: <Food className="stroke-white" />,
+    color: 'bg-food',
   },
   all: {
-    icon: <Nature className="fill-icon-color stroke-icon-color" />,
+    icon: null,
     color: 'bg-text-gray',
+  },
+  favorite: {
+    icon: <Favorite className="stroke-white" />,
+    color: 'bg-favorite',
   },
 };
 
@@ -36,27 +41,26 @@ export const CategoryLabel: React.FC<CategoryLabelProps> = ({
   selected,
   onCategoryToggle,
 }) => {
+  const t = useTranslations('map');
   const iconData = icons[category as keyof typeof icons];
-  if (!iconData)
-    return (
-      <span className="text-foreground w-[50px] h-[50px] flex justify-center items-center rounded-full">
-        {category}
-      </span>
-    );
+  if (!iconData) return null;
 
   return (
     <li>
       <Button
         variant="tag"
         size="xl"
-        className={` ${icons[category].color} flex gap-[10px] w-[136px] text-sm ${
-          selected ? 'clickedBtn text-sm' : ''
+        className={`${iconData.color} flex items-center justify-center gap-1 break-words w-[136px] text-sm px-4 py-3 text-white ${
+          selected ? 'ring-2 ring-white' : ''
         }`}
-        onClick={() => onCategoryToggle && onCategoryToggle(category)}
+        onClick={() => onCategoryToggle?.(category)}
       >
-        <span>{icons[category].icon}</span>
-
-        <span>{category}</span>
+        {iconData.icon && (
+          <span className="flex size-5 shrink-0 items-center">
+            {iconData.icon}
+          </span>
+        )}
+        <span className="break-words text-sm">{t(`category-${category}`)}</span>
       </Button>
     </li>
   );

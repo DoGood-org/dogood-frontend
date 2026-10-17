@@ -75,6 +75,7 @@
   --color-animal: var(--animal);
   --color-nature: var(--nature);
   --color-food: var(--food);
+  --color-favorite: var(--favorite);
   --color-map-btn: var(--map-btn-bg);
   --color-map-btn-icon: var(--map-btn-icon);
   --color-news-item-hover: var(--btn-hover);
@@ -200,6 +201,7 @@
   --animal: #ff7d57;
   --nature: #00c1ac;
   --food: #e4a23c;
+  --favorite: #01425c;
 
   /* --radius: 0.625rem; */
   --radius: 12px;
