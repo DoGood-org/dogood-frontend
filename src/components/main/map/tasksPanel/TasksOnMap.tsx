@@ -31,7 +31,6 @@ export const TasksOnMap = (props: Props): JSX.Element => {
       if (activePanel) setActivePanel(null);
     },
     options: {
-      // на моб/планшеті панель під картою — закриваємо лише кнопкою
       enabled: !!activePanel && isDesktop,
       detectEscapeKey: true,
       ignoreSelectors: ['.leaflet-popup-task', '.leaflet-popup'],
@@ -45,34 +44,31 @@ export const TasksOnMap = (props: Props): JSX.Element => {
       onClick={(e) => e.stopPropagation()}
       onTouchStart={(e) => e.stopPropagation()}
       onMouseDown={(e) => e.stopPropagation()}
-      className={`${props.className} md:bg-card`}
+      className={`${props.className} px-5 py-8 rounded-md md:p-0 md:rounded-none ${
+        !activePanel
+          ? 'bg-modal dark:bg-[#171b19] md:bg-[#E6E6E6] md:dark:bg-toggle transition-colors duration-300 delay-300 md:transition-none'
+          : activePanel === 'filters'
+            ? 'md:bg-[#E6E6E6] md:dark:bg-toggle transition-none'
+            : 'bg-[#E6E6E6] dark:bg-toggle transition-none'
+      }`}
       ref={ref}
     >
-      <div
-        className={`md:bg-card md:p-0 md:rounded-none ${
-          activePanel === 'filters'
-            ? 'bg-modal dark:bg-[#171b19] py-8 px-5 rounded-md'
-            : 'bg-card'
-        }`}
-      >
-        <div className="flex flex-col bg-card rounded-sm px-5 pt-5 pb-3 lg:p-0">
+      <div className="bg-[#E6E6E6] dark:bg-toggle">
+        <div className="flex flex-col bg-[#E6E6E6] dark:bg-toggle px-4 pt-3 pb-2 md:px-5 md:pt-5 md:pb-3 lg:p-0 rounded-sm">
           <FormSearch
-            className="p-0 bg-card border-0 lg:border-b lg:border-b-foreground lg:rounded-t-none"
+            className="p-0 bg-[#E6E6E6] dark:bg-toggle border-0 lg:border-b lg:border-b-foreground lg:rounded-t-none"
             inputClassName="h-10 overflow-hidden py-0 lg:h-12 lg:py-3"
             leftSVGClassName="left-0"
             rightSVGClassName="right-0"
           />
 
-          {/* стрілка під пошуком — моб/планшет */}
           <ButtonOpenTasks
-            className="mx-auto bg-card h-5 pt-3 lg:pt-0 lg:hidden"
+            className="mx-auto h-5 pt-3 lg:pt-0 lg:hidden"
             onClick={() => togglePanel('tasks')}
           />
-
-          {/* кнопка на всю ширину — десктоп */}
           {activePanel !== 'filters' && (
             <ButtonOpenTasks
-              className="hidden lg:inline-flex lg:bg-card lg:h-10 lg:mb-0 lg:z-500 lg:w-full"
+              className="hidden lg:inline-flex lg:bg-[#E6E6E6] lg:dark:bg-toggle lg:h-10 lg:mb-0 lg:z-500 lg:w-full"
               onClick={() => togglePanel('tasks')}
             />
           )}
@@ -87,14 +83,17 @@ export const TasksOnMap = (props: Props): JSX.Element => {
           <AnimatePresence>
             {activePanel === 'filters' && (
               <motion.div
-                className="w-full h-full relative bg-card"
+                className="w-full h-full relative bg-[#E6E6E6] dark:bg-toggle"
                 key="filters"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
-                <Filters tasks={noPaginatedTasks} className="w-full bg-card" />
+                <Filters
+                  tasks={noPaginatedTasks}
+                  className="w-full bg-[#E6E6E6] dark:bg-toggle"
+                />
               </motion.div>
             )}
           </AnimatePresence>
@@ -105,19 +104,31 @@ export const TasksOnMap = (props: Props): JSX.Element => {
         initial={false}
         animate={{ height: activePanel === 'tasks' ? 'auto' : 0 }}
         transition={{ duration: 0.3 }}
-        className="min-h-0 overflow-y-scroll custom-scrollbar-tasks max-h-[70vh] lg:max-h-[100vh] mr-5 md:mr-6"
+        className={`custom-scrollbar-tasks -mr-4 md:mr-5 min-h-0 ${
+          activePanel === 'tasks' ? 'overflow-y-scroll' : 'overflow-hidden'
+        }
+        max-h-[795px] md:max-h-[802px] lg:max-h-[708px]
+        [&::-webkit-scrollbar]:w-2
+        [&::-webkit-scrollbar-track]:my-2
+        [&::-webkit-scrollbar-track]:rounded-full
+        [&::-webkit-scrollbar-track]:!bg-[#E8E8E8]
+        [&::-webkit-scrollbar-thumb]:rounded-full
+        [&::-webkit-scrollbar-thumb]:!bg-[#999999]`}
       >
         <AnimatePresence>
           {activePanel === 'tasks' && (
             <motion.div
               key="tasks"
-              className="w-full h-full relative bg-card"
+              className="w-full h-full relative bg-[#E6E6E6] dark:bg-toggle md:px-8"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
             >
-              <TasksList tasks={noPaginatedTasks} className="w-full bg-card" />
+              <TasksList
+                tasks={noPaginatedTasks}
+                className="w-full bg-[#E6E6E6] dark:bg-toggle"
+              />
             </motion.div>
           )}
         </AnimatePresence>

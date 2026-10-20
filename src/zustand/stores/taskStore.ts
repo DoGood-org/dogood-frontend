@@ -53,19 +53,29 @@ export const useTaskStore = create<TTaskStore>()(
       setTasksByKey: (key, tasks): void => {
         set((state) => {
           const updated = { ...state.tasksByKey, [key]: tasks };
-
-          const allTasks = Object.values(updated).flat();
+          const prev = new Map(state.tasks.map((t) => [t.id, t]));
 
           const uniqueTasks = Array.from(
-            new Map(allTasks.map((task) => [task.id, task])).values()
-          );
+            new Map(
+              Object.values(updated)
+                .flat()
+                .map((t) => [t.id, t])
+            ).values()
+          ).map((t) => {
+            const old = prev.get(t.id);
+            return old
+              ? { ...t, isSelected: old.isSelected, isFavorite: old.isFavorite }
+              : t;
+          });
 
           return {
             tasksByKey: updated,
             tasks: uniqueTasks,
+            joinedTasks: uniqueTasks.filter((t) => t.isSelected),
           };
         });
       },
+
       updateTaskStatus: (taskId: string, status: TaskStatus): void => {
         set((prev) => {
           const updatedTasks = prev.tasks.map((t) =>

@@ -51,7 +51,9 @@ export const CategoryLabel: React.FC<CategoryLabelProps> = ({
         variant="tag"
         size="xl"
         className={`${iconData.color} flex items-center justify-center gap-1 break-words w-[136px] text-sm px-4 py-3 text-white ${
-          selected ? 'ring-2 ring-white' : ''
+          selected
+            ? 'ring-2 ring-modal shadow-[0_4px_12px_rgba(0,0,0,0.25)] dark:ring-modal dark:shadow-[0_0_12px_rgba(255,255,255,0.35)]'
+            : ''
         }`}
         onClick={() => onCategoryToggle?.(category)}
       >

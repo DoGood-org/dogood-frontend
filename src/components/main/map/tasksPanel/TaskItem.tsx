@@ -2,26 +2,31 @@
 import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
 import { JSX } from 'react';
-import { TaskCategoryIconsList } from '@/components/main/map/tasksPanel/TaskCategoryIconList';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { IExtendedITaskProps } from '@/types/tasks.type';
-import { GpsIcon } from '@/components/icons/GPSicon';
-import { ButtonMap } from '@/components/main/map/controls/ButtonMap';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useRouter } from 'next/navigation';
+import { FavoriteToggleButton } from '@/components/tasks/taskPage/ButtonGroup/FavoriteToggleButton';
+import { MapDotButton } from '@/components/tasks/taskPage/ButtonGroup/MapDotButton';
+import { TaskCategoryList } from '@/components/tasks/createTaskPage/TaskCategoryList/TaskCategoryList';
 
 export const TaskItem = ({
   id,
   title,
   subtitle,
   category,
-  isSelected,
-  distance,
+  location,
 }: IExtendedITaskProps): JSX.Element => {
   const t = useTranslations('map');
-  const { joinTask, setHighlightedTaskId } = useTaskStore();
+
+  const isJoined = useTaskStore(
+    (s) => !!s.tasks.find((task) => task.id === id)?.isSelected
+  );
+  const joinTask = useTaskStore((s) => s.joinTask);
   const { setActivePanel } = useMapStore();
+
   const router = useRouter();
+
   return (
     <div
       className="min-h-[200px] relative w-full py-6"
@@ -30,43 +35,43 @@ export const TaskItem = ({
         setActivePanel(null);
       }}
     >
-      <h3 className="text-base underline lg:text-xl font-normal mb-3">
+      <h3 className="text-base underline lg:text-reg font-normal mb-3">
         {title}
       </h3>
       <h4 className="text-base mb-5 md:mb-3 lg:mb-5">{subtitle}</h4>
       <div className="flex justify-between items-center mb-5 md:mb-3 lg:mb-5">
-        <TaskCategoryIconsList categories={category} />
-        {distance}
+        <TaskCategoryList categories={category} />
+        <div className="flex gap-2 items-end">
+          <FavoriteToggleButton taskId={id} variant="map" />
+          <MapDotButton
+            lat={location?.lat}
+            lng={location?.lat}
+            taskId={id}
+            onAfterClick={() => setActivePanel(null)}
+          />
+        </div>
       </div>
       <div className="flex justify-between mb-6">
-        <Button variant="primary" size="lg" className="text-[14px] w-[156px]">
+        <Button
+          variant="primary"
+          size="lg"
+          className="text-[14px] w-[156px]"
+          onClick={(e) => e.stopPropagation()}
+        >
           {t('donateBtn')}
         </Button>
         <Button
           variant="secondary"
           size="lg"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             joinTask(id);
           }}
-          className={`bg-card text-[14px] w-[82px] px-3 ${isSelected ? 'clickedBtn' : ''}`}
+          className={`bg-card text-[14px] w-[82px] px-3 ${isJoined ? 'clickedBtn' : ''}`}
         >
-          {isSelected ? (
-            <span>{t('joined')}</span>
-          ) : (
-            <span>{t('joinBtn')}</span>
-          )}
+          <span>{isJoined ? t('joined') : t('joinBtn')}</span>
         </Button>
       </div>
-      <ButtonMap
-        className="absolute top-0 right-0 z-10 m-0"
-        aria-label={t('showOnMap')}
-        onClickHandler={() => {
-          setHighlightedTaskId(id);
-          setActivePanel(null);
-        }}
-      >
-        <GpsIcon className=" w-6 h-6" />
-      </ButtonMap>
       <div className="w-full bg-[#999999] h-[1px]" />
     </div>
   );

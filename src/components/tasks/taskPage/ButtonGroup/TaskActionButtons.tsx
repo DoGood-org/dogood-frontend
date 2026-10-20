@@ -26,10 +26,13 @@ export const TaskActionButtons = ({
   className = '',
 }: TaskActionButtonsProps): JSX.Element | null => {
   const t = useTranslations('map');
-  const { joinedTasks, joinTask } = useTaskStore();
+
+  const isJoined = useTaskStore(
+    (s) => !!s.tasks.find((task) => task.id === taskId)?.isSelected
+  );
+  const joinTask = useTaskStore((s) => s.joinTask);
 
   const router = useRouter();
-  const isJoined = joinedTasks.some((task) => task.id === taskId);
 
   const {
     isOpen: isModalOpen,
@@ -50,7 +53,10 @@ export const TaskActionButtons = ({
       {isDonation ? (
         <Button
           variant="primary"
-          onClick={openModal}
+          onClick={(e) => {
+            e.stopPropagation();
+            openModal();
+          }}
           className={`${baseButtonClass} text-white`}
           size="lg"
         >

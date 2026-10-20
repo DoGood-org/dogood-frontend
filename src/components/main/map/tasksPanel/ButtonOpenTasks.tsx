@@ -25,7 +25,7 @@ export const ButtonOpenTasks = ({
       // id="tasksButton"
       type="button"
       onClick={clickHandler}
-      className={`transition items-center justify-center border-0 rounded-none cursor-pointer  ${className}`}
+      className={`transition items-center justify-center border-0 rounded-none cursor-pointer ${className}`}
     >
       <div className=" h-full">
         <div className="w-full h-full flex items-center justify-center">

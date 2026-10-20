@@ -57,7 +57,10 @@ export const FormSearch = ({
   };
 
   return (
-    <div className="bg-card w-full flex flex-col relative" itemRef="search">
+    <div
+      className="bg-[#E6E6E6] w-full flex flex-col relative"
+      itemRef="search"
+    >
       <form onSubmit={(e) => e.preventDefault()} className=" flex flex-col">
         <div className={` flex items-center justify-center ${className}`}>
           <button
@@ -76,10 +79,10 @@ export const FormSearch = ({
             placeholder="Search.."
             className={`${searchIsActive ? 'cursor-default' : 'cursor-grab'}
             px-10
-            w-full text-base italic bg-background text-foreground rounded-sm
-        placeholder:font-normal placeholder:text-muted-foreground
-        border-none outline-none focus:ring-0 focus:outline-none shadow-none
-        disabled:pointer-events-none disabled:opacity-50 lg:bg-card ${inputClassName}`}
+            w-full text-base italic bg-header-bg lg:bg-[#E6E6E6] lg:dark:bg-toggle text-foreground rounded-sm
+            placeholder:font-normal placeholder:text-muted-foreground
+            border-none outline-none focus:ring-0 focus:outline-none shadow-none
+            disabled:pointer-events-none disabled:opacity-50 ${inputClassName}`}
             onBlur={(e) => {
               if (!e.target.value.trim()) {
                 console.log('blurr');

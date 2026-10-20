@@ -26,17 +26,17 @@ export const Filters: FC<Props> = ({ tasks, className }): JSX.Element => {
 
   return (
     <div
-      className={`flex flex-col h-full px-5 pt-9 pb-10 lg:px-12 ${className}`}
+      className={`flex flex-col h-full px-4 md:px-5 pt-9 pb-10 lg:px-12 ${className}`}
     >
       <div className="flex justify-between align-text-bottom mb-3">
-        <h3 className="text-h3 pl-3">{t('title')}</h3>
+        <h3 className="text-h3 lg:pl-3">{t('title')}</h3>
 
         <Close
-          className="w-[24px] h-[24px] stroke-white"
+          className="w-[24px] h-[24px] stroke-[#FFFCFC]"
           onClick={() => setActivePanel(null)}
         />
       </div>
-      <div className="flex-1 pl-3 h-full overflow-x-hidden">
+      <div className="flex-1 lg:pl-3 h-full overflow-hidden">
         <div className="flex flex-col pr-2">
           <CategoryFilter categories={categories as string[]} />
           <DistanceFilter />

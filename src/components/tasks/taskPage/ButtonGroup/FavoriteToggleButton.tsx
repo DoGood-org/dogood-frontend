@@ -4,28 +4,34 @@ import { Button } from '@/components/ui/Button';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useTaskStore } from '@/zustand/stores/taskStore';
-import { useMemo } from 'react';
 
 interface FavoriteToggleButtonProps {
   taskId: string;
+  variant?: 'default' | 'map';
 }
+
+const INACTIVE_MAP = 'text-[#fffcfc] fill-transparent stroke-[#fffcfc]';
+const INACTIVE_DEFAULT =
+  'text-[#1B1B1B] stroke-[#1B1B1B] fill-transparent dark:text-[#fffcfc] dark:stroke-[#fffcfc]';
 
 export const FavoriteToggleButton: React.FC<FavoriteToggleButtonProps> = ({
   taskId,
+  variant = 'default',
 }) => {
-  const { tasks, toggleFavorite } = useTaskStore();
-
-  const isFavorite = useMemo(
-    () => tasks.find((t) => t.id === taskId)?.isFavorite ?? false,
-    [tasks, taskId]
+  const isFavorite = useTaskStore(
+    (s) => s.tasks.find((t) => t.id === taskId)?.isFavorite ?? false
   );
 
+  const toggleFavorite = useTaskStore((s) => s.toggleFavorite);
   return (
     <Button
       variant="iconOnly"
       size="icon"
       aria-pressed={isFavorite}
-      onClick={() => toggleFavorite(taskId)}
+      onClick={(e) => {
+        e.stopPropagation();
+        toggleFavorite(taskId);
+      }}
     >
       <motion.div
         initial={false}
@@ -53,7 +59,9 @@ export const FavoriteToggleButton: React.FC<FavoriteToggleButtonProps> = ({
             'size-6 transition-all duration-300',
             isFavorite
               ? 'text-[#ee0606] fill-[#ee0606] stroke-[#ee0606]'
-              : 'text-tag_text fill-transparent stroke-tag_text'
+              : variant === 'map'
+                ? INACTIVE_MAP
+                : INACTIVE_DEFAULT
           )}
         />
       </motion.div>
