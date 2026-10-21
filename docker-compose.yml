@@ -1,6 +1,6 @@
 services:
   redis:
-    image: redis:latest
+    image: redis:8.10.2
     container_name: redis-front
     ports:
       - '6379:6379'
@@ -8,7 +8,7 @@ services:
     networks:
       - dev-network
   postgres:
-    image: postgis/postgis:latest
+    image: postgis/postgis:18-3.6
     container_name: postgress-front
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -27,7 +27,7 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - pgdata_front:/var/lib/postgresql/data
+      - pgdata_front:/var/lib/postgresql
 
   server:
     build:
