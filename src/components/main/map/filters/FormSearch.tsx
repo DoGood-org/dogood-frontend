@@ -79,7 +79,7 @@ export const FormSearch = ({
             placeholder="Search.."
             className={`${searchIsActive ? 'cursor-default' : 'cursor-grab'}
             px-10
-            w-full text-base italic bg-header-bg lg:bg-[#E6E6E6] lg:dark:bg-toggle text-foreground rounded-sm
+            w-full text-base italic dark:bg-header-bg bg-modal lg:bg-[#E6E6E6] lg:dark:bg-toggle text-foreground rounded-sm
             placeholder:font-normal placeholder:text-muted-foreground
             border-none outline-none focus:ring-0 focus:outline-none shadow-none
             disabled:pointer-events-none disabled:opacity-50 ${inputClassName}`}

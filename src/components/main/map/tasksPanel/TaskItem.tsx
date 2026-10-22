@@ -1,14 +1,12 @@
 'use client';
-import { Button } from '@/components/ui/Button';
-import { useTranslations } from 'next-intl';
+
 import { JSX } from 'react';
-import { useTaskStore } from '@/zustand/stores/taskStore';
 import { IExtendedITaskProps } from '@/types/tasks.type';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useRouter } from 'next/navigation';
-import { FavoriteToggleButton } from '@/components/tasks/taskPage/ButtonGroup/FavoriteToggleButton';
-import { MapDotButton } from '@/components/tasks/taskPage/ButtonGroup/MapDotButton';
-import { TaskCategoryList } from '@/components/tasks/createTaskPage/TaskCategoryList/TaskCategoryList';
+import { TaskActionButtons } from '@/components/tasks/taskPage/ButtonGroup/TaskActionButtons';
+import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
+import { authStore } from '@/zustand/stores/authStore';
 
 export const TaskItem = ({
   id,
@@ -16,14 +14,11 @@ export const TaskItem = ({
   subtitle,
   category,
   location,
+  status,
+  isHost,
 }: IExtendedITaskProps): JSX.Element => {
-  const t = useTranslations('map');
-
-  const isJoined = useTaskStore(
-    (s) => !!s.tasks.find((task) => task.id === id)?.isSelected
-  );
-  const joinTask = useTaskStore((s) => s.joinTask);
   const { setActivePanel } = useMapStore();
+  const isLoggedIn = authStore((s) => s.isLoggedIn);
 
   const router = useRouter();
 
@@ -35,42 +30,27 @@ export const TaskItem = ({
         setActivePanel(null);
       }}
     >
-      <h3 className="text-base underline lg:text-reg font-normal mb-3">
+      <h3 className="text-base underline lg:text-reg font-normal mb-3 cursor-pointer">
         {title}
       </h3>
       <h4 className="text-base mb-5 md:mb-3 lg:mb-5">{subtitle}</h4>
-      <div className="flex justify-between items-center mb-5 md:mb-3 lg:mb-5">
-        <TaskCategoryList categories={category} />
-        <div className="flex gap-2 items-end">
-          <FavoriteToggleButton taskId={id} variant="map" />
-          <MapDotButton
-            lat={location?.lat}
-            lng={location?.lat}
-            taskId={id}
-            onAfterClick={() => setActivePanel(null)}
-          />
-        </div>
+      <div className="relative">
+        <IconButtonGroup
+          categories={category}
+          showDivider={false}
+          location={location}
+          showFavorite={isLoggedIn}
+          taskId={id}
+          onAfterMapClick={() => setActivePanel(null)}
+        />
       </div>
       <div className="flex justify-between mb-6">
-        <Button
-          variant="primary"
-          size="lg"
-          className="text-[14px] w-[156px]"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {t('donateBtn')}
-        </Button>
-        <Button
-          variant="secondary"
-          size="lg"
-          onClick={(e) => {
-            e.stopPropagation();
-            joinTask(id);
-          }}
-          className={`bg-card text-[14px] w-[82px] px-3 ${isJoined ? 'clickedBtn' : ''}`}
-        >
-          <span>{isJoined ? t('joined') : t('joinBtn')}</span>
-        </Button>
+        <TaskActionButtons
+          taskId={id}
+          category={category}
+          isHost={isHost ?? false}
+          taskStatus={status}
+        />
       </div>
       <div className="w-full bg-[#999999] h-[1px]" />
     </div>

@@ -12,6 +12,9 @@ interface IconButtonGroupProps {
   location?: { lat: number; lng: number } | null;
   taskId?: string;
   distance?: string;
+  onAfterMapClick?: () => void;
+  showFavorite?: boolean;
+  showDivider?: boolean;
 }
 
 export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
@@ -19,6 +22,9 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
   location,
   taskId,
   distance: fallbackDistance,
+  onAfterMapClick,
+  showFavorite = true,
+  showDivider = true,
 }) => {
   const userLocation = useMapStore((state) => state.userLocation);
   const defaultLocation = useMapStore((state) => state.defaultLocation);
@@ -35,15 +41,22 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
 
   return (
     <div className="relative flex items-center justify-between py-2 md:py-5">
-      <span className="absolute top-0 left-0 h-px w-full bg-text-gray"></span>
+      {showDivider && (
+        <span className="absolute top-0 left-0 h-px w-full bg-text-gray"></span>
+      )}
       <TaskCategoryList categories={categories} />
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center gap-2">
           {taskId && (
             <>
-              <FavoriteToggleButton taskId={taskId} />
-              {lat !== undefined && lng !== undefined && (
-                <MapDotButton lat={lat} lng={lng} taskId={taskId} />
+              {showFavorite && <FavoriteToggleButton taskId={taskId} />}
+              {lat != null && lng != null && (
+                <MapDotButton
+                  lat={lat}
+                  lng={lng}
+                  taskId={taskId}
+                  onAfterClick={onAfterMapClick}
+                />
               )}
             </>
           )}

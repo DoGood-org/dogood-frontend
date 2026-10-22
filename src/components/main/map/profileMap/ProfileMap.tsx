@@ -77,7 +77,7 @@ export const ProfileMap = (): JSX.Element => {
     }
     const coords = marker.getLatLng();
     console.log('Flying to coords:', coords);
-    flyToCoords(coords, 15);
+    flyToCoords(coords, 15, 'user');
 
     marker.openPopup();
   }, [highlightedTaskId, flyToCoords]);
@@ -208,21 +208,34 @@ export const ProfileMap = (): JSX.Element => {
               {renderCustomMarkers()}
               {/* Task markers */}
               {noPaginatedTasks.map((task) => {
+                if (!task.location) return null;
+
                 const resolvedCategory = resolveTaskCategory(
                   task.category,
                   choosenCategories,
                   categories
                 );
+
                 const icon =
                   mapIcons[resolvedCategory as keyof typeof mapIcons] ??
                   mapIcons.default;
+
+                const position = {
+                  lat: task.location.lat,
+                  lng: task.location.lng,
+                };
+
                 return (
                   <Marker
                     ref={(ref) => {
-                      if (ref) markerRefs.current.set(task.id, ref);
+                      if (ref) {
+                        markerRefs.current.set(task.id, ref);
+                      } else {
+                        markerRefs.current.delete(task.id);
+                      }
                     }}
                     key={`task-marker-${task.id}`}
-                    position={{ lat: task.lat, lng: task.lng }}
+                    position={position}
                     icon={icon ?? undefined}
                     title={task.title}
                     zIndexOffset={highlightedTaskId === task.id ? 1000 : 0}
@@ -239,7 +252,6 @@ export const ProfileMap = (): JSX.Element => {
                     <Popup
                       className="leaflet-popup-task"
                       key={`popup-${task.id}`}
-                      position={{ lat: task.lat, lng: task.lng }}
                       autoClose={false}
                       closeOnClick={false}
                       closeButton={true}

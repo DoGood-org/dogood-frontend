@@ -65,7 +65,8 @@ export const TaskActionButtons = ({
       ) : (
         <Button
           variant="primary"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             if (!isJoined) joinTask(taskId);
             router.push(`/tasks/${taskId}`);
           }}

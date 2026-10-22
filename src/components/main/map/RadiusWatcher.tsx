@@ -18,7 +18,8 @@ export const RadiusWatcher = (): JSX.Element | null => {
 
   useMapEvent('zoomend', () => {
     const zoom = map.getZoom();
-    const newRadius = zoomToRadiusMap[zoom] || 0;
+    const newRadius = zoomToRadiusMap[zoom];
+    if (newRadius == null) return;
     setRadius(newRadius);
   });
 

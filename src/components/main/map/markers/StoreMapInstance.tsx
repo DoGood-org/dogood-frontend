@@ -10,13 +10,24 @@ type Props = {
 const StoreMapInstance = ({ mapKey }: Props): null => {
   const map = useMap();
   const setMapInstance = useMapStore((s) => s.setMapInstance);
-  const currentMapInstance = useMapStore((s) => s.mapInstances[mapKey]);
-
   useEffect(() => {
-    if (map && map !== currentMapInstance) {
-      setMapInstance(mapKey, map);
-    }
-  }, [map, mapKey, currentMapInstance, setMapInstance]);
+    setMapInstance(mapKey, map);
+
+    return (): void => {
+      useMapStore.setState((state) => {
+        if (state.mapInstances[mapKey] !== map) {
+          return state;
+        }
+
+        return {
+          mapInstances: {
+            ...state.mapInstances,
+            [mapKey]: null,
+          },
+        };
+      });
+    };
+  }, [map, mapKey, setMapInstance]);
 
   return null;
 };

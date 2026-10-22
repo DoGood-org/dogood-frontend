@@ -13,6 +13,7 @@ interface TFilterState {
   searchIsActive: boolean;
   locationData: ILocationData | null;
   radius: number;
+  showFavorites: boolean;
 
   sortBy: 'distance' | 'title';
   distanceUnit: 'km' | 'mi';
@@ -38,6 +39,7 @@ interface TFilterActions {
   setLocationData: (data: ILocationData | null) => void;
   setRadius: (radius: number) => void;
   setDistanceUnit: (unit: 'km' | 'mi') => void;
+  toggleShowFavorites: () => void;
 }
 type TFilterStore = TFilterState & TFilterActions;
 
@@ -53,6 +55,7 @@ const initialState: TFilterState = {
   locationData: null,
   radius: 10,
   distanceUnit: 'km',
+  showFavorites: false,
 };
 export const useFilterStore = create<TFilterStore>()(
   persist(
@@ -79,6 +82,11 @@ export const useFilterStore = create<TFilterStore>()(
             currentPage: 1,
           };
         }),
+      toggleShowFavorites: (): any =>
+        set((state) => ({
+          showFavorites: !state.showFavorites,
+          currentPage: 1,
+        })),
 
       setDistanceFilter: (distance): any => set({ distanceFilter: distance }),
 
@@ -105,6 +113,7 @@ export const useFilterStore = create<TFilterStore>()(
           distanceFilter: null,
           searchQuery: '',
           sortBy: 'distance',
+          showFavorites: false,
         }),
       setLocationData: (data: ILocationData | null): void => {
         set({ locationData: data, currentPage: 1 });

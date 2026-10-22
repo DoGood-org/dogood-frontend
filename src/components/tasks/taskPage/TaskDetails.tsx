@@ -6,12 +6,12 @@ import Link from 'next/link';
 import { Location } from '@/components/icons';
 import { useTranslations } from 'next-intl';
 import { parseDescription, parseRequirements } from '@/utils/tasks';
-import { useMapStore } from '@/zustand/stores/mapStore';
 import { LatLngLiteral } from 'leaflet';
 import { useAuth } from '@/hooks';
 import { Button } from '@/components/ui/Button';
 import EditButton from './ButtonGroup/EditButton';
 import { isDonationCategory } from '@/utils/isDonationCategory';
+import { useShowOnMap } from '@/hooks/useShowOnMap';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
@@ -24,19 +24,15 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
 }) => {
   const t = useTranslations('tasks');
   const { user } = useAuth();
-  const flyToCoords = useMapStore((s) => s.flyToCoords);
 
-  const hasCoords = task.lat != null && task.lng != null;
-
-  const taskCoords: LatLngLiteral | null = hasCoords
-    ? { lat: task.lat as number, lng: task.lng as number }
+  const taskCoords: LatLngLiteral | null = task.location
+    ? {
+        lat: task.location.lat,
+        lng: task.location.lng,
+      }
     : null;
 
-  const handleShowOnMap = (): void => {
-    if (taskCoords) {
-      flyToCoords(taskCoords, 17);
-    }
-  };
+  const showOnMap = useShowOnMap(task.id, taskCoords ?? undefined);
 
   const { host } = task;
 
@@ -99,11 +95,11 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
               </span>{' '}
               {task.locationName}
             </p>
-            {hasCoords && (
+            {taskCoords && (
               <Button
                 type="button"
                 variant="iconOnly"
-                onClick={handleShowOnMap}
+                onClick={showOnMap}
                 className="hidden md:flex items-center h-6 gap-2 group p-0"
               >
                 <Location className="text-[#00c1ac] transition-colors duration-300 group-hover:stroke-[#999999]" />

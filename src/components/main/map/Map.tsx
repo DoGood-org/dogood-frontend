@@ -9,7 +9,6 @@ import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import React, { JSX, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRouter } from 'next/navigation';
 import {
   AcceptShareLocationPopUp,
   AutoZoomOnDistanceFilter,
@@ -25,6 +24,7 @@ import { CustomControlContent } from './controls/CustomControlContent';
 import { TasksOnMap } from './tasksPanel/TasksOnMap';
 import { MapAutoResize } from './profileMap/MapAutoResize';
 import { isFilterCategory } from '@/utils/filterCategories';
+import { useRouter } from 'next/navigation';
 
 export const Map: React.FC = (): JSX.Element => {
   const router = useRouter();
@@ -43,8 +43,6 @@ export const Map: React.FC = (): JSX.Element => {
     userLocation,
     setUserLocation,
     defaultLocation,
-    // activePanel,
-
     declineLocationSharing,
     showGeolocationPopup,
     checkLocationPermission,
@@ -177,19 +175,23 @@ export const Map: React.FC = (): JSX.Element => {
             />
             {/* Task markers */}
             {noPaginatedTasks.map((task) => {
+              if (!task.location) return null;
+
               const resolvedCategory = resolveTaskCategory(
                 task.category,
                 choosenCategories,
                 categories
               );
+
               const icon =
                 mapIcons[resolvedCategory as keyof typeof mapIcons] ??
                 mapIcons.default;
+
               return (
                 <Marker
                   ref={highlightedTaskId === task.id ? highLightedRef : null}
                   key={`task-marker-${task.id}`}
-                  position={{ lat: task.lat, lng: task.lng }}
+                  position={task.location}
                   icon={icon ?? undefined}
                   title={task.title}
                   zIndexOffset={highlightedTaskId === task.id ? 1000 : 0}
@@ -203,7 +205,6 @@ export const Map: React.FC = (): JSX.Element => {
                 >
                   <Popup
                     key={`popup-${task.id}`}
-                    position={{ lat: task.lat, lng: task.lng }}
                     autoClose={false}
                     closeButton={true}
                     autoPanPadding={[10, 10]}

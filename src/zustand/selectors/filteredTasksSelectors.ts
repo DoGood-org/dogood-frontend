@@ -2,6 +2,7 @@ import { useTaskStore } from '@/zustand/stores/taskStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMemo } from 'react';
 import { IExtendedITaskProps } from '@/types/tasks.type';
+import { authStore } from '../stores/authStore';
 
 export const useFilteredTasksSelector = (): {
   paginatedTasks: IExtendedITaskProps[];
@@ -16,6 +17,8 @@ export const useFilteredTasksSelector = (): {
   const sortBy = useFilterStore((state) => state.sortBy);
   const currentPage = useFilterStore((state) => state.currentPage);
   const itemsPerPage = useFilterStore((state) => state.itemsPerPage);
+  const showFavorites = useFilterStore((state) => state.showFavorites);
+  const isLoggedIn = authStore((state) => state.isLoggedIn);
 
   const filteredTasks = useMemo(() => {
     const tasksWithFilters = tasks.filter((task) => {
@@ -34,7 +37,12 @@ export const useFilteredTasksSelector = (): {
         task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         task.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-      return isCategoryMatch && isDistanceMatch && isSearchMatch;
+      const isFavoriteMatch =
+        !showFavorites || !isLoggedIn || !!task.isFavorite;
+
+      return (
+        isCategoryMatch && isDistanceMatch && isSearchMatch && isFavoriteMatch
+      );
     });
 
     if (sortBy === 'title') {
@@ -65,7 +73,9 @@ export const useFilteredTasksSelector = (): {
     searchQuery,
     sortBy,
     currentPage,
+    showFavorites,
     itemsPerPage,
+    isLoggedIn,
   ]);
 
   return filteredTasks;

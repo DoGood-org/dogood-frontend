@@ -98,10 +98,7 @@ export function transformBackendTaskToITaskDetails({
     throw new Error('Invalid task data from backend');
   }
 
-  const lat =
-    typeof task.lat === 'number' ? task.lat : (task.location?.lat ?? 0);
-  const lng =
-    typeof task.lng === 'number' ? task.lng : (task.location?.lng ?? 0);
+  const location = task.location ?? null;
 
   const category: TaskCategoryEnum[] = Array.isArray(task.category)
     ? task.category.filter((c): c is TaskCategoryEnum =>
@@ -122,15 +119,13 @@ export function transformBackendTaskToITaskDetails({
     subtitle: task.subtitle || '',
     description: task.description || '',
     distance: task.distance ?? '',
-    lat,
-    lng,
     category,
     picture: task.picture ?? null,
     status: Object.values(TaskStatus).includes(task.status)
       ? task.status
       : TaskStatus.PENDING,
     locationName: task.locationName || '',
-    location: { lat, lng },
+    location: location,
     host: task.host,
     organizationId: task.organizationId,
     startDate: parseDate(task.startDate),
@@ -185,8 +180,6 @@ export const mapFormToCreateTask = (
     category: data.category,
     locationName: data.locationName ?? defaultTaskValues.locationName,
     location: data.location ?? defaultTaskValues.location,
-    lat: data.location?.lat ?? 0,
-    lng: data.location?.lng ?? 0,
     distance: '0 km',
     status: TaskStatus.PENDING,
     host: hostMapping(data, currentUser ?? null, organizations ?? []),

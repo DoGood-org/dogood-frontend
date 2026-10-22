@@ -5,7 +5,6 @@ import { ButtonOpenTasks } from '@/components/main/map/tasksPanel/ButtonOpenTask
 import { TasksList } from '@/components/main/map/tasksPanel/TasksList';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useClickOutside } from '@/hooks/useClickOutside';
-import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { JSX } from 'react';
@@ -22,7 +21,7 @@ export const TasksOnMap = (props: Props): JSX.Element => {
   const ref = React.useRef<HTMLDivElement | null>(null);
   const { activePanel, setActivePanel, fullscreenMap, togglePanel } =
     useMapStore();
-  const { noPaginatedTasks } = useFilteredTasksSelector();
+
   const { isDesktop } = useWindowSize();
 
   useClickOutside({
@@ -48,7 +47,7 @@ export const TasksOnMap = (props: Props): JSX.Element => {
         !activePanel
           ? 'bg-modal dark:bg-[#171b19] md:bg-[#E6E6E6] md:dark:bg-toggle transition-colors duration-300 delay-300 md:transition-none'
           : activePanel === 'filters'
-            ? 'md:bg-[#E6E6E6] md:dark:bg-toggle transition-none'
+            ? 'md:bg-[#E6E6E6] md:dark:bg-toggle transition-none bg-modal'
             : 'bg-[#E6E6E6] dark:bg-toggle transition-none'
       }`}
       ref={ref}
@@ -56,7 +55,7 @@ export const TasksOnMap = (props: Props): JSX.Element => {
       <div className="bg-[#E6E6E6] dark:bg-toggle">
         <div className="flex flex-col bg-[#E6E6E6] dark:bg-toggle px-4 pt-3 pb-2 md:px-5 md:pt-5 md:pb-3 lg:p-0 rounded-sm">
           <FormSearch
-            className="p-0 bg-[#E6E6E6] dark:bg-toggle border-0 lg:border-b lg:border-b-foreground lg:rounded-t-none"
+            className="p-0 bg-[#E6E6E6] bg-[#171b19] dark:bg-toggle border-0 lg:border-b lg:border-b-foreground lg:rounded-t-none"
             inputClassName="h-10 overflow-hidden py-0 lg:h-12 lg:py-3"
             leftSVGClassName="left-0"
             rightSVGClassName="right-0"
@@ -91,7 +90,7 @@ export const TasksOnMap = (props: Props): JSX.Element => {
                 transition={{ duration: 0.3 }}
               >
                 <Filters
-                  tasks={noPaginatedTasks}
+                  tasks={props.tasks}
                   className="w-full bg-[#E6E6E6] dark:bg-toggle"
                 />
               </motion.div>
@@ -126,7 +125,7 @@ export const TasksOnMap = (props: Props): JSX.Element => {
               transition={{ duration: 0.3 }}
             >
               <TasksList
-                tasks={noPaginatedTasks}
+                tasks={props.tasks}
                 className="w-full bg-[#E6E6E6] dark:bg-toggle"
               />
             </motion.div>

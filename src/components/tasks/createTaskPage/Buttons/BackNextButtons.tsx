@@ -95,8 +95,8 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       if (newTask.location && newTask.category?.length) {
         addMarker({
           id: newTask.id,
-          lat: newTask.lat,
-          lng: newTask.lng,
+          lat: newTask.location.lat,
+          lng: newTask.location.lng,
           title: newTask.title,
           description: newTask.description,
           category: mapCategoryToMarker(newTask.category[0]),

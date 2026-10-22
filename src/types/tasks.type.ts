@@ -43,8 +43,6 @@ export interface ITask {
   description: string;
   location?: { lat: number; lng: number } | null;
   distance: string;
-  // lat: number;
-  // lng: number;
   id: string;
 }
 

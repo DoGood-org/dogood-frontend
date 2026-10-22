@@ -12,7 +12,12 @@ type Props = {
 };
 export const CategoryFilter = ({ categories }: Props): JSX.Element | null => {
   const t = useTranslations('map');
-  const { toggleCategory, choosenCategories } = useFilterStore();
+  const {
+    toggleCategory,
+    choosenCategories,
+    showFavorites,
+    toggleShowFavorites,
+  } = useFilterStore();
 
   const isLoggedIn = authStore((s) => s.isLoggedIn);
   const visibleCategories = categories.filter(isFilterCategory);
@@ -40,12 +45,8 @@ export const CategoryFilter = ({ categories }: Props): JSX.Element | null => {
         {isLoggedIn && (
           <CategoryLabel
             category="favorite"
-            selected={choosenCategories.includes(
-              'favorite' as IExtendedCategoryFilter
-            )}
-            onCategoryToggle={() =>
-              toggleCategory('favorite' as IExtendedCategoryFilter)
-            }
+            selected={showFavorites}
+            onCategoryToggle={() => toggleShowFavorites()}
           />
         )}
 

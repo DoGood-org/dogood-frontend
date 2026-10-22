@@ -65,6 +65,7 @@ type TMapState = {
 
   clickedCoords: LatLngLiteral | null;
   showOptionsMenu: boolean;
+  pendingFlyTo: LatLngLiteral | null;
 
   activePanel: 'filters' | 'tasks' | null;
 };
@@ -88,10 +89,15 @@ type TMapActions = {
   toggleFullscreenMap: (fullscreen: boolean) => void;
 
   togglePanel: (panel: 'tasks' | 'filters') => void;
-  flyToCoords: (coords: LatLngLiteral, zoom?: number) => void;
+  flyToCoords: (
+    coords: LatLngLiteral,
+    zoom?: number,
+    mapKey?: 'main' | 'user'
+  ) => void;
 
   setClickedCoords: (coords: LatLngLiteral | null) => void;
   setShowOptionsMenu: (visible: boolean) => void;
+  setPendingFlyTo: (coords: LatLngLiteral | null) => void;
   closeOptionsMenu: () => void;
 
   addMarker: (loc: TCustomMarker) => void;
@@ -158,6 +164,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
 
       clickedCoords: null,
       showOptionsMenu: false,
+      pendingFlyTo: null,
 
       // *Actions*//
 
@@ -218,20 +225,29 @@ export const useMapStore = create<TMapState & TMapActions>()(
           showGeolocationPopup: false,
           clickedCoords: null,
         }),
-      flyToCoords: (coords, zoom = 17): void => {
-        const map = get().mapInstances.main;
-        if (!map) return;
+      flyToCoords: (coords, zoom = 17, mapKey = 'main'): void => {
+        const map = get().mapInstances[mapKey];
+
+        if (
+          !map ||
+          !map.getContainer()?.isConnected ||
+          !Number.isFinite(coords.lat) ||
+          !Number.isFinite(coords.lng)
+        ) {
+          return;
+        }
 
         const isMobile = window.innerWidth < 768;
         const isTablet = window.innerWidth >= 768 && window.innerWidth < 1440;
-        const offsetY = isMobile ? 180 : isTablet ? 300 : 150;
+        const size = map.getSize();
+        const baseOffset = isMobile ? 180 : isTablet ? 300 : 150;
+        const offsetY = -Math.min(baseOffset, size.y * 0.25);
 
-        const onMoveEnd = (): void => {
-          map.panBy([0, offsetY]);
-          map.off('moveend', onMoveEnd); // cleanup
-        };
+        map.stop();
 
-        map.once('moveend', onMoveEnd);
+        map.once('moveend', () => {
+          map.panBy([0, offsetY], { animate: true });
+        });
 
         map.flyTo(coords, zoom, {
           animate: true,
@@ -305,6 +321,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
 
       setClickedCoords: (coords) => set({ clickedCoords: coords }),
       setShowOptionsMenu: (visible) => set({ showOptionsMenu: visible }),
+      setPendingFlyTo: (coords) => set({ pendingFlyTo: coords }),
 
       closeOptionsMenu: () =>
         set({
@@ -371,6 +388,17 @@ export const useMapStore = create<TMapState & TMapActions>()(
             showGeolocationPopup: false,
           });
         } catch (error) {
+          const code = (error as GeolocationPositionError)?.code;
+
+          if (code === 1) {
+            set({
+              hasAgreedToLocation: false,
+              showGeolocationPopup: false,
+              locationError: 'Location permission denied in browser settings',
+              userLocation: get().userLocation ?? get().defaultLocation,
+            });
+            return;
+          }
           console.warn('[Zustand] Geolocation access failed:', error);
           set({
             locationError:
