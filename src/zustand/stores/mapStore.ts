@@ -66,6 +66,7 @@ type TMapState = {
   clickedCoords: LatLngLiteral | null;
   showOptionsMenu: boolean;
   pendingFlyTo: LatLngLiteral | null;
+  skipGeoPrompt: boolean;
 
   activePanel: 'filters' | 'tasks' | null;
 };
@@ -92,12 +93,14 @@ type TMapActions = {
   flyToCoords: (
     coords: LatLngLiteral,
     zoom?: number,
-    mapKey?: 'main' | 'user'
-  ) => void;
+    mapKey?: 'main' | 'user',
+    onDone?: () => void
+  ) => boolean;
 
   setClickedCoords: (coords: LatLngLiteral | null) => void;
   setShowOptionsMenu: (visible: boolean) => void;
   setPendingFlyTo: (coords: LatLngLiteral | null) => void;
+  setSkipGeoPrompt: (value: boolean) => void;
   closeOptionsMenu: () => void;
 
   addMarker: (loc: TCustomMarker) => void;
@@ -165,6 +168,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
       clickedCoords: null,
       showOptionsMenu: false,
       pendingFlyTo: null,
+      skipGeoPrompt: false,
 
       // *Actions*//
 
@@ -225,7 +229,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
           showGeolocationPopup: false,
           clickedCoords: null,
         }),
-      flyToCoords: (coords, zoom = 17, mapKey = 'main'): void => {
+      flyToCoords: (coords, zoom = 17, mapKey = 'main', onDone): boolean => {
         const map = get().mapInstances[mapKey];
 
         if (
@@ -234,7 +238,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
           !Number.isFinite(coords.lat) ||
           !Number.isFinite(coords.lng)
         ) {
-          return;
+          return false;
         }
 
         const isMobile = window.innerWidth < 768;
@@ -246,6 +250,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
         map.stop();
 
         map.once('moveend', () => {
+          map.once('moveend', () => onDone?.());
           map.panBy([0, offsetY], { animate: true });
         });
 
@@ -254,8 +259,8 @@ export const useMapStore = create<TMapState & TMapActions>()(
           duration: 1.5,
           easeLinearity: 0.5,
         });
+        return true;
       },
-
       setLocationError: (error) => set({ locationError: error }),
       setCustomMarkers: (markers) => set({ customMarkers: markers }),
       setHasAgreedToLocation: (value): void => {
@@ -322,6 +327,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
       setClickedCoords: (coords) => set({ clickedCoords: coords }),
       setShowOptionsMenu: (visible) => set({ showOptionsMenu: visible }),
       setPendingFlyTo: (coords) => set({ pendingFlyTo: coords }),
+      setSkipGeoPrompt: (value) => set({ skipGeoPrompt: value }),
 
       closeOptionsMenu: () =>
         set({

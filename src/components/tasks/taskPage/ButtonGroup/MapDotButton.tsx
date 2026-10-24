@@ -2,6 +2,7 @@
 
 import { GoToTask } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
+import { useShowOnMap } from '@/hooks/useShowOnMap';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 
@@ -10,6 +11,7 @@ interface MapDotButtonProps {
   lng?: number;
   taskId: string;
   onAfterClick?: () => void;
+  redirectToMap?: boolean;
 }
 
 export const MapDotButton: React.FC<MapDotButtonProps> = ({
@@ -17,17 +19,26 @@ export const MapDotButton: React.FC<MapDotButtonProps> = ({
   lng,
   taskId,
   onAfterClick,
+  redirectToMap = false,
 }) => {
   const flyToCoords = useMapStore((s) => s.flyToCoords);
   const setHighlightedTaskId = useTaskStore((s) => s.setHighlightedTaskId);
+  const showOnMap = useShowOnMap(
+    taskId,
+    lat != null && lng != null ? { lat, lng } : undefined
+  );
 
   const handleClick = (e: React.MouseEvent): void => {
     console.log('Fly to task:', lat, lng);
     e.stopPropagation();
-    if (lat != null && lng != null) {
-      flyToCoords({ lat, lng }, 17);
+    if (redirectToMap) {
+      showOnMap();
+    } else {
+      if (lat != null && lng != null) {
+        flyToCoords({ lat, lng }, 17, 'main');
+      }
+      setHighlightedTaskId(taskId);
     }
-    setHighlightedTaskId(taskId);
     onAfterClick?.();
   };
 

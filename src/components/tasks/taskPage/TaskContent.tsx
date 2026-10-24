@@ -96,6 +96,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
         categories={task.category}
         location={task.location}
         taskId={task.id}
+        redirectToMap
       />
       <div className="flex justify-between mt-5">
         <TaskControlButtons

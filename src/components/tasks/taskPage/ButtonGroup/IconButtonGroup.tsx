@@ -15,6 +15,7 @@ interface IconButtonGroupProps {
   onAfterMapClick?: () => void;
   showFavorite?: boolean;
   showDivider?: boolean;
+  redirectToMap?: boolean;
 }
 
 export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
@@ -25,6 +26,7 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
   onAfterMapClick,
   showFavorite = true,
   showDivider = true,
+  redirectToMap = false,
 }) => {
   const userLocation = useMapStore((state) => state.userLocation);
   const defaultLocation = useMapStore((state) => state.defaultLocation);
@@ -56,6 +58,7 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
                   lng={lng}
                   taskId={taskId}
                   onAfterClick={onAfterMapClick}
+                  redirectToMap={redirectToMap}
                 />
               )}
             </>

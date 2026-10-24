@@ -55,8 +55,13 @@ export const Map: React.FC = (): JSX.Element => {
     closeOptionsMenu,
   } = useMapStore();
   const { choosenCategories, categories } = useFilterStore();
+  const pendingFlyTo = useMapStore((s) => s.pendingFlyTo);
+  const setPendingFlyTo = useMapStore((s) => s.setPendingFlyTo);
+  const flyToCoords = useMapStore((s) => s.flyToCoords);
+  const mainMap = useMapStore((s) => s.mapInstances.main);
   const { tasksByKey, setTasksByKey, highlightedTaskId } = useTaskStore();
   const { setCategories } = useFilterStore();
+  const setSkipGeoPrompt = useMapStore((s) => s.setSkipGeoPrompt);
 
   useEffect(() => {
     initMap('main');
@@ -64,26 +69,26 @@ export const Map: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     if (!isInView) return;
-    const run = async (): Promise<void> => {
-      checkLocationPermission();
-    };
-    run();
-  }, [isInView, checkLocationPermission]);
+
+    if (useMapStore.getState().skipGeoPrompt) {
+      setSkipGeoPrompt(false);
+      return;
+    }
+
+    checkLocationPermission();
+  }, [isInView, setSkipGeoPrompt, checkLocationPermission]);
 
   // Imitate backend data generation
   // This should be replaced with actual data fetching logic
   // For now, we generate tasks based on the user's location
 
-  const key = userLocation
-    ? `${radius}:${userLocation.lat.toFixed(4)}:${userLocation.lng.toFixed(4)}`
-    : `${radius}:unknown:unknown`;
+  const baseLocation = userLocation ?? defaultLocation;
+  const key = `${radius}:${baseLocation.lat.toFixed(4)}:${baseLocation.lng.toFixed(4)}`;
 
   useEffect(() => {
-    if (!userLocation) return;
-
     let tasks = tasksByKey[key];
     if (!tasks) {
-      tasks = generateTasks(userLocation.lat, userLocation.lng, radius);
+      tasks = generateTasks(baseLocation.lat, baseLocation.lng, radius);
       setTasksByKey(key, tasks);
     }
 
@@ -92,16 +97,39 @@ export const Map: React.FC = (): JSX.Element => {
         isFilterCategory(c)
       )
     );
-  }, [userLocation, radius, key, tasksByKey, setTasksByKey, setCategories]);
+  }, [
+    baseLocation.lat,
+    baseLocation.lng,
+    radius,
+    key,
+    tasksByKey,
+    setTasksByKey,
+    setCategories,
+  ]);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
   const highLightedRef = useRef<L.Marker | null>(null);
 
   useEffect(() => {
-    if (highlightedTaskId && highLightedRef.current) {
-      highLightedRef.current.openPopup();
-    }
-  }, [highlightedTaskId]);
+    if (!highlightedTaskId || pendingFlyTo) return;
+    highLightedRef.current?.openPopup();
+  }, [highlightedTaskId, pendingFlyTo]);
+
+  useEffect(() => {
+    if (!pendingFlyTo || !mainMap) return;
+
+    const timer = setTimeout(() => {
+      const started = flyToCoords(pendingFlyTo, 17, 'main', () =>
+        highLightedRef.current?.openPopup()
+      );
+      if (started) {
+        setPendingFlyTo(null);
+        setSkipGeoPrompt(false);
+      }
+    }, 600);
+
+    return (): void => clearTimeout(timer);
+  }, [pendingFlyTo, mainMap, flyToCoords, setPendingFlyTo, setSkipGeoPrompt]);
 
   if (
     !leafletComponents ||
