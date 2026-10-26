@@ -9,6 +9,8 @@ import {
   IAuthResponse,
   ICurrentUserResponse,
 } from '@/zustand/services/authService';
+// NEW: для перевірки статусу помилки (401/403 проти мережі/5xx)
+import { isAxiosError } from 'axios';
 
 type Status =
   | 'idle'
@@ -179,7 +181,15 @@ export const authStore = create<TAuthState>()(
           status: options.silent ? get().status : 'loading',
           error: null,
         });
-
+        // NEW: одна функція замість трьох однакових блоків set({...})
+        const clearUser = (): void => {
+          set({
+            status: 'idle',
+            isLoggedIn: false,
+            isEmailVerified: false,
+            user: null,
+          });
+        };
         try {
           const res = await service.currentUser();
 
@@ -194,24 +204,39 @@ export const authStore = create<TAuthState>()(
 
             return res;
           }
+          // OLD:
+          // set({
+          //   status: 'idle',
+          //   isLoggedIn: false,
+          //   isEmailVerified: false,
+          //   user: null,
+          // });
 
-          set({
-            status: 'idle',
-            isLoggedIn: false,
-            isEmailVerified: false,
-            user: null,
-          });
-
+          // NEW: бек відповів, але користувача немає: це справжня відсутність сесії
+          // бек відповів, але користувача немає: це справжня відсутність сесії
+          clearUser();
           return null;
         } catch (e) {
           console.error('[store.currentUser] threw:', e);
+          // OLD: будь-яка помилка (мережа, 5xx, таймаут) стирала користувача
+          // set({
+          //   status: 'idle',
+          //   isLoggedIn: false,
+          //   isEmailVerified: false,
+          //   user: null,
+          // });
 
-          set({
-            status: 'idle',
-            isLoggedIn: false,
-            isEmailVerified: false,
-            user: null,
-          });
+          // NEW: стираємо користувача лише при справжній відмові авторизації
+
+          const status = isAxiosError(e) ? e.response?.status : undefined;
+          const isAuthFailure = status === 401 || status === 403;
+
+          if (isAuthFailure) {
+            clearUser();
+          } else {
+            // мережа / 5xx / таймаут: user не чіпаємо
+            set({ status: get().user ? 'authorized' : 'idle' });
+          }
 
           return null;
         }
