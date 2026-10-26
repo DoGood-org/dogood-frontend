@@ -12,7 +12,7 @@ export const ButtonLocation = (): JSX.Element => {
 
   return (
     <ButtonMap onClickHandler={handleClick}>
-      <GpsIcon className=" w-6 h-6" />
+      <GpsIcon className="w-6 h-6 text-[#fffcfc]" />
     </ButtonMap>
   );
 };

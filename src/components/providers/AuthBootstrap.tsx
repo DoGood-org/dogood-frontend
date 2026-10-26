@@ -3,52 +3,33 @@
 import { useEffect } from 'react';
 import { authStore } from '@/zustand/stores/authStore';
 
+const MIN_INTERVAL_MS = 30_000;
+
+let inFlight: Promise<unknown> | null = null;
+let lastRunAt = 0;
+
+function refreshSilently(force = false): void {
+  const { isLoggedIn, currentUser } = authStore.getState();
+  if (!isLoggedIn) return;
+  if (inFlight) return;
+  if (!force && Date.now() - lastRunAt < MIN_INTERVAL_MS) return;
+
+  lastRunAt = Date.now();
+  inFlight = Promise.resolve(currentUser({ silent: true })).finally(() => {
+    inFlight = null;
+  });
+}
+
 export function AuthBootstrap(): null {
   useEffect(() => {
-    // OLD:
-    // const refreshSilently = (): void => {
-    //   const { isLoggedIn } = authStore.getState();
-    //
-    //   if (!isLoggedIn) {
-    //     return;
-    //   }
-    //
-    //   void authStore.getState().currentUser({ silent: true });
-    // };
-
-    // NEW: те саме, але компактніше
-    const refreshSilently = (): void => {
-      if (!authStore.getState().isLoggedIn) return;
-      void authStore.getState().currentUser({ silent: true });
-    };
-
-    // OLD:
-    // const onVisibility = (): void => {
-    //   if (document.visibilityState === 'visible') {
-    //     refreshSilently();
-    //   }
-    // };
-
-    // NEW:
-
     const onVisibility = (): void => {
       if (document.visibilityState === 'visible') refreshSilently();
     };
-    // OLD: refreshSilently();
-    // NEW (з твого диффа): безумовний виклик для всіх, включно з гостями.
-    // Ризик: гість -> 401 -> refresh -> 401 -> редірект на /login.
-    // Перевір в інкогніто на публічній сторінці (/, /news).
-    // NEW
-    refreshSilently();
-    // void authStore.getState().currentUser({ silent: true });
-    // SAFE ALTERNATIVE (якщо в інкогніто викидає на /login, використай це
-    // замість рядка вище):
-    // refreshSilently();
-    window.addEventListener('focus', refreshSilently);
+
+    refreshSilently(true);
     document.addEventListener('visibilitychange', onVisibility);
 
     return (): void => {
-      window.removeEventListener('focus', refreshSilently);
       document.removeEventListener('visibilitychange', onVisibility);
     };
   }, []);

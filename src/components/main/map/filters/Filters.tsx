@@ -32,7 +32,7 @@ export const Filters: FC<Props> = ({ tasks, className }): JSX.Element => {
         <h3 className="text-h3 lg:pl-3">{t('title')}</h3>
 
         <Close
-          className="w-[24px] h-[24px] stroke-[#FFFCFC]"
+          className="w-[24px] h-[24px] stroke-black dark:stroke-[#FFFCFC]"
           onClick={() => setActivePanel(null)}
         />
       </div>

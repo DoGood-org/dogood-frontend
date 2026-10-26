@@ -67,16 +67,16 @@ export const CustomLayerController = ({
             <Button
               key={option.id}
               variant={'ghost'}
-              className=" p-0 w-6 h-6  rounded-full border-map-btn-icon mr-2"
+              className="p-0 w-6 h-6 rounded-full border-[#fffcfc] dark:border-[#656565] mr-2"
               onClick={(e) => {
                 handleOptionSelect(option.id, e);
               }}
             >
               <span
-                className={`text-xs font-medium rounded-full  border-transparent ${activeLayer === option.id ? 'bg-btn-hover' : 'bg-transparent'} p-[6px]`}
+                className={`text-xs font-medium rounded-full  border-transparent ${activeLayer === option.id ? 'bg-btn-outline' : 'bg-transparent'} p-[6px]`}
               ></span>
             </Button>
-            <span className="text-[var(--map-btn-icon)] text-base font-medium">
+            <span className="text-[#fffcfc] text-base font-medium">
               {option.label}
             </span>
           </div>

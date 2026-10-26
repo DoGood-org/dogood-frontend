@@ -44,7 +44,7 @@ export const TaskItem = ({
           onAfterMapClick={() => setActivePanel(null)}
         />
       </div>
-      <div className="flex justify-between mb-6">
+      <div className="flex w-full justify-center mb-6">
         <TaskActionButtons
           taskId={id}
           category={category}

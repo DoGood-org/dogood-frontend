@@ -12,7 +12,7 @@ export const ButtonLayers = (): JSX.Element => {
 
   return (
     <ButtonMap onClickHandler={handleClick}>
-      <Layers className=" w-6 h-6" />
+      <Layers className="w-6 h-6 text-[#fffcfc]" />
     </ButtonMap>
   );
 };

@@ -333,7 +333,7 @@ export const Map: React.FC = (): JSX.Element => {
         mapHeight={547}
         mapOnMain={true}
         tasks={noPaginatedTasks}
-        className="relative z-[1000] w-full mt-0 md:mt-4 lg:mt-0 lg:absolute lg:top-16 lg:left-24 lg:w-[487px]"
+        className="relative z-[1000] w-full mt-0 md:mt-4 lg:mt-0 lg:absolute lg:top-12 lg:left-12 lg:w-[487px]"
       />
     </div>
   );
