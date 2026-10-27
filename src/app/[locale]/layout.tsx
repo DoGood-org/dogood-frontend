@@ -12,6 +12,7 @@ import { Header } from '@/components/layout/header/Header';
 import { Footer } from '@/components/layout/footer/Footer';
 import { ReactQueryProvider } from '@/components/providers/ReactQueryProvider';
 import { AuthBootstrap } from '@/components/providers/AuthBootstrap';
+import { AuthRequiredModal } from '@/components/ui/modals/AuthRequiredModal/AuthRequiredModal';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -45,6 +46,7 @@ export default async function LocaleLayout({
             <Header />
             <main className="pt-[80px] lg:pt-[72px]">{children}</main>
             <Footer />
+            <AuthRequiredModal />
           </NextIntlClientProvider>
           <ToastProvider />
         </ReactQueryProvider>

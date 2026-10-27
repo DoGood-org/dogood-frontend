@@ -41,5 +41,9 @@
   "seeMoreBtn": "See more",
   "editBtn": "Edit",
   "markAsFinished": "Mark as finished",
-  "closeThisTask": "Close this task"
+  "closeThisTask": "Close this task",
+  "loginToJoin": "Log in or sign up to join",
+  "login": "Log in",
+  "noAccount": "Don't have an account?",
+  "register": "Sign up"
 }

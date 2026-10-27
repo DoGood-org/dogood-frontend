@@ -13,6 +13,7 @@ interface TTaskActions {
   setTasks: (tasks: IExtendedITaskProps[]) => void;
   setJoinedTasks: (tasks: IExtendedITaskProps[]) => void;
   joinTask: (taskId: string) => void;
+  leaveTask: (taskId: string) => void;
   setTasksByKey: (key: string, tasks: IExtendedITaskProps[]) => void;
   setHighlightedTaskId: (taskId: string | null) => void;
   toggleFavorite: (taskId: string) => void;
@@ -31,11 +32,20 @@ export const useTaskStore = create<TTaskStore>()(
 
       setTasks: (tasks): any => set({ tasks }),
       setJoinedTasks: (tasks): any => set({ joinedTasks: tasks }),
-      joinTask: (taskId): any => {
-        const updated = get().tasks.map((task) => ({
-          ...task,
-          isSelected: task.id === taskId ? !task.isSelected : task.isSelected,
-        }));
+      joinTask: (taskId: string): void => {
+        const updated = get().tasks.map((task) =>
+          task.id === taskId ? { ...task, isSelected: true } : task
+        );
+        set({
+          tasks: updated,
+          joinedTasks: updated.filter((task) => task.isSelected),
+        });
+      },
+
+      leaveTask: (taskId: string): void => {
+        const updated = get().tasks.map((task) =>
+          task.id === taskId ? { ...task, isSelected: false } : task
+        );
         set({
           tasks: updated,
           joinedTasks: updated.filter((task) => task.isSelected),

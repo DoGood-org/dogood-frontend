@@ -41,5 +41,9 @@
   "seeMoreBtn": "Mehr anzeigen",
   "editBtn": "Bearbeiten",
   "markAsFinished": "Als erledigt markieren",
-  "closeThisTask": "Diese Aufgabe schließen"
+  "closeThisTask": "Diese Aufgabe schließen",
+  "loginToJoin": "Melden Sie sich an oder registrieren Sie sich, um mitzumachen",
+  "login": "Anmelden",
+  "noAccount": "Noch kein Konto?",
+  "register": "Registrieren"
 }

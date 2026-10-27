@@ -10,6 +10,8 @@ import { JSX } from 'react';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import { isDonationCategory } from '@/utils/isDonationCategory';
 import { useRouter } from 'next/navigation';
+import { authStore } from '@/zustand/stores/authStore';
+import { useAuthModalStore } from '@/zustand/stores/authModalStore';
 
 interface TaskActionButtonsProps {
   taskId: string;
@@ -31,6 +33,9 @@ export const TaskActionButtons = ({
     (s) => !!s.tasks.find((task) => task.id === taskId)?.isSelected
   );
   const joinTask = useTaskStore((s) => s.joinTask);
+  const leaveTask = useTaskStore((s) => s.leaveTask);
+  const isLoggedIn = authStore((s) => s.isLoggedIn);
+  const openAuthModal = useAuthModalStore((s) => s.open);
 
   const router = useRouter();
 
@@ -39,6 +44,18 @@ export const TaskActionButtons = ({
     openMenu: openModal,
     closeMenu: closeModal,
   } = useMenuToggle();
+
+  const handleJoinToggle = (e: React.MouseEvent): void => {
+    e.stopPropagation();
+
+    if (!isLoggedIn) {
+      openAuthModal();
+      return;
+    }
+
+    if (isJoined) leaveTask(taskId);
+    else joinTask(taskId);
+  };
 
   const isDonation = isDonationCategory(category);
 
@@ -65,11 +82,7 @@ export const TaskActionButtons = ({
       ) : (
         <Button
           variant="primary"
-          onClick={(e) => {
-            e.stopPropagation();
-            if (!isJoined) joinTask(taskId);
-            router.push(`/tasks/${taskId}`);
-          }}
+          onClick={handleJoinToggle}
           className={`${baseButtonClass} text-white w-full max-w-[114px] py-3 px-6`}
           size="lg"
         >
