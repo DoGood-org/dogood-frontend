@@ -25,6 +25,7 @@ import { TasksOnMap } from './tasksPanel/TasksOnMap';
 import { MapAutoResize } from './profileMap/MapAutoResize';
 import { isFilterCategory } from '@/utils/filterCategories';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export const Map: React.FC = (): JSX.Element => {
   const router = useRouter();
@@ -54,6 +55,9 @@ export const Map: React.FC = (): JSX.Element => {
     setShowOptionsMenu,
     closeOptionsMenu,
   } = useMapStore();
+
+  const t = useTranslations('map');
+
   const { choosenCategories, categories } = useFilterStore();
   const pendingFlyTo = useMapStore((s) => s.pendingFlyTo);
   const setPendingFlyTo = useMapStore((s) => s.setPendingFlyTo);
@@ -142,7 +146,7 @@ export const Map: React.FC = (): JSX.Element => {
     return (
       <div className="w-full bg-background">
         <div className="max-w-[1920px] px-[100px] h-[560px] mx-auto flex items-center justify-center text-gray-500">
-          Some nice loading animation here...
+          {t('loadingMap')}
         </div>
       </div>
     );
@@ -249,7 +253,7 @@ export const Map: React.FC = (): JSX.Element => {
                           router.push(`/tasks/${task.id}`);
                         }}
                       >
-                        GO TO TASK
+                        {t('goToTask')}
                       </button>
                     </div>
                   </Popup>
@@ -281,9 +285,9 @@ export const Map: React.FC = (): JSX.Element => {
               >
                 <Popup>
                   <div>
-                    📍 You are here: <br />
-                    But you can drag me to change location! <br />
-                    <strong>Coordinates:</strong> <br />
+                    📍 {t('youAreHere')}: <br />
+                    {t('dragHint')} <br />
+                    <strong>{t('coordinates')}:</strong> <br />
                     <strong>{userLocation.lat.toFixed(5)}</strong>,{' '}
                     <strong>{userLocation.lng.toFixed(5)}</strong>
                   </div>

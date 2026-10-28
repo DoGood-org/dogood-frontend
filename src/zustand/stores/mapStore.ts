@@ -118,8 +118,9 @@ export const useMapStore = create<TMapState & TMapActions>()(
       activeLayer: EnumMapLayers.GoogleMaps,
       defaultLayers: [],
       fullscreenMap: false,
-      toggleFullscreenMap: () =>
-        set((state) => ({ fullscreenMap: !state.fullscreenMap })),
+      toggleFullscreenMap: (fullscreen: boolean): void => {
+        set({ fullscreenMap: fullscreen });
+      },
 
       layerDropIsOpen: false,
       mapInstances: {

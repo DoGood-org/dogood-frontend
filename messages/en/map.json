@@ -45,5 +45,19 @@
   "loginToJoin": "Log in or sign up to join",
   "login": "Log in",
   "noAccount": "Don't have an account?",
-  "register": "Sign up"
+  "register": "Sign up",
+  "goToTask": "GO TO TASK",
+  "youAreHere": "You are here",
+  "dragToChange": "Drag me to change your location",
+  "dragHint": "But you can drag me to change location!",
+  "coordinates": "Coordinates",
+  "setMyLocation": "Set my location",
+  "dragMarker": "Drag me to change location",
+  "addMyTask": "Add my task here",
+  "remove": "Remove",
+  "loadingMap": "Loading map...",
+  "latitude": "Lat",
+  "longitude": "Lng",
+  "myTaskTitle": "My task",
+  "myTaskDescription": "I added this task here"
 }

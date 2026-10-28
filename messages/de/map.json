@@ -45,5 +45,19 @@
   "loginToJoin": "Melden Sie sich an oder registrieren Sie sich, um mitzumachen",
   "login": "Anmelden",
   "noAccount": "Noch kein Konto?",
-  "register": "Registrieren"
+  "register": "Registrieren",
+  "goToTask": "ZUR AUFGABE",
+  "youAreHere": "Du bist hier",
+  "dragToChange": "Zieh mich, um deinen Standort zu ändern",
+  "dragHint": "Aber du kannst mich ziehen, um den Standort zu ändern!",
+  "coordinates": "Koordinaten",
+  "setMyLocation": "Meinen Standort festlegen",
+  "dragMarker": "Zieh mich, um den Standort zu ändern",
+  "addMyTask": "Meine Aufgabe hier hinzufügen",
+  "remove": "Entfernen",
+  "loadingMap": "Karte wird geladen...",
+  "latitude": "Breite",
+  "longitude": "Länge",
+  "myTaskTitle": "Meine Aufgabe",
+  "myTaskDescription": "Diese Aufgabe habe ich hier hinzugefügt"
 }

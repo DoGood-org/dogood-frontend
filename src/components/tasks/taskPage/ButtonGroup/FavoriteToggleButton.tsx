@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { authStore } from '@/zustand/stores/authStore';
-import { useRouter } from 'next/navigation';
 
 interface FavoriteToggleButtonProps {
   taskId: string;
@@ -21,7 +20,6 @@ export const FavoriteToggleButton: React.FC<FavoriteToggleButtonProps> = ({
   variant = 'default',
 }) => {
   const isLoggedIn = authStore((s) => s.isLoggedIn);
-  const router = useRouter();
   const isFavorite = useTaskStore(
     (s) =>
       isLoggedIn && (s.tasks.find((t) => t.id === taskId)?.isFavorite ?? false)
@@ -34,10 +32,7 @@ export const FavoriteToggleButton: React.FC<FavoriteToggleButtonProps> = ({
       aria-pressed={isFavorite}
       onClick={(e) => {
         e.stopPropagation();
-        if (!isLoggedIn) {
-          router.push('/login');
-          return;
-        }
+        if (!isLoggedIn) return;
         toggleFavorite(taskId);
       }}
     >

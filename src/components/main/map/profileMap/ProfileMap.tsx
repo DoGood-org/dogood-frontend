@@ -20,6 +20,8 @@ import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AnimatePresence } from 'framer-motion';
 import { JSX, useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 
 import { TasksOnMap } from '@/components/main/map/tasksPanel/TasksOnMap';
 import { useTaskStore } from '@/zustand/stores/taskStore';
@@ -46,8 +48,11 @@ export const ProfileMap = (): JSX.Element => {
     checkLocationPermission,
     clickedCoords,
     showOptionsMenu,
-    // activePanel,
   } = useMapStore();
+
+  const t = useTranslations('map');
+
+  const router = useRouter();
 
   useEffect(() => {
     initMap('user');
@@ -87,7 +92,7 @@ export const ProfileMap = (): JSX.Element => {
     !mapIcons ||
     Object.values(mapIcons).some((icon) => !icon)
   ) {
-    return <div>Loading map...</div>;
+    return <div>{t('loadingMap')}</div>;
   }
   const { MapContainer, TileLayer, Marker, Popup } = leafletComponents;
 
@@ -102,7 +107,7 @@ export const ProfileMap = (): JSX.Element => {
           }}
           draggable={true}
           zIndexOffset={10000}
-          title="Drag me to change location"
+          title={t('dragMarker')}
           position={{ lat: marker.lat, lng: marker.lng }}
           icon={icon}
           eventHandlers={{
@@ -132,7 +137,8 @@ export const ProfileMap = (): JSX.Element => {
               <br />
               {marker.description}
               <br />
-              Lat: {marker.lat.toFixed(5)}, Lng: {marker.lng.toFixed(5)}
+              {t('latitude')}: {marker.lat.toFixed(5)}, {t('longitude')}:
+              {marker.lng.toFixed(5)}
               <div className="flex gap-2 mt-2">
                 <button
                   className="cursor-pointer"
@@ -140,7 +146,7 @@ export const ProfileMap = (): JSX.Element => {
                     console.log('Edit marker:', marker);
                   }}
                 >
-                  ✏️ Edit
+                  ✏️ {t('editBtn')}
                 </button>
                 <button
                   className="cursor-pointer"
@@ -148,7 +154,7 @@ export const ProfileMap = (): JSX.Element => {
                     setCustomMarkers(customMarkers.filter((m) => m !== marker));
                   }}
                 >
-                  ❌ Remove
+                  ❌ {t('remove')}
                 </button>
               </div>
             </div>
@@ -262,6 +268,16 @@ export const ProfileMap = (): JSX.Element => {
                         <p className="text-xs text-muted mt-1">
                           {task.distance}
                         </p>
+
+                        <button
+                          className="mt-2 text-violet-500 hover:underline cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(`/tasks/${task.id}`);
+                          }}
+                        >
+                          {t('goToTask')}
+                        </button>
                       </div>
                     </Popup>
                   </Marker>
@@ -272,7 +288,7 @@ export const ProfileMap = (): JSX.Element => {
                   position={userLocation}
                   draggable={true}
                   zIndexOffset={10000}
-                  title="Drag me to change your location"
+                  title={t('dragToChange')}
                   icon={mapIcons.myPosition}
                   eventHandlers={{
                     dragend: (e) => {
@@ -283,8 +299,8 @@ export const ProfileMap = (): JSX.Element => {
                 >
                   <Popup>
                     <div className="text-sm text-foreground">
-                      📍 You are here: <br />
-                      But you can drag me to change location! <br />
+                      📍 {t('youAreHere')}: <br />
+                      {t('dragHint')} <br />
                       <strong>{userLocation.lat.toFixed(5)}</strong>,{' '}
                       <strong>{userLocation.lng.toFixed(5)}</strong>
                     </div>
@@ -315,7 +331,7 @@ export const ProfileMap = (): JSX.Element => {
                         closeOptionsMenu();
                       }}
                     >
-                      📍 Set My Location
+                      📍 {t('setMyLocation')}
                     </button>
                     <button
                       onClick={(e) => {
@@ -330,7 +346,7 @@ export const ProfileMap = (): JSX.Element => {
                         closeOptionsMenu();
                       }}
                     >
-                      ➕ Add My Task Here
+                      ➕ {t('addMyTask')}
                     </button>
                   </div>
                 </Popup>
@@ -352,7 +368,7 @@ export const ProfileMap = (): JSX.Element => {
         mapHeight={400}
         tasks={noPaginatedTasks}
         mapOnMain={false}
-        className="relative z-[1000] w-full mt-0 md:mt-0 lg:absolute lg:top-16 lg:left-24 lg:w-[487px]"
+        className="relative z-[1000] w-full mt-0 md:mt-0 lg:absolute lg:top-20 lg:left-6 lg:w-[487px]"
       />
     </div>
   );

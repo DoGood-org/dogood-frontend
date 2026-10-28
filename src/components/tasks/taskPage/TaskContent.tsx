@@ -31,6 +31,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   const currentUser = authStore((state) => state.user);
   const myOrganizations = useCreateTaskStore((state) => state.organizations);
   const storeTasks = useTaskStore((state) => state.tasks);
+  const isLoggedIn = authStore((s) => s.isLoggedIn);
 
   useEffect(() => {
     if (currentUser && myOrganizations.length === 0) {
@@ -96,6 +97,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
         categories={task.category}
         location={task.location}
         taskId={task.id}
+        showFavorite={isLoggedIn}
         redirectToMap
       />
       <div className="flex justify-between mt-5">
