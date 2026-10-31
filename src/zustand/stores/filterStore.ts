@@ -126,6 +126,13 @@ export const useFilterStore = create<TFilterStore>()(
         set({ distanceUnit: unit });
       },
     }),
-    { name: 'task-filters' }
+    {
+      name: 'task-filters',
+      partialize: ({
+        categories: _categories,
+        showFavorites: _showFavorites,
+        ...rest
+      }) => rest,
+    }
   )
 );

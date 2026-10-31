@@ -17,10 +17,16 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
   status,
 }) => {
   const userLocation = useMapStore((state) => state.userLocation);
-  const defaultLocation = useMapStore((state) => state.defaultLocation);
 
-  const currentLat = userLocation?.lat ?? defaultLocation.lat;
-  const currentLng = userLocation?.lng ?? defaultLocation.lng;
+  const distanceStr =
+    userLocation && location?.lat != null && location?.lng != null
+      ? getDistanceStr(
+          userLocation.lat,
+          userLocation.lng,
+          location.lat,
+          location.lng
+        )
+      : '-- km';
   return (
     <div className="border p-4 rounded-lg bg-card flex flex-col min-h-[270px]">
       <div className="relative min-h-[100px]">
@@ -47,14 +53,7 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
           <TaskCategoryList categories={category} />
           <div className="flex-shrink-0">
             <span className="text-sm font-semibold text-text-gray whitespace-nowrap">
-              {location?.lat != null && location?.lng != null
-                ? getDistanceStr(
-                    currentLat,
-                    currentLng,
-                    location.lat,
-                    location.lng
-                  )
-                : '-- km'}
+              {distanceStr}
             </span>
           </div>
         </div>

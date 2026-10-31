@@ -57,7 +57,8 @@
         "next": "Next step",
         "edit": "Edit",
         "back": "Go back",
-        "uploadPicture": "Upload picture"
+        "uploadPicture": "Upload picture",
+        "saving": "Saving..."
       },
       "stepTitles": {
         "addPicture": "Add picture"

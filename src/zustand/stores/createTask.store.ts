@@ -136,9 +136,9 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
       },
 
       resetCreateTask: (): void => {
-        set((state) => ({
+        set(() => ({
           createStep: STEP_IDS.OWNER,
-          stepHistory: state.stepHistory,
+          stepHistory: [],
           createTaskDraft: {},
           isSuccess: false,
         }));
@@ -148,7 +148,7 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
       name: 'create-task-storage',
       partialize: (state) => ({
         createStep: state.createStep,
-        stepHistory: [],
+        stepHistory: state.stepHistory,
         createTaskDraft: state.createTaskDraft,
         currentUser: state.currentUser,
       }),

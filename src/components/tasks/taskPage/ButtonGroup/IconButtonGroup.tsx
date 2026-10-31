@@ -29,16 +29,13 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
   redirectToMap = false,
 }) => {
   const userLocation = useMapStore((state) => state.userLocation);
-  const defaultLocation = useMapStore((state) => state.defaultLocation);
 
   const lat = location?.lat;
   const lng = location?.lng;
 
-  const currentLat = userLocation?.lat ?? defaultLocation.lat;
-  const currentLng = userLocation?.lng ?? defaultLocation.lng;
   const distanceStr =
-    lat != null && lng != null
-      ? getDistanceStr(currentLat, currentLng, lat, lng)
+    userLocation && lat != null && lng != null
+      ? getDistanceStr(userLocation.lat, userLocation.lng, lat, lng)
       : fallbackDistance || '-- km';
 
   return (

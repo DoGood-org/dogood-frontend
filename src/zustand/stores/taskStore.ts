@@ -18,6 +18,7 @@ interface TTaskActions {
   setHighlightedTaskId: (taskId: string | null) => void;
   toggleFavorite: (taskId: string) => void;
   updateTaskStatus: (taskId: string, status: TaskStatus) => void;
+  upsertTasks: (tasks: IExtendedITaskProps[]) => void;
 }
 
 type TTaskStore = TTaskState & TTaskActions;
@@ -67,9 +68,12 @@ export const useTaskStore = create<TTaskStore>()(
 
           const uniqueTasks = Array.from(
             new Map(
-              Object.values(updated)
-                .flat()
-                .map((t) => [t.id, t])
+              [
+                ...Object.entries(updated)
+                  .filter(([k]) => k !== key)
+                  .flatMap(([, list]) => list),
+                ...tasks,
+              ].map((t) => [t.id, t])
             ).values()
           ).map((t) => {
             const old = prev.get(t.id);
@@ -77,7 +81,6 @@ export const useTaskStore = create<TTaskStore>()(
               ? { ...t, isSelected: old.isSelected, isFavorite: old.isFavorite }
               : t;
           });
-
           return {
             tasksByKey: updated,
             tasks: uniqueTasks,
@@ -85,14 +88,42 @@ export const useTaskStore = create<TTaskStore>()(
           };
         });
       },
-
+      upsertTasks: (incoming): void => {
+        set((state) => {
+          const merged = new Map(state.tasks.map((t) => [t.id, t]));
+          incoming.forEach((t) => {
+            const old = merged.get(t.id);
+            merged.set(
+              t.id,
+              old
+                ? {
+                    ...t,
+                    isSelected: old.isSelected,
+                    isFavorite: old.isFavorite,
+                  }
+                : t
+            );
+          });
+          const tasks = Array.from(merged.values());
+          return { tasks, joinedTasks: tasks.filter((t) => t.isSelected) };
+        });
+      },
       updateTaskStatus: (taskId: string, status: TaskStatus): void => {
         set((prev) => {
           const updatedTasks = prev.tasks.map((t) =>
             t.id === taskId ? { ...t, status } : t
           );
+
+          const updatedByKey = Object.fromEntries(
+            Object.entries(prev.tasksByKey).map(([k, list]) => [
+              k,
+              list.map((t) => (t.id === taskId ? { ...t, status } : t)),
+            ])
+          );
+
           return {
             tasks: updatedTasks,
+            tasksByKey: updatedByKey,
             joinedTasks: updatedTasks.filter((t) => t.isSelected),
           };
         });

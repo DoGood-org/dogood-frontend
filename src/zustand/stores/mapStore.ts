@@ -69,6 +69,7 @@ type TMapState = {
   skipGeoPrompt: boolean;
 
   activePanel: 'filters' | 'tasks' | null;
+  locationResolved: boolean;
 };
 
 type TMapActions = {
@@ -107,6 +108,7 @@ type TMapActions = {
   removeMarker: (loc: TCustomMarker) => void;
   checkLocationPermission: () => void;
   requestGeolocation: (manualLoc?: LatLngLiteral) => Promise<void>;
+  setLocationResolved: (value: boolean) => void;
 };
 
 export type TMapProps = TMapState & TMapActions;
@@ -146,7 +148,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
         myPin: null,
         donation: null,
       },
-      defaultLocation: { lat: 48.8566, lng: 2.3522 }, // Default to Paris
+      defaultLocation: { lat: 50, lng: 10 },
       userLocation: null,
 
       selectedTask: null,
@@ -170,6 +172,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
       showOptionsMenu: false,
       pendingFlyTo: null,
       skipGeoPrompt: false,
+      locationResolved: false,
 
       // *Actions*//
 
@@ -287,19 +290,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
 
         setShowGeolocationPopup(false);
 
-        try {
-          await requestGeolocation();
-        } catch (err) {
-          console.error('Geolocation request failed:', err);
-        }
-
-        const error = get().locationError;
-        if (error) {
-          console.warn(
-            'User may need to enable location access manually in the browser.',
-            error
-          );
-        }
+        await requestGeolocation();
       },
       declineLocationSharing: (): void => {
         console.warn('User declined location sharing');
@@ -308,6 +299,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
           showGeolocationPopup: false,
           userLocation: null,
           locationError: null,
+          locationResolved: true,
         });
       },
       addMarker: (loc): void => {
@@ -329,6 +321,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
       setShowOptionsMenu: (visible) => set({ showOptionsMenu: visible }),
       setPendingFlyTo: (coords) => set({ pendingFlyTo: coords }),
       setSkipGeoPrompt: (value) => set({ skipGeoPrompt: value }),
+      setLocationResolved: (value) => set({ locationResolved: value }),
 
       closeOptionsMenu: () =>
         set({
@@ -350,50 +343,33 @@ export const useMapStore = create<TMapState & TMapActions>()(
       },
       requestGeolocation: async (manualLoc?: LatLngLiteral): Promise<void> => {
         try {
-          const coords = await getGeolocationPromise();
-          // If we have coordinates from geolocation navigator, use them
-          if (coords) {
-            const userLocation = get().userLocation;
-            const alreadyUpToDate = userLocation
-              ? coordsMatch(userLocation, coords)
-              : false;
-            if (!alreadyUpToDate) {
-              set({
-                userLocation: coords,
-                locationError: null,
-                showGeolocationPopup: false,
-              });
-              console.info(
-                '[Zustand] User location set from navigator:',
-                coords
-              );
-            } else {
-              console.info('[Zustand] Skipping update — same coordinates');
-            }
-            return;
-          }
-
-          // If manual location is provided, use it
-
           if (manualLoc) {
             set({
               userLocation: manualLoc,
               locationError: null,
               showGeolocationPopup: false,
+              locationResolved: true,
             });
-            console.info('[Zustand] Manual location set:', manualLoc);
             return;
           }
 
-          // No navigator location and no manual fallback
-          console.warn(
-            '[Zustand] No coordinates from navigator or manual input'
-          );
+          const coords = await getGeolocationPromise();
+
+          if (!coords) {
+            throw new Error('Geolocation returned empty coordinates');
+          }
+
           set({
-            userLocation: null,
-            locationError: 'Failed to retrieve geolocation from navigator',
+            userLocation: {
+              lat: coords.lat,
+              lng: coords.lng,
+            },
+            locationError: null,
             showGeolocationPopup: false,
+            locationResolved: true,
           });
+
+          console.info('[Zustand] Actual user location:', coords);
         } catch (error) {
           const code = (error as GeolocationPositionError)?.code;
 
@@ -402,22 +378,26 @@ export const useMapStore = create<TMapState & TMapActions>()(
               hasAgreedToLocation: false,
               showGeolocationPopup: false,
               locationError: 'Location permission denied in browser settings',
-              userLocation: get().userLocation ?? get().defaultLocation,
+              userLocation: null,
+              locationResolved: true,
             });
+
             return;
           }
+
           console.warn('[Zustand] Geolocation access failed:', error);
+
           set({
             locationError:
-              typeof error === 'object' && error && 'message' in error
-                ? `${(error as { message: string }).message} — showing fallback pin`
-                : 'Failed to retrieve geolocation from all sources',
+              error instanceof Error
+                ? error.message
+                : 'Failed to retrieve geolocation',
             showGeolocationPopup: false,
-            userLocation: get().defaultLocation,
+            userLocation: null,
+            locationResolved: true,
           });
         }
       },
-
       setActivePanel: (panel: 'tasks' | 'filters' | null): any =>
         set({ activePanel: panel }),
 

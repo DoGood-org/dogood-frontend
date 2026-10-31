@@ -57,7 +57,8 @@
         "next": "Nächster Schritt",
         "edit": "Bearbeiten",
         "back": "Zurück",
-        "uploadPicture": "Bild hochladen"
+        "uploadPicture": "Bild hochladen",
+        "saving": "SWird gespeichert..."
       },
       "stepTitles": {
         "addPicture": "Foto hinzufügen"

@@ -15,9 +15,13 @@ import { useTaskStore } from '@/zustand/stores/taskStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { isDonationCategory } from '@/utils/isDonationCategory';
 import { mapCategoryToMarker } from '@/utils/mapCategoryToMarker';
-import { mapFormToCreateTask } from '@/utils/taskTransform';
+import {
+  mapFormToApiPayload,
+  transformBackendTaskToITaskDetails,
+} from '@/utils/taskTransform';
 import { STEP_IDS } from '@/constants/stepIds';
 import { useTranslations } from 'next-intl';
+import { createTaskService } from '@/services/taskService';
 
 type Props = {
   showBack?: boolean;
@@ -34,14 +38,13 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
     isNextStepPreview,
   } = useCreateTaskStore();
 
-  const organizations = useCreateTaskStore((s) => s.organizations);
-  const currentUser = useCreateTaskStore((s) => s.currentUser);
-
   const t = useTranslations('tasks.createTask.buttons');
 
   const addMarker = useMapStore((s) => s.addMarker);
 
   const [isRequiredModalOpen, setIsRequiredModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const { trigger, watch, reset, setValue, getValues } =
     useFormContext<BasicInfoFormValues>();
@@ -80,11 +83,36 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
     setCreateTaskDraft(getValues());
 
     if (isLastStep) {
-      const currentFormData = getValues();
-      const newTask = mapFormToCreateTask(currentFormData, {
-        currentUser,
-        organizations,
-        id: crypto.randomUUID(),
+      await handleConfirm();
+      return;
+    }
+    nextCreateStep();
+  };
+
+  const handleConfirm = async (): Promise<void> => {
+    if (isSubmitting) return;
+
+    const currentFormData = getValues();
+    setSubmitError(null);
+
+    try {
+      setIsSubmitting(true);
+
+      const payload = mapFormToApiPayload(currentFormData, {
+        isDonation: hasDonationCategory,
+      });
+
+      const result = await createTaskService(payload);
+
+      if (!result.ok) {
+        setSubmitError(result.errorMessage);
+        return;
+      }
+
+      const backendTask = result.data.data;
+
+      const newTask = transformBackendTaskToITaskDetails({
+        task: backendTask as any,
       });
 
       const existingLocal = useTaskStore.getState().tasksByKey['local'] || [];
@@ -102,12 +130,16 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
           category: mapCategoryToMarker(newTask.category[0]),
         });
       }
+
       resetCreateTask();
       reset(defaultTaskValues);
       setIsSuccess(true);
-      return;
+    } catch (err) {
+      console.error(err);
+      setSubmitError(t('submitError'));
+    } finally {
+      setIsSubmitting(false);
     }
-    nextCreateStep();
   };
 
   const handleBackClick = (): void => {
@@ -137,6 +169,7 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
             className={cn('hover:border', getButtonClass(isLastStep))}
             onClick={handleBackClick}
             size="lg"
+            disabled={isSubmitting}
           >
             {leftButtonText}
           </Button>
@@ -146,10 +179,17 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
           size="lg"
           className={getButtonClass(isLastStep)}
           onClick={handleNextClick}
+          disabled={isSubmitting}
         >
-          {rightButtonText}
+          {isSubmitting ? t('saving') : rightButtonText}
         </Button>
       </div>
+
+      {submitError && (
+        <p className="mt-3 text-sm text-error text-center md:text-right">
+          {submitError}
+        </p>
+      )}
 
       {isRequiredModalOpen && (
         <RequiredFieldsModal

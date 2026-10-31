@@ -5,7 +5,6 @@ import { useFormContext } from 'react-hook-form';
 import { FormField } from './FormField';
 import { Input } from '@/components/ui/Input';
 import { useFilterStore } from '@/zustand/stores/filterStore';
-import { MOCK_LOCATIONS_SEARCH } from '@/components/main/map/mockTasks';
 import { useTranslations } from 'next-intl';
 
 interface LocationData {
@@ -63,14 +62,24 @@ export const LocationSearchInput = ({
       return;
     }
 
-    searchTimeoutRef.current = setTimeout(() => {
-      const res = MOCK_LOCATIONS_SEARCH.filter((l) =>
-        l.display_name.toLowerCase().includes(q.toLowerCase())
-      );
-      setSuggestions(res);
-      setIsOpen(res.length > 0);
-      setActiveIndex(-1);
-    }, 300);
+    searchTimeoutRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&limit=5&q=${encodeURIComponent(q)}`,
+          { headers: { 'Accept-Language': 'en' } }
+        );
+        if (!res.ok) throw new Error(`Nominatim ${res.status}`);
+
+        const data: NominatimResult[] = await res.json();
+        setSuggestions(data);
+        setIsOpen(data.length > 0);
+        setActiveIndex(-1);
+      } catch (e) {
+        console.error('Location search failed', e);
+        setSuggestions([]);
+        setIsOpen(false);
+      }
+    }, 500);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent): void => {

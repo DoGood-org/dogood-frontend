@@ -11,7 +11,7 @@ import { authStore } from '@/zustand/stores/authStore';
 export const TaskItem = ({
   id,
   title,
-  subtitle,
+  description,
   category,
   location,
   status,
@@ -33,7 +33,9 @@ export const TaskItem = ({
       <h3 className="text-base underline lg:text-reg font-normal mb-3 cursor-pointer">
         {title}
       </h3>
-      <h4 className="text-base mb-5 md:mb-3 lg:mb-5">{subtitle}</h4>
+      <h4 className="text-base mb-5 md:mb-3 lg:mb-5 line-clamp-1">
+        {description}
+      </h4>
       <div className="relative">
         <IconButtonGroup
           categories={category}

@@ -1,6 +1,6 @@
 'use client';
 import { useMapStore } from '@/zustand/stores/mapStore';
-import { JSX } from 'react';
+import { JSX, useEffect } from 'react';
 import { useMap, useMapEvent } from 'react-leaflet';
 
 export const zoomToRadiusMap: Record<number, number> = {
@@ -14,11 +14,15 @@ export const zoomToRadiusMap: Record<number, number> = {
 
 export const RadiusWatcher = (): JSX.Element | null => {
   const map = useMap();
-  const { setRadius } = useMapStore();
+  const setRadius = useMapStore((s) => s.setRadius);
+
+  useEffect(() => {
+    const r = zoomToRadiusMap[map.getZoom()];
+    if (r != null) setRadius(r);
+  }, [map, setRadius]);
 
   useMapEvent('zoomend', () => {
-    const zoom = map.getZoom();
-    const newRadius = zoomToRadiusMap[zoom];
+    const newRadius = zoomToRadiusMap[map.getZoom()];
     if (newRadius == null) return;
     setRadius(newRadius);
   });

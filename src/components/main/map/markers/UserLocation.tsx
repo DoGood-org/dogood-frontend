@@ -9,7 +9,11 @@ export const UserLocation: React.FC = () => {
 
   useEffect(() => {
     if (!map || !userLocation) return;
+    if (!map.getContainer()?.isConnected) return;
 
+    if (useMapStore.getState().pendingFlyTo) return;
+
+    if (map.getCenter().distanceTo(userLocation) < 50) return;
     map.flyTo(userLocation, map.getZoom(), {
       animate: true,
       duration: 1.5,

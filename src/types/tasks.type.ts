@@ -36,14 +36,13 @@ export interface OrganizationFromBack {
 }
 
 export interface ITask {
+  id: string;
   title: string;
-  subtitle: string;
   icon?: ReactElement;
   category: TaskCategoryEnum[];
   description: string;
   location?: { lat: number; lng: number } | null;
-  distance: string;
-  id: string;
+  createdAt?: string;
 }
 
 export enum TaskStatus {

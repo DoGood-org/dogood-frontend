@@ -7,10 +7,8 @@ import { useTranslations } from 'next-intl';
 import { Container } from '@/components/ui/Container';
 import { TaskControlButtons } from './ButtonGroup/TaskControlButtons';
 import { OtherTasksSection } from './OtherTasks/OtherTasksSection';
-import { authStore } from '@/zustand/stores/authStore';
 import { Task } from './Task';
-import { useEffect, useMemo } from 'react';
-import { useTaskStore } from '@/zustand/stores/taskStore';
+import { useEffect, useMemo, useState } from 'react';
 import { transformBackendTaskToITaskDetails } from '@/utils/taskTransform';
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
 import {
@@ -18,43 +16,116 @@ import {
   MOCK_ORGANIZATIONS,
 } from '@/components/main/map/mockTasks';
 import { Spinner } from '@/components/ui/Spinner';
+import type { ITaskDetails } from '@/types/tasks.type';
+import {
+  getAllTasksService,
+  getTaskByIdService,
+  IGetAllTasksResponse,
+  IGetTaskByIdResponse,
+  ITask,
+} from '@/services/taskService';
+import { authStore } from '@/zustand/stores/authStore';
+import { useTaskStore } from '@/zustand/stores/taskStore';
+
+const NOT_FOUND = 'not-found';
 
 interface TaskContentProps {
   slug: string;
   newsItems: INewsItem[];
 }
 
+const safeTransform = (raw?: ITask): ITaskDetails | null => {
+  if (!raw || typeof raw !== 'object' || !raw.id) return null;
+  try {
+    return transformBackendTaskToITaskDetails({
+      task: raw as unknown as ITaskDetails,
+    });
+  } catch (err) {
+    console.error('Failed to transform task', err, raw);
+    return null;
+  }
+};
+
 export const TaskContent: React.FC<TaskContentProps> = ({
   slug,
   newsItems,
 }) => {
-  const currentUser = authStore((state) => state.user);
+  const t = useTranslations('tasks');
   const myOrganizations = useCreateTaskStore((state) => state.organizations);
-  const storeTasks = useTaskStore((state) => state.tasks);
   const isLoggedIn = authStore((s) => s.isLoggedIn);
 
+  const [task, setTask] = useState<ITaskDetails | null>(null);
+  const [otherTasks, setOtherTasks] = useState<ITaskDetails[]>([]);
+  const [isFetching, setIsFetching] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [listError, setListError] = useState<string | null>(null);
+
   useEffect(() => {
-    if (currentUser && myOrganizations.length === 0) {
-    }
-  }, [currentUser, myOrganizations.length]);
+    let cancelled = false;
 
-  const t = useTranslations('tasks');
+    const load = async (): Promise<void> => {
+      setIsFetching(true);
+      setFetchError(null);
+      setListError(null);
+      setTask(null);
+      setOtherTasks([]);
 
-  const allDetailedTasks = useMemo(
-    () =>
-      storeTasks.map((task) => transformBackendTaskToITaskDetails({ task })),
-    [storeTasks]
-  );
+      const [singleRes, listRes] = await Promise.all([
+        getTaskByIdService(slug),
+        getAllTasksService(),
+      ]);
 
-  const task = useMemo(
-    () => allDetailedTasks.find((t) => String(t.id) === String(slug)),
-    [allDetailedTasks, slug]
-  );
+      if (cancelled) return;
 
-  const otherTasksList = useMemo(
-    () => allDetailedTasks.filter((t) => String(t.id) !== String(slug)),
-    [allDetailedTasks, slug]
-  );
+      let parsedTask: ITaskDetails | null = null;
+      let parsedList: ITaskDetails[] = [];
+
+      // ---- Single task ----
+      if (!singleRes.ok) {
+        setFetchError(singleRes.errorMessage);
+      } else {
+        const raw = (singleRes.data as IGetTaskByIdResponse | undefined)?.data
+          ?.task;
+        parsedTask = safeTransform(raw);
+
+        if (parsedTask) {
+          setTask(parsedTask);
+        } else {
+          setFetchError(NOT_FOUND);
+        }
+      }
+
+      // ---- All tasks ----
+      if (!listRes.ok) {
+        setListError(listRes.errorMessage);
+      } else {
+        const rawList =
+          (listRes.data as IGetAllTasksResponse | undefined)?.data?.tasks ?? [];
+
+        parsedList = rawList
+          .map((raw) => safeTransform(raw))
+          .filter((item): item is ITaskDetails => item !== null)
+          .filter((item) => String(item.id) !== String(slug));
+
+        setOtherTasks(parsedList);
+      }
+
+      useTaskStore.getState().upsertTasks(
+        [...(parsedTask ? [parsedTask] : []), ...parsedList].map((item) => ({
+          ...item,
+          distance: '',
+        }))
+      );
+
+      setIsFetching(false);
+    };
+
+    load();
+
+    return (): void => {
+      cancelled = true;
+    };
+  }, [slug]);
 
   const isHost = useMemo(() => {
     if (!task?.host) return false;
@@ -74,7 +145,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
     return false;
   }, [task, myOrganizations]);
 
-  if (storeTasks.length === 0) {
+  if (isFetching) {
     return (
       <Container className="py-10 flex justify-center items-center">
         <Spinner />
@@ -85,7 +156,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   if (!task) {
     return (
       <Container className="py-10 flex justify-center items-center">
-        <span>{t('task.notFound')}</span>
+        <span>{fetchError ?? t('task.notFound')}</span>
       </Container>
     );
   }
@@ -108,7 +179,11 @@ export const TaskContent: React.FC<TaskContentProps> = ({
           isHost={isHost}
         />
       </div>
-      <OtherTasksSection tasks={otherTasksList} />
+
+      {/* List fetch failure is non-blocking — the page still renders.
+          Swap for a toast if you prefer. */}
+      {listError ? null : <OtherTasksSection tasks={otherTasks} />}
+
       <LastNews newsItems={newsItems} />
     </Container>
   );

@@ -6,6 +6,7 @@ import { HostUser, OrganizationFromBack } from '@/types/tasks.type';
 import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
 import { CreateTaskForm } from './CreateTaskForm';
 import { CreateTask } from './CreateTask';
+import { STEP_IDS } from '@/constants/stepIds';
 
 interface Props {
   initialUser: HostUser;
@@ -23,6 +24,10 @@ const CreateTaskPage = ({
       currentUser: initialUser,
       organizations: initialOrganizations,
       hasHydrated: true,
+      isSuccess: false,
+      createStep: STEP_IDS.OWNER,
+      stepHistory: [],
+      createTaskDraft: {},
     });
     isInitialized.current = true;
   }

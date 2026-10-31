@@ -7,7 +7,7 @@ import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelec
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
-import React, { JSX, useEffect, useRef } from 'react';
+import React, { JSX, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import {
   AcceptShareLocationPopUp,
@@ -17,7 +17,6 @@ import {
   ScrollAfterDelay,
   StoreMapInstance,
 } from './LazyImports';
-import { generateTasks } from './mockTasks';
 import { UserLocation } from './markers/UserLocation';
 import { MultiControlPanel } from './controls/MultiControlPanel';
 import { CustomControlContent } from './controls/CustomControlContent';
@@ -26,6 +25,15 @@ import { MapAutoResize } from './profileMap/MapAutoResize';
 import { isFilterCategory } from '@/utils/filterCategories';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import {
+  getDistanceStr,
+  transformBackendTaskToITaskDetails,
+} from '@/utils/taskTransform';
+import { ITaskDetails } from '@/types/tasks.type';
+import { getAllTasksService } from '@/services/taskService';
+import { TaskCategoryEnum } from '@/types/createTask.type';
+import { IExtendedCategoryFilter } from '@/types/filter.type';
+import { MapSkeleton } from './MapSkeleton';
 
 export const Map: React.FC = (): JSX.Element => {
   const router = useRouter();
@@ -47,7 +55,9 @@ export const Map: React.FC = (): JSX.Element => {
     declineLocationSharing,
     showGeolocationPopup,
     checkLocationPermission,
-    radius,
+
+    locationResolved,
+    setLocationResolved,
 
     clickedCoords,
     showOptionsMenu,
@@ -72,43 +82,103 @@ export const Map: React.FC = (): JSX.Element => {
   }, [initMap]);
 
   useEffect(() => {
+    setCategories(
+      Object.values(TaskCategoryEnum).filter((c) =>
+        isFilterCategory(c)
+      ) as IExtendedCategoryFilter[]
+    );
+  }, [setCategories]);
+
+  useEffect(() => {
     if (!isInView) return;
 
     if (useMapStore.getState().skipGeoPrompt) {
       setSkipGeoPrompt(false);
+      setLocationResolved(true);
       return;
     }
 
     checkLocationPermission();
-  }, [isInView, setSkipGeoPrompt, checkLocationPermission]);
-
-  // Imitate backend data generation
-  // This should be replaced with actual data fetching logic
-  // For now, we generate tasks based on the user's location
+  }, [
+    isInView,
+    setSkipGeoPrompt,
+    checkLocationPermission,
+    setLocationResolved,
+  ]);
 
   const baseLocation = userLocation ?? defaultLocation;
-  const key = `${radius}:${baseLocation.lat.toFixed(4)}:${baseLocation.lng.toFixed(4)}`;
+  const key = `${baseLocation.lat.toFixed(4)}:${baseLocation.lng.toFixed(4)}`;
+
+  const [backendTasks, setBackendTasks] = useState<ITaskDetails[] | null>(null);
 
   useEffect(() => {
-    let tasks = tasksByKey[key];
-    if (!tasks) {
-      tasks = generateTasks(baseLocation.lat, baseLocation.lng, radius);
-      setTasksByKey(key, tasks);
-    }
+    let cancelled = false;
 
-    setCategories(
-      Array.from(new Set(tasks.flatMap((task) => task.category))).filter((c) =>
-        isFilterCategory(c)
-      )
+    (async (): Promise<void> => {
+      try {
+        const res = await getAllTasksService();
+        if (cancelled) return;
+
+        if (!res.ok) {
+          console.error('GET /task failed:', res.errorMessage);
+          return;
+        }
+
+        const raw = res.data.data?.tasks ?? [];
+        setBackendTasks(
+          raw
+            .map((r) => {
+              try {
+                return transformBackendTaskToITaskDetails({
+                  task: r as unknown as ITaskDetails,
+                });
+              } catch (e) {
+                console.error('transform failed', e, r);
+                return null;
+              }
+            })
+            .filter(
+              (t): t is ITaskDetails =>
+                t !== null &&
+                t.location != null &&
+                !(t.location.lat === 0 && t.location.lng === 0)
+            )
+        );
+      } catch (e) {
+        console.error('GET /task error:', e);
+      }
+    })();
+
+    return (): void => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!backendTasks) return;
+    if (tasksByKey[key]) return;
+
+    setTasksByKey(
+      key,
+      backendTasks.map((t) => {
+        const lat = t.location?.lat;
+        const lng = t.location?.lng;
+        return {
+          ...t,
+          distance:
+            lat != null && lng != null
+              ? getDistanceStr(baseLocation.lat, baseLocation.lng, lat, lng)
+              : '-- km',
+        };
+      })
     );
   }, [
-    baseLocation.lat,
-    baseLocation.lng,
-    radius,
+    backendTasks,
     key,
     tasksByKey,
+    baseLocation.lat,
+    baseLocation.lng,
     setTasksByKey,
-    setCategories,
   ]);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
@@ -145,14 +215,15 @@ export const Map: React.FC = (): JSX.Element => {
   ) {
     return (
       <div className="w-full bg-background">
-        <div className="max-w-[1920px] px-[100px] h-[560px] mx-auto flex items-center justify-center text-gray-500">
-          {t('loadingMap')}
+        <div className="max-w-[1920px] px-[100px] h-[560px] mx-auto flex items-center justify-center">
+          <MapSkeleton />
         </div>
       </div>
     );
   }
 
   const { MapContainer, TileLayer, Marker, Popup } = leafletComponents;
+  const canShowMap = locationResolved || showGeolocationPopup;
 
   return (
     <div className="w-full relative transition-transform-y overflow-hidden pb-0 lg:h-full lg:pb-20">
@@ -169,168 +240,183 @@ export const Map: React.FC = (): JSX.Element => {
               <AcceptShareLocationPopUp />
             </AnimatedModalWrapper>
           </Portal>
+          {canShowMap ? (
+            <MapContainer
+              center={userLocation || defaultLocation}
+              style={{ height: '100%', width: '100%' }}
+              doubleClickZoom={false}
+              className="h-full w-full cursor-default relative"
+              zoom={13}
+              minZoom={10}
+              maxZoom={17}
+              zoomControl={false}
+              attributionControl={false}
+              // key="default-location"
+              scrollWheelZoom={false}
+            >
+              <ScrollAfterDelay delay={2000} />
+              <StoreMapInstance mapKey="main" />
+              <MapAutoResize />
+              <UserLocation />
+              <RadiusWatcher />
+              <AutoZoomOnDistanceFilter />
 
-          <MapContainer
-            center={userLocation || defaultLocation}
-            style={{ height: '100%', width: '100%' }}
-            doubleClickZoom={false}
-            className="h-full w-full cursor-default relative"
-            zoom={13}
-            minZoom={10}
-            maxZoom={17}
-            zoomControl={false}
-            attributionControl={false}
-            key="default-location"
-            scrollWheelZoom={false}
-          >
-            <ScrollAfterDelay delay={2000} />
-            <StoreMapInstance mapKey="main" />
-            <MapAutoResize />
-            <UserLocation />
-            <RadiusWatcher />
-            <AutoZoomOnDistanceFilter />
+              <TileLayer
+                url={baseLayerConfig[activeLayer].url}
+                maxZoom={18}
+                minZoom={1}
+              />
+              {/* Click handler */}
+              <MapClickHandler
+                onClick={(coords, clickType) => {
+                  if (clickType === 'right') {
+                    setClickedCoords(coords);
+                    setShowOptionsMenu(true);
+                  }
+                }}
+                allowClickToAddMarker
+              />
+              {/* Task markers */}
+              {noPaginatedTasks.map((task) => {
+                if (!task.location) return null;
 
-            <TileLayer
-              url={baseLayerConfig[activeLayer].url}
-              maxZoom={18}
-              minZoom={1}
-            />
-            {/* Click handler */}
-            <MapClickHandler
-              onClick={(coords, clickType) => {
-                if (clickType === 'right') {
-                  setClickedCoords(coords);
-                  setShowOptionsMenu(true);
-                }
-              }}
-              allowClickToAddMarker
-            />
-            {/* Task markers */}
-            {noPaginatedTasks.map((task) => {
-              if (!task.location) return null;
+                const resolvedCategory = resolveTaskCategory(
+                  task.category,
+                  choosenCategories,
+                  categories
+                );
 
-              const resolvedCategory = resolveTaskCategory(
-                task.category,
-                choosenCategories,
-                categories
-              );
+                const icon =
+                  mapIcons[resolvedCategory as keyof typeof mapIcons] ??
+                  mapIcons.default;
 
-              const icon =
-                mapIcons[resolvedCategory as keyof typeof mapIcons] ??
-                mapIcons.default;
-
-              return (
+                return (
+                  <Marker
+                    ref={highlightedTaskId === task.id ? highLightedRef : null}
+                    key={`task-marker-${task.id}`}
+                    position={task.location}
+                    icon={icon ?? undefined}
+                    title={task.title}
+                    zIndexOffset={highlightedTaskId === task.id ? 1000 : 0}
+                    autoPanOnFocus={true}
+                    riseOnHover={true}
+                    riseOffset={100}
+                    eventHandlers={{
+                      click: () =>
+                        console.log('Marker clicked:', task.id, task.title),
+                    }}
+                  >
+                    <Popup
+                      key={`popup-${task.id}`}
+                      autoClose={false}
+                      closeButton={true}
+                      autoPanPadding={[10, 10]}
+                      autoPan
+                    >
+                      <div className="text-sm max-w-[200px]">
+                        <h4 className="font-bold mb-1">{task.title}</h4>
+                        <p className="text-xs">{task.description}</p>
+                        <p className="text-xs text-muted mt-1">
+                          {userLocation
+                            ? getDistanceStr(
+                                userLocation.lat,
+                                userLocation.lng,
+                                task.location.lat,
+                                task.location.lng
+                              )
+                            : '-- km'}
+                        </p>
+                        <button
+                          className="mt-2 text-violet-500 hover:underline cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(`/tasks/${task.id}`);
+                          }}
+                        >
+                          {t('goToTask')}
+                        </button>
+                      </div>
+                    </Popup>
+                  </Marker>
+                );
+              })}
+              {/* User location marker */}
+              {userLocation && mapIcons.myPosition && (
                 <Marker
-                  ref={highlightedTaskId === task.id ? highLightedRef : null}
-                  key={`task-marker-${task.id}`}
-                  position={task.location}
-                  icon={icon ?? undefined}
-                  title={task.title}
-                  zIndexOffset={highlightedTaskId === task.id ? 1000 : 0}
-                  autoPanOnFocus={true}
-                  riseOnHover={true}
-                  riseOffset={100}
+                  position={userLocation}
+                  icon={mapIcons.myPosition}
+                  draggable={true}
+                  title="Drag me to change your location"
+                  zIndexOffset={10000}
                   eventHandlers={{
-                    click: () =>
-                      console.log('Marker clicked:', task.id, task.title),
+                    dragend: (event) => {
+                      const newCoords = event.target.getLatLng();
+                      setUserLocation({
+                        lat: newCoords.lat,
+                        lng: newCoords.lng,
+                      });
+                      console.log(
+                        'User location updated:',
+                        newCoords.lat.toFixed(5),
+                        newCoords.lng.toFixed(5)
+                      );
+                    },
                   }}
                 >
-                  <Popup
-                    key={`popup-${task.id}`}
-                    autoClose={false}
-                    closeButton={true}
-                    autoPanPadding={[10, 10]}
-                    autoPan
-                  >
-                    <div className="text-sm max-w-[200px]">
-                      <h4 className="font-bold mb-1">{task.title}</h4>
-                      <p className="text-xs">{task.subtitle}</p>
-                      <p className="text-xs text-muted mt-1">{task.distance}</p>
-                      <button
-                        className="mt-2 text-violet-500 hover:underline cursor-pointer"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          router.push(`/tasks/${task.id}`);
-                        }}
-                      >
-                        {t('goToTask')}
-                      </button>
+                  <Popup>
+                    <div>
+                      📍 {t('youAreHere')}: <br />
+                      {t('dragHint')} <br />
+                      <strong>{t('coordinates')}:</strong> <br />
+                      <strong>{userLocation.lat.toFixed(5)}</strong>,{' '}
+                      <strong>{userLocation.lng.toFixed(5)}</strong>
                     </div>
                   </Popup>
                 </Marker>
-              );
-            })}
-            {/* User location marker */}
-            {userLocation && mapIcons.myPosition && (
-              <Marker
-                position={userLocation}
-                icon={mapIcons.myPosition}
-                draggable={true}
-                title="Drag me to change your location"
-                zIndexOffset={10000}
-                eventHandlers={{
-                  dragend: (event) => {
-                    const newCoords = event.target.getLatLng();
-                    setUserLocation({
-                      lat: newCoords.lat,
-                      lng: newCoords.lng,
-                    });
-                    console.log(
-                      'User location updated:',
-                      newCoords.lat.toFixed(5),
-                      newCoords.lng.toFixed(5)
-                    );
-                  },
-                }}
-              >
-                <Popup>
+              )}
+
+              {/* Options menu for right click */}
+              {showOptionsMenu && clickedCoords && (
+                <Popup
+                  key={`${clickedCoords.lat}-${clickedCoords.lng}`}
+                  position={clickedCoords}
+                  closeOnClick={true}
+                  autoPan={true}
+                  closeButton={true}
+                  eventHandlers={{
+                    remove: () => {
+                      setShowOptionsMenu(false);
+                      setClickedCoords(null);
+                    },
+                  }}
+                >
                   <div>
-                    📍 {t('youAreHere')}: <br />
-                    {t('dragHint')} <br />
-                    <strong>{t('coordinates')}:</strong> <br />
-                    <strong>{userLocation.lat.toFixed(5)}</strong>,{' '}
-                    <strong>{userLocation.lng.toFixed(5)}</strong>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setUserLocation(clickedCoords);
+                        closeOptionsMenu();
+                      }}
+                    >
+                      📍 {t('setMyLocation')}
+                    </button>
                   </div>
                 </Popup>
-              </Marker>
-            )}
+              )}
 
-            {/* Options menu for right click */}
-            {showOptionsMenu && clickedCoords && (
-              <Popup
-                key={`${clickedCoords.lat}-${clickedCoords.lng}`}
-                position={clickedCoords}
-                closeOnClick={true}
-                autoPan={true}
-                closeButton={true}
-                eventHandlers={{
-                  remove: () => {
-                    setShowOptionsMenu(false);
-                    setClickedCoords(null);
+              {/* Custom controls */}
+              <MultiControlPanel
+                controls={[
+                  {
+                    position: 'bottomright',
+                    element: <CustomControlContent />,
                   },
-                }}
-              >
-                <div>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setUserLocation(clickedCoords);
-                      closeOptionsMenu();
-                    }}
-                  >
-                    📍 Set My Location
-                  </button>
-                </div>
-              </Popup>
-            )}
-
-            {/* Custom controls */}
-            <MultiControlPanel
-              controls={[
-                { position: 'bottomright', element: <CustomControlContent /> },
-              ]}
-            />
-          </MapContainer>
+                ]}
+              />
+            </MapContainer>
+          ) : (
+            <MapSkeleton />
+          )}
         </div>
       </div>
       <TasksOnMap

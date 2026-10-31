@@ -15,12 +15,12 @@ function getGeolocationPromise(): Promise<LatLngLiteral> {
       );
     }
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        console.warn('Geolocation position shared by navigator:', pos);
-        resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-      },
-      (error) => {
-        reject(error);
+      (pos) => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+      (error) => reject(error),
+      {
+        enableHighAccuracy: false,
+        timeout: 10000,
+        maximumAge: 5 * 60 * 1000,
       }
     );
   });

@@ -15,13 +15,8 @@ export type IExtendedCategoryFilter =
   | TaskCategoryEnum
   | 'all'
   | null;
-export type IDistanceFilter = '1' | '3' | '5' | '10' | '20' | '50' | null;
-export interface IFilterStore {
-  choosenCategories: IExtendedCategoryFilter[];
-  distanceFilter: IDistanceFilter;
-  searchQuery: string;
-  sortBy: 'title' | 'distance';
-}
+export type IDistanceFilter = '1' | '3' | '5' | '10' | '30' | 'all' | null;
+
 export interface IDistanceItem {
   title: string;
   value: string;

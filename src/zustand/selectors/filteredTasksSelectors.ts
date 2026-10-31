@@ -1,8 +1,15 @@
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { useFilterStore } from '@/zustand/stores/filterStore';
+import { useMapStore } from '@/zustand/stores/mapStore';
 import { useMemo } from 'react';
 import { IExtendedITaskProps } from '@/types/tasks.type';
 import { authStore } from '../stores/authStore';
+import { getDistanceStr } from '@/utils/taskTransform';
+
+const toDistanceNumber = (value: string): number => {
+  const n = parseFloat(value);
+  return Number.isFinite(n) ? n : Number.MAX_SAFE_INTEGER;
+};
 
 export const useFilteredTasksSelector = (): {
   paginatedTasks: IExtendedITaskProps[];
@@ -19,18 +26,33 @@ export const useFilteredTasksSelector = (): {
   const itemsPerPage = useFilterStore((state) => state.itemsPerPage);
   const showFavorites = useFilterStore((state) => state.showFavorites);
   const isLoggedIn = authStore((state) => state.isLoggedIn);
+  const userLocation = useMapStore((state) => state.userLocation);
 
   const filteredTasks = useMemo(() => {
-    const tasksWithFilters = tasks.filter((task) => {
+    const tasksWithDistance = tasks.map((task) => ({
+      ...task,
+      distance:
+        userLocation && task.location
+          ? getDistanceStr(
+              userLocation.lat,
+              userLocation.lng,
+              task.location.lat,
+              task.location.lng
+            )
+          : '',
+    }));
+    const tasksWithFilters = tasksWithDistance.filter((task) => {
       const isCategoryMatch =
         choosenCategories.length === 0 || choosenCategories.includes('all')
           ? true
-          : task.category.some((cat) => choosenCategories.includes(cat));
+          : (task.category ?? []).some((cat) =>
+              choosenCategories.includes(cat)
+            );
 
       const isDistanceMatch =
-        !distanceFilter || isNaN(parseFloat(distanceFilter))
+        !userLocation || !distanceFilter || isNaN(parseFloat(distanceFilter))
           ? true
-          : parseFloat(task.distance) <= parseFloat(distanceFilter);
+          : toDistanceNumber(task.distance) <= parseFloat(distanceFilter);
 
       const isSearchMatch =
         !searchQuery ||
@@ -48,9 +70,17 @@ export const useFilteredTasksSelector = (): {
     if (sortBy === 'title') {
       tasksWithFilters.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortBy === 'distance') {
-      tasksWithFilters.sort(
-        (a, b) => parseFloat(a.distance) - parseFloat(b.distance)
-      );
+      if (userLocation) {
+        tasksWithFilters.sort(
+          (a, b) => toDistanceNumber(a.distance) - toDistanceNumber(b.distance)
+        );
+      }
+    } else {
+      tasksWithFilters.sort((a, b) => {
+        const tA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const tB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return tB - tA;
+      });
     }
     const totalItems = tasksWithFilters.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -76,6 +106,7 @@ export const useFilteredTasksSelector = (): {
     showFavorites,
     itemsPerPage,
     isLoggedIn,
+    userLocation,
   ]);
 
   return filteredTasks;
