@@ -9,7 +9,7 @@ export const zoomToRadiusMap: Record<number, number> = {
   13: 5000,
   12: 10000,
   11: 20000,
-  10: 50000,
+  10: 30000,
 };
 
 export const RadiusWatcher = (): JSX.Element | null => {
