@@ -7,7 +7,7 @@ import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelec
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
-import React, { JSX, useEffect, useRef, useState } from 'react';
+import React, { JSX, useCallback, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import {
   AcceptShareLocationPopUp,
@@ -30,7 +30,7 @@ import {
   transformBackendTaskToITaskDetails,
 } from '@/utils/taskTransform';
 import { ITaskDetails } from '@/types/tasks.type';
-import { getAllTasksService } from '@/services/taskService';
+// import { getAllTasksService } from '@/services/taskService';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import { IExtendedCategoryFilter } from '@/types/filter.type';
 import { MapSkeleton } from './MapSkeleton';
@@ -38,6 +38,8 @@ import { DistanceRadius } from './DistanceRadius';
 import { GoToTask } from '@/components/icons';
 import { authStore } from '@/zustand/stores/authStore';
 import { useUserMarkerIcon } from '@/hooks/useUserMarkerIcon';
+import { useTaskSearch } from '@/hooks/useTaskSearch';
+import { ITaskApi } from '@/services/taskService';
 
 export const Map: React.FC = (): JSX.Element => {
   const router = useRouter();
@@ -86,7 +88,7 @@ export const Map: React.FC = (): JSX.Element => {
   const setPendingFlyTo = useMapStore((s) => s.setPendingFlyTo);
   const flyToCoords = useMapStore((s) => s.flyToCoords);
   const mainMap = useMapStore((s) => s.mapInstances.main);
-  const { tasksByKey, setTasksByKey, highlightedTaskId } = useTaskStore();
+  const { setTasksByKey, highlightedTaskId } = useTaskStore();
   const { setCategories } = useFilterStore();
   const setSkipGeoPrompt = useMapStore((s) => s.setSkipGeoPrompt);
 
@@ -127,52 +129,32 @@ export const Map: React.FC = (): JSX.Element => {
 
   const [backendTasks, setBackendTasks] = useState<ITaskDetails[] | null>(null);
 
-  useEffect(() => {
-    let cancelled = false;
-
-    (async (): Promise<void> => {
-      try {
-        const res = await getAllTasksService();
-        if (cancelled) return;
-
-        if (!res.ok) {
-          console.error('GET /task failed:', res.errorMessage);
-          return;
-        }
-
-        const raw = res.data.data?.tasks ?? [];
-        setBackendTasks(
-          raw
-            .map((r) => {
-              try {
-                return transformBackendTaskToITaskDetails({
-                  task: r as unknown as ITaskDetails,
-                });
-              } catch (e) {
-                console.error('transform failed', e, r);
-                return null;
-              }
-            })
-            .filter(
-              (t): t is ITaskDetails =>
-                t !== null &&
-                t.location != null &&
-                !(t.location.lat === 0 && t.location.lng === 0)
-            )
-        );
-      } catch (e) {
-        console.error('GET /task error:', e);
-      }
-    })();
-
-    return (): void => {
-      cancelled = true;
-    };
+  const handleTasksResult = useCallback((raw: ITaskApi[]) => {
+    setBackendTasks(
+      raw
+        .map((r) => {
+          try {
+            return transformBackendTaskToITaskDetails({
+              task: r as unknown as ITaskDetails,
+            });
+          } catch (e) {
+            console.error('transform failed', e, r);
+            return null;
+          }
+        })
+        .filter(
+          (t): t is ITaskDetails =>
+            t !== null &&
+            t.location != null &&
+            !(t.location.lat === 0 && t.location.lng === 0)
+        )
+    );
   }, []);
+
+  useTaskSearch(handleTasksResult);
 
   useEffect(() => {
     if (!backendTasks) return;
-    if (tasksByKey[key]) return;
 
     setTasksByKey(
       key,
@@ -188,14 +170,7 @@ export const Map: React.FC = (): JSX.Element => {
         };
       })
     );
-  }, [
-    backendTasks,
-    key,
-    tasksByKey,
-    baseLocation.lat,
-    baseLocation.lng,
-    setTasksByKey,
-  ]);
+  }, [backendTasks, key, baseLocation.lat, baseLocation.lng, setTasksByKey]);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
   const highLightedRef = useRef<L.Marker | null>(null);

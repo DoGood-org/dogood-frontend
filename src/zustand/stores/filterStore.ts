@@ -88,7 +88,8 @@ export const useFilterStore = create<TFilterStore>()(
           currentPage: 1,
         })),
 
-      setDistanceFilter: (distance): any => set({ distanceFilter: distance }),
+      setDistanceFilter: (distance): any =>
+        set({ distanceFilter: distance, currentPage: 1 }),
 
       removeDistanceFilter: (): any =>
         set({ distanceFilter: null, currentPage: 1 }),
@@ -114,6 +115,7 @@ export const useFilterStore = create<TFilterStore>()(
           searchQuery: '',
           sortBy: 'distance',
           showFavorites: false,
+          currentPage: 1,
         }),
       setLocationData: (data: ILocationData | null): void => {
         set({ locationData: data, currentPage: 1 });
@@ -131,6 +133,8 @@ export const useFilterStore = create<TFilterStore>()(
       partialize: ({
         categories: _categories,
         showFavorites: _showFavorites,
+        searchIsActive: _searchIsActive,
+        locationData: _locationData,
         ...rest
       }) => rest,
     }

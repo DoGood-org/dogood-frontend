@@ -3,8 +3,13 @@ import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useMemo } from 'react';
 import { IExtendedITaskProps } from '@/types/tasks.type';
+import { TaskCategoryEnum } from '@/types/createTask.type';
 import { authStore } from '../stores/authStore';
 import { getDistanceStr } from '@/utils/taskTransform';
+
+const ALL_CATEGORIES = Object.values(TaskCategoryEnum).map((category) =>
+  String(category).toUpperCase()
+);
 
 const toDistanceNumber = (value: string): number => {
   const n = parseFloat(value);
@@ -29,6 +34,22 @@ export const useFilteredTasksSelector = (): {
   const userLocation = useMapStore((state) => state.userLocation);
 
   const filteredTasks = useMemo(() => {
+    // Categories typed in the search field (by prefix)
+    const queryUpper = searchQuery.trim().toUpperCase();
+    const searchedCategories = queryUpper
+      ? ALL_CATEGORIES.filter((category) => category.startsWith(queryUpper))
+      : [];
+
+    // Categories chosen in the filter panel
+    const panelCategories = choosenCategories
+      .filter((category) => !!category && category !== 'all')
+      .map((category) => String(category).toUpperCase());
+
+    // Search field has priority over the filter panel
+    const activeCategories = new Set(
+      searchedCategories.length > 0 ? searchedCategories : panelCategories
+    );
+
     const tasksWithDistance = tasks.map((task) => ({
       ...task,
       distance:
@@ -41,12 +62,13 @@ export const useFilteredTasksSelector = (): {
             )
           : '',
     }));
+
     const tasksWithFilters = tasksWithDistance.filter((task) => {
       const isCategoryMatch =
-        choosenCategories.length === 0 || choosenCategories.includes('all')
+        activeCategories.size === 0
           ? true
           : (task.category ?? []).some((cat) =>
-              choosenCategories.includes(cat)
+              activeCategories.has(String(cat).toUpperCase())
             );
 
       const isDistanceMatch =
@@ -54,17 +76,11 @@ export const useFilteredTasksSelector = (): {
           ? true
           : toDistanceNumber(task.distance) <= parseFloat(distanceFilter);
 
-      const isSearchMatch =
-        !searchQuery ||
-        task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        task.description.toLowerCase().includes(searchQuery.toLowerCase());
-
       const isFavoriteMatch =
         !showFavorites || !isLoggedIn || !!task.isFavorite;
 
-      return (
-        isCategoryMatch && isDistanceMatch && isSearchMatch && isFavoriteMatch
-      );
+      // Text search (title / location) is done by the backend
+      return isCategoryMatch && isDistanceMatch && isFavoriteMatch;
     });
 
     if (sortBy === 'title') {
@@ -82,6 +98,7 @@ export const useFilteredTasksSelector = (): {
         return tB - tA;
       });
     }
+
     const totalItems = tasksWithFilters.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const startIdx = (currentPage - 1) * itemsPerPage;

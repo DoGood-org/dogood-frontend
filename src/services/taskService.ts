@@ -1,8 +1,8 @@
 import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
 import type { CreateTaskApiPayload } from '@/utils/taskTransform';
-import type { ITaskDetails } from '@/types/tasks.type';
+import type { ISearchTasksPayload, ITaskDetails } from '@/types/tasks.type';
 
-export interface ITask {
+export interface ITaskApi {
   id: number;
   title: string;
   description: string;
@@ -28,14 +28,14 @@ export interface ITask {
 
 export interface ICreateTaskResponse {
   message: string;
-  data: ITask;
+  data: ITaskApi;
 }
 
 export interface IGetTaskByIdResponse {
   status: string;
   code: string;
   data: {
-    task: ITask;
+    task: ITaskApi;
   };
 }
 
@@ -43,7 +43,7 @@ export interface IGetAllTasksResponse {
   status: string;
   code: string;
   data: {
-    tasks: ITask[];
+    tasks: ITaskApi[];
   };
 }
 
@@ -87,6 +87,21 @@ export const getAllTasksService = async (): Promise<
 > => {
   return fetchFromApi<IGetAllTasksResponse>('/task', {
     method: 'GET',
+    auth: true,
+  });
+};
+
+/**
+ * POST search task.
+ * POST /task/search
+ */
+
+export const searchTasksService = async (
+  payload: ISearchTasksPayload
+): Promise<FetchResult<IGetAllTasksResponse>> => {
+  return fetchFromApi<IGetAllTasksResponse>('/task/search', {
+    method: 'POST',
+    data: payload,
     auth: true,
   });
 };

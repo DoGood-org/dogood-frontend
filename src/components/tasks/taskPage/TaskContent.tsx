@@ -22,7 +22,7 @@ import {
   getTaskByIdService,
   IGetAllTasksResponse,
   IGetTaskByIdResponse,
-  ITask,
+  ITaskApi,
 } from '@/services/taskService';
 import { authStore } from '@/zustand/stores/authStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
@@ -34,7 +34,7 @@ interface TaskContentProps {
   newsItems: INewsItem[];
 }
 
-const safeTransform = (raw?: ITask): ITaskDetails | null => {
+const safeTransform = (raw?: ITaskApi): ITaskDetails | null => {
   if (!raw || typeof raw !== 'object' || !raw.id) return null;
   try {
     return transformBackendTaskToITaskDetails({

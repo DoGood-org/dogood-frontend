@@ -78,3 +78,11 @@ export interface IExtendedITaskProps extends ITaskDetails {
   isFavorite?: boolean;
   isHost?: boolean;
 }
+
+export interface ISearchTasksPayload {
+  title?: string;
+  categories?: string[];
+  locationName?: string;
+  location?: { lat: number; lng: number };
+  radiusKm?: number;
+}
