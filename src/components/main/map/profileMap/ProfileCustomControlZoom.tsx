@@ -28,10 +28,10 @@ export const ProfileCustomControlZoom = (): JSX.Element => {
       }}
     >
       <ButtonMap onClickHandler={handleZoomIn}>
-        <SvgPlus />
+        <SvgPlus className="w-6 h-6" />
       </ButtonMap>
       <ButtonMap onClickHandler={handleZoomOut}>
-        <SvgMinus />
+        <SvgMinus className="w-6 h-6" />
       </ButtonMap>
     </div>
   );

@@ -61,9 +61,11 @@ export const useFilterStore = create<TFilterStore>()(
   persist(
     (set) => ({
       ...initialState,
-      setCategories: (categories): any => set({ categories: categories }),
+      setCategories: (categories): void => {
+        set({ categories: categories });
+      },
 
-      toggleCategory: (category): any =>
+      toggleCategory: (category): void => {
         set((state) => {
           if (category === 'all') {
             return { choosenCategories: ['all'] as IExtendedCategoryFilter[] };
@@ -81,34 +83,45 @@ export const useFilterStore = create<TFilterStore>()(
             choosenCategories: updatedCategories as IExtendedCategoryFilter[],
             currentPage: 1,
           };
-        }),
-      toggleShowFavorites: (): any =>
+        });
+      },
+      toggleShowFavorites: (): void => {
         set((state) => ({
           showFavorites: !state.showFavorites,
           currentPage: 1,
-        })),
+        }));
+      },
 
-      setDistanceFilter: (distance): any =>
-        set({ distanceFilter: distance, currentPage: 1 }),
+      setDistanceFilter: (distance): void => {
+        set({ distanceFilter: distance, currentPage: 1 });
+      },
 
-      removeDistanceFilter: (): any =>
-        set({ distanceFilter: null, currentPage: 1 }),
+      removeDistanceFilter: (): void => {
+        set({ distanceFilter: null, currentPage: 1 });
+      },
 
-      setSearchQuery: debounce((query): any => {
+      setSearchQuery: debounce((query: string): void => {
         set({
           searchQuery: query,
         });
       }, 300),
-      setSearchActive: (active): any =>
+      setSearchActive: (active): void => {
         set({
           searchIsActive: active,
           currentPage: 1,
-        }),
-      setSortBy: (sortBy): any => set({ sortBy }),
-      setCurrentPage: (page): any => set({ currentPage: page }),
-      setItemsPerPage: (items): any => set({ itemsPerPage: items }),
+        });
+      },
+      setSortBy: (sortBy): void => {
+        set({ sortBy });
+      },
+      setCurrentPage: (page): void => {
+        set({ currentPage: page });
+      },
+      setItemsPerPage: (items): void => {
+        set({ itemsPerPage: items });
+      },
 
-      resetFilters: (): any =>
+      resetFilters: (): void => {
         set({
           choosenCategories: [],
           distanceFilter: null,
@@ -116,7 +129,8 @@ export const useFilterStore = create<TFilterStore>()(
           sortBy: 'distance',
           showFavorites: false,
           currentPage: 1,
-        }),
+        });
+      },
       setLocationData: (data: ILocationData | null): void => {
         set({ locationData: data, currentPage: 1 });
       },
