@@ -5,14 +5,10 @@ import { useMapStore } from '@/zustand/stores/mapStore';
 import { JSX } from 'react';
 
 export const ButtonLocation = (): JSX.Element => {
-  const { checkLocationPermission } = useMapStore();
-  const handleClick = (): void => {
-    checkLocationPermission();
-  };
-
+  const locateMe = useMapStore((state) => state.locateMe);
   return (
-    <ButtonMap onClickHandler={handleClick}>
-      <GpsIcon className="w-6 h-6 text-[#fffcfc]" />
+    <ButtonMap onClickHandler={() => locateMe('main')}>
+      <GpsIcon className="w-6 h-6" />
     </ButtonMap>
   );
 };

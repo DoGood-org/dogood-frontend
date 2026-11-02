@@ -28,10 +28,10 @@ export const CustomControlZoom = (): JSX.Element => {
       }}
     >
       <ButtonMap onClickHandler={handleZoomIn}>
-        <SvgPlus className="w-6 h-6 text-[#fffcfc]" />
+        <SvgPlus className="w-6 h-6" />
       </ButtonMap>
       <ButtonMap onClickHandler={handleZoomOut}>
-        <SvgMinus className="w-6 h-6 text-[#fffcfc]" />
+        <SvgMinus className="w-6 h-6" />
       </ButtonMap>
     </div>
   );

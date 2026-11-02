@@ -51,7 +51,7 @@ export const AuthRequiredModal = (): JSX.Element => {
           <Button
             type="button"
             variant="ghost"
-            className="h-auto px-0 py-2 align-baseline text-sm underline text-[#fffcfc]"
+            className="h-auto px-0 py-2 align-baseline text-sm underline text-[#fffcfc] hover:text-btn"
             onClick={() => goTo('/register')}
           >
             {t('register')}

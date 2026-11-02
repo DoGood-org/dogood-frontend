@@ -19,12 +19,24 @@ import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelec
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AnimatePresence } from 'framer-motion';
-import { JSX, useEffect, useRef } from 'react';
+import { JSX, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 
 import { TasksOnMap } from '@/components/main/map/tasksPanel/TasksOnMap';
 import { useTaskStore } from '@/zustand/stores/taskStore';
+import coordsMatch from '@/lib/coordinatesMatch';
+import { GoToTask } from '@/components/icons';
+import { authStore } from '@/zustand/stores/authStore';
+import { useUserMarkerIcon } from '@/hooks/useUserMarkerIcon';
+import {
+  getDistanceStr,
+  transformBackendTaskToITaskDetails,
+} from '@/utils/taskTransform';
+import { useTaskSearch } from '@/hooks/useTaskSearch';
+import { ITaskDetails } from '@/types/tasks.type';
+import { ITaskApi } from '@/services/taskService';
+import { MapSkeleton } from '../MapSkeleton';
 
 export const ProfileMap = (): JSX.Element => {
   const {
@@ -37,7 +49,6 @@ export const ProfileMap = (): JSX.Element => {
     setUserLocation,
     showGeolocationPopup,
     declineLocationSharing,
-    addMarker,
     customMarkers,
     userLocation,
     fullscreenMap,
@@ -58,14 +69,64 @@ export const ProfileMap = (): JSX.Element => {
     initMap('user');
     const run = async (): Promise<void> => {
       checkLocationPermission();
-      console.log('ProfileMap initialized');
     };
     run();
   }, [initMap, checkLocationPermission]);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
   const { choosenCategories, categories } = useFilterStore();
-  const { highlightedTaskId } = useTaskStore();
+  const { setTasksByKey, highlightedTaskId } = useTaskStore();
+
+  const user = authStore((s) => s.user);
+  const userMarkerIcon = useUserMarkerIcon(user);
+
+  const baseLocation = userLocation ?? defaultLocation;
+  const key = `${baseLocation.lat.toFixed(4)}:${baseLocation.lng.toFixed(4)}`;
+
+  const [backendTasks, setBackendTasks] = useState<ITaskDetails[] | null>(null);
+
+  const handleTasksResult = useCallback((raw: ITaskApi[]) => {
+    setBackendTasks(
+      raw
+        .map((r) => {
+          try {
+            return transformBackendTaskToITaskDetails({
+              task: r as unknown as ITaskDetails,
+            });
+          } catch (e) {
+            console.error('transform failed', e, r);
+            return null;
+          }
+        })
+        .filter(
+          (t): t is ITaskDetails =>
+            t !== null &&
+            t.location != null &&
+            !(t.location.lat === 0 && t.location.lng === 0)
+        )
+    );
+  }, []);
+
+  useTaskSearch(handleTasksResult);
+
+  useEffect(() => {
+    if (!backendTasks) return;
+
+    setTasksByKey(
+      key,
+      backendTasks.map((t) => {
+        const lat = t.location?.lat;
+        const lng = t.location?.lng;
+        return {
+          ...t,
+          distance:
+            lat != null && lng != null
+              ? getDistanceStr(baseLocation.lat, baseLocation.lng, lat, lng)
+              : '-- km',
+        };
+      })
+    );
+  }, [backendTasks, key, baseLocation.lat, baseLocation.lng, setTasksByKey]);
 
   const markerRefs = useRef(new Map<string, L.Marker>());
 
@@ -92,7 +153,11 @@ export const ProfileMap = (): JSX.Element => {
     !mapIcons ||
     Object.values(mapIcons).some((icon) => !icon)
   ) {
-    return <div>{t('loadingMap')}</div>;
+    return (
+      <div>
+        <MapSkeleton />
+      </div>
+    );
   }
   const { MapContainer, TileLayer, Marker, Popup } = leafletComponents;
 
@@ -264,9 +329,16 @@ export const ProfileMap = (): JSX.Element => {
                     >
                       <div className="text-sm max-w-[200px]">
                         <h4 className="font-bold mb-1">{task.title}</h4>
-                        <p className="text-xs">{task.subtitle}</p>
+                        <p className="text-xs">{task.description}</p>
                         <p className="text-xs text-muted mt-1">
-                          {task.distance}
+                          {userLocation
+                            ? getDistanceStr(
+                                userLocation.lat,
+                                userLocation.lng,
+                                task.location.lat,
+                                task.location.lng
+                              )
+                            : '-- km'}
                         </p>
 
                         <button
@@ -283,13 +355,13 @@ export const ProfileMap = (): JSX.Element => {
                   </Marker>
                 );
               })}
-              {userLocation && mapIcons.myPosition && (
+              {userLocation && (userMarkerIcon || mapIcons.myPosition) && (
                 <Marker
                   position={userLocation}
                   draggable={true}
                   zIndexOffset={10000}
                   title={t('dragToChange')}
-                  icon={mapIcons.myPosition}
+                  icon={userMarkerIcon ?? mapIcons.myPosition ?? undefined}
                   eventHandlers={{
                     dragend: (e) => {
                       const newPosition = e.target.getLatLng();
@@ -312,6 +384,11 @@ export const ProfileMap = (): JSX.Element => {
                 <Popup
                   key={`${clickedCoords.lat}-${clickedCoords.lng}`}
                   position={clickedCoords}
+                  offset={
+                    userLocation && coordsMatch(clickedCoords, userLocation)
+                      ? [0, -65]
+                      : [0, 0]
+                  }
                   closeOnClick={true}
                   autoPan={true}
                   closeButton={true}
@@ -330,21 +407,20 @@ export const ProfileMap = (): JSX.Element => {
 
                         closeOptionsMenu();
                       }}
+                      className="flex items-center gap-2"
                     >
-                      📍 {t('setMyLocation')}
+                      <GoToTask className="text-[#00c1ac] size-5" />
+                      {t('setMyLocation')}
                     </button>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        addMarker({
-                          ...clickedCoords,
-                          id: `${clickedCoords.lat}-${clickedCoords.lng}-${Date.now()}`,
-                          title: 'My Task',
-                          description: 'I added this task here',
-                          category: MarkerCategoryEnum.MyPin,
-                        });
+                        router.push(
+                          `/tasks?lat=${clickedCoords.lat.toFixed(6)}&lng=${clickedCoords.lng.toFixed(6)}`
+                        );
                         closeOptionsMenu();
                       }}
+                      className="cursor-pointer transition-colors hover:text-violet-500"
                     >
                       ➕ {t('addMyTask')}
                     </button>

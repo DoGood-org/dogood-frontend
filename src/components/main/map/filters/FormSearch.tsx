@@ -77,7 +77,7 @@ export const FormSearch = ({
             autoComplete="off"
             type="text"
             placeholder="Search.."
-            className={`${searchIsActive ? 'cursor-default' : 'cursor-grab'}
+            className={`${searchIsActive ? 'cursor-text' : ''}
             px-10
             w-full text-base italic dark:bg-header-bg bg-modal lg:bg-[#E6E6E6] lg:dark:bg-toggle text-foreground rounded-sm
             placeholder:font-normal placeholder:text-muted-foreground

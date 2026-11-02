@@ -97,7 +97,7 @@ type TMapActions = {
     mapKey?: 'main' | 'user',
     onDone?: () => void
   ) => boolean;
-
+  locateMe: (mapKey?: 'main' | 'user') => Promise<void>;
   setClickedCoords: (coords: LatLngLiteral | null) => void;
   setShowOptionsMenu: (visible: boolean) => void;
   setPendingFlyTo: (coords: LatLngLiteral | null) => void;
@@ -264,6 +264,19 @@ export const useMapStore = create<TMapState & TMapActions>()(
           easeLinearity: 0.5,
         });
         return true;
+      },
+      locateMe: async (mapKey = 'main'): Promise<void> => {
+        if (!get().hasAgreedToLocation) {
+          set({ showGeolocationPopup: true });
+          return;
+        }
+        await get().requestGeolocation();
+        const loc = get().userLocation;
+        if (!loc) return;
+
+        get().flyToCoords(loc, 15, mapKey, () => {
+          set({ clickedCoords: loc, showOptionsMenu: true });
+        });
       },
       setLocationError: (error) => set({ locationError: error }),
       setCustomMarkers: (markers) => set({ customMarkers: markers }),

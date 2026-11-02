@@ -40,6 +40,7 @@ import { authStore } from '@/zustand/stores/authStore';
 import { useUserMarkerIcon } from '@/hooks/useUserMarkerIcon';
 import { useTaskSearch } from '@/hooks/useTaskSearch';
 import { ITaskApi } from '@/services/taskService';
+import coordsMatch from '@/lib/coordinatesMatch';
 
 export const Map: React.FC = (): JSX.Element => {
   const router = useRouter();
@@ -370,6 +371,11 @@ export const Map: React.FC = (): JSX.Element => {
               <Popup
                 key={`${clickedCoords.lat}-${clickedCoords.lng}`}
                 position={clickedCoords}
+                offset={
+                  userLocation && coordsMatch(clickedCoords, userLocation)
+                    ? [0, -65]
+                    : [0, 0]
+                }
                 closeOnClick={true}
                 autoPan={true}
                 closeButton={true}

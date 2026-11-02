@@ -1,5 +1,4 @@
 import { NominatimResult } from '@/components/tasks/createTaskPage/Form/LocationAutocomplete';
-import { calculateDistanceInMeters } from '@/lib/mapUtils';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 // import { MarkerCategoryEnum } from '@/types/mapType';
 import {
@@ -100,7 +99,7 @@ export function generateTasks(
   userLng: number,
   radiusInMeters: number = 3000
 ): IExtendedITaskProps[] {
-  return TITLES.map(([title, subtitle], i): IExtendedITaskProps => {
+  return TITLES.map(([title], i): IExtendedITaskProps => {
     // Generate point within radius
     const angle = Math.random() * 2 * Math.PI;
     const distance = Math.random() * radiusInMeters;
@@ -112,17 +111,13 @@ export function generateTasks(
 
     const lat = parseFloat((userLat + deltaLat).toFixed(6));
     const lng = parseFloat((userLng + deltaLng).toFixed(6));
-    const realDistance = calculateDistanceInMeters(userLat, userLng, lat, lng);
-    const distanceStr = `${(realDistance / 1000).toFixed(2)} km`;
 
     return {
       id: `task-${i}`,
       title,
-      subtitle,
       picture:
         'https://res.cloudinary.com/dinpgnkhh/image/upload/v1760461912/dog_gc3uel.png',
       category: CATEGORIES[i],
-      distance: distanceStr,
       location: { lat, lng },
       description: DESCRIPTIONS[i],
       organizationId: `id: org-${i}`,
