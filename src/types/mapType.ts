@@ -1,4 +1,4 @@
-import { Icon, LatLngLiteral } from 'leaflet';
+import { DivIcon, Icon, LatLngLiteral } from 'leaflet';
 import { ReactElement } from 'react';
 
 export const enum MarkerCategoryEnum {
@@ -84,15 +84,17 @@ export interface IIconMap {
   [key: string]: IIconData;
 }
 
+export type MapIcon = Icon | DivIcon;
+
 export type MapIcons = {
-  medicine: Icon | null;
-  nature: Icon | null;
-  animal: Icon | null;
-  food: Icon | null;
-  myPosition: Icon | null;
-  default: Icon | null;
-  myPin: Icon | null;
-  donation: Icon | null;
+  medicine: MapIcon | null;
+  nature: MapIcon | null;
+  animal: MapIcon | null;
+  food: MapIcon | null;
+  myPosition: MapIcon | null;
+  default: MapIcon | null;
+  myPin: MapIcon | null;
+  donation: MapIcon | null;
 };
 
 export type LeafletModule = {

@@ -881,6 +881,11 @@ html {
   border-radius: var(--radius-lg);
 }
 
+.leaflet-popup-tip {
+  background-color: var(--card);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
 /* map: tiles (prevent Tailwind Preflight from breaking tile sizing) */
 .leaflet-container img.leaflet-tile {
   max-width: none;

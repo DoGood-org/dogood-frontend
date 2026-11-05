@@ -58,5 +58,6 @@
   "latitude": "Breite",
   "longitude": "Länge",
   "myTaskTitle": "Meine Aufgabe",
-  "myTaskDescription": "Diese Aufgabe habe ich hier hinzugefügt"
+  "myTaskDescription": "Diese Aufgabe habe ich hier hinzugefügt",
+  "myPosition": "DU"
 }

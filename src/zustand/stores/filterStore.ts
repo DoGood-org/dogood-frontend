@@ -129,6 +129,7 @@ export const useFilterStore = create<TFilterStore>()(
           sortBy: 'distance',
           showFavorites: false,
           currentPage: 1,
+          locationData: null,
         });
       },
       setLocationData: (data: ILocationData | null): void => {

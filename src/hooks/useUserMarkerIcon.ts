@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import type L from 'leaflet';
-
-const escapeHtml = (s: string): string =>
-  s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
-
-type MarkerUser = {
-  avatar?: string | null;
-  avatarUrl?: string;
-  name?: string;
-} | null;
+import { useTranslations } from 'next-intl';
+import userAvatarMarker from '@/assets/svg/UserAvatarMarker.svg';
 
 const DESKTOP_QUERY = '(min-width: 1024px)';
-const SIZE_DESKTOP = { w: 64, h: 83 };
-const SIZE_MOBILE = { w: 48, h: 62 };
+
+const SIZE_DESKTOP = { w: 56, h: 73 };
+const SIZE_MOBILE = { w: 42, h: 54 };
+
+const escapeHtml = (s: string): string =>
+  s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 
 const useIsDesktop = (): boolean => {
   const [isDesktop, setIsDesktop] = useState(false);
@@ -20,55 +21,85 @@ const useIsDesktop = (): boolean => {
   useEffect(() => {
     const mq = window.matchMedia(DESKTOP_QUERY);
     const update = (): void => setIsDesktop(mq.matches);
+
     update();
     mq.addEventListener('change', update);
+
     return (): void => mq.removeEventListener('change', update);
   }, []);
 
   return isDesktop;
 };
 
+type MarkerUser = {
+  name?: string;
+  avatar?: string | null;
+  avatarUrl?: string;
+} | null;
+
+const getInitials = (name: string): string => {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '?';
+  if (parts.length === 1) return parts[0][0].toUpperCase();
+  return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+};
+
 export const useUserMarkerIcon = (user: MarkerUser): L.DivIcon | null => {
   const [icon, setIcon] = useState<L.DivIcon | null>(null);
   const isDesktop = useIsDesktop();
+  const t = useTranslations('map');
 
-  const avatarUrl = user?.avatar ?? user?.avatarUrl ?? null;
-  const name = user?.name ?? '';
   const isLoggedIn = !!user;
+  const name = user?.name ?? '';
+  const avatarUrl = user?.avatar ?? user?.avatarUrl ?? null;
+
+  const label = isLoggedIn ? getInitials(name) : t('myPosition');
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      setIcon(null);
-      return;
-    }
-
     let cancelled = false;
     const { w, h } = isDesktop ? SIZE_DESKTOP : SIZE_MOBILE;
+    const avatarSize = Math.round(w * 0.6);
 
     (async (): Promise<void> => {
       const Leaflet = (await import('leaflet')).default;
       if (cancelled) return;
 
-      const letter = escapeHtml(name.trim()[0]?.toUpperCase() ?? '?');
+      const markerSrc =
+        typeof userAvatarMarker === 'string'
+          ? userAvatarMarker
+          : userAvatarMarker.src;
 
-      const content = avatarUrl
-        ? `<image href="${escapeHtml(avatarUrl)}" x="7" y="7" width="30" height="30"
-             preserveAspectRatio="xMidYMid slice" clip-path="url(#userPinClip)" />`
-        : `<text x="22" y="28" text-anchor="middle" font-size="18" font-weight="600"
-             font-family="sans-serif" fill="#374151">${letter}</text>`;
+      const inner = avatarUrl
+        ? `<img src="${escapeHtml(avatarUrl)}" alt=""
+             style="position:absolute;top:38.5%;left:50%;transform:translate(-50%,-50%);
+                    width:${avatarSize}px;height:${avatarSize}px;
+                    border-radius:50%;object-fit:cover;border:2px solid #fff;
+                    box-sizing:border-box;" />`
+        : `<span style="
+             position:absolute;
+             top:38.5%;
+             left:50%;
+             transform:translate(-50%,-50%);
+             color:#FFFFFF;
+             font-size:${isDesktop ? 16 : 14}px;
+             font-weight:400;
+             font-family:Roboto, Arial, sans-serif;
+             line-height:22px;
+             white-space:nowrap;
+           ">${escapeHtml(label)}</span>`;
 
       const html = `
-        <svg viewBox="0 0 44 56" width="${w}" height="${h}"
-             preserveAspectRatio="xMidYMax meet"
-             xmlns="http://www.w3.org/2000/svg"
-             style="display:block;overflow:visible;">
-          <defs>
-            <clipPath id="userPinClip"><circle cx="22" cy="22" r="15" /></clipPath>
-          </defs>
-          <path d="M22 0C9.8 0 0 9.8 0 22c0 16 22 34 22 34s22-18 22-34C44 9.8 34.2 0 22 0z" fill="#EE0606"/>
-          <circle cx="22" cy="22" r="17" fill="#fff"/>
-          ${content}
-        </svg>`;
+        <div style="position:relative;width:${w}px;height:${h}px;">
+          <img
+            src="${markerSrc}"
+            width="${w}"
+            height="${h}"
+            alt=""
+            style="position:absolute;inset:0;width:100%;height:100%;display:block; filter:drop-shadow(5px 9px 7px rgba(0,0,0,0.35));"
+          />
+          ${inner}
+        </div>
+      `;
 
       setIcon(
         Leaflet.divIcon({
@@ -84,7 +115,7 @@ export const useUserMarkerIcon = (user: MarkerUser): L.DivIcon | null => {
     return (): void => {
       cancelled = true;
     };
-  }, [isLoggedIn, avatarUrl, name, isDesktop]);
+  }, [isDesktop, label, avatarUrl]);
 
   return icon;
 };

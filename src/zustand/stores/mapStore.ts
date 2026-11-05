@@ -7,6 +7,7 @@ import { initializeMapIcons } from '@/lib/mapUtils';
 import {
   EnumMapLayers,
   LeafletType,
+  MapIcon,
   MarkerCategoryEnum,
   TCustomMarker,
 } from '@/types/mapType';
@@ -35,7 +36,6 @@ type TMapState = {
   leafletComponents: IReactLeafletModule | null;
   mapInstances: Record<'main' | 'user', LeafletMap | null>;
   setMapInstance: (key: 'main' | 'user', map: LeafletMap) => void;
-  mapIcons: Record<MarkerCategoryEnum, L.Icon | null>;
 
   defaultLayers: {
     [key in EnumMapLayers]: {
@@ -70,6 +70,7 @@ type TMapState = {
 
   activePanel: 'filters' | 'tasks' | null;
   locationResolved: boolean;
+  mapIcons: Record<MarkerCategoryEnum, MapIcon | null>;
 };
 
 type TMapActions = {

@@ -30,7 +30,6 @@ import {
   transformBackendTaskToITaskDetails,
 } from '@/utils/taskTransform';
 import { ITaskDetails } from '@/types/tasks.type';
-// import { getAllTasksService } from '@/services/taskService';
 import { TaskCategoryEnum } from '@/types/createTask.type';
 import { IExtendedCategoryFilter } from '@/types/filter.type';
 import { MapSkeleton } from './MapSkeleton';
@@ -198,6 +197,7 @@ export const Map: React.FC = (): JSX.Element => {
   }, [pendingFlyTo, mainMap, flyToCoords, setPendingFlyTo, setSkipGeoPrompt]);
 
   if (
+    // true || sceletton!!!!!!!!!!!!
     !leafletComponents ||
     !mapIcons ||
     !defaultLayers ||
@@ -270,7 +270,6 @@ export const Map: React.FC = (): JSX.Element => {
             {/* Task markers */}
             {noPaginatedTasks.map((task) => {
               if (!task.location) return null;
-
               const resolvedCategory = resolveTaskCategory(
                 task.category,
                 choosenCategories,
@@ -346,11 +345,6 @@ export const Map: React.FC = (): JSX.Element => {
                       lat: newCoords.lat,
                       lng: newCoords.lng,
                     });
-                    console.log(
-                      'User location updated:',
-                      newCoords.lat.toFixed(5),
-                      newCoords.lng.toFixed(5)
-                    );
                   },
                 }}
               >

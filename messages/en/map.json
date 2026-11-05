@@ -58,5 +58,6 @@
   "latitude": "Lat",
   "longitude": "Lng",
   "myTaskTitle": "My task",
-  "myTaskDescription": "I added this task here"
+  "myTaskDescription": "I added this task here",
+  "myPosition": "YOU"
 }

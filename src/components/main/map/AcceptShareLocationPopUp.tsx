@@ -9,7 +9,7 @@ export const AcceptShareLocationPopUp = (): JSX.Element => {
   const { acceptLocationSharing, declineLocationSharing } = useMapStore();
 
   return (
-    <div className="bg-background text-foreground p-4 rounded-lg shadow-lg max-w-md w-full mx-4">
+    <div className="bg-background text-foreground w-[355px] md:w-[459px] max-w-[calc(100vw-32px)] h-auto p-4 rounded-xl shadow-lg">
       <h3 className="text-base font-semibold mb-4">{t('popupTitle')}</h3>
       <p className="mb-4">{t('popupDescription')}</p>
       <div className="flex justify-end space-x-4">

@@ -1,12 +1,11 @@
 'use client';
 
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
-import { JSX, useRef } from 'react';
+import { JSX, useEffect } from 'react';
 import { HostUser, OrganizationFromBack } from '@/types/tasks.type';
 import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
 import { CreateTaskForm } from './CreateTaskForm';
 import { CreateTask } from './CreateTask';
-import { STEP_IDS } from '@/constants/stepIds';
 
 interface Props {
   initialUser: HostUser;
@@ -17,20 +16,13 @@ const CreateTaskPage = ({
   initialUser,
   initialOrganizations,
 }: Props): JSX.Element => {
-  const isInitialized = useRef(false);
-
-  if (!isInitialized.current) {
+  useEffect(() => {
     useCreateTaskStore.setState({
       currentUser: initialUser,
       organizations: initialOrganizations,
-      hasHydrated: true,
       isSuccess: false,
-      createStep: STEP_IDS.OWNER,
-      stepHistory: [],
-      createTaskDraft: {},
     });
-    isInitialized.current = true;
-  }
+  }, [initialUser, initialOrganizations]);
 
   return (
     <StripeProviderLazy>
