@@ -149,7 +149,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
         myPin: null,
         donation: null,
       },
-      defaultLocation: { lat: 50, lng: 10 },
+      defaultLocation: { lat: 39.1567, lng: -75.5243 },
       userLocation: null,
 
       selectedTask: null,

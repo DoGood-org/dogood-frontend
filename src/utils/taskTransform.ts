@@ -208,6 +208,7 @@ export function transformBackendTaskToITaskDetails({
     startTime: formatTime(task.startTime || ''),
     requirements: task.requirements || '',
     amount: task.amount ?? 0,
+    currentAmount: task.currentAmount ?? 0,
     currency: task.currency || 'USD',
     createdAt: (task as any).createdAt ?? '',
     isOrganization: task.isOrganization ?? false,

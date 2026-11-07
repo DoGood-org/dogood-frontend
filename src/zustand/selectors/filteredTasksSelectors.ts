@@ -31,7 +31,10 @@ export const useFilteredTasksSelector = (): {
   const itemsPerPage = useFilterStore((state) => state.itemsPerPage);
   const showFavorites = useFilterStore((state) => state.showFavorites);
   const isLoggedIn = authStore((state) => state.isLoggedIn);
+
   const userLocation = useMapStore((state) => state.userLocation);
+  const defaultLocation = useMapStore((state) => state.defaultLocation);
+  const origin = userLocation ?? defaultLocation;
 
   const filteredTasks = useMemo(() => {
     // Categories typed in the search field (by prefix)
@@ -52,15 +55,14 @@ export const useFilteredTasksSelector = (): {
 
     const tasksWithDistance = tasks.map((task) => ({
       ...task,
-      distance:
-        userLocation && task.location
-          ? getDistanceStr(
-              userLocation.lat,
-              userLocation.lng,
-              task.location.lat,
-              task.location.lng
-            )
-          : '',
+      distance: task.location
+        ? getDistanceStr(
+            origin.lat,
+            origin.lng,
+            task.location.lat,
+            task.location.lng
+          )
+        : '',
     }));
 
     const tasksWithFilters = tasksWithDistance.filter((task) => {
@@ -72,7 +74,7 @@ export const useFilteredTasksSelector = (): {
             );
 
       const isDistanceMatch =
-        !userLocation || !distanceFilter || isNaN(parseFloat(distanceFilter))
+        !distanceFilter || isNaN(parseFloat(distanceFilter))
           ? true
           : toDistanceNumber(task.distance) <= parseFloat(distanceFilter);
 
@@ -86,11 +88,11 @@ export const useFilteredTasksSelector = (): {
     if (sortBy === 'title') {
       tasksWithFilters.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortBy === 'distance') {
-      if (userLocation) {
-        tasksWithFilters.sort(
-          (a, b) => toDistanceNumber(a.distance) - toDistanceNumber(b.distance)
-        );
-      }
+      // ЗМІНА: прибрали if (userLocation) — сортування за відстанню
+      // працює завжди
+      tasksWithFilters.sort(
+        (a, b) => toDistanceNumber(a.distance) - toDistanceNumber(b.distance)
+      );
     } else {
       tasksWithFilters.sort((a, b) => {
         const tA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
@@ -123,7 +125,7 @@ export const useFilteredTasksSelector = (): {
     showFavorites,
     itemsPerPage,
     isLoggedIn,
-    userLocation,
+    origin,
   ]);
 
   return filteredTasks;

@@ -5,7 +5,7 @@ import { Link } from '@/i18n/navigation';
 import { TaskActionButtons } from '@/components/tasks/taskPage/ButtonGroup/TaskActionButtons';
 import { TaskCategoryList } from '@/components/tasks/createTaskPage/TaskCategoryList/TaskCategoryList';
 import { getDistanceStr } from '@/utils/taskTransform';
-import { useMapStore } from '@/zustand/stores/mapStore';
+import { useDistanceOrigin } from '@/hooks/useDistanceOrigin';
 
 export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
   id,
@@ -16,17 +16,13 @@ export const OtherTaskItem: React.FC<IExtendedITaskProps> = ({
   isHost,
   status,
 }) => {
-  const userLocation = useMapStore((state) => state.userLocation);
+  const origin = useDistanceOrigin();
 
   const distanceStr =
-    userLocation && location?.lat != null && location?.lng != null
-      ? getDistanceStr(
-          userLocation.lat,
-          userLocation.lng,
-          location.lat,
-          location.lng
-        )
+    location?.lat != null && location?.lng != null
+      ? getDistanceStr(origin.lat, origin.lng, location.lat, location.lng)
       : '-- km';
+
   return (
     <div className="border p-4 rounded-lg bg-card flex flex-col min-h-[270px]">
       <div className="relative min-h-[100px]">

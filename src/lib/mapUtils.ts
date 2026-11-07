@@ -48,7 +48,8 @@ const createPinIcon = (
         <div style="position:absolute;left:14px;top:7px;width:20px;height:20px;color:${glyphColor}">
           ${glyph}
         </div>
-      </div>`,
+      </div>
+    `,
   });
 };
 

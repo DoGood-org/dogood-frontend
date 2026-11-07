@@ -37,6 +37,11 @@ import { useTaskSearch } from '@/hooks/useTaskSearch';
 import { ITaskDetails } from '@/types/tasks.type';
 import { ITaskApi } from '@/services/taskService';
 import { MapSkeleton } from '../MapSkeleton';
+import { isFilterCategory } from '@/utils/filterCategories';
+import { IExtendedCategoryFilter } from '@/types/filter.type';
+import { TaskCategoryEnum } from '@/types/createTask.type';
+import { AutoZoomOnDistanceFilter } from '../LazyImports';
+import { DistanceRadius } from '../DistanceRadius';
 
 export const ProfileMap = (): JSX.Element => {
   const {
@@ -74,11 +79,19 @@ export const ProfileMap = (): JSX.Element => {
   }, [initMap, checkLocationPermission]);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
-  const { choosenCategories, categories } = useFilterStore();
+  const { choosenCategories, categories, setCategories } = useFilterStore();
   const { setTasksByKey, highlightedTaskId } = useTaskStore();
 
   const user = authStore((s) => s.user);
   const userMarkerIcon = useUserMarkerIcon(user);
+
+  useEffect(() => {
+    setCategories(
+      Object.values(TaskCategoryEnum).filter((c) =>
+        isFilterCategory(c)
+      ) as IExtendedCategoryFilter[]
+    );
+  }, [setCategories]);
 
   const baseLocation = userLocation ?? defaultLocation;
   const key = `${baseLocation.lat.toFixed(4)}:${baseLocation.lng.toFixed(4)}`;
@@ -160,7 +173,7 @@ export const ProfileMap = (): JSX.Element => {
     );
   }
   const { MapContainer, TileLayer, Marker, Popup } = leafletComponents;
-
+  console.log('customMarkers:', customMarkers);
   const renderCustomMarkers = (): JSX.Element[] => {
     return customMarkers.map((marker, index) => {
       const icon = getMarkerIcon(MarkerCategoryEnum.Default, mapIcons);
@@ -247,11 +260,7 @@ export const ProfileMap = (): JSX.Element => {
               minZoom={10}
               maxZoom={17}
               style={{ height: '100%', width: '100%' }}
-              center={
-                highlightedTaskId
-                  ? userLocation || defaultLocation
-                  : defaultLocation
-              }
+              center={userLocation ?? defaultLocation}
               zoomControl={false}
               attributionControl={false}
               doubleClickZoom={false}
@@ -261,6 +270,9 @@ export const ProfileMap = (): JSX.Element => {
               <ScrollAfterDelay delay={2000} />
               <UserLocation />
               <RadiusWatcher />
+              <AutoZoomOnDistanceFilter />
+              <DistanceRadius />
+
               <TileLayer
                 url={baseLayerConfig[activeLayer].url}
                 maxZoom={18}

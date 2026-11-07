@@ -68,6 +68,7 @@ export interface ITaskDetails extends ITask {
   host?: TaskHost;
   relatedTasks?: ITask[];
   amount: number;
+  currentAmount?: number;
   currency?: 'USD' | 'EUR';
   joinedUsers?: { id: string; name: string }[];
 }

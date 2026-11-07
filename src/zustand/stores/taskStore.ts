@@ -89,22 +89,31 @@ export const useTaskStore = create<TTaskStore>()(
       },
       upsertTasks: (incoming): void => {
         set((state) => {
-          const merged = new Map(state.tasks.map((t) => [t.id, t]));
-          incoming.forEach((t) => {
-            const old = merged.get(t.id);
-            merged.set(
-              t.id,
-              old
-                ? {
-                    ...t,
-                    isSelected: old.isSelected,
-                    isFavorite: old.isFavorite,
-                  }
-                : t
-            );
+          const existingIds = new Set(state.tasks.map((t) => t.id));
+          const fresh = incoming.filter((t) => !existingIds.has(t.id));
+
+          const updatedExisting = state.tasks.map((t) => {
+            const inc = incoming.find((i) => i.id === t.id);
+            return inc
+              ? { ...inc, isSelected: t.isSelected, isFavorite: t.isFavorite }
+              : t;
           });
-          const tasks = Array.from(merged.values());
-          return { tasks, joinedTasks: tasks.filter((t) => t.isSelected) };
+
+          const tasks = [...fresh, ...updatedExisting];
+
+          const tasksByKey = Object.fromEntries(
+            Object.entries(state.tasksByKey).map(([k, list]) => {
+              const listIds = new Set(list.map((t) => t.id));
+              const newForList = fresh.filter((t) => !listIds.has(t.id));
+              return [k, [...newForList, ...list]];
+            })
+          );
+
+          return {
+            tasks,
+            tasksByKey,
+            joinedTasks: tasks.filter((t) => t.isSelected),
+          };
         });
       },
       updateTaskStatus: (taskId: string, status: TaskStatus): void => {

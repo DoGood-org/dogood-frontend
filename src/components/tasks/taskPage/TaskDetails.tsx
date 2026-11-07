@@ -5,7 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Location } from '@/components/icons';
 import { useTranslations } from 'next-intl';
-import { parseDescription, parseRequirements } from '@/utils/tasks';
+import {
+  getDonationProgress,
+  parseDescription,
+  parseRequirements,
+} from '@/utils/tasks';
 import { LatLngLiteral } from 'leaflet';
 import { useAuth } from '@/hooks';
 import { Button } from '@/components/ui/Button';
@@ -57,6 +61,8 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
   };
 
   const isDonationTask = isDonationCategory(task.category);
+
+  const progress = getDonationProgress(task.currentAmount, task.amount);
 
   return (
     <section className="w-full max-w-[353px] md:max-w-[648px] lg:max-w-[800px]">
@@ -161,9 +167,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
             <h4 className="text-base font-medium mb-2">
               {t('taskDetails.donationNeeds')}:
             </h4>
-            <span className="block text-base mb-2">
-              {(task.amount ?? 0).toLocaleString()} {task.currency ?? 'USD'}
-            </span>
+            <span className="block text-base mb-2">{progress}%</span>
           </div>
         )}
         {parsedRequirements.length > 0 && (

@@ -307,14 +307,12 @@ export const Map: React.FC = (): JSX.Element => {
                       <h4 className="font-bold mb-1">{task.title}</h4>
                       <p className="text-xs">{task.description}</p>
                       <p className="text-xs text-muted mt-1">
-                        {userLocation
-                          ? getDistanceStr(
-                              userLocation.lat,
-                              userLocation.lng,
-                              task.location.lat,
-                              task.location.lng
-                            )
-                          : '-- km'}
+                        {getDistanceStr(
+                          baseLocation.lat,
+                          baseLocation.lng,
+                          task.location.lat,
+                          task.location.lng
+                        )}
                       </p>
                       <button
                         className="mt-2 text-violet-500 hover:underline cursor-pointer"
@@ -331,34 +329,46 @@ export const Map: React.FC = (): JSX.Element => {
               );
             })}
             {/* User location marker */}
-            {userLocation && (userMarkerIcon || mapIcons.myPosition) && (
-              <Marker
-                position={userLocation}
-                icon={userMarkerIcon ?? mapIcons.myPosition ?? undefined}
-                draggable={true}
-                title="Drag me to change your location"
-                zIndexOffset={10000}
-                eventHandlers={{
-                  dragend: (event) => {
-                    const newCoords = event.target.getLatLng();
-                    setUserLocation({
-                      lat: newCoords.lat,
-                      lng: newCoords.lng,
-                    });
-                  },
-                }}
-              >
-                <Popup>
-                  <div>
-                    📍 {t('youAreHere')}: <br />
-                    {t('dragHint')} <br />
-                    <strong>{t('coordinates')}:</strong> <br />
-                    <strong>{userLocation.lat.toFixed(5)}</strong>,{' '}
-                    <strong>{userLocation.lng.toFixed(5)}</strong>
-                  </div>
-                </Popup>
-              </Marker>
-            )}
+            {((): JSX.Element | null => {
+              const markerPosition =
+                userLocation ?? (locationResolved ? defaultLocation : null);
+              const isDefault = !userLocation;
+              const markerIcon = isDefault
+                ? mapIcons.myPosition
+                : (userMarkerIcon ?? mapIcons.myPosition);
+
+              if (!markerPosition || !markerIcon) return null;
+
+              return (
+                <Marker
+                  position={markerPosition}
+                  icon={markerIcon}
+                  draggable={true}
+                  title="Drag me to change your location"
+                  zIndexOffset={10000}
+                  eventHandlers={{
+                    dragend: (event) => {
+                      const newCoords = event.target.getLatLng();
+                      setUserLocation({
+                        lat: newCoords.lat,
+                        lng: newCoords.lng,
+                      });
+                    },
+                  }}
+                >
+                  <Popup>
+                    <div>
+                      📍 {isDefault ? 'DoGood Impact Inc.' : t('youAreHere')}:
+                      <br />
+                      {t('dragHint')} <br />
+                      <strong>{t('coordinates')}:</strong> <br />
+                      <strong>{markerPosition.lat.toFixed(5)}</strong>,{' '}
+                      <strong>{markerPosition.lng.toFixed(5)}</strong>
+                    </div>
+                  </Popup>
+                </Marker>
+              );
+            })()}
 
             {/* Options menu for right click */}
             {showOptionsMenu && clickedCoords && (

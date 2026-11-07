@@ -25,3 +25,13 @@ export const parseDescription = (
     })
     .filter(Boolean) as (string | string[])[];
 };
+
+export const getDonationProgress = (current = 0, goal = 0): number =>
+  goal > 0 ? Math.min(100, Math.round((current / goal) * 100)) : 0;
+
+export const formatMoney = (value: number, currency = 'USD'): string =>
+  new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency,
+    maximumFractionDigits: 0,
+  }).format(value);

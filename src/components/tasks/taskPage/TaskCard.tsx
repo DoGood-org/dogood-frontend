@@ -7,6 +7,7 @@ import { ClockIcon, DateIcon, Location } from '@/components/icons';
 import { DonationProgressBar } from './DonationProgressBar';
 import { formatISOTimeTo12h } from '@/utils/taskTransform';
 import { isDonationCategory } from '@/utils/isDonationCategory';
+import { formatMoney } from '@/utils/tasks';
 
 interface TaskCardProps {
   task: ITaskDetails;
@@ -15,9 +16,9 @@ interface TaskCardProps {
 export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const t = useTranslations('tasks');
 
-  const donation = 10000;
-  const donationGoal = (task as any)?.goalAmount ?? 0;
-  const collected = (task as any)?.amount ?? 0;
+  const goal = task.amount ?? 0;
+  const collected = task.currentAmount ?? 0;
+  // const collected = 50;// TODO: test
 
   const isFundraising = isDonationCategory(task.category);
 
@@ -68,12 +69,12 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
           {isFundraising && (
             <>
               <h3 className="mb-4 text-base text-[#00c1ac] font-semibold">
-                {t('taskCard.donationNeeds')} {donation}$
+                {t('taskCard.donationNeeds')} {formatMoney(goal, task.currency)}
               </h3>
               <div className="flex flex-col items-center justify-center">
                 <DonationProgressBar
                   currentAmount={collected}
-                  goalAmount={donationGoal}
+                  goalAmount={goal}
                 />
               </div>
             </>
