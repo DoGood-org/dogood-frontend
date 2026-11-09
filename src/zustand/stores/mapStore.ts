@@ -275,9 +275,7 @@ export const useMapStore = create<TMapState & TMapActions>()(
         const loc = get().userLocation;
         if (!loc) return;
 
-        get().flyToCoords(loc, 15, mapKey, () => {
-          set({ clickedCoords: loc, showOptionsMenu: true });
-        });
+        get().flyToCoords(loc, 15, mapKey);
       },
       setLocationError: (error) => set({ locationError: error }),
       setCustomMarkers: (markers) => set({ customMarkers: markers }),

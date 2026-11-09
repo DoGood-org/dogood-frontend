@@ -27,9 +27,10 @@ export const MapDotButton: React.FC<MapDotButtonProps> = ({
     taskId,
     lat != null && lng != null ? { lat, lng } : undefined
   );
-
+  console.trace('map dot click', { redirectToMap });
   const handleClick = (e: React.MouseEvent): void => {
     console.log('Fly to task:', lat, lng);
+    console.trace('map dot click', { redirectToMap });
     e.stopPropagation();
     if (redirectToMap) {
       showOnMap();

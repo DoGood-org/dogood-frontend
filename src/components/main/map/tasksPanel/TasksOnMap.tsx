@@ -7,8 +7,9 @@ import { useWindowSize } from '@/hooks/useWindowSize';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { JSX } from 'react';
+import React, { JSX, useEffect } from 'react';
 import { IExtendedITaskProps } from '@/types/tasks.type';
+import { useFilterStore } from '@/zustand/stores/filterStore';
 
 type Props = {
   className?: string;
@@ -23,6 +24,14 @@ export const TasksOnMap = (props: Props): JSX.Element => {
     useMapStore();
 
   const { isDesktop } = useWindowSize();
+
+  const { searchQuery, searchIsActive } = useFilterStore();
+
+  useEffect(() => {
+    if (searchIsActive && searchQuery.trim()) {
+      setActivePanel('tasks');
+    }
+  }, [searchIsActive, searchQuery, setActivePanel]);
 
   useClickOutside({
     ref: ref,
@@ -120,6 +129,7 @@ export const TasksOnMap = (props: Props): JSX.Element => {
             >
               <TasksList
                 tasks={props.tasks}
+                mapOnMain={props.mapOnMain}
                 className="w-full bg-[#E6E6E6] dark:bg-toggle"
               />
             </motion.div>

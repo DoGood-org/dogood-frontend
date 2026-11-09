@@ -1,7 +1,7 @@
 'use client';
 import React, { JSX } from 'react';
 import dynamic from 'next/dynamic';
-import ContentLoader from '@/components/ui/ContentLoader';
+import { ProfileMapSkeleton } from './ProfileMapSkeleton';
 
 const ProfileMap = dynamic(
   () =>
@@ -10,7 +10,7 @@ const ProfileMap = dynamic(
     ),
   {
     ssr: false,
-    loading: (): JSX.Element => <ContentLoader />,
+    loading: (): JSX.Element => <ProfileMapSkeleton />,
   }
 );
 

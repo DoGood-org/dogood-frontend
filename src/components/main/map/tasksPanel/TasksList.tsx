@@ -7,11 +7,13 @@ import { TaskItem } from './TaskItem';
 type Props = {
   tasks: IExtendedITaskProps[];
   className?: string;
+  mapOnMain?: boolean;
 };
 
 export const TasksList: React.FC<Props> = ({
   tasks,
   className,
+  mapOnMain = true,
 }): JSX.Element => {
   const t = useTranslations('map');
   return (
@@ -22,7 +24,7 @@ export const TasksList: React.FC<Props> = ({
           <ul className="list-none w-full">
             {tasks.map((task) => (
               <li key={task.id}>
-                <TaskItem {...task} />
+                <TaskItem {...task} mapOnMain={mapOnMain} />
               </li>
             ))}
           </ul>

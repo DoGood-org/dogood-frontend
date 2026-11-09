@@ -2,6 +2,7 @@
 import { useRouter } from '@/i18n/navigation';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
+import { useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
 export const useShowOnMap = (
@@ -11,6 +12,9 @@ export const useShowOnMap = (
   const router = useRouter();
   const setPendingFlyTo = useMapStore((s) => s.setPendingFlyTo);
   const setHighlightedTaskId = useTaskStore((s) => s.setHighlightedTaskId);
+
+  const searchParams = useSearchParams();
+  const fromProfile = searchParams.get('from') === 'profile';
 
   const lat = location?.lat;
   const lng = location?.lng;
@@ -22,7 +26,7 @@ export const useShowOnMap = (
     setSkipGeoPrompt(true);
     setPendingFlyTo({ lat, lng });
     setHighlightedTaskId(taskId);
-    router.push('/');
+    router.push(fromProfile ? '/account/map' : '/');
   }, [
     lat,
     lng,
@@ -31,5 +35,6 @@ export const useShowOnMap = (
     setPendingFlyTo,
     setHighlightedTaskId,
     setSkipGeoPrompt,
+    fromProfile,
   ]);
 };

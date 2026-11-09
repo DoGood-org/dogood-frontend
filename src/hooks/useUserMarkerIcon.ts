@@ -4,7 +4,7 @@ import myPin from '@/assets/images/map/my-pin.png';
 
 const PIN_SRC = typeof myPin === 'string' ? myPin : myPin.src;
 
-const PIN_W = 44;
+const PIN_W = 42;
 const PIN_H = 58;
 
 const AVATAR_SIZE = Math.round(PIN_W * 0.42);

@@ -12,7 +12,6 @@ import { useInView } from 'react-intersection-observer';
 import {
   AcceptShareLocationPopUp,
   AutoZoomOnDistanceFilter,
-  MapClickHandler,
   RadiusWatcher,
   ScrollAfterDelay,
   StoreMapInstance,
@@ -34,12 +33,10 @@ import { TaskCategoryEnum } from '@/types/createTask.type';
 import { IExtendedCategoryFilter } from '@/types/filter.type';
 import { MapSkeleton } from './MapSkeleton';
 import { DistanceRadius } from './DistanceRadius';
-import { GoToTask } from '@/components/icons';
 import { authStore } from '@/zustand/stores/authStore';
 import { useUserMarkerIcon } from '@/hooks/useUserMarkerIcon';
 import { useTaskSearch } from '@/hooks/useTaskSearch';
 import { ITaskApi } from '@/services/taskService';
-import coordsMatch from '@/lib/coordinatesMatch';
 
 export const Map: React.FC = (): JSX.Element => {
   const router = useRouter();
@@ -56,7 +53,6 @@ export const Map: React.FC = (): JSX.Element => {
     defaultLayers,
     initMap,
     userLocation,
-    setUserLocation,
     defaultLocation,
     declineLocationSharing,
     showGeolocationPopup,
@@ -64,12 +60,6 @@ export const Map: React.FC = (): JSX.Element => {
 
     locationResolved,
     setLocationResolved,
-
-    clickedCoords,
-    showOptionsMenu,
-    setClickedCoords,
-    setShowOptionsMenu,
-    closeOptionsMenu,
   } = useMapStore();
 
   const t = useTranslations('map');
@@ -197,7 +187,6 @@ export const Map: React.FC = (): JSX.Element => {
   }, [pendingFlyTo, mainMap, flyToCoords, setPendingFlyTo, setSkipGeoPrompt]);
 
   if (
-    // true || sceletton!!!!!!!!!!!!
     !leafletComponents ||
     !mapIcons ||
     !defaultLayers ||
@@ -207,7 +196,7 @@ export const Map: React.FC = (): JSX.Element => {
   ) {
     return (
       <div className="w-full bg-background">
-        <div className="max-w-[1920px] px-[100px] h-[560px] mx-auto flex items-center justify-center">
+        <div className="mx-auto flex h-[360px] max-w-[1920px] items-center justify-center px-4 sm:h-[420px] md:h-[480px] md:px-10 lg:h-[560px] lg:px-[100px]">
           <MapSkeleton />
         </div>
       </div>
@@ -257,16 +246,7 @@ export const Map: React.FC = (): JSX.Element => {
               maxZoom={18}
               minZoom={1}
             />
-            {/* Click handler */}
-            <MapClickHandler
-              onClick={(coords, clickType) => {
-                if (clickType === 'right') {
-                  setClickedCoords(coords);
-                  setShowOptionsMenu(true);
-                }
-              }}
-              allowClickToAddMarker
-            />
+
             {/* Task markers */}
             {noPaginatedTasks.map((task) => {
               if (!task.location) return null;
@@ -304,8 +284,12 @@ export const Map: React.FC = (): JSX.Element => {
                     autoPan
                   >
                     <div className="text-sm max-w-[200px]">
-                      <h4 className="font-bold mb-1">{task.title}</h4>
-                      <p className="text-xs">{task.description}</p>
+                      <h4 className="font-bold mb-1 line-clamp-2 break-words">
+                        {task.title}
+                      </h4>
+                      <p className="text-xs line-clamp-2 break-words">
+                        {task.description}
+                      </p>
                       <p className="text-xs text-muted mt-1">
                         {getDistanceStr(
                           baseLocation.lat,
@@ -328,6 +312,7 @@ export const Map: React.FC = (): JSX.Element => {
                 </Marker>
               );
             })}
+
             {/* User location marker */}
             {((): JSX.Element | null => {
               const markerPosition =
@@ -343,68 +328,11 @@ export const Map: React.FC = (): JSX.Element => {
                 <Marker
                   position={markerPosition}
                   icon={markerIcon}
-                  draggable={true}
-                  title="Drag me to change your location"
+                  title={t('youAreHere')}
                   zIndexOffset={10000}
-                  eventHandlers={{
-                    dragend: (event) => {
-                      const newCoords = event.target.getLatLng();
-                      setUserLocation({
-                        lat: newCoords.lat,
-                        lng: newCoords.lng,
-                      });
-                    },
-                  }}
-                >
-                  <Popup>
-                    <div>
-                      📍 {isDefault ? 'DoGood Impact Inc.' : t('youAreHere')}:
-                      <br />
-                      {t('dragHint')} <br />
-                      <strong>{t('coordinates')}:</strong> <br />
-                      <strong>{markerPosition.lat.toFixed(5)}</strong>,{' '}
-                      <strong>{markerPosition.lng.toFixed(5)}</strong>
-                    </div>
-                  </Popup>
-                </Marker>
+                />
               );
             })()}
-
-            {/* Options menu for right click */}
-            {showOptionsMenu && clickedCoords && (
-              <Popup
-                key={`${clickedCoords.lat}-${clickedCoords.lng}`}
-                position={clickedCoords}
-                offset={
-                  userLocation && coordsMatch(clickedCoords, userLocation)
-                    ? [0, -65]
-                    : [0, 0]
-                }
-                closeOnClick={true}
-                autoPan={true}
-                closeButton={true}
-                eventHandlers={{
-                  remove: () => {
-                    setShowOptionsMenu(false);
-                    setClickedCoords(null);
-                  },
-                }}
-              >
-                <div>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setUserLocation(clickedCoords);
-                      closeOptionsMenu();
-                    }}
-                    className="flex items-center gap-2"
-                  >
-                    <GoToTask className="text-[#00c1ac] size-5" />
-                    {t('setMyLocation')}
-                  </button>
-                </div>
-              </Popup>
-            )}
 
             {/* Custom controls */}
             <MultiControlPanel

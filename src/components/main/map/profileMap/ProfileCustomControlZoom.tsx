@@ -22,7 +22,7 @@ export const ProfileCustomControlZoom = (): JSX.Element => {
   };
   return (
     <div
-      className=" gap-1 flex"
+      className=" gap-1 hidden lg:flex"
       style={{
         position: 'relative',
       }}

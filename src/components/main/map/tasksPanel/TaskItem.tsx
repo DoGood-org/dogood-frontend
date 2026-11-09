@@ -8,6 +8,8 @@ import { TaskActionButtons } from '@/components/tasks/taskPage/ButtonGroup/TaskA
 import { IconButtonGroup } from '@/components/tasks/taskPage/ButtonGroup/IconButtonGroup';
 import { authStore } from '@/zustand/stores/authStore';
 
+type TaskItemProps = IExtendedITaskProps & { mapOnMain?: boolean };
+
 export const TaskItem = ({
   id,
   title,
@@ -16,7 +18,8 @@ export const TaskItem = ({
   location,
   status,
   isHost,
-}: IExtendedITaskProps): JSX.Element => {
+  mapOnMain = true,
+}: TaskItemProps): JSX.Element => {
   const { setActivePanel } = useMapStore();
   const isLoggedIn = authStore((s) => s.isLoggedIn);
 
@@ -26,7 +29,7 @@ export const TaskItem = ({
     <div
       className="min-h-[200px] relative w-full py-6"
       onClick={() => {
-        router.push(`/tasks/${id}`);
+        router.push(`/tasks/${id}${mapOnMain ? '' : '?from=profile'}`);
         setActivePanel(null);
       }}
     >

@@ -33,7 +33,7 @@ export const Filters: FC<Props> = ({ tasks, className }): JSX.Element => {
 
         <Close
           className="w-[24px] h-[24px] stroke-black dark:stroke-[#FFFCFC]"
-          onClick={() => setActivePanel(null)}
+          onClick={() => setActivePanel('tasks')}
         />
       </div>
       <div className="flex-1 lg:pl-3 h-full overflow-hidden">
@@ -46,7 +46,7 @@ export const Filters: FC<Props> = ({ tasks, className }): JSX.Element => {
             variant="primary"
             className="w-full max-w-[128px]"
             size="lg"
-            onClick={() => setActivePanel(null)}
+            onClick={() => setActivePanel('tasks')}
           >
             {t('applyBtn')}({tasks.length})
           </Button>
