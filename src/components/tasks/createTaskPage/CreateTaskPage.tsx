@@ -1,7 +1,7 @@
 'use client';
 
 import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
-import { JSX, useEffect } from 'react';
+import { JSX, useEffect, useState } from 'react';
 import { HostUser, OrganizationFromBack } from '@/types/tasks.type';
 import { StripeProviderLazy } from '@/components/providers/StripeProviderLazy';
 import { CreateTaskForm } from './CreateTaskForm';
@@ -16,13 +16,21 @@ const CreateTaskPage = ({
   initialUser,
   initialOrganizations,
 }: Props): JSX.Element => {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    useCreateTaskStore.setState({ isSuccess: false });
+  }, []);
+
   useEffect(() => {
     useCreateTaskStore.setState({
       currentUser: initialUser,
       organizations: initialOrganizations,
-      isSuccess: false,
     });
+    setReady(true);
   }, [initialUser, initialOrganizations]);
+
+  if (!ready) return <></>;
 
   return (
     <StripeProviderLazy>

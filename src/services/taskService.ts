@@ -1,9 +1,10 @@
 import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
 import type { CreateTaskApiPayload } from '@/utils/taskTransform';
 import type { ISearchTasksPayload, ITaskDetails } from '@/types/tasks.type';
+import { apiRoutes } from '@/lib/server/apiRoutes';
 
 export interface ITaskApi {
-  id: number;
+  id: string;
   title: string;
   description: string;
   picture: string | null;
@@ -19,7 +20,7 @@ export interface ITaskApi {
   requirements: string;
   categories: string[];
   host: ITaskDetails['host'];
-  joinedUsers: Array<{ id: number; name: string }>;
+  joinedUsers: Array<{ id: string; name: string }>;
 }
 
 // ============================================
@@ -58,7 +59,7 @@ export interface IGetAllTasksResponse {
 export const createTaskService = async (
   payload: CreateTaskApiPayload
 ): Promise<FetchResult<ICreateTaskResponse>> => {
-  return fetchFromApi<ICreateTaskResponse>('/task', {
+  return fetchFromApi<ICreateTaskResponse>(apiRoutes.tasks.create, {
     method: 'POST',
     data: payload,
     auth: true,
@@ -72,7 +73,7 @@ export const createTaskService = async (
 export const getTaskByIdService = async (
   id: string | number
 ): Promise<FetchResult<IGetTaskByIdResponse>> => {
-  return fetchFromApi<IGetTaskByIdResponse>(`/task/${id}`, {
+  return fetchFromApi<IGetTaskByIdResponse>(apiRoutes.tasks.getById(id), {
     method: 'GET',
     auth: true,
   });
@@ -85,7 +86,7 @@ export const getTaskByIdService = async (
 export const getAllTasksService = async (): Promise<
   FetchResult<IGetAllTasksResponse>
 > => {
-  return fetchFromApi<IGetAllTasksResponse>('/task', {
+  return fetchFromApi<IGetAllTasksResponse>(apiRoutes.tasks.list, {
     method: 'GET',
     auth: true,
   });
@@ -99,7 +100,7 @@ export const getAllTasksService = async (): Promise<
 export const searchTasksService = async (
   payload: ISearchTasksPayload
 ): Promise<FetchResult<IGetAllTasksResponse>> => {
-  return fetchFromApi<IGetAllTasksResponse>('/task/search', {
+  return fetchFromApi<IGetAllTasksResponse>(apiRoutes.tasks.search, {
     method: 'POST',
     data: payload,
     auth: true,

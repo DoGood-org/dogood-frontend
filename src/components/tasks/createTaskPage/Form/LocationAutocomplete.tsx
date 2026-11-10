@@ -2,10 +2,10 @@
 
 import { useState, JSX, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useTranslations, useLocale } from 'next-intl';
 import { FormField } from './FormField';
 import { Input } from '@/components/ui/Input';
 import { useFilterStore } from '@/zustand/stores/filterStore';
-import { useTranslations } from 'next-intl';
 
 interface LocationData {
   address: string;
@@ -16,8 +16,18 @@ interface LocationData {
 export interface NominatimResult {
   place_id: string;
   display_name: string;
+  name?: string;
   lat: string;
   lon: string;
+  address?: {
+    road?: string;
+    house_number?: string;
+    city?: string;
+    town?: string;
+    village?: string;
+    municipality?: string;
+    country?: string;
+  };
 }
 
 interface LocationSearchInputProps {
@@ -32,12 +42,39 @@ const locationInputClasses =
   'focus-visible:ring-0 focus-visible:ring-offset-0 w-full ' +
   'autofill:bg-white autofill:text-black';
 
+// З вулицею: "вулиця номер, місто". Без вулиці: "місто, країна".
+const formatLocation = (item: NominatimResult): string => {
+  const a = item.address;
+  if (!a) return item.display_name;
+
+  const place = a.city || a.town || a.village || a.municipality || '';
+  const street = [a.road, a.house_number].filter(Boolean).join(' ');
+
+  const result = street
+    ? [street, place].filter(Boolean).join(', ')
+    : [place || item.name, a.country].filter(Boolean).join(', ');
+
+  return result || item.display_name;
+};
+
+// Прибирає пункти, які після форматування виглядають однаково
+const removeDuplicates = (items: NominatimResult[]): NominatimResult[] => {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    const key = formatLocation(item).toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+};
+
 export const LocationSearchInput = ({
   name,
   label,
   onSelect,
 }: LocationSearchInputProps): JSX.Element => {
   const t = useTranslations('tasks.createTask.form');
+  const lang = useLocale().split('-')[0];
 
   const { watch, setValue } = useFormContext();
   const value = watch(name) ?? '';
@@ -56,7 +93,9 @@ export const LocationSearchInput = ({
       clearTimeout(searchTimeoutRef.current);
     }
 
-    if (q.length < 2) {
+    const query = q.trim();
+
+    if (query.length < 3) {
       setSuggestions([]);
       setIsOpen(false);
       return;
@@ -64,22 +103,31 @@ export const LocationSearchInput = ({
 
     searchTimeoutRef.current = setTimeout(async () => {
       try {
+        const params = new URLSearchParams({
+          format: 'jsonv2',
+          q: query,
+          addressdetails: '1',
+          limit: '8',
+          'accept-language': lang,
+        });
+
         const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&limit=5&q=${encodeURIComponent(q)}`,
-          { headers: { 'Accept-Language': 'en' } }
+          `https://nominatim.openstreetmap.org/search?${params}`
         );
         if (!res.ok) throw new Error(`Nominatim ${res.status}`);
 
         const data: NominatimResult[] = await res.json();
-        setSuggestions(data);
-        setIsOpen(data.length > 0);
+        const unique = removeDuplicates(data);
+
+        setSuggestions(unique);
+        setIsOpen(unique.length > 0);
         setActiveIndex(-1);
       } catch (e) {
         console.error('Location search failed', e);
         setSuggestions([]);
         setIsOpen(false);
       }
-    }, 500);
+    }, 700);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent): void => {
@@ -98,8 +146,10 @@ export const LocationSearchInput = ({
   };
 
   const handleSelect = (item: NominatimResult): void => {
-    const loc = { address: item.display_name, lat: +item.lat, lng: +item.lon };
-    setValue(name, item.display_name, {
+    const address = formatLocation(item);
+    const loc = { address, lat: +item.lat, lng: +item.lon };
+
+    setValue(name, address, {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -139,7 +189,7 @@ export const LocationSearchInput = ({
                     className={`cursor-pointer p-3 border-b last:border-none transition-colors 
                       ${index === activeIndex ? 'bg-[#999999]' : 'bg-text-gray'} text-white`}
                   >
-                    {item.display_name}
+                    {formatLocation(item)}
                   </li>
                 ))}
               </ul>

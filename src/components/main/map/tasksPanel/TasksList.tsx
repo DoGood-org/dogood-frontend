@@ -20,7 +20,9 @@ export const TasksList: React.FC<Props> = ({
     <div className={`flex flex-col h-full ${className}`}>
       <div className={'h-full lg:h-[722px] flex-1 w-full'}>
         <div className="flex flex-col w-full lg:rounded-xl">
-          <h2 className="text-h3 mb-6">{t('tasksTitle')}</h2>
+          <h2 className="text-h3 line-clamp-1 break-words mb-6">
+            {t('tasksTitle')}
+          </h2>
           <ul className="list-none w-full">
             {tasks.map((task) => (
               <li key={task.id}>

@@ -11,7 +11,6 @@ import {
   parseRequirements,
 } from '@/utils/tasks';
 import { LatLngLiteral } from 'leaflet';
-import { useAuth } from '@/hooks';
 import { Button } from '@/components/ui/Button';
 import EditButton from './ButtonGroup/EditButton';
 import { isDonationCategory } from '@/utils/isDonationCategory';
@@ -19,15 +18,16 @@ import { useShowOnMap } from '@/hooks/useShowOnMap';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
+  isHost: boolean;
   showEditButton?: boolean;
 }
 
 export const TaskDetails: React.FC<TaskDetailsProps> = ({
   task,
+  isHost,
   showEditButton = true,
 }) => {
   const t = useTranslations('tasks');
-  const { user } = useAuth();
 
   const taskCoords: LatLngLiteral | null = task.location
     ? {
@@ -50,9 +50,6 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
     ? `/users/${host?.user?.id || ''}`
     : `/organizations/${host?.organization?.id || ''}`;
 
-  const hostId = isUser ? host?.user?.id : host?.organization?.id;
-  const isHost =
-    !!user && hostId !== undefined && String(user.id) === String(hostId);
   const parsedRequirements = parseRequirements(task.requirements);
   const parsedDescription = parseDescription(task.description);
 

@@ -10,11 +10,6 @@ import { OtherTasksSection } from './OtherTasks/OtherTasksSection';
 import { Task } from './Task';
 import { useEffect, useMemo, useState } from 'react';
 import { transformBackendTaskToITaskDetails } from '@/utils/taskTransform';
-import { useCreateTaskStore } from '@/zustand/stores/createTask.store';
-import {
-  MOCK_CURRENT_USER,
-  MOCK_ORGANIZATIONS,
-} from '@/components/main/map/mockTasks';
 import { Spinner } from '@/components/ui/Spinner';
 import type { ITaskDetails } from '@/types/tasks.type';
 import {
@@ -26,6 +21,7 @@ import {
 } from '@/services/taskService';
 import { authStore } from '@/zustand/stores/authStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
+import { isAdminOrModerator } from '@/lib/getUserRole';
 
 const NOT_FOUND = 'not-found';
 
@@ -51,8 +47,9 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   newsItems,
 }) => {
   const t = useTranslations('tasks');
-  const myOrganizations = useCreateTaskStore((state) => state.organizations);
+
   const isLoggedIn = authStore((s) => s.isLoggedIn);
+  const user = authStore((s) => s.user);
 
   const [task, setTask] = useState<ITaskDetails | null>(null);
   const [otherTasks, setOtherTasks] = useState<ITaskDetails[]>([]);
@@ -128,22 +125,20 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   }, [slug]);
 
   const isHost = useMemo(() => {
-    if (!task?.host) return false;
+    if (!task?.host || !user) return false;
 
     if (task.host.type === 'USER') {
-      return String(task.host.user?.id) === String(MOCK_CURRENT_USER.id);
+      return String(task.host.user?.id) === String(user.id);
     }
 
-    if (task.host.type === 'ORGANIZATION') {
-      const taskOrgId = String(task.host.organization?.id);
-      return (
-        myOrganizations.some((org) => String(org.id) === taskOrgId) ||
-        MOCK_ORGANIZATIONS.some((org) => String(org.id) === taskOrgId)
-      );
-    }
-
-    return false;
-  }, [task, myOrganizations]);
+    const taskOrgId = String(task.host.organization?.id);
+    return (user.organizations ?? []).some(
+      (org) =>
+        String(org.id) === taskOrgId &&
+        !!org.role &&
+        isAdminOrModerator(org.role)
+    );
+  }, [task, user]);
 
   if (isFetching) {
     return (
@@ -163,7 +158,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
 
   return (
     <Container className="py-10">
-      <Task task={task} />
+      <Task task={task} isHost={isHost} />
       <IconButtonGroup
         categories={task.category}
         location={task.location}
@@ -180,10 +175,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
         />
       </div>
 
-      {/* List fetch failure is non-blocking — the page still renders.
-          Swap for a toast if you prefer. */}
       {listError ? null : <OtherTasksSection tasks={otherTasks} />}
-
       <LastNews newsItems={newsItems} />
     </Container>
   );

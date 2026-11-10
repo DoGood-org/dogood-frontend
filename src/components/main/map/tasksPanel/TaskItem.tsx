@@ -27,16 +27,16 @@ export const TaskItem = ({
 
   return (
     <div
-      className="min-h-[200px] relative w-full py-6"
+      className="relative w-full py-6"
       onClick={() => {
         router.push(`/tasks/${id}${mapOnMain ? '' : '?from=profile'}`);
         setActivePanel(null);
       }}
     >
-      <h3 className="text-base underline lg:text-reg font-normal mb-3 cursor-pointer">
+      <h3 className="text-base underline line-clamp-1 lg:text-reg font-normal mb-3 cursor-pointer">
         {title}
       </h3>
-      <h4 className="text-base mb-5 md:mb-3 lg:mb-5 line-clamp-1">
+      <h4 className="text-base line-clamp-1 mb-5 md:mb-3 lg:mb-5">
         {description}
       </h4>
       <div className="relative">

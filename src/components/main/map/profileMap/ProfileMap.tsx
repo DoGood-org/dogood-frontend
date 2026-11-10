@@ -59,6 +59,7 @@ export const ProfileMap = (): JSX.Element => {
     checkLocationPermission,
     clickedCoords,
     showOptionsMenu,
+    locationResolved,
   } = useMapStore();
 
   const t = useTranslations('map');
@@ -268,14 +269,12 @@ export const ProfileMap = (): JSX.Element => {
                         <h4 className="font-bold mb-1">{task.title}</h4>
                         <p className="text-xs">{task.description}</p>
                         <p className="text-xs text-muted mt-1">
-                          {userLocation
-                            ? getDistanceStr(
-                                userLocation.lat,
-                                userLocation.lng,
-                                task.location.lat,
-                                task.location.lng
-                              )
-                            : '-- km'}
+                          {getDistanceStr(
+                            baseLocation.lat,
+                            baseLocation.lng,
+                            task.location.lat,
+                            task.location.lng
+                          )}
                         </p>
 
                         <button
@@ -294,14 +293,25 @@ export const ProfileMap = (): JSX.Element => {
               })}
 
               {/* User location marker */}
-              {userLocation && (userMarkerIcon || mapIcons.myPosition) && (
-                <Marker
-                  position={userLocation}
-                  zIndexOffset={10000}
-                  title={t('youAreHere')}
-                  icon={userMarkerIcon ?? mapIcons.myPosition ?? undefined}
-                />
-              )}
+              {((): JSX.Element | null => {
+                const markerPosition =
+                  userLocation ?? (locationResolved ? defaultLocation : null);
+                const isDefault = !userLocation;
+                const markerIcon = isDefault
+                  ? mapIcons.myPosition
+                  : (userMarkerIcon ?? mapIcons.myPosition);
+
+                if (!markerPosition || !markerIcon) return null;
+
+                return (
+                  <Marker
+                    position={markerPosition}
+                    icon={markerIcon}
+                    title={t('youAreHere')}
+                    zIndexOffset={10000}
+                  />
+                );
+              })()}
 
               {/* Options menu for right click */}
               {showOptionsMenu && clickedCoords && (

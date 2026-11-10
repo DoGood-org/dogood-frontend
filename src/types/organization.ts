@@ -22,6 +22,7 @@ export interface OrganizationProps {
   avatar: string;
   // membersCount: number;
   _count: MembersCount;
+  role?: OrganizationRole; // роль поточного користувача в цій організації
 }
 
 type MembersCount = {
