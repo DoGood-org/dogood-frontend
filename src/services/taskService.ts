@@ -1,5 +1,8 @@
 import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
-import type { CreateTaskApiPayload } from '@/utils/taskTransform';
+import type {
+  CreateTaskApiPayload,
+  UpdateTaskApiPayload,
+} from '@/utils/taskTransform';
 import type {
   ISearchTasksPayload,
   ITaskDetails,
@@ -28,6 +31,12 @@ export interface ITaskApi {
   organizationId?: string;
   isOrganization?: boolean;
   createdAt?: string;
+}
+
+export interface IUpdateTaskResponse {
+  status: string;
+  code: string;
+  data: { task: ITaskApi };
 }
 
 // ============================================
@@ -119,12 +128,28 @@ export const searchTasksService = async (
  * PATCH /task/:id/status
  */
 
+/**
+ * Update an existing task (host only).
+ * PATCH /task/:id
+ */
+export const updateTaskService = async (
+  id: string | number,
+  payload: UpdateTaskApiPayload
+): Promise<FetchResult<IUpdateTaskResponse>> => {
+  return fetchFromApi<IUpdateTaskResponse>(apiRoutes.tasks.update(id), {
+    method: 'PATCH',
+    data: payload,
+    auth: true,
+  });
+};
+
 export const updateTaskStatusService = (
   id: string | number,
-  status: TaskStatus
+  status: TaskStatus,
+  rejectionReason?: string
 ): Promise<FetchResult<unknown>> =>
   fetchFromApi(apiRoutes.tasks.updateStatus(id), {
     method: 'PATCH',
-    data: { status },
+    data: { status, rejectionReason },
     auth: true,
   });

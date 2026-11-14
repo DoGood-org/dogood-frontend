@@ -348,3 +348,92 @@ export const mapFormToApiPayload = (
 
   return payload;
 };
+
+// ---------------------------------------------------------------------------
+// ADDED (new): Form → API payload (PATCH /task/:id)
+// Everything from here to the end of the file is new.
+// ---------------------------------------------------------------------------
+
+/**
+ * ADDED: type for the PATCH body.
+ * PATCH payload. Host fields (`isOrganization`, `organizationId`) are not
+ * editable. In PATCH an omitted field means "leave as is", so fields that
+ * can be cleared are sent as explicit `null`.
+ */
+export type UpdateTaskApiPayload = Partial<
+  Omit<
+    CreateTaskApiPayload,
+    | 'isOrganization'
+    | 'organizationId'
+    | 'picture'
+    | 'location'
+    | 'amount'
+    | 'currency'
+  >
+> & {
+  picture?: string | null;
+  location?: { lat: number; lng: number } | null;
+  amount?: number | null;
+  currency?: string | null;
+};
+
+/**
+ * Converts form values into the PATCH body.
+ * Reuses `mapFormToApiPayload`, drops host fields, and turns omitted
+ * clearable fields into explicit `null`.
+ */
+export const mapFormToUpdatePayload = (
+  data: BasicInfoFormValues
+): UpdateTaskApiPayload => {
+  const {
+    isOrganization: _isOrganization,
+    organizationId: _organizationId,
+    picture,
+    location,
+    amount,
+    currency,
+    ...rest
+  } = mapFormToApiPayload(data);
+
+  return {
+    ...rest,
+    ...(picture !== undefined && { picture }),
+    ...(amount !== undefined && { amount }),
+    ...(currency !== undefined && { currency }),
+    location: location ?? null,
+  };
+};
+
+// ---------------------------------------------------------------------------
+// Backend task → form values (edit page)
+// ---------------------------------------------------------------------------
+
+/**
+ * ADDED: converts a backend task into form values for the edit page
+ * (the reverse of `mapFormToApiPayload`).
+ * Takes the raw `ITaskApi` (not `ITaskDetails`): there `startTime` is already
+ * formatted as "03:30 PM", while the form expects "HH:mm".
+ */
+export const mapTaskToFormValues = (task: ITaskApi): BasicInfoFormValues => {
+  const start = new Date(task.startTime);
+  const hh = String(start.getHours());
+  const mm = String(start.getMinutes()).padStart(2, '0');
+
+  return {
+    ...defaultTaskValues,
+    title: task.title,
+    description: task.description,
+    picture: task.picture ?? undefined,
+    startDate: new Date(task.startDate),
+    endDate: task.endDate ? new Date(task.endDate) : undefined,
+    startTime: `${hh}-${mm}`,
+    locationName: task.locationName,
+    location: task.location,
+    category: (task.categories ?? [])
+      .map(fromApiCategory)
+      .filter((c): c is TaskCategoryEnum => c !== null),
+    amount: task.amount ?? undefined,
+    currency: toCurrency(task.currency),
+    requirements: task.requirements,
+  } as BasicInfoFormValues;
+};

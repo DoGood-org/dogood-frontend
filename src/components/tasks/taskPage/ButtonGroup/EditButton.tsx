@@ -17,7 +17,7 @@ const EditButton = ({
 }: EditButtonProps): JSX.Element | null => {
   const t = useTranslations('tasks');
 
-  if (isHost || !show) return null;
+  if (!isHost || !show) return null;
 
   return (
     <Button

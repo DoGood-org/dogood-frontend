@@ -14,6 +14,7 @@ interface CreateTaskState {
   hasHydrated: boolean;
   currentUser: HostUser | null;
   organizations: OrganizationFromBack[];
+  editingTaskId: string | null;
 }
 
 interface CreateTaskActions {
@@ -27,6 +28,7 @@ interface CreateTaskActions {
   isNextStepPreview: () => boolean;
   setUserInfo: (user: HostUser | null) => void;
   setOrganizations: (orgs: OrganizationFromBack[]) => void;
+  startEditTask: (taskId: string, values: CreateTaskDraft) => void;
 }
 
 const getNextStepIndex = (
@@ -53,6 +55,7 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
       hasHydrated: false,
       currentUser: null,
       organizations: [],
+      editingTaskId: null,
 
       setHasHydrated: (value: boolean): void => {
         set({ hasHydrated: value });
@@ -60,6 +63,15 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
 
       setUserInfo: (user: HostUser | null): void => {
         set({ currentUser: user });
+      },
+      startEditTask: (taskId, values): void => {
+        set({
+          editingTaskId: taskId,
+          createTaskDraft: values,
+          createStep: STEP_IDS.BASIC,
+          stepHistory: [],
+          isSuccess: false,
+        });
       },
       setOrganizations: (orgs: OrganizationFromBack[]): void => {
         set({ organizations: orgs });
@@ -141,6 +153,7 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
           stepHistory: [],
           createTaskDraft: {},
           isSuccess: false,
+          editingTaskId: null,
         }));
       },
     }),
@@ -151,6 +164,7 @@ export const useCreateTaskStore = create<CreateTaskState & CreateTaskActions>()(
         stepHistory: state.stepHistory,
         createTaskDraft: state.createTaskDraft,
         currentUser: state.currentUser,
+        editingTaskId: state.editingTaskId,
       }),
       onRehydrateStorage:
         () =>

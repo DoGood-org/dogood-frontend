@@ -17,6 +17,7 @@ import { isDonationCategory } from '@/utils/isDonationCategory';
 import { useShowOnMap } from '@/hooks/useShowOnMap';
 import { useMemo, useState } from 'react';
 import { TaskMapModal } from './TaskMapModal';
+import { useRouter } from 'next/navigation';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
@@ -32,6 +33,8 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
   isPreview = false,
 }) => {
   const t = useTranslations('tasks');
+
+  const router = useRouter();
 
   const [isMapOpen, setIsMapOpen] = useState(false);
 
@@ -64,7 +67,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
   const parsedDescription = parseDescription(task.description);
 
   const handleEdit = (): void => {
-    console.log('Editing task now!');
+    router.push(`/tasks?edit=${task.id}`);
   };
 
   const isDonationTask = isDonationCategory(task.category);

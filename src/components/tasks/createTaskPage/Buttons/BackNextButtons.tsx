@@ -17,12 +17,14 @@ import { isDonationCategory } from '@/utils/isDonationCategory';
 import { mapCategoryToMarker } from '@/utils/mapCategoryToMarker';
 import {
   mapFormToApiPayload,
+  mapFormToUpdatePayload,
   transformBackendTaskToITaskDetails,
 } from '@/utils/taskTransform';
 import { STEP_IDS } from '@/constants/stepIds';
 import { useTranslations } from 'next-intl';
-import { createTaskService } from '@/services/taskService';
+import { createTaskService, updateTaskService } from '@/services/taskService';
 import { useFilterStore } from '@/zustand/stores/filterStore';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   showBack?: boolean;
@@ -31,8 +33,6 @@ type Props = {
 export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   const {
     createStep,
-    setIsSuccess,
-    resetCreateTask,
     prevCreateStep,
     nextCreateStep,
     setCreateTaskDraft,
@@ -40,6 +40,8 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
   } = useCreateTaskStore();
 
   const t = useTranslations('tasks.createTask.buttons');
+
+  const router = useRouter();
 
   const addMarker = useMapStore((s) => s.addMarker);
 
@@ -96,9 +98,40 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
     const currentFormData = getValues();
     setSubmitError(null);
 
+    let navigating = false;
+
     try {
       setIsSubmitting(true);
 
+      const editingTaskId = useCreateTaskStore.getState().editingTaskId;
+
+      // ---------- РЕДАГУВАННЯ ----------
+      if (editingTaskId) {
+        const updateResult = await updateTaskService(
+          editingTaskId,
+          mapFormToUpdatePayload(currentFormData)
+        );
+
+        if (!updateResult.ok) {
+          setSubmitError(updateResult.errorMessage);
+          return;
+        }
+
+        const updatedTask = transformBackendTaskToITaskDetails({
+          task: updateResult.data.data.task,
+        });
+
+        const { upsertTasks, refreshTasks } = useTaskStore.getState();
+        upsertTasks([updatedTask]);
+        refreshTasks();
+
+        // стор і форму тут НЕ скидаємо: це зробить cleanup у CreateTaskPage
+        navigating = true;
+        router.push(`/tasks/${editingTaskId}`);
+        return;
+      }
+
+      // ---------- СТВОРЕННЯ ----------
       const payload = mapFormToApiPayload(currentFormData, {
         isDonation: hasDonationCategory,
       });
@@ -110,16 +143,13 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
         return;
       }
 
-      const backendTask = result.data.data;
-
       const newTask = transformBackendTaskToITaskDetails({
-        task: backendTask,
+        task: result.data.data,
       });
 
       const { upsertTasks, refreshTasks, setNewTaskId } =
         useTaskStore.getState();
       setNewTaskId(newTask.id);
-      console.log('[pin] set', newTask.id, useTaskStore.getState().newTaskId);
       upsertTasks([newTask]);
 
       useFilterStore.getState().setLocationData(null);
@@ -136,14 +166,20 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
         });
       }
 
-      resetCreateTask();
+      // один атомарний апдейт замість resetCreateTask() + setIsSuccess(true)
+      useCreateTaskStore.setState({
+        createStep: STEP_IDS.OWNER,
+        stepHistory: [],
+        createTaskDraft: {},
+        editingTaskId: null,
+        isSuccess: true,
+      });
       reset(defaultTaskValues);
-      setIsSuccess(true);
     } catch (err) {
       console.error(err);
       setSubmitError(t('submitError'));
     } finally {
-      setIsSubmitting(false);
+      if (!navigating) setIsSubmitting(false);
     }
   };
 
