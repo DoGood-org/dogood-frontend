@@ -11,9 +11,10 @@ import {
   defaultTaskValues,
 } from '@/lib/validation/createTask.schema';
 import { hostMapping } from './hostMapping';
+import type { ITaskApi } from '@/services/taskService';
 
-export interface TaskPreviewProps {
-  task?: ITaskDetails;
+export interface BackendTaskInput {
+  task?: ITaskApi;
 }
 
 // ---------------------------------------------------------------------------
@@ -102,6 +103,13 @@ export const combineDateTime = (date: Date, time?: string): string => {
   return d.toISOString();
 };
 
+// Currency
+const SUPPORTED_CURRENCIES = ['USD', 'EUR'] as const;
+type Currency = (typeof SUPPORTED_CURRENCIES)[number];
+
+const toCurrency = (raw?: string | null): Currency =>
+  SUPPORTED_CURRENCIES.includes(raw as Currency) ? (raw as Currency) : 'USD';
+
 // ---------------------------------------------------------------------------
 // Category casing helpers
 //
@@ -158,29 +166,19 @@ export const getDistanceStr = (
 
 export function transformBackendTaskToITaskDetails({
   task,
-}: TaskPreviewProps): ITaskDetails {
+}: BackendTaskInput): ITaskDetails {
   if (!task || typeof task !== 'object') {
     throw new Error('Invalid task data from backend');
   }
 
-  // Backend may send either `categories` (plural, current API) or
-  // `category` (singular, legacy). Support both.
-  const rawTask = task as unknown as {
-    categories?: unknown;
-    category?: unknown;
-    location?: { lat?: number; lng?: number } | null;
-  };
-
-  const rawCategories = rawTask.categories ?? rawTask.category;
-
-  const category: TaskCategoryEnum[] = Array.isArray(rawCategories)
-    ? rawCategories
+  const category: TaskCategoryEnum[] = Array.isArray(task.categories)
+    ? task.categories
         .map(fromApiCategory)
         .filter((c): c is TaskCategoryEnum => c !== null)
     : [];
 
-  const lat = rawTask.location?.lat ?? 0;
-  const lng = rawTask.location?.lng ?? 0;
+  const lat = task.location?.lat ?? 0;
+  const lng = task.location?.lng ?? 0;
 
   const joinedUsers = Array.isArray(task.joinedUsers)
     ? task.joinedUsers.map((u) => ({
@@ -189,29 +187,40 @@ export function transformBackendTaskToITaskDetails({
       }))
     : [];
 
+  const status = Object.values(TaskStatus).includes(task.status as TaskStatus)
+    ? (task.status as TaskStatus)
+    : TaskStatus.PENDING;
+  console.log('[TASK CREATED AT]', {
+    id: task.id,
+    title: task.title,
+    createdAt: task.createdAt,
+    type: typeof task.createdAt,
+  });
+
   return {
-    // Backend may return `id` as number; ITaskDetails uses string.
-    id: String(task.id ?? `task-${Date.now()}`),
+    id: String(
+      task.id ??
+        (task as { _id?: string })._id ??
+        (task as { taskId?: string }).taskId ??
+        `task-${Date.now()}`
+    ),
     title: task.title || '',
     description: task.description || '',
     category,
     picture: task.picture ?? null,
-    status: Object.values(TaskStatus).includes(task.status)
-      ? task.status
-      : TaskStatus.PENDING,
+    status,
     locationName: task.locationName || '',
     location: { lat, lng },
     host: task.host,
-    organizationId: task.organizationId,
+    organizationId: task.organizationId ?? '',
     startDate: parseDate(task.startDate),
     endDate: parseDate(task.endDate),
-    // startTime: formatTime(task.startTime || ''),
     startTime: formatISOTimeTo12h(task.startTime),
     requirements: task.requirements || '',
     amount: task.amount ?? 0,
     currentAmount: task.currentAmount ?? 0,
-    currency: task.currency || 'USD',
-    createdAt: (task as any).createdAt ?? '',
+    currency: toCurrency(task.currency),
+    createdAt: task.createdAt ?? '',
     isOrganization: task.isOrganization ?? false,
     joinedUsers,
   };

@@ -60,6 +60,7 @@ export const ProfileMap = (): JSX.Element => {
     clickedCoords,
     showOptionsMenu,
     locationResolved,
+    hasAgreedToLocation,
   } = useMapStore();
 
   const t = useTranslations('map');
@@ -89,8 +90,17 @@ export const ProfileMap = (): JSX.Element => {
     );
   }, [setCategories]);
 
-  const baseLocation = userLocation ?? defaultLocation;
-  const key = `${baseLocation.lat.toFixed(4)}:${baseLocation.lng.toFixed(4)}`;
+  const baseLocation =
+    userLocation ??
+    (hasAgreedToLocation && !locationResolved ? null : defaultLocation);
+  const key = baseLocation
+    ? `${baseLocation.lat.toFixed(4)}:${baseLocation.lng.toFixed(4)}`
+    : null;
+
+  const getDistanceLabel = (lat: number, lng: number): string =>
+    baseLocation
+      ? getDistanceStr(baseLocation.lat, baseLocation.lng, lat, lng)
+      : '-- km';
 
   const [backendTasks, setBackendTasks] = useState<ITaskDetails[] | null>(null);
 
@@ -99,9 +109,7 @@ export const ProfileMap = (): JSX.Element => {
       raw
         .map((r) => {
           try {
-            return transformBackendTaskToITaskDetails({
-              task: r as unknown as ITaskDetails,
-            });
+            return transformBackendTaskToITaskDetails({ task: r });
           } catch (e) {
             console.error('transform failed', e, r);
             return null;
@@ -119,7 +127,7 @@ export const ProfileMap = (): JSX.Element => {
   useTaskSearch(handleTasksResult);
 
   useEffect(() => {
-    if (!backendTasks) return;
+    if (!backendTasks || !baseLocation || !key) return;
 
     setTasksByKey(
       key,
@@ -135,7 +143,7 @@ export const ProfileMap = (): JSX.Element => {
         };
       })
     );
-  }, [backendTasks, key, baseLocation.lat, baseLocation.lng, setTasksByKey]);
+  }, [backendTasks, key, baseLocation, setTasksByKey]);
 
   const markerRefs = useRef(new Map<string, L.Marker>());
 
@@ -166,7 +174,8 @@ export const ProfileMap = (): JSX.Element => {
   if (
     !leafletComponents ||
     !mapIcons ||
-    Object.values(mapIcons).some((icon) => !icon)
+    Object.values(mapIcons).some((icon) => !icon) ||
+    (hasAgreedToLocation && !locationResolved)
   ) {
     return <ProfileMapSkeleton />;
   }
@@ -269,9 +278,7 @@ export const ProfileMap = (): JSX.Element => {
                         <h4 className="font-bold mb-1">{task.title}</h4>
                         <p className="text-xs">{task.description}</p>
                         <p className="text-xs text-muted mt-1">
-                          {getDistanceStr(
-                            baseLocation.lat,
-                            baseLocation.lng,
+                          {getDistanceLabel(
                             task.location.lat,
                             task.location.lng
                           )}

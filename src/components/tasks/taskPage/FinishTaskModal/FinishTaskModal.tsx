@@ -11,6 +11,8 @@ interface FinishTaskModalProps {
   onClose: () => void;
   onConfirm: () => void;
   wrapperClassName?: string;
+  isLoading?: boolean;
+  error?: string | null;
 }
 
 export const FinishTaskModal = ({
@@ -18,6 +20,8 @@ export const FinishTaskModal = ({
   onClose,
   onConfirm,
   wrapperClassName = '',
+  isLoading = false,
+  error = null,
 }: FinishTaskModalProps): JSX.Element => {
   return (
     <ModalWrapper
@@ -33,7 +37,12 @@ export const FinishTaskModal = ({
         className="top-5 right-5"
         iconClassName="hover:text-[#999999] "
       />
-      <FinishTaskModalContent onClose={onClose} onConfirm={onConfirm} />
+      <FinishTaskModalContent
+        onClose={onClose}
+        onConfirm={onConfirm}
+        isLoading={isLoading}
+        error={error}
+      />
     </ModalWrapper>
   );
 };

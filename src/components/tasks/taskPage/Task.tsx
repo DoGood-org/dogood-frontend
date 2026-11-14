@@ -8,12 +8,14 @@ interface TaskProps {
   task: ITaskDetails;
   showEditButton?: boolean;
   isHost: boolean;
+  isPreview?: boolean;
 }
 
 export const Task: React.FC<TaskProps> = ({
   task,
   showEditButton = true,
   isHost,
+  isPreview = false,
 }) => {
   if (!task) return null;
   return (
@@ -23,6 +25,7 @@ export const Task: React.FC<TaskProps> = ({
         task={task}
         showEditButton={showEditButton}
         isHost={isHost}
+        isPreview={isPreview}
       />
     </section>
   );

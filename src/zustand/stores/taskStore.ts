@@ -7,6 +7,8 @@ interface TTaskState {
   joinedTasks: IExtendedITaskProps[];
   tasksByKey: Record<string, IExtendedITaskProps[]>;
   highlightedTaskId: string | null;
+  tasksVersion: number;
+  newTaskId: string | null;
 }
 
 interface TTaskActions {
@@ -19,6 +21,8 @@ interface TTaskActions {
   toggleFavorite: (taskId: string) => void;
   updateTaskStatus: (taskId: string, status: TaskStatus) => void;
   upsertTasks: (tasks: IExtendedITaskProps[]) => void;
+  refreshTasks: () => void;
+  setNewTaskId: (taskId: string | null) => void;
 }
 
 type TTaskStore = TTaskState & TTaskActions;
@@ -29,10 +33,22 @@ export const useTaskStore = create<TTaskStore>()(
       tasks: [],
       joinedTasks: [],
       tasksByKey: {},
+      tasksVersion: 0,
       highlightedTaskId: null,
+      newTaskId: null,
 
-      setTasks: (tasks): any => set({ tasks }),
-      setJoinedTasks: (tasks): any => set({ joinedTasks: tasks }),
+      setTasks: (tasks): void => {
+        set({ tasks });
+      },
+      setJoinedTasks: (tasks): void => {
+        set({ joinedTasks: tasks });
+      },
+      refreshTasks: (): void => {
+        set((state) => ({ tasksVersion: state.tasksVersion + 1 }));
+      },
+      setNewTaskId: (taskId): void => {
+        set({ newTaskId: taskId });
+      },
       joinTask: (taskId: string): void => {
         const updated = get().tasks.map((task) =>
           task.id === taskId ? { ...task, isSelected: true } : task
@@ -136,7 +152,9 @@ export const useTaskStore = create<TTaskStore>()(
           };
         });
       },
-      setHighlightedTaskId: (taskId): any => set({ highlightedTaskId: taskId }),
+      setHighlightedTaskId: (taskId): void => {
+        set({ highlightedTaskId: taskId });
+      },
     }),
     {
       name: 'task-storage',

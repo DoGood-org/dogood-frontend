@@ -43,6 +43,14 @@
       "confirm": "Bestätigen"
     }
   },
+    "closeTaskModal": {
+    "title": "Diese Aufgabe abschließen?",
+    "message": "Die Aufgabe wird abgeschlossen und alle Teilnehmer werden benachrichtigt. Diese Aktion kann nicht rückgängig gemacht werden.",
+    "buttons": {
+    "cancel": "Abbrechen",
+    "confirm": "Aufgabe abschließen"
+  }
+},
     "createTask": {
     "title": "Erstellen Sie Ihre nächste Aufgabe",
     "preview": "Vorschau",

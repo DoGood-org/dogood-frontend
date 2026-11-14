@@ -6,49 +6,59 @@ import Link from 'next/link';
 import { Location } from '@/components/icons';
 import { useTranslations } from 'next-intl';
 import {
-  getDonationProgress,
   parseDescription,
   parseRequirements,
+  getDonationPercentage,
 } from '@/utils/tasks';
 import { LatLngLiteral } from 'leaflet';
 import { Button } from '@/components/ui/Button';
 import EditButton from './ButtonGroup/EditButton';
 import { isDonationCategory } from '@/utils/isDonationCategory';
 import { useShowOnMap } from '@/hooks/useShowOnMap';
+import { useMemo, useState } from 'react';
+import { TaskMapModal } from './TaskMapModal';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
   isHost: boolean;
   showEditButton?: boolean;
+  isPreview?: boolean;
 }
 
 export const TaskDetails: React.FC<TaskDetailsProps> = ({
   task,
   isHost,
   showEditButton = true,
+  isPreview = false,
 }) => {
   const t = useTranslations('tasks');
 
-  const taskCoords: LatLngLiteral | null = task.location
-    ? {
-        lat: task.location.lat,
-        lng: task.location.lng,
-      }
-    : null;
+  const [isMapOpen, setIsMapOpen] = useState(false);
 
+  const lat = task.location?.lat;
+  const lng = task.location?.lng;
+
+  const taskCoords = useMemo<LatLngLiteral | null>(
+    () => (lat != null && lng != null ? { lat, lng } : null),
+    [lat, lng]
+  );
   const showOnMap = useShowOnMap(task.id, taskCoords ?? undefined);
+  const handleShowOnMap = (): void => {
+    if (isPreview) {
+      setIsMapOpen(true);
+      return;
+    }
+
+    showOnMap();
+  };
 
   const { host } = task;
 
-  const isUser = host?.type === 'USER';
-  const hostData = isUser ? host?.user : host?.organization;
+  const organization = host?.type === 'USER' ? null : host?.organization;
 
-  const organizerName = hostData?.name || '';
-  const avatarSrc = hostData?.avatar || '/task/no-image.png';
-
-  const organizerLink = isUser
-    ? `/users/${host?.user?.id || ''}`
-    : `/organizations/${host?.organization?.id || ''}`;
+  const organizerName = organization?.name || '';
+  const avatarSrc = organization?.avatar || '/task/no-image.png';
+  const organizerLink = `/organization/${organization?.id ?? ''}`;
 
   const parsedRequirements = parseRequirements(task.requirements);
   const parsedDescription = parseDescription(task.description);
@@ -59,7 +69,9 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
 
   const isDonationTask = isDonationCategory(task.category);
 
-  const progress = getDonationProgress(task.currentAmount, task.amount);
+  const goal = task.amount ?? 0;
+  const collected = task.currentAmount ?? 0;
+  const donationPercentage = getDonationPercentage(collected, goal);
 
   return (
     <section className="w-full max-w-[353px] md:max-w-[648px] lg:max-w-[800px]">
@@ -102,7 +114,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
               <Button
                 type="button"
                 variant="iconOnly"
-                onClick={showOnMap}
+                onClick={handleShowOnMap}
                 className="hidden md:flex items-center h-6 gap-2 group p-0"
               >
                 <Location className="text-[#00c1ac] transition-colors duration-300 group-hover:stroke-[#999999]" />
@@ -112,25 +124,26 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
               </Button>
             )}
           </div>
-
-          <ul className="flex gap-3 items-center">
-            <li>
-              <Image
-                src={avatarSrc}
-                alt="Task image"
-                width={48}
-                height={48}
-                className="w-[48px] h-[48px] rounded-full object-cover"
-              />
-            </li>
-            <li>
-              <Link href={organizerLink} className="flex items-center gap-1">
-                <span className="cursor-pointer underline text-base hover:text-btn-hover">
-                  {t('taskDetails.organizedBy')} {organizerName}
-                </span>
-              </Link>
-            </li>
-          </ul>
+          {organization && (
+            <ul className="flex gap-3 items-center">
+              <li>
+                <Image
+                  src={avatarSrc}
+                  alt="Task image"
+                  width={48}
+                  height={48}
+                  className="w-[48px] h-[48px] rounded-full object-cover"
+                />
+              </li>
+              <li>
+                <Link href={organizerLink} className="flex items-center gap-1">
+                  <span className="cursor-pointer underline text-base hover:text-btn-hover">
+                    {t('taskDetails.organizedBy')} {organizerName}
+                  </span>
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
 
@@ -159,12 +172,9 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
         <h3 className="text-[20px] leading-[20px] mb-2">
           {t('taskDetails.howYouCanHelp')}:
         </h3>
-        {isDonationTask && task.amount && (
+        {isDonationTask && (
           <div className="mb-3">
-            <h4 className="text-base font-medium mb-2">
-              {t('taskDetails.donationNeeds')}:
-            </h4>
-            <span className="block text-base mb-2">{progress}%</span>
+            <p className="text-base">{donationPercentage}%</p>
           </div>
         )}
         {parsedRequirements.length > 0 && (
@@ -182,6 +192,13 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
           </>
         )}
       </div>
+      {isPreview && isMapOpen && taskCoords && (
+        <TaskMapModal
+          coords={taskCoords}
+          title={task.locationName || task.title}
+          onClose={() => setIsMapOpen(false)}
+        />
+      )}
     </section>
   );
 };

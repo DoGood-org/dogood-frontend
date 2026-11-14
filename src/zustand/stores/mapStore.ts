@@ -14,6 +14,8 @@ import {
 import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
 import { IExtendedITaskProps } from '@/types/tasks.type';
 
+let geoRequestInFlight: Promise<void> | null = null;
+
 export interface IReactLeafletModule {
   MapContainer: React.FC<any>;
   TileLayer: typeof import('react-leaflet').TileLayer;
@@ -354,61 +356,67 @@ export const useMapStore = create<TMapState & TMapActions>()(
         }
       },
       requestGeolocation: async (manualLoc?: LatLngLiteral): Promise<void> => {
-        try {
-          if (manualLoc) {
-            set({
-              userLocation: manualLoc,
-              locationError: null,
-              showGeolocationPopup: false,
-              locationResolved: true,
-            });
-            return;
-          }
-
-          const coords = await getGeolocationPromise();
-
-          if (!coords) {
-            throw new Error('Geolocation returned empty coordinates');
-          }
-
+        // Якщо координати передані вручну — використовуємо їх
+        if (manualLoc) {
           set({
-            userLocation: {
-              lat: coords.lat,
-              lng: coords.lng,
-            },
+            userLocation: manualLoc,
             locationError: null,
             showGeolocationPopup: false,
             locationResolved: true,
           });
+          return;
+        }
 
-          console.info('[Zustand] Actual user location:', coords);
-        } catch (error) {
-          const code = (error as GeolocationPositionError)?.code;
+        if (geoRequestInFlight) return geoRequestInFlight;
 
-          if (code === 1) {
+        geoRequestInFlight = (async (): Promise<void> => {
+          try {
+            const coords = await getGeolocationPromise();
+
+            if (!coords) {
+              throw new Error('Geolocation returned empty coordinates');
+            }
+
             set({
-              hasAgreedToLocation: false,
+              userLocation: {
+                lat: coords.lat,
+                lng: coords.lng,
+              },
+              locationError: null,
               showGeolocationPopup: false,
-              locationError: 'Location permission denied in browser settings',
-              userLocation: null,
               locationResolved: true,
             });
 
-            return;
+            console.info('[Zustand] Actual user location:', coords);
+          } catch (error) {
+            const code = (error as GeolocationPositionError)?.code;
+
+            if (code === 1) {
+              set({
+                hasAgreedToLocation: false,
+                showGeolocationPopup: false,
+                locationError: 'Location permission denied in browser settings',
+                userLocation: null,
+                locationResolved: true,
+              });
+              return;
+            }
+
+            set({
+              locationError:
+                error instanceof Error
+                  ? error.message
+                  : 'Failed to retrieve geolocation',
+              showGeolocationPopup: false,
+              userLocation: null,
+              locationResolved: true,
+            });
+          } finally {
+            geoRequestInFlight = null;
           }
+        })();
 
-          console.warn('[Zustand] Geolocation access failed:', error);
-
-          set({
-            locationError:
-              error instanceof Error
-                ? error.message
-                : 'Failed to retrieve geolocation',
-            showGeolocationPopup: false,
-            userLocation: null,
-            locationResolved: true,
-          });
-        }
+        return geoRequestInFlight;
       },
       setActivePanel: (panel: 'tasks' | 'filters' | null): any =>
         set({ activePanel: panel }),

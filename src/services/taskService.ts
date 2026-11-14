@@ -1,6 +1,10 @@
 import { fetchFromApi, FetchResult } from '@/lib/api/apiFetcher';
 import type { CreateTaskApiPayload } from '@/utils/taskTransform';
-import type { ISearchTasksPayload, ITaskDetails } from '@/types/tasks.type';
+import type {
+  ISearchTasksPayload,
+  ITaskDetails,
+  TaskStatus,
+} from '@/types/tasks.type';
 import { apiRoutes } from '@/lib/server/apiRoutes';
 
 export interface ITaskApi {
@@ -21,6 +25,9 @@ export interface ITaskApi {
   categories: string[];
   host: ITaskDetails['host'];
   joinedUsers: Array<{ id: string; name: string }>;
+  organizationId?: string;
+  isOrganization?: boolean;
+  createdAt?: string;
 }
 
 // ============================================
@@ -106,3 +113,18 @@ export const searchTasksService = async (
     auth: true,
   });
 };
+
+/**
+ * Change task status (host: COMPLETED / CLOSED only).
+ * PATCH /task/:id/status
+ */
+
+export const updateTaskStatusService = (
+  id: string | number,
+  status: TaskStatus
+): Promise<FetchResult<unknown>> =>
+  fetchFromApi(apiRoutes.tasks.updateStatus(id), {
+    method: 'PATCH',
+    data: { status },
+    auth: true,
+  });

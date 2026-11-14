@@ -10,5 +10,5 @@ interface PreviewProps {
 
 export const Preview = ({ task }: PreviewProps): JSX.Element | null => {
   if (!task) return null;
-  return <Task task={task} />;
+  return <Task task={task} isHost={false} isPreview />;
 };

@@ -26,8 +26,14 @@ export const parseDescription = (
     .filter(Boolean) as (string | string[])[];
 };
 
-export const getDonationProgress = (current = 0, goal = 0): number =>
-  goal > 0 ? Math.min(100, Math.round((current / goal) * 100)) : 0;
+export const getDonationPercentage = (
+  collected: number | null | undefined,
+  goal: number | null | undefined
+): number => {
+  if (!goal || goal <= 0) return 0;
+
+  return Math.min(Math.round(((collected ?? 0) / goal) * 100), 100);
+};
 
 export const formatMoney = (value: number, currency = 'USD'): string =>
   new Intl.NumberFormat('en-US', {

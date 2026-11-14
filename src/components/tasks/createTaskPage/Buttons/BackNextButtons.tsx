@@ -22,6 +22,7 @@ import {
 import { STEP_IDS } from '@/constants/stepIds';
 import { useTranslations } from 'next-intl';
 import { createTaskService } from '@/services/taskService';
+import { useFilterStore } from '@/zustand/stores/filterStore';
 
 type Props = {
   showBack?: boolean;
@@ -112,13 +113,17 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       const backendTask = result.data.data;
 
       const newTask = transformBackendTaskToITaskDetails({
-        task: backendTask as any,
+        task: backendTask,
       });
 
-      const existingLocal = useTaskStore.getState().tasksByKey['local'] || [];
-      useTaskStore
-        .getState()
-        .setTasksByKey('local', [...existingLocal, newTask]);
+      const { upsertTasks, refreshTasks, setNewTaskId } =
+        useTaskStore.getState();
+      setNewTaskId(newTask.id);
+      console.log('[pin] set', newTask.id, useTaskStore.getState().newTaskId);
+      upsertTasks([newTask]);
+
+      useFilterStore.getState().setLocationData(null);
+      refreshTasks();
 
       if (newTask.location && newTask.category?.length) {
         addMarker({

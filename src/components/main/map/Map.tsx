@@ -60,18 +60,11 @@ export const Map: React.FC = (): JSX.Element => {
 
     locationResolved,
     setLocationResolved,
+    hasAgreedToLocation,
+    requestGeolocation,
   } = useMapStore();
 
   const t = useTranslations('map');
-
-  console.log('[MAP RENDER]', {
-    hasLeaflet: !!leafletComponents,
-    hasIcons: !!mapIcons && Object.values(mapIcons).length > 0,
-    hasLayers: !!defaultLayers && !!activeLayer,
-    locationResolved,
-    showGeolocationPopup,
-    isInView,
-  });
 
   const { choosenCategories, categories } = useFilterStore();
   const pendingFlyTo = useMapStore((s) => s.pendingFlyTo);
@@ -98,6 +91,12 @@ export const Map: React.FC = (): JSX.Element => {
   }, [setCategories]);
 
   useEffect(() => {
+    if (hasAgreedToLocation && !useMapStore.getState().locationResolved) {
+      requestGeolocation();
+    }
+  }, [hasAgreedToLocation, requestGeolocation]);
+
+  useEffect(() => {
     if (!isInView) return;
 
     if (useMapStore.getState().skipGeoPrompt) {
@@ -114,8 +113,17 @@ export const Map: React.FC = (): JSX.Element => {
     setLocationResolved,
   ]);
 
-  const baseLocation = userLocation ?? defaultLocation;
-  const key = `${baseLocation.lat.toFixed(4)}:${baseLocation.lng.toFixed(4)}`;
+  const baseLocation =
+    userLocation ??
+    (hasAgreedToLocation && !locationResolved ? null : defaultLocation);
+  const key = baseLocation
+    ? `${baseLocation.lat.toFixed(4)}:${baseLocation.lng.toFixed(4)}`
+    : null;
+
+  const getDistanceLabel = (lat: number, lng: number): string =>
+    baseLocation
+      ? getDistanceStr(baseLocation.lat, baseLocation.lng, lat, lng)
+      : '-- km';
 
   const [backendTasks, setBackendTasks] = useState<ITaskDetails[] | null>(null);
 
@@ -124,9 +132,7 @@ export const Map: React.FC = (): JSX.Element => {
       raw
         .map((r) => {
           try {
-            return transformBackendTaskToITaskDetails({
-              task: r as unknown as ITaskDetails,
-            });
+            return transformBackendTaskToITaskDetails({ task: r });
           } catch (e) {
             console.error('transform failed', e, r);
             return null;
@@ -144,7 +150,7 @@ export const Map: React.FC = (): JSX.Element => {
   useTaskSearch(handleTasksResult);
 
   useEffect(() => {
-    if (!backendTasks) return;
+    if (!backendTasks || !baseLocation || !key) return;
 
     setTasksByKey(
       key,
@@ -160,9 +166,10 @@ export const Map: React.FC = (): JSX.Element => {
         };
       })
     );
-  }, [backendTasks, key, baseLocation.lat, baseLocation.lng, setTasksByKey]);
+  }, [backendTasks, key, baseLocation, setTasksByKey]);
 
   const { noPaginatedTasks } = useFilteredTasksSelector();
+
   const highLightedRef = useRef<L.Marker | null>(null);
 
   useEffect(() => {
@@ -192,7 +199,8 @@ export const Map: React.FC = (): JSX.Element => {
     !defaultLayers ||
     !activeLayer ||
     Object.values(mapIcons).length === 0 ||
-    Object.values(mapIcons).some((icon) => !icon)
+    Object.values(mapIcons).some((icon) => !icon) ||
+    (hasAgreedToLocation && !locationResolved)
   ) {
     return (
       <div className="w-full bg-background">
@@ -291,12 +299,7 @@ export const Map: React.FC = (): JSX.Element => {
                         {task.description}
                       </p>
                       <p className="text-xs text-muted mt-1">
-                        {getDistanceStr(
-                          baseLocation.lat,
-                          baseLocation.lng,
-                          task.location.lat,
-                          task.location.lng
-                        )}
+                        {getDistanceLabel(task.location.lat, task.location.lng)}
                       </p>
                       <button
                         className="mt-2 text-violet-500 hover:underline cursor-pointer"

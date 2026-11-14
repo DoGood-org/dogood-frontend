@@ -11,7 +11,7 @@ import { Task } from './Task';
 import { useEffect, useMemo, useState } from 'react';
 import { transformBackendTaskToITaskDetails } from '@/utils/taskTransform';
 import { Spinner } from '@/components/ui/Spinner';
-import type { ITaskDetails } from '@/types/tasks.type';
+import type { ITaskDetails, TaskStatus } from '@/types/tasks.type';
 import {
   getAllTasksService,
   getTaskByIdService,
@@ -33,9 +33,7 @@ interface TaskContentProps {
 const safeTransform = (raw?: ITaskApi): ITaskDetails | null => {
   if (!raw || typeof raw !== 'object' || !raw.id) return null;
   try {
-    return transformBackendTaskToITaskDetails({
-      task: raw as unknown as ITaskDetails,
-    });
+    return transformBackendTaskToITaskDetails({ task: raw });
   } catch (err) {
     console.error('Failed to transform task', err, raw);
     return null;
@@ -56,6 +54,10 @@ export const TaskContent: React.FC<TaskContentProps> = ({
   const [isFetching, setIsFetching] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [listError, setListError] = useState<string | null>(null);
+
+  const handleStatusChange = (status: TaskStatus): void => {
+    setTask((prev) => (prev ? { ...prev, status } : prev));
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -172,6 +174,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
           categories={task.category}
           taskStatus={task.status}
           isHost={isHost}
+          onStatusChange={handleStatusChange}
         />
       </div>
 

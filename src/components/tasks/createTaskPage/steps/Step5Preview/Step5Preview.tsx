@@ -54,12 +54,16 @@ export const Step5Preview = (): JSX.Element => {
         title={t('preview')}
         titleClassName="text-lg mb-8 pl-0"
       />
-      <Task task={currentTask} showEditButton={false} />
+      <Task
+        task={currentTask}
+        showEditButton={false}
+        isHost={false}
+        isPreview
+      />
       <IconButtonGroup
         categories={currentTask.category}
         location={currentTask.location ?? null}
         taskId={currentTask.id}
-        distance={currentTask.distance}
       />
       <div className="mt-8 flex justify-end">
         <BackNextButtons showBack={true} />

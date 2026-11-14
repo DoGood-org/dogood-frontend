@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { Button } from '@/components/ui/Button';
 import { DonationModal } from '@/components/ui/modals/DonationModal/DonationModal';
@@ -8,6 +9,8 @@ import { TaskStatus } from '@/types/tasks.type';
 import { useTranslations } from 'next-intl';
 import { FinishTaskModal } from '@/components/tasks/taskPage/FinishTaskModal/FinishTaskModal';
 import { TaskCategoryEnum } from '@/types/createTask.type';
+import { updateTaskStatusService } from '@/services/taskService';
+import { CloseTaskModal } from '../CloseTaskModal/CloseTaskModal';
 
 interface TaskControlButtonsProps {
   taskId: string;
@@ -15,6 +18,7 @@ interface TaskControlButtonsProps {
   taskStatus: TaskStatus;
   isHost: boolean;
   className?: string;
+  onStatusChange?: (status: TaskStatus) => void;
 }
 
 export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
@@ -23,12 +27,17 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
   isHost,
   categories,
   className = '',
+  onStatusChange,
 }) => {
   const t = useTranslations('map');
-  const { updateTaskStatus } = useTaskStore();
+  const updateTaskStatus = useTaskStore((s) => s.updateTaskStatus);
 
   const finishModal = useMenuToggle();
+  const closeModal = useMenuToggle();
   const donateModal = useMenuToggle();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const isActive =
     taskStatus !== TaskStatus.COMPLETED && taskStatus !== TaskStatus.CLOSED;
@@ -42,13 +51,40 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
       taskStatus === TaskStatus.PENDING);
   const showDonateButton = isFundraising && !isHost;
 
-  const handleFinishTask = (): void => {
-    updateTaskStatus(taskId, TaskStatus.COMPLETED);
-    finishModal.closeMenu();
+  const changeStatus = async (
+    status: TaskStatus.COMPLETED | TaskStatus.CLOSED,
+    closeModalFn: () => void
+  ): Promise<void> => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+    setError(null);
+    const res = await updateTaskStatusService(taskId, status);
+    setIsLoading(false);
+
+    if (!res.ok) {
+      setError(res.errorMessage);
+      return;
+    }
+
+    updateTaskStatus(taskId, status);
+    onStatusChange?.(status);
+    closeModalFn();
   };
 
-  const handleCloseTask = (): void => {
-    updateTaskStatus(taskId, TaskStatus.CLOSED);
+  const handleFinishTask = (): Promise<void> =>
+    changeStatus(TaskStatus.COMPLETED, finishModal.closeMenu);
+
+  const handleCloseTask = (): Promise<void> =>
+    changeStatus(TaskStatus.CLOSED, closeModal.closeMenu);
+
+  const openFinish = (): void => {
+    setError(null);
+    finishModal.openMenu();
+  };
+  const openClose = (): void => {
+    setError(null);
+    closeModal.openMenu();
   };
 
   return (
@@ -58,14 +94,14 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
           className="w-full flex justify-center gap-2 flex-col md:justify-end
           md:gap-12 md:flex-row mb-20 md:mb-0"
         >
-          <Button variant="primary" size="lg" onClick={finishModal.openMenu}>
+          <Button variant="primary" size="lg" onClick={openFinish}>
             {t('markAsFinished')}
           </Button>
           <Button
             variant="secondary"
             className="hover:border"
             size="lg"
-            onClick={handleCloseTask}
+            onClick={openClose}
           >
             {t('closeThisTask')}
           </Button>
@@ -84,10 +120,21 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
           </Button>
         </div>
       )}
+
       <FinishTaskModal
         isOpen={finishModal.isOpen}
         onClose={finishModal.closeMenu}
         onConfirm={handleFinishTask}
+        isLoading={isLoading}
+        error={error}
+      />
+
+      <CloseTaskModal
+        isOpen={closeModal.isOpen}
+        onClose={closeModal.closeMenu}
+        onConfirm={handleCloseTask}
+        isLoading={isLoading}
+        error={error}
       />
 
       <DonationModal

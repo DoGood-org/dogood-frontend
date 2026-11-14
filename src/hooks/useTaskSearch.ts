@@ -7,6 +7,7 @@ import { TaskCategoryEnum } from '@/types/createTask.type';
 import { ISearchTasksPayload } from '@/types/tasks.type';
 import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
+import { useTaskStore } from '@/zustand/stores/taskStore';
 import { useEffect, useRef } from 'react';
 
 const TASK_CATEGORIES = new Set<string>(
@@ -38,14 +39,14 @@ export const useTaskSearch = (onResult: (raw: ITaskApi[]) => void): void => {
   const userLocation = useMapStore((s) => s.userLocation);
   const defaultLocation = useMapStore((s) => s.defaultLocation);
 
-  // Always use the latest onResult without triggering a new request
+  const tasksVersion = useTaskStore((s) => s.tasksVersion);
+
   const onResultRef = useRef(onResult);
 
   useEffect(() => {
     onResultRef.current = onResult;
   }, [onResult]);
 
-  // Search center: chosen location -> user location -> default location
   const base = locationData ?? userLocation ?? defaultLocation;
 
   // Convert selected distance to kilometers
@@ -110,7 +111,6 @@ export const useTaskSearch = (onResult: (raw: ITaskApi[]) => void): void => {
         const payloads: ISearchTasksPayload[] = [];
 
         if (address) {
-          // Chosen location: location name + optional title (AND)
           const payload: ISearchTasksPayload = {
             ...common,
             locationName: address,
@@ -123,11 +123,9 @@ export const useTaskSearch = (onResult: (raw: ITaskApi[]) => void): void => {
           withRadius(payload);
           payloads.push(payload);
         } else if (textQuery) {
-          // Unknown text: by title OR by location name
           const byTitle: ISearchTasksPayload = { ...common, title: textQuery };
           withRadius(byTitle);
 
-          // No radius here: coordinates would come from the user location
           const byLocation: ISearchTasksPayload = {
             ...common,
             locationName: textQuery,
@@ -135,7 +133,6 @@ export const useTaskSearch = (onResult: (raw: ITaskApi[]) => void): void => {
 
           payloads.push(byTitle, byLocation);
         } else {
-          // Only categories and/or radius
           const payload: ISearchTasksPayload = { ...common };
           withRadius(payload);
 
@@ -159,7 +156,6 @@ export const useTaskSearch = (onResult: (raw: ITaskApi[]) => void): void => {
 
         for (const res of results) {
           if (!res.ok) {
-            // 404 = nothing found, it is a valid empty answer
             if (isSearch && res.status === 404) {
               hasAnswer = true;
               continue;
@@ -177,7 +173,7 @@ export const useTaskSearch = (onResult: (raw: ITaskApi[]) => void): void => {
         }
 
         if (!hasAnswer) return;
-
+        console.log('[search result]', merged.size);
         onResultRef.current(Array.from(merged.values()));
       } catch (error) {
         if (!cancelled) {
@@ -191,5 +187,13 @@ export const useTaskSearch = (onResult: (raw: ITaskApi[]) => void): void => {
     return (): void => {
       cancelled = true;
     };
-  }, [searchQuery, choosenCategories, radiusKm, centerLat, centerLng, address]);
+  }, [
+    searchQuery,
+    choosenCategories,
+    radiusKm,
+    centerLat,
+    centerLng,
+    address,
+    tasksVersion,
+  ]);
 };
