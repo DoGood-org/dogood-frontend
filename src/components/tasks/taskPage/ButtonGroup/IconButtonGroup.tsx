@@ -15,6 +15,8 @@ interface IconButtonGroupProps {
   showFavorite?: boolean;
   showDivider?: boolean;
   redirectToMap?: boolean;
+  title?: string;
+  isPreview?: boolean;
 }
 
 export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
@@ -26,6 +28,8 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
   showFavorite = true,
   showDivider = true,
   redirectToMap = false,
+  title,
+  isPreview = false,
 }) => {
   const lat = location?.lat;
   const lng = location?.lng;
@@ -50,6 +54,8 @@ export const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
                   taskId={taskId}
                   onAfterClick={onAfterMapClick}
                   redirectToMap={redirectToMap}
+                  isPreview={isPreview}
+                  title={title}
                 />
               )}
             </>

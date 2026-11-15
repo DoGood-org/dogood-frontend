@@ -64,6 +64,8 @@ export const Step5Preview = (): JSX.Element => {
         categories={currentTask.category}
         location={currentTask.location ?? null}
         taskId={currentTask.id}
+        title={currentTask.locationName || currentTask.title}
+        isPreview
       />
       <div className="mt-8 flex justify-end">
         <BackNextButtons showBack={true} />

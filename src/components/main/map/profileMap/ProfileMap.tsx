@@ -19,7 +19,7 @@ import { useFilterStore } from '@/zustand/stores/filterStore';
 import { useMapStore } from '@/zustand/stores/mapStore';
 import { AnimatePresence } from 'framer-motion';
 import { JSX, useCallback, useEffect, useRef, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 
 import { TasksOnMap } from '@/components/main/map/tasksPanel/TasksOnMap';
@@ -40,6 +40,7 @@ import { TaskCategoryEnum } from '@/types/createTask.type';
 import { AutoZoomOnDistanceFilter } from '../LazyImports';
 import { DistanceRadius } from '../DistanceRadius';
 import { ProfileMapSkeleton } from './ProfileMapSkeleton';
+import { getAddressByCoords } from '@/utils/reverseGeocode';
 
 export const ProfileMap = (): JSX.Element => {
   const {
@@ -65,6 +66,9 @@ export const ProfileMap = (): JSX.Element => {
 
   const t = useTranslations('map');
   const router = useRouter();
+
+  const lang = useLocale().split('-')[0];
+  const setLocationData = useFilterStore((s) => s.setLocationData);
 
   useEffect(() => {
     initMap('user');
@@ -342,10 +346,18 @@ export const ProfileMap = (): JSX.Element => {
                 >
                   <div className="flex flex-col gap-2 items-start justify-start">
                     <button
-                      onClick={(e) => {
+                      onClick={async (e) => {
                         e.stopPropagation();
-                        router.push('/tasks');
+
+                        const locationData = await getAddressByCoords(
+                          clickedCoords.lat,
+                          clickedCoords.lng,
+                          lang
+                        );
+                        setLocationData(locationData);
+
                         closeOptionsMenu();
+                        router.push('/tasks');
                       }}
                       className="cursor-pointer transition-colors hover:text-violet-500"
                     >

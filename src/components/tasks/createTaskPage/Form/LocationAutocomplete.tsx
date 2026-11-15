@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, JSX, useRef } from 'react';
+import { useState, JSX, useRef, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslations, useLocale } from 'next-intl';
 import { FormField } from './FormField';
 import { Input } from '@/components/ui/Input';
 import { useFilterStore } from '@/zustand/stores/filterStore';
+import { useMapStore } from '@/zustand/stores/mapStore';
 
 interface LocationData {
   address: string;
@@ -13,19 +14,21 @@ interface LocationData {
   lng: number;
 }
 
-export interface NominatimResult {
-  place_id: string;
-  display_name: string;
-  name?: string;
-  lat: string;
-  lon: string;
-  address?: {
-    road?: string;
-    house_number?: string;
+export interface PhotonFeature {
+  geometry: {
+    coordinates: [number, number];
+  };
+  properties: {
+    osm_id: number;
+    name?: string;
+    street?: string;
+    housenumber?: string;
     city?: string;
     town?: string;
     village?: string;
-    municipality?: string;
+    district?: string;
+    county?: string;
+    state?: string;
     country?: string;
   };
 }
@@ -42,26 +45,29 @@ const locationInputClasses =
   'focus-visible:ring-0 focus-visible:ring-offset-0 w-full ' +
   'autofill:bg-white autofill:text-black';
 
-// З вулицею: "вулиця номер, місто". Без вулиці: "місто, країна".
-const formatLocation = (item: NominatimResult): string => {
-  const a = item.address;
-  if (!a) return item.display_name;
+export const formatLocation = (item: PhotonFeature): string => {
+  const p = item.properties;
 
-  const place = a.city || a.town || a.village || a.municipality || '';
-  const street = [a.road, a.house_number].filter(Boolean).join(' ');
+  const city = p.city || p.town || p.village || p.district || p.county || '';
 
-  const result = street
-    ? [street, place].filter(Boolean).join(', ')
-    : [place || item.name, a.country].filter(Boolean).join(', ');
+  const streetName = p.street || (p.name !== city ? p.name : '');
+  const street = [streetName, p.housenumber].filter(Boolean).join(' ');
 
-  return result || item.display_name;
+  const parts = [
+    street,
+    city && city !== street ? city : null,
+    p.country && p.country !== city ? p.country : null,
+  ].filter(Boolean);
+
+  return parts.join(', ');
 };
 
-// Прибирає пункти, які після форматування виглядають однаково
-const removeDuplicates = (items: NominatimResult[]): NominatimResult[] => {
+const removeDuplicates = (items: PhotonFeature[]): PhotonFeature[] => {
   const seen = new Set<string>();
   return items.filter((item) => {
-    const key = formatLocation(item).toLowerCase();
+    const formatted = formatLocation(item);
+    if (!formatted) return false;
+    const key = formatted.toLowerCase();
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
@@ -76,13 +82,32 @@ export const LocationSearchInput = ({
   const t = useTranslations('tasks.createTask.form');
   const lang = useLocale().split('-')[0];
 
+  const userLocation = useMapStore((s) => s.userLocation);
+  const defaultLocation = useMapStore((s) => s.defaultLocation);
+  const currentCenter = userLocation ?? defaultLocation;
+
   const { watch, setValue } = useFormContext();
   const value = watch(name) ?? '';
   const [isOpen, setIsOpen] = useState(false);
-  const [suggestions, setSuggestions] = useState<NominatimResult[]>([]);
+  const [suggestions, setSuggestions] = useState<PhotonFeature[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
+
+  const locationData = useFilterStore((s) => s.locationData);
   const setLocationData = useFilterStore((s) => s.setLocationData);
   const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (locationData && !value) {
+      setValue(name, locationData.address, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      setValue('location', {
+        lat: locationData.lat,
+        lng: locationData.lng,
+      });
+    }
+  }, [locationData, name, setValue, value]);
 
   const handleSearch = (q: string): void => {
     setValue(name, q, { shouldDirty: true });
@@ -104,20 +129,21 @@ export const LocationSearchInput = ({
     searchTimeoutRef.current = setTimeout(async () => {
       try {
         const params = new URLSearchParams({
-          format: 'jsonv2',
           q: query,
-          addressdetails: '1',
           limit: '8',
-          'accept-language': lang,
+          lang: lang,
         });
 
-        const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?${params}`
-        );
-        if (!res.ok) throw new Error(`Nominatim ${res.status}`);
+        if (currentCenter) {
+          params.append('lat', String(currentCenter.lat));
+          params.append('lon', String(currentCenter.lng));
+        }
 
-        const data: NominatimResult[] = await res.json();
-        const unique = removeDuplicates(data);
+        const res = await fetch(`https://photon.komoot.io/api/?${params}`);
+        if (!res.ok) throw new Error(`Photon ${res.status}`);
+
+        const data: { features: PhotonFeature[] } = await res.json();
+        const unique = removeDuplicates(data.features ?? []);
 
         setSuggestions(unique);
         setIsOpen(unique.length > 0);
@@ -127,7 +153,7 @@ export const LocationSearchInput = ({
         setSuggestions([]);
         setIsOpen(false);
       }
-    }, 700);
+    }, 350);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent): void => {
@@ -145,9 +171,10 @@ export const LocationSearchInput = ({
     }
   };
 
-  const handleSelect = (item: NominatimResult): void => {
+  const handleSelect = (item: PhotonFeature): void => {
     const address = formatLocation(item);
-    const loc = { address, lat: +item.lat, lng: +item.lon };
+    const [lng, lat] = item.geometry.coordinates;
+    const loc = { address, lat, lng };
 
     setValue(name, address, {
       shouldDirty: true,
@@ -183,7 +210,7 @@ export const LocationSearchInput = ({
               <ul className="absolute z-[100] mt-1 w-full overflow-hidden rounded-sm border border-[#999999] bg-white shadow-lg">
                 {suggestions.map((item, index) => (
                   <li
-                    key={item.place_id}
+                    key={`${item.properties.osm_id}-${index}`}
                     onMouseDown={() => handleSelect(item)}
                     onMouseEnter={() => setActiveIndex(index)}
                     className={`cursor-pointer p-3 border-b last:border-none transition-colors 
