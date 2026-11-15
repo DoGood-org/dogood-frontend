@@ -43,7 +43,7 @@
       "confirm": "Bestätigen"
     }
   },
-    "closeTaskModal": {
+  "closeTaskModal": {
     "title": "Diese Aufgabe abschließen?",
     "message": "Die Aufgabe wird abgeschlossen und alle Teilnehmer werden benachrichtigt. Diese Aktion kann nicht rückgängig gemacht werden.",
     "buttons": {
@@ -51,6 +51,14 @@
     "confirm": "Aufgabe abschließen"
   }
 },
+  "deleteTaskPopover": {
+    "ariaLabel": "Aufgabe löschen",
+    "title": "Diese Aufgabe löschen?",
+    "buttons": {
+      "cancel": "Abbrechen",
+      "confirm": "Löschen"
+    }
+  }, 
     "createTask": {
     "title": "Erstellen Sie Ihre nächste Aufgabe",
     "preview": "Vorschau",

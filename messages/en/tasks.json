@@ -51,6 +51,14 @@
       "confirm": "Close task"
       }
     },
+    "deleteTaskPopover": {
+      "ariaLabel": "Delete task",
+      "title": "Delete this task?",
+      "buttons": {
+        "cancel": "Cancel",
+        "confirm": "Delete"
+     }
+    },
     "createTask": {
     "title": "Create your next task",
     "step": "Step",

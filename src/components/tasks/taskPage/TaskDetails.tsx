@@ -18,6 +18,8 @@ import { useShowOnMap } from '@/hooks/useShowOnMap';
 import { useMemo, useState } from 'react';
 import { TaskMapModal } from './TaskMapModal';
 import { useRouter } from 'next/navigation';
+import DeleteButton from './ButtonGroup/DeleteButton';
+import { deleteTaskService } from '@/services/taskService';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
@@ -37,6 +39,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
   const router = useRouter();
 
   const [isMapOpen, setIsMapOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const lat = task.location?.lat;
   const lng = task.location?.lng;
@@ -66,6 +69,22 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
   const parsedRequirements = parseRequirements(task.requirements);
   const parsedDescription = parseDescription(task.description);
 
+  const handleDelete = async (): Promise<void> => {
+    setIsDeleting(true);
+    try {
+      const result = await deleteTaskService(task.id);
+
+      if (!result.ok) {
+        throw new Error('Delete failed');
+      }
+
+      router.push('/');
+      router.refresh();
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   const handleEdit = (): void => {
     router.push(`/tasks?edit=${task.id}`);
   };
@@ -79,14 +98,19 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
   return (
     <section className="w-full max-w-[353px] md:max-w-[648px] lg:max-w-[800px]">
       <div className="flex flex-wrap md:flex-nowrap items-baseline">
-        <h1 className="w-full max-w-[500px] text-lg mb-2 md:mb-5 mr-5 break-words">
+        <h1 className="w-full max-w-[500px] text-lg mb-2 md:mb-5 mr-7 break-words">
           {task.title}
         </h1>
-        <div className="ml-auto mr-11 md:ml-0">
+        <div className="flex items-center gap-10 ml-auto mr-11 md:ml-0">
           <EditButton
             onClick={handleEdit}
             isHost={isHost}
             show={showEditButton}
+          />
+          <DeleteButton
+            isHost={isHost}
+            onConfirm={handleDelete}
+            isLoading={isDeleting}
           />
         </div>
       </div>

@@ -153,6 +153,7 @@ export { default as TechnoGrants } from './TechnoGrants';
 export { default as TelIcon } from './TelIcon';
 export { default as TimeIcon } from './TimeIcon';
 export { default as Tools } from './Tools';
+export { default as Trash } from './Trash';
 export { default as TrashBinChat } from './TrashBinChat';
 export { default as Unionpay } from './Unionpay';
 export { default as UnlockIcon } from './UnlockIcon';

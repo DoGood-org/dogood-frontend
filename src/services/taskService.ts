@@ -109,7 +109,7 @@ export const getAllTasksService = async (): Promise<
 };
 
 /**
- * POST search task.
+ * Search tasks.
  * POST /task/search
  */
 
@@ -124,14 +124,10 @@ export const searchTasksService = async (
 };
 
 /**
- * Change task status (host: COMPLETED / CLOSED only).
- * PATCH /task/:id/status
- */
-
-/**
  * Update an existing task (host only).
  * PATCH /task/:id
  */
+
 export const updateTaskService = async (
   id: string | number,
   payload: UpdateTaskApiPayload
@@ -143,6 +139,11 @@ export const updateTaskService = async (
   });
 };
 
+/**
+ * Change task status (host: COMPLETED / CLOSED only).
+ * PATCH /task/:id/status
+ */
+
 export const updateTaskStatusService = (
   id: string | number,
   status: TaskStatus,
@@ -153,3 +154,17 @@ export const updateTaskStatusService = (
     data: { status, rejectionReason },
     auth: true,
   });
+
+/**
+ * Delete a task (host only).
+ * DELETE /task/:id
+ */
+
+export const deleteTaskService = async (
+  id: string | number
+): Promise<FetchResult<IUpdateTaskResponse>> => {
+  return fetchFromApi<IUpdateTaskResponse>(apiRoutes.tasks.delete(id), {
+    method: 'DELETE',
+    auth: true,
+  });
+};
