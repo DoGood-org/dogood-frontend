@@ -1,4 +1,5 @@
 import { IExtendedITaskProps, TaskStatus } from '@/types/tasks.type';
+import { isMapTask } from '@/utils/taskStatus';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -27,6 +28,9 @@ interface TTaskActions {
 
 type TTaskStore = TTaskState & TTaskActions;
 
+const onlyMapTasks = (list: IExtendedITaskProps[]): IExtendedITaskProps[] =>
+  list.filter((t) => isMapTask(t.status));
+
 export const useTaskStore = create<TTaskStore>()(
   persist<TTaskStore, [], [], Pick<TTaskState, 'tasks' | 'joinedTasks'>>(
     (set, get) => ({
@@ -38,7 +42,7 @@ export const useTaskStore = create<TTaskStore>()(
       newTaskId: null,
 
       setTasks: (tasks): void => {
-        set({ tasks });
+        set({ tasks: onlyMapTasks(tasks) });
       },
       setJoinedTasks: (tasks): void => {
         set({ joinedTasks: tasks });
@@ -77,7 +81,8 @@ export const useTaskStore = create<TTaskStore>()(
           joinedTasks: updatedTasks.filter((task) => task.isSelected),
         });
       },
-      setTasksByKey: (key, tasks): void => {
+      setTasksByKey: (key, allTasks): void => {
+        const tasks = onlyMapTasks(allTasks);
         set((state) => {
           const prev = new Map(state.tasks.map((task) => [task.id, task]));
 
@@ -103,7 +108,8 @@ export const useTaskStore = create<TTaskStore>()(
           };
         });
       },
-      upsertTasks: (incoming): void => {
+      upsertTasks: (allIncoming): void => {
+        const incoming = onlyMapTasks(allIncoming);
         set((state) => {
           const existingIds = new Set(state.tasks.map((t) => t.id));
           const fresh = incoming.filter((t) => !existingIds.has(t.id));

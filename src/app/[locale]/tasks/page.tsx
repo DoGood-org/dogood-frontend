@@ -8,18 +8,9 @@ const TaskPage = async (): Promise<React.JSX.Element> => {
   const user = await getServerCurrentUser();
 
   if (!user || 'isBanned' in user) notFound();
-  console.log(
-    '[DBG page] raw orgs:',
-    JSON.stringify(user.organizations, null, 2)
-  );
 
   const organizations = (user.organizations ?? []).filter(
     (org) => !!org.role && isAdminOrModerator(org.role)
-  );
-
-  console.log(
-    '[DBG page] after role filter:',
-    organizations.map((o) => ({ id: o.id, name: o.name, role: o.role }))
   );
 
   const hostUser: HostUser = {

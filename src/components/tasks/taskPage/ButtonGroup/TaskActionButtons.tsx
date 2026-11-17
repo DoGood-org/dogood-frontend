@@ -66,7 +66,7 @@ export const TaskActionButtons = ({
   }
 
   return (
-    <div className="flex w-full justify-between mt-4">
+    <div className="flex w-full justify-between gap-2 mt-4">
       {isDonation ? (
         <Button
           variant="primary"
@@ -74,7 +74,7 @@ export const TaskActionButtons = ({
             e.stopPropagation();
             openModal();
           }}
-          className={`${baseButtonClass} text-white w-full max-w-[150px] py-3 px-6`}
+          className={`${baseButtonClass} text-white shrink-0 min-w-[114px] py-3 px-4`}
           size="lg"
         >
           {t('donateBtn')}
@@ -83,7 +83,7 @@ export const TaskActionButtons = ({
         <Button
           variant="primary"
           onClick={handleJoinToggle}
-          className={`${baseButtonClass} text-white w-full max-w-[114px] py-3 px-6`}
+          className={`${baseButtonClass} text-white shrink-0 min-w-[114px] py-3 px-4`}
           size="lg"
         >
           {isJoined ? t('joined') : t('join')}
@@ -92,7 +92,7 @@ export const TaskActionButtons = ({
 
       <Button
         variant="secondary"
-        className={`${baseButtonClass} py-2 px-4`}
+        className={`${baseButtonClass} shrink-0 px-4 py-2`}
         size="lg"
         onClick={() => router.push(`/tasks/${taskId}`)}
       >

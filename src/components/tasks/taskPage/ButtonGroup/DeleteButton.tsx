@@ -41,7 +41,14 @@ const DeleteButton = ({
           className={cn('group cursor-pointer transition-colors', className)}
           aria-label={t('ariaLabel')}
         >
-          <Trash className="size-6 text-foreground group-hover:text-error/55 transition-colors" />
+          <Trash
+            className={cn(
+              'size-6 transition-colors',
+              open
+                ? 'text-error dark:error'
+                : 'text-foreground group-hover:text-error/55'
+            )}
+          />
         </Button>
       </Popover.Trigger>
 
@@ -50,7 +57,7 @@ const DeleteButton = ({
           side="bottom"
           align="end"
           sideOffset={8}
-          className="z-[999] w-60px rounded-lg bg-card p-4 text-foreground shadow-lg"
+          className="z-[999] w-60 rounded-lg bg-card p-4 text-foreground shadow-lg"
           onClick={(e) => e.stopPropagation()}
         >
           <p className="mb-3 text-sm text-center">{t('title')}</p>
@@ -60,15 +67,16 @@ const DeleteButton = ({
               size="sm"
               onClick={() => setOpen(false)}
               disabled={isLoading}
-              className="text-foreground"
+              className="text-foreground hover:bg-foreground/10 cursor-pointer transition-colors"
             >
               {t('buttons.cancel')}
             </Button>
             <Button
+              variant="ghost"
               size="sm"
               onClick={handleConfirm}
               disabled={isLoading}
-              className="bg-error text-foreground hover:bg-error/65"
+              className="border border-error text-error dark:border-red-400 dark:text-red-400 hover:bg-error/10 transition-colors"
             >
               {isLoading ? '...' : t('buttons.confirm')}
             </Button>

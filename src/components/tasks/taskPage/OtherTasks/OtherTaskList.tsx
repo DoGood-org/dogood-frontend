@@ -39,14 +39,13 @@ export const OtherTaskList: React.FC<OtherListProps> = ({ tasks }) => {
   }
 
   return (
-    <div className="lg:pl-11 lg:pr-11">
+    <div className="md:px-0 lg:pl-11 lg:pr-11">
       <Slider
         items={displayedTasks}
         itemsPerSlide={itemsPerSlide}
         renderItem={(task) => <OtherTaskItem key={task.id} {...task} />}
         listClassName="flex-row"
-        itemClassName="flex-1 max-w-[350px] ml-2 mr-2 w-full 
-        md:max-w-[310px] lg:max-w-[350px] lg:ml-6 lg:mr-6 p-0"
+        itemClassName="flex-1 w-full max-w-[340px] mx-auto md:mx-2 md:max-w-[310px] lg:mx-6 lg:max-w-[350px] p-0"
       />
     </div>
   );

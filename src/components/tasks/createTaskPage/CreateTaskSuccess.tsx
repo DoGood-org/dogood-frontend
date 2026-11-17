@@ -4,14 +4,16 @@ import { Button } from '@/components/ui/Button';
 import { Section } from '@/components/ui/Section';
 import { UiSuccessMessage } from '@/components/ui/UiSuccessMessage';
 import { useRouter } from 'next/navigation';
-import { JSX } from 'react';
+import { JSX, useState } from 'react';
 import { StepCard } from './StepCard';
 import { useTranslations } from 'next-intl';
+import { ContactFormModal } from '@/components/supportPage/ContactFormModal';
 
 export const CreateTaskSuccess = (): JSX.Element => {
   const router = useRouter();
 
   const t = useTranslations('tasks.createTask.success');
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   const handleGoHome = (): void => {
     router.push('/');
@@ -30,7 +32,7 @@ export const CreateTaskSuccess = (): JSX.Element => {
         </p>
 
         <div className="flex gap-4 justify-center">
-          <Button variant="ghost" onClick={() => router.push('/support')}>
+          <Button variant="ghost" onClick={() => setIsContactOpen(true)}>
             {t('contactUs')}
           </Button>
 
@@ -39,6 +41,7 @@ export const CreateTaskSuccess = (): JSX.Element => {
           </Button>
         </div>
       </StepCard>
+      <ContactFormModal isOpen={isContactOpen} setIsOpen={setIsContactOpen} />
     </Section>
   );
 };

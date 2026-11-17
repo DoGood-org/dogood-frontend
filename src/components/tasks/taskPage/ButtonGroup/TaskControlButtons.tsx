@@ -49,7 +49,7 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
     isHost &&
     (taskStatus === TaskStatus.IN_PROGRESS ||
       taskStatus === TaskStatus.PENDING);
-  const showDonateButton = isFundraising && !isHost;
+  const showDonateButton = isFundraising;
 
   const changeStatus = async (
     status: TaskStatus.COMPLETED | TaskStatus.CLOSED,
@@ -88,11 +88,13 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
   };
 
   return (
-    <div className={`w-full flex ${className}`}>
+    <div
+      className={`flex flex-wrap md:gap-5 lg:flex-nowrap lg:ml-auto ${className}`}
+    >
       {showHostFinishButtons && (
         <div
-          className="w-full flex justify-center gap-2 flex-col md:justify-end
-          md:gap-12 md:flex-row mb-20 md:mb-0"
+          className="w-full flex justify-between gap-2 flex-col md:justify-end
+          md:gap-12 md:flex-row mb-10 md:mb-0"
         >
           <Button variant="primary" size="lg" onClick={openFinish}>
             {t('markAsFinished')}
@@ -109,7 +111,7 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
       )}
 
       {showDonateButton && (
-        <div className="w-full flex justify-end mb-20 md:mb-0">
+        <div className="w-full flex justify-end mb-10 md:mb-0 lg:ml-10">
           <Button
             variant="primary"
             size="lg"
