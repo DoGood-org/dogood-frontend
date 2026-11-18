@@ -20,6 +20,7 @@ import { TaskMapModal } from './TaskMapModal';
 import { useRouter } from 'next/navigation';
 import DeleteButton from './ButtonGroup/DeleteButton';
 import { deleteTaskService } from '@/services/taskService';
+import { MiniMap } from './MiniMap';
 
 interface TaskDetailsProps {
   task: ITaskDetails;
@@ -118,16 +119,8 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
         {t('taskDetails.details')}:
       </h3>
       <div className="flex gap-3 mb-5 w-full">
-        {/* !!!!add mini map !!!!*/}
-        <div className="w-[80px] h-[80px]">
-          <Image
-            src="https://res.cloudinary.com/dyamzitdn/image/upload/v1773335960/image_wkerwn.jpg"
-            alt="Avatar"
-            width={80}
-            height={80}
-            className="object-cover"
-          />
-        </div>
+        {/* mini map */}
+        {taskCoords && <MiniMap coords={taskCoords} />}
 
         <div className="flex flex-col">
           <div className="flex items-start md:gap-7 lg:gap-5 ">

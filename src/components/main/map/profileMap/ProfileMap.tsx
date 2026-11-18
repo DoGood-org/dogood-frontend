@@ -263,6 +263,13 @@ export const ProfileMap = (): JSX.Element => {
                     key={`task-marker-${task.id}`}
                     position={position}
                     icon={icon ?? undefined}
+                    bubblingMouseEvents={false}
+                    eventHandlers={{
+                      contextmenu: (e) => {
+                        e.originalEvent.preventDefault();
+                        e.originalEvent.stopPropagation();
+                      },
+                    }}
                     title={task.title}
                     zIndexOffset={highlightedTaskId === task.id ? 1000 : 0}
                     riseOffset={1000}

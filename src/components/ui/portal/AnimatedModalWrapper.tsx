@@ -7,11 +7,13 @@ type Props = {
   isVisible: boolean;
   onClose: () => void;
   children?: React.ReactNode;
+  position?: 'fixed' | 'absolute';
 };
 export const AnimatedModalWrapper: React.FC<Props> = ({
   isVisible,
   onClose,
   children,
+  position = 'fixed',
 }): JSX.Element => {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -28,7 +30,7 @@ export const AnimatedModalWrapper: React.FC<Props> = ({
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="modal-backdrop fixed inset-0 z-[1000] flex items-center justify-center"
+          className={`modal-backdrop ${position} inset-0 z-[1100] flex items-center justify-center`}
           initial={{ opacity: 0, backdropFilter: 'blur(2px)' }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

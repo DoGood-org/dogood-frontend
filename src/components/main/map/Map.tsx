@@ -1,7 +1,6 @@
 'use client';
 import baseLayerConfig from '@/components/main/map/config/baseLayerConfig';
 import { AnimatedModalWrapper } from '@/components/ui/portal/AnimatedModalWrapper';
-import Portal from '@/components/ui/portal/Portal';
 import { resolveTaskCategory } from '@/lib/mapUtils';
 import { useFilteredTasksSelector } from '@/zustand/selectors/filteredTasksSelectors';
 import { useFilterStore } from '@/zustand/stores/filterStore';
@@ -204,7 +203,7 @@ export const Map: React.FC = (): JSX.Element => {
   ) {
     return (
       <div className="w-full bg-background">
-        <div className="mx-auto flex h-[360px] max-w-[1920px] items-center justify-center px-4 sm:h-[420px] md:h-[480px] md:px-10 lg:h-[560px] lg:px-[100px]">
+        <div className="mx-auto w-full flex h-[547px] max-w-[1920px] items-center justify-center lg:h-[919px]">
           <MapSkeleton />
         </div>
       </div>
@@ -215,19 +214,18 @@ export const Map: React.FC = (): JSX.Element => {
 
   return (
     <div className="w-full relative transition-transform-y overflow-hidden pb-0 lg:h-full lg:pb-20">
-      <div className="flex flex-col rounded-[12px] rounded-b-none md:rounded-b-[12px] overflow-hidden bg-card h-[547px] lg:h-[919px]">
+      <div className="relative flex flex-col rounded-[12px] rounded-b-none md:rounded-b-[12px] overflow-hidden bg-card h-[547px] lg:h-[919px]">
         <div
           ref={mapContainerRef}
           className="block overflow-hidden border-background text-foreground rounded-t-[10px] md:rounded-b-[10px] w-full h-full"
         >
-          <Portal>
-            <AnimatedModalWrapper
-              isVisible={showGeolocationPopup}
-              onClose={declineLocationSharing}
-            >
-              <AcceptShareLocationPopUp />
-            </AnimatedModalWrapper>
-          </Portal>
+          <AnimatedModalWrapper
+            position="absolute"
+            isVisible={showGeolocationPopup}
+            onClose={declineLocationSharing}
+          >
+            <AcceptShareLocationPopUp />
+          </AnimatedModalWrapper>
 
           <MapContainer
             center={userLocation || defaultLocation}
