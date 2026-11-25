@@ -286,8 +286,12 @@ export const ProfileMap = (): JSX.Element => {
                       closeButton={true}
                     >
                       <div className="text-sm max-w-[200px]">
-                        <h4 className="font-bold mb-1">{task.title}</h4>
-                        <p className="text-xs">{task.description}</p>
+                        <h4 className="font-bold mb-1 line-clamp-2">
+                          {task.title}
+                        </h4>
+                        <p className="text-xs line-clamp-2">
+                          {task.description}
+                        </p>
                         <p className="text-xs text-muted mt-1">
                           {getDistanceLabel(
                             task.location.lat,

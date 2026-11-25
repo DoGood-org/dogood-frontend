@@ -39,17 +39,13 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const isActive =
-    taskStatus !== TaskStatus.COMPLETED && taskStatus !== TaskStatus.CLOSED;
+  const isOnMap =
+    taskStatus === TaskStatus.CREATED || taskStatus === TaskStatus.IN_PROGRESS;
 
-  if (!isActive) return null;
+  if (!isOnMap) return null;
 
-  const isFundraising = categories.includes(TaskCategoryEnum.Donation);
-  const showHostFinishButtons =
-    isHost &&
-    (taskStatus === TaskStatus.IN_PROGRESS ||
-      taskStatus === TaskStatus.PENDING);
-  const showDonateButton = isFundraising;
+  const showHostFinishButtons = isHost;
+  const showDonateButton = categories.includes(TaskCategoryEnum.Donation);
 
   const changeStatus = async (
     status: TaskStatus.COMPLETED | TaskStatus.CLOSED,
@@ -86,24 +82,30 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
     setError(null);
     closeModal.openMenu();
   };
-
   return (
     <div
-      className={`flex flex-wrap md:gap-5 lg:flex-nowrap lg:ml-auto ${className}`}
+      className={`w-full flex flex-col items-center lg:flex-row lg:justify-end lg:items-start lg:gap-5 ${className}`}
     >
       {showHostFinishButtons && (
         <div
-          className="w-full flex justify-between gap-2 flex-col md:justify-end
-          md:gap-12 md:flex-row mb-10 md:mb-0"
+          className={`w-full flex flex-col gap-3 mb-10
+            md:flex-row md:justify-end md:gap-2 md:mb-0
+            ${showDonateButton ? 'lg:w-auto lg:justify-end' : 'lg:w-full lg:justify-end'}`}
         >
-          <Button variant="primary" size="lg" onClick={openFinish}>
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={openFinish}
+            className="w-full md:w-auto"
+          >
             {t('markAsFinished')}
           </Button>
+
           <Button
             variant="secondary"
-            className="hover:border"
             size="lg"
             onClick={openClose}
+            className="w-full hover:border md:w-auto"
           >
             {t('closeThisTask')}
           </Button>
@@ -111,12 +113,12 @@ export const TaskControlButtons: React.FC<TaskControlButtonsProps> = ({
       )}
 
       {showDonateButton && (
-        <div className="w-full flex justify-end mb-10 md:mb-0 lg:ml-10">
+        <div className="w-full flex justify-center mb-10 md:justify-end md:mt-3 lg:mt-0 lg:w-auto lg:mb-0">
           <Button
             variant="primary"
             size="lg"
             onClick={donateModal.openMenu}
-            className="text-white"
+            className="w-full text-white md:w-auto"
           >
             {t('donateBtn')}
           </Button>

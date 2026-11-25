@@ -57,27 +57,29 @@ const DeleteButton = ({
           side="bottom"
           align="end"
           sideOffset={8}
-          className="z-[999] w-60 rounded-lg bg-card p-4 text-foreground shadow-lg"
+          className="z-[999] w-70 text-center rounded-xl bg-card p-4 text-foreground shadow-lg"
           onClick={(e) => e.stopPropagation()}
         >
           <p className="mb-3 text-sm text-center">{t('title')}</p>
-          <div className="flex justify-end gap-2">
+          <div className="flex justify-center gap-3">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setOpen(false)}
               disabled={isLoading}
-              className="text-foreground hover:bg-foreground/10 cursor-pointer transition-colors"
+              className="text-foreground hover:bg-foreground/10 cursor-pointer"
             >
               {t('buttons.cancel')}
             </Button>
+
             <Button
               variant="ghost"
               size="sm"
               onClick={handleConfirm}
               disabled={isLoading}
-              className="border border-error text-error dark:border-red-400 dark:text-red-400 hover:bg-error/10 transition-colors"
+              className="border border-error text-error hover:bg-error/10"
             >
+              <Trash className="size-4" />
               {isLoading ? '...' : t('buttons.confirm')}
             </Button>
           </div>

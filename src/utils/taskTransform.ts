@@ -21,6 +21,9 @@ export interface BackendTaskInput {
 // Time / date helpers
 // ---------------------------------------------------------------------------
 
+// ADDED: helper for two-digit numbers (used in date/time formatting below).
+const pad2 = (n: number): string => String(n).padStart(2, '0');
+
 export const formatTime = (time: string): string => {
   if (!time || typeof time !== 'string') return '';
 
@@ -41,10 +44,14 @@ export const formatTime = (time: string): string => {
     .padStart(2, '0')} ${ampm}`;
 };
 
+// CHANGED: was `d.toISOString().slice(0, 10)` (UTC day).
+// Now the local calendar day (YYYY-MM-DD): startDate carries a time now,
+// so the UTC day could be shifted by one in the user's timezone.
 const parseDate = (date?: string | number | Date): string => {
   if (!date) return '';
   const d = new Date(date);
-  return isNaN(d.getTime()) ? '' : d.toISOString().slice(0, 10);
+  if (isNaN(d.getTime())) return '';
+  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
 };
 
 export const formatISOTimeTo12h = (isoString?: string): string => {
@@ -71,15 +78,21 @@ export const formatISOTimeTo12h = (isoString?: string): string => {
     .padStart(2, '0')} ${ampm}`;
 };
 
+// CHANGED: same as parseDate: local day instead of the UTC day (toISOString).
 export const formatDateForPreview = (date?: Date | string): string => {
   if (!date) return '';
   const d = new Date(date);
   if (isNaN(d.getTime())) return '';
-  return d.toISOString().slice(0, 10);
+  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
 };
 
+// ADDED: strips the time from a Date (used on the edit page, so the form's
+// endDate >= startDate check compares days, not times).
+const dateOnly = (d: Date): Date =>
+  new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
 /**
- * Combines a form time string ("HH:mm" or "HH-mm") with the picked start date
+ * Combines a form time string ("HH:mm" or "HH-mm") with the picked date
  * and returns an ISO string. Falls back to the date's own time if the input
  * is missing or invalid.
  */
@@ -190,12 +203,6 @@ export function transformBackendTaskToITaskDetails({
   const status = Object.values(TaskStatus).includes(task.status as TaskStatus)
     ? (task.status as TaskStatus)
     : TaskStatus.PENDING;
-  console.log('[TASK CREATED AT]', {
-    id: task.id,
-    title: task.title,
-    createdAt: task.createdAt,
-    type: typeof task.createdAt,
-  });
 
   return {
     id: String(
@@ -215,7 +222,7 @@ export function transformBackendTaskToITaskDetails({
     organizationId: task.organizationId ?? '',
     startDate: parseDate(task.startDate),
     endDate: parseDate(task.endDate),
-    startTime: formatISOTimeTo12h(task.startTime),
+    startTime: formatISOTimeTo12h(task.startDate),
     requirements: task.requirements || '',
     amount: task.amount ?? 0,
     currentAmount: task.currentAmount ?? 0,
@@ -275,22 +282,17 @@ export const mapFormToCreateTask = (
 export interface CreateTaskApiPayload {
   title: string;
   description: string;
-  /** Omitted when empty/null — backend rejects empty string with "Invalid url". */
   picture?: string;
   startDate: string;
-  startTime: string;
   endDate: string;
+  startTime?: string;
   location?: { lat: number; lng: number };
   locationName: string;
-  /** Only present for donation tasks. */
   amount?: number;
-  /** Only present for donation tasks. */
   currency?: string;
   requirements: string;
-  /** Uppercased enum strings, e.g. `['NATURE', 'ANIMAL']`. */
   categories: string[];
   isOrganization: boolean;
-  /** Omitted when `isOrganization === false` — backend rejects `null`. */
   organizationId?: string;
 }
 
@@ -314,9 +316,9 @@ export const mapFormToApiPayload = (
   const payload: CreateTaskApiPayload = {
     title: data.title ?? '',
     description: data.description ?? '',
-    startDate: startDate.toISOString(),
+    startDate: combineDateTime(startDate, data.startTime),
+    endDate: combineDateTime(endDate, '23:59'),
     startTime: combineDateTime(startDate, data.startTime),
-    endDate: endDate.toISOString(),
     locationName: data.locationName ?? '',
     requirements: data.requirements ?? '',
     categories: (data.category ?? []).map(toApiCategory),
@@ -350,12 +352,10 @@ export const mapFormToApiPayload = (
 };
 
 // ---------------------------------------------------------------------------
-// ADDED (new): Form → API payload (PATCH /task/:id)
-// Everything from here to the end of the file is new.
+// Form → API payload (PATCH /task/:id)
 // ---------------------------------------------------------------------------
 
 /**
- * ADDED: type for the PATCH body.
  * PATCH payload. Host fields (`isOrganization`, `organizationId`) are not
  * editable. In PATCH an omitted field means "leave as is", so fields that
  * can be cleared are sent as explicit `null`.
@@ -409,24 +409,31 @@ export const mapFormToUpdatePayload = (
 // ---------------------------------------------------------------------------
 
 /**
- * ADDED: converts a backend task into form values for the edit page
+ * Converts a backend task into form values for the edit page
  * (the reverse of `mapFormToApiPayload`).
- * Takes the raw `ITaskApi` (not `ITaskDetails`): there `startTime` is already
- * formatted as "03:30 PM", while the form expects "HH:mm".
+ * Takes the raw `ITaskApi` (not `ITaskDetails`): the time is read from the
+ * full `startDate`, and the form expects "H-mm" in 5-minute steps.
  */
 export const mapTaskToFormValues = (task: ITaskApi): BasicInfoFormValues => {
-  const start = new Date(task.startTime);
-  const hh = String(start.getHours());
-  const mm = String(start.getMinutes()).padStart(2, '0');
+  const start = new Date(task.startDate);
+  const end = task.endDate ? new Date(task.endDate) : undefined;
+
+  // ADDED: the form's time regex only allows 5-minute steps, so round minutes.
+  let hours = start.getHours();
+  let minutes = Math.round(start.getMinutes() / 5) * 5;
+  if (minutes === 60) {
+    minutes = 0;
+    hours = (hours + 1) % 24;
+  }
 
   return {
     ...defaultTaskValues,
     title: task.title,
     description: task.description,
     picture: task.picture ?? undefined,
-    startDate: new Date(task.startDate),
-    endDate: task.endDate ? new Date(task.endDate) : undefined,
-    startTime: `${hh}-${mm}`,
+    startDate: dateOnly(start),
+    endDate: end ? dateOnly(end) : undefined,
+    startTime: `${hours}-${pad2(minutes)}`,
     locationName: task.locationName,
     location: task.location,
     category: (task.categories ?? [])
@@ -434,6 +441,6 @@ export const mapTaskToFormValues = (task: ITaskApi): BasicInfoFormValues => {
       .filter((c): c is TaskCategoryEnum => c !== null),
     amount: task.amount ?? undefined,
     currency: toCurrency(task.currency),
-    requirements: task.requirements,
+    requirements: task.requirements ?? '',
   } as BasicInfoFormValues;
 };

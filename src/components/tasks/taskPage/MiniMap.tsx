@@ -30,7 +30,7 @@ export const MiniMap: React.FC<MiniMapProps> = ({ coords, zoom = 10 }) => {
   }
 
   return (
-    <div className="relative h-[80px] w-[80px] shrink-0 overflow-hidden rounded">
+    <div className="relative h-[80px] w-[80px] shrink-0 overflow-hidden rounded shadow-md">
       <div className="absolute left-1/2 top-1/2 h-[160px] w-[160px] -translate-x-1/2 -translate-y-1/2 scale-50">
         <MapContainer
           key={`${coords.lat}-${coords.lng}`}

@@ -18,6 +18,8 @@ const TASK_CATEGORIES = new Set<string>(
 
 const KM_IN_MILE = 1.60934;
 
+const MAP_TASKS_LIMIT = 100;
+
 const parseTasks = (body: unknown): ITaskApi[] =>
   Array.isArray(body)
     ? (body as ITaskApi[])
@@ -141,13 +143,15 @@ export const useTaskSearch = (onResult: (raw: ITaskApi[]) => void): void => {
           }
         }
 
-        console.log('[search payloads]', payloads);
-
         const isSearch = payloads.length > 0;
 
         const results = isSearch
-          ? await Promise.all(payloads.map((p) => searchTasksService(p)))
-          : [await getAllTasksService()];
+          ? await Promise.all(
+              payloads.map((p) =>
+                searchTasksService(p, { limit: MAP_TASKS_LIMIT })
+              )
+            )
+          : [await getAllTasksService({ limit: MAP_TASKS_LIMIT })];
 
         if (cancelled) return;
 
@@ -173,7 +177,6 @@ export const useTaskSearch = (onResult: (raw: ITaskApi[]) => void): void => {
         }
 
         if (!hasAnswer) return;
-        console.log('[search result]', merged.size);
         onResultRef.current(Array.from(merged.values()));
       } catch (error) {
         if (!cancelled) {

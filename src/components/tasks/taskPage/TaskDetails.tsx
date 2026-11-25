@@ -98,11 +98,12 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
 
   return (
     <section className="w-full max-w-[353px] md:max-w-[648px] lg:max-w-[800px]">
-      <div className="flex flex-wrap md:flex-nowrap items-baseline">
-        <h1 className="w-full max-w-[500px] text-lg mb-2 md:mb-5 mr-7 break-words">
+      <div className="flex items-baseline gap-5 flex-wrap md:flex-nowrap">
+        <h1 className="min-w-0 flex-1 text-lg mb-2 md:mb-5 break-words">
           {task.title}
         </h1>
-        <div className="flex items-center gap-10 ml-auto mr-11 md:ml-0">
+
+        <div className="flex items-center gap-5 shrink-0 ml-auto md:ml-0">
           <EditButton
             onClick={handleEdit}
             isHost={isHost}

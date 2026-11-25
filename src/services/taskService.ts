@@ -16,7 +16,6 @@ export interface ITaskApi {
   description: string;
   picture: string | null;
   startDate: string;
-  startTime: string;
   endDate: string;
   location: { lat: number; lng: number };
   locationName: string;
@@ -56,12 +55,30 @@ export interface IGetTaskByIdResponse {
   };
 }
 
+/**
+ *Get all tasks (paginated).
+ */
+export interface IPagination {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
+
+export type IPaginationParams = {
+  page?: number;
+  limit?: number;
+};
+
 export interface IGetAllTasksResponse {
   status: string;
   code: string;
   data: {
     tasks: ITaskApi[];
   };
+  pagination: IPagination;
 }
 
 // ============================================
@@ -99,11 +116,12 @@ export const getTaskByIdService = async (
  * Get all tasks.
  * GET /task
  */
-export const getAllTasksService = async (): Promise<
-  FetchResult<IGetAllTasksResponse>
-> => {
+export const getAllTasksService = async (
+  params: IPaginationParams = {}
+): Promise<FetchResult<IGetAllTasksResponse>> => {
   return fetchFromApi<IGetAllTasksResponse>(apiRoutes.tasks.list, {
     method: 'GET',
+    params,
     auth: true,
   });
 };
@@ -114,11 +132,13 @@ export const getAllTasksService = async (): Promise<
  */
 
 export const searchTasksService = async (
-  payload: ISearchTasksPayload
+  payload: ISearchTasksPayload,
+  params: IPaginationParams = {}
 ): Promise<FetchResult<IGetAllTasksResponse>> => {
   return fetchFromApi<IGetAllTasksResponse>(apiRoutes.tasks.search, {
     method: 'POST',
     data: payload,
+    params,
     auth: true,
   });
 };

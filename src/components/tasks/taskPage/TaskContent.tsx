@@ -22,8 +22,11 @@ import {
 import { authStore } from '@/zustand/stores/authStore';
 import { useTaskStore } from '@/zustand/stores/taskStore';
 import { isAdminOrModerator } from '@/lib/getUserRole';
+import { isMapTask } from '@/utils/taskStatus';
 
 const NOT_FOUND = 'not-found';
+const TASKS_PER_PAGE = 12;
+const MAX_OTHER_TASKS = 36;
 
 interface TaskContentProps {
   slug: string;
@@ -39,6 +42,13 @@ const safeTransform = (raw?: ITaskApi): ITaskDetails | null => {
     return null;
   }
 };
+
+const parseOtherTasks = (raw: ITaskApi[], slug: string): ITaskDetails[] =>
+  raw
+    .map((item) => safeTransform(item))
+    .filter((item): item is ITaskDetails => item !== null)
+    .filter((item) => String(item.id) !== String(slug))
+    .filter((item) => isMapTask(item.status));
 
 export const TaskContent: React.FC<TaskContentProps> = ({
   slug,
@@ -71,13 +81,15 @@ export const TaskContent: React.FC<TaskContentProps> = ({
 
       const [singleRes, listRes] = await Promise.all([
         getTaskByIdService(slug),
-        getAllTasksService(),
+        getAllTasksService({ page: 1, limit: TASKS_PER_PAGE }),
       ]);
 
       if (cancelled) return;
 
       let parsedTask: ITaskDetails | null = null;
       let parsedList: ITaskDetails[] = [];
+      let hasNextPage = false;
+      let currentPage = 1;
 
       // ---- Single task ----
       if (!singleRes.ok) {
@@ -94,17 +106,17 @@ export const TaskContent: React.FC<TaskContentProps> = ({
         }
       }
 
-      // ---- All tasks ----
+      // ---- All tasks (перша сторінка) ----
       if (!listRes.ok) {
         setListError(listRes.errorMessage);
       } else {
-        const rawList =
-          (listRes.data as IGetAllTasksResponse | undefined)?.data?.tasks ?? [];
+        const listData = listRes.data as IGetAllTasksResponse | undefined;
 
-        parsedList = rawList
-          .map((raw) => safeTransform(raw))
-          .filter((item): item is ITaskDetails => item !== null)
-          .filter((item) => String(item.id) !== String(slug));
+        // CHANGED: через parseOtherTasks (без поточної та без PENDING)
+        parsedList = parseOtherTasks(listData?.data?.tasks ?? [], slug);
+
+        hasNextPage = !!listData?.pagination?.hasNextPage;
+        currentPage = listData?.pagination?.page ?? 1;
 
         setOtherTasks(parsedList);
       }
@@ -117,6 +129,33 @@ export const TaskContent: React.FC<TaskContentProps> = ({
       );
 
       setIsFetching(false);
+
+      let collected = parsedList;
+
+      while (hasNextPage && collected.length < MAX_OTHER_TASKS && !cancelled) {
+        const res = await getAllTasksService({
+          page: currentPage + 1,
+          limit: TASKS_PER_PAGE,
+        });
+
+        if (cancelled || !res.ok) break;
+
+        const data = res.data as IGetAllTasksResponse | undefined;
+        const more = parseOtherTasks(data?.data?.tasks ?? [], slug);
+
+        const ids = new Set(collected.map((item) => String(item.id)));
+        const fresh = more.filter((item) => !ids.has(String(item.id)));
+
+        collected = [...collected, ...fresh];
+        setOtherTasks(collected);
+
+        useTaskStore
+          .getState()
+          .upsertTasks(fresh.map((item) => ({ ...item, distance: '' })));
+
+        currentPage = data?.pagination?.page ?? currentPage + 1;
+        hasNextPage = !!data?.pagination?.hasNextPage;
+      }
     };
 
     load();
@@ -168,7 +207,7 @@ export const TaskContent: React.FC<TaskContentProps> = ({
         showFavorite={isLoggedIn}
         redirectToMap
       />
-      <div className="flex justify-between mt-5">
+      <div className="flex mt-5">
         <TaskControlButtons
           taskId={task.id}
           categories={task.category}
