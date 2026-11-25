@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { proxy } from './proxy';
 
 const BACKEND = (
-  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
+  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1'
 ).replace(/\/+$/, '');
 
 const intlMiddleware = createMiddleware({
