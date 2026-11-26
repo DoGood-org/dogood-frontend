@@ -51,7 +51,45 @@ export const PayoutMethods = (): JSX.Element => {
           </p>
         </div>
       </div>
-      <PaymentCardList />
+      <div
+        className="
+          relative pb-8
+          [&_h3]:hidden
+          [&_.grid]:flex
+          [&_.grid]:flex-col
+          [&_.grid]:gap-3
+          [&_.grid]:p-1
+          [&_.grid]:pr-2
+          [&_.grid]:max-h-[240px]
+          [&_.grid]:overflow-y-auto
+
+          [&_.grid::-webkit-scrollbar]:w-2
+          [&_.grid::-webkit-scrollbar-track]:my-2
+          [&_.grid::-webkit-scrollbar-track]:rounded-full
+          [&_.grid::-webkit-scrollbar-track]:!bg-[#E8E8E8]
+          dark:[&_.grid::-webkit-scrollbar-track]:!bg-[#171b19]
+          [&_.grid::-webkit-scrollbar-thumb]:rounded-full
+          [&_.grid::-webkit-scrollbar-thumb]:!bg-[#999999]
+
+          [&_.grid>*:not(button)]:w-[284px]
+          [&_.grid>*:not(button)]:max-w-full
+          [&_.grid>*:not(button)]:min-h-[79px]
+          [&_.grid>*:not(button)]:shrink-0
+
+          [&_.grid>button]:absolute
+          [&_.grid>button]:bottom-0
+          [&_.grid>button]:left-0
+          [&_.grid>button]:w-auto
+          [&_.grid>button]:min-h-0
+          [&_.grid>button]:p-0
+          [&_.grid>button]:border-0
+          [&_.grid>button]:flex-row
+          [&_.grid>button]:gap-1
+          [&_.grid>button]:hover:bg-transparent
+        "
+      >
+        <PaymentCardList />
+      </div>
     </div>
   );
 };

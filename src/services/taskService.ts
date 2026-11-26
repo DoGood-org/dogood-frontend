@@ -43,8 +43,9 @@ export interface IUpdateTaskResponse {
 // ============================================
 
 export interface ICreateTaskResponse {
-  message: string;
-  data: ITaskApi;
+  status: string;
+  code: string;
+  data: { task: ITaskApi };
 }
 
 export interface IGetTaskByIdResponse {

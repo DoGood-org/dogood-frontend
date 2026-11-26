@@ -113,7 +113,8 @@ export const TasksOnMap = (props: Props): JSX.Element => {
         [&::-webkit-scrollbar]:w-2
         [&::-webkit-scrollbar-track]:my-2
         [&::-webkit-scrollbar-track]:rounded-full
-        [&::-webkit-scrollbar-track]:!bg-[#E8E8E8]:dark:!bg-[#303030]
+        [&::-webkit-scrollbar-track]:!bg-[#E8E8E8]
+        dark:[&::-webkit-scrollbar-track]:!bg-[#171b19]
         [&::-webkit-scrollbar-thumb]:rounded-full
         [&::-webkit-scrollbar-thumb]:!bg-[#999999]`}
       >

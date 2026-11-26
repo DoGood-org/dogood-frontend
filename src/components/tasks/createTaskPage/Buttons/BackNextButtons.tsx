@@ -125,7 +125,6 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
         upsertTasks([updatedTask]);
         refreshTasks();
 
-        // стор і форму тут НЕ скидаємо: це зробить cleanup у CreateTaskPage
         navigating = true;
         router.push(`/tasks/${editingTaskId}`);
         return;
@@ -144,7 +143,7 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
       }
 
       const newTask = transformBackendTaskToITaskDetails({
-        task: result.data.data,
+        task: result.data.data.task,
       });
 
       const { upsertTasks, refreshTasks, setNewTaskId } =
@@ -166,7 +165,6 @@ export const BackNextButtons = ({ showBack = true }: Props): JSX.Element => {
         });
       }
 
-      // один атомарний апдейт замість resetCreateTask() + setIsSuccess(true)
       useCreateTaskStore.setState({
         createStep: STEP_IDS.OWNER,
         stepHistory: [],

@@ -98,8 +98,12 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
 
   return (
     <section className="w-full max-w-[353px] md:max-w-[648px] lg:max-w-[800px]">
-      <div className="flex items-baseline gap-5 flex-wrap md:flex-nowrap">
-        <h1 className="min-w-0 flex-1 text-lg mb-2 md:mb-5 break-words">
+      <div className="flex flex-wrap gap-8 mb-2 md:flex-nowrap md:items-baseline md:mb-5">
+        <h1
+          className={`min-w-0 w-full md:w-auto text-lg break-words ${
+            isPreview ? 'lg:max-w-[calc(100%-200px)]' : ''
+          }`}
+        >
           {task.title}
         </h1>
 

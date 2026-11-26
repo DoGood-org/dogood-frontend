@@ -8,8 +8,8 @@ export const basicInfoSchema = yup.object({
     .string()
     .required('Title is required')
     .trim()
-    .max(100, 'Title must be at most 100 characters')
-    .min(3, 'Title must be at least 3 characters'),
+    .max(50, 'Title must be at most 100 characters')
+    .min(1, 'Title must be at least 3 characters'),
   location: yup
     .object({
       lat: yup.number().required(),
@@ -28,7 +28,7 @@ export const basicInfoSchema = yup.object({
     .string()
     .required('Description is required')
     .max(500, 'Maximum 500 characters')
-    .min(5, 'Description must be at least 5 characters'),
+    .min(1, 'Description must be at least 5 characters'),
   startTime: yup
     .string()
     .required('Time is required')
