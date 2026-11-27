@@ -5,5 +5,7 @@
   "organizations": "Organization list",
   "support": "Support",
   "reviews": "Reviews",
-  "logout": "Log out"
+  "logout": "Log out",
+  "users": "Users",
+  "tasks": "Tasks"
 }

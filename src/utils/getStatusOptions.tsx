@@ -2,7 +2,7 @@ import React from 'react';
 import Pending from '@/components/icons/Pending';
 import Approved from '@/components/icons/Approved';
 import Rejected from '@/components/icons/Rejected';
-import { FilterOption } from '@/types';
+import { FilterOption } from '@/types/admin';
 
 export const getStatusOptions = (
   t: (key: string) => string

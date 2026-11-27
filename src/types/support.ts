@@ -49,4 +49,7 @@ export interface ICustomAccordionProps {
 export interface IFilterProps {
   handleFilterChange: (filter: string) => void;
   t: (key: string) => string;
+  isLabelVisible?: boolean;
+  className?: string;
+  labelClassName?: string;
 }

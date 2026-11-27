@@ -5,5 +5,7 @@
   "organizations": "Organisationsliste",
   "support": "Support",
   "reviews": "Bewertungen",
-  "logout": "Abmelden"
+  "logout": "Abmelden",
+  "users": "Benutzer",
+  "tasks": "Aufgaben"
 }

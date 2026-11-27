@@ -1,6 +1,6 @@
 import { ReviewsPage } from '@/components/admin/reviews/ReviewsPage';
 import { JSX } from 'react';
 
-export default async function AdminReviewsPage(): Promise<JSX.Element> {
+export default function AdminReviewsPage(): JSX.Element {
   return <ReviewsPage />;
 }

@@ -3,7 +3,7 @@
 import React, { JSX } from 'react';
 import { useTranslations } from 'next-intl';
 import { UserReview, Organizations, AboutUs } from '@/components/icons';
-import { ButtonsPanelProps } from '@/types/reviewType';
+import { ButtonsPanelProps } from '@/types/admin';
 
 export const ButtonsPanel = ({
   activeTab,
@@ -31,13 +31,13 @@ export const ButtonsPanel = ({
     onTabChange(activeTab === key ? '' : key);
   };
   return (
-    <ul className="flex gap-2 md:justify-between shrink-0 mb-3 md:mb-6 lg:gap-14">
+    <ul className="flex justify-between gap-3 md:gap-10 w-full">
       {tabs.map(({ key, label, icon }) => (
         <li key={key}>
           <button
             onClick={() => handleTabClick(key)}
-            className={`flex items-center justify-center gap-2 px-4 py-3 rounded-sm h-12 w-[99px] md:w-[180px] lg:w-[302px] cursor-pointer ${
-              activeTab === key ? 'border border' : 'bg-card'
+            className={`flex items-center justify-center gap-2 px-4 py-3 rounded-sm h-12 w-22.5 md:w-45 lg:w-75.5 cursor-pointer ${
+              activeTab === key ? 'border' : 'bg-card'
             }`}
           >
             {icon}

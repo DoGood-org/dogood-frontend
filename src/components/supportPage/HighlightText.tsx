@@ -17,7 +17,7 @@ export const HighlightText: React.FC<HighlightTextProps> = ({
   if (!trimmedHighlight) return <>{text}</>;
 
   const regex = new RegExp(
-    `\\b(${trimmedHighlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})\\b`,
+    `(${trimmedHighlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`,
     'gi'
   );
 

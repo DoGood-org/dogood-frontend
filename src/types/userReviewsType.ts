@@ -1,4 +1,4 @@
-import { IReviewsItem } from './reviewType';
+import { IReviewsItem } from './admin';
 
 export type IUser = {
   id: string;
@@ -30,7 +30,10 @@ export type DeleteModalControls = {
   setIsOpen: (arg0: boolean) => void;
   orgId?: string;
   revId?: string;
+  taskId?: string;
+  userId?: string;
 };
+export type TaskModalControls = DeleteModalControls & { taskId: string };
 export type AddModalControls = {
   isOpen: boolean;
   setIsOpen: (arg0: boolean) => void;

@@ -1,13 +1,13 @@
-'use client';
-
 import { JSX } from 'react';
 import { Section } from '@/components/ui/Section';
-import mocks from './mock.json';
-import { IReviewsItem } from '@/types';
 import { ReviewsList } from './ReviewsList';
+import { IAdminReviews } from '@/types/admin';
+import { getAllReviewsService } from '@/services/reviewsService';
 
-export const ReviewsPage = (): JSX.Element => {
-  const reviews: IReviewsItem[] = mocks.data.reviews as IReviewsItem[];
+export const ReviewsPage = async (): Promise<JSX.Element> => {
+  const result = await getAllReviewsService();
+  const reviews: IAdminReviews[] = result.ok ? result.data.data.reviews : [];
+  console.log(reviews);
   return (
     <Section
       withContainer={false}

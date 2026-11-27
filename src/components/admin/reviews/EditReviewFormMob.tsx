@@ -6,7 +6,7 @@ import { RenderField } from '../report/RenderField';
 import CloseIcon from '@/components/icons/CloseIcon';
 import { RenderRow } from '../report/RenderRow';
 import { TargetTypeBadge } from './TargetTypeBadge';
-import { FilterSelect } from './FilterSelect';
+import { FilterSelect } from '../../ui/FilterSelect';
 import { RenderUser } from '../report/RenderUser';
 import { Rating } from '@/components/ui/Rating';
 import { ButtonControls } from '../report/ButtonControls';

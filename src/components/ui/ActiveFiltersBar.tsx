@@ -3,7 +3,7 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import Star from '@/components/icons/Star';
-import { ActiveFiltersBarProps } from '@/types/reviewType';
+import { ActiveFiltersBarProps } from '@/types/admin';
 
 export const ActiveFiltersBar: React.FC<ActiveFiltersBarProps> = ({
   activeFilters,

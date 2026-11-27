@@ -1,0 +1,152 @@
+{
+  "status": "success",
+  "code": "USERS_RETRIEVED",
+  "data": {
+    "users": [
+      {
+        "id": "user_001",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "email": "user001@example.com",
+        "role": "USER",
+        "status": "Active",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_002",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "email": "user002@example.com",
+        "role": "ADMIN",
+        "status": "Active",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_003",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "email": "user003@example.com",
+        "role": "MODERATOR",
+        "status": "Blocked",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_004",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "email": "user004@example.com",
+        "role": "USER",
+        "status": "Active",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_005",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "email": "user005@example.com",
+        "role": "USER",
+        "status": "Blocked",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_006",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "email": "user006@example.com",
+        "role": "ADMIN",
+        "status": "Active",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_007",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
+        "email": "user007@example.com",
+        "role": "USER",
+        "status": "Blocked",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_008",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/women/4.jpg",
+        "email": "user008@example.com",
+        "role": "MODERATOR",
+        "status": "Active",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_009",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/men/5.jpg",
+        "email": "user009@example.com",
+        "role": "USER",
+        "status": "Blocked",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_010",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/women/6.jpg",
+        "email": "user010@example.com",
+        "role": "USER",
+        "status": "Active",
+        "createdAt": "2026-11-18T10:00:00.000Z"
+      },
+      {
+        "id": "user_011",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/men/7.jpg",
+        "email": "user011@example.com",
+        "role": "USER",
+        "status": "Blocked",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_012",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "email": "user012@example.com",
+        "role": "ADMIN",
+        "status": "Active",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_013",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "email": "user013@example.com",
+        "role": "USER",
+        "status": "Active",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_014",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "email": "user014@example.com",
+        "role": "USER",
+        "status": "Blocked",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_015",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "email": "user015@example.com",
+        "role": "ADMIN",
+        "status": "Active",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      },
+      {
+        "id": "user_016",
+        "name": "Brittany Lucas",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "email": "user016@example.com",
+        "role": "USER",
+        "status": "Blocked",
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      }
+    ]
+  }
+}

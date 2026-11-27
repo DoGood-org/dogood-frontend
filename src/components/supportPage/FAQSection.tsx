@@ -4,7 +4,7 @@ import { CustomAccordion } from './CustomAccordion';
 import { useTranslations } from 'next-intl';
 import { MenuCategoryKey } from '@/types/support';
 import { Section } from '../ui/Section';
-import { Filter } from './Filter';
+import { SearchFilter } from './SearchFilter';
 import {
   getAllCategoriesData,
   getFilteredCategories,
@@ -43,7 +43,12 @@ export const FAQSection = (): React.JSX.Element => {
   return (
     <Section>
       <h2 className="text-h2-m lg:text-h2-d mb-4 md:hidden">{t('title')}</h2>
-      <Filter handleFilterChange={handleFilterChange} t={t} />
+      <SearchFilter
+        handleFilterChange={handleFilterChange}
+        t={t}
+        className="justify-end mb-10 md:mb-12 lg:mb-20"
+        labelClassName="md:w-78.5"
+      />
       <h2 className="hidden md:block md:text-center text-h2-m lg:text-h2-d md:mb-10">
         {t('title')}
       </h2>

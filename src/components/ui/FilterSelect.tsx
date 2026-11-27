@@ -6,31 +6,33 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/Select';
-import { FilterSelectProps } from '@/types';
 import { JSX } from 'react';
+import { FilterSelectProps } from '@/types/admin';
 
 export const FilterSelect = ({
   value,
   onValueChange,
   options,
+  translationNamespace = '',
   placeholderKey,
-  placeholder = 'Select...',
+  placeholder,
   triggerClassName = '',
   contentClassName = '',
   triggerStyle,
+  disabled = false,
 }: FilterSelectProps): JSX.Element => {
-  const t = useTranslations('adminReviews');
+  const t = useTranslations(translationNamespace);
+
   const resolvedPlaceholder =
-    (placeholderKey && t(placeholderKey)) || placeholder;
+    placeholder ?? (placeholderKey ? t(placeholderKey) : undefined);
 
   return (
-    <Select value={value} onValueChange={onValueChange}>
+    <Select value={value} onValueChange={onValueChange} disabled={disabled}>
       <SelectTrigger
-        className={`w-full cursor-pointer bg-card  text-sm ${triggerClassName}`}
+        className={`w-full cursor-pointer bg-card text-xs md:text-sm border border-transparent transition duration-300 hover:border-border ${triggerClassName}`}
         style={{
           height: '48px',
           borderRadius: '4px',
-          borderColor: 'transparent',
           ...triggerStyle,
         }}
       >
@@ -47,7 +49,7 @@ export const FilterSelect = ({
           <SelectItem
             key={option.value}
             value={option.value}
-            className="mb-3 last:mb-0 cursor-pointer hover:text-btn "
+            className="mb-3 last:mb-0 cursor-pointer hover:text-btn"
           >
             {option.label}
           </SelectItem>

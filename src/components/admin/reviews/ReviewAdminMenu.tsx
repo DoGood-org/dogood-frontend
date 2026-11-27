@@ -7,13 +7,13 @@ import { Gear, TrashBinChat } from '@/components/icons';
 import { MenuAction } from '@/components/ui/MenuAction';
 import { useMediaQuery } from '@/hooks';
 import { EditFormModal } from './EditFormModal';
-import { ActionConfig, IReviewsItem } from '@/types';
 import { DeleteReviewFormModal } from './DeleteReviewFormModal';
+import { ActionConfig, IAdminReviews } from '@/types/admin';
 
 export const ReviewAdminMenu = ({
   review,
 }: {
-  review: IReviewsItem;
+  review: IAdminReviews;
 }): JSX.Element => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);

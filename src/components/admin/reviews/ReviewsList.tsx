@@ -1,25 +1,21 @@
 'use client';
 
-import {
-  IReviewsItem,
-  FilterValues,
-  ReviewsListProps,
-} from '@/types/reviewType';
 import { useTranslations } from 'next-intl';
-import React, { JSX, useEffect, useState } from 'react';
-import { SearchInput } from '../report/SearchInput';
+import React, { JSX, useState } from 'react';
 import { OrgNoFound } from '../organizations/OrgNoFound';
 import { Slider } from '@/components/ui/Slider';
-import { Filter } from '@/components/icons';
-import { FilterPanel } from './FilterPanel';
+import { Star } from '@/components/icons';
+import { FilterPanel } from '../../ui/FilterPanel';
 import { ButtonsPanel } from './ButtonsPanel';
-import { ActiveFiltersBar } from './ActiveFiltersBar';
+import { ActiveFiltersBar } from '../../ui/ActiveFiltersBar';
 import { ReviewItemDesk } from './ReviewItemDesk';
 import { ReviewItemMob } from './ReviewItemMob';
 import { HeaderItem } from '@/types/reportType';
-import { applyFilters } from '@/utils/filterReviews';
 import { useMediaQuery } from '@/hooks';
 import { format } from 'date-fns';
+import { applyReviewsFilters } from '@/utils/filterReviews';
+import { getStatusOptions } from '@/utils/getStatusOptions';
+import { FilterConfig, FilterValues, ReviewsListProps } from '@/types/admin';
 export const ReviewsList = ({
   reviews,
   itemsPerSlide = 6,
@@ -28,13 +24,8 @@ export const ReviewsList = ({
   const isMobile = useMediaQuery('(max-width: 767px)');
 
   const [activeTab, setActiveTab] = useState<string>('');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState<FilterValues>({});
-  const [filteredReviews, setFilteredReviews] =
-    useState<IReviewsItem[]>(reviews);
   const [resetKey, setResetKey] = useState(0);
-
   const HEADER_ITEMS: HeaderItem[] = [
     { label: t('id') },
     { label: t('type') },
@@ -44,14 +35,37 @@ export const ReviewsList = ({
     { label: t('status') },
     { label: t('date') },
   ];
-
-  useEffect(() => {
-    setFilteredReviews(applyFilters(reviews, activeTab, searchQuery, filters));
-  }, [reviews, activeTab, searchQuery, filters]);
-
-  const handleSearch = (query: string): void => {
-    setSearchQuery(query);
-  };
+  const ratingOptions = Array.from({ length: 5 }, (_, i) => {
+    const value = String(i + 1);
+    return {
+      value,
+      label: (
+        <span className="flex items-center gap-2">
+          {value} <Star className="fill-transparent w-5 h-5" />
+        </span>
+      ),
+    };
+  });
+  const filterConfig: FilterConfig[] = [
+    {
+      type: 'select',
+      key: 'status',
+      placeholderKey: 'status',
+      placeholder: t('status'),
+      options: getStatusOptions(t),
+      triggerClassName: 'w-22.5 md:w-45 lg:w-75.5',
+    },
+    {
+      type: 'select',
+      key: 'rating',
+      placeholderKey: 'rating',
+      placeholder: t('rating'),
+      options: ratingOptions,
+      triggerClassName: 'w-22.5 md:w-45 lg:w-75.5',
+    },
+    { type: 'date', key: 'dateRange', mode: 'range' },
+  ];
+  const filteredReviews = applyReviewsFilters(reviews, activeTab, filters);
 
   const handleTabChange = (tab: string): void => {
     setActiveTab(tab);
@@ -64,7 +78,6 @@ export const ReviewsList = ({
   const handleResetFilters = (): void => {
     setFilters({});
     setActiveTab('');
-    setSearchQuery('');
     setResetKey((prev) => prev + 1);
   };
 
@@ -96,7 +109,6 @@ export const ReviewsList = ({
 
   const handleRemoveFilter = (label: string): void => {
     const newFilters = { ...filters };
-
     const keyToRemove = (
       Object.keys(newFilters) as (keyof FilterValues)[]
     ).find((k) => formatFilterLabel(k, newFilters[k]) === label);
@@ -107,61 +119,22 @@ export const ReviewsList = ({
       setResetKey((prev) => prev + 1);
     }
   };
-
   return (
     <>
-      <ButtonsPanel activeTab={activeTab} onTabChange={handleTabChange} />
+      <div className="flex flex-col gap-3 md:gap-6 ">
+        <ButtonsPanel activeTab={activeTab} onTabChange={handleTabChange} />
+        <FilterPanel
+          config={filterConfig}
+          onFilterChange={handleFilterChange}
+          key={resetKey}
+        />
 
-      <div
-        className={
-          isMobile
-            ? 'flex flex-col items-start mb-6 gap-6 w-full'
-            : 'flex md:flex-col lg:flex-row items-start mb-6 gap-6 w-full'
-        }
-      >
-        <div
-          className={isMobile ? 'flex gap-3' : 'flex gap-6 w-full lg:w-auto'}
-        >
-          <button
-            className="bg-card p-3 rounded-sm h-12 w-12 shrink-0 focus:fill-primary"
-            onClick={() => setIsFilterOpen(!isFilterOpen)}
-          >
-            <Filter className="w-5 h-5 cursor-pointer" />
-          </button>
-
-          <div
-            className={
-              isMobile
-                ? 'flex w-full md:w-[528px]'
-                : 'flex flex-1 lg:flex-none lg:w-[360px] min-w-0'
-            }
-          >
-            <SearchInput
-              onSearch={handleSearch}
-              placeholder={t('searchPlaceholder')}
-              className="w-full"
-            />
-          </div>
-        </div>
-
-        {isFilterOpen && (
-          <div
-            className={
-              isMobile
-                ? 'flex min-w-0 justify-end items-start w-full'
-                : 'flex flex-col gap-2 min-w-0 w-full lg:w-auto lg:flex-1 md:justify-between lg:justify-end items-start'
-            }
-          >
-            <FilterPanel key={resetKey} onFilterChange={handleFilterChange} />
-          </div>
-        )}
+        <ActiveFiltersBar
+          activeFilters={activeFilters}
+          onReset={handleResetFilters}
+          onRemoveFilter={handleRemoveFilter}
+        />
       </div>
-
-      <ActiveFiltersBar
-        activeFilters={activeFilters}
-        onReset={handleResetFilters}
-        onRemoveFilter={handleRemoveFilter}
-      />
 
       {!isMobile && (
         <ul className="lg:w-[1018px] overflow-hidden grid grid-cols-7 gap-2 lg:gap-4 mb-6 bg-card px-6 py-3 rounded-sm font-semibold list-none w-full md:grid-cols-[60px_80px_80px_110px_60px_60px_80px] lg:grid-cols-[100px_150px_150px_250px_80px_80px_80px]">

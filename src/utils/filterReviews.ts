@@ -1,24 +1,15 @@
-// utils/filterReviews.ts
+import { FilterValues, IReviewsItem } from '@/types/admin';
 import { isWithinInterval, startOfDay, endOfDay } from 'date-fns';
-import { IReviewsItem, FilterValues } from '@/types/reviewType';
 
-export const applyFilters = (
+export const applyReviewsFilters = (
   reviews: IReviewsItem[],
   tab: string,
-  query: string,
   currentFilters: FilterValues
 ): IReviewsItem[] => {
   return reviews.filter((review) => {
     const matchesTab =
       review.targetType?.toLowerCase() === tab.toLowerCase() || tab === '';
     if (!matchesTab) return false;
-
-    if (query.trim()) {
-      const matchesSearch = review.id
-        .toLowerCase()
-        .includes(query.toLowerCase().trim());
-      if (!matchesSearch) return false;
-    }
 
     if (
       currentFilters.status &&

@@ -66,6 +66,8 @@ export const fetchFromApi = async <T>(
     headers = {},
     auth = false,
   } = options;
+  console.log('OUTGOING HEADERS:', headers);
+  console.log('AUTH:', auth);
 
   try {
     const instance = getApiInstance(auth);
@@ -139,7 +141,6 @@ export const fetchFromApi = async <T>(
         extra: { endpoint, method, auth, params, error },
       });
     }
-
     return {
       ok: false,
       errorMessage,

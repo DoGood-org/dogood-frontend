@@ -6,7 +6,7 @@ import { RenderField } from './RenderField';
 import { RenderRow } from './RenderRow';
 import { CloseIcon } from '@/components/icons';
 import { ButtonControls } from './ButtonControls';
-import { FilterSelect } from '../reviews/FilterSelect';
+import { FilterSelect } from '../../ui/FilterSelect';
 
 export const ReportDetailsMob: React.FC<IReportDetailsMob> = ({
   setIsOpen,

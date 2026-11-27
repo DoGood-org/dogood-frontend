@@ -5,7 +5,7 @@
     "title": "Aufgabe",
     "description": "Details zur Aufgabe"
   },
-    "taskDetails": {
+  "taskDetails": {
     "details": "Einzelheiten",
     "location": "Ort",
     "showOnMap": "Auf der Karte anzeigen",
@@ -16,7 +16,7 @@
     "description": "Beschreibung",
     "edit": "Bearbeiten"
   },
-    "taskCard": {
+  "taskCard": {
     "start": "Start",
     "finish": "Ende",
     "time": "Zeit",
@@ -24,18 +24,18 @@
     "donationNeeds": "Spendenbedarf",
     "localTime": "(lokale Zeit)"
   },
-    "otherTask": {
+  "otherTask": {
     "otherTask": "Weitere Aufgaben",
     "noTasks": "In diesem Abschnitt gibt es noch keine Aufgaben."
   },
   "paymentSuccess": {
-  "downloadReceipt": "Beleg herunterladen",
-  "homePage": "Startseite"
+    "downloadReceipt": "Beleg herunterladen",
+    "homePage": "Startseite"
   },
-    "task": {
+  "task": {
     "notFound": "Aufgabe nicht gefunden"
   },
-    "finishTaskModal": {
+  "finishTaskModal": {
     "title": "Ist Ihre Aufgabe wirklich erledigt?",
     "message": "Wählen Sie „Bestätigen“, um Ihre Aufgabe zu schließen.",
     "buttons": {
@@ -43,7 +43,7 @@
       "confirm": "Bestätigen"
     }
   },
-    "createTask": {
+  "createTask": {
     "title": "Erstellen Sie Ihre nächste Aufgabe",
     "preview": "Vorschau",
     "step": "Schritt",
@@ -52,54 +52,55 @@
     "privateLabel": "(privat)",
     "organizationName": "Organisation",
     "buttons": {
-        "confirm": "Bestätigen",
-        "preview": "Vorschau",
-        "next": "Nächster Schritt",
-        "edit": "Bearbeiten",
-        "back": "Zurück",
-        "uploadPicture": "Bild hochladen"
-      },
-      "stepTitles": {
-        "addPicture": "Foto hinzufügen"
-      },
-      "form": {
-        "title": "Titel",
-        "location": "Ort",
-        "dateFrom": "Datum von",
-        "dateTo": "Datum bis",
-        "startTime": "Startzeit",
-        "descriptionLabel": "Beschreibung hinzufügen",
-        "descriptionPlaceholder": "Beschreibung hinzufügen",
-        "requirementsLabel": "Was sind die Anforderungen an die Position? (optional)",
-        "requirementsPlaceholder": "Anforderungen hinzufügen"
-      },
-      "categories": {
-        "title": "Kategorie wählen",
-        "subtitle": "Sie können mehrere Kategorien auswählen",
-        "items": {
-          "medicine": "Medizin",
-          "nature": "Natur",
-          "animal": "Tiere",
-          "food": "Essen",
-          "donation": "Spende"
-        }
-      },
-      "payout": {
-        "donationTitle": "Spendenbedarf",
-        "donationDescription": "Geben Sie Details zu Ihrem Spendenbedarf und Ihren Finanzinformationen an",
-        "financialTitle": "Finanzinformationen",
-        "financialDescription": "Wählen Sie das Konto aus, auf das die Gelder überwiesen werden sollen"
-      },
-      "success": {
-        "title": "Sie haben Ihre Aufgabe erfolgreich erstellt!",
-        "description": "Ihre Aufgabe erscheint auf der Karte, nachdem sie von einem Moderator überprüft wurde.",
-        "contactUs": "Kontaktieren Sie uns",
-        "goHome": "Zur Startseite"
-      },
-      "validation": {
-        "title": "Bitte füllen Sie alle Pflichtfelder aus",
-        "message": "Um fortzufahren, füllen Sie bitte alle mit einem Sternchen gekennzeichneten Felder aus.",
-        "backButton": "Zurück zum Formular"
+      "confirm": "Bestätigen",
+      "preview": "Vorschau",
+      "next": "Nächster Schritt",
+      "edit": "Bearbeiten",
+      "back": "Zurück",
+      "uploadPicture": "Bild hochladen",
+      "saving": "Speichern..."
+    },
+    "stepTitles": {
+      "addPicture": "Foto hinzufügen"
+    },
+    "form": {
+      "title": "Titel",
+      "location": "Ort",
+      "dateFrom": "Datum von",
+      "dateTo": "Datum bis",
+      "startTime": "Startzeit",
+      "descriptionLabel": "Beschreibung hinzufügen",
+      "descriptionPlaceholder": "Beschreibung hinzufügen",
+      "requirementsLabel": "Was sind die Anforderungen an die Position? (optional)",
+      "requirementsPlaceholder": "Anforderungen hinzufügen"
+    },
+    "categories": {
+      "title": "Kategorie wählen",
+      "subtitle": "Sie können mehrere Kategorien auswählen",
+      "items": {
+        "medicine": "Medizin",
+        "nature": "Natur",
+        "animal": "Tiere",
+        "food": "Essen",
+        "donation": "Spende"
       }
+    },
+    "payout": {
+      "donationTitle": "Spendenbedarf",
+      "donationDescription": "Geben Sie Details zu Ihrem Spendenbedarf und Ihren Finanzinformationen an",
+      "financialTitle": "Finanzinformationen",
+      "financialDescription": "Wählen Sie das Konto aus, auf das die Gelder überwiesen werden sollen"
+    },
+    "success": {
+      "title": "Sie haben Ihre Aufgabe erfolgreich erstellt!",
+      "description": "Ihre Aufgabe erscheint auf der Karte, nachdem sie von einem Moderator überprüft wurde.",
+      "contactUs": "Kontaktieren Sie uns",
+      "goHome": "Zur Startseite"
+    },
+    "validation": {
+      "title": "Bitte füllen Sie alle Pflichtfelder aus",
+      "message": "Um fortzufahren, füllen Sie bitte alle mit einem Sternchen gekennzeichneten Felder aus.",
+      "backButton": "Zurück zum Formular"
+    }
   }
 }

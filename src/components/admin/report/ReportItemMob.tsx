@@ -16,7 +16,7 @@ export const ReportItemMob = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="bg-modal flex flex-col gap-3 mb-2 rounded-sm py-2.5 px-4.5 w-full">
+    <div className="bg-modal flex flex-col gap-3 mb-2 rounded-sm py-2.5 px-4.5 w-full hover:shadow-admin hover:border-[#00BC7D1A] focus:shadow-admin focus:border-[#00BC7D1A] cursor-pointer">
       <div onClick={() => setIsModalOpen(!isModalOpen)}>
         <RenderRow className="justify-between items-center">
           <RenderField

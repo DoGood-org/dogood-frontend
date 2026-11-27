@@ -1,4 +1,3 @@
-import { IReviewsItem } from '@/types';
 import { useTranslations } from 'next-intl';
 import React, { JSX, useState } from 'react';
 import { RenderField } from '../report/RenderField';
@@ -6,11 +5,12 @@ import { RenderRow } from '../report/RenderRow';
 import { TargetTypeBadge } from './TargetTypeBadge';
 import { ReviewAdminMenu } from './ReviewAdminMenu';
 import { EditFormModal } from './EditFormModal';
+import { IAdminReviews } from '@/types/admin';
 
 export const ReviewItemMob = ({
   review,
 }: {
-  review: IReviewsItem;
+  review: IAdminReviews;
 }): JSX.Element => {
   const t = useTranslations('adminReviews');
   const [isModalOpen, setIsModalOpen] = useState(false);

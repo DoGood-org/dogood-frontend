@@ -1,14 +1,15 @@
 import React, { JSX, useState } from 'react';
-import { Approved, Pending, Star, Rejected } from '@/components/icons';
-import { IReviewsItem } from '@/types/reviewType';
+import { Star } from '@/components/icons';
 import { TargetTypeBadge } from './TargetTypeBadge';
 import { ReviewAdminMenu } from './ReviewAdminMenu';
 import { EditFormModal } from './EditFormModal';
+import { StatusIcon } from '../tasks/StatusIcon';
+import { IAdminReviews } from '@/types/admin';
 
 export const ReviewItemDesk = ({
   review,
 }: {
-  review: IReviewsItem;
+  review: IAdminReviews;
 }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -64,15 +65,7 @@ export const ReviewItemDesk = ({
     },
     {
       key: 'status',
-      content: (
-        <>
-          {review.status === 'Under consideration' && (
-            <Pending className="h-5 w-5" />
-          )}
-          {review.status === 'Confirmed' && <Approved className="h-5 w-5" />}
-          {review.status === 'Rejected' && <Rejected className="h-5 w-5" />}
-        </>
-      ),
+      content: <StatusIcon status={review.status} />,
     },
     {
       key: 'date',

@@ -59,7 +59,7 @@ export const ReportItemDesk = ({
   return (
     <ul
       key={report.id}
-      className="lg:w-[1018px] overflow-hidden grid grid-cols-6 gap-2 lg:gap-4 bg-modal px-6 py-3 rounded-sm list-none w-full md:grid-cols-[60px_130px_120px_80px_80px_60px] lg:grid-cols-[100px_200px_200px_150px_150px_80px]"
+      className="lg:w-[1018px] overflow-hidden grid grid-cols-6 gap-2 lg:gap-4 bg-modal px-6 py-3 rounded-sm list-none w-full md:grid-cols-[60px_130px_120px_80px_80px_60px] lg:grid-cols-[100px_200px_200px_150px_150px_80px] hover:shadow-admin hover:border-[#00BC7D1A] focus:shadow-admin focus:border-[#00BC7D1A] cursor-pointer"
     >
       {columns.map((column) => (
         <li
