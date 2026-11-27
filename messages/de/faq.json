@@ -25,7 +25,21 @@
       "emailError": "E-Mail ist erforderlich",
       "phoneText": "z. B. +49 (160) 123-4567",
       "messageText": "Gib hier deine Nachricht ein ...",
-      "phoneError": "Unbekanntes Telefonnummernformat"
+      "phoneError": "Unbekanntes Telefonnummernformat",
+      "nameLabel": "Name",
+      "emailLabel": "E-Mail-Adresse",
+      "phoneLabel": "Telefonnummer (optional)",
+      "messageLabel": "Ihre Nachricht",
+      "validation": {
+        "required": "Dieses Feld ist erforderlich",
+        "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+        "invalidPhone": "Bitte geben Sie eine gültige Telefonnummer ein",
+        "minNameLength": "Der Name muss mindestens 2 Zeichen enthalten",
+        "minMessageLength": "Die Nachricht muss mindestens 10 Zeichen enthalten",
+        "maxNameLength": "Der Name darf maximal 100 Zeichen enthalten",
+        "maxMessageLength": "Die Nachricht darf maximal 200 Zeichen enthalten",
+        "spamMessage": "Ihre Nachricht enthält möglicherweise unerwünschte Inhalte. Bitte überprüfen Sie den Text."
+      }
     }
   ],
   "downtext": [

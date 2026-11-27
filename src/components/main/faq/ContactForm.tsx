@@ -4,11 +4,11 @@ import { Button } from '@/components/ui/Button';
 import { useTranslations } from 'next-intl';
 import { FormField } from './FormField';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { InferType } from 'yup';
+import type { FormData } from './formSchema';
 import { formSchema } from './formSchema';
 import { sendContact } from '@/services/contactsService';
 import { toast } from 'react-toastify';
-export type FormData = InferType<typeof formSchema>;
+import { FormFieldConfig } from '@/types/contact';
 
 export const ContactForm = ({
   title,
@@ -22,8 +22,15 @@ export const ContactForm = ({
   const downText = (t.raw('downtext') as any[])[0];
 
   const methods = useForm<FormData>({
-    mode: 'onChange',
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     resolver: yupResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      message: '',
+    },
   });
 
   const {
@@ -32,13 +39,44 @@ export const ContactForm = ({
     formState: { isSubmitting },
   } = methods;
 
+  const fields: FormFieldConfig[] = [
+    {
+      name: 'name',
+      label: contact.nameLabel,
+      type: 'text',
+      placeholder: contact.nameText,
+      required: true,
+    },
+    {
+      name: 'email',
+      label: contact.emailLabel,
+      type: 'email',
+      placeholder: contact.emailText,
+      required: true,
+    },
+    {
+      name: 'phone',
+      label: contact.phoneLabel,
+      type: 'tel',
+      placeholder: contact.phoneText,
+    },
+    {
+      name: 'message',
+      label: contact.messageLabel,
+      type: 'textarea',
+      placeholder: contact.messageText,
+      required: true,
+      maxLength: 200,
+    },
+  ] as const;
+
   const onSubmit = async (data: FormData): Promise<void> => {
     try {
       const response = await sendContact({
         name: data.name,
         email: data.email,
         phone: data.phone,
-        message: data.interest,
+        message: data.message,
       });
       if (response.ok) {
         toast.success(downText.success);
@@ -64,32 +102,9 @@ export const ContactForm = ({
           className="w-full space-y-[24px] py-[24px] md:space-y-[36px] md:pt-[40px] xl:py[0]  z-10"
         >
           <div className="md:w-[427px] lg:w-[655px] mx-auto">
-            <FormField
-              name="name"
-              label="Name"
-              type="text"
-              placeholder={contact.nameText}
-              required
-            />
-            <FormField
-              name="email"
-              label="E-mail"
-              type="email"
-              placeholder={contact.emailText}
-              required
-            />
-            <FormField
-              name="phone"
-              label="Phone number (optional)"
-              type="tel"
-              placeholder={contact.phoneText}
-            />
-            <FormField
-              name="interest"
-              label="Add a message"
-              type="textarea"
-              placeholder={contact.messageText}
-            />
+            {fields.map((field) => (
+              <FormField key={field.name} {...field} />
+            ))}
           </div>
           <div className="pt-[20px] flex flex-col items-center md:flex-row justify-between gap-[20px] md:justify-center md:gap-[110px]">
             <p className="text-[#999999] text-p4-m md:text-p2-d max-w-[365px]">
@@ -102,7 +117,6 @@ export const ContactForm = ({
               disabled={isSubmitting}
               className="w-full h-[48px] lg:max-w-[186px] md:max-w-[180px]"
             >
-              {/* {downText.btn} */}
               {buttonTxt}
             </Button>
           </div>

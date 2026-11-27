@@ -25,7 +25,21 @@
       "emailError": "Email is required",
       "phoneText": "ex. +1 (111) 111-1111",
       "messageText": "Type your message here ...",
-      "phoneError": "Unknown phone format"
+      "phoneError": "Unknown phone format",
+      "nameLabel": "Name",
+      "emailLabel": "Email address",
+      "phoneLabel": "Phone number (optional)",
+      "messageLabel": "Your message",
+      "validation": {
+        "required": "This field is required",
+        "invalidEmail": "Please enter a valid email address",
+        "invalidPhone": "Please enter a valid phone number",
+        "minNameLength": "Name must contain at least 2 characters",
+        "minMessageLength": "Message must contain at least 10 characters",
+        "maxNameLength": "Name must not exceed 100 characters",
+        "maxMessageLength": "Message must not exceed 200 characters",
+        "spamMessage": "Your message contains potentially unwanted content. Please review it."
+      }
     }
   ],
   "downtext": [
